@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import { home } from "@/content/home";
+import { home1 as home } from "@/content/home-1";
 
 export function InfrastructureRotator() {
   const reduced = useReducedMotion();

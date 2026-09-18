@@ -39,7 +39,7 @@ export function HeroAtmosphere({
             </div>
           </div>
         ) : null
-      ) : (
+      ) : sign ? (
         <>
           <div className="absolute top-[2%] right-[-4%] text-[var(--color-blue-100)]">
             <div className="emfi-sign-cluster relative flex h-[500px] w-[500px] items-center justify-center [perspective:1800px]">
@@ -53,7 +53,21 @@ export function HeroAtmosphere({
             </div>
           </div>
         </>
-      )}
+      ) : null}
+    </div>
+  );
+}
+
+export function HeroBrandMark() {
+  return (
+    <div className="emfi-hero-mark" aria-hidden>
+      <BrandSign className="emfi-hero-mark-base h-auto w-full" />
+      <span className="emfi-hero-mark-lit">
+        <BrandSign className="h-auto w-full" />
+      </span>
+      <span className="emfi-hero-mark-core">
+        <BrandSign className="h-auto w-full" />
+      </span>
     </div>
   );
 }

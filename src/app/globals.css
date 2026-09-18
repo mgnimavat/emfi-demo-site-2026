@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "../styles/tokens.primitive.css";
 @import "../styles/tokens.semantic.css";
@@ -33,6 +34,7 @@
   --color-footer: var(--footer-bg);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: Oswald, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
 
   --radius-md: var(--radius-control);
@@ -146,6 +148,110 @@
     color-mix(in srgb, var(--color-blue-50) 62%, transparent) 44%,
     transparent 74%
   );
+}
+
+.emfi-hero-mark {
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+  width: min(calc(100svh - 72px), 100%);
+  color: var(--color-blue-100);
+  container-type: inline-size;
+}
+
+.emfi-hero-mark-base {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0.16;
+}
+
+.emfi-hero-mark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: scale(calc(50 / 48));
+  transform-origin: 0 0;
+}
+
+.emfi-hero-mark-lit,
+.emfi-hero-mark-core {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-size: 36cqw 100%;
+  mask-size: 36cqw 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: -36cqw 0;
+  mask-position: -36cqw 0;
+  animation: emfi-hero-mark-sweep 4.8s linear infinite;
+  animation-fill-mode: backwards;
+  will-change: mask-position, -webkit-mask-position, opacity;
+}
+
+.emfi-hero-mark-lit {
+  color: color-mix(in srgb, var(--color-blue-500) 42%, var(--color-blue-100));
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(0 0 0 / 0.03) 52%,
+    rgb(0 0 0 / 0.12) 70%,
+    rgb(0 0 0 / 0.38) 85%,
+    rgb(0 0 0 / 0.74) 94%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(0 0 0 / 0.03) 52%,
+    rgb(0 0 0 / 0.12) 70%,
+    rgb(0 0 0 / 0.38) 85%,
+    rgb(0 0 0 / 0.74) 94%,
+    #000 100%
+  );
+  filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-blue-500) 22%, transparent));
+}
+
+.emfi-hero-mark-core {
+  color: var(--color-blue-500);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 98.6%,
+    #000 99.4%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 98.6%,
+    #000 99.4%,
+    #000 100%
+  );
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-blue-500) 24%, transparent));
+}
+
+@keyframes emfi-hero-mark-sweep {
+  0% {
+    opacity: 1;
+    -webkit-mask-position: -36cqw 0;
+    mask-position: -36cqw 0;
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+  75% {
+    opacity: 1;
+    -webkit-mask-position: 100cqw 0;
+    mask-position: 100cqw 0;
+  }
+  75.2%,
+  100% {
+    opacity: 0;
+    -webkit-mask-position: 100cqw 0;
+    mask-position: 100cqw 0;
+  }
 }
 
 .emfi-live-dot {
@@ -416,6 +522,35 @@
   .emfi-cta-section .emfi-btn-arrow {
     transition: none;
   }
+
+  .emfi-light-glow-a,
+  .emfi-light-glow-b,
+  .emfi-light-sheen {
+    animation: none;
+  }
+
+  .emfi-hero-mark-lit,
+  .emfi-hero-mark-core,
+  .emfi-cta-sweep-scan {
+    animation: none;
+    opacity: 0;
+  }
+
+  .emfi-chain-energy,
+  .emfi-chain-energy-path,
+  .emfi-chain-spark {
+    animation: none;
+  }
+
+  .emfi-chain-energy,
+  .emfi-chain-spark {
+    display: none;
+  }
+
+  .emfi-chain-energy-path {
+    stroke-dasharray: none;
+    opacity: 0;
+  }
 }
 
 html,
@@ -427,6 +562,15 @@ body {
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
 }
 
 ::selection {
@@ -590,4 +734,270 @@ body {
 
 .emfi-cta-section .emfi-btn-arrow {
   transition: transform 0.7s var(--cta-ease);
+}
+
+@keyframes emfi-light-drift-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, -4%, 0) scale(1.14);
+  }
+}
+
+@keyframes emfi-light-drift-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.08);
+  }
+  50% {
+    transform: translate3d(-7%, 5%, 0) scale(0.94);
+  }
+}
+
+@keyframes emfi-light-sheen {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(500%);
+  }
+}
+
+.emfi-light {
+  --emfi-light-a: color-mix(in srgb, var(--color-blue-100) 30%, transparent);
+  --emfi-light-b: color-mix(in srgb, var(--color-blue-550) 55%, transparent);
+  --emfi-light-sheen: color-mix(in srgb, var(--text-inverse) 12%, transparent);
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.emfi-light-page {
+  --emfi-light-a: color-mix(in srgb, var(--color-blue-100) 38%, transparent);
+  --emfi-light-b: color-mix(in srgb, var(--color-blue-50) 72%, transparent);
+  --emfi-light-sheen: color-mix(in srgb, var(--color-white) 58%, transparent);
+}
+
+.emfi-light-glow-a,
+.emfi-light-glow-b,
+.emfi-light-sheen {
+  pointer-events: none;
+  position: absolute;
+}
+
+.emfi-light-glow-a,
+.emfi-light-glow-b {
+  inset: -30%;
+}
+
+.emfi-light-glow-a {
+  background: radial-gradient(circle at 30% 35%, var(--emfi-light-a) 0%, transparent 42%);
+  animation: emfi-light-drift-a 12s ease-in-out infinite;
+}
+
+.emfi-light-glow-b {
+  background: radial-gradient(circle at 72% 68%, var(--emfi-light-b) 0%, transparent 46%);
+  animation: emfi-light-drift-b 16s ease-in-out infinite;
+}
+
+.emfi-light-sheen {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 26%;
+  background: linear-gradient(100deg, transparent, var(--emfi-light-sheen), transparent);
+  animation: emfi-light-sheen 5s linear infinite;
+}
+
+.emfi-cta-featured {
+  background: var(--bg-inverse);
+}
+
+.emfi-cta-sweep {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.emfi-cta-sweep-scan {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 36%;
+  animation: emfi-cta-sweep 4.8s linear infinite;
+  will-change: transform, opacity;
+}
+
+.emfi-cta-sweep-wake,
+.emfi-cta-sweep-halo,
+.emfi-cta-sweep-core {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.emfi-cta-sweep-wake {
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--text-inverse) 3%, transparent) 52%,
+    color-mix(in srgb, var(--text-inverse) 8%, transparent) 70%,
+    color-mix(in srgb, var(--text-inverse) 14%, transparent) 85%,
+    color-mix(in srgb, var(--text-inverse) 22%, transparent) 94%,
+    color-mix(in srgb, var(--text-inverse) 28%, transparent) 100%
+  );
+}
+
+.emfi-cta-sweep-halo {
+  right: -44px;
+  width: 44px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--text-inverse) 13%, transparent),
+    transparent
+  );
+}
+
+.emfi-cta-sweep-core {
+  right: 0;
+  width: 1.4px;
+  background: color-mix(in srgb, var(--text-inverse) 62%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--text-inverse) 28%, transparent);
+}
+
+@keyframes emfi-cta-sweep {
+  0% {
+    opacity: 1;
+    transform: translate3d(-100%, 0, 0);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+  75% {
+    opacity: 1;
+    transform: translate3d(calc(100% / 0.36), 0, 0);
+  }
+  75.2%,
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(100% / 0.36), 0, 0);
+  }
+}
+
+.emfi-chain-node,
+.emfi-chain-hub {
+  border: 1px solid var(--border-inverse);
+  background: color-mix(in srgb, var(--bg-inverse) 82%, var(--color-blue-550));
+}
+
+.emfi-chain-hub {
+  border-color: color-mix(in srgb, var(--color-blue-100) 32%, var(--border-inverse));
+  background: color-mix(in srgb, var(--bg-inverse) 70%, var(--color-blue-550));
+}
+
+.emfi-chain-link {
+  position: relative;
+  overflow: visible;
+  background: var(--color-blue-100);
+}
+
+.emfi-chain-energy {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: var(--radius-pill);
+  background: var(--text-inverse);
+  box-shadow: 0 0 10px 2px color-mix(in srgb, var(--color-blue-100) 70%, transparent);
+  animation: emfi-chain-link-flow 1.35s linear infinite;
+}
+
+.emfi-chain-link-v .emfi-chain-energy {
+  top: 0;
+  left: 50%;
+  width: 6px;
+  height: 14px;
+  margin-top: 0;
+  margin-left: -3px;
+  animation-name: emfi-chain-link-flow-v;
+  animation-duration: 1.15s;
+}
+
+.emfi-chain-path {
+  stroke: var(--color-blue-100);
+  stroke-width: 1.5;
+  opacity: 0.55;
+}
+
+.emfi-chain-path-glow {
+  stroke: var(--color-blue-550);
+  stroke-width: 6;
+  opacity: 0.45;
+}
+
+.emfi-chain-path,
+.emfi-chain-path-glow,
+.emfi-chain-energy-path {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.emfi-chain-energy-path {
+  stroke: var(--text-inverse);
+  stroke-width: 2.2;
+  stroke-dasharray: 0.18 0.82;
+  stroke-dashoffset: 1;
+  animation: emfi-chain-flow 2.1s linear infinite;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--color-blue-100) 80%, transparent));
+}
+
+.emfi-chain-spark {
+  fill: var(--text-inverse);
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--color-blue-100) 85%, transparent));
+}
+
+@keyframes emfi-chain-flow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes emfi-chain-link-flow {
+  0% {
+    transform: translateX(-14px);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(68px);
+    opacity: 0;
+  }
+}
+
+@keyframes emfi-chain-link-flow-v {
+  0% {
+    transform: translateY(-12px);
+    opacity: 0;
+  }
+  14% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(36px);
+    opacity: 0;
+  }
 }

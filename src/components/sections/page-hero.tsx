@@ -34,6 +34,7 @@ export function PageHero({
   children,
   visual,
   visualOverlay = false,
+  visualWide = false,
   className,
   rotatingWords,
 }: {
@@ -43,6 +44,7 @@ export function PageHero({
   children?: React.ReactNode;
   visual?: React.ReactNode;
   visualOverlay?: boolean;
+  visualWide?: boolean;
   className?: string;
   /** Optional alternate last words. Defaults to the headline's last word. */
   rotatingWords?: readonly string[];
@@ -90,7 +92,14 @@ export function PageHero({
       <HeroAtmosphere compact sign={!visual} />
       <Container className="relative w-full py-12 lg:py-16">
         {visual && !visualOverlay ? (
-          <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:gap-10">
+          <div
+            className={cn(
+              "grid items-center gap-8 lg:gap-10",
+              visualWide
+                ? "lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.18fr)]"
+                : "lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]",
+            )}
+          >
             {copy}
             <FadeIn delay={0.14}>{visual}</FadeIn>
           </div>

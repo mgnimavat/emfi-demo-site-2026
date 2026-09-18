@@ -3,6 +3,8 @@ export const execution = {
   eyebrow: "Services / Research & Execution",
   headline: "Research that supports the relationship.\nExecution that reaches the market.",
   body: "Research supports institutional investment decision-making. Execution provides access to relevant markets and securities. Together they are one service — not a publishing house with a brokerage attached.",
+  mockupLabel: "Interactive demonstration",
+  mockupStatus: "Switched on",
   entity:
     "The relevant legal entity for research and execution is EMFI Securities Limited, authorised and regulated by the FCA.",
   entityCta: "See regulated entities",

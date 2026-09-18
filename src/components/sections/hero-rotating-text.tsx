@@ -89,19 +89,22 @@ export function HeroRotatingText({
 export function HeroTypedLastWord({
   text,
   words,
+  prefix,
   className,
 }: {
-  text: string;
+  text?: string;
   words?: readonly string[];
+  prefix?: string;
   className?: string;
 }) {
-  const { rest, lastWord } = splitLastWord(text);
-  const animated = words && words.length > 0 ? words : lastWord ? [lastWord] : [];
+  const split = text ? splitLastWord(text) : { rest: "", lastWord: "" };
+  const rest = prefix ?? split.rest;
+  const animated = words && words.length > 0 ? words : split.lastWord ? [split.lastWord] : [];
 
   if (animated.length === 0) return null;
 
   return (
-    <span className={cn("block font-light tracking-[-0.03em] text-brand", className)}>
+    <span className={cn("block font-light tracking-[-0.045em] text-brand", className)}>
       {rest ? (
         <>
           {rest}

@@ -9,6 +9,7 @@ import { CtaBand } from "@/components/sections/cta-band";
 import { BloombergBand } from "@/components/sections/bloomberg-band";
 import { ResearchExplorer } from "@/components/demos/research-explorer";
 import { SecurityLookup } from "@/components/demos/security-lookup";
+import { HeroMockup } from "@/components/mockups/operating-view";
 
 export const metadata = {
   title: execution.title,
@@ -18,7 +19,19 @@ export const metadata = {
 export default function ResearchExecutionPage() {
   return (
     <>
-      <PageHero title={execution.headline} body={execution.body} />
+      <PageHero
+        title={execution.headline}
+        body={execution.body}
+        visualWide
+        visual={
+          <>
+            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-ink-muted">
+              {execution.mockupLabel} · {execution.mockupStatus}
+            </p>
+            <HeroMockup />
+          </>
+        }
+      />
 
       <section className="border-b border-line bg-subtle">
         <Container className="py-10">

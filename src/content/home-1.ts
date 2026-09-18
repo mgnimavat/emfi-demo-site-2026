@@ -1,21 +1,29 @@
-export const home = {
+export const home1 = {
   title: "EMFI: Switched On",
   hero: {
     eyebrow: "EMFI: Switched On",
-    headline: "Institutional infrastructure",
-    headlineAccent: "Without the",
-    headlineAccentWords: ["Institutional Layers.", "Lag.", "Legacy.", "Limit.", "Error."] as const,
-    body: "Direct, real-time settlement infrastructure for institutional players - no intermediary chain, no T+2 waiting, no reconciliation gaps.",
+    headline: "Institutional infrastructure.",
+    headlineAccent: "Without the institutional layers.",
+    body: "One operating relationship into the market infrastructure professional clients actually use. Technology where it helps. People where judgement matters.",
     primaryCta: "Discuss your requirements",
     secondaryCta: "Explore services",
     mockupLabel: "Interactive demonstration",
     mockupStatus: "Switched on",
   },
+  heroBoard: {
+    kicker: "One partner / Full lifecycle",
+    route: "Active route / 01",
+    originLabel: "Origin / 01",
+    originTitle: "Client",
+    hubLabel: "Central relationship",
+    hubTitle: "EMFI",
+    hubCaption: "One partner",
+    destinationLabel: "Destination / 02",
+  },
   chainEyebrow: "How the relationship works",
-  chainTitle: "One Connection.\nDirect Access.",
+  chainTitle: "Client → EMFI → Institutional infrastructure",
   chainBody:
-    "A single relationship with EMFI gives professional clients direct access to custody, settlement, and banking rails - without managing each one separately.",
-  chainHubCaption: "One partner",
+    "EMFI connects clients into institutional infrastructure through a single operating relationship. Euroclear is one important part of that infrastructure — not the whole proposition.",
   chainNodes: [
     { label: "Client", sub: "Instructions / portfolio" },
     { label: "EMFI", sub: "One operating relationship" },
@@ -30,7 +38,8 @@ export const home = {
   infraNote:
     "These are the institutional relationships and infrastructure through which EMFI operates. Descriptors are draft pending legal and operational review.",
   servicesEyebrow: "Services",
-  servicesTitle: "Infrastructure\nfor the whole\nworkflow.",
+  servicesTitle: "One relationship. Fewer layers.",
+  servicesBody: "Three pillars. Not a catalogue of extra categories.",
   services: [
     [
       "Research & Execution",
@@ -76,7 +85,7 @@ export const home = {
     },
   ] as const,
   whyEyebrow: "Why EMFI",
-  whyTitle: "Direct.\nResponsive.\nAccountable.",
+  whyTitle: "Direct. Responsive. Accountable.",
   whyBody:
     "Why an institutional client would choose EMFI rather than a conventional bank, broker, custodian or platform.",
   why: [
@@ -85,107 +94,6 @@ export const home = {
     ["Accountable", "Clear ownership, regulated entities, controlled processes and independent oversight."],
   ] as const,
   whyCta: "Why EMFI",
-  whyTabs: [
-    {
-      label: "Authorised.",
-      eyebrow: "Public registers",
-      body: "EMFI operates through authorised and regulated entities across the relevant jurisdictions.",
-      cta: "See the evidence",
-      href: "/trust",
-      items: [
-        {
-          name: "EMFI Securities Limited",
-          detail: "Research & execution",
-          tag: "FCA · UK",
-        },
-        {
-          name: "EMFI Capital Limited",
-          detail: "Settlement & custody · wealth & asset management",
-          tag: "FCA · UK",
-        },
-        {
-          name: "EMFI Capital (DIFC) Limited",
-          detail: "Relevant DIFC-regulated investment services · F011663",
-          tag: "DFSA · DIFC",
-        },
-        {
-          name: "EMFI Fund",
-          detail: "Current fund structure",
-          tag: "CIMA · Cayman",
-        },
-      ],
-      note: {
-        label: "Public evidence",
-        body: "The evidence sits in the public registers, the applicable regimes, independent audit, and the infrastructure through which client assets move.",
-      },
-    },
-    {
-      label: "Regulated.",
-      eyebrow: "Applicable regimes",
-      body: "High-level frameworks covering client assets, investment services, prudential requirements and fund management.",
-      cta: "See the evidence",
-      href: "/trust",
-      items: [
-        {
-          name: "Client Assets Sourcebook",
-          detail: "Protection and segregation of relevant client money and custody assets.",
-          tag: "CASS",
-        },
-        {
-          name: "Markets in Financial Instruments Directive",
-          detail: "The framework governing relevant investment services and conduct.",
-          tag: "MiFID",
-        },
-        {
-          name: "Prudential sourcebook for MiFID investment firms",
-          detail: "The applicable UK prudential framework for relevant investment firms.",
-          tag: "MIFIDPRU",
-        },
-        {
-          name: "Alternative Investment Fund Managers Directive",
-          detail: "Applicable to relevant alternative investment fund management activity.",
-          tag: "AIFMD",
-        },
-      ],
-      note: {
-        label: "Frameworks",
-        body: "The regimes that govern how work is done.",
-      },
-    },
-    {
-      label: "Auditable.",
-      eyebrow: "Independent external audit",
-      body: "Independent firms examine the financials and the controls behind them.",
-      cta: "See the evidence",
-      href: "/trust",
-      items: [
-        {
-          name: "Baker Tilly",
-          detail: "Independent external audit",
-          tag: "Audit",
-        },
-        {
-          name: "Buzzacott",
-          detail: "Independent external audit",
-          tag: "Audit",
-        },
-        {
-          name: "BDO",
-          detail: "Independent external audit",
-          tag: "Audit",
-        },
-        {
-          name: "Euroclear · institutional rails",
-          detail: "Settlement and custody through recognised market infrastructure.",
-          tag: "Settlement",
-        },
-      ],
-      note: {
-        label: "Records",
-        body: "Institutional infrastructure with reconciled records, reporting and an audit trail available to clients on request.",
-      },
-    },
-  ],
   voiceEyebrow: "Testimonials",
   voiceTitle: "Trusted across the investment ecosystem.",
   quotes: [
@@ -244,20 +152,7 @@ export const home = {
     ["2025", "DIFC"],
     ["2026", "Ten years"],
   ] as const,
-  ctaTitle: "Discuss your\nrequirements.",
-  ctaBody:
-    "Tell us where the operating model needs a more direct connection. Our team can provide further information on EMFI’s structure, regulatory framework and operating model.",
+  ctaTitle: "Discuss your requirements.",
+  ctaBody: "Tell us where the operating model needs a more direct connection.",
   ctaButton: "Contact EMFI",
-  ctaLocations: [
-    {
-      label: "London",
-      address: "25-26 Dering Street, Third Floor, Mayfair, London W1S 1AW",
-      email: "contact@emfi.uk",
-    },
-    {
-      label: "Dubai · DIFC",
-      address: "IH-00-01-02-OF-01, Level 2, Innovation One, DIFC, Dubai",
-      email: "contact@emfi.ae",
-    },
-  ],
 };
