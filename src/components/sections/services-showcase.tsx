@@ -22,7 +22,7 @@ function serviceLens(title: string) {
 
 export function ServicesShowcase() {
   const items = home.services;
-  const [index, setIndex] = useState(items.length);
+  const [index, setIndex] = useState<number>(items.length);
   const [animate, setAnimate] = useState(true);
   const titleLines = home.servicesTitle.split("\n").filter(Boolean);
   const titleLabel = home.servicesTitle.replace(/\n/g, " ");
