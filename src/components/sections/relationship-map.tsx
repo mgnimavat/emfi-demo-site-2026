@@ -11,6 +11,13 @@ function FanLines() {
       fill="none"
       aria-hidden
     >
+      <defs>
+        <linearGradient id="emfi-chain-flow" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="var(--flow-from)" />
+          <stop offset="48%" stopColor="var(--flow-mid)" />
+          <stop offset="100%" stopColor="var(--flow-to)" />
+        </linearGradient>
+      </defs>
       {ends.map((y, i) => {
         const d = `M1 124 C 34 124 40 ${y} 87 ${y}`;
         return (
@@ -21,9 +28,10 @@ function FanLines() {
               d={d}
               pathLength="1"
               className="emfi-chain-energy-path"
+              stroke="url(#emfi-chain-flow)"
               style={{ animationDelay: `${0.35 + i * 0.14}s` }}
             />
-            <circle r="2.4" className="emfi-chain-spark">
+            <circle r="2.4" className="emfi-chain-spark" fill="url(#emfi-chain-flow)">
               <animateMotion
                 dur="2.1s"
                 begin={`${0.35 + i * 0.14}s`}
@@ -58,7 +66,7 @@ export function RelationshipMap() {
       <div className="relative flex w-full min-w-0 flex-col items-center gap-6 md:flex-row md:items-center md:gap-0">
         <div className="flex flex-col items-center md:contents">
           <div className="emfi-chain-node flex h-20 w-20 shrink-0 items-center justify-center self-center rounded-lg lg:h-22 lg:w-22">
-            <span className="font-heading text-base font-bold leading-none tracking-[-0.03em] text-ink-inverse">
+            <span className="font-heading text-base font-bold leading-none tracking-[-0.03em] text-ink">
               Client
             </span>
           </div>
@@ -77,7 +85,7 @@ export function RelationshipMap() {
               unoptimized
             />
           </div>
-          <p className="pointer-events-none absolute top-full mt-2 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-ink-inverse-muted">
+          <p className="pointer-events-none absolute top-full mt-2 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-ink-muted">
             {home.chainHubCaption}
           </p>
         </div>
@@ -88,8 +96,8 @@ export function RelationshipMap() {
         <ul className="flex min-w-0 w-full flex-col gap-3 md:max-w-56">
           {home.chainInfra.map((item) => (
             <li key={item.name} className="emfi-chain-node rounded-lg px-4 py-2.5">
-              <p className="text-[12px] leading-4 text-ink-inverse-muted">{item.role}</p>
-              <p className="mt-0.5 font-heading text-md font-bold tracking-[-0.02em] text-ink-inverse">
+              <p className="text-[12px] leading-4 text-ink-muted">{item.role}</p>
+              <p className="mt-0.5 font-heading text-md font-bold tracking-[-0.02em] text-ink">
                 {item.name}
               </p>
             </li>

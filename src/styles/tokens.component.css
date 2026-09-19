@@ -1,7 +1,7 @@
 :root {
   --button-primary-bg: var(--action-primary);
   --button-primary-fg: var(--text-inverse);
-  --button-primary-hover: var(--action-hover);
+  --button-primary-hover: var(--color-blue-100);
   --button-secondary-bg: var(--bg-page);
   --button-secondary-fg: var(--action-primary);
   --button-secondary-border: var(--action-primary);

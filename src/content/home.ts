@@ -10,6 +10,12 @@ export const home = {
     secondaryCta: "Explore services",
     mockupLabel: "Interactive demonstration",
     mockupStatus: "Switched on",
+    entities: [
+      "EMFI Group Limited",
+      "EMFI Securities Limited",
+      "EMFI Capital Limited",
+      "EMFI Capital (DIFC) Limited",
+    ] as const,
   },
   chainEyebrow: "How the relationship works",
   chainTitle: "One Connection.\nDirect Access.",
@@ -76,9 +82,9 @@ export const home = {
     },
   ] as const,
   whyEyebrow: "Why EMFI",
-  whyTitle: "Direct.\nResponsive.\nAccountable.",
+  whyTitle: "Direct. Responsive. Accountable.",
   whyBody:
-    "Why an institutional client would choose EMFI rather than a conventional bank, broker, custodian or platform.",
+    "Why an institutional client would\nchoose EMFI rather than a conventional\nbank, broker, custodian or platform.",
   why: [
     ["Direct", "Fewer layers. A more direct route between client requirements and market infrastructure."],
     ["Responsive", "Technology where it helps, human judgement where it matters, flexibility when the standard route is wrong."],
@@ -88,7 +94,7 @@ export const home = {
   whyTabs: [
     {
       label: "Authorised.",
-      eyebrow: "Public registers",
+      eyebrow: "Public Registers",
       body: "EMFI operates through authorised and regulated entities across the relevant jurisdictions.",
       cta: "See the evidence",
       href: "/trust",
@@ -121,7 +127,7 @@ export const home = {
     },
     {
       label: "Regulated.",
-      eyebrow: "Applicable regimes",
+      eyebrow: "Applicable Regimes",
       body: "High-level frameworks covering client assets, investment services, prudential requirements and fund management.",
       cta: "See the evidence",
       href: "/trust",
@@ -154,7 +160,7 @@ export const home = {
     },
     {
       label: "Auditable.",
-      eyebrow: "Independent external audit",
+      eyebrow: "Independent External Audit",
       body: "Independent firms examine the financials and the controls behind them.",
       cta: "See the evidence",
       href: "/trust",
@@ -224,7 +230,10 @@ export const home = {
     ["Dubai", "DIFC", "EMFI Capital (DIFC) Limited — DFSA-regulated operations."],
   ] as const,
   anniversaryEyebrow: "Ten years / 2016—2026",
-  anniversaryTitle: "A decade of building direct access.",
+  anniversaryTitle: "A decade of building\ndirect access.",
+  anniversaryBody:
+    "Since 2016, EMFI has developed an institutional investment platform connecting clients with markets, execution and the infrastructure behind the transaction.",
+  anniversaryCta: "About",
   anniversaryBadge: "EMFI 10",
   anniversaryBadgeSub: "2016—2026",
   milestones: [

@@ -57,8 +57,8 @@ export function ServicesShowcase() {
       className="scroll-mt-[6.5rem] overflow-hidden bg-page py-16 md:py-24"
       aria-labelledby="services-heading"
     >
-      <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-14 lg:gap-20">
-        <div className="w-full shrink-0 px-6 md:w-[min(48%,32rem)] md:pl-[max(2.5rem,calc((100vw-1440px)/2+2.5rem))] md:pr-0">
+      <div className="flex flex-col gap-12 md:flex-row md:items-start md:gap-24 lg:gap-36">
+        <div className="w-full shrink-0 px-6 md:w-[min(48%,32rem)] md:pl-[max(2.5rem,calc((100vw-1440px)/2+2.5rem))] md:pr-10">
           <Eyebrow className="mb-5 text-[11px] tracking-[0.22em]">{home.servicesEyebrow}</Eyebrow>
           <h2
             id="services-heading"
@@ -84,7 +84,7 @@ export function ServicesShowcase() {
             <button
               type="button"
               onClick={() => go(1)}
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-inverse text-ink-inverse transition-colors hover:bg-brand"
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-inverse text-ink-inverse transition-colors hover:bg-[var(--color-blue-100)] hover:text-ink"
               aria-label="Next service"
             >
               <ArrowRight size={18} strokeWidth={2.2} />

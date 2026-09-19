@@ -23,6 +23,10 @@
   --status-info: var(--color-blue-400);
   --status-neutral: var(--color-gray-600);
 
+  --flow-from: #a2c2fd;
+  --flow-mid: #8098cc;
+  --flow-to: #00c9a7;
+
   --radius-control: 12px;
   --radius-card: 20px;
   --radius-surface: 30px;

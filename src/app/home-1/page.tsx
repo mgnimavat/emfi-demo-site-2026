@@ -8,7 +8,7 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { FadeIn, FadeInOnLoad } from "@/components/motion/fade-in";
 import { HeroAtmosphere } from "@/components/sections/hero-atmosphere";
 import { HeroTypedLastWord } from "@/components/sections/hero-rotating-text";
-import { HeroRouteBoard } from "@/components/sections/hero-route-board";
+import { HeroMockup } from "@/components/mockups/operating-view";
 import { GlobalPresence } from "@/components/sections/global-presence";
 import { CtaFeatured } from "@/components/sections/cta-featured";
 
@@ -52,7 +52,10 @@ export default function Home1Page() {
             </div>
 
             <FadeInOnLoad delay={0.18}>
-              <HeroRouteBoard />
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-ink-muted">
+                {home.hero.mockupLabel} · {home.hero.mockupStatus}
+              </p>
+              <HeroMockup />
             </FadeInOnLoad>
           </div>
         </Container>

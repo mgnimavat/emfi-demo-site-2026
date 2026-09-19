@@ -3,44 +3,47 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { brandSignPath } from "@/components/brand/logo";
 import { about } from "@/content/about";
+import { cn } from "@/lib/cn";
 
 const CX = 160;
-const CY = 168;
 const RING = 92;
+const YEAR_GAP = 22;
+const PAD_Y = 36;
+const CY = PAD_Y + YEAR_GAP + RING;
+const VIEW_H = CY + RING + YEAR_GAP + PAD_Y;
 const MARK_SIZE = 72;
 const MARK_VIEWBOX = 50;
 const MARK_SCALE = MARK_SIZE / MARK_VIEWBOX;
 const ease = [0.22, 1, 0.36, 1] as const;
 
-function point(angle: number, radius: number) {
-  const a = (angle * Math.PI) / 180;
-  return {
-    x: CX + Math.cos(a) * radius,
-    y: CY + Math.sin(a) * radius,
-  };
-}
-
-function tick(angle: number, inner: number, outer: number) {
-  const a = point(angle, inner);
-  const b = point(angle, outer);
-  return { x1: a.x, y1: a.y, x2: b.x, y2: b.y };
-}
-
 const ARC = `M ${CX} ${CY - RING} A ${RING} ${RING} 0 0 1 ${CX} ${CY + RING}`;
 
-export function DecadeHeroVisual() {
+export function DecadeHeroVisual({
+  showCaption = true,
+  className,
+}: {
+  showCaption?: boolean;
+  className?: string;
+}) {
   const reduceMotion = useReducedMotion();
   const { from, to, mark, caption } = about.heroVisual;
   const label = `${from} to ${to}. ${mark}. ${caption}.`;
 
   return (
-    <figure className="relative mx-auto w-full max-w-[17rem]" aria-label={label}>
-      <svg viewBox="0 0 320 328" className="h-auto w-full" role="img" aria-hidden>
+    <figure className={cn("relative mx-auto w-full max-w-[17rem]", className)} aria-label={label}>
+      <svg viewBox={`0 0 320 ${VIEW_H}`} className="h-auto w-full" role="img" aria-hidden>
+        <defs>
+          <linearGradient id="emfi-decade-flow" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="var(--flow-from)" />
+            <stop offset="48%" stopColor="var(--flow-mid)" />
+            <stop offset="100%" stopColor="var(--flow-to)" />
+          </linearGradient>
+        </defs>
         <path
           d={ARC}
           fill="none"
-          stroke="var(--action-primary)"
-          strokeOpacity={0.18}
+          stroke="var(--color-blue-100)"
+          strokeOpacity={0.55}
           strokeWidth={2.5}
           strokeLinecap="round"
         />
@@ -48,7 +51,7 @@ export function DecadeHeroVisual() {
           <path
             d={ARC}
             fill="none"
-            stroke="var(--action-primary)"
+            stroke="url(#emfi-decade-flow)"
             strokeWidth={2.5}
             strokeLinecap="round"
           />
@@ -56,7 +59,7 @@ export function DecadeHeroVisual() {
           <motion.path
             d={ARC}
             fill="none"
-            stroke="var(--action-primary)"
+            stroke="url(#emfi-decade-flow)"
             strokeWidth={2.5}
             strokeLinecap="round"
             initial={{ pathLength: 0 }}
@@ -71,25 +74,6 @@ export function DecadeHeroVisual() {
           />
         )}
 
-        {Array.from({ length: 11 }, (_, i) => {
-          const angle = -90 + i * 18;
-          const t = tick(angle, RING - 7, RING + 7);
-          const major = i === 0 || i === 10;
-          return (
-            <line
-              key={i}
-              x1={t.x1}
-              y1={t.y1}
-              x2={t.x2}
-              y2={t.y2}
-              stroke="var(--action-primary)"
-              strokeOpacity={major ? 0.9 : 0.32}
-              strokeWidth={major ? 2 : 1.25}
-              strokeLinecap="round"
-            />
-          );
-        })}
-
         <circle cx={CX} cy={CY - RING} r={3.5} fill="var(--action-primary)" />
         <circle cx={CX} cy={CY + RING} r={3.5} fill="var(--action-primary)" />
 
@@ -99,9 +83,9 @@ export function DecadeHeroVisual() {
               cx={CX}
               cy={CY + RING}
               r={8}
-              fill="color-mix(in srgb, var(--action-primary) 22%, transparent)"
+              fill="color-mix(in srgb, var(--flow-to) 22%, transparent)"
             />
-            <circle cx={CX} cy={CY + RING} r={3.5} fill="var(--action-primary)" />
+            <circle cx={CX} cy={CY + RING} r={3.5} fill="url(#emfi-decade-flow)" />
           </g>
         ) : (
           <motion.g
@@ -120,9 +104,9 @@ export function DecadeHeroVisual() {
               cx={CX + RING}
               cy={CY}
               r={8}
-              fill="color-mix(in srgb, var(--action-primary) 22%, transparent)"
+              fill="color-mix(in srgb, var(--flow-to) 22%, transparent)"
             />
-            <circle cx={CX + RING} cy={CY} r={3.5} fill="var(--action-primary)" />
+            <circle cx={CX + RING} cy={CY} r={3.5} fill="url(#emfi-decade-flow)" />
           </motion.g>
         )}
 
@@ -134,8 +118,9 @@ export function DecadeHeroVisual() {
 
         <text
           x={CX}
-          y={42}
+          y={CY - RING - YEAR_GAP}
           textAnchor="middle"
+          dominantBaseline="middle"
           fill="var(--action-primary)"
           fontSize={15}
           fontWeight={700}
@@ -146,8 +131,9 @@ export function DecadeHeroVisual() {
         </text>
         <text
           x={CX}
-          y={314}
+          y={CY + RING + YEAR_GAP}
           textAnchor="middle"
+          dominantBaseline="middle"
           fill="var(--action-primary)"
           fontSize={15}
           fontWeight={700}
@@ -157,9 +143,11 @@ export function DecadeHeroVisual() {
           {to}
         </text>
       </svg>
-      <p className="mx-auto mt-2 w-fit rounded-lg bg-inverse px-4 py-2.5 text-center font-mono text-[12px] font-extrabold uppercase tracking-[0.16em] text-ink-inverse">
-        {caption}
-      </p>
+      {showCaption ? (
+        <p className="mx-auto mt-2 w-fit rounded-lg bg-inverse px-4 py-2.5 text-center font-mono text-[12px] font-extrabold uppercase tracking-[0.16em] text-ink-inverse">
+          {caption}
+        </p>
+      ) : null}
     </figure>
   );
 }

@@ -19,12 +19,14 @@ export function HeroRotatingText({
   typeMs = 55,
   deleteMs = 35,
   holdMs = 2200,
+  onWordIndexChange,
 }: {
   words: readonly string[];
   className?: string;
   typeMs?: number;
   deleteMs?: number;
   holdMs?: number;
+  onWordIndexChange?: (index: number) => void;
 }) {
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
@@ -32,6 +34,10 @@ export function HeroRotatingText({
   const [chars, setChars] = useState(0);
   const word = words[index] ?? words[0] ?? "";
   const longest = words.reduce((a, b) => (a.length >= b.length ? a : b), "");
+
+  useEffect(() => {
+    onWordIndexChange?.(index);
+  }, [index, onWordIndexChange]);
 
   useEffect(() => {
     if (words.length === 0) return;
@@ -91,11 +97,13 @@ export function HeroTypedLastWord({
   words,
   prefix,
   className,
+  onWordIndexChange,
 }: {
   text?: string;
   words?: readonly string[];
   prefix?: string;
   className?: string;
+  onWordIndexChange?: (index: number) => void;
 }) {
   const split = text ? splitLastWord(text) : { rest: "", lastWord: "" };
   const rest = prefix ?? split.rest;
@@ -111,7 +119,7 @@ export function HeroTypedLastWord({
           <br />
         </>
       ) : null}
-      <HeroRotatingText words={animated} />
+      <HeroRotatingText words={animated} onWordIndexChange={onWordIndexChange} />
     </span>
   );
 }

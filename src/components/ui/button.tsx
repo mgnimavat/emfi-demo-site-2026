@@ -14,7 +14,8 @@ type ButtonProps = {
 };
 
 const variants = {
-  primary: "bg-brand text-ink-inverse hover:bg-brand-hover",
+  primary:
+    "bg-brand text-ink-inverse hover:bg-[var(--color-blue-100)] hover:text-ink",
   outline: "border border-line bg-page text-ink hover:bg-subtle",
   secondary:
     "border border-brand bg-page text-brand hover:border-brand hover:bg-brand hover:text-ink-inverse",
