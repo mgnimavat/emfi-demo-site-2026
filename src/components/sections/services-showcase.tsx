@@ -57,8 +57,8 @@ export function ServicesShowcase() {
       className="scroll-mt-[6.5rem] overflow-hidden bg-page py-16 md:py-24"
       aria-labelledby="services-heading"
     >
-      <div className="flex flex-col gap-12 md:flex-row md:items-start md:gap-24 lg:gap-36">
-        <div className="w-full shrink-0 px-6 md:w-[min(48%,32rem)] md:pl-[max(2.5rem,calc((100vw-1440px)/2+2.5rem))] md:pr-10">
+      <div className="flex flex-col gap-12 md:flex-row md:items-start md:gap-16 lg:gap-24">
+        <div className="w-full shrink-0 px-6 md:ml-[max(2.5rem,calc((100vw-1440px)/2+2.5rem))] md:w-[min(46%,36rem)] md:pl-0 md:pr-8 lg:pr-12">
           <Eyebrow className="mb-5 text-[11px] tracking-[0.22em]">{home.servicesEyebrow}</Eyebrow>
           <h2
             id="services-heading"
