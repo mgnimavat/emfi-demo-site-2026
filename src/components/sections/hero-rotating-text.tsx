@@ -74,7 +74,7 @@ export function HeroRotatingText({
     return () => window.clearTimeout(id);
   }, [chars, deleteMs, holdMs, phase, reduced, typeMs, word.length, words.length]);
 
-  const visible = reduced ? word : word.slice(0, chars);
+  const visible = word.slice(0, chars);
 
   return (
     <span className={cn("relative inline-block", className)} aria-hidden>

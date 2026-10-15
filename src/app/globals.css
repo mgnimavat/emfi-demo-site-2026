@@ -387,6 +387,11 @@
   container-type: inline-size;
 }
 
+.emfi-hero-mark-lg {
+  top: 0;
+  height: 100%;
+}
+
 .emfi-hero-mark-base {
   display: block;
   width: 100%;
@@ -897,7 +902,9 @@ h6 {
   font-family: Inter, "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
 }
 
-.home-2 {
+.home-2,
+.home-3,
+.home-4 {
   --font-heading: Oswald, sans-serif;
 }
 
@@ -907,7 +914,21 @@ h6 {
 .home-2 h4,
 .home-2 h5,
 .home-2 h6,
-.home-2 .font-heading {
+.home-2 .font-heading,
+.home-3 h1,
+.home-3 h2,
+.home-3 h3,
+.home-3 h4,
+.home-3 h5,
+.home-3 h6,
+.home-3 .font-heading,
+.home-4 h1,
+.home-4 h2,
+.home-4 h3,
+.home-4 h4,
+.home-4 h5,
+.home-4 h6,
+.home-4 .font-heading {
   font-family: var(--font-oswald), Oswald, sans-serif;
 }
 

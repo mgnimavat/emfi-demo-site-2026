@@ -1,4 +1,5 @@
 import { BrandSign } from "@/components/brand/logo";
+import { cn } from "@/lib/cn";
 
 function OrbitSign({
   orbit,
@@ -58,9 +59,9 @@ export function HeroAtmosphere({
   );
 }
 
-export function HeroBrandMark() {
+export function HeroBrandMark({ className }: { className?: string }) {
   return (
-    <div className="emfi-hero-mark" aria-hidden>
+    <div className={cn("emfi-hero-mark", className)} aria-hidden>
       <BrandSign className="emfi-hero-mark-base h-auto w-full" />
       <span className="emfi-hero-mark-lit">
         <BrandSign className="h-auto w-full" />
