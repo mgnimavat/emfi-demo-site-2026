@@ -5,10 +5,8 @@ export const servicePages = [
 ] as const;
 
 export const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/services", children: servicePages },
-  { label: "Why EMFI", href: "/why-emfi" },
-  { label: "Trust", href: "/trust" },
+  { label: "Services", href: "/services" },
+  { label: "Why EMFI", href: "/trust" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;
