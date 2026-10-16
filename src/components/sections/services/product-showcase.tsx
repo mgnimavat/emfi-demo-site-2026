@@ -2,7 +2,7 @@
 
 import { useRef, useState, type KeyboardEvent } from "react";
 import { ChartNoAxesCombined, FileText, Layers3 } from "lucide-react";
-import { services } from "@/content/services-new";
+import { services } from "@/content/services";
 import { ProductAnimation } from "./product-animation";
 import { BrandSign } from "@/components/brand/logo";
 
