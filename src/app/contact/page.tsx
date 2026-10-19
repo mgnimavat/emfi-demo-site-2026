@@ -46,15 +46,12 @@ export default function ContactPage() {
           <p className={styles.sectionBody}>{about.geographyBody}</p>
           <div className={styles.grid3}>{contact.locations.map((location, i) => <FadeIn key={location.city} delay={i * 0.08}><article id={`contact-${location.city.toLowerCase().replaceAll(" ", "-")}`} className={`${styles.card} ${styles.locationCard}`}>
             <span className={styles.label}>{about.geography[i].role}</span>
-            <h3>{about.geography[i].city}</h3><p>{about.geography[i].note}</p>
-            {location.city === "Dubai" ? <p className="mt-3">{location.entity}</p> : null}
-            <p className="mt-3">{location.note}</p>
+            <h3>{about.geography[i].city}</h3>
+            {location.kind === "enquiry" ? <p className="mt-3">{location.note}</p> : null}
             {location.lines.length ? <p className={styles.locationLines}>{location.lines.map((line) => <span key={line}>{line}</span>)}</p> : null}
             <div className={styles.registerLinks}><a href={`mailto:${location.email}`}>{location.email}</a></div>
           </article></FadeIn>)}</div>
-          <p className={styles.contactNote}>{about.entitiesNote}{" "}<Link href="/why-emfi#regulated-entities" className={styles.textLink}>{about.entitiesCta}</Link>.</p>
-          <p className={styles.contactNote}>{contact.coverage}</p>
-        </div>
+          <p className={styles.contactNote}>{about.entitiesNote}{" "}<Link href="/why-emfi#regulated-entities" className={styles.textLink}>{about.entitiesCta}</Link>.</p>        </div>
       </section></CurvedBand>
     </div>
   );
