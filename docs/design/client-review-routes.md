@@ -38,4 +38,4 @@ The smoke check verifies the six old and six current routes, representative orig
 
 ## Archive reference
 
-`docs/reference/archive-10/` contains the clean original artifact input for `scripts/import-archive-home.mjs`; its generated snapshot is `public/archive-home/index.html`. These are historical references, separate from `/home-old` and the native React homepage. The optional importer works from committed inputs. The original supplied ZIP and extracted top-level `Archive 10/` folder are left untouched and excluded from the commit, including their Mac metadata.
+`docs/reference/archive-10/` contains the clean original artifact input for `scripts/import-archive-home.mjs`; its generated snapshot is `public/archive-home/index.html`. These are historical references, separate from `/home-old` and the native React homepage. The optional importer works from committed inputs. The redundant top-level `Archive 10/` folder and `Archive 10.zip`, including their Mac metadata, have been removed.

@@ -21,7 +21,7 @@
 .pillar::after { content: ""; position: absolute; top: -24px; left: 50%; width: 1px; height: 24px; background: #b8c5d5; }
 .pillarTitle { display: block; font-size: clamp(14px,4.6cqw,20px); font-weight: 800; line-height: 1.2; letter-spacing: -.03em; }
 .pillarLabel { display: block; min-height: 2.8em; margin-top: 8px; color: #585c65; font-size: clamp(11px,2.5cqw,12px); font-weight: 500; line-height: 1.4; }
-.pillarItems { display: grid; align-content: start; gap: 12px; margin-top: 16px; padding-top: 20px; border-top: 1px solid rgb(7 25 50 / 12%); color: #24344b; font-size: clamp(12px,3.2cqw,15px); font-weight: 500; line-height: 1.45; }
+.pillarItems { display: grid; align-content: start; gap: 14px; margin-top: 16px; padding-top: 20px; border-top: 1px solid rgb(7 25 50 / 12%); color: #071832; font-size: clamp(14px,4.2cqw,20px); font-weight: 600; line-height: 1.45; letter-spacing: -.015em; }
 .pillar:hover { border-color: #8098cc; box-shadow: 0 10px 24px rgb(7 25 50 / 6%); }
 .heroLayout[data-motion-active="false"] .pillar::before { animation-play-state: paused; }
 @keyframes evidence-pulse { 0%,15%,65%,100% { background: #8098cc; box-shadow: 0 0 0 4px #f7f9fc; } 30%,45% { background: #071932; box-shadow: 0 0 0 5px #dce8f8; } }
