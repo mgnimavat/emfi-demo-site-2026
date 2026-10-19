@@ -1,49 +1,77 @@
-.card { display: flex; flex-direction: column; min-width: 0; height: 100%; padding: 28px; border: 1px solid #e4eaf2; border-radius: 20px; background: #fff; transition: border-color .25s ease,box-shadow .25s ease; }
+.card {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto;
+  column-gap: 18px;
+  min-width: 0;
+  height: 100%;
+  padding: 28px;
+  border: 1px solid #e4eaf2;
+  border-radius: 20px;
+  background: #fff;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
 .card:hover { border-color: #b8c5d5; box-shadow: 0 12px 28px rgb(7 25 50 / 4%); }
-.header { display: flex; align-items: center; gap: 18px; }
-.portrait { display: grid; place-items: center; flex: none; width: 72px; height: 72px; overflow: hidden; border-radius: 16px; background: #dce8f8; color: #071932; }
-.photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-.initials { font-size: 25px; font-weight: 600; line-height: 1; letter-spacing: -.05em; }
-.identity { min-width: 0; }
-.identity h3 { margin: 0; color: #071832; font-family: inherit; font-size: 22px; font-weight: 800; line-height: 1.18; letter-spacing: -.025em; text-wrap: balance; }
-.identity p { margin: 8px 0 0; color: #585c65; font-size: 14px; font-weight: 500; line-height: 1.5; text-wrap: pretty; }
-.description { margin: 24px 0 0; color: #24344b; font-size: 16px; font-weight: 400; line-height: 1.7; text-wrap: pretty; }
-.board { margin-top: auto; padding-top: 24px; }
+.portrait {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: center;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #dce8f8;
+}
+.photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
+.body, .details, .detailsInner { display: contents; }
+.name { grid-column: 2; grid-row: 1; align-self: end; margin: 0; color: #071832; font-family: inherit; font-size: 22px; font-weight: 800; line-height: 1.18; letter-spacing: -.025em; text-wrap: balance; }
+.role { grid-column: 2; grid-row: 2; align-self: start; margin: 6px 0 0; color: #585c65; font-size: 14px; font-weight: 500; line-height: 1.5; text-wrap: pretty; }
+.description { grid-column: 1 / -1; grid-row: 3; margin: 24px 0 0; color: #24344b; font-size: 16px; font-weight: 400; line-height: 1.7; text-wrap: pretty; }
+.board { grid-column: 1 / -1; grid-row: 4; margin-top: auto; padding-top: 24px; }
 .board::before { content: ""; display: block; height: 1px; margin-bottom: 20px; background: #e4eaf2; }
 .board span { display: inline-flex; align-items: center; min-height: 28px; padding: 5px 10px; border-radius: 999px; background: #f4f7fb; color: #071932; font-size: 12px; font-weight: 600; line-height: 1.4; }
-@media (max-width: 599px) { .card { padding: 24px; } .header { gap: 16px; } .portrait { width: 64px; height: 64px; border-radius: 14px; } .identity h3 { font-size: 21px; } .description { margin-top: 22px; } }
+@media (max-width: 599px) {
+  .card { grid-template-columns: 64px minmax(0, 1fr); column-gap: 16px; padding: 24px; }
+  .portrait { width: 64px; height: 64px; border-radius: 14px; }
+  .name { font-size: 21px; }
+  .description { margin-top: 22px; }
+}
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
 
-/* A portrait-led cover becomes the compact biography on hover or keyboard focus. */
+/* Full portrait at rest; on hover the name rises and the details open beneath it. */
 @media (hover: hover) and (pointer: fine) {
-  .card { position: relative; isolation: isolate; width: 100%; height: auto; aspect-ratio: 1; min-height: 0; padding: 24px; }
-  .card::before { content: ""; position: absolute; z-index: 1; inset: auto 0 0; height: 110px; border-radius: 0 0 19px 19px; background: linear-gradient(transparent, rgb(255 255 255 / 95%) 55%, #fff); pointer-events: none; transition: opacity .3s ease; }
-  .card:is(:hover,:focus-visible)::before { opacity: 0; }
-  .header { display: grid; grid-template-columns: 72px minmax(0, 1fr); min-height: 72px; }
-  .portrait { position: absolute; top: 0; left: 0; width: 100%; height: 100%; aspect-ratio: 1; border-radius: 19px; background: #dce8f8; transition: width .5s cubic-bezier(.22,1,.36,1), height .5s cubic-bezier(.22,1,.36,1), top .5s cubic-bezier(.22,1,.36,1), left .5s cubic-bezier(.22,1,.36,1), border-radius .5s ease; }
-  .photo { position: absolute; inset: 0; min-width: 0; min-height: 0; object-fit: cover; object-position: center; }
-  .initials { font-size: 56px; transition: font-size .5s cubic-bezier(.22,1,.36,1); }
-  .identity { position: absolute; z-index: 2; top: calc(100% - 64px); left: 24px; right: 24px; transition: top .5s cubic-bezier(.22,1,.36,1), left .5s cubic-bezier(.22,1,.36,1); }
-  .identity h3 { font-size: 21px; }
-  .identity p { position: absolute; top: 100%; left: 0; right: 0; }
-  .description, .board { position: relative; z-index: 2; }
-  .identity p, .description, .board { opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .25s ease, transform .4s ease, visibility .25s; }
-  .card:is(:hover,:focus-visible) .portrait { top: 24px; left: 24px; width: 72px; height: 72px; border-radius: 12px; }
-  .card:is(:hover,:focus-visible) .initials { font-size: 25px; }
-  .card:is(:hover,:focus-visible) .identity { top: 30px; left: 114px; }
-  .card:is(:hover,:focus-visible) .identity p,
-  .card:is(:hover,:focus-visible) .description,
-  .card:is(:hover,:focus-visible) .board { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: .12s; }
+  .card { position: relative; isolation: isolate; display: block; width: 100%; height: auto; aspect-ratio: 1; padding: 0; overflow: hidden; }
+  .card::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: auto 0 0;
+    height: 110px;
+    background: linear-gradient(transparent, rgb(255 255 255 / 95%) 55%, #fff);
+    pointer-events: none;
+    transition: height .5s cubic-bezier(.22, 1, .36, 1);
+  }
+  .card:is(:hover, :focus)::before { height: 78%; background: linear-gradient(transparent, rgb(255 255 255 / 94%) 38%, #fff 60%); }
+  .portrait { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 19px; }
+  .photo { transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+  .card:is(:hover, :focus) .photo { transform: scale(1.03); }
+  .body { position: absolute; z-index: 2; inset: auto 0 0; display: flex; flex-direction: column; padding: 22px 24px; }
+  .name { align-self: stretch; font-size: 21px; text-align: left; }
+  .details { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.22, 1, .36, 1); }
+  .detailsInner { display: block; min-height: 0; overflow: hidden; opacity: 0; transform: translateY(8px); transition: opacity .3s ease, transform .45s ease; }
+  .card:is(:hover, :focus) .details { grid-template-rows: 1fr; }
+  .card:is(:hover, :focus) .detailsInner { opacity: 1; transform: translateY(0); transition-delay: .08s; }
+  .role { margin-top: 6px; }
+  .description { margin-top: 12px; line-height: 1.6; }
+  .board { padding-top: 16px; }
+  .board::before { margin-bottom: 14px; }
 }
 @media (hover: hover) and (pointer: fine) and (max-width: 599px) {
-  .card { min-height: 0; }
-  .header { min-height: 96px; }
-  .description { font-size: 14px; line-height: 1.5; margin-top: 18px; }
+  .body { padding: 18px; }
+  .description { font-size: 14px; line-height: 1.5; }
   .board { padding-top: 12px; }
   .board::before { margin-bottom: 10px; }
-  .card:is(:hover,:focus-visible) .portrait { width: 64px; height: 64px; }
-  .card:is(:hover,:focus-visible) .identity { left: 104px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .card::before, .portrait, .initials, .identity, .identity p, .description, .board { transition: none; }
+  .card::before, .photo, .details, .detailsInner { transition: none; }
 }

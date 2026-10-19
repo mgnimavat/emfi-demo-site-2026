@@ -1,4 +1,24 @@
 {
+  "tagline": "Institutional infrastructure. Without the institutional layers.",
+  "entities": "EMFI Securities Limited · EMFI Capital Limited · EMFI Capital (DIFC) Limited",
+  "linkGroups": [
+    {
+      "heading": "Services",
+      "links": [
+        { "label": "Research & Execution", "href": "/services/research-execution" },
+        { "label": "Settlement & Custody", "href": "/services/settlement-custody" },
+        { "label": "Wealth & Asset Management", "href": "/services/wealth-asset-management" }
+      ]
+    },
+    {
+      "heading": "Company",
+      "links": [
+        { "label": "Why EMFI", "href": "/why-emfi" },
+        { "label": "About", "href": "/about" },
+        { "label": "Contact", "href": "/contact" }
+      ]
+    }
+  ],
   "offices": [
     {
       "city": "London",
@@ -16,5 +36,6 @@
       "email": "contact@emfi.uk"
     }
   ],
-  "legal": "© 2026 EMFI. Intended for Professional Clients and Eligible Counterparties only. Not suitable for Retail Clients or US Persons."
+  "legal": "© 2026 EMFI. All rights reserved. Intended for Professional Clients and Eligible Counterparties only. Not suitable for Retail Clients or US Persons.",
+  "legalDetail": "UK entities authorised and regulated by the Financial Conduct Authority (FCA). EMFI Capital (DIFC) Limited regulated by the Dubai Financial Services Authority (DFSA), Firm Reference F011663 · Company Number 8775. Exact legal names and regulatory statuses are draft pending verification against public registers."
 }

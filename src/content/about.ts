@@ -144,16 +144,8 @@ export const about = {
         "Ensures instructions move through matching, settlement, exceptions and reporting.",
     },
     {
-      name: "Bhavin Umaraniya",
-      role: "Technology",
-      photo: "/people/bhavin-umaraniya-6.jpg",
-      description:
-        "Maintains the systems, access and infrastructure that support the operating relationship.",
-    },
-    {
       name: "Kishan Lashkari",
       role: "Software Development",
-      photo: "/people/kishan-lashkari-6.jpg",
       description:
         "Builds the technology that connects EMFI’s workflows, systems and client experience.",
     },
