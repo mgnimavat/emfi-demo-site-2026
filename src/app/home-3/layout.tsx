@@ -1,8 +1,9 @@
-import { Oswald } from "next/font/google";
+import localFont from "next/font/local";
 
-const oswald = Oswald({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+const oswald = localFont({
+  src: "../../assets/fonts/oswald-latin-variable.woff2",
+  weight: "200 700",
+  style: "normal",
   display: "swap",
   variable: "--font-oswald",
 });

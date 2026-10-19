@@ -34,8 +34,8 @@
   --color-card: var(--card-bg);
   --color-footer: var(--footer-bg);
 
-  --font-sans: Inter, "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: Inter, "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
 
   --radius-md: var(--radius-control);
@@ -891,7 +891,7 @@ body {
 }
 
 body {
-  font-family: Inter, "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -901,13 +901,13 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Inter, "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 .home-2,
 .home-3,
 .home-4 {
-  --font-heading: Oswald, sans-serif;
+  --font-heading: var(--font-oswald), Oswald, sans-serif;
 }
 
 .home-2 h1,
