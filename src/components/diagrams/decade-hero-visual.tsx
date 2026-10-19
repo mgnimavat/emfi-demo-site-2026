@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useSyncExternalStore } from "react";
 import { brandSignPath } from "@/components/brand/logo";
 import { about } from "@/content/about";
 import { cn } from "@/lib/cn";
@@ -15,6 +16,7 @@ const MARK_SIZE = 72;
 const MARK_VIEWBOX = 50;
 const MARK_SCALE = MARK_SIZE / MARK_VIEWBOX;
 const ease = [0.22, 1, 0.36, 1] as const;
+const subscribeToHydration = () => () => {};
 
 const ARC = `M ${CX} ${CY - RING} A ${RING} ${RING} 0 0 1 ${CX} ${CY + RING}`;
 
@@ -25,7 +27,9 @@ export function DecadeHeroVisual({
   showCaption?: boolean;
   className?: string;
 }) {
-  const reduceMotion = useReducedMotion();
+  const reducedPreference = useReducedMotion();
+  const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
+  const reduceMotion = hydrated && reducedPreference;
   const { from, to, mark, caption } = about.heroVisual;
   const label = `${from} to ${to}. ${mark}. ${caption}.`;
 

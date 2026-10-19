@@ -1,0 +1,20 @@
+{
+  "offices": [
+    {
+      "city": "London",
+      "lines": ["25-26 Dering Street, Third Floor", "Mayfair, London W1S 1AW"],
+      "email": "contact@emfi.uk"
+    },
+    {
+      "city": "Dubai",
+      "lines": ["7A-10, Level POD, Park Towers,", "Dubai International Financial Centre, Dubai, United Arab Emirates."],
+      "email": "contact@emfi.ae"
+    },
+    {
+      "city": "Cayman Islands",
+      "lines": ["EMFI Fund enquiries"],
+      "email": "contact@emfi.uk"
+    }
+  ],
+  "legal": "© 2026 EMFI. Intended for Professional Clients and Eligible Counterparties only. Not suitable for Retail Clients or US Persons."
+}

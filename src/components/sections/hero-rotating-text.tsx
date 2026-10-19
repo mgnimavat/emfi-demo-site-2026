@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
 
 type Phase = "typing" | "holding" | "deleting";
+const subscribeToHydration = () => () => {};
 
 export function splitLastWord(text: string) {
   const trimmed = text.trimEnd();
@@ -28,7 +29,9 @@ export function HeroRotatingText({
   holdMs?: number;
   onWordIndexChange?: (index: number) => void;
 }) {
-  const reduced = useReducedMotion();
+  const reducedPreference = useReducedMotion();
+  const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
+  const reduced = hydrated && reducedPreference;
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("typing");
   const [chars, setChars] = useState(0);
@@ -42,11 +45,7 @@ export function HeroRotatingText({
   useEffect(() => {
     if (words.length === 0) return;
 
-    if (reduced) {
-      setChars(word.length);
-      setPhase("holding");
-      return;
-    }
+    if (reduced) return;
 
     if (phase === "typing") {
       if (chars >= word.length) {
@@ -74,7 +73,7 @@ export function HeroRotatingText({
     return () => window.clearTimeout(id);
   }, [chars, deleteMs, holdMs, phase, reduced, typeMs, word.length, words.length]);
 
-  const visible = word.slice(0, chars);
+  const visible = reduced ? word : word.slice(0, chars);
 
   return (
     <span className={cn("relative inline-block", className)} aria-hidden>

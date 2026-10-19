@@ -226,7 +226,7 @@ export default function Home1Page() {
             ))}
           </div>
           <div className="mt-8">
-            <Button href="/trust">{home.trustCta}</Button>
+            <Button href="/why-emfi">{home.trustCta}</Button>
           </div>
         </Container>
       </section>

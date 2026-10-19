@@ -38,7 +38,7 @@ export default function SettlementCustodyPage() {
             </p>
             <p className="mt-4 max-w-3xl text-sm leading-6 text-ink-muted">
               {settlement.entity}{" "}
-              <Link href="/trust" className="font-semibold text-brand hover:underline">
+              <Link href="/why-emfi" className="font-semibold text-brand hover:underline">
                 {settlement.entityCta}
               </Link>
               .

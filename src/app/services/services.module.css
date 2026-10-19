@@ -1,0 +1,125 @@
+/* Scoped adaptation of docs/design/archive-10-design-system.md. */
+.page {
+  --bg-page: #fff;
+  --bg-subtle: #f4f7fb;
+  --bg-soft: #dce8f8;
+  --bg-inverse: #071932;
+  --text-primary: #071832;
+  --text-secondary: #24344b;
+  --text-muted: #585c65;
+  --text-inverse-muted: #c9d4e5;
+  --border-default: #e4eaf2;
+  --border-strong: #b8c5d5;
+  --action-primary: #071932;
+  --action-hover: #001a34;
+  --action-focus: #8098cc;
+  --radius-control: 12px;
+  --radius-card: 20px;
+  --radius-surface: 20px;
+  color: var(--text-primary);
+  font-family: var(--font-inter), Inter, Arial, sans-serif;
+}
+.container { width: calc(100% - 64px); max-width: 1320px; padding-inline: 0; }
+.hero {
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 77.36px);
+  min-height: calc(100dvh - 77.36px);
+  padding-block: clamp(64px, 7vw, 104px);
+  background: radial-gradient(70% 62% at 0% 0%, #c6d8ecc7, #dce8f861 42%, transparent 74%), radial-gradient(64% 58% at 100% 100%, #bad0eab8, #d6e4f452 44%, transparent 76%), #f7f9fc;
+}
+.heroGrid { display: grid; align-items: center; gap: 28px; }
+.heroGrid > * { min-width: 0; }
+.heroTitle { font-family: var(--font-inter), Inter, Arial, sans-serif; font-size: clamp(70px, 10vw, 132px); font-weight: 800; line-height: .94; letter-spacing: -.045em; -webkit-text-stroke: .006em currentColor; hyphens: manual; }
+.heroTitle span { display: block; }
+.heroTitle span + span { margin-top: 0; }
+.heroSubtext { margin-top: 26px; font-size: clamp(36px, 4.2vw, 58px); font-weight: 300; line-height: 1.25; letter-spacing: -.03em; }
+.typeLine { white-space: nowrap; }
+.typeWord { position: relative; display: inline-grid; }
+.typeReserve { grid-area: 1 / 1; visibility: hidden; padding-right: 5px; }
+.typeLetters { position: absolute; left: 0; top: 0; }
+.caret { display: inline-block; width: 2px; height: .85em; margin-left: 2px; vertical-align: baseline; transform: translateY(.1em); background: currentColor; animation: services-caret 1.05s steps(1) infinite; }
+@keyframes services-caret { 0%, 45% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.serviceNav { position: relative; isolation: isolate; container-type: inline-size; max-width: 520px; margin-inline: auto; padding: 24px; border: 1px solid #e4eaf2; border-radius: 24px; background: #fff; box-shadow: 0 16px 36px rgb(0 26 52 / 8%); }
+.connectionRoot { position: relative; display: flex; align-items: center; justify-content: flex-start; height: 64px; margin-left: 28px; padding-inline: 17px; }
+.connectionRoot img { display: block; width: 120px; height: auto; }
+.connectionRoot::before { content: ""; position: absolute; left: -18px; top: calc(50% - 1px); width: 18px; height: 2px; background: #b8c5d5; }
+.connectionRoot::after { content: ""; position: absolute; left: -22px; top: calc(50% - 4px); width: 8px; height: 8px; border-radius: 50%; background: #071932; box-shadow: 0 0 0 4px #fff; }
+.navLinks { position: relative; display: grid; gap: 16px; margin-top: 20px; }
+.navLinks::before { content: ""; position: absolute; left: 9px; top: -52px; bottom: 54px; width: 2px; background: #b8c5d5; }
+.navLink { position: relative; display: flex; align-items: center; min-width: 0; height: 108px; margin-left: 28px; padding: 18px 16px; border: 1px solid #e4eaf2; border-radius: 16px; background: #f4f7fb; transition: background .25s,border-color .25s; }
+.navLink:nth-child(2) { background: #dce8f8; border-color: #dce8f8; }
+.navLink::before { content: ""; position: absolute; left: -18px; top: calc(50% - 1px); width: 18px; height: 2px; background: #b8c5d5; }
+.navLink::after { content: ""; position: absolute; left: -22px; top: calc(50% - 4px); width: 8px; height: 8px; border-radius: 50%; background: #8098cc; box-shadow: 0 0 0 4px #fff; transition: background .25s; }
+.navLink:is(:hover,:focus-visible) { background: #dce8f8; border-color: #8098cc; }
+.navLink:is(:hover,:focus-visible)::after { background: #071932; }
+.navCopy { min-width: 0; flex: 1; }
+.navTitle { display: block; font-size: clamp(13px,calc(7cqw - 4px),21px); font-weight: 700; line-height: 1.2; letter-spacing: -.025em; white-space: nowrap; }
+.navSlogan { display: block; margin-top: 8px; font-size: 14px; font-weight: 400; line-height: 1.5; color: #24344b; text-wrap: pretty; }
+.capabilities { padding-block: clamp(64px, 7vw, 104px); background: #fff; }
+.sectionTitle { max-width: 20ch; font-size: clamp(38px, 4.5vw, 60px); font-weight: 800; line-height: 1.1; letter-spacing: -.04em; }
+.cardList { display: grid; gap: 24px; margin-top: clamp(40px, 4.5vw, 60px); }
+.serviceCard { position: relative; isolation: isolate; overflow: hidden; padding: 40px 40px 44px; border-radius: 20px; background: #dce8f8; scroll-margin-top: 100px; }
+.cardList > :nth-child(2) .serviceCard { background: #f4f7fb; }
+.cardMark { position: absolute; z-index: -1; pointer-events: none; right: -40px; bottom: -64px; width: 280px; height: 280px; color: #8098cc; opacity: .1; }
+.cardIntro { margin-bottom: 24px; }
+.cardIntro h3 { font-size: clamp(24px, 2vw, 28px); font-weight: 800; line-height: 1.18; letter-spacing: -.03em; }
+.cardIntro p { margin-top: 12px; white-space: pre-line; font-size: 17px; font-style: italic; font-weight: 500; line-height: 1.6; color: var(--text-secondary); }
+.cardBody { min-width: 0; }
+.description { max-width: 72ch; font-size: 17px; font-weight: 500; line-height: 1.6; }
+.features { display: grid; column-gap: 32px; margin-top: 28px; list-style: none; }
+.features li { padding-block: 18px; border-top: 1px solid rgb(7 24 50 / 12%); font-size: 17px; font-weight: 500; line-height: 1.65; color: var(--text-secondary); }
+.cardAction { margin-top: 20px; }
+.cardAction :global(.emfi-btn-hit) { max-width: 100%; }
+.action { max-width: 100%; min-width: 0; text-align: center; min-height: 48px; padding: 14px 28px; font-size: 13px; font-weight: 700; letter-spacing: .02em; }
+.action:hover { color: #fff; background: #001a34; }
+.evidence { padding-block: clamp(72px, 8vw, 104px); background: #f4f7fb; scroll-margin-top: 88px; }
+.evidenceIntro { display: grid; align-items: end; gap: 24px; margin-bottom: 40px; }
+.evidenceIntro > p { max-width: 62ch; font-size: 17px; font-weight: 500; line-height: 1.65; color: var(--text-secondary); }
+.page :focus-visible { outline: 3px solid #8098cc; outline-offset: 5px; }
+@media (min-width: 640px) { .features { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) {
+  .cardIntro { display: flex; align-items: baseline; justify-content: space-between; gap: 40px; }
+  .cardIntro p { margin-top: 0; white-space: normal; text-align: right; }
+  .evidenceIntro { grid-template-columns: .9fr 1.1fr; gap: 64px; }
+}
+@media (max-width: 599px) {
+  .container { width: calc(100% - 40px); }
+  .hero { padding-block: 56px; }
+  .heroTitle { font-size: clamp(60px, 16.5vw, 80px); }
+  .heroSubtext { font-size: 36px; }
+  .serviceCard { padding: 28px; }
+  .action { padding-inline: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .navLink { transition: none; } .caret { animation: none; display: none; } }
+
+@media (min-width: 600px) and (max-width: 899px) {
+  .heroTitle { font-size: clamp(82px, 10vw, 96px); }
+}
+@media (min-width: 900px) {
+  .heroGrid { grid-template-columns: minmax(0, 1fr) 400px; gap: clamp(40px, 5vw, 80px); }
+}
+@media (min-width: 900px) and (max-width: 1199px) {
+  .heroGrid { grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; }
+}
+
+.evidence figure { border: 0; border-radius: 20px; }
+.evidence figcaption { background: #fff; }
+
+.contactCta { padding-block: clamp(64px, 8vw, 104px); background: radial-gradient(ellipse at 50% 100%, #dce8f8, transparent 75%), #f4f7fb; }
+.ctaInner { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.ctaInner h2 { max-width: 20ch; text-wrap: balance; }
+.ctaInner > p { max-width: 64ch; margin-top: 24px; margin-bottom: 32px; font-size: 17px; font-weight: 500; line-height: 1.65; color: #24344b; text-wrap: pretty; }
+
+.heroActions { margin-top: 32px; }
+.capabilities { scroll-margin-top: 72px; }
+
+@media (max-width: 599px) {
+  .serviceNav { padding: 18px; }
+  .connectionRoot, .navLink { margin-left: 24px; }
+  .connectionRoot::before, .navLink::before { left: -14px; width: 14px; }
+  .connectionRoot::after, .navLink::after { left: -18px; }
+  .connectionRoot { padding-inline: 15px; }
+  .navLink { padding-inline: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .navLink::after { transition: none; } }

@@ -10,6 +10,7 @@ import { PageHero } from "@/components/sections/page-hero";
 export const metadata = {
   title: "Services",
   description: services.body,
+  robots: { index: false, follow: true },
 };
 
 const audienceIcons = [Building2, Network, WalletCards];

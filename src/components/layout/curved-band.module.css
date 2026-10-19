@@ -1,0 +1,4 @@
+.band { background: var(--next-band-background); }
+.band > section { border-radius: 0 0 50% 50% / 0 0 72px 72px; }
+
+.surface > section { background-color: var(--band-background); }

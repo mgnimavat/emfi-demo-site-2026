@@ -9,7 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/services/settlement-custody",
     "/services/wealth-asset-management",
     "/why-emfi",
-    "/trust",
     "/about",
     "/contact",
   ];

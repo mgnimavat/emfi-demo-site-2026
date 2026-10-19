@@ -1,0 +1,5 @@
+.researchWindow { translate: 0 0; transition: translate .4s cubic-bezier(.22,1,.36,1); }
+/* The single card sits in the center of the reserved overlapping-window stage. */
+.researchWindow[data-centered="true"] { translate: 2.631579% 32px; }
+@media (min-width: 640px) { .researchWindow[data-centered="true"] { translate: 21.428571% 40px; } }
+@media (prefers-reduced-motion: reduce) { .researchWindow { transition: none; } }

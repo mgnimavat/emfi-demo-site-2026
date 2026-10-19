@@ -1,120 +1,61 @@
 "use client";
 
+import { CurvedBand } from "@/components/layout/curved-band";
+import Link from "next/link";
+import { about } from "@/content/about";
 import { useState } from "react";
-import { Check, Mail, MapPin, Phone } from "lucide-react";
 import { contact } from "@/content/contact";
-import { Container } from "@/components/layout/container";
-import { Button } from "@/components/ui/button";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import { FadeIn } from "@/components/motion/fade-in";
-import { PageHero } from "@/components/sections/page-hero";
-
-const inputClass =
-  "mt-2 w-full rounded-md border border-line bg-page px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-brand-focus font-sans normal-case";
+import { useResearchEnquiry } from "@/lib/use-research-enquiry";
+import styles from "@/components/sections/archive/theme.module.css";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
-
+  const researchEnquiry = useResearchEnquiry();
   return (
-    <>
-      <PageHero title={contact.headline} body={contact.body} />
-
-      <section className="border-b border-line bg-subtle">
-        <Container className="grid gap-10 py-12 lg:grid-cols-[1.1fr_0.75fr]">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSent(true);
-            }}
-            className="rounded-lg border border-line bg-page p-7 md:p-10"
-          >
-            <Eyebrow>{contact.formEyebrow}</Eyebrow>
-            {sent ? (
-              <div className="mt-6 flex gap-3 border-l-2 border-brand bg-soft p-4 text-sm text-ink">
-                <Check size={17} className="text-brand" />
-                {contact.success}
+    <div className={styles.page}>
+      <CurvedBand nextBackground="#fff"><section className={styles.contact}>
+        <div className={styles.container}>
+          <div className={styles.contactGrid}>
+            <FadeIn className={styles.contactIntro}>
+              <h1>{contact.headline.split("\n").map((line) => <span key={line}>{line}</span>)}</h1>
+              <p>{contact.body}</p>
+              <nav aria-label="Contact locations" className={styles.locationNav}>
+                {contact.locations.map((location) => <a key={location.city} href={`#contact-${location.city.toLowerCase().replaceAll(" ", "-")}`}>{location.city}</a>)}
+              </nav>
+            </FadeIn>
+            <form className={styles.form} onSubmit={(event) => { event.preventDefault(); setSent(true); }}>
+              <h2>{contact.formEyebrow}</h2>
+              {researchEnquiry ? <div className={styles.success}><p className="text-sm">Research context</p><p className="mt-2 font-semibold">{researchEnquiry.record.title}</p></div> : null}
+              {sent ? <div role="status" className={styles.success}>{contact.success}</div> : null}
+              <div className={styles.formFields}>
+                {contact.fields.map((field, i) => <label key={field} className={styles.field}>{field}<input required={i < 4} name={['name', 'company', 'role', 'email', 'phone'][i]} type={field === "Email" ? "email" : i === 4 ? "tel" : "text"} autoComplete={['name', 'organization', 'organization-title', 'email', 'tel'][i]} /></label>)}
+                <label className={styles.field}>{contact.clientType}<select name="clientType" aria-label={contact.clientType}>{contact.clientTypes.map((option) => <option key={option}>{option}</option>)}</select></label>
+                <label className={styles.field}>{contact.serviceInterest}<select name="serviceInterest" aria-label={contact.serviceInterest}>{contact.services.map((option) => <option key={option}>{option}</option>)}</select></label>
               </div>
-            ) : null}
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
-              {contact.fields.map((field, i) => (
-                <label
-                  key={field}
-                  className={`font-mono text-[11px] uppercase tracking-wide text-ink-muted ${
-                    i === 4 ? "md:col-span-2" : ""
-                  }`}
-                >
-                  {field}
-                  <input
-                    required={i < 4}
-                    type={field === "Email" ? "email" : "text"}
-                    className={inputClass}
-                  />
-                </label>
-              ))}
-              <label className="font-mono text-[11px] uppercase tracking-wide text-ink-muted">
-                {contact.clientType}
-                <select className={inputClass}>
-                  {contact.clientTypes.map((option) => (
-                    <option key={option}>{option}</option>
-                  ))}
-                </select>
-              </label>
-              <label className="font-mono text-[11px] uppercase tracking-wide text-ink-muted">
-                {contact.serviceInterest}
-                <select className={inputClass}>
-                  {contact.services.map((option) => (
-                    <option key={option}>{option}</option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            <label className="mt-5 block font-mono text-[11px] uppercase tracking-wide text-ink-muted">
-              {contact.message}
-              <textarea required className={`${inputClass} h-32 resize-none`} />
-            </label>
-            <label className="mt-6 flex cursor-pointer items-start gap-3 text-xs text-ink-muted">
-              <input required type="checkbox" className="mt-0.5 accent-[var(--action-primary)]" />
-              {contact.confirm}
-            </label>
-            <Button type="submit" className="mt-7">
-              {contact.submit}
-            </Button>
-          </form>
-
-          <aside>
-            <Eyebrow>{contact.locationsEyebrow}</Eyebrow>
-            {contact.locations.map((location, i) => (
-              <FadeIn
-                key={location.city}
-                delay={i * 0.1}
-                className="mt-7 border-t-2 border-brand py-7"
-              >
-                <MapPin className="text-brand" />
-                <h2 className="mt-5 text-2xl font-bold">{location.city}</h2>
-                <p className="mt-3 font-mono text-xs">{location.entity}</p>
-                <p className="mt-2 text-sm text-ink-secondary">{location.note}</p>
-                {location.lines.length > 0 ? (
-                  <p className="mt-5 text-sm leading-6 text-ink-muted">
-                    {location.lines.map((line) => (
-                      <span key={line} className="block">
-                        {line}
-                      </span>
-                    ))}
-                  </p>
-                ) : null}
-                <p className="mt-4 text-sm text-brand">
-                  <Mail size={13} className="mr-2 inline" />
-                  <a href={`mailto:${location.email}`}>{location.email}</a>
-                </p>
-              </FadeIn>
-            ))}
-            <div className="mt-4 border-t border-line pt-6 text-sm text-ink-muted">
-              <Phone size={15} className="mr-2 inline text-brand" />
-              {contact.coverage}
-            </div>
-          </aside>
-        </Container>
-      </section>
-    </>
+              <label className={styles.field}>{contact.message}<textarea key={researchEnquiry?.record.id ?? "general"} name="message" aria-label={contact.message} required defaultValue={researchEnquiry?.message ?? ""} /></label>
+              <label className={styles.confirm}><input required type="checkbox" name="professionalClient" />{contact.confirm}</label>
+              <button type="submit" className={styles.submit}>{contact.submit}</button>
+            </form>
+          </div>
+        </div>
+      </section></CurvedBand>
+      <CurvedBand nextBackground="#0c1725" background="#fff"><section className={styles.section} aria-labelledby="locations-heading">
+        <div className={styles.container}>
+          <h2 id="locations-heading" className={styles.sectionTitle}>{about.geographyTitle}</h2>
+          <p className={styles.sectionBody}>{about.geographyBody}</p>
+          <div className={styles.grid3}>{contact.locations.map((location, i) => <FadeIn key={location.city} delay={i * 0.08}><article id={`contact-${location.city.toLowerCase().replaceAll(" ", "-")}`} className={`${styles.card} ${styles.locationCard}`}>
+            <span className={styles.label}>{about.geography[i].role}</span>
+            <h3>{about.geography[i].city}</h3><p>{about.geography[i].note}</p>
+            {location.city === "Dubai" ? <p className="mt-3">{location.entity}</p> : null}
+            <p className="mt-3">{location.note}</p>
+            {location.lines.length ? <p className={styles.locationLines}>{location.lines.map((line) => <span key={line}>{line}</span>)}</p> : null}
+            <div className={styles.registerLinks}><a href={`mailto:${location.email}`}>{location.email}</a></div>
+          </article></FadeIn>)}</div>
+          <p className={styles.contactNote}>{about.entitiesNote}{" "}<Link href="/why-emfi#regulated-entities" className={styles.textLink}>{about.entitiesCta}</Link>.</p>
+          <p className={styles.contactNote}>{contact.coverage}</p>
+        </div>
+      </section></CurvedBand>
+    </div>
   );
 }

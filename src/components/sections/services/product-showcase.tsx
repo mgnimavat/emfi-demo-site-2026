@@ -47,7 +47,6 @@ export function ProductShowcase() {
             >
               <Icon size={23} strokeWidth={1.5} className="size-5 shrink-0 sm:size-6" aria-hidden />
               <span className={`min-w-0 text-sm font-semibold leading-5 sm:flex-1 sm:text-base sm:leading-6 lg:text-lg ${active === i ? "block" : "hidden sm:block"}`}>{item.title}</span>
-              <span aria-hidden className={`hidden font-mono text-xs sm:block ${active === i ? "text-ink-inverse-muted" : "text-ink-muted"}`}>0{i + 1}</span>
             </button>
           );
         })}
@@ -72,11 +71,8 @@ export function ProductShowcase() {
               {active === i ? <ProductAnimation view={item.id} /> : null}
             </div>
             <figcaption className="flex flex-col justify-center p-6 sm:p-10 lg:p-12">
-              <p className="flex items-center gap-3 font-mono text-xs uppercase leading-6 tracking-[0.08em] text-ink-secondary">
-                <span>0{i + 1}</span><span className="h-px w-7 bg-line-strong" aria-hidden />{item.layer}
-              </p>
-              <h3 className="mt-5 text-3xl font-semibold leading-tight tracking-[-0.035em] text-ink sm:text-4xl">{item.title}</h3>
-              <p className="mt-5 text-lg leading-8 text-ink-secondary">{item.body}</p>
+              <h3 className="text-3xl font-extrabold leading-tight tracking-[-0.035em] text-ink sm:text-4xl">{item.title}</h3>
+              <p className="mt-4 text-[17px] font-medium leading-[1.65] text-ink-secondary">{item.body}</p>
 
             </figcaption>
           </figure>

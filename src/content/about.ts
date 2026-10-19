@@ -160,7 +160,7 @@ export const about = {
   ],
   boardLabel: "Board Member",
   entitiesNote: "Regulated entities, jurisdictions and roles are set out on",
-  entitiesCta: "Trust",
+  entitiesCta: "Why EMFI",
   ctaTitle: "Meet EMFI.",
   ctaBody: "Talk to the team behind the platform.",
   ctaButton: "Contact EMFI",

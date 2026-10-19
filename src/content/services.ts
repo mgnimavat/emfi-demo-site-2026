@@ -1,8 +1,9 @@
 export const services = {
   title: "Services",
   eyebrow: "Services",
-  headline: "EMFI.\nSWITCHED ON.",
-  body: "Research, execution, settlement, custody and asset management for professional clients.",
+  headline: "One\nRelationship.",
+  body: "More Control. More Access. More Visibility. More Precision. More Oversight.",
+  heroSubtext: ["More Control.", "More Access.", "More Visibility.", "More Precision.", "More Oversight."],
   items: [
     {
       num: "6.1",
@@ -83,6 +84,11 @@ export const services = {
         note: "Not live-trading proof. As the screen states: no account needed, no real trade made.",
       },
     ],
+  },
+  cta: {
+    title: "What Do You Need Access To?",
+    body: "From research and execution to settlement, custody and asset management, let's discuss the right approach for your requirements.",
+    action: "Discuss your requirement",
   },
   mobile: {
     title: "Mobile app · Client access",

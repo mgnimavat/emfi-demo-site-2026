@@ -97,7 +97,7 @@ export const home = {
       eyebrow: "Public Registers",
       body: "EMFI operates through authorised and regulated entities across the relevant jurisdictions.",
       cta: "See the evidence",
-      href: "/trust",
+      href: "/why-emfi",
       items: [
         {
           name: "EMFI Securities Limited",
@@ -130,7 +130,7 @@ export const home = {
       eyebrow: "Applicable Regimes",
       body: "High-level frameworks covering client assets, investment services, prudential requirements and fund management.",
       cta: "See the evidence",
-      href: "/trust",
+      href: "/why-emfi",
       items: [
         {
           name: "Client Assets Sourcebook",
@@ -163,7 +163,7 @@ export const home = {
       eyebrow: "Independent External Audit",
       body: "Independent firms examine the financials and the controls behind them.",
       cta: "See the evidence",
-      href: "/trust",
+      href: "/why-emfi",
       items: [
         {
           name: "Baker Tilly",

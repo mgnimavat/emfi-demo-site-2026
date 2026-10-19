@@ -1,48 +1,110 @@
+export type ExecutionResearchRecord = {
+  id: string;
+  title: string;
+  country: string;
+  reportType: string;
+  publishedAt: string;
+  topics: readonly string[];
+  paragraphs: readonly string[];
+  source: string;
+};
+
 export const execution = {
   title: "Research & Execution",
-  eyebrow: "Services / Research & Execution",
-  headline: "Research that supports the relationship.\nExecution that reaches the market.",
-  body: "Research supports institutional investment decision-making. Execution provides access to relevant markets and securities. Together they are one service — not a publishing house with a brokerage attached.",
-  mockupLabel: "Interactive demonstration",
-  mockupStatus: "Switched on",
-  entity:
-    "The relevant legal entity for research and execution is EMFI Securities Limited, authorised and regulated by the FCA.",
-  entityCta: "See regulated entities",
-  highlights: [
-    ["RESEARCH", "Supports the investment and execution relationship — it does not define the firm."],
-    ["EXECUTION", "Access to relevant markets and securities, with follow-through into settlement."],
-    ["ENTITY", "EMFI Securities Limited. Disclosed on the page, not as a separate website."],
-  ] as const,
-  researchEyebrow: "Research",
-  researchTitle: "Decision support, not a country catalogue.",
-  researchBody:
-    "EMFI research is written for professional clients making investment and execution decisions. Selected recent notes are available to explore below. The public site does not publish a crawlable tree of country pages.",
-  executionEyebrow: "Execution",
-  executionTitle: "Access to the relevant markets and securities.",
-  executionBody:
-    "High-touch institutional execution across international fixed income and selected securities, connected to the settlement relationship rather than handed off at the trade.",
-  books: [
-    ["International fixed income", "Primary capability across global markets."],
-    ["Selected securities", "Access mapped to the client mandate — not a slogan."],
-    ["Electronic + voice", "The right channel for the instrument and the situation."],
-    ["Settlement follow-through", "Execution that stays connected to completion."],
-  ] as const,
-  howEyebrow: "How it works",
-  howTitle: "From idea to settlement instruction.",
-  steps: [
-    ["Research", "Context for the investment decision, where it is useful."],
-    ["Order", "Instrument, side and settlement details captured in one workflow."],
-    ["Market access", "Electronic venues or an experienced voice desk."],
-    ["Instruction", "Visible through matching, settlement and confirmation."],
-  ] as const,
-  demoResearchEyebrow: "Interactive demonstration",
-  demoResearchTitle: "Explore EMFI Research",
-  demoExecutionEyebrow: "Interactive demonstration",
-  demoExecutionTitle: "Search a security",
-  demoExecutionBody:
-    "Enter a security, ISIN or issuer. The demonstration returns generic market information. It is not trading access.",
-  followEyebrow: "Connected by design",
-  followTitle: "Research supports the work. Execution completes it.",
-  followBody:
-    "The public site demonstrates that EMFI is an active, switched-on organisation. For current market information, execution or other services, contact EMFI directly.",
+  description: "Research and execution for professional clients across relevant global markets and securities, with specialist market expertise and direct execution support.",
+  eyebrow: "Research & Execution",
+  headline: "RESEARCH &\nEXECUTION",
+  body: "From Insight to Action. From Decision to Execution. Across Markets.",
+  heroPhrases: ["From Insight to Action.", "From Decision to Execution.", "Across Markets."],
+  capabilities: [
+    {
+      id: "research-capability",
+      eyebrow: "Research",
+      title: "KNOW THE MARKET.",
+      body: "Research that helps professional clients understand markets, securities and investment opportunities.",
+    },
+    {
+      id: "execution-capability",
+      eyebrow: "Execution",
+      title: "MAKE THE TRADE.",
+      body: "Professional execution across relevant markets and securities.",
+    },
+  ],
+  workflow: {
+    eyebrow: "Why research and execution belong together",
+    title: "FROM VIEW TO ACTION.",
+    body: "One connected process, from investment insight to trade execution.",
+    label: "Execution workflow",
+    steps: [
+      { label: "Research", detail: "The view" },
+      { label: "Requirement", detail: "What to access" },
+      { label: "Pricing", detail: "Price discovery" },
+      { label: "Execution", detail: "The trade" },
+      { label: "Confirmation", detail: "Agreed terms" },
+      { label: "Settlement", detail: "Post-trade" },
+    ],
+  },
+  research: {
+    eyebrow: "Direct evidence",
+    title: "FIND THE INSIGHT.",
+    body: "Search approved research by keyword, issuer, market or publication date.",
+    label: "Screenshot-sourced research preview",
+    notice: "These records were transcribed from the supplied EMFI screenshots. This is not a live research feed. An approved research database or API is still pending.",
+    records: [
+      {
+        id: "venezuela-imf-discount",
+        title: "The IMF Discount",
+        country: "Venezuela",
+        reportType: "Fixed Income",
+        publishedAt: "2026-09-28",
+        topics: ["Country Report", "Quantitative Insight"],
+        paragraphs: [
+          "Bitácora Económica reported that the Rodríguez administration has decided to delay the debt restructuring and that the IMF might become involved in producing the DSA framework.",
+          "We put numbers on our view that IMF involvement would keep stringent sustainability constraints, use a far more conservative oil production path and extend the restructuring timeline.",
+          "The IMF scenario cuts the NPV/Face of the restructuring package by 18.8 pts to 37.9%, against 56.7% without IMF involvement.",
+        ],
+        source: "Supplied EMFI research screenshots: report selector and readable report excerpt. Publication date is the date displayed in the screenshot; this is historical source text, not a current recommendation.",
+      },
+      {
+        id: "honduras-austerity",
+        title: "Asfura’s Austerity Agenda Takes Shape",
+        country: "Honduras",
+        reportType: "Economics",
+        publishedAt: "2026-09-27",
+        topics: [],
+        paragraphs: [],
+        source: "Supplied EMFI report-selector screenshot. Only the title, country, category and date were visible. Full report content has not been provided.",
+      },
+      {
+        id: "egypt-external-accounts",
+        title: "The Longer War On External Accounts",
+        country: "Egypt",
+        reportType: "Economics",
+        publishedAt: "2026-09-24",
+        topics: [],
+        paragraphs: [],
+        source: "Supplied EMFI report-selector screenshot. Only the title, country, category and date were visible. Full report content has not been provided.",
+      },
+      {
+        id: "jamaica-debt",
+        title: "Raising Cash, Not Reducing Debt",
+        country: "Jamaica",
+        reportType: "Fixed Income",
+        publishedAt: "2026-09-23",
+        topics: [],
+        paragraphs: [],
+        source: "Supplied EMFI report-selector screenshot. Only the title, country, category and date were visible. Full report content has not been provided.",
+      },
+    ] satisfies ExecutionResearchRecord[],
+  },
+  trade: {
+    title: "PUT INSIGHT INTO ACTION.",
+    body: "Explore how a selected research item can lead to a trade enquiry, with the relevant context carried forward.",
+  },
+  contact: {
+    eyebrow: "Next step",
+    title: "Discuss a market or trade.",
+    body: "Tell us what you are trying to access, execute or research.",
+    action: "Discuss a market or trade",
+  },
 };

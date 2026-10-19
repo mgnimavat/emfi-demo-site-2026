@@ -2,6 +2,8 @@
 @import "../styles/tokens.primitive.css";
 @import "../styles/tokens.semantic.css";
 @import "../styles/tokens.component.css";
+@import "../styles/site-footer.css";
+@import "../styles/site-header.css";
 
 @theme inline {
   --color-page: var(--bg-page);
@@ -1380,3 +1382,5 @@ h6 {
     opacity: 0;
   }
 }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

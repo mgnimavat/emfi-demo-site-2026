@@ -1,6 +1,6 @@
 export const trust = {
-  title: "Trust",
-  eyebrow: "Trust",
+  title: "Why EMFI",
+  eyebrow: "Why EMFI",
   headline: "Authorised. Regulated.\nAuditable.",
   body: "Independent evidence of the entities, regulatory frameworks and oversight behind EMFI.",
   authorisedEyebrow: "Authorised",

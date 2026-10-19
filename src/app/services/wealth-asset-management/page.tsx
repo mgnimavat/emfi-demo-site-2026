@@ -120,8 +120,8 @@ export default function WealthAssetManagementPage() {
               <p className="mt-5 text-lg leading-8 text-ink-secondary">{wealth.visBody}</p>
               <p className="mt-6 text-sm text-ink-muted">
                 Legal entities for each activity are listed on{" "}
-                <Link href="/trust" className="font-semibold text-brand hover:underline">
-                  Trust
+                <Link href="/why-emfi" className="font-semibold text-brand hover:underline">
+                  Why EMFI
                 </Link>
                 .
               </p>
