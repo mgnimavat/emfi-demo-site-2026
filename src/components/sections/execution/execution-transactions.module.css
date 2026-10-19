@@ -1,0 +1,26 @@
+.panel { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid #dce0e6; border-radius: 16px; background: #fff; color: #071832; box-shadow: 0 8px 20px rgb(7 25 50 / 6%); }
+.header { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 48px; padding: 8px 12px; border-bottom: 1px solid #dce0e6; background: #eef0f2; }
+.header h3 { display: flex; align-items: center; gap: 9px; margin: 0; font-size: 15px; }
+.header h3 svg { color: #c4cbd2; }
+.actions { display: flex; align-items: center; gap: 4px; }
+.actions button { display: flex; align-items: center; justify-content: center; gap: 4px; min-width: 28px; min-height: 28px; padding: 4px; border: 0; border-radius: 7px; background: #071932; color: #fff; cursor: pointer; }
+.actions button:last-child { background: transparent; color: #80909d; }
+.actions .kill { padding-inline: 7px; background: #f33f49; font: inherit; font-size: 11px; font-weight: 600; }
+.actions button:disabled { opacity: .4; cursor: default; }
+.scroll { flex: 1; min-width: 0; max-height: 390px; overflow: auto; }
+.scroll table { width: 100%; min-width: 1480px; border-collapse: collapse; table-layout: fixed; text-align: left; }
+.scroll th { position: sticky; top: 0; z-index: 1; padding: 10px 5px; background: #fff; font-size: 11px; font-weight: 600; }
+.scroll th span { display: block; margin-bottom: 8px; }
+.scroll input,.scroll select { width: 100%; min-width: 0; height: 30px; padding: 5px 7px; border: 1px solid #cdd2da; border-radius: 5px; background: #fff; color: #071832; font: inherit; font-size: 10px; }
+.scroll input::placeholder { color: #8a96a4; }
+.scroll td { height: 36px; padding: 6px 5px; font-size: 12px; white-space: nowrap; }
+.scroll tbody tr:nth-child(odd) { background: #eef0f2; }
+.badge { display: block; padding: 4px 6px; border-radius: 5px; background: #dce8f8; color: #244f88; font-size: 11px; text-align: center; }
+.badge[data-status="Filled"] { background: #b2fac1; color: #26733e; }
+.badge[data-status="Cancelled"] { background: #fbe6e8; color: #a72c3c; }
+.note { margin-top: auto; padding: 9px 12px 12px; font-size: 10px; line-height: 1.4; color: #718096; }
+.empty { padding: 24px 12px; font-size: 12px; color: #718096; }
+.closed { display: grid; place-items: center; min-width: 0; min-height: 180px; border-radius: 16px; background: #fff; }
+.closed button { padding: 10px 18px; border: 0; border-radius: 999px; background: #071932; color: #fff; font: inherit; font-size: 13px; cursor: pointer; }
+.panel button:focus-visible,.scroll:focus-visible,.scroll input:focus-visible,.scroll select:focus-visible { outline: 2px solid #8098cc; outline-offset: -2px; }
+@media (max-width: 599px) { .scroll input,.scroll select { font-size: 16px; } }

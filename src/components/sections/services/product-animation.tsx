@@ -1,13 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
-import { ArrowRight, Check, ChevronDown, FileText, Search } from "lucide-react";
-
-// Reference close: https://stockanalysis.com/stocks/nvda/history/ (15 October 2026).
-// The bid/ask spread is illustrative, rather than an executable market quote.
-const orderExample = { bid: 217.22, ask: 217.24, shares: 10_000 };
-const formatNumber = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+import { useRef, useSyncExternalStore } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { ArrowRight, FileText, Search } from "lucide-react";
+import { InteractiveExecutionTicket } from "@/components/sections/execution/interactive-execution-ticket";
 
 const subscribeToHydration = () => () => {};
 
@@ -35,19 +31,6 @@ function Chart({ kind, running, index }: { kind: number; running: boolean; index
   );
 }
 
-function SubmissionProgress({ running, duration = 2.8 }: { running: boolean; duration?: number }) {
-  const reduced = useReducedMotion();
-  const progress = useMotionValue(0);
-  const width = useTransform(progress, (value) => `${value * 100}%`);
-  useEffect(() => {
-    if (reduced) { progress.set(1); return; }
-    if (!running || progress.get() >= 1) return;
-    const controls = animate(progress, 1, { duration: (1 - progress.get()) * duration, ease: "linear" });
-    return () => controls.stop();
-  }, [running, reduced, progress, duration]);
-  return <motion.span aria-hidden className="absolute inset-y-0 left-0 bg-ink-inverse/20" style={{ width }} />;
-}
-
 export function ProductAnimation({ view, paused = false, orderStage, fillHeight = false, compact = false, submissionDuration = 2.8, researchQuery, researchStage }: { researchQuery?: string; researchStage?: "typing" | "loading" | "report" | "selected"; view: string; paused?: boolean; orderStage?: "searching" | "submitting" | "booked"; fillHeight?: boolean; compact?: boolean; submissionDuration?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.2 });
@@ -58,21 +41,21 @@ export function ProductAnimation({ view, paused = false, orderStage, fillHeight 
   const running = visible && !reduced && !paused;
   const researchTitle = researchStage ? "AI Boom Brings Record-Breaking GPU Sales" : "The AI boom: beyond the headlines";
   const reportVisible = researchStage ? (researchStage === "report" || researchStage === "selected") : visible || reduced;
-  const loop = { duration: 8, repeat: Infinity, ease: "easeInOut" as const };
+  if (view !== "research" && view !== "backoffice") return (
+    <div ref={ref} role="img" aria-label="Demo animated NVIDIA execution ticket and simulated buy order" className={fillHeight ? "h-full" : "w-full"}>
+      <InteractiveExecutionTicket fillHeight={fillHeight} preview={{ stage: orderStage, running, submissionDuration }} />
+    </div>
+  );
 
   return (
-    <div ref={ref} role="img" aria-label={`Illustrative animated ${view === "research" ? `research explorer loading a generic AI-market brief titled ${researchTitle}` : view === "backoffice" ? "client dashboard with six charts and obscured totals" : "NVIDIA NVDA order ticket showing illustrative bid and ask prices and a simulated order"}`} className={`relative w-full max-w-[620px] overflow-hidden rounded-lg border border-line bg-page shadow-[var(--elevation-card-hover)] ${fillHeight ? "flex h-full flex-col" : ""}`}>
-      <div className="flex items-center justify-between gap-2 border-b border-line bg-inverse px-4 py-3 text-ink-inverse sm:px-5">
-        <span className="text-sm font-semibold tracking-[-0.02em]">emfi<span className="font-normal text-ink-inverse-muted"> / {view === "research" ? "Research" : view === "backoffice" ? "Client dashboard" : "Execution"}</span></span>
-        <span className="flex items-center gap-1.5 text-[10px] text-ink-inverse-muted"><span className="size-1.5 rounded-full bg-ink-inverse-muted" />Illustrative</span>
+    <div ref={ref} role="img" aria-label={`Demo animated ${view === "research" ? `research explorer loading a generic AI-market brief titled ${researchTitle}` : view === "backoffice" ? "client dashboard with six charts and obscured totals" : "NVIDIA NVDA order ticket showing demo bid and ask prices and a simulated order"}`} className={`relative w-full max-w-[620px] overflow-hidden rounded-lg border border-line bg-page shadow-[var(--elevation-card-hover)] ${fillHeight ? "flex h-full flex-col" : ""}`}>
+      <div className={`flex min-h-12 items-center justify-between gap-2 border-b px-4 py-3 sm:px-5 ${view === "research" ? "border-[#dce0e6] bg-[#eef0f2] text-[#071832]" : "border-line bg-inverse text-ink-inverse"}`}>
+        <span className="text-sm font-semibold tracking-[-0.02em]">EMFI<span className={`font-normal ${view === "research" ? "text-[#485666]" : "text-ink-inverse-muted"}`}> / {view === "research" ? "Research" : view === "backoffice" ? "Client dashboard" : "Execution"}</span></span>
       </div>
       {view === "research" ? (
         <div className={`${compact ? "p-4" : "p-4 sm:p-6"} ${fillHeight ? "flex flex-1 flex-col" : ""}`}>
           <div className="flex items-center gap-2 rounded-md border border-line bg-subtle px-3 py-3 text-xs text-ink-secondary"><Search size={15} className="shrink-0" aria-hidden />{researchQuery !== undefined ? <span className="min-w-0 truncate" data-research-query aria-hidden="true">{researchQuery || "Search research"}{researchStage === "typing" && <span className="ml-0.5 inline-block h-3 border-r border-current align-middle motion-safe:animate-pulse" />}</span> : "Country, report type or topic"}</div>
-          <div className={`${compact ? "my-3" : "my-4"} flex flex-wrap gap-2 text-[11px] text-brand`}>
-            {["Artificial intelligence", "Technology", "Market themes"].map((label) => <span key={label} className="rounded-full bg-soft px-3 py-2">{label}</span>)}
-          </div>
-          <div className={`relative overflow-hidden rounded-md border border-line p-4 ${compact ? "" : "sm:p-5"} ${fillHeight ? "flex-1" : ""}`}>
+          <div className={`relative overflow-hidden rounded-md border border-line p-4 ${compact ? "mt-3" : "mt-4 sm:p-5"} ${fillHeight ? "flex-1" : ""}`}>
             {!reduced && (!researchStage || !reportVisible) ? (
               <motion.div
                 aria-hidden
@@ -100,7 +83,7 @@ export function ProductAnimation({ view, paused = false, orderStage, fillHeight 
             >
               <div className="mb-4 flex items-center gap-2 text-xs text-ink-secondary"><FileText size={16} className="text-brand" aria-hidden />Technology brief · Example</div>
               <p className={`font-semibold leading-tight tracking-[-0.025em] text-ink ${compact ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"}`}>{researchTitle}</p>
-              <p className={`text-sm text-ink-secondary ${compact ? "mt-3 leading-6" : "mt-4 leading-7"}`}>{researchStage ? "An illustrative look at how demand for artificial intelligence could accelerate GPU sales and investment in computing infrastructure." : "An illustrative look at how demand for computing, data centres and energy could shape the next wave of AI investment."}</p>
+              <p className={`text-sm text-ink-secondary ${compact ? "mt-3 leading-6" : "mt-4 leading-7"}`}>{researchStage ? "A look at how demand for artificial intelligence could accelerate GPU sales and investment in computing infrastructure." : "A look at how demand for computing, data centres and energy could shape the next wave of AI investment."}</p>
               <p className={`mt-3 text-sm text-ink-secondary ${compact ? "leading-6" : "leading-7"}`}>
                 {researchStage ? <>Follow the theme from AI infrastructure and semiconductor demand to <motion.mark
                   data-research-highlight="NVIDIA"
@@ -116,7 +99,7 @@ export function ProductAnimation({ view, paused = false, orderStage, fillHeight 
             </motion.div>
           </div>
         </div>
-      ) : view === "backoffice" ? (
+      ) : (
         <div className="p-3 sm:p-5">
           <div className="mb-4 flex items-center justify-between text-xs text-ink-secondary"><span>Account overview</span><span className="rounded-full bg-soft px-2.5 py-1.5">Demonstration</span></div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
@@ -128,42 +111,7 @@ export function ProductAnimation({ view, paused = false, orderStage, fillHeight 
               </div>
             ))}
           </div>
-          <div className="mt-4 flex items-center gap-2 border-t border-line pt-3 text-xs text-ink-secondary"><span className="size-1.5 rounded-full bg-brand-focus" />Illustrative charts · Totals obscured</div>
-        </div>
-      ) : (
-        <div className={`p-4 ${compact ? "" : "sm:p-6"} ${fillHeight ? "flex flex-1 flex-col" : ""}`}>
-          <div className="flex items-center justify-between text-xs text-ink-secondary"><span>{orderStage === "searching" ? "Search securities" : "Security selection"}</span><ChevronDown size={15} aria-hidden /></div>
-          <motion.div className="relative mt-2 min-h-[74px] rounded-md border border-line bg-subtle px-4 py-3" animate={{ borderColor: running ? ["var(--border-default)", "var(--action-focus)", "var(--border-default)", "var(--border-default)"] : "var(--border-default)" }} transition={loop}>
-            {orderStage === "searching" ? (
-              <>
-                <div className="flex items-center gap-2 text-sm font-semibold text-ink"><Search size={16} aria-hidden /><motion.span className="block overflow-hidden whitespace-nowrap" initial={reduced ? false : { width: 0 }} animate={{ width: "7ch" }} transition={{ duration: reduced ? 0 : 0.7 }}>NVIDIA</motion.span></div>
-                <motion.div initial={reduced ? false : { opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduced ? 0 : 0.7, duration: 0.2 }} className="absolute inset-x-0 top-full z-20 mt-2 flex items-center justify-between gap-2 rounded-md border border-brand-focus/30 bg-page p-4 shadow-lg">
-                  <span><span className="block text-sm font-semibold text-ink">NVDA · NVIDIA</span><span className="mt-1 block text-xs text-ink-secondary">NASDAQ · USD</span></span><Check size={17} className="text-brand" aria-hidden />
-                </motion.div>
-              </>
-            ) : (
-              <><span className="text-sm font-semibold text-ink">NVDA · NVIDIA</span><span className="mt-1 block text-xs text-ink-secondary">NASDAQ · USD</span></>
-            )}
-          </motion.div>
-          <p className="mt-2 text-[11px] leading-5 text-ink-secondary">
-            Illustrative spread · Reference close $217.23 · <a href="https://stockanalysis.com/stocks/nvda/history/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">15 Oct 2026</a>
-          </p>
-          <div className={`${compact ? "my-4" : "my-5"} grid grid-cols-2 gap-3`}>
-            {[["Bid", formatNumber.format(orderExample.bid)], ["Ask", formatNumber.format(orderExample.ask)]].map(([label, value]) => (
-              <div key={label} className={`rounded-md border p-3 ${label === "Bid" ? "border-emerald-200 bg-linear-to-br from-emerald-50 to-white text-emerald-700" : "border-red-200 bg-linear-to-br from-red-50 to-white text-red-700"}`}>
-                <p className="text-xs font-medium">{label}</p>
-                <p className="mt-1 text-2xl font-semibold tabular-nums">{value}</p>
-              </div>
-            ))}
-          </div>
-          <div className={`grid grid-cols-2 text-xs text-ink-secondary ${compact ? "gap-3" : "gap-4"}`}>
-            {[["Order type", "Market"], ["Time in force", "Day"], ["Side", "Buy"], ["Number of shares", orderExample.shares.toLocaleString("en-US")]].map(([label, value]) => <div key={label}><p>{label}</p><p className="mt-2 rounded-md bg-subtle px-3 py-2.5 text-sm font-medium text-ink">{value}</p></div>)}
-          </div>
-          <div className={`${compact ? "my-4" : "my-5"} flex items-center justify-between border-t border-line pt-4 text-sm text-ink-secondary`}><span>Estimated order value</span><span className="font-semibold tabular-nums text-ink">{formatNumber.format(orderExample.ask * orderExample.shares)} USD</span></div>
-          <div className={`relative flex min-h-12 shrink-0 items-center justify-center overflow-hidden rounded-full border px-4 py-3 text-center text-sm font-semibold ${fillHeight ? "mt-auto" : ""} ${orderStage === "booked" ? "border-emerald-200 bg-linear-to-br from-emerald-50 to-white text-emerald-800" : "border-brand bg-brand text-ink-inverse"}`}>
-            {orderStage === "submitting" ? <SubmissionProgress running={running} duration={submissionDuration} /> : !orderStage ? <motion.span className="absolute inset-y-0 left-0 bg-ink-inverse/15" aria-hidden animate={{ width: running ? ["0%", "0%", "100%", "100%", "0%"] : "100%" }} transition={loop} /> : null}
-            <span className="relative inline-flex items-center justify-center gap-2">{orderStage === "booked" ? <><Check size={17} aria-hidden />Order booked<span className="text-[10px] font-medium">· Simulation</span></> : <>{orderStage === "submitting" ? "Booking simulated order" : "Simulate order"}<ArrowRight size={15} aria-hidden /></>}</span>
-          </div>
+          <div className="mt-4 flex items-center gap-2 border-t border-line pt-3 text-xs text-ink-secondary"><span className="size-1.5 rounded-full bg-brand-focus" />Demo charts · Totals obscured</div>
         </div>
       )}
     </div>

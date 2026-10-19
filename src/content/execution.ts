@@ -13,26 +13,26 @@ export const execution = {
   title: "Research & Execution",
   description: "Research and execution for professional clients across relevant global markets and securities, with specialist market expertise and direct execution support.",
   eyebrow: "Research & Execution",
-  headline: "RESEARCH &\nEXECUTION",
+  headline: "Research &\nExecution",
   body: "From Insight to Action. From Decision to Execution. Across Markets.",
   heroPhrases: ["From Insight to Action.", "From Decision to Execution.", "Across Markets."],
   capabilities: [
     {
       id: "research-capability",
       eyebrow: "Research",
-      title: "KNOW THE MARKET.",
+      title: "Know the Market.",
       body: "Research that helps professional clients understand markets, securities and investment opportunities.",
     },
     {
       id: "execution-capability",
       eyebrow: "Execution",
-      title: "MAKE THE TRADE.",
+      title: "Make the Trade.",
       body: "Professional execution across relevant markets and securities.",
     },
   ],
   workflow: {
     eyebrow: "Why research and execution belong together",
-    title: "FROM VIEW TO ACTION.",
+    title: "From View to Action.",
     body: "One connected process, from investment insight to trade execution.",
     label: "Execution workflow",
     steps: [
@@ -46,7 +46,7 @@ export const execution = {
   },
   research: {
     eyebrow: "Direct evidence",
-    title: "FIND THE INSIGHT.",
+    title: "Find the Insight.",
     body: "Search approved research by keyword, issuer, market or publication date.",
     label: "Screenshot-sourced research preview",
     notice: "These records were transcribed from the supplied EMFI screenshots. This is not a live research feed. An approved research database or API is still pending.",
@@ -98,7 +98,7 @@ export const execution = {
     ] satisfies ExecutionResearchRecord[],
   },
   trade: {
-    title: "PUT INSIGHT INTO ACTION.",
+    title: "Put Insight Into Action.",
     body: "Explore how a selected research item can lead to a trade enquiry, with the relevant context carried forward.",
   },
   contact: {

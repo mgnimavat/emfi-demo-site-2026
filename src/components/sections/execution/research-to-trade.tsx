@@ -78,7 +78,7 @@ export function ResearchToTrade() {
         </motion.div>
         <motion.div
           data-execution-window
-          className="relative z-20 col-span-19 col-start-2 row-span-2 row-start-2 origin-top-right sm:col-span-14 sm:col-start-7"
+          className="relative z-20 self-start col-span-19 col-start-2 row-span-2 row-start-2 origin-top-right sm:col-span-14 sm:col-start-7"
           initial={false}
           animate={{ opacity: executionShown ? 1 : 0, y: executionShown ? 0 : 24, scale: executionShown ? 1 : 0.98 }}
           transition={transition}
@@ -86,12 +86,12 @@ export function ResearchToTrade() {
           aria-hidden={!executionShown}
           inert={!executionShown}
         >
-          <div className="h-full rounded-lg ring-1 ring-brand-focus/20 shadow-[var(--elevation-card-hover)]">
-            <ProductAnimation view="execution" compact fillHeight submissionDuration={1.6} paused={!running || !executionShown} orderStage={phase < 4 ? undefined : phase === 4 ? "searching" : phase === 5 ? "submitting" : "booked"} />
+          <div className="rounded-lg ring-1 ring-brand-focus/20 shadow-[var(--elevation-card-hover)]">
+            <ProductAnimation view="execution" compact submissionDuration={1.6} paused={!running || !executionShown} orderStage={phase < 4 ? undefined : phase === 4 ? "searching" : phase === 5 ? "submitting" : "booked"} />
           </div>
         </motion.div>
       </div>
-      <p className="sr-only">Illustrative repeating sequence: search Artificial Intelligence, read an example report on AI demand and GPU sales, highlight the word NVIDIA in the report text, then search NVIDIA in execution and book a simulated buy order.</p>
+      <p className="sr-only">Demo repeating sequence: search Artificial Intelligence, read an example report on AI demand and GPU sales, highlight the word NVIDIA in the report text, then search NVIDIA in execution and book a simulated buy order.</p>
     </div>
   );
 }

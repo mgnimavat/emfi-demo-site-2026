@@ -2,6 +2,7 @@
 
 import { CurvedBand } from "@/components/layout/curved-band";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { about } from "@/content/about";
 import { useState } from "react";
 import { contact } from "@/content/contact";
@@ -14,15 +15,12 @@ export default function ContactPage() {
   const researchEnquiry = useResearchEnquiry();
   return (
     <div className={styles.page}>
-      <CurvedBand nextBackground="#fff"><section className={styles.contact}>
+      <CurvedBand nextBackground="#fff"><section className={`${styles.contact} ${styles.contactHeroSection}`}>
         <div className={styles.container}>
           <div className={styles.contactGrid}>
-            <FadeIn className={styles.contactIntro}>
-              <h1>{contact.headline.split("\n").map((line) => <span key={line}>{line}</span>)}</h1>
-              <p>{contact.body}</p>
-              <nav aria-label="Contact locations" className={styles.locationNav}>
-                {contact.locations.map((location) => <a key={location.city} href={`#contact-${location.city.toLowerCase().replaceAll(" ", "-")}`}>{location.city}</a>)}
-              </nav>
+            <FadeIn className={`${styles.contactIntro} ${styles.contactHeroIntro}`}>
+              <h1><span>Let’s</span><span>Discuss</span></h1>
+              <Link href="/services" className={styles.contactServicesCta}>Our Services <ArrowRight size={14} aria-hidden="true" /></Link>
             </FadeIn>
             <form className={styles.form} onSubmit={(event) => { event.preventDefault(); setSent(true); }}>
               <h2>{contact.formEyebrow}</h2>

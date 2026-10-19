@@ -3,7 +3,7 @@ export const contact = {
   eyebrow: "Contact",
   headline: "Discuss your\nrequirements.",
   body: "Keep it simple. London for UK operations. Dubai for EMFI Capital (DIFC). Cayman Islands for EMFI Fund and Cayman-related matters.",
-  formEyebrow: "Institutional enquiry",
+  formEyebrow: "Discover Your Requirement",
   fields: ["Full name", "Firm name", "Role / title", "Email", "Phone (optional)"],
   clientType: "Client type",
   clientTypes: [

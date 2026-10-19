@@ -1,10 +1,14 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useSyncExternalStore, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
+const subscribeToHydration = () => () => {};
+
 export function ExecutionReveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
-  const reduced = useReducedMotion();
+  const reducedPreference = useReducedMotion();
+  const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
+  const reduced = hydrated && reducedPreference;
   return (
     <motion.div
       className={className}

@@ -1,0 +1,59 @@
+.watchlists { container-type: inline-size; display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid #dce0e6; border-radius: 16px; background: #fff; box-shadow: 0 8px 20px rgb(7 25 50 / 6%); }
+.categoryPanel { flex: 1; min-width: 0; }
+.panel { min-width: 0; min-height: 366px; overflow: hidden; background: #fff; color: #071832; }
+.header { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 48px; padding: 8px 12px; border-bottom: 1px solid #dce0e6; background: #eef0f2; }
+.title { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.title svg { flex: none; color: #c4cbd2; }
+.title h3 { font-size: 15px; font-weight: 700; line-height: 1.3; }
+.actions { display: flex; align-items: center; gap: 3px; }
+.actions button,.cancel,.removeCell button { display: grid; flex: none; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 4px; background: transparent; color: #80909d; cursor: pointer; }
+.actions button:hover,.actions button[aria-pressed="true"] { background: #e1e6ec; color: #244f88; }
+.actions button:disabled { opacity: .35; cursor: default; }
+.table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.priceColumn { width: 76px; }
+.removeColumn { width: 30px; }
+.table thead th { height: 30px; padding: 6px 8px; color: #485666; font-size: 12px; font-weight: 600; line-height: 1.4; text-align: left; }
+.table thead th:nth-child(n+2) { text-align: right; }
+.table tbody tr:nth-child(odd) { background: #eef0f2; }
+.table tbody th,.table tbody td { height: 48px; padding: 7px 8px; vertical-align: middle; }
+.table tbody th { min-width: 0; text-align: left; font-weight: 400; }
+.instrument,.identifier { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.instrument { font-size: 12px; line-height: 1.35; }
+.identifier { margin-top: 2px; color: #8491a1; font-size: 10px; font-weight: 600; line-height: 1.2; }
+.bid,.ask { text-align: right; font-size: 12px; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.bid { color: #00bf48; }
+.ask { color: #f0293c; }
+.bid small,.ask small { display: block; margin-top: 3px; font-size: 10px; font-weight: 600; line-height: 1.2; }
+.removeCell { padding: 0 !important; }
+.removeCell button { width: 26px; color: #80909d; }
+.removeCell button:hover { color: #dc3636; background: #feeeee; }
+.addForm { display: flex; align-items: center; gap: 6px; padding: 10px 8px; border-bottom: 1px solid #dce0e6; background: #f7f9fc; }
+.addForm select { flex: 1; width: 100%; min-width: 0; min-height: 34px; padding: 6px 8px; border: 1px solid #cdd2da; border-radius: 6px; background: #fff; color: #071832; font-family: inherit; font-size: 12px; }
+.addConfirm { min-height: 34px; padding: 6px 12px; border: 0; border-radius: 6px; background: #071932; color: #fff; font: 600 12px/1.3 var(--font-inter),Arial,sans-serif; cursor: pointer; }
+.cancel { width: 24px; }
+.empty { padding: 28px 16px; color: #718096; text-align: center; font-size: 12px; line-height: 1.6; }
+.note { margin-top: auto; padding: 9px 12px 12px; color: #718096; font-size: 10px; line-height: 1.4; }
+.closed { display: grid; place-items: center; min-width: 0; min-height: 180px; padding: 20px; border: 1px solid #dce0e6; border-radius: 16px; background: #fff; }
+.closed button { padding: 10px 18px; border: 0; border-radius: 999px; background: #071932; color: #fff; font-family: inherit; font-size: 13px; cursor: pointer; }
+.watchlists button:focus-visible,.watchlists select:focus-visible { outline: 2px solid #8098cc; outline-offset: 2px; }
+@media (max-width: 599px) { .addForm select { font-size: 16px; } }
+@container (max-width: 260px) {
+  .header { flex-wrap: wrap; gap: 4px; padding: 8px; }
+  .title { flex-basis: 100%; }
+  .title h3 { font-size: 13px; }
+  .actions { margin-left: auto; }
+  .table,.table tbody { display: block; }
+  .table colgroup { display: none; }
+  .table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .table tbody tr { position: relative; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); padding: 7px 8px; }
+  .table tbody th { grid-column: 1 / -1; padding: 0 0 5px; height: auto; }
+  .table tbody td { height: auto; padding: 0; }
+  .bid { text-align: left; }
+  .bid::before,.ask::before { display: block; margin-bottom: 2px; font-size: 9px; font-weight: 500; }
+  .bid::before { content: "Bid"; }
+  .ask::before { content: "Ask"; }
+  .bid small,.ask small { display: none; }
+  .table tbody .removeCell { position: absolute; top: 2px; right: 2px; background: #fff; border-radius: 4px; }
+  .addForm { flex-wrap: wrap; }
+  .addForm select { flex-basis: 100%; }
+}
