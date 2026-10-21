@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type CSSProperties, type FormEvent, type KeyboardEvent } from "react";
-import { ArrowDown, ArrowUp, Check, ChevronDown, Eye, GripVertical, X } from "lucide-react";
+import { ArrowDown, ArrowUp, Check, ChevronDown, Eye } from "lucide-react";
 import { executionSecurities, demoExecutionSecurities, type ExecutionSymbol } from "@/content/execution-securities";
 import styles from "./interactive-execution-ticket.module.css";
 
 const money = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 type Side = "Buy" | "Sell";
 type OrderType = "Market" | "Limit" | "Stop";
-type Draft = { symbol: ExecutionSymbol; orderType: OrderType; timeInForce: "Day" | "GTC" | "IOC"; venue: "Interactive" | "Voice"; quantity: string; price: string };
+type Draft = { symbol: ExecutionSymbol; orderType: OrderType; timeInForce: "Day" | "GTC"; venue: "Interactive" | "Voice"; quantity: string; price: string };
 const initialDraft: Draft = { symbol: "NVDA", orderType: "Market", timeInForce: "Day", venue: "Interactive", quantity: "100", price: "" };
 type Preview = { stage?: "searching" | "submitting" | "booked"; running: boolean; submissionDuration: number };
 
@@ -19,13 +19,11 @@ export function InteractiveExecutionTicket({ preview, fillHeight = false, onSecu
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeResult, setActiveResult] = useState(0);
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const [closed, setClosed] = useState(false);
   const [side, setSide] = useState<Side>("Buy");
   const [status, setStatus] = useState<"editing" | "submitting" | "booked">("editing");
   const [error, setError] = useState("");
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
-  const reopenRef = useRef<HTMLButtonElement>(null);
   const buyRef = useRef<HTMLButtonElement>(null);
   const id = useId();
   useEffect(() => () => { if (timer.current !== null) clearTimeout(timer.current); }, []);
@@ -86,24 +84,13 @@ export function InteractiveExecutionTicket({ preview, fillHeight = false, onSecu
     timer.current = setTimeout(() => { setStatus("booked"); timer.current = null; }, 700);
   }
 
-  function close() {
-    if (timer.current !== null) clearTimeout(timer.current);
-    timer.current = null;
-    setStatus("editing");
-    setSearchOpen(false);
-    setClosed(true);
-    requestAnimationFrame(() => reopenRef.current?.focus());
-  }
-
-  if (closed) return <div className={styles.closed}><button ref={reopenRef} type="button" onClick={() => { setClosed(false); requestAnimationFrame(() => searchRef.current?.focus()); }}>Open execution window</button></div>;
-
-  return <form className={`${styles.ticket} ${fillHeight ? styles.fillHeight : ""}`} aria-label={animated ? "Animated execution preview" : "Simulated execution ticket"} onSubmit={submit} onKeyDown={(event) => {
+  return <form className={`${styles.ticket} ${fillHeight ? styles.fillHeight : ""} ${animated && fillHeight ? styles.previewFill : ""}`} aria-label={animated ? "Animated execution preview" : "Simulated execution ticket"} onSubmit={submit} onKeyDown={(event) => {
     if (!animated && event.key === "Enter" && event.target instanceof HTMLInputElement && event.target !== searchRef.current) {
       event.preventDefault();
       event.currentTarget.requestSubmit(buyRef.current ?? undefined);
     }
   }}>
-    <div className={styles.header}><span className={styles.windowTitle}><GripVertical size={15} aria-hidden="true" /><strong>Execution</strong></span>{animated ? <X size={19} aria-hidden="true" className={styles.closeIcon} /> : <button type="button" className={styles.closeButton} aria-label="Close execution window" onClick={close}><X size={19} aria-hidden="true" /></button>}</div>
+    <div className={styles.header}><span className={styles.windowTitle}><strong>Execution</strong></span></div>
     <div className={styles.body}>
       <fieldset disabled={animated || pending} className={styles.fields}>
         <legend className="sr-only">Order details</legend>
@@ -125,7 +112,7 @@ export function InteractiveExecutionTicket({ preview, fillHeight = false, onSecu
         </div>
         <div className={styles.grid}>
           <label className={styles.field}>Order Type<span className={styles.selectControl}><select aria-label="Order type" value={draft.orderType} onChange={(event) => update({ orderType: event.target.value as OrderType, price: "" })}><option value="Market">Market</option><option value="Limit">Limit</option><option value="Stop">Stop</option></select><ChevronDown size={16} aria-hidden="true" /></span></label>
-          <label className={styles.field}>Time<span className={styles.selectControl}><select aria-label="Time in force" value={draft.timeInForce} onChange={(event) => update({ timeInForce: event.target.value as Draft["timeInForce"] })}><option value="Day">Day</option><option>GTC</option><option>IOC</option></select><ChevronDown size={16} aria-hidden="true" /></span></label>
+          <label className={styles.field}>Time<span className={styles.selectControl}><select aria-label="Time in force" value={draft.timeInForce} onChange={(event) => update({ timeInForce: event.target.value as Draft["timeInForce"] })}><option value="Day">Day</option><option>GTC</option></select><ChevronDown size={16} aria-hidden="true" /></span></label>
         </div>
         <label className={`${styles.field} ${styles.quantity}`}>Quantity<input required aria-label="Quantity" type="number" inputMode="numeric" min="1" step="1" value={draft.quantity} onChange={(event) => update({ quantity: event.target.value })} /></label>
         {draft.orderType !== "Market" ? <label className={`${styles.field} ${styles.priceField}`}>{draft.orderType === "Limit" ? "Limit price (USD)" : "Stop price (USD)"}<input required type="number" inputMode="decimal" min="0.01" step="0.01" placeholder="0.00" value={draft.price} onChange={(event) => update({ price: event.target.value })} /></label> : null}

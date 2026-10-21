@@ -1,0 +1,18 @@
+.chart { max-width: 700px; margin: 0 auto; padding: 18px 14px 10px; border: 1px solid #e5ebf4; border-radius: 14px; background: #fff; }
+.chart figcaption { margin-bottom: 14px; padding-inline: 4px; color: #52647c; font-size: 12px; font-weight: 500; line-height: 1.5; }
+.priceChart { display: block; width: 100%; height: auto; overflow: visible; }
+.priceChart text { fill: #7a8ba1; font-family: inherit; font-size: 12px; }
+.worldMap { display: block; width: 100%; height: auto; padding-block: 16px; }
+.chartNote { color: #65758a; font-size: 11px; text-align: center; }
+
+.previewChart { margin-top: 28px; }
+.cardFooter { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; width: 100%; }
+.pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e4eaf2; }
+.pagination p { color: #65758a; font-size: 12px; }
+.pagination nav { display: flex; align-items: center; gap: 6px; }
+.pagination button { display: grid; place-items: center; min-width: 36px; height: 36px; padding: 0 8px; border: 1px solid transparent; border-radius: 8px; background: #f4f7fb; color: #36577f; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.pagination button[aria-current="page"] { border-color: #071932; background: #071932; color: #fff; }
+.pagination button:hover:not(:disabled):not([aria-current]) { border-color: #8098cc; background: #edf3fc; }
+.pagination button:disabled { opacity: .35; cursor: default; }
+.pagination button:focus-visible { outline: 2px solid #8098cc; outline-offset: 3px; }
+@media (max-width: 599px) { .chart { padding: 14px 8px 8px; border-radius: 12px; } .chart figcaption { font-size: 11px; } }

@@ -104,12 +104,12 @@
 .card[id] { scroll-margin-top: 100px; }
 @media (prefers-reduced-motion: reduce) { .cursor { animation: none; display: none; } .locationNav a { transition: none; } }
 
-.peopleIntro { display: grid; gap: 24px; }
-.peopleIntro .sectionTitle { max-width: 16ch; }
-.peopleIntro .sectionBody { max-width: 54ch; margin-top: 0; }
+.peopleIntro { text-align: center; }
+.peopleIntro h2, .peopleIntro p { margin-inline: auto; }
+.peopleIntro h2 { max-width: 28ch; }
+.peopleIntro p { max-width: 68ch; }
 @media (min-width: 768px) { .personGrid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
-@media (min-width: 900px) { .peopleIntro { grid-template-columns: 1fr 1fr; align-items: end; gap: 64px; } }
-@media (min-width: 1200px) { .personGrid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media (min-width: 1024px) { .personGrid { grid-template-columns: repeat(4,minmax(0,1fr)); } }
 
 .locationCard { display: flex; flex-direction: column; }
 .locationCard .registerLinks { margin-top: auto; padding-top: 24px; }

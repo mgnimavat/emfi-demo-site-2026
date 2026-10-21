@@ -1,5 +1,10 @@
 export const home = {
   title: "EMFI: Switched On",
+  contactCta: {
+    title: "What Do You Need Access To?",
+    body: "From research and execution to settlement, custody and asset management, let's discuss the right approach for your requirements.",
+    action: "Discuss your requirement",
+  },
   hero: {
     eyebrow: "EMFI: Switched On",
     headline: "Institutional infrastructure",

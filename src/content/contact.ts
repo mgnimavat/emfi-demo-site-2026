@@ -1,6 +1,8 @@
 export const contact = {
   title: "Contact — EMFI",
   eyebrow: "Contact",
+  heroPhrases: ["Your requirements.", "Your next step.", "Your access."],
+  heroBody: "Tell us what you need across research, execution, settlement, custody or asset management.",
   headline: "Discuss your\nrequirements.",
   body: "Keep it simple. London for UK operations. Dubai for EMFI Capital (DIFC). Cayman Islands for EMFI Fund and Cayman-related matters.",
   formEyebrow: "Discover Your Requirement",
