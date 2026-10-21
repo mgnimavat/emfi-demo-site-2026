@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import {
   motion,
   useMotionValueEvent,
@@ -79,7 +79,7 @@ function StageRow({
       className={styles.stage}
       data-active={isActive ? "true" : "false"}
       data-reached={isReached ? "true" : "false"}
-      style={{ opacity, "--stage-emphasis": emphasis } as CSSProperties}
+      style={{ opacity, "--stage-emphasis": emphasis } as never}
       tabIndex={0}
       aria-current={isActive ? "step" : undefined}
       onKeyDown={onKeyDown}
@@ -144,11 +144,7 @@ export function EditorialJourney() {
           <p className={styles.body}>{execution.workflow.body}</p>
         </div>
 
-        <ol
-          className={styles.stages}
-          aria-label="Research to settlement process"
-          style={{ "--active-ratio": activeIndex / Math.max(1, steps.length - 1) } as CSSProperties}
-        >
+        <ol className={styles.stages} aria-label="Research to settlement process">
           <div className={styles.rail} aria-hidden="true">
             <span className={styles.railTrack} />
             <motion.span
