@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { CurvedBand } from "@/components/layout/curved-band";
 import { execution } from "@/content/execution";
-import { ResearchToTrade } from "@/components/sections/execution/research-to-trade";
+import { ResearchExecutionHeroMockup } from "@/components/mockups/research-execution-hero";
 import { ExecutionReveal } from "@/components/sections/execution/reveal";
 import { ExecutionHeroPhrases } from "@/components/sections/execution/hero-phrases";
 import { ConnectedJourney } from "@/components/sections/execution-v2/connected-journey";
@@ -35,7 +35,7 @@ export default function ResearchExecutionV2Page() {
                 </a>
               </ExecutionReveal>
               <ExecutionReveal delay={0.12} className={styles.heroMedia}>
-                <ResearchToTrade />
+                <ResearchExecutionHeroMockup />
               </ExecutionReveal>
             </div>
           </div>
