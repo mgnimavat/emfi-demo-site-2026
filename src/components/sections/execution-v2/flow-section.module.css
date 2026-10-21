@@ -1,0 +1,4 @@
+/* Equal top/bottom spacing — matches More Direct / research-execution-v3 */
+.flow {
+  padding: clamp(64px, 7vw, 96px) 0;
+}

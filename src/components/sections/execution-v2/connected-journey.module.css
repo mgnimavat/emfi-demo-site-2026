@@ -1,0 +1,303 @@
+.journey {
+  --journey-navy: #071932;
+  --journey-ink: #001a34;
+  --journey-accent: #244f88;
+  --disc-size: 84px;
+  margin: 64px 0 8px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: start;
+  gap: 0;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 0;
+  padding: 8px 4px 4px;
+  border-radius: 16px;
+  outline: none;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.connector {
+  position: absolute;
+  top: calc(8px + var(--disc-size) / 2 - 1.5px);
+  left: calc(50% + var(--disc-size) / 2 - 4px);
+  right: calc(-50% + var(--disc-size) / 2 - 4px);
+  height: 3px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.track {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: rgb(231 238 248 / 16%);
+}
+
+.beam {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  transform-origin: left center;
+  transform: scaleX(var(--segment-fill, 0));
+  opacity: 0;
+  background: linear-gradient(90deg, rgb(162 194 253 / 45%), #fff 78%);
+  box-shadow: 0 0 10px #fff, 0 0 22px rgb(162 194 253 / 75%);
+  will-change: transform, opacity;
+}
+
+.pulse {
+  position: absolute;
+  top: -4.5px;
+  left: calc(var(--segment-fill, 0) * 100% - 6px);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+  box-shadow: 0 0 8px #fff, 0 0 20px rgb(162 194 253 / 90%);
+  will-change: left, top, opacity;
+}
+
+.disc {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--disc-size);
+  height: var(--disc-size);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--journey-ink);
+  border: 1.5px solid #e4eaf2;
+  box-shadow: 0 0 0 8px var(--journey-navy);
+  transition:
+    color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s ease;
+}
+
+.disc svg {
+  width: 28px;
+  height: 28px;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.label {
+  display: block;
+  margin-top: 20px;
+  max-width: 12ch;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: rgb(255 255 255 / 88%);
+  transition:
+    color 0.45s ease,
+    text-shadow 0.45s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.step[data-reached="true"] .disc {
+  color: var(--journey-accent);
+}
+
+.step[data-active="true"] .disc {
+  color: var(--journey-accent);
+  border-color: #c9d8f0;
+  box-shadow:
+    0 0 0 8px var(--journey-navy),
+    0 0 0 12px rgb(162 194 253 / 24%),
+    0 0 32px rgb(162 194 253 / 42%);
+  transform: translateY(-3px) scale(1.04);
+}
+
+.step[data-active="true"] .disc svg {
+  transform: scale(1.06);
+}
+
+.step[data-active="true"] .label {
+  color: #fff;
+  text-shadow: 0 0 16px rgb(162 194 253 / 65%);
+  transform: translateY(-1px);
+}
+
+.step:hover .disc,
+.step:focus-visible .disc {
+  color: var(--journey-accent);
+  border-color: #c9d8f0;
+  box-shadow:
+    0 0 0 8px var(--journey-navy),
+    0 0 0 13px rgb(162 194 253 / 28%),
+    0 0 36px rgb(162 194 253 / 48%);
+  transform: translateY(-4px) scale(1.06);
+}
+
+.step:hover .disc svg,
+.step:focus-visible .disc svg {
+  transform: scale(1.08);
+}
+
+.step:hover .label,
+.step:focus-visible .label {
+  color: #fff;
+  text-shadow: 0 0 18px rgb(162 194 253 / 70%);
+  transform: translateY(-2px);
+}
+
+.step:focus-visible {
+  box-shadow: 0 0 0 2px var(--journey-navy), 0 0 0 4px rgb(162 194 253 / 70%);
+}
+
+@media (max-width: 899px) {
+  .journey {
+    --disc-size: 72px;
+    grid-template-columns: 1fr;
+    max-width: 360px;
+    margin: 48px auto 0;
+    gap: 4px;
+  }
+
+  .step {
+    flex-direction: row;
+    align-items: center;
+    gap: 22px;
+    text-align: left;
+    padding: 10px 8px;
+  }
+
+  .connector {
+    top: calc(50% + var(--disc-size) / 2 - 6px);
+    left: calc(8px + var(--disc-size) / 2 - 1.5px);
+    right: auto;
+    width: 3px;
+    height: calc(100% + 4px);
+  }
+
+  .beam {
+    transform-origin: top center;
+    transform: scaleY(var(--segment-fill, 0));
+    background: linear-gradient(180deg, rgb(162 194 253 / 45%), #fff 78%);
+  }
+
+  .pulse {
+    top: calc(var(--segment-fill, 0) * 100% - 6px);
+    left: -4.5px;
+  }
+
+  .label {
+    margin-top: 0;
+    max-width: none;
+    font-size: 18px;
+  }
+
+  .step[data-active="true"] .disc,
+  .step:hover .disc,
+  .step:focus-visible .disc {
+    transform: translateX(2px) scale(1.05);
+  }
+
+  .step[data-active="true"] .label,
+  .step:hover .label,
+  .step:focus-visible .label {
+    transform: translateX(2px);
+  }
+}
+
+@media (max-width: 599px) {
+  .journey {
+    --disc-size: 64px;
+    max-width: 320px;
+  }
+
+  .disc svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .label {
+    font-size: 17px;
+  }
+}
+
+@media (hover: none) {
+  .step:hover .disc {
+    transform: none;
+    box-shadow: 0 0 0 8px var(--journey-navy);
+    color: var(--journey-ink);
+    border-color: #e4eaf2;
+  }
+
+  .step:hover .label {
+    color: rgb(255 255 255 / 88%);
+    text-shadow: none;
+    transform: none;
+  }
+
+  .step[data-active="true"]:hover .disc,
+  .step[data-active="true"] .disc {
+    color: var(--journey-accent);
+    border-color: #c9d8f0;
+    box-shadow:
+      0 0 0 8px var(--journey-navy),
+      0 0 0 12px rgb(162 194 253 / 24%),
+      0 0 28px rgb(162 194 253 / 40%);
+    transform: scale(1.03);
+  }
+
+  .step[data-active="true"]:hover .label,
+  .step[data-active="true"] .label {
+    color: #fff;
+    text-shadow: 0 0 14px rgb(162 194 253 / 60%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beam,
+  .pulse,
+  .disc,
+  .disc svg,
+  .label {
+    transition: none !important;
+  }
+
+  .beam {
+    transform: none !important;
+    opacity: 1 !important;
+    box-shadow: none;
+  }
+
+  .pulse {
+    display: none;
+  }
+
+  .disc {
+    color: var(--journey-accent);
+    box-shadow:
+      0 0 0 8px var(--journey-navy),
+      0 0 0 10px rgb(162 194 253 / 14%);
+    transform: none;
+  }
+
+  .label {
+    color: #fff;
+    text-shadow: none;
+    transform: none;
+  }
+
+  .step:hover .disc,
+  .step:focus-visible .disc,
+  .step[data-active="true"] .disc {
+    transform: none;
+  }
+}
