@@ -192,10 +192,7 @@ function FilterCell({
 
 function ActivePill({ label }: { label: string }) {
   return (
-    <span
-      className="inline-flex items-center rounded-full px-2 py-0.5 text-[7px] font-bold text-white"
-      style={{ backgroundColor: CHART.status }}
-    >
+    <span className="inline-flex min-w-[48px] items-center justify-center rounded-[5px] bg-[#39ff14] px-2.5 py-0.5 text-[7px] font-semibold text-[#36A14B]">
       {label}
     </span>
   );
@@ -205,7 +202,7 @@ function StatusBadge({ status }: { status: "Filled" | "Placed" }) {
   const filled = status === "Filled";
   return (
     <span
-      className={`inline-flex items-center rounded px-1 py-px text-[5.5px] font-bold ${
+      className={`inline-flex items-center rounded-[5px] px-1 py-px text-[5.5px] font-bold ${
         filled ? "bg-[#d8f5e4] text-[#1a7a45]" : "bg-[#ffe4cc] text-[#c45a12]"
       }`}
     >
