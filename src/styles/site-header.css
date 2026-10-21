@@ -22,5 +22,6 @@
 .emfi-site-header .emfi-client-mobile { display: inline-flex; align-self: flex-start; align-items: center; gap: 10px; min-height: 44px; margin-top: 16px; padding: 8px 16px; border: 0; border-radius: 8px; background: #fff; color: #071932; font-family: inherit; font-size: 14px; font-weight: 600; line-height: normal; text-decoration: none; cursor: pointer; }
 .emfi-site-header :focus-visible { outline: 3px solid #8098cc; outline-offset: 5px; }
 @media (max-width: 999px) { .emfi-header-nav,.emfi-login-slot { display: none; } .emfi-menu-toggle { display: block; } .emfi-mobile-nav:not([hidden]) { display: flex; } }
+@media (min-width: 1000px) and (max-width: 1439px) { .emfi-client-tooltip { left: auto; right: 0; transform: none; } .emfi-client-tooltip::before { left: auto; right: 17px; transform: none; } }
 @media (max-width: 599px) { .emfi-mobile-nav { padding-inline: 20px; } }
 @media (prefers-reduced-motion: reduce) { .emfi-client-login, .emfi-client-icon, .emfi-client-tooltip { transition: none; } }

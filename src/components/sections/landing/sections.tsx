@@ -2,7 +2,7 @@ import { MotionRegion } from "@/components/sections/landing/motion-region";
 import { HeroTypewriter } from "@/components/sections/landing/typewriter";
 import { CurvedBand } from "@/components/layout/curved-band";
 import { Button } from "@/components/ui/button";
-import { services } from "@/content/services";
+import { home } from "@/content/home";
 import { ArrowIcon, BrandMark, SectionCurve, TechnologyIcon, PeopleIcon, RelationshipIcon, ResponsibilityIcon, ConnectedIcon } from "@/components/sections/landing/icons";
 import styles from "@/components/sections/landing/landing.module.css";
 
@@ -52,5 +52,5 @@ export function AccountabilitySection() {
 }
 
 export function ContactSection() {
-  return <CurvedBand nextBackground="#0c1725"><section id="contact" className={styles.contact} aria-labelledby="contact-heading"><MotionRegion className={styles.contactInner}><h2 id="contact-heading">{services.cta.title}</h2><p>{services.cta.body}</p><Button href="/contact" className={styles.contactAction}>{services.cta.action}</Button></MotionRegion></section></CurvedBand>;
+  return <CurvedBand nextBackground="#0c1725"><section id="contact" className={styles.contact} aria-labelledby="contact-heading"><MotionRegion className={styles.contactInner}><h2 id="contact-heading">{home.contactCta.title}</h2><p>{home.contactCta.body}</p><Button href="/contact" className={styles.contactAction}>{home.contactCta.action}</Button></MotionRegion></section></CurvedBand>;
 }

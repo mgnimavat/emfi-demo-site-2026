@@ -35,14 +35,16 @@
 .curve { height: 72px; width: 100%; border-radius: 0 0 50% 50% / 0 0 100% 100%; }
 .direct { background: var(--navy); color: #fff; }
 .direct > .curve { background: #f4f7fb; }
-.directInner { max-width: 1440px; margin: auto; padding: clamp(64px,7vw,96px) clamp(20px,4vw,56px) clamp(56px,6vw,80px); }
+.directInner { max-width: 1440px; margin: auto; padding: clamp(64px,7vw,96px) clamp(20px,4vw,56px); }
 .sectionTitle { font-size: clamp(38px,4.5vw,60px); font-weight: 800; line-height: 1.1; letter-spacing: -.04em; text-align: center; -webkit-text-stroke: 0; }
-.flow { position: relative; display: grid; grid-template-columns: 108px minmax(48px,1fr) 228px minmax(48px,1fr) 108px; grid-template-rows: auto auto; align-items: center; width: 100%; max-width: 1200px; margin: 32px auto 0; overflow: visible; }
+.flow { position: relative; display: grid; grid-template-columns: 108px minmax(48px,1fr) 228px minmax(48px,1fr) 108px; grid-template-rows: auto auto; align-items: center; width: 100%; max-width: 1200px; margin: 32px auto 0; padding-bottom: 44px; overflow: visible; }
 .flowLegacy { grid-column: 1 / -1; position: relative; height: 128px; }
 .viaRail { position: absolute; left: 54px; right: 54px; top: 28px; bottom: -112px; }
 .viaRail svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .viaTrack { stroke: rgb(210 226 245 / 18%); stroke-width: 3; }
 .viaBeam { stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 100 100; stroke-dashoffset: 100; filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 14px rgb(162 194 253 / 75%)); animation: via-beam 8s linear infinite; }
+.viaArrow { position: absolute; left: 40.66%; top: .9146%; width: 10px; height: 10px; border-top: 2px solid #c9d4e5; border-right: 2px solid #c9d4e5; transform: translate(-50%,-50%) rotate(45deg); opacity: 0; pointer-events: none; animation: via-arrow-first 8s linear infinite; }
+.viaArrowSecond { left: 59.34%; animation-name: via-arrow-second; }
 .viaSteps { position: absolute; top: 0; left: 54px; right: 54px; height: 100%; }
 .viaStep { position: absolute; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; width: 176px; gap: 12px; color: #fff; font-size: 16px; font-weight: 600; line-height: 1.2; letter-spacing: -.02em; text-align: center; }
 .viaStep:first-child { left: 31.32%; }
@@ -109,6 +111,8 @@
 @keyframes mark-trace { 0% { opacity: 0; stroke-dashoffset: 1; } 1.5% { opacity: 1; } 48%,90% { opacity: 1; stroke-dashoffset: 0; } 100% { opacity: 0; stroke-dashoffset: 0; } }
 /* The upper route progresses at a constant speed, passing Custodian without pausing. */
 @keyframes via-beam { 0%,3% { opacity: 0; stroke-dashoffset: 100; } 4% { opacity: 1; } 30%,84% { opacity: 1; stroke-dashoffset: 0; } 92%,100% { opacity: 0; stroke-dashoffset: 0; } }
+@keyframes via-arrow-first { 0%,14% { opacity: 0; } 15%,30% { opacity: 1; } 32%,100% { opacity: 0; } }
+@keyframes via-arrow-second { 0%,18% { opacity: 0; } 19%,30% { opacity: 1; } 32%,100% { opacity: 0; } }
 /* Shared 8s cycle: EMFI arrives at 1.6s; the upper route follows at 2.4s. */
 @keyframes beam-first { 0%,3% { transform: scaleX(0); opacity: 0; } 4% { opacity: 1; } 12%,84% { transform: scaleX(1); opacity: 1; } 92%,100% { transform: scaleX(1); opacity: 0; } }
 @keyframes beam-second { 0%,12% { transform: scaleX(0); opacity: 0; } 13% { opacity: 1; } 20%,84% { transform: scaleX(1); opacity: 1; } 92%,100% { transform: scaleX(1); opacity: 0; } }

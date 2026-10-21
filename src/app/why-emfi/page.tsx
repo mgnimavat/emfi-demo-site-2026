@@ -17,7 +17,7 @@ export default function WhyEmfiPage() {
       <CurvedBand nextBackground="#071932" background="#fff"><section id="authorised" className={styles.section} aria-labelledby="authorised-heading">
         <div className={styles.container}>
           <FadeIn className={why.sectionIntro}><h2 id="authorised-heading" className={styles.sectionTitle}>{trust.authorisedTitle}</h2><p className={styles.sectionBody}>{trust.authorisedBody}</p></FadeIn>
-          <div className={styles.grid3}>{trust.regulators.map((item, i) => <FadeIn key={item.code} delay={i * 0.08}>
+          <div className={`${styles.grid3} ${why.evidenceCards}`}>{trust.regulators.map((item, i) => <FadeIn key={item.code} delay={i * 0.08}>
             <article className={`${styles.card} ${why.authorityCard}`}>
               <div className={why.authorityLogo}><Image src={item.logo} alt={item.name} width={item.logoWidth} height={item.logoHeight} unoptimized /></div>
               <h3>{item.name}</h3>
@@ -35,7 +35,7 @@ export default function WhyEmfiPage() {
       <CurvedBand nextBackground="#dce8f8" background="#fff"><section id="audit" className={styles.section} aria-labelledby="audit-heading">
         <div className={styles.container}>
           <FadeIn className={why.sectionIntro}><h2 id="audit-heading" className={styles.sectionTitle}>{trust.auditableTitle}</h2><p className={styles.sectionBody}>{trust.auditableBody}</p></FadeIn>
-          <div className={styles.grid3}>{trust.auditors.map((item, i) => <FadeIn key={item.name} delay={i * 0.08}><article className={`${styles.card} ${why.auditCard}`}><Image src={item.logo} alt={item.name} width={item.logoWidth} height={item.logoHeight} unoptimized /><p>{item.scope}</p></article></FadeIn>)}</div>
+          <div className={`${styles.grid3} ${why.evidenceCards}`}>{trust.auditors.map((item, i) => <FadeIn key={item.name} delay={i * 0.08}><article className={`${styles.card} ${why.auditCard}`}><Image src={item.logo} alt={item.name} width={item.logoWidth} height={item.logoHeight} unoptimized /><p>{item.scope}</p></article></FadeIn>)}</div>
         </div>
       </section></CurvedBand>
       <CurvedBand nextBackground="#f4f7fb"><section id="regulated-entities" className={`${styles.section} ${styles.blue} scroll-mt-24`} aria-labelledby="entities-heading">
