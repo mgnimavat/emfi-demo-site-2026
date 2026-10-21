@@ -2,15 +2,14 @@
 
 import { useId, useMemo, useState } from "react";
 import { CalendarDays, ChevronDown, FileSearch, FileText, Globe2, RotateCcw, Search, SlidersHorizontal, X } from "lucide-react";
-import { execution } from "@/content/execution";
+import { execution, researchReportTypes, researchDerivedTypes } from "@/content/execution";
 import { emptyExecutionFilters, filterExecutionResearch, invalidResearchDateRange, type ExecutionResearchFilters } from "@/lib/execution-research";
 
 const fieldClass = "mt-2 block min-h-12 w-full min-w-0 max-w-full rounded-md border border-line-strong bg-page px-3 py-3 text-base font-normal text-ink outline-none transition-[border-color,box-shadow] hover:border-brand-focus/40 focus:border-brand-focus focus:ring-2 focus:ring-brand-focus/20";
 const dateFormat = new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" });
 const countries = [...new Set(execution.research.records.map((record) => record.country))].sort();
-const reportTypes = [...new Set(execution.research.records.map((record) => record.reportType))].sort();
 const filterLabels: Record<keyof ExecutionResearchFilters, string> = {
-  keyword: "Keyword", country: "Country", reportType: "Report type", from: "From", to: "To",
+  keyword: "Report title / topic", country: "Country", reportType: "Report type", derivedType: "Derived type", from: "From", to: "To",
 };
 
 export function ExecutionResearchExplorer() {
@@ -31,10 +30,10 @@ export function ExecutionResearchExplorer() {
           </div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
             <div className="min-w-0 sm:col-span-2 lg:col-span-1">
-              <label htmlFor={`${id}-query`} className="block text-sm font-semibold leading-6 text-ink">Search by keyword, country or topic</label>
+              <label htmlFor={`${id}-query`} className="block text-sm font-semibold leading-6 text-ink">Report title / topic</label>
               <div className="relative">
                 <Search size={18} aria-hidden className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted" />
-                <input id={`${id}-query`} type="search" value={filters.keyword} onChange={(event) => updateFilter("keyword", event.target.value)} placeholder="Try Venezuela, IMF or Fixed Income" className={`${fieldClass} pl-10`} />
+                <input id={`${id}-query`} type="search" value={filters.keyword} onChange={(event) => updateFilter("keyword", event.target.value)} placeholder="Search report titles or topics" className={`${fieldClass} pl-10`} />
               </div>
             </div>
             <label className="min-w-0 text-sm font-semibold text-ink">Country
@@ -46,7 +45,13 @@ export function ExecutionResearchExplorer() {
             <label className="min-w-0 text-sm font-semibold text-ink">Report type
               <select aria-label="Report type" value={filters.reportType} onChange={(event) => updateFilter("reportType", event.target.value)} className={fieldClass}>
                 <option value="">All report types</option>
-                {reportTypes.map((type) => <option key={type}>{type}</option>)}
+                {researchReportTypes.map((type) => <option key={type}>{type}</option>)}
+              </select>
+            </label>
+            <label className="min-w-0 text-sm font-semibold text-ink">Derived type
+              <select aria-label="Derived type" value={filters.derivedType} onChange={(event) => updateFilter("derivedType", event.target.value)} className={fieldClass}>
+                <option value="">All derived types</option>
+                {researchDerivedTypes.map((type) => <option key={type}>{type}</option>)}
               </select>
             </label>
             <label className="min-w-0 text-sm font-semibold text-ink">Publication date from
@@ -77,7 +82,7 @@ export function ExecutionResearchExplorer() {
             <div className="rounded-lg border border-dashed border-line-strong bg-page px-5 py-14 text-center">
               <span className="mx-auto mb-5 flex size-16 items-center justify-center rounded-lg bg-soft text-brand"><FileSearch size={30} strokeWidth={1.5} aria-hidden /></span>
               <p className="text-lg font-semibold text-ink">{invalidDates ? "Check the publication date range." : "No research matches these filters."}</p>
-              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-ink-secondary">This preview contains four screenshot-sourced records. Reset the filters to see them all.</p>
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-ink-secondary">This preview contains imported EMFI Intelligence publications. Reset the filters to see them all.</p>
             </div>
           ) : (
             <div className="grid gap-4">
@@ -93,14 +98,14 @@ export function ExecutionResearchExplorer() {
                         <span className="inline-flex items-center gap-1.5"><CalendarDays size={13} aria-hidden /><time dateTime={record.publishedAt}>{dateFormat.format(new Date(`${record.publishedAt}T12:00:00Z`))}</time></span>
                       </span>
                       <span className="mt-3 block text-xl font-semibold leading-7 tracking-[-0.025em] text-ink sm:text-2xl sm:leading-8">{record.title}</span>
-                      <span className={`mt-2 block text-sm leading-6 ${record.paragraphs.length ? "font-medium text-brand" : "text-ink-secondary"}`}>{record.paragraphs.length ? "Read supplied excerpt" : "View supplied record · full report pending"}</span>
+                      <span className={`mt-2 block text-sm leading-6 ${record.paragraphs.length ? "font-medium text-brand" : "text-ink-secondary"}`}>{record.paragraphs.length ? "Read publication summary" : "View publication record"}</span>
                     </span>
                     <span className="mt-1 flex size-10 shrink-0 items-center justify-center rounded-full border border-line bg-page text-brand transition-colors group-hover:bg-soft group-open:border-brand group-open:bg-brand group-open:text-ink-inverse"><ChevronDown size={18} aria-hidden className="transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none" /></span>
                   </summary>
                   <div className="border-t border-line bg-linear-to-br from-soft/40 to-page p-5 sm:p-6">
                     {record.topics.length ? <div className="mb-5 flex flex-wrap gap-2">{record.topics.map((topic) => <span key={topic} className="rounded-full border border-brand-focus/10 bg-page px-3 py-1.5 text-xs font-medium text-ink">{topic}</span>)}</div> : null}
                     <div className="max-w-4xl space-y-4 text-base leading-8 text-ink-secondary">
-                      {record.paragraphs.length ? record.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>) : <p>Report body not supplied. Only the publication metadata is available in this preview.</p>}
+                      {record.paragraphs.length ? record.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>) : <p>Open the original report on EMFI Intelligence for the full publication.</p>}
                     </div>
                     <p className="mt-6 max-w-4xl rounded-md border border-line bg-page px-4 py-3 text-sm leading-7 text-ink-secondary"><strong className="font-semibold text-ink">Source context:</strong> {record.source}</p>
                   </div>
