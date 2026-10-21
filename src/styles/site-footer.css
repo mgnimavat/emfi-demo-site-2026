@@ -1,6 +1,29 @@
 /* The user's approved simple footer, shared across the entire site. */
-.emfi-site-footer { background: #0c1725; color: #fff; font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif; font-size: 15px; font-weight: 500; line-height: 1.6; letter-spacing: normal; }
-.emfi-site-footer .emfi-footer-inner { display: flex; flex-direction: column; gap: 48px; width: calc(100% - 64px); max-width: 1320px; margin: 0 auto; padding: clamp(56px,6vw,88px) 0 32px; box-sizing: border-box; }
+.emfi-site-footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(180deg, #071932 0%, #071932 48%, #163056 72%, #04101f 100%);
+  color: #fff;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: normal;
+}
+.emfi-site-footer::before {
+  content: "";
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  bottom: -180px;
+  left: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(162 194 253 / 22%) 0%, rgb(162 194 253 / 0%) 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+.emfi-site-footer .emfi-footer-inner { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 48px; width: calc(100% - 64px); max-width: 1320px; margin: 0 auto; padding: clamp(56px,6vw,88px) 0 32px; box-sizing: border-box; }
 .emfi-footer-top { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1fr); gap: 32px; }
 .emfi-footer-brand { display: flex; flex-direction: column; align-items: flex-start; }
 .emfi-footer-logo { display: block; width: 160px; height: auto; }
@@ -11,15 +34,15 @@
 .emfi-site-footer .emfi-footer-links a { color: #cbd2e8; font-size: 15px; font-weight: 500; line-height: 1.6; text-decoration: none; transition: color .2s; }
 .emfi-site-footer .emfi-footer-links a:hover { color: #fff; }
 .emfi-footer-offices { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,260px),1fr)); gap: 32px; }
-.emfi-footer-office { display: flex; flex-direction: column; gap: 8px; padding-top: 20px; border-top: 1px solid #1c2a41; font-style: normal; }
+.emfi-footer-office { display: flex; flex-direction: column; gap: 8px; padding-top: 20px; border-top: 1px solid rgb(255 255 255 / 12%); font-style: normal; }
 .emfi-footer-office h2 { margin: 0; color: #fff; font-family: inherit; font-size: 18px; font-weight: 800; line-height: 1.2; letter-spacing: -.025em; -webkit-text-stroke: 0; }
 .emfi-footer-office p { margin: 0; color: #cbd2e8; font-size: 15px; font-weight: 400; line-height: 1.6; }
 .emfi-footer-office p span { display: block; }
 .emfi-site-footer .emfi-footer-office a { color: #a2c2fd; font-size: 15px; font-weight: 700; line-height: 1.6; text-decoration: none; overflow-wrap: anywhere; }
 .emfi-site-footer .emfi-footer-office a:hover { color: #fff; }
-.emfi-site-footer .emfi-footer-legal { padding-top: 24px; border-top: 1px solid #1c2a41; }
+.emfi-site-footer .emfi-footer-legal { padding-top: 24px; border-top: 1px solid rgb(255 255 255 / 12%); }
 .emfi-site-footer .emfi-footer-legal p { max-width: 900px; margin: 0; color: #cbd2e8; font-size: 13px; font-weight: 400; line-height: 1.6; }
-.emfi-site-footer .emfi-footer-legal .emfi-footer-legal-detail { margin-top: 8px; color: #6f7f9c; }
+.emfi-site-footer .emfi-footer-legal .emfi-footer-legal-detail { margin-top: 8px; max-width: none; color: #6f7f9c; }
 .emfi-site-footer a:focus-visible { outline: 3px solid #8098cc; outline-offset: 5px; }
 @media (max-width: 899px) { .emfi-footer-top { grid-template-columns: repeat(2,minmax(0,1fr)); } .emfi-footer-brand { grid-column: 1 / -1; } }
 @media (max-width: 599px) { .emfi-site-footer .emfi-footer-inner { width: calc(100% - 40px); } }

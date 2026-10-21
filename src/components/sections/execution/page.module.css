@@ -18,12 +18,13 @@
 .section { padding-block: clamp(56px,6vw,88px); }
 .title { max-width: 24ch; font-size: clamp(32px,3.8vw,52px); font-weight: 800; line-height: 1.12; letter-spacing: -.04em; text-wrap: balance; }
 .body { max-width: 72ch; margin-top: 22px; font-size: 17px; font-weight: 500; line-height: 1.65; color: #24344b; }
-.capabilities { display: grid; gap: 24px; }
-.capability { height: 100%; padding: 40px 40px 44px; border-radius: 20px; background: #dce8f8; }
-.capabilities > :nth-child(2) .capability { background: #f4f7fb; }
+.capabilities { display: grid; gap: 20px; }
+.capability { height: 100%; }
 .capability > p:first-child { margin-bottom: 20px; font-size: 16px; font-weight: 600; color: #585c65; }
 .capability h2 { font-size: clamp(24px,2.5vw,36px); font-weight: 800; line-height: 1.15; letter-spacing: -.03em; }
 .capability .body { max-width: 46ch; }
+.capabilities > :nth-child(2) .capability > p:first-child,
+.capabilities > :nth-child(2) .capability .body { color: #c9d4e5; }
 .flow { position: relative; padding: 48px 0 clamp(64px,7vw,96px); background: #071932; color: #fff; }
 .flow h2 { max-width: none; text-align: center; }
 .flow .body { max-width: none; color: #c9d4e5; text-align: center; }

@@ -8,6 +8,7 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { BrandSign } from "@/components/brand/logo";
 import { ServicesHeroSubtext } from "@/components/sections/services/hero-subtext";
 import { MotionRegion } from "@/components/sections/landing/motion-region";
+import glass from "@/components/sections/glass-card.module.css";
 import styles from "./services.module.css";
 
 export const metadata = { title: services.title, description: services.lifecycle.body };
@@ -66,7 +67,7 @@ export default function ServicesPage() {
         <Container className={styles.container}>
           <FadeIn>
             <div className={styles.serviceCards}>
-              {services.items.map((item, i) => <article key={item.num} id={`svc-${item.num}`} aria-labelledby={`service-title-${item.num}`} className={styles.serviceCard}>
+              {services.items.map((item, i) => <article key={item.num} id={`svc-${item.num}`} aria-labelledby={`service-title-${item.num}`} className={`${glass.card} ${i === 1 ? glass.inverse : ""} ${styles.serviceCard}`}>
                 <h2 id={`service-title-${item.num}`} className={styles.serviceTitle}>{item.title}</h2>
                 <p className={styles.serviceDescription}>{item.desc}</p>
                 <div className={styles.serviceAction}><Button href={item.path} variant={i === 1 ? "inverse" : "primary"} className={styles.action}>{item.cta}</Button></div>
@@ -76,7 +77,7 @@ export default function ServicesPage() {
         </Container>
       </section></CurvedBand>
 
-      <CurvedBand nextBackground="#0c1725"><section aria-labelledby="services-cta-heading" className={styles.contactCta}>
+      <CurvedBand nextBackground="#071932"><section aria-labelledby="services-cta-heading" className={styles.contactCta}>
         <Container className={styles.container}>
           <FadeIn className={styles.ctaInner}>
             <h2 id="services-cta-heading" className={styles.sectionTitle}>{services.cta.title}</h2>

@@ -33,7 +33,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section></CurvedBand>
-
-    </div>
+      </div>
   );
 }
