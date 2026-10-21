@@ -1,5 +1,6 @@
 import { HeroSection, ExpectBand, ResponsiveSection, AccountabilitySection, ContactSection } from "@/components/sections/landing/sections";
 import { DirectFlowSection } from "@/components/sections/landing/direct-flow";
+import { CurvedBand } from "@/components/layout/curved-band";
 import styles from "@/components/sections/landing/landing.module.css";
 
 export const metadata = {
@@ -8,5 +9,5 @@ export const metadata = {
 };
 
 export default function HomePage() {
-  return <div className={styles.page}><HeroSection /><ExpectBand /><DirectFlowSection /><ResponsiveSection /><AccountabilitySection /><ContactSection /></div>;
+  return <div className={styles.page}><HeroSection /><ExpectBand /><DirectFlowSection /><ResponsiveSection /><CurvedBand nextBackground="#f4f7fb"><AccountabilitySection /></CurvedBand><ContactSection /></div>;
 }
