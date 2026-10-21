@@ -7,7 +7,10 @@ const placeholderPhoto = "/people/placeholder-draw-sky.jpg";
 export function PersonCardSmall({ person }: { person: (typeof about.people)[number] }) {
   const headingId = `person-${person.name.toLowerCase().replace(/\s+/g, "-")}`;
   const isBoard = "board" in person && person.board;
-  const photo = "photo" in person && person.photo ? person.photo : placeholderPhoto;
+  const photo =
+    "photo" in person && typeof person.photo === "string" && person.photo
+      ? person.photo
+      : placeholderPhoto;
 
   return (
     <article className={styles.card} aria-labelledby={headingId} aria-describedby={`${headingId}-details`}>
