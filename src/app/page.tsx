@@ -9,5 +9,5 @@ export const metadata = {
 };
 
 export default function HomePage() {
-  return <div className={styles.page}><HeroSection /><ExpectBand /><DirectFlowSection /><ResponsiveSection /><CurvedBand nextBackground="#f4f7fb"><AccountabilitySection /></CurvedBand><ContactSection /></div>;
+  return <div className={styles.page}><CurvedBand nextBackground="#fff"><HeroSection /></CurvedBand><CurvedBand nextBackground="#071932"><ExpectBand /></CurvedBand><DirectFlowSection /><ResponsiveSection /><CurvedBand nextBackground="#f4f7fb"><AccountabilitySection /></CurvedBand><ContactSection /></div>;
 }

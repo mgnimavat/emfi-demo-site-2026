@@ -3,11 +3,11 @@ import { ShieldCheck } from "lucide-react";
 import { wealth } from "@/content/wealth";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { FadeIn } from "@/components/motion/fade-in";
 import { PageHero } from "@/components/sections/page-hero";
 import { PortfolioView } from "@/components/mockups/portfolio-view";
+import glass from "@/components/sections/glass-card.module.css";
 
 export const metadata = {
   title: wealth.title,
@@ -21,17 +21,17 @@ export default function WealthAssetManagementPage() {
 
       <section>
         <Container className="py-12 md:py-16">
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-3">
             {wealth.pillars.map((pillar, i) => (
               <FadeIn key={pillar.title} delay={i * 0.08}>
-                <Card className="h-full">
+                <article className={`${glass.card} ${i === 1 ? glass.inverse : ""}`}>
                   <p className="font-mono text-[12px] font-bold tracking-[0.14em] text-brand">
                     {pillar.regime}
                   </p>
-                  <h3 className="mt-4 text-2xl font-bold text-ink">{pillar.title}</h3>
+                  <h3 className="mt-4 text-2xl font-bold">{pillar.title}</h3>
                   <p className="mt-4 text-sm leading-6 text-ink-secondary">{pillar.body}</p>
                   <p className="mt-6 text-xs leading-5 text-ink-muted">{pillar.entity}</p>
-                </Card>
+                </article>
               </FadeIn>
             ))}
           </div>
@@ -95,14 +95,14 @@ export default function WealthAssetManagementPage() {
               {wealth.getTitle}
             </h2>
           </FadeIn>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
             {wealth.getItems.map((title, i) => (
               <FadeIn key={title} delay={i * 0.08}>
-                <Card>
+                <article className={`${glass.card} ${i === 1 ? glass.inverse : ""}`}>
                   <ShieldCheck className="mb-16 text-brand" size={23} />
-                  <h3 className="text-xl font-semibold text-ink">{title}</h3>
+                  <h3 className="text-xl font-semibold">{title}</h3>
                   <p className="mt-4 text-sm leading-6 text-ink-secondary">{wealth.getBody}</p>
-                </Card>
+                </article>
               </FadeIn>
             ))}
           </div>

@@ -1,4 +1,4 @@
-import { BrandMark, SectionCurve, ClientIcon, DepositoryIcon } from "./icons";
+import { BrandMark, ClientIcon, DepositoryIcon } from "./icons";
 import { MotionRegion } from "./motion-region";
 import styles from "./landing.module.css";
 
@@ -7,7 +7,6 @@ function FlowLink({ second = false }: { second?: boolean }) {
 }
 export function DirectFlowSection() {
   return <section id="direct" className={styles.direct} aria-labelledby="direct-heading">
-    <SectionCurve />
     <div className={styles.directInner}>
       <MotionRegion>
         <h2 id="direct-heading" className={styles.sectionTitle}>More Direct.</h2>
