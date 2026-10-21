@@ -84,7 +84,7 @@ export function InteractiveExecutionTicket({ preview, fillHeight = false, onSecu
     timer.current = setTimeout(() => { setStatus("booked"); timer.current = null; }, 700);
   }
 
-  return <form className={`${styles.ticket} ${fillHeight ? styles.fillHeight : ""}`} aria-label={animated ? "Animated execution preview" : "Simulated execution ticket"} onSubmit={submit} onKeyDown={(event) => {
+  return <form className={`${styles.ticket} ${fillHeight ? styles.fillHeight : ""} ${animated && fillHeight ? styles.previewFill : ""}`} aria-label={animated ? "Animated execution preview" : "Simulated execution ticket"} onSubmit={submit} onKeyDown={(event) => {
     if (!animated && event.key === "Enter" && event.target instanceof HTMLInputElement && event.target !== searchRef.current) {
       event.preventDefault();
       event.currentTarget.requestSubmit(buyRef.current ?? undefined);

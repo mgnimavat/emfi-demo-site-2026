@@ -47,13 +47,13 @@
 .field { display: flex; flex-direction: column; gap: 5px; min-width: 0; color: #071832; font-size: 12px; font-weight: 500; line-height: 1.4; }
 .quantity,.priceField { margin-top: 15px; }
 .orderActions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; margin-top: 16px; }
-.orderActions button { position: relative; isolation: isolate; overflow: hidden; min-height: 44px; padding: 10px 16px; border: 0; border-radius: 12px; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
-.sell { background: #ef4444; }
-.buy { background: #22c55e; }
-.sell:hover { background: #dc3636; }
-.buy:hover { background: #16a34a; }
+.orderActions button { position: relative; isolation: isolate; overflow: hidden; min-height: 44px; padding: 10px 16px; border: 1px solid transparent; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color .2s,border-color .2s; }
+.orderActions .sell { border-color: #e8c7cd; background: #f5e2e5; color: #934a57; }
+.orderActions .buy { border-color: #c6ddd1; background: #dfede6; color: #31624e; }
+.orderActions .sell:hover:not(:disabled) { border-color: #dab1ba; background: #eed4da; }
+.orderActions .buy:hover:not(:disabled) { border-color: #abcbb9; background: #d1e4d9; }
 .orderActions button:disabled { cursor: default; }
-.orderActions button[data-booking="true"]::before { content: ""; position: absolute; z-index: -1; inset: 0; transform-origin: left; background: rgb(255 255 255 / 28%); animation: order-progress var(--booking-duration,700ms) linear both; animation-play-state: var(--booking-state,running); }
+.orderActions button[data-booking="true"]::before { content: ""; position: absolute; z-index: -1; inset: 0; transform-origin: left; background: currentColor; opacity: .1; animation: order-progress var(--booking-duration,700ms) linear both; animation-play-state: var(--booking-state,running); }
 .status { color: #657181; font-size: 11px; line-height: 1.5; }
 .status:not(:empty) { margin-top: 12px; }
 .confirmation { display: flex; align-items: flex-start; gap: 6px; color: #15803d; }
@@ -66,6 +66,10 @@
 .ticket fieldset:disabled input,.ticket fieldset:disabled select { opacity: 1; -webkit-text-fill-color: #071832; }
 .animatedQuery { position: absolute; top: 50%; left: 12px; padding-right: 2px; transform: translateY(-50%); background: #fff; color: #071832; font-size: 14px; animation: security-search .65s steps(6,end) both; }
 .fillHeight .orderActions { margin-top: 12px; }
+.previewFill .header { flex-shrink: 0; }
+.previewFill .fields { display: flex; flex: 1; flex-direction: column; justify-content: space-between; }
+.previewFill .orderActions { margin-top: 16px; }
+.previewFill .status { min-height: 16.5px; margin-top: 12px; }
 @keyframes security-search { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
 @keyframes order-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @media (max-width: 599px) { .searchControl input,.venue select,.field select,.field input { font-size: 16px; } .animatedQuery { font-size: 16px; } .grid,.orderActions { gap: 12px; } }

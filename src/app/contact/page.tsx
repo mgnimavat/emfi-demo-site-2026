@@ -1,12 +1,10 @@
 "use client";
 
 import { CurvedBand } from "@/components/layout/curved-band";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { about } from "@/content/about";
+import { ContactHero } from "@/components/sections/contact/hero";
+import contactStyles from "@/components/sections/contact/contact.module.css";
 import { useState } from "react";
 import { contact } from "@/content/contact";
-import { FadeIn } from "@/components/motion/fade-in";
 import { useResearchEnquiry } from "@/lib/use-research-enquiry";
 import styles from "@/components/sections/archive/theme.module.css";
 
@@ -15,15 +13,12 @@ export default function ContactPage() {
   const researchEnquiry = useResearchEnquiry();
   return (
     <div className={styles.page}>
-      <CurvedBand nextBackground="#fff"><section className={`${styles.contact} ${styles.contactHeroSection}`}>
+      <CurvedBand nextBackground="#fff"><ContactHero /></CurvedBand>
+      <CurvedBand nextBackground="#0c1725"><section id="contact-enquiry" className={`${styles.section} ${contactStyles.enquiry}`} aria-labelledby="contact-form-heading">
         <div className={styles.container}>
-          <div className={styles.contactGrid}>
-            <FadeIn className={`${styles.contactIntro} ${styles.contactHeroIntro}`}>
-              <h1><span>Let’s</span><span>Discuss</span></h1>
-              <Link href="/services" className={styles.contactServicesCta}>Our Services <ArrowRight size={14} aria-hidden="true" /></Link>
-            </FadeIn>
-            <form className={styles.form} onSubmit={(event) => { event.preventDefault(); setSent(true); }}>
-              <h2>{contact.formEyebrow}</h2>
+          <div className={contactStyles.enquiryLayout}>
+            <h2 id="contact-form-heading" className={`${styles.sectionTitle} ${contactStyles.formTitle}`}>{contact.formEyebrow}</h2>
+            <form className={styles.form} aria-labelledby="contact-form-heading" onSubmit={(event) => { event.preventDefault(); setSent(true); }}>
               {researchEnquiry ? <div className={styles.success}><p className="text-sm">Research context</p><p className="mt-2 font-semibold">{researchEnquiry.record.title}</p></div> : null}
               {sent ? <div role="status" className={styles.success}>{contact.success}</div> : null}
               <div className={styles.formFields}>
@@ -38,19 +33,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section></CurvedBand>
-      <CurvedBand nextBackground="#0c1725" background="#fff"><section className={styles.section} aria-labelledby="locations-heading">
-        <div className={styles.container}>
-          <h2 id="locations-heading" className={styles.sectionTitle}>{about.geographyTitle}</h2>
-          <p className={styles.sectionBody}>{about.geographyBody}</p>
-          <div className={styles.grid3}>{contact.locations.map((location, i) => <FadeIn key={location.city} delay={i * 0.08}><article id={`contact-${location.city.toLowerCase().replaceAll(" ", "-")}`} className={`${styles.card} ${styles.locationCard}`}>
-            <span className={styles.label}>{about.geography[i].role}</span>
-            <h3>{about.geography[i].city}</h3>
-            {location.kind === "enquiry" ? <p className="mt-3">{location.note}</p> : null}
-            {location.lines.length ? <p className={styles.locationLines}>{location.lines.map((line) => <span key={line}>{line}</span>)}</p> : null}
-            <div className={styles.registerLinks}><a href={`mailto:${location.email}`}>{location.email}</a></div>
-          </article></FadeIn>)}</div>
-          <p className={styles.contactNote}>{about.entitiesNote}{" "}<Link href="/why-emfi#regulated-entities" className={styles.textLink}>{about.entitiesCta}</Link>.</p>        </div>
-      </section></CurvedBand>
+
     </div>
   );
 }
