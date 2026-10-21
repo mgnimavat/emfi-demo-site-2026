@@ -1,6 +1,8 @@
 import { MotionRegion } from "@/components/sections/landing/motion-region";
 import { HeroTypewriter } from "@/components/sections/landing/typewriter";
-import { HomeContactForm } from "@/components/sections/landing/contact-form";
+import { CurvedBand } from "@/components/layout/curved-band";
+import { Button } from "@/components/ui/button";
+import { services } from "@/content/services";
 import { ArrowIcon, BrandMark, SectionCurve, TechnologyIcon, PeopleIcon, RelationshipIcon, ResponsibilityIcon, ConnectedIcon } from "@/components/sections/landing/icons";
 import styles from "@/components/sections/landing/landing.module.css";
 
@@ -26,7 +28,7 @@ export function ResponsiveSection() {
   return <section id="responsive" className={styles.responsive} aria-labelledby="responsive-heading">
       <SectionCurve />
       <div className={styles.benefitInner}><MotionRegion>
-        <h2 id="responsive-heading" className={styles.sectionTitle}>More responsive.</h2>
+        <h2 id="responsive-heading" className={styles.sectionTitle}>More Responsive</h2>
         <div className={styles.cards}>
           <article className={styles.card}><div className={styles.cardTitle}><span className={styles.cardIcon}><TechnologyIcon /></span><h3>Technology where <span>it helps</span></h3></div><p>Technology provides the structure, visibility and control needed to handle established processes efficiently.</p></article>
           <article className={styles.card}><div className={styles.cardTitle}><span className={styles.cardIcon}><PeopleIcon /></span><h3>People where <span>judgement matters</span></h3></div><p>Experienced teams remain involved where a requirement needs context, coordination or human judgement.</p></article>
@@ -39,7 +41,7 @@ export function AccountabilitySection() {
   return <section id="accountable" className={styles.accountable} aria-labelledby="accountable-heading">
       <SectionCurve />
       <div className={styles.accountableInner}><MotionRegion>
-        <h2 id="accountable-heading" className={styles.sectionTitle}>More accountable.</h2>
+        <h2 id="accountable-heading" className={styles.sectionTitle}>More Accountable</h2>
         <div className={styles.principles}>
           <article><div className={styles.principleTitle}><span><RelationshipIcon /></span><h3>One relationship</h3></div><p>A clear relationship sits at the centre of the work, helping coordinate the relevant teams and services.</p></article>
           <article><div className={styles.principleTitle}><span><ResponsibilityIcon /></span><h3>Clear responsibility</h3></div><p>Defined responsibilities make it clear who is involved and who is responsible for progressing the work.</p></article>
@@ -50,5 +52,5 @@ export function AccountabilitySection() {
 }
 
 export function ContactSection() {
-  return <section id="contact" className={styles.contact} aria-labelledby="contact-heading"><div className={styles.contactInner}><MotionRegion><h2 id="contact-heading">Discuss your requirements.</h2></MotionRegion><HomeContactForm /></div></section>;
+  return <CurvedBand nextBackground="#0c1725"><section id="contact" className={styles.contact} aria-labelledby="contact-heading"><MotionRegion className={styles.contactInner}><h2 id="contact-heading">{services.cta.title}</h2><p>{services.cta.body}</p><Button href="/contact" className={styles.contactAction}>{services.cta.action}</Button></MotionRegion></section></CurvedBand>;
 }

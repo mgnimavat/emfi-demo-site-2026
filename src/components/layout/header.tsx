@@ -42,7 +42,7 @@ function Navigation({ pathname }: { pathname: string }) {
         <nav aria-label="Main navigation" className="emfi-header-nav">
           {navLinks.map((link) => <Link key={link.href} href={link.href} aria-current={activeLink(pathname, link.href) ? "page" : undefined}>{link.label}</Link>)}
         </nav>
-        <div className="emfi-login-slot"><a href={navigation.loginHref} className="emfi-client-login" aria-label="Client Login"><LoginMark /><span className="emfi-client-label">Client Login</span></a></div>
+        <div className="emfi-login-slot"><a href={navigation.loginHref} className="emfi-client-login" aria-label="Client Login" aria-describedby="emfi-login-tooltip"><LoginMark /><span id="emfi-login-tooltip" className="emfi-client-tooltip" role="tooltip">Click here to Login</span></a></div>
         <button ref={toggle} type="button" className="emfi-menu-toggle" aria-expanded={open} aria-controls="emfi-mobile-navigation" onClick={() => setOpen((value) => !value)}>{open ? "Close" : "Menu"}</button>
       </div>
       <nav id="emfi-mobile-navigation" aria-label="Mobile navigation" className="emfi-mobile-nav" hidden={!open}>
