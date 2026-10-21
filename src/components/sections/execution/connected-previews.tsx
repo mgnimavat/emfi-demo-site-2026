@@ -48,7 +48,7 @@ export function ConnectedExecutionPreviews() {
         </div>
       </div>
     </section></CurvedBand>
-    <CurvedBand nextBackground="#071932"><section id="execution-preview" aria-label="Execution window" className={`${styles.section} ${styles.executionStage} scroll-mt-24`}>
+    <CurvedBand nextBackground="#f4f7fb"><section id="execution-preview" aria-label="Execution window" className={`${styles.section} ${styles.executionStage} scroll-mt-24`}>
       <div className={styles.container}>
         <ExecutionReveal className={styles.executionCaption}><h2>Put Insight Into Action,</h2><p>across relevant markets and securities.</p></ExecutionReveal>
         <ExecutionReveal className={styles.executionLayout}>
