@@ -16,7 +16,7 @@ export function PersonCard({ person }: { person: (typeof about.people)[number] }
           alt=""
           width={480}
           height={480}
-          sizes="(min-width: 1200px) 400px, (min-width: 768px) 50vw, 100vw"
+          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
           className={styles.photo}
         />
       </div>
