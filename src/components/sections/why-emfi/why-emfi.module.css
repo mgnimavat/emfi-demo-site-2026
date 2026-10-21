@@ -46,13 +46,6 @@
 .auditCard { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; min-height: 200px; text-align: center; }
 .auditCard img { max-width: 100%; width: auto; height: auto; max-height: 56px; object-fit: contain; }
 .auditCard p { font-size: 14px; font-weight: 500; }
-.evidenceCards > :first-child article { background: #dce8f8; border: 1px solid #e4eaf2; }
-.evidenceCards > :last-child article { background: #f4f7fb; }
-.evidenceCards > :nth-child(2) article.authorityCard,
-.evidenceCards > :nth-child(2) article.auditCard { background: var(--color-blue-500); color: #fff; }
-.evidenceCards > :nth-child(2) .authorityLinks a { color: #fff; text-decoration-color: #8098cc; }
-.evidenceCards > :nth-child(2) .authorityLinks a:hover { color: #c9d4e5; text-decoration-color: #c9d4e5; }
-.evidenceCards > :nth-child(2) .auditCard p { color: #c9d4e5; }
 .evidenceCards > :nth-child(2) .authorityLogo img,
 .evidenceCards > :nth-child(2) .auditCard img { filter: brightness(0) invert(1); }
 .entityCard { display: flex; flex-direction: column; }

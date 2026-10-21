@@ -3,10 +3,10 @@ import { ArrowRight, Check } from "lucide-react";
 import { settlement } from "@/content/settlement";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { FadeIn } from "@/components/motion/fade-in";
 import { PageHero } from "@/components/sections/page-hero";
+import glass from "@/components/sections/glass-card.module.css";
 import { SettlementChain } from "@/components/diagrams/settlement-chain";
 import { SettlementDemo } from "@/components/demos/settlement-demo";
 import { WorkstationDemo } from "@/components/demos/workstation-demo";
@@ -110,20 +110,20 @@ export default function SettlementCustodyPage() {
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {settlement.servicing.map(([heading, items], i) => (
               <FadeIn key={heading} delay={i * 0.08}>
-                <Card>
+                <article className={`${glass.card} ${i === 1 ? glass.inverse : ""}`}>
                   <p className="font-mono text-[11px] tracking-widest text-ink-muted">
                     {heading}
                   </p>
                   {items.map((item) => (
                     <div
                       key={item}
-                      className="flex items-center gap-3 border-b border-line py-5 text-sm text-ink last:border-0"
+                      className="flex items-center gap-3 border-b border-line py-5 text-sm last:border-0"
                     >
                       <Check size={15} className="text-brand" />
                       {item}
                     </div>
                   ))}
-                </Card>
+                </article>
               </FadeIn>
             ))}
           </div>
@@ -139,15 +139,15 @@ export default function SettlementCustodyPage() {
             </h2>
           </FadeIn>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {settlement.roles.map(([label, body, cta]) => (
+            {settlement.roles.map(([label, body, cta], i) => (
               <article
                 key={label}
-                className="rounded-lg border border-line border-t-4 border-t-brand bg-card p-9 emfi-card-lift"
+                className={`${glass.card} ${i === 1 ? glass.inverse : ""}`}
               >
                 <p className="font-mono text-[11px] tracking-widest text-brand">{label}</p>
                 <p className="mt-7 text-lg leading-8 text-ink-secondary">{body}</p>
                 <div className="mt-8">
-                  <Button href="/contact">{cta}</Button>
+                  <Button href="/contact" variant={i === 1 ? "inverse" : "primary"}>{cta}</Button>
                 </div>
               </article>
             ))}
