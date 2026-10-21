@@ -192,7 +192,7 @@ function FilterCell({
 
 function ActivePill({ label }: { label: string }) {
   return (
-    <span className="inline-flex min-w-[48px] items-center justify-center rounded-[5px] bg-[#39ff14] px-2.5 py-0.5 text-[7px] font-semibold text-[#36A14B]">
+    <span className="flex w-full items-center justify-center rounded-[5px] bg-[#8AFF8E] px-2 py-0.5 text-center text-[7px] font-semibold text-[#36a16b]">
       {label}
     </span>
   );
@@ -519,7 +519,9 @@ function ResearchReportsPanel() {
               {row.map((cell, i) => (
                 <td
                   key={i}
-                  className="max-w-[140px] truncate whitespace-nowrap px-1.5 py-1.5 text-ink"
+                  className={`whitespace-nowrap px-1.5 py-1.5 text-ink ${
+                    i === 4 ? "w-[72px]" : "max-w-[140px] truncate"
+                  }`}
                 >
                   {i === 4 ? <ActivePill label={cell} /> : cell}
                 </td>
