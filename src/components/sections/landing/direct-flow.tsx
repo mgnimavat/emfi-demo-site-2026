@@ -14,7 +14,7 @@ export function DirectFlowSection() {
         <p className="sr-only">Two routes connect Client to Depository. The direct route through EMFI arrives faster than the route through Settlement agent, Sub-custodian and Custodian.</p>
         <div className={styles.flow}>
           <div className={styles.flowLegacy} aria-hidden="true">
-            <span className={styles.viaRail}><svg viewBox="0 0 1000 164" preserveAspectRatio="none"><path className={styles.viaTrack} pathLength="100" vectorEffect="non-scaling-stroke" d="M1.5 163V50A48.5 48.5 0 0 1 50 1.5H950A48.5 48.5 0 0 1 998.5 50V163" fill="none" /><path className={styles.viaBeam} pathLength="100" d="M1.5 163V50A48.5 48.5 0 0 1 50 1.5H950A48.5 48.5 0 0 1 998.5 50V163" fill="none" /></svg></span>
+            <span className={styles.viaRail}><svg viewBox="0 0 1000 164" preserveAspectRatio="none"><path className={styles.viaTrack} pathLength="100" vectorEffect="non-scaling-stroke" d="M1.5 163V50A48.5 48.5 0 0 1 50 1.5H950A48.5 48.5 0 0 1 998.5 50V163" fill="none" /><path className={styles.viaBeam} pathLength="100" d="M1.5 163V50A48.5 48.5 0 0 1 50 1.5H950A48.5 48.5 0 0 1 998.5 50V163" fill="none" /></svg><span className={styles.viaArrow} /><span className={`${styles.viaArrow} ${styles.viaArrowSecond}`} /></span>
             <div className={styles.viaSteps}>{["Settlement agent", "Sub-custodian", "Custodian"].map((label) => <span key={label} className={styles.viaStep}><span className={styles.viaDot} /><span>{label}</span></span>)}</div>
           </div>
           <div className={`${styles.flowNode} ${styles.clientNode}`} aria-hidden="true"><span className={styles.flowIcon}><ClientIcon /></span><span className={styles.flowName}>Client</span></div>

@@ -50,7 +50,7 @@ export function ProductAnimation({ view, paused = false, orderStage, fillHeight 
   return (
     <div ref={ref} role="img" aria-label={`Demo animated ${view === "research" ? `research explorer loading a generic AI-market brief titled ${researchTitle}` : view === "backoffice" ? "client dashboard with six charts and obscured totals" : "NVIDIA NVDA order ticket showing demo bid and ask prices and a simulated order"}`} className={`relative w-full max-w-[620px] overflow-hidden rounded-lg border border-line bg-page shadow-[var(--elevation-card-hover)] ${fillHeight ? "flex h-full flex-col" : ""}`}>
       <div className={`flex min-h-12 items-center justify-between gap-2 border-b px-4 py-3 sm:px-5 ${view === "research" ? "border-[#dce0e6] bg-[#eef0f2] text-[#071832]" : "border-line bg-inverse text-ink-inverse"}`}>
-        <span className="text-sm font-semibold tracking-[-0.02em]">EMFI<span className={`font-normal ${view === "research" ? "text-[#485666]" : "text-ink-inverse-muted"}`}> / {view === "research" ? "Research" : view === "backoffice" ? "Client dashboard" : "Execution"}</span></span>
+        <span className="text-sm font-semibold tracking-[-0.02em]">{view === "research" ? "Research" : <>EMFI<span className="font-normal text-ink-inverse-muted"> / Client dashboard</span></>}</span>
       </div>
       {view === "research" ? (
         <div className={`${compact ? "p-4" : "p-4 sm:p-6"} ${fillHeight ? "flex flex-1 flex-col" : ""}`}>

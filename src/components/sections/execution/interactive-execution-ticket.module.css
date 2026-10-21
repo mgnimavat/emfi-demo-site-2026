@@ -6,6 +6,7 @@
 .windowTitle > svg { color: #c4cbd2; }
 .closeButton,.detailsButton,.searchToggle { display: grid; flex: none; place-items: center; padding: 0; border: 0; background: transparent; color: #80909d; cursor: pointer; }
 .closeButton { width: 28px; height: 28px; }
+.closeButton:disabled { cursor: default; opacity: .55; }
 .closeIcon { margin: 4px; color: #80909d; }
 .body { display: flex; flex: 1; flex-direction: column; min-width: 0; padding: 14px 13px 20px; }
 .fields { min-width: 0; margin: 0; padding: 0; border: 0; }
