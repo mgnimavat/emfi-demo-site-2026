@@ -8,6 +8,7 @@ import { ConnectedJourney } from "@/components/sections/execution-v2/connected-j
 import { ConnectedExecutionPreviews } from "@/components/sections/execution/connected-previews";
 import theme from "@/components/sections/archive/theme.module.css";
 import styles from "@/components/sections/execution/page.module.css";
+import flowStyles from "@/components/sections/execution-v2/flow-section.module.css";
 
 export const metadata = {
   title: `${execution.title} (v2)`,
@@ -56,7 +57,7 @@ export default function ResearchExecutionV2Page() {
         </section>
       </CurvedBand>
       <CurvedBand nextBackground="#f4f7fb">
-        <section className={styles.flow} aria-labelledby="workflow-heading">
+        <section className={`${styles.flow} ${flowStyles.flow}`} aria-labelledby="workflow-heading">
           <div className={styles.container}>
             <ExecutionReveal>
               <h2 id="workflow-heading" className={styles.title}>

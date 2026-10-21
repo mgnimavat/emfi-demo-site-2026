@@ -6,8 +6,8 @@
   --journey-glow: #a2c2fd;
   --node-size: 12px;
   position: relative;
-  /* Same padding rhythm as original research-execution .flow */
-  padding: 48px 0 clamp(64px, 7vw, 96px);
+  /* Same equal top/bottom spacing as homepage More Direct (.directInner) */
+  padding: clamp(64px, 7vw, 96px) 0;
   background: var(--journey-navy);
   color: var(--journey-white);
 }
@@ -45,7 +45,7 @@
 .stages {
   position: relative;
   margin: 0;
-  padding: 0 0 clamp(24px, 4vh, 48px);
+  padding: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
