@@ -9,7 +9,7 @@
 }
 .page h1, .page h2, .page h3 { font-family: inherit; }
 .container { width: calc(100% - 64px); max-width: 1320px; margin-inline: auto; }
-.hero { padding-block: 64px; background: radial-gradient(70% 62% at 0 0, #c6d8ecc7, #dce8f861 42%, transparent 74%), radial-gradient(64% 58% at 100% 100%, #bad0eab8, #d6e4f452 44%, transparent 76%), #f7f9fc; }
+.hero { padding-block: 64px; background: var(--hero-page-background); }
 .heroGrid { display: grid; align-items: center; gap: 40px; }
 .heroGrid > * { min-width: 0; }
 .hero .heroTitle { font-size: clamp(48px,7.2vw,104px); font-weight: 800; line-height: 1.08; letter-spacing: -.045em; }

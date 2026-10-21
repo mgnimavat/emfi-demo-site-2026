@@ -3,7 +3,7 @@
 .page h1, .page h2, .page h3, .page p { margin: 0; }
 .page section, .capabilities { scroll-margin-top: 88px; }
 .container { width: calc(100% - 64px); max-width: 1320px; padding-inline: 0; }
-.hero { display: flex; align-items: center; min-height: calc(100dvh - 77.36px); padding-block: clamp(64px,7vw,104px); background: radial-gradient(70% 62% at 0% 0%, #c6d8ecc7, #dce8f861 42%, transparent 74%), radial-gradient(64% 58% at 100% 100%, #bad0eab8, #d6e4f452 44%, transparent 76%), #f7f9fc; }
+.hero { display: flex; align-items: center; min-height: calc(100dvh - 77.36px); padding-block: clamp(64px,7vw,104px); background: var(--hero-page-background); }
 .heroGrid { display: grid; grid-template-columns: minmax(0,1fr) 520px; align-items: center; gap: clamp(32px,3vw,48px); }
 .heroGrid > * { min-width: 0; }
 .heroTitle { font-size: clamp(64px,8vw,116px); font-weight: 800; line-height: .96; letter-spacing: -.045em; -webkit-text-stroke: .006em currentColor; }

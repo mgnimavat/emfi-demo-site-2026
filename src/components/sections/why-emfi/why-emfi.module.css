@@ -1,4 +1,4 @@
-.hero { display: flex; align-items: center; min-height: calc(100dvh - 77.36px); color: #071832; background: radial-gradient(ellipse 70% 62% at 0 0,rgb(198 216 236 / 78%),rgb(220 232 248 / 38%) 42%,transparent 74%),radial-gradient(ellipse 64% 58% at 100% 100%,rgb(186 208 234 / 72%),rgb(214 228 244 / 32%) 44%,transparent 76%),#f7f9fc; }
+.hero { display: flex; align-items: center; min-height: calc(100dvh - 77.36px); color: #071832; background: var(--hero-page-background); }
 .heroLayout { display: grid; grid-template-columns: minmax(0,1fr) clamp(400px,calc(50vw - 180px),640px); align-items: center; gap: clamp(32px,4vw,64px); width: 100%; max-width: 1440px; margin: auto; padding: clamp(56px,8vh,104px) clamp(20px,4vw,56px) clamp(80px,10vh,112px); }
 .heroCopy { min-width: 0; container-type: inline-size; }
 .heroCopy h1 { margin: 0; font-size: clamp(44px,18.4cqw,132px); font-weight: 800; line-height: .94; letter-spacing: -.045em; white-space: nowrap; -webkit-text-stroke: .006em currentColor; paint-order: stroke fill; }

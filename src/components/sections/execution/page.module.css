@@ -1,5 +1,5 @@
 .container { width: calc(100% - 64px); max-width: 1320px; margin-inline: auto; }
-.hero { padding-block: clamp(56px,6vw,88px); background: radial-gradient(70% 62% at 0 0,#c6d8ecc7,#dce8f861 42%,transparent 74%),radial-gradient(64% 58% at 100% 100%,#bad0eab8,#d6e4f452 44%,transparent 76%),#f7f9fc; }
+.hero { padding-block: clamp(56px,6vw,88px); background: var(--hero-page-background); }
 .heroGrid { display: grid; align-items: center; gap: 40px; }
 .heroGrid > * { min-width: 0; }
 .heroCopy { container-type: inline-size; }
