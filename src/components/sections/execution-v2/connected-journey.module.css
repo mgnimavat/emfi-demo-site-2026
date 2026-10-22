@@ -7,7 +7,7 @@
   padding: 0;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--journey-columns, 6), minmax(0, 1fr));
   align-items: start;
   gap: 0;
 }

@@ -1,4 +1,4 @@
-.hero { display: flex; align-items: center; min-height: calc(100dvh - 77.36px); color: #071832; background: radial-gradient(ellipse 70% 62% at 0 0,rgb(198 216 236 / 78%),rgb(220 232 248 / 38%) 42%,transparent 74%),radial-gradient(ellipse 64% 58% at 100% 100%,rgb(186 208 234 / 72%),rgb(214 228 244 / 32%) 44%,transparent 76%),#f7f9fc; }
+.hero { display: flex; align-items: center; min-height: calc(100dvh - 77.36px); color: #071832; background: var(--hero-page-background); }
 .layout { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,.9fr); align-items: center; gap: clamp(40px,5vw,80px); width: 100%; max-width: 1440px; margin: auto; padding: clamp(56px,8vh,104px) clamp(20px,4vw,56px) clamp(80px,10vh,112px); }
 .copy { min-width: 0; container-type: inline-size; }
 .copy h1 { margin: 0; font-size: clamp(70px,22cqw,132px); font-weight: 800; line-height: .94; letter-spacing: -.045em; -webkit-text-stroke: .006em currentColor; paint-order: stroke fill; }

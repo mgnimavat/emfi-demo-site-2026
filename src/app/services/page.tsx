@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { ChartNoAxesCombined, ArrowRightLeft, CircleCheck, ShieldCheck, BriefcaseBusiness } from "lucide-react";
+import { ChartNoAxesCombined, ShieldCheck, BriefcaseBusiness } from "lucide-react";
 import { CurvedBand } from "@/components/layout/curved-band";
 import { services } from "@/content/services";
 import { Container } from "@/components/layout/container";
@@ -8,11 +8,11 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { BrandSign } from "@/components/brand/logo";
 import { ServicesHeroSubtext } from "@/components/sections/services/hero-subtext";
 import { MotionRegion } from "@/components/sections/landing/motion-region";
+import { ConnectedJourney } from "@/components/sections/execution-v2/connected-journey";
 import glass from "@/components/sections/glass-card.module.css";
 import styles from "./services.module.css";
 
 export const metadata = { title: services.title, description: services.lifecycle.body };
-const stageIcons = [ChartNoAxesCombined, ArrowRightLeft, CircleCheck, ShieldCheck, BriefcaseBusiness];
 const servicePoints = [{ x: 180, y: 60 }, { x: 76.077, y: 240 }, { x: 283.923, y: 240 }];
 
 export default function ServicesPage() {
@@ -49,17 +49,7 @@ export default function ServicesPage() {
             <h2 id="lifecycle-heading" className={styles.sectionTitle}>{services.lifecycle.title}</h2>
             <p className={styles.supporting}>{services.lifecycle.body}</p>
           </FadeIn>
-          <FadeIn>
-            <ol className={styles.lifecycleDiagram} aria-label="Five connected stages of the investment lifecycle">
-              {services.lifecycle.stages.map((stage, i) => {
-                const Icon = stageIcons[i];
-                return <li key={stage.num} className={styles.lifecycleStage}>
-                  <span className={styles.stageIcon}><Icon aria-hidden="true" strokeWidth={1.5} /></span>
-                  <div className={styles.stageCopy}><h3>{stage.title}</h3><p>{stage.description}</p></div>
-                </li>;
-              })}
-            </ol>
-          </FadeIn>
+          <ConnectedJourney variant="lifecycle" />
         </Container>
       </section></CurvedBand>
 

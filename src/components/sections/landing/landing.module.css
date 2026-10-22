@@ -1,5 +1,3 @@
-@property --emfi-home-glow-x { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
-@property --emfi-home-glow-y { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
 .page { --ink: #071832; --navy: #071932; --glyph: #001a34; --body: #24344b; color: var(--ink); font-family: var(--font-inter), Inter, Arial, sans-serif; background: #fff; }
 .page *, .page *::before, .page *::after { box-sizing: border-box; }
 .page h1, .page h2, .page h3, .page p { margin: 0; }
@@ -10,9 +8,7 @@
 .page [data-motion-region] { transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1); }
 .page [data-revealed="false"] { opacity: 0; transform: translateY(12px); }
 .page [data-motion-active="false"] *, .page [data-motion-active="false"] *::before, .page [data-motion-active="false"] *::after { animation-play-state: paused !important; }
-.hero { position: relative; overflow: hidden; display: flex; align-items: center; min-height: calc(100vh - 77.36px); min-height: calc(100dvh - 77.36px); background: #f7f9fc; }
-.hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 62% at calc(0% - var(--emfi-home-glow-x)) calc(0% - var(--emfi-home-glow-y)),rgb(198 216 236 / 78%) 0%,rgb(220 232 248 / 38%) 42%,transparent 74%),radial-gradient(ellipse 64% 58% at calc(100% + var(--emfi-home-glow-x)) calc(100% + var(--emfi-home-glow-y)),rgb(186 208 234 / 72%) 0%,rgb(214 228 244 / 32%) 44%,transparent 76%); pointer-events: none; animation: glow-drift 36s ease-in-out infinite; }
-.hero:has([data-motion-active="false"])::before { animation-play-state: paused; }
+.hero { position: relative; overflow: hidden; display: flex; align-items: center; min-height: calc(100vh - 77.36px); min-height: calc(100dvh - 77.36px); background: var(--hero-page-background); }
 .heroLayout { position: relative; z-index: 1; width: 100%; max-width: 1440px; margin: auto; display: grid; grid-template-columns: minmax(0,1fr) 440px; gap: clamp(72px,9vw,160px); align-items: center; padding: clamp(48px,8vh,104px) clamp(20px,4vw,56px); }
 .heroCopy { position: relative; z-index: 2; min-width: 0; padding-right: clamp(48px,6vw,96px); max-width: min(720px,100%); }
 .heroCopy h1 { font-size: clamp(70px,10vw,132px); font-weight: 800; line-height: .94; letter-spacing: -.045em; -webkit-text-stroke: .006em currentColor; paint-order: stroke fill; }
@@ -37,13 +33,13 @@
 .direct > .curve { background: #f4f7fb; }
 .directInner { max-width: 1440px; margin: auto; padding: clamp(64px,7vw,96px) clamp(20px,4vw,56px); }
 .sectionTitle { font-size: clamp(38px,4.5vw,60px); font-weight: 800; line-height: 1.1; letter-spacing: -.04em; text-align: center; -webkit-text-stroke: 0; }
-.flow { position: relative; display: grid; grid-template-columns: 108px minmax(48px,1fr) 228px minmax(48px,1fr) 108px; grid-template-rows: auto auto; align-items: center; width: 100%; max-width: 1200px; margin: 32px auto 0; padding-bottom: 44px; overflow: visible; }
+.flow { --flow-cycle-duration: 16s; position: relative; display: grid; grid-template-columns: 108px minmax(48px,1fr) 228px minmax(48px,1fr) 108px; grid-template-rows: auto auto; align-items: center; width: 100%; max-width: 1200px; margin: 32px auto 0; padding-bottom: 44px; overflow: visible; }
 .flowLegacy { grid-column: 1 / -1; position: relative; height: 128px; }
 .viaRail { position: absolute; left: 54px; right: 54px; top: 28px; bottom: -112px; }
 .viaRail svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .viaTrack { stroke: rgb(210 226 245 / 18%); stroke-width: 3; }
-.viaBeam { stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 100 100; stroke-dashoffset: 100; filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 14px rgb(162 194 253 / 75%)); animation: via-beam 8s linear infinite; }
-.viaArrow { position: absolute; left: 40.66%; top: .9146%; width: 10px; height: 10px; border-top: 2px solid #c9d4e5; border-right: 2px solid #c9d4e5; transform: translate(-50%,-50%) rotate(45deg); opacity: 0; pointer-events: none; animation: via-arrow-first 8s linear infinite; }
+.viaBeam { stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 100 100; stroke-dashoffset: 100; filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 14px rgb(162 194 253 / 75%)); animation: via-beam var(--flow-cycle-duration) linear infinite; }
+.viaArrow { position: absolute; left: 40.66%; top: .9146%; width: 10px; height: 10px; border-top: 2px solid #c9d4e5; border-right: 2px solid #c9d4e5; transform: translate(-50%,-50%) rotate(45deg); opacity: 0; pointer-events: none; animation: via-arrow-first var(--flow-cycle-duration) linear infinite; }
 .viaArrowSecond { left: 59.34%; animation-name: via-arrow-second; }
 .viaSteps { position: absolute; top: 0; left: 54px; right: 54px; height: 100%; }
 .viaStep { position: absolute; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; width: 176px; gap: 12px; color: #fff; font-size: 16px; font-weight: 600; line-height: 1.2; letter-spacing: -.02em; text-align: center; }
@@ -55,13 +51,13 @@
 .flowIcon svg { width: 38px; height: 38px; }
 .flowName { position: absolute; left: 50%; top: 110px; transform: translateX(-50%); width: 160px; text-align: center; color: #fff; font-size: 18px; font-weight: 700; letter-spacing: -.02em; line-height: 1.25; }
 .routeMark { position: relative; z-index: 3; display: grid; place-items: center; border-radius: 50%; color: var(--glyph); }
-.routeDisc { width: 216px; height: 216px; border-radius: 50%; background: #fff; border: 1.5px solid #e4eaf2; display: grid; place-items: center; color: #244f88; box-shadow: 0 0 0 10px rgb(162 194 253 / 40%), 0 0 48px rgb(162 194 253 / 25%); animation: route-highlight 8s linear infinite; transition: box-shadow .3s; }
+.routeDisc { width: 216px; height: 216px; border-radius: 50%; background: #fff; border: 1.5px solid #e4eaf2; display: grid; place-items: center; color: #244f88; box-shadow: 0 0 0 10px rgb(162 194 253 / 40%), 0 0 48px rgb(162 194 253 / 25%); animation: route-highlight var(--flow-cycle-duration) linear infinite; transition: box-shadow .3s; }
 .routeDisc svg { width: 130px; height: 130px; }
 .routeMark:is(:hover,:focus-visible) .routeDisc { animation: none; box-shadow: 0 0 0 10px rgb(162 194 253 / 50%),0 0 48px rgb(162 194 253 / 35%); }
 .flowLink { position: relative; display: block; height: 3px; }
 .flowTrack { position: absolute; inset: 0; background: rgb(231 238 248 / 16%); }
-.flowBeam { position: absolute; inset: 0; transform-origin: left; background: linear-gradient(90deg,rgb(162 194 253 / 35%),#fff 70%); box-shadow: 0 0 8px #fff,0 0 22px rgb(162 194 253 / 90%); animation: beam-first 8s linear infinite; }
-.flowGlow { position: absolute; width: 12px; height: 12px; top: -4.5px; border-radius: 50%; background: #fff; box-shadow: 0 0 8px #fff,0 0 22px rgb(162 194 253 / 90%); animation: glow-first 8s linear infinite; }
+.flowBeam { position: absolute; inset: 0; transform-origin: left; background: linear-gradient(90deg,rgb(162 194 253 / 35%),#fff 70%); box-shadow: 0 0 8px #fff,0 0 22px rgb(162 194 253 / 90%); animation: beam-first var(--flow-cycle-duration) linear infinite; }
+.flowGlow { position: absolute; width: 12px; height: 12px; top: -4.5px; border-radius: 50%; background: #fff; box-shadow: 0 0 8px #fff,0 0 22px rgb(162 194 253 / 90%); animation: glow-first var(--flow-cycle-duration) linear infinite; }
 .secondLink .flowBeam { animation-name: beam-second; }
 .secondLink .flowGlow { animation-name: glow-second; }
 .responsive { background: #f4f7fb; }
@@ -166,7 +162,6 @@
 .form button { justify-self: start; min-width: 140px; min-height: 50px; padding: 0 24px; border: 0; border-radius: 6px; background: var(--ink); color: #fff; font-family: inherit; font-size: 16px; font-weight: 700; line-height: 1; cursor: pointer; transition: background .2s; }
 .form button:hover { background: #183252; }
 .form .confirmation { color: var(--body); font-size: 14px; line-height: 1.6; }
-@keyframes glow-drift { 0%,100% { --emfi-home-glow-x: 0%; --emfi-home-glow-y: 0%; } 50% { --emfi-home-glow-x: 4%; --emfi-home-glow-y: 5%; } }
 @keyframes cta-enter { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 @keyframes caret { 0%,45% { opacity: 1; } 50%,100% { opacity: 0; } }
 @keyframes mark-fill { 0%,40% { opacity: 0; } 70%,88% { opacity: 1; } 100% { opacity: 0; } }
@@ -175,7 +170,7 @@
 @keyframes via-beam { 0%,3% { opacity: 0; stroke-dashoffset: 100; } 4% { opacity: 1; } 30%,84% { opacity: 1; stroke-dashoffset: 0; } 92%,100% { opacity: 0; stroke-dashoffset: 0; } }
 @keyframes via-arrow-first { 0%,14% { opacity: 0; } 15%,30% { opacity: 1; } 32%,100% { opacity: 0; } }
 @keyframes via-arrow-second { 0%,18% { opacity: 0; } 19%,30% { opacity: 1; } 32%,100% { opacity: 0; } }
-/* Shared 8s cycle: EMFI arrives at 1.6s; the upper route follows at 2.4s. */
+/* Shared 16s cycle: EMFI arrives at 3.2s; the upper route follows at 4.8s. */
 @keyframes beam-first { 0%,3% { transform: scaleX(0); opacity: 0; } 4% { opacity: 1; } 12%,84% { transform: scaleX(1); opacity: 1; } 92%,100% { transform: scaleX(1); opacity: 0; } }
 @keyframes beam-second { 0%,12% { transform: scaleX(0); opacity: 0; } 13% { opacity: 1; } 20%,84% { transform: scaleX(1); opacity: 1; } 92%,100% { transform: scaleX(1); opacity: 0; } }
 @keyframes glow-first { 0%,3% { left: 0; opacity: 0; } 4% { opacity: 1; } 12% { left: calc(100% - 12px); opacity: 1; } 14%,100% { left: calc(100% - 12px); opacity: 0; } }
