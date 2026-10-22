@@ -1,6 +1,4 @@
 {
-  "tagline": "Institutional infrastructure. Without the institutional layers.",
-  "entities": "EMFI Securities Limited · EMFI Capital Limited · EMFI Capital (DIFC) Limited",
   "linkGroups": [
     {
       "heading": "Services",
@@ -17,23 +15,23 @@
         { "label": "About", "href": "/about" },
         { "label": "Contact", "href": "/contact" }
       ]
-    }
-  ],
-  "offices": [
-    {
-      "city": "London",
-      "lines": ["25-26 Dering Street, Third Floor", "Mayfair, London W1S 1AW"],
-      "email": "contact@emfi.uk"
     },
     {
-      "city": "Dubai",
-      "lines": ["7A-10, Level POD, Park Towers,", "Dubai International Financial Centre, Dubai, United Arab Emirates."],
-      "email": "contact@emfi.ae"
+      "heading": "Legal",
+      "links": [
+        { "label": "Terms of Use", "href": "https://emfi.uk/english/termsofuse" },
+        { "label": "Privacy Policy", "href": "https://emfi.uk/english/privacypolicy" },
+        { "label": "Cookies Policy", "href": "https://emfi.uk/english/cookiespolicy" },
+        { "label": "Scam Alert", "href": "https://emfi.uk/english/scamalert" }
+      ]
     },
     {
-      "city": "Cayman Islands",
-      "lines": ["EMFI Fund enquiries"],
-      "email": "contact@emfi.uk"
+      "heading": "Regulatory",
+      "links": [
+        { "label": "Policy Documents", "href": "https://emfi.uk/english/policydocuments" },
+        { "label": "Standardised Costs", "href": "https://emfi.uk/EMFIStandardisedCosts.pdf" },
+        { "label": "MIFIDPRU 8 Disclosure", "href": "https://emfi.uk/EMFIMifidpru8disclosure.pdf" }
+      ]
     }
   ],
   "legal": "© 2026 EMFI. All rights reserved. Intended for Professional Clients and Eligible Counterparties only. Not suitable for Retail Clients or US Persons.",
