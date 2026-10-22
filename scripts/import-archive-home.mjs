@@ -30,8 +30,8 @@ const sharedHeader = `<header class="emfi-site-header"><div class="emfi-header-i
 if (!/<header\b[\s\S]*?<\/header>/.test(template)) throw new Error("Archive header is missing");
 template = template.replace(/<header\b[\s\S]*?<\/header>/, () => sharedHeader);
 template = template.replace("</head>", () => `<style id="emfi-shared-header">${headerCss}</style></head>`);
-const offices = footer.offices.map((office) => `<address class="emfi-footer-office"><h2>${escape(office.city)}</h2><p>${office.lines.map((line) => `<span>${escape(line)}</span>`).join("")}</p><a href="mailto:${escape(office.email)}">${escape(office.email)}</a></address>`).join("");
-const sharedFooter = `<footer class="emfi-site-footer"><div class="emfi-footer-inner"><div class="emfi-footer-brand"><a href="/" aria-label="EMFI home"><img src="/brand/archive-footer-logo.svg" alt="EMFI" width="160" height="64" class="emfi-footer-logo"></a></div><div class="emfi-footer-offices">${offices}</div><p class="emfi-footer-legal">${escape(footer.legal)}</p></div></footer>`;
+const linkGroups = footer.linkGroups.map((group) => `<nav class="emfi-footer-links" aria-label="Footer ${escape(group.heading.toLowerCase())}"><h2>${escape(group.heading)}</h2><ul>${group.links.map((link) => `<li><a href="${escape(link.href)}"${link.href.startsWith("http") ? " target=\"_blank\" rel=\"noopener noreferrer\"" : ""}>${escape(link.label)}</a></li>`).join("")}</ul></nav>`).join("");
+const sharedFooter = `<footer class="emfi-site-footer"><div class="emfi-footer-inner"><div class="emfi-footer-top">${linkGroups}</div><div class="emfi-footer-legal"><p>${escape(footer.legal)}</p><p class="emfi-footer-legal-detail">${escape(footer.legalDetail)}</p></div></div></footer>`;
 template = template.replace(originalFooter, () => sharedFooter);
 template = template.replace("</head>", () => `<style id="emfi-shared-footer">${footerCss}</style></head>`);
 // JSON is embedded in a script element, so preserve HTML-safe closing tags.

@@ -51,10 +51,10 @@ export function Button({
   );
 
   const content = (
-    <>
+    <span className="emfi-btn-label">
       {children}
       {showArrow ? <ButtonArrow /> : null}
-    </>
+    </span>
   );
 
   const control =
