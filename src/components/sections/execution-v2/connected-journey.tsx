@@ -4,6 +4,11 @@ import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } f
 import { animate, useInView, useMotionValue, useReducedMotion } from "framer-motion";
 import {
   ArrowUpRight,
+  ArrowRightLeft,
+  BriefcaseBusiness,
+  ChartNoAxesCombined,
+  CircleCheck,
+  ShieldCheck,
   BadgeCheck,
   CircleDollarSign,
   ClipboardList,
@@ -11,6 +16,7 @@ import {
   Handshake,
   type LucideIcon,
 } from "lucide-react";
+import { services } from "@/content/services";
 import { execution } from "@/content/execution";
 import styles from "./connected-journey.module.css";
 
@@ -31,12 +37,19 @@ function clamp01(value: number) {
   return Math.min(1, Math.max(0, value));
 }
 
-export function ConnectedJourney() {
+export function ConnectedJourney({ variant = "execution" }: { variant?: "execution" | "lifecycle" }) {
   const ref = useRef<HTMLOListElement>(null);
   const visible = useInView(ref, { amount: 0.15 });
   const prefersReducedMotion = useReducedMotion();
   const reduced = Boolean(prefersReducedMotion);
-  const steps = execution.workflow.steps;
+  const lifecycle = variant === "lifecycle";
+  const steps = lifecycle
+    ? services.lifecycle.stages.map(stage => ({ label: stage.title.toLowerCase().replace(/\b\w/g, letter => letter.toUpperCase()) }))
+    : execution.workflow.steps;
+  const stageIcons = lifecycle
+    ? [ChartNoAxesCombined, ArrowRightLeft, CircleCheck, ShieldCheck, BriefcaseBusiness]
+    : icons;
+  const journeyDuration = lifecycle ? 15500 : JOURNEY_MS;
   const lastIndex = steps.length - 1;
   const progress = useMotionValue(0);
   const [progressValue, setProgressValue] = useState(0);
@@ -62,7 +75,7 @@ export function ConnectedJourney() {
       if (!active) return;
       progress.set(0);
       controls = animate(progress, 1, {
-        duration: JOURNEY_MS / 1000,
+        duration: journeyDuration / 1000,
         ease: "linear",
         onComplete: () => {
           if (!active) return;
@@ -79,7 +92,7 @@ export function ConnectedJourney() {
       active = false;
       controls?.stop();
     };
-  }, [visible, reduced, progress]);
+  }, [visible, reduced, progress, journeyDuration]);
 
   const flow = reduced ? 1 : progressValue;
   const frontier = flow * lastIndex;
@@ -101,13 +114,13 @@ export function ConnectedJourney() {
   return (
     <ol
       ref={ref}
-      aria-label="Research to settlement process"
+      aria-label={lifecycle ? "Five connected stages of the investment lifecycle" : "Research to settlement process"}
       className={styles.journey}
       data-reduced={reduced ? "true" : "false"}
-      style={{ "--play-state": visible && !reduced ? "running" : "paused" } as CSSProperties}
+      style={{ "--play-state": visible && !reduced ? "running" : "paused", "--journey-columns": steps.length } as CSSProperties}
     >
       {steps.map((step, index) => {
-        const Icon = icons[index];
+        const Icon = stageIcons[index];
         const isLast = index === lastIndex;
         const nodePos = index / lastIndex;
         const isReached = flow >= nodePos - 0.002;
