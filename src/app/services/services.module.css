@@ -57,7 +57,7 @@
 .action:hover { color: #fff; background: #001a34; }
 .serviceCards > :nth-child(2) .action { color: #071932; background: #fff; }
 .serviceCards > :nth-child(2) .action:hover { color: #071932; background: var(--color-blue-25); }
-.contactCta { padding-block: clamp(64px,8vw,104px); background: radial-gradient(ellipse at 50% 100%,#dce8f8,transparent 75%),#f4f7fb; }
+.contactCta { padding-block: clamp(64px,8vw,104px); background: #fff; }
 .securityReference { padding-block: clamp(72px,8vw,112px); background: radial-gradient(ellipse at 85% 40%,#dce8f8,transparent 70%),#f4f7fb; }
 .referenceGrid { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.15fr); gap: clamp(48px,6vw,96px); align-items: center; }
 .referenceGrid > * { min-width: 0; }
