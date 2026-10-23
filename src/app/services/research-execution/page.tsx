@@ -8,7 +8,8 @@ import { DirectExecutionWorkflow } from "@/components/sections/execution/direct-
 import { ConnectedExecutionPreviews } from "@/components/sections/execution/connected-previews";
 import { ArchiveCta } from "@/components/sections/archive/cta";
 import theme from "@/components/sections/archive/theme.module.css";
-import glass from "@/components/sections/glass-card.module.css";
+import { FileSearch, ArrowRightLeft } from "lucide-react";
+import landing from "@/components/sections/landing/landing.module.css";
 import styles from "@/components/sections/execution/page.module.css";
 
 export const metadata = { title: execution.title, description: execution.description };
@@ -22,7 +23,17 @@ export default function ResearchExecutionPage() {
       </div></div>
     </section></CurvedBand>
     <CurvedBand nextBackground="#071932" background="#fff"><section id="research-execution-capabilities" className={styles.section} aria-label="Research and execution capabilities">
-      <div className={`${styles.container} ${styles.capabilities}`}>{execution.capabilities.map((item, i) => <ExecutionReveal key={item.id} delay={i * 0.08}><article className={`${glass.card} ${i === 1 ? glass.inverse : ""} ${styles.capability}`}><p>{item.eyebrow}</p><h2 id={item.id}>{item.title}</h2><p className={styles.body}>{item.body}</p></article></ExecutionReveal>)}</div>
+      <div className={styles.container}><ExecutionReveal>
+        <div className={`${landing.principles} ${styles.capabilities}`}>
+          {execution.capabilities.map((item, i) => {
+            const Icon = i === 0 ? FileSearch : ArrowRightLeft;
+            return <article key={item.id} className={styles.capability} aria-labelledby={item.id}>
+              <div className={landing.principleTitle}><span className={landing.principleIcon}><Icon aria-hidden="true" strokeWidth={1.5} /></span><div><p className={styles.capabilityEyebrow}>{item.eyebrow}</p><h2 id={item.id}>{item.title}</h2></div></div>
+              <p>{item.body}</p>
+            </article>;
+          })}
+        </div>
+      </ExecutionReveal></div>
     </section></CurvedBand>
     <CurvedBand nextBackground="#f4f7fb"><section className={styles.flow} aria-labelledby="workflow-heading"><div className={styles.container}><ExecutionReveal><h2 id="workflow-heading" className={styles.title}>{execution.workflow.title}</h2><p className={styles.body}>{execution.workflow.body}</p></ExecutionReveal><DirectExecutionWorkflow /></div></section></CurvedBand>
     <ConnectedExecutionPreviews />
