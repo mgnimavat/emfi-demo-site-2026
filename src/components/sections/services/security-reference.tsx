@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
-import { ArrowLeft, Info, Search, X } from "lucide-react";
+import { ArrowLeft, FileText, Info, Search, X } from "lucide-react";
 import type { SecurityReferenceData } from "@/lib/security-reference";
 import { hasReferenceValue, securityDetailGroups } from "@/lib/security-reference-view";
 import styles from "./security-reference.module.css";
@@ -110,8 +110,8 @@ export function SecurityReference() {
         <div className={styles.matchHeading}><h5>{result.basic.securityName || "Security reference"}</h5><button ref={viewButton} type="button" onClick={() => { setUnavailable(null); setDetailOpen(true); }}>View details</button></div>
         <dl className={styles.matchFields}>{[["ISIN", result.basic.isin], ["Instrument", result.euroclear?.instrument], ["Common Code", result.euroclear?.commonCode]].filter(([, value]) => hasReferenceValue(value)).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
       </article>
-    </section> : <div className={styles.result} role="status" aria-live="polite" aria-busy={status === "loading"}>
-      {status === "loading" ? <div className={styles.skeleton} aria-label="Loading security details">{[0, 1, 2, 3].map(line => <span key={line} />)}</div> : status === "error" ? <><strong>{lookupError}</strong><p>Check your search value or try again.</p></> : <><span className={styles.resultIcon}><Search size={19} strokeWidth={1.5} aria-hidden="true" /></span><strong>Find a security</strong><p>Choose a search type and enter a value.</p></>}
+    </section> : <div className={`${styles.result} ${status === "idle" ? styles.emptyState : ""}`} role="status" aria-live="polite" aria-busy={status === "loading"}>
+      {status === "loading" ? <div className={styles.skeleton} aria-label="Loading security details">{[0, 1, 2, 3].map(line => <span key={line} />)}</div> : status === "error" ? <><strong>{lookupError}</strong><p>Check your search value or try again.</p></> : <><div className={styles.emptyVisual} aria-hidden="true"><span className={styles.emptyHalo} /><span className={styles.emptyDocument}><FileText size={30} strokeWidth={1.25} /></span><span className={styles.emptySearch}><Search size={19} strokeWidth={1.7} /></span></div><div className={styles.emptyCopy}><strong>Find a security</strong><p>Enter an ISIN above to explore security details and settlement information.</p></div></>}
     </div>}
 
   </div>;
