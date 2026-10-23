@@ -1,4 +1,5 @@
-import { HeroSection, ExpectBand, ResponsiveSection, AccountabilitySection, ContactSection } from "@/components/sections/landing/sections";
+import { ExpectBand, ResponsiveSection, AccountabilitySection, ContactSection } from "@/components/sections/landing/sections";
+import { HomeV4Hero } from "@/components/sections/home-v4/hero";
 import { MoreDirectV4 } from "@/components/sections/home-v4/more-direct";
 import { CurvedBand } from "@/components/layout/curved-band";
 import styles from "@/components/sections/landing/landing.module.css";
@@ -13,7 +14,7 @@ export default function HomeV4Page() {
   return (
     <div className={styles.page}>
       <CurvedBand nextBackground="#fff">
-        <HeroSection />
+        <HomeV4Hero />
       </CurvedBand>
       <CurvedBand nextBackground="#071932">
         <ExpectBand />

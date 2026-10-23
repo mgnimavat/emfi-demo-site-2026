@@ -1,0 +1,56 @@
+.hero {
+  align-items: flex-start;
+}
+
+.layout {
+  padding-top: clamp(24px, 4vh, 48px);
+  padding-bottom: clamp(96px, 14vh, 140px);
+}
+
+.eyebrow {
+  margin-bottom: 24px !important;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: .03em;
+  line-height: 1.45;
+}
+
+.headlineLead {
+  font-weight: 700 !important;
+}
+
+.headlineRest {
+  font-weight: 400 !important;
+}
+
+.accent {
+  height: auto !important;
+  margin-top: 20px !important;
+  font-weight: 400 !important;
+}
+
+.accent strong {
+  font-weight: 700 !important;
+}
+
+.symbol {
+  display: grid;
+  place-items: center;
+  align-self: center;
+}
+
+.symbol > :global(svg) {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 599px) {
+  .eyebrow { font-size: 18px; white-space: normal; }
+  .layout { padding-top: 20px; padding-bottom: 88px; }
+}
