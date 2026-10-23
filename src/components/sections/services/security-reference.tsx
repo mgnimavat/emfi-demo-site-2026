@@ -102,7 +102,7 @@ export function SecurityReference() {
       <label htmlFor={`${id}-query`} className={styles.label}>Search value</label>
       <div className={styles.inputWrap}><Search size={18} aria-hidden="true" /><input ref={input} id={`${id}-query`} type="search" value={query} placeholder={placeholders[type]} aria-invalid={Boolean(error)} aria-describedby={error ? `${id}-error` : undefined} autoComplete="off" maxLength={160} onChange={event => { setQuery(event.target.value); setError(""); resetResult(); }} /></div>
       {error ? <p id={`${id}-error`} className={styles.error} role="alert">{error}</p> : null}
-      <div className={styles.actions}><button type="submit" disabled={status === "loading"}>{status === "loading" ? "Searching" : "Search"} <Search size={15} aria-hidden="true" /></button><button type="button" onClick={clearSearch}>Clear</button></div>
+      <div className={styles.actions}><button type="submit" disabled={status === "loading"}>{status === "loading" ? "Searching" : "Search"}</button><button type="button" onClick={clearSearch}>Clear</button></div>
     </form>
     {result ? <section className={styles.results} aria-label="Security search results" aria-live="polite">
       <h4>Result</h4>

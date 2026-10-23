@@ -59,7 +59,7 @@ export function ResearchFilterSelect({ label, allLabel, options, value, onChange
         const found = items.findIndex(item => item.label.toLowerCase().startsWith(search.current.text.toLowerCase()));
         if (found >= 0) { event.preventDefault(); setActive(found); setOpen(true); }
       }
-    }}><span>{items.find(item => item.value === value)?.label ?? `Select ${label.toLowerCase()}`}</span><ChevronDown size={15} strokeWidth={1.7} aria-hidden="true" /></button>
+    }}><span>{items.find(item => item.value === value)?.label ?? `Select ${label}`}</span><ChevronDown size={15} strokeWidth={1.7} aria-hidden="true" /></button>
     {open ? <ul id={`${id}-options`} role="listbox" aria-labelledby={`${id}-label`} className={styles.menu}>
       {items.map((item, index) => <li key={item.value} id={`${id}-option-${index}`} role="option" aria-selected={value === item.value} data-index={index} data-active={active === index} onPointerMove={() => setActive(index)} onPointerDown={event => event.preventDefault()} onClick={() => choose(index)} className={styles.option}><span>{item.label}</span>{value === item.value ? <Check size={15} aria-hidden="true" /> : null}</li>)}
     </ul> : null}

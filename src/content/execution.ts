@@ -65,8 +65,8 @@ export const execution = {
   research: {
     eyebrow: "Direct evidence",
     title: "Find the Insight.",
-    body: "Search EMFI Intelligence reports by keyword or country, and filter results by report type or publication date.",
-    label: "EMFI Intelligence publications",
+    body: "Search EMFI Intelligence reports by keyword or country, and filter results by report type or report date.",
+    label: "EMFI Intelligence Reports",
     notice: "Publication and chart snapshot from EMFI Intelligence, imported 21 October 2026.",
     records: intelligencePublications,
   },
