@@ -68,7 +68,7 @@ export default function ServicesPage() {
         </Container>
       </section></CurvedBand>
 
-      <CurvedBand nextBackground="#f4f7fb"><section id="security-reference" className={styles.securityReference} aria-labelledby="security-reference-heading">
+      <CurvedBand nextBackground="#fff"><section id="security-reference" className={styles.securityReference} aria-labelledby="security-reference-heading">
         <Container className={styles.container}>
           <div className={styles.referenceGrid}>
             <FadeIn className={styles.referenceIntro}>
