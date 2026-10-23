@@ -6,7 +6,7 @@ import styles from "./research-filter-select.module.css";
 
 export function ResearchFilterSelect({ label, allLabel, options, value, onChange, className }: {
   label: string;
-  allLabel: string;
+  allLabel?: string;
   options: readonly string[];
   value: string;
   onChange: (value: string) => void;
@@ -17,7 +17,7 @@ export function ResearchFilterSelect({ label, allLabel, options, value, onChange
   const search = useRef({ text: "", time: 0 });
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
-  const items = [{ value: "", label: allLabel }, ...options.map(option => ({ value: option, label: option }))];
+  const items = [...(allLabel ? [{ value: "", label: allLabel }] : []), ...options.map(option => ({ value: option, label: option }))];
   const selectedIndex = Math.max(0, items.findIndex(item => item.value === value));
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export function ResearchFilterSelect({ label, allLabel, options, value, onChange
         const found = items.findIndex(item => item.label.toLowerCase().startsWith(search.current.text.toLowerCase()));
         if (found >= 0) { event.preventDefault(); setActive(found); setOpen(true); }
       }
-    }}><span>{items[selectedIndex].label}</span><ChevronDown size={15} strokeWidth={1.7} aria-hidden="true" /></button>
+    }}><span>{items.find(item => item.value === value)?.label ?? `Select ${label.toLowerCase()}`}</span><ChevronDown size={15} strokeWidth={1.7} aria-hidden="true" /></button>
     {open ? <ul id={`${id}-options`} role="listbox" aria-labelledby={`${id}-label`} className={styles.menu}>
       {items.map((item, index) => <li key={item.value} id={`${id}-option-${index}`} role="option" aria-selected={value === item.value} data-index={index} data-active={active === index} onPointerMove={() => setActive(index)} onPointerDown={event => event.preventDefault()} onClick={() => choose(index)} className={styles.option}><span>{item.label}</span>{value === item.value ? <Check size={15} aria-hidden="true" /> : null}</li>)}
     </ul> : null}

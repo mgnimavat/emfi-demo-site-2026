@@ -3,6 +3,15 @@ import { intelligencePublications } from "./intelligence-publications";
 export const researchReportTypes = ["Daily Notes", "Country Report", "Large Report"] as const;
 export const researchDerivedTypes = ["Country Report", "Strategy Viewpoint", "Trade Idea", "Quantitative Insight", "Special Report", "Flash Note", "EMFI Monthly Review"] as const;
 
+export type ExecutionResearchChart = {
+  title: string;
+  kind: "price" | "world";
+  points?: readonly { date: string; value: number }[];
+  benchmarkPoints?: readonly { date: string; value: number }[];
+  benchmarkTitle?: string;
+  countries?: readonly { id: string; name: string; value: number }[];
+};
+
 export type ExecutionResearchRecord = {
   id: string;
   title: string;
@@ -14,7 +23,8 @@ export type ExecutionResearchRecord = {
   paragraphs: readonly string[];
   source: string;
   sourceUrl?: string;
-  chart?: { title: string; kind: "price" | "world"; points?: readonly { date: string; value: number }[] };
+  chartSource?: "other" | "special";
+  chart?: ExecutionResearchChart;
 };
 
 export const execution = {
@@ -35,7 +45,7 @@ export const execution = {
       id: "execution-capability",
       eyebrow: "Execution",
       title: "Make the Trade.",
-      body: "Professional execution across relevant markets and securities.",
+      body: "Professional execution that helps clients put investment decisions into action across relevant markets and securities.",
     },
   ],
   workflow: {
@@ -55,7 +65,7 @@ export const execution = {
   research: {
     eyebrow: "Direct evidence",
     title: "Find the Insight.",
-    body: "Search approved research by country, report type, derived type, title, topic or publication date.",
+    body: "Search EMFI Intelligence reports by keyword or country, and filter results by report type or publication date.",
     label: "EMFI Intelligence publications",
     notice: "Publication and chart snapshot from EMFI Intelligence, imported 21 October 2026.",
     records: intelligencePublications,

@@ -1,0 +1,23 @@
+.field { position: relative; }
+.trigger { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-width: 0; height: 44px; padding: 10px 12px; border: 1px solid #cdd8e7; border-radius: 8px; background: #fff; color: #24344b; font: inherit; font-size: 13px; font-weight: 500; text-align: left; cursor: pointer; box-shadow: 0 1px 2px rgb(7 25 50 / 3%); }
+.trigger span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.trigger svg { flex: none; color: #778ba8; }
+.trigger:hover { border-color: #8098cc; }
+.trigger:focus-visible, .trigger[aria-expanded="true"] { outline: 2px solid #8098cc; outline-offset: 2px; }
+.popup { position: absolute; z-index: 35; top: calc(100% + 8px); right: 0; width: min(420px,calc(100vw - 64px)); padding: 18px; border: 1px solid #e0e7f1; border-radius: 12px; background: #fff; color: #24344b; white-space: normal; box-shadow: 0 12px 32px rgb(7 25 50 / 13%); }
+.popup h3 { margin: 0 0 14px; font-size: 14px; font-weight: 650; }
+.presets { display: flex; flex-wrap: nowrap; gap: 4px; margin-bottom: 16px; }
+.popup button { cursor: pointer; }
+.presets button { flex: 1 0 auto; padding: 7px 6px; white-space: nowrap; border: 1px solid #e0e7f1; border-radius: 6px; background: #f7f9fc; font: inherit; font-size: 12px; }
+.shortPreset { display: none; }
+.presets button[aria-pressed="true"] { border-color: #bccde4; background: #eaf1fb; color: #244f88; }
+.inputs { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.inputs label { display: grid; gap: 6px; min-width: 0; font-size: 12px; }
+.inputs input { color-scheme: light; }
+.popup p { margin-top: 10px; color: #a53737; font-size: 12px; line-height: 1.5; }
+.actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid #edf1f6; }
+.actions button { padding: 8px 14px; border-radius: 7px; background: #f1f5fa; color: #43536b; font: inherit; font-size: 12px; }
+.actions button:last-child { background: #102139; color: #fff; }
+.actions button:disabled { opacity: .45; cursor: default; }
+.popup button:focus-visible { outline: 2px solid #8098cc; outline-offset: 2px; }
+@media (max-width: 639px) { .popup { left: 0; right: auto; } .trigger { font-size: 14px; } .fullPreset { display: none; } .shortPreset { display: inline; } }
