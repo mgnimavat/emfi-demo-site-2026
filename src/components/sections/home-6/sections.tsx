@@ -14,7 +14,7 @@ export function HeroSection() {
             <span className={styles.heroLead}>Settle</span>
             <span className={styles.heroRest}>for Less</span>
           </h1>
-          <p className={styles.heroAccent}><strong>Execute</strong> and <strong>Custody</strong><br />for Less, Too.</p>
+          <p className={styles.heroAccent}><strong>Execute</strong> and <strong>Custody</strong><br />for Less, too.</p>
         </div>
         <div className={styles.heroSymbol} aria-hidden="true">
           <div className={styles.heroSymbolOrbit}>

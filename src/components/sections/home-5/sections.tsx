@@ -1,14 +1,12 @@
 import { MotionRegion } from "@/components/sections/landing/motion-region";
 import { Button } from "@/components/ui/button";
 import { home5 as home } from "@/content/home-5";
-import { BrandMark } from "@/components/sections/landing/icons";
 import { ComplexityIcon, ExpenseIcon, ExposureIcon } from "@/components/sections/home-5/icons";
 import glass from "@/components/sections/glass-card.module.css";
+import { HeroMark3D } from "@/components/sections/home-5/hero-mark-3d";
 import styles from "./landing.module.css";
 
 const responsiveIcons = [ComplexityIcon, ExpenseIcon, ExposureIcon];
-
-const heroMarkDepths = [0, 4, 8, 12, 16];
 
 export function HeroSection() {
   return <section id="home" className={styles.hero} aria-labelledby="home-heading">
@@ -19,19 +17,12 @@ export function HeroSection() {
             <span className={styles.heroLead}>Settle</span>
             <span className={styles.heroRest}>for Less</span>
           </h1>
-          <p className={styles.heroAccent}><strong>Execute</strong> and <strong>Custody</strong><br />for Less, Too.</p>
+          <p className={styles.heroAccent}><strong>Execute</strong> and <strong>Custody</strong><br />for Less, too.</p>
         </div>
         <div className={styles.heroSymbol} aria-hidden="true">
           <div className={styles.heroSymbolScene}>
             <span className={styles.heroSymbolGlow} />
-            <div className={styles.heroSymbolSpin}>
-              {heroMarkDepths.map((depth) => (
-                <span key={depth} className={styles.heroSymbolSlice} style={{ transform: `translateZ(${depth}px)` }}>
-                  <BrandMark />
-                </span>
-              ))}
-              <span className={styles.heroSymbolFace}><BrandMark /></span>
-            </div>
+            <HeroMark3D className={styles.heroSymbolCanvas} />
           </div>
         </div>
       </MotionRegion>

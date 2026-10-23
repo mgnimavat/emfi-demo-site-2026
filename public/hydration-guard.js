@@ -1,4 +1,25 @@
 (function () {
+  function isExtensionNoise(filename, stack, message) {
+    var source = [filename || "", stack || "", message || ""].join("\n");
+    return source.indexOf("chrome-extension://") !== -1 || source.indexOf("moz-extension://") !== -1 || source.indexOf("safari-extension://") !== -1;
+  }
+
+  window.addEventListener("error", function (event) {
+    var stack = event.error && event.error.stack;
+    if (!isExtensionNoise(event.filename, stack, event.message)) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }, true);
+
+  window.addEventListener("unhandledrejection", function (event) {
+    var reason = event.reason;
+    var stack = reason && reason.stack;
+    var message = reason && reason.message;
+    if (!isExtensionNoise("", stack, message || String(reason || ""))) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }, true);
+
   var ATTRS = ["bis_skin_checked", "bis_register"];
 
   function strip(node) {

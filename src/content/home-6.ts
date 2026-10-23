@@ -3,7 +3,7 @@ export const home6 = {
   description:
     "Institutional infrastructure. Without the institutional layers. Research, execution, settlement, custody and asset management for professional clients.",
   hero: {
-    eyebrow: "Investment Services for Professional Clients",
+    eyebrow: "Professional Investment Services",
   },
   contactCta: {
     title: "What Do You Need Access To?",
