@@ -7,3 +7,5 @@ Responses dynamically expose all non-empty security fields under the upstream `d
 Only ISIN requests are documented so far. Security name and Common Code remain unavailable for selection. Clicking them opens a dismissible contextual notice that disappears after five seconds; only ISIN remains selected and keyboard navigation skips unavailable modes. Search, result and detail views share a fixed responsive card height, with longer content scrolling inside.
 
 Run `node tests/security-reference.test.mjs` for the response and request-contract checks.
+
+Tab routing follows response content, not a hardcoded ISIN list. Responses with Euroclear fields or explicit settlement reference data show Settlement. Basic-only EMFI responses keep minimum piece/increment and other trading constraints under Security Details, so they do not create a mostly empty Settlement tab.

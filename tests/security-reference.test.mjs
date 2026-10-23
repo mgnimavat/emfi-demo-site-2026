@@ -105,3 +105,38 @@ test("renders a success response containing only new data sections", () => {
   assert.equal(result.sections[0].fields.length, 2);
   assert.equal(result.basic.securityName, "");
 });
+
+test("basic-only response keeps trading constraints in Security Details without a Settlement tab", async () => {
+  const { securityDetailGroups } = await import("../src/lib/security-reference-view.ts");
+  for (const isin of ["USP7807HAV70", "US24702RAJ05"]) {
+    const result = normalizeSecurityReference({ status: 1, source_name: "EMFI Database", data: {
+      basic: { isin, security_name: "Security from EMFI", market: "Euro", min_piece: 150000, min_increment: 1000, coupon: 7.625 }, euroclear: null,
+    } });
+    const groups = securityDetailGroups(result.sections);
+    assert.equal(groups.settlement.length, 0);
+    assert.deepEqual(groups.security.find(group => group.title === "Trading constraints").fields.map(field => field.value), ["150,000", "1,000"]);
+    assert.equal(groups.security.flatMap(group => group.fields).length, result.sections.flatMap(section => section.fields).length);
+  }
+});
+
+test("Euroclear response keeps constraints in Settlement independent of the ISIN", async () => {
+  const { securityDetailGroups } = await import("../src/lib/security-reference-view.ts");
+  for (const isin of ["AED01089C228", "USP7807HAV70"]) {
+    const result = normalizeSecurityReference({ ...payload, data: { ...payload.data, basic: { ...payload.data.basic, isin } } });
+    const groups = securityDetailGroups(result.sections);
+    assert(groups.settlement.some(group => group.title === "Trading constraints"));
+    assert(groups.settlement.some(group => group.title === "Settlement eligibility"));
+    assert(!groups.security.some(group => group.title === "Trading constraints"));
+  }
+});
+
+test("explicit settlement sections remain available for other provider response types", async () => {
+  const { securityDetailGroups } = await import("../src/lib/security-reference-view.ts");
+  const result = normalizeSecurityReference({ status: 1, data: {
+    basic: { isin: "USP7807HAV70", security_name: "Other provider", min_piece: 0 },
+    settlement: { clearing_system: "Reported clearing system" },
+  } });
+  const groups = securityDetailGroups(result.sections);
+  assert(groups.settlement.some(group => group.title === "Trading constraints" && group.fields[0].value === "0"));
+  assert(groups.settlement.flatMap(group => group.fields).some(field => field.value === "Reported clearing system"));
+});

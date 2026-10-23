@@ -20,13 +20,19 @@ export function securityDetailGroups(sections: readonly { key: string; title: st
   const groups = { security: [] as SecurityDetailGroup[], settlement: [] as SecurityDetailGroup[] };
   const constraints = new Set(["min_piece", "min_increment", "quantity_type"]);
   const settlementFields = new Set(["bridge_cbl", "external_cbf", "specialised_depositary", "clearing_system", "internal_settlement_eligibility", "bridge_settlement_eligibility", "local_market_receive_eligibility", "local_market_deliver_eligibility"]);
+  const hasSettlementReference = sections.some(section => section.fields.some(field => {
+    if (!hasReferenceValue(field.value)) return false;
+    const key = field.path.split(".").at(-1) ?? "";
+    return section.key.toLowerCase() === "euroclear" || settlementFields.has(key) || /settlement/i.test(section.key);
+  }));
   for (const section of sections) {
     for (const field of section.fields) {
       if (!hasReferenceValue(field.value)) continue;
       const key = field.path.split(".").at(-1) ?? "";
       const eligibility = key === "bridge_cbl" || key.endsWith("settlement_eligibility") || key.endsWith("receive_eligibility") || key.endsWith("deliver_eligibility");
-      const settlement = constraints.has(key) || settlementFields.has(key) || /settlement|trading_constraints/i.test(section.key);
-      const title = settlement ? constraints.has(key) ? "Trading constraints" : eligibility ? "Settlement eligibility" : section.key === "euroclear" ? "Settlement information" : section.title : section.key === "basic" ? "" : section.title;
+      const tradingConstraint = constraints.has(key) || /trading_constraints/i.test(section.key);
+      const settlement = tradingConstraint ? hasSettlementReference : settlementFields.has(key) || /settlement/i.test(section.key);
+      const title = tradingConstraint ? "Trading constraints" : settlement ? eligibility ? "Settlement eligibility" : section.key === "euroclear" ? "Settlement information" : section.title : section.key === "basic" ? "" : section.title;
       const target = settlement ? groups.settlement : groups.security;
       let group = target.find(group => group.title === title);
       if (!group) { group = { title, fields: [] }; target.push(group); }
