@@ -12,10 +12,10 @@
 .section::before {
   content: "";
   position: absolute;
-  inset: auto 8% -42% 8%;
-  height: 72%;
+  inset: auto 22% -18% 22%;
+  height: 28%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgb(162 194 253 / 16%) 0%, transparent 70%);
+  background: radial-gradient(circle, rgb(162 194 253 / 8%) 0%, transparent 68%);
   pointer-events: none;
   z-index: 0;
 }

@@ -20,14 +20,14 @@
     linear-gradient(105deg, transparent 46%, rgb(255 255 255 / 40%) 62%, transparent 78%);
 }
 .heroLayout { position: relative; z-index: 1; width: 100%; max-width: 1440px; margin: auto; display: grid; grid-template-columns: minmax(0,1fr) 540px; gap: clamp(24px,3.5vw,48px); align-items: center; padding: clamp(24px,4vh,48px) clamp(20px,4vw,56px) clamp(96px,14vh,140px); }
-.heroCopy { position: relative; z-index: 2; min-width: 0; }
+.heroCopy { position: relative; z-index: 2; min-width: 0; padding-top: clamp(28px, 5vh, 64px); }
 .page .heroEyebrow { margin-bottom: 24px; color: var(--ink); font-size: 18px; font-weight: 400; letter-spacing: .03em; line-height: 1.45; white-space: nowrap; }
 .heroCopy h1 { display: flex; flex-direction: column; align-items: flex-start; font-size: clamp(70px,10vw,132px); font-weight: 800; line-height: .86; letter-spacing: -.055em; }
 .heroLead { font-weight: 800; }
 .heroRest { margin-top: .02em; font-size: 1em; font-weight: 400; }
 .page .heroAccent { margin-top: 20px; height: auto; color: #071932; font-size: clamp(34px,3.6vw,52px); font-weight: 300; line-height: 1.2; letter-spacing: -.025em; white-space: nowrap; }
 .heroAccent strong { color: inherit; font-weight: 500; }
-.heroSymbol { position: relative; pointer-events: none; width: 540px; height: 540px; justify-self: end; color: var(--glyph); }
+.page .heroSymbol { position: relative; pointer-events: none; width: 540px; height: 540px; justify-self: end; color: var(--glyph); transform: translate(-40px, 15px); }
 .heroSymbolScene { position: relative; width: 100%; height: 100%; }
 .heroSymbolGlow { position: absolute; inset: 4%; border-radius: 50%; background: radial-gradient(circle, rgb(197 212 234 / 44%) 0%, rgb(7 25 50 / 16%) 46%, transparent 74%); filter: blur(38px); }
 .heroSymbolCanvas { position: relative; z-index: 1; width: 100%; height: 100%; }
