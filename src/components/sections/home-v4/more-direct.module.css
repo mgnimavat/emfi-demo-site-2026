@@ -1,0 +1,594 @@
+.section {
+  --route: 15.2s;
+  background: #071932;
+  color: #fff;
+}
+
+.inner {
+  max-width: 1440px;
+  margin: auto;
+  padding: clamp(64px, 7vw, 96px) clamp(20px, 4vw, 56px);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(38px, 4.5vw, 60px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+
+.stage {
+  position: relative;
+  width: min(1120px, 100%);
+  margin: 28px auto 0;
+}
+
+/* Static fallback is the direct route. The loop overrides it while motion is allowed. */
+.desktop {
+  position: relative;
+  height: 224px;
+}
+
+.track,
+.beamTrad,
+.beamDirect {
+  position: absolute;
+  z-index: 0;
+  top: 118px;
+  left: 7%;
+  width: 86%;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.track {
+  background: rgb(231 238 248 / 18%);
+}
+
+.beamTrad,
+.beamDirect {
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, rgb(162 194 253 / 40%), #fff 50%, rgb(162 194 253 / 40%));
+  box-shadow: 0 0 8px #fff, 0 0 20px rgb(162 194 253 / 75%);
+}
+
+.beamTrad {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  animation: beam-trad var(--route) linear infinite;
+}
+
+.beamDirect {
+  clip-path: inset(0 0 0 0);
+  animation: beam-direct var(--route) linear infinite;
+}
+
+.spark {
+  position: absolute;
+  z-index: 1;
+  top: 118px;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px #fff, 0 0 18px rgb(162 194 253 / 90%);
+  opacity: 0;
+  animation: spark var(--route) linear infinite;
+}
+
+.node,
+.logo {
+  position: absolute;
+  top: 118px;
+  display: flex;
+  width: 148px;
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.client { left: 7%; z-index: 2; }
+.settle { left: 50%; z-index: 2; opacity: 0; animation: settle var(--route) linear infinite; }
+.sub { left: 50%; z-index: 2; opacity: 0; animation: sub var(--route) linear infinite; }
+.custody { left: 50%; z-index: 2; opacity: 0; animation: custody var(--route) linear infinite; }
+.depository { left: 93%; z-index: 2; }
+
+.disc {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #001a34;
+  border: 1.5px solid #e4eaf2;
+}
+
+.discEnd {
+  width: 84px;
+  height: 84px;
+  box-shadow: 0 0 0 6px #071932, 0 0 0 7px rgb(255 255 255 / 16%);
+}
+
+.client .discEnd,
+.mobileClient .mobileDisc {
+  animation: client-highlight var(--route) linear infinite;
+}
+
+.depository .discEnd,
+.mobileDepository .mobileDisc {
+  animation: depository-highlight var(--route) linear infinite;
+}
+
+.discEnd svg {
+  width: 34px;
+  height: 34px;
+}
+
+.discMid {
+  width: 22px;
+  height: 22px;
+  background: #fff;
+  box-shadow: 0 0 0 5px #071932, 0 0 14px 4px rgb(162 194 253 / 55%);
+}
+
+.settle .discMid { animation: settle-dot var(--route) linear infinite; }
+.sub .discMid { animation: sub-dot var(--route) linear infinite; }
+.custody .discMid { animation: custody-dot var(--route) linear infinite; }
+
+.label {
+  position: absolute;
+  top: 58px;
+  left: 50%;
+  width: 148px;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.endLabel {
+  top: 100px;
+}
+
+.midLabel {
+  animation: mid-label var(--route) linear infinite;
+}
+
+.gather {
+  position: absolute;
+  z-index: 3;
+  top: 118px;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.4);
+  animation: gather var(--route) linear infinite;
+}
+
+.logo {
+  left: 50%;
+  z-index: 4;
+  width: 168px;
+  height: 168px;
+  opacity: 1;
+  pointer-events: auto;
+  animation: logo var(--route) linear infinite;
+}
+
+.logoDisc {
+  display: grid;
+  width: 168px;
+  height: 168px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #244f88;
+  border: 1.5px solid #e4eaf2;
+  box-shadow:
+    0 0 0 10px rgb(162 194 253 / 28%),
+    0 0 42px rgb(162 194 253 / 32%);
+}
+
+.logoDisc svg {
+  width: 104px;
+  height: 104px;
+}
+
+.mobile {
+  display: none;
+}
+
+.mobileCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobileEnd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.mobileDisc {
+  display: grid;
+  width: 76px;
+  height: 76px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #001a34;
+  border: 1.5px solid #e4eaf2;
+  box-shadow: 0 0 0 6px #071932, 0 0 0 7px rgb(255 255 255 / 16%);
+}
+
+.mobileDisc svg {
+  width: 30px;
+  height: 30px;
+}
+
+.mobileSlot {
+  position: relative;
+  width: 100%;
+  height: 280px;
+}
+
+.mobileSpark {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px #fff, 0 0 16px rgb(162 194 253 / 90%);
+  opacity: 0;
+  animation: mobile-spark var(--route) linear infinite;
+}
+
+.tradStack,
+.directStack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tradStack {
+  opacity: 0;
+  animation: trad-stack var(--route) linear infinite;
+}
+
+.directStack {
+  opacity: 1;
+  animation: direct-stack var(--route) linear infinite;
+}
+
+.vline {
+  width: 2px;
+  height: 28px;
+  background: linear-gradient(#fff, rgb(162 194 253 / 70%));
+  box-shadow: 0 0 10px rgb(162 194 253 / 55%);
+}
+
+.midBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tradStack .midBlock:nth-child(2) { animation: fold-up var(--route) linear infinite; }
+.tradStack .midBlock:nth-child(3) { animation: fold-mid var(--route) linear infinite; }
+.tradStack .midBlock:nth-child(4) { animation: fold-down var(--route) linear infinite; }
+
+.midRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.mobileLogo {
+  display: grid;
+  width: 132px;
+  height: 132px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #244f88;
+  box-shadow:
+    0 0 0 8px rgb(162 194 253 / 28%),
+    0 0 32px rgb(162 194 253 / 30%);
+}
+
+.mobileLogo svg {
+  width: 82px;
+  height: 82px;
+}
+
+@keyframes beam-trad {
+  0% { clip-path: inset(0 100% 0 0); opacity: 1; }
+  9.5%, 12.6% { clip-path: inset(0 75% 0 0); opacity: 1; }
+  20%, 23.2% { clip-path: inset(0 50% 0 0); opacity: 1; }
+  30.5%, 33.7% { clip-path: inset(0 25% 0 0); opacity: 1; }
+  41.1%, 43.2% { clip-path: inset(0 0 0 0); opacity: 1; }
+  52.6% { clip-path: inset(0 0 0 0); opacity: 0; }
+  94.7% { clip-path: inset(0 0 0 0); opacity: 0; }
+  95.8% { clip-path: inset(0 100% 0 0); opacity: 0; }
+  100% { clip-path: inset(0 100% 0 0); opacity: 1; }
+}
+
+@keyframes beam-direct {
+  0%, 66.3% { clip-path: inset(0 100% 0 0); opacity: 0; }
+  67.4% { clip-path: inset(0 100% 0 0); opacity: 1; }
+  96.8% { clip-path: inset(0 0 0 0); opacity: 1; }
+  97.9% { clip-path: inset(0 0 0 0); opacity: 0; }
+  98.9%, 100% { clip-path: inset(0 100% 0 0); opacity: 0; }
+}
+
+@keyframes spark {
+  0% { left: 7%; opacity: 1; }
+  9.5%, 12.6% { left: 28.5%; opacity: 1; }
+  20%, 23.2% { left: 50%; opacity: 1; }
+  30.5%, 33.7% { left: 71.5%; opacity: 1; }
+  41.1%, 43.2% { left: 93%; opacity: 1; }
+  44.2% { left: 93%; opacity: 0; }
+  45.3%, 66.3% { left: 7%; opacity: 0; }
+  67.4% { left: 7%; opacity: 1; }
+  96.8% { left: 93%; opacity: 1; }
+  97.9% { left: 93%; opacity: 0; }
+  98.9% { left: 7%; opacity: 0; }
+  100% { left: 7%; opacity: 1; }
+}
+
+@keyframes mid-label {
+  0%, 45.3% { opacity: 1; }
+  51.6%, 94.7% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes settle-dot {
+  0%, 45.3% { transform: scale(1); }
+  51.6% { transform: scale(1.35); }
+  57.9% { transform: scale(1.1); }
+  65.3%, 94.7% { transform: scale(0.2); }
+  95.8%, 100% { transform: scale(1); }
+}
+
+@keyframes sub-dot {
+  0%, 45.3% { transform: scale(1); }
+  51.6% { transform: scale(1.35); }
+  57.9% { transform: scale(1.1); }
+  65.3%, 94.7% { transform: scale(0.2); }
+  95.8%, 100% { transform: scale(1); }
+}
+
+@keyframes custody-dot {
+  0%, 45.3% { transform: scale(1); }
+  51.6% { transform: scale(1.35); }
+  57.9% { transform: scale(1.1); }
+  65.3%, 94.7% { transform: scale(0.2); }
+  95.8%, 100% { transform: scale(1); }
+}
+
+@keyframes client-highlight {
+  0%, 4.2%, 64.2%, 74.7%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px #071932, 0 0 0 7px rgb(255 255 255 / 16%);
+  }
+  1%, 2.1%, 68.4%, 70.5% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 10px rgb(162 194 253 / 50%), 0 0 32px rgb(162 194 253 / 80%);
+  }
+}
+
+@keyframes depository-highlight {
+  0%, 36.8%, 47.4%, 91.6%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px #071932, 0 0 0 7px rgb(255 255 255 / 16%);
+  }
+  41.1%, 43.2%, 95.8%, 96.8% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 10px rgb(162 194 253 / 50%), 0 0 32px rgb(162 194 253 / 80%);
+  }
+}
+
+@keyframes settle {
+  0%, 7.4% { left: 28.5%; top: 118px; opacity: 0; pointer-events: none; transform: translate(-50%, -50%); }
+  9.5%, 45.3% { left: 28.5%; top: 118px; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+  51.6% { left: 28.5%; top: 68px; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+  57.9% { left: 39%; top: 52px; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+  65.3%, 94.7% { left: 50%; top: 118px; opacity: 0; pointer-events: none; transform: translate(-50%, -50%); }
+  95.8%, 100% { left: 28.5%; top: 118px; opacity: 0; pointer-events: none; transform: translate(-50%, -50%); }
+}
+
+@keyframes sub {
+  0%, 17.9% { left: 50%; top: 118px; opacity: 0; pointer-events: none; transform: translate(-50%, -50%); }
+  20%, 45.3% { left: 50%; top: 118px; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+  51.6% { left: 50%; top: 46px; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+  57.9% { left: 50%; top: 40px; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+  65.3%, 94.7% { left: 50%; top: 118px; opacity: 0; pointer-events: none; transform: translate(-50%, -50%); }
+  95.8%, 100% { left: 50%; top: 118px; opacity: 0; pointer-events: none; transform: translate(-50%, -50%); }
+}
+
+@keyframes custody {
+  0%, 28.4% { left: 71.5%; top: 118px; opacity: 0; pointer-events: none; transform: translate(-50%, -50%); }
+  30.5%, 45.3% { left: 71.5%; top: 118px; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+  51.6% { left: 71.5%; top: 68px; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+  57.9% { left: 61%; top: 52px; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+  65.3%, 94.7% { left: 50%; top: 118px; opacity: 0; pointer-events: none; transform: translate(-50%, -50%); }
+  95.8%, 100% { left: 71.5%; top: 118px; opacity: 0; pointer-events: none; transform: translate(-50%, -50%); }
+}
+
+@keyframes gather {
+  0%, 49.5% {
+    top: 118px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+    box-shadow: 0 0 0 0 rgb(162 194 253 / 0%);
+  }
+  55.8% {
+    top: 46px;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 0 10px rgb(162 194 253 / 28%), 0 0 28px rgb(162 194 253 / 55%);
+  }
+  64.2% {
+    top: 118px;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(2.8);
+    box-shadow: 0 0 0 16px rgb(162 194 253 / 30%), 0 0 48px rgb(162 194 253 / 50%);
+  }
+  70.5% {
+    top: 118px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(5.5);
+    box-shadow: 0 0 0 1px rgb(162 194 253 / 0%);
+  }
+  100% {
+    top: 118px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+    box-shadow: 0 0 0 0 rgb(162 194 253 / 0%);
+  }
+}
+
+@keyframes logo {
+  0%, 66.3% { opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0.34); }
+  72.6% { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1.08); }
+  76.8%, 95.8% { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+  97.9% { opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(1); }
+  98.9%, 100% { opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0.34); }
+}
+
+@keyframes mobile-spark {
+  0% { top: 0; opacity: 1; }
+  9.5%, 12.6% { top: 22%; opacity: 1; }
+  20%, 23.2% { top: 46%; opacity: 1; }
+  30.5%, 33.7% { top: 70%; opacity: 1; }
+  41.1%, 43.2% { top: calc(100% - 8px); opacity: 1; }
+  44.2% { top: calc(100% - 8px); opacity: 0; }
+  45.3%, 66.3% { top: 0; opacity: 0; }
+  67.4% { top: 0; opacity: 1; }
+  96.8% { top: calc(100% - 8px); opacity: 1; }
+  97.9% { top: calc(100% - 8px); opacity: 0; }
+  98.9% { top: 0; opacity: 0; }
+  100% { top: 0; opacity: 1; }
+}
+
+@keyframes trad-stack {
+  0%, 45.3% { opacity: 1; transform: none; }
+  60%, 95.8% { opacity: 0; transform: none; }
+  98.9%, 100% { opacity: 1; transform: none; }
+}
+
+@keyframes fold-up {
+  0%, 45.3% { opacity: 1; transform: none; }
+  60% { opacity: 0; transform: translateY(40px); }
+  93.7% { opacity: 0; transform: translateY(40px); }
+  95.8%, 100% { opacity: 1; transform: none; }
+}
+
+@keyframes fold-mid {
+  0%, 45.3%, 100% { opacity: 1; transform: none; }
+  60%, 93.7% { opacity: 0; transform: none; }
+  95.8% { opacity: 1; transform: none; }
+}
+
+@keyframes fold-down {
+  0%, 45.3% { opacity: 1; transform: none; }
+  60% { opacity: 0; transform: translateY(-40px); }
+  93.7% { opacity: 0; transform: translateY(-40px); }
+  95.8%, 100% { opacity: 1; transform: none; }
+}
+
+@keyframes direct-stack {
+  0%, 66.3% { opacity: 0; pointer-events: none; transform: scale(0.42); }
+  72.6% { opacity: 1; pointer-events: auto; transform: scale(1.08); }
+  76.8%, 95.8% { opacity: 1; pointer-events: auto; transform: scale(1); }
+  97.9%, 100% { opacity: 0; pointer-events: none; transform: scale(0.42); }
+}
+
+@media (max-width: 980px) {
+  .desktop { display: none; }
+  .mobile { display: block; }
+  .stage { margin-top: 36px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beamTrad,
+  .beamDirect,
+  .spark,
+  .settle,
+  .sub,
+  .custody,
+  .midLabel,
+  .settle .discMid,
+  .sub .discMid,
+  .custody .discMid,
+  .gather,
+  .logo,
+  .mobileSpark,
+  .tradStack,
+  .tradStack .midBlock,
+  .directStack,
+  .client .discEnd,
+  .depository .discEnd,
+  .mobileClient .mobileDisc,
+  .mobileDepository .mobileDisc {
+    animation: none;
+  }
+
+  .beamTrad,
+  .spark,
+  .settle,
+  .sub,
+  .custody,
+  .gather,
+  .mobileSpark,
+  .tradStack {
+    opacity: 0;
+  }
+
+  .settle,
+  .custody {
+    left: 50%;
+  }
+
+  .beamDirect {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateY(-50%);
+  }
+
+  .logo,
+  .directStack {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .directStack {
+    transform: none;
+  }
+}

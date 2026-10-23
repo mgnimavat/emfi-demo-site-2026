@@ -1,0 +1,497 @@
+.section {
+  background: #071932;
+  color: #fff;
+}
+
+.inner {
+  max-width: 1440px;
+  margin: auto;
+  padding: clamp(64px, 7vw, 96px) clamp(20px, 4vw, 56px);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(38px, 4.5vw, 60px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+
+.stage {
+  position: relative;
+  width: min(1120px, 100%);
+  margin: 48px auto 0;
+}
+
+/* Static fallback is the direct route. The loop overrides it while motion is allowed. */
+.desktop {
+  position: relative;
+  height: 224px;
+}
+
+.track,
+.beamTrad,
+.beamDirect {
+  position: absolute;
+  top: 118px;
+  left: 7%;
+  width: 86%;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.track {
+  background: rgb(231 238 248 / 18%);
+}
+
+.beamTrad,
+.beamDirect {
+  transform-origin: left center;
+  background: linear-gradient(90deg, rgb(162 194 253 / 40%), #fff 50%, rgb(162 194 253 / 40%));
+  box-shadow: 0 0 8px #fff, 0 0 20px rgb(162 194 253 / 75%);
+}
+
+.beamTrad {
+  opacity: 0;
+  animation: beam-trad 16s linear infinite;
+}
+
+.beamDirect {
+  transform: translateY(-50%) scaleX(1);
+  animation: beam-direct 16s linear infinite;
+}
+
+.spark {
+  position: absolute;
+  z-index: 1;
+  top: 118px;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px #fff, 0 0 18px rgb(162 194 253 / 90%);
+  opacity: 0;
+  animation: spark 16s linear infinite;
+}
+
+.node,
+.logo {
+  position: absolute;
+  top: 118px;
+  display: flex;
+  width: 148px;
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.client { left: 7%; z-index: 2; }
+.settle { left: 50%; z-index: 2; opacity: 0; animation: settle 16s linear infinite; }
+.sub { left: 50%; z-index: 2; opacity: 0; animation: sub 16s linear infinite; }
+.custody { left: 50%; z-index: 2; opacity: 0; animation: custody 16s linear infinite; }
+.depository { left: 93%; z-index: 2; }
+
+.disc {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #001a34;
+  border: 1.5px solid #e4eaf2;
+}
+
+.discEnd {
+  width: 84px;
+  height: 84px;
+  box-shadow: 0 0 0 6px rgb(7 25 50 / 100%), 0 0 0 7px rgb(255 255 255 / 16%);
+}
+
+.client .discEnd,
+.mobileClient .mobileDisc {
+  animation: client-highlight 16s linear infinite;
+}
+
+.depository .discEnd,
+.mobileDepository .mobileDisc {
+  animation: depository-highlight 16s linear infinite;
+}
+
+.discEnd svg {
+  width: 34px;
+  height: 34px;
+}
+
+.discMid {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  box-shadow: 0 0 0 5px #071932, 0 0 14px 4px rgb(162 194 253 / 55%);
+}
+
+.label {
+  position: absolute;
+  top: 58px;
+  left: 50%;
+  width: 148px;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.endLabel {
+  top: 100px;
+}
+
+.midLabel {
+  animation: mid-label 16s linear infinite;
+}
+
+.gather {
+  position: absolute;
+  z-index: 3;
+  top: 118px;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.4);
+  animation: gather 16s linear infinite;
+}
+
+.logo {
+  left: 50%;
+  z-index: 4;
+  width: 168px;
+  height: 168px;
+  opacity: 1;
+  animation: logo 16s linear infinite;
+}
+
+.logoDisc {
+  display: grid;
+  width: 168px;
+  height: 168px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #244f88;
+  border: 1.5px solid #e4eaf2;
+  box-shadow:
+    0 0 0 10px rgb(162 194 253 / 28%),
+    0 0 42px rgb(162 194 253 / 32%);
+}
+
+.logoDisc svg {
+  width: 104px;
+  height: 104px;
+}
+
+.mobile {
+  display: none;
+}
+
+.mobileCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobileEnd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.mobileDisc {
+  display: grid;
+  width: 76px;
+  height: 76px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #001a34;
+}
+
+.mobileDisc svg {
+  width: 30px;
+  height: 30px;
+}
+
+.mobileSlot {
+  position: relative;
+  width: 100%;
+  height: 280px;
+}
+
+.mobileSpark {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px #fff, 0 0 16px rgb(162 194 253 / 90%);
+  opacity: 0;
+  animation: mobile-spark 16s linear infinite;
+}
+
+.tradStack,
+.directStack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tradStack {
+  opacity: 0;
+  animation: trad-stack 16s linear infinite;
+}
+
+.directStack {
+  opacity: 1;
+  animation: direct-stack 16s linear infinite;
+}
+
+.vline {
+  width: 2px;
+  height: 28px;
+  background: linear-gradient(#fff, rgb(162 194 253 / 70%));
+  box-shadow: 0 0 10px rgb(162 194 253 / 55%);
+}
+
+.midBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.midRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.mobileLogo {
+  display: grid;
+  width: 132px;
+  height: 132px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #244f88;
+  box-shadow:
+    0 0 0 8px rgb(162 194 253 / 28%),
+    0 0 32px rgb(162 194 253 / 30%);
+}
+
+.mobileLogo svg {
+  width: 82px;
+  height: 82px;
+}
+
+@keyframes beam-trad {
+  0% { transform: translateY(-50%) scaleX(0); opacity: 1; }
+  18% { transform: translateY(-50%) scaleX(1); opacity: 1; }
+  26% { transform: translateY(-50%) scaleX(1); opacity: 1; }
+  42% { transform: translateY(-50%) scaleX(1); opacity: 0; }
+  90% { transform: translateY(-50%) scaleX(1); opacity: 0; }
+  91% { transform: translateY(-50%) scaleX(0); opacity: 0; }
+  100% { transform: translateY(-50%) scaleX(0); opacity: 1; }
+}
+
+@keyframes beam-direct {
+  0%, 50% { transform: translateY(-50%) scaleX(0); opacity: 0; }
+  52% { transform: translateY(-50%) scaleX(0); opacity: 1; }
+  66%, 74% { transform: translateY(-50%) scaleX(1); opacity: 1; }
+  84% { transform: translateY(-50%) scaleX(1); opacity: 0; }
+  85%, 100% { transform: translateY(-50%) scaleX(0); opacity: 0; }
+}
+
+@keyframes spark {
+  0%, 2% { left: 7%; opacity: 0; }
+  4% { left: 7%; opacity: 1; }
+  18% { left: 93%; opacity: 1; }
+  24% { left: 93%; opacity: 0; }
+  25%, 51% { left: 7%; opacity: 0; }
+  53% { left: 7%; opacity: 1; }
+  66% { left: 93%; opacity: 1; }
+  72% { left: 93%; opacity: 0; }
+  73%, 100% { left: 7%; opacity: 0; }
+}
+
+@keyframes mid-label {
+  0%, 22% { opacity: 1; }
+  30%, 88% { opacity: 0; }
+  96%, 100% { opacity: 1; }
+}
+
+@keyframes client-highlight {
+  0%, 2%, 14%, 50%, 64%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px #071932, 0 0 0 7px rgb(255 255 255 / 16%);
+  }
+  8%, 57% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 10px rgb(162 194 253 / 50%), 0 0 32px rgb(162 194 253 / 80%);
+  }
+}
+
+@keyframes depository-highlight {
+  0%, 14%, 28%, 62%, 78%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px #071932, 0 0 0 7px rgb(255 255 255 / 16%);
+  }
+  20%, 70% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 10px rgb(162 194 253 / 50%), 0 0 32px rgb(162 194 253 / 80%);
+  }
+}
+
+@keyframes settle {
+  0%, 26% { left: 28.5%; top: 118px; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  34% { left: 30%; top: 152px; opacity: 1; transform: translate(-50%, -50%) scale(1.35); }
+  42% { left: 40%; top: 132px; opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+  49% { left: 50%; top: 118px; opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+  50%, 90% { left: 50%; top: 118px; opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+  91% { left: 28.5%; top: 118px; opacity: 0; transform: translate(-50%, -50%) scale(1); }
+  98%, 100% { left: 28.5%; top: 118px; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes sub {
+  0%, 26% { left: 50%; top: 118px; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  34% { left: 50%; top: 156px; opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
+  42% { left: 50%; top: 134px; opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+  49% { left: 50%; top: 118px; opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+  50%, 90% { left: 50%; top: 118px; opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+  91% { left: 50%; top: 118px; opacity: 0; transform: translate(-50%, -50%) scale(1); }
+  98%, 100% { left: 50%; top: 118px; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes custody {
+  0%, 26% { left: 71.5%; top: 118px; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  34% { left: 70%; top: 152px; opacity: 1; transform: translate(-50%, -50%) scale(1.35); }
+  42% { left: 60%; top: 132px; opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+  49% { left: 50%; top: 118px; opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+  50%, 90% { left: 50%; top: 118px; opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+  91% { left: 71.5%; top: 118px; opacity: 0; transform: translate(-50%, -50%) scale(1); }
+  98%, 100% { left: 71.5%; top: 118px; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes gather {
+  0%, 32% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); box-shadow: 0 0 0 0 rgb(162 194 253 / 0%); }
+  42% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 0 16px rgb(162 194 253 / 42%), 0 0 48px rgb(162 194 253 / 60%); }
+  54% { opacity: 0; transform: translate(-50%, -50%) scale(7); box-shadow: 0 0 0 1px rgb(162 194 253 / 0%), 0 0 24px rgb(162 194 253 / 0%); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); box-shadow: 0 0 0 0 rgb(162 194 253 / 0%); }
+}
+
+@keyframes logo {
+  0%, 40% { opacity: 0; transform: translate(-50%, -50%) scale(0.46); }
+  54%, 74% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  86%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.92); }
+}
+
+@keyframes mobile-spark {
+  0%, 2% { top: 0; opacity: 0; }
+  4% { top: 0; opacity: 1; }
+  18% { top: calc(100% - 8px); opacity: 1; }
+  24% { top: calc(100% - 8px); opacity: 0; }
+  25%, 51% { top: 0; opacity: 0; }
+  53% { top: 0; opacity: 1; }
+  66% { top: calc(100% - 8px); opacity: 1; }
+  72% { top: calc(100% - 8px); opacity: 0; }
+  73%, 100% { top: 0; opacity: 0; }
+}
+
+@keyframes trad-stack {
+  0%, 24% { opacity: 1; transform: scale(1); }
+  44%, 86% { opacity: 0; transform: scale(0.82); }
+  96%, 100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes direct-stack {
+  0%, 38% { opacity: 0; transform: scale(0.68); }
+  54%, 74% { opacity: 1; transform: scale(1); }
+  88%, 100% { opacity: 0; transform: scale(0.92); }
+}
+
+@media (max-width: 980px) {
+  .desktop { display: none; }
+  .mobile { display: block; }
+  .stage { margin-top: 36px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beamTrad,
+  .beamDirect,
+  .spark,
+  .settle,
+  .sub,
+  .custody,
+  .midLabel,
+  .gather,
+  .logo,
+  .mobileSpark,
+  .tradStack,
+  .directStack,
+  .client .discEnd,
+  .depository .discEnd,
+  .mobileClient .mobileDisc,
+  .mobileDepository .mobileDisc {
+    animation: none;
+  }
+
+  .beamTrad,
+  .spark,
+  .settle,
+  .sub,
+  .custody,
+  .gather,
+  .mobileSpark,
+  .tradStack {
+    opacity: 0;
+  }
+
+  .settle,
+  .custody {
+    left: 50%;
+  }
+
+  .beamDirect {
+    opacity: 1;
+    transform: translateY(-50%) scaleX(1);
+  }
+
+  .logo,
+  .directStack {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .directStack {
+    transform: none;
+  }
+}
