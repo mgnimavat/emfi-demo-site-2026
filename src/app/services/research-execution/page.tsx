@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { CurvedBand } from "@/components/layout/curved-band";
 import { execution } from "@/content/execution";
 import { ResearchToTrade } from "@/components/sections/execution/research-to-trade";
 import { ExecutionReveal } from "@/components/sections/execution/reveal";
@@ -16,13 +15,13 @@ export const metadata = { title: execution.title, description: execution.descrip
 
 export default function ResearchExecutionPage() {
   return <div className={theme.page}>
-    <CurvedBand nextBackground="#fff"><section className={styles.hero}>
+    <section className={styles.hero}>
       <div className={styles.container}><div className={styles.heroGrid}>
         <ExecutionReveal className={styles.heroCopy}><h1>{execution.headline.split("\n").map((line) => <span key={line}>{line}</span>)}</h1><ExecutionHeroPhrases /><Button href="#research-execution-capabilities" className={styles.heroAction}>Know More</Button></ExecutionReveal>
         <ExecutionReveal delay={0.12} className={styles.heroMedia}><ResearchToTrade /></ExecutionReveal>
       </div></div>
-    </section></CurvedBand>
-    <CurvedBand nextBackground="#071932" background="#fff"><section id="research-execution-capabilities" className={styles.section} aria-label="Research and execution capabilities">
+    </section>
+    <section id="research-execution-capabilities" className={styles.section} aria-label="Research and execution capabilities">
       <div className={styles.container}><ExecutionReveal>
         <div className={`${landing.principles} ${styles.capabilities}`}>
           {execution.capabilities.map((item, i) => {
@@ -34,9 +33,10 @@ export default function ResearchExecutionPage() {
           })}
         </div>
       </ExecutionReveal></div>
-    </section></CurvedBand>
-    <CurvedBand nextBackground="#f4f7fb"><section className={styles.flow} aria-labelledby="workflow-heading"><div className={styles.container}><ExecutionReveal><h2 id="workflow-heading" className={styles.title}>{execution.workflow.title}</h2><p className={styles.body}>{execution.workflow.body}</p></ExecutionReveal><DirectExecutionWorkflow /></div></section></CurvedBand>
-    <ConnectedExecutionPreviews />
-    <CurvedBand nextBackground="#0c1725"><ArchiveCta title={execution.contact.title} body={execution.contact.body} action={execution.contact.action} /></CurvedBand>
+    </section>
+    <section className={styles.flow} aria-labelledby="workflow-heading"><div className={styles.container}><ExecutionReveal><h2 id="workflow-heading" className={styles.title}>{execution.workflow.title}</h2><p className={styles.body}>{execution.workflow.body}</p></ExecutionReveal><DirectExecutionWorkflow /></div></section>
+    {/* Execution preview is temporarily disabled; its implementation is retained. */}
+    <ConnectedExecutionPreviews flatSections showExecution={false} />
+    <ArchiveCta title={execution.contact.title} body={execution.contact.body} action={execution.contact.action} />
   </div>;
 }

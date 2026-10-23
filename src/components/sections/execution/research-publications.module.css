@@ -1,9 +1,9 @@
 .researchLayout { --research-panel-height: clamp(720px,88vh,960px); }
 .researchLayout .resultsPanel { display: flex; flex-direction: column; height: var(--research-panel-height); min-height: 0; padding: 0; overflow: hidden; }
 .resultsPanel .resultsHeader { flex: none; padding: 22px 24px 18px; }
-.scrollViewport { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; scrollbar-gutter: stable; padding: 0 18px 24px 24px; }
+.scrollViewport { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: auto; scrollbar-gutter: stable; padding: 0 18px 24px 24px; }
 .scrollViewport:focus-visible, .previewPanel:focus-visible { outline: 2px solid #8098cc; outline-offset: -3px; }
-.researchLayout .previewPanel { height: var(--research-panel-height); min-height: 0; padding: 24px 28px; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; scrollbar-gutter: stable; }
+.researchLayout .previewPanel { height: var(--research-panel-height); min-height: 0; padding: 24px 28px; overflow-y: auto; overflow-x: hidden; overscroll-behavior: auto; scrollbar-gutter: stable; }
 .previewMetadata { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin-bottom: 14px; }
 .previewMetadata p { margin: 0; }
 .researchLayout .resultsHeader h3 { font-size: 20px; }

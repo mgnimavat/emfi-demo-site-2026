@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
 import { ChartNoAxesCombined, ShieldCheck, BriefcaseBusiness } from "lucide-react";
-import { CurvedBand } from "@/components/layout/curved-band";
 import { services } from "@/content/services";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
@@ -19,7 +18,7 @@ const servicePoints = [{ x: 180, y: 60 }, { x: 76.077, y: 240 }, { x: 283.923, y
 export default function ServicesPage() {
   return (
     <div className={styles.page}>
-      <CurvedBand nextBackground="#071932"><section className={styles.hero} aria-labelledby="services-heading">
+      <section className={styles.hero} aria-labelledby="services-heading">
         <Container className={styles.container}>
           <div className={styles.heroGrid}>
             <FadeIn>
@@ -42,9 +41,9 @@ export default function ServicesPage() {
             </MotionRegion>
           </div>
         </Container>
-      </section></CurvedBand>
+      </section>
 
-      <CurvedBand nextBackground="#fff"><section id="investment-lifecycle" className={styles.lifecycle} aria-labelledby="lifecycle-heading">
+      <section id="investment-lifecycle" className={styles.lifecycle} aria-labelledby="lifecycle-heading">
         <Container className={styles.container}>
           <FadeIn className={styles.lifecycleIntro}>
             <h2 id="lifecycle-heading" className={styles.sectionTitle}>{services.lifecycle.title}</h2>
@@ -52,9 +51,9 @@ export default function ServicesPage() {
           </FadeIn>
           <ConnectedJourney variant="lifecycle" />
         </Container>
-      </section></CurvedBand>
+      </section>
 
-      <CurvedBand nextBackground="#f4f7fb"><section id="service-capabilities" className={styles.capabilities} aria-label="EMFI services">
+      <section id="service-capabilities" className={styles.capabilities} aria-label="EMFI services">
         <Container className={styles.container}>
           <FadeIn>
             <div className={styles.serviceCards}>
@@ -66,9 +65,9 @@ export default function ServicesPage() {
             </div>
           </FadeIn>
         </Container>
-      </section></CurvedBand>
+      </section>
 
-      <CurvedBand nextBackground="#fff"><section id="security-reference" className={styles.securityReference} aria-labelledby="security-reference-heading">
+      <section id="security-reference" className={styles.securityReference} aria-labelledby="security-reference-heading">
         <Container className={styles.container}>
           <div className={styles.referenceGrid}>
             <FadeIn className={styles.referenceIntro}>
@@ -78,9 +77,9 @@ export default function ServicesPage() {
             <FadeIn><SecurityReference /></FadeIn>
           </div>
         </Container>
-      </section></CurvedBand>
+      </section>
 
-      <CurvedBand nextBackground="#071932"><section aria-labelledby="services-cta-heading" className={styles.contactCta}>
+      <section aria-labelledby="services-cta-heading" className={styles.contactCta}>
         <Container className={styles.container}>
           <FadeIn className={styles.ctaInner}>
             <h2 id="services-cta-heading" className={styles.sectionTitle}>{services.cta.title}</h2>
@@ -88,7 +87,7 @@ export default function ServicesPage() {
             <Button href="/contact" className={styles.action}>{services.cta.action}</Button>
           </FadeIn>
         </Container>
-      </section></CurvedBand>
+      </section>
     </div>
   );
 }
