@@ -30,10 +30,10 @@ function ReportDetails({ report, language }: { report: ExecutionResearchRecord; 
     <h3 id="publication-preview-heading" className={pageStyles.reportTitle} aria-live="polite">{report.title}</h3>
     {report.topics.some(topic => topic !== report.reportType) ? <div className={pageStyles.topicTags}>{report.topics.filter(topic => topic !== report.reportType).map(topic => <span key={topic}>{topic}</span>)}</div> : null}
     <div className={pageStyles.reportBody}>{report.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>
+    {report.sourceUrl ? <a href={report.sourceUrl} target="_blank" rel="noopener noreferrer" className={pageStyles.previewReadMore}>Read more <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only"> on EMFI Intelligence (opens in a new tab)</span></a> : null}
     <div className={styles.previewChart}>
       {chart.loading ? <PublicationChartSkeleton /> : chart.error ? <div className={styles.chartMessage} role="alert">Could not load this chart. <button type="button" onClick={chart.retry}>Try again</button></div> : chart.chart ? <PublicationChart chart={chart.chart} /> : <p className={styles.chartMessage}>No chart data available for this report.</p>}
     </div>
-    {report.sourceUrl ? <a href={report.sourceUrl} target="_blank" rel="noopener noreferrer" className={pageStyles.previewReadMore}>Read more <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only"> on EMFI Intelligence (opens in a new tab)</span></a> : null}
   </>;
 }
 

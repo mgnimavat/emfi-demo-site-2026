@@ -13,7 +13,10 @@
 .presets button[aria-pressed="true"] { border-color: #bccde4; background: #eaf1fb; color: #244f88; }
 .inputs { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
 .inputs label { display: grid; gap: 6px; min-width: 0; font-size: 12px; }
-.inputs input { color-scheme: light; }
+.dateInput { position: relative; display: block; min-width: 0; }
+.inputs .dateInput > input[type="text"] { padding: 10px 28px 10px 10px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.calendarButton { position: absolute; right: 1px; top: 1px; bottom: 1px; display: grid; place-items: center; width: 26px; padding: 0; border: 0; border-radius: 7px; background: #fff; color: #778ba8; }
+.inputs .dateInput > .nativePicker { position: absolute; right: 0; bottom: 0; width: 1px; min-height: 0; height: 1px; padding: 0; border: 0; opacity: 0; pointer-events: none; }
 .popup p { margin-top: 10px; color: #a53737; font-size: 12px; line-height: 1.5; }
 .actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid #edf1f6; }
 .actions button { padding: 8px 14px; border-radius: 7px; background: #f1f5fa; color: #43536b; font: inherit; font-size: 12px; }
@@ -21,3 +24,4 @@
 .actions button:disabled { opacity: .45; cursor: default; }
 .popup button:focus-visible { outline: 2px solid #8098cc; outline-offset: 2px; }
 @media (max-width: 639px) { .popup { left: 0; right: auto; } .trigger { font-size: 14px; } .fullPreset { display: none; } .shortPreset { display: inline; } }
+@media (max-width: 359px) { .inputs { grid-template-columns: minmax(0,1fr); } }

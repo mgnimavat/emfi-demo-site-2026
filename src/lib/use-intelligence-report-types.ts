@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 export function useIntelligenceReportTypes() {
-  const [state, setState] = useState<{ types: Record<string, string>; loading: boolean; error: boolean }>({ types: {}, loading: true, error: false });
+  const [state, setState] = useState<{ types: Record<string, string>; slugs: Record<string, string>; loading: boolean; error: boolean }>({ types: {}, slugs: {}, loading: true, error: false });
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
     const controller = new AbortController();
@@ -13,9 +13,11 @@ export function useIntelligenceReportTypes() {
         if (!response.ok) throw new Error("Derived types unavailable");
         const data = await response.json();
         if (!data.types || typeof data.types !== "object" || Array.isArray(data.types) || !Object.values(data.types).every(type => typeof type === "string")) throw new Error("Invalid report types");
-        if (!controller.signal.aborted) setState({ types: data.types, loading: false, error: false });
+        const slugs = data.slugs ?? {};
+        if (typeof slugs !== "object" || Array.isArray(slugs) || !Object.values(slugs).every(slug => typeof slug === "string")) throw new Error("Invalid report links");
+        if (!controller.signal.aborted) setState({ types: data.types, slugs, loading: false, error: false });
       } catch {
-        if (!controller.signal.aborted) setState({ types: {}, loading: false, error: true });
+        if (!controller.signal.aborted) setState({ types: {}, slugs: {}, loading: false, error: true });
       }
     }
     void load();

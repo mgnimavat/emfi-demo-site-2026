@@ -6,6 +6,7 @@ import { emptyExecutionFilters, filterExecutionResearch, invalidResearchDateRang
 import { intelligenceReportFeeds, intelligenceReportLabels, mergeIntelligenceReports, type IntelligenceLanguage } from "@/lib/intelligence-reports";
 import { useIntelligenceReports } from "@/lib/use-intelligence-reports";
 import { useIntelligenceSearch } from "@/lib/use-intelligence-search";
+import { reportSourceUrl } from "@/lib/intelligence-report-types";
 import { useIntelligenceReportTypes } from "@/lib/use-intelligence-report-types";
 import { trailingResearchRange } from "@/lib/research-date-range";
 import { ResearchDateRange } from "./research-date-range";
@@ -33,8 +34,9 @@ function LiveResearchFeed({ language, onLanguageChange, filters, setFilters }: {
   const sourceRecords = search.active ? search.records : allRecords;
   const typedRecords = useMemo(() => sourceRecords.map(record => {
     const derivedType = search.active ? undefined : reportCatalogue.types[record.id];
-    return derivedType ? { ...record, topics: [...new Set([...record.topics, derivedType])] } : record;
-  }), [sourceRecords, reportCatalogue.types, search.active]);
+    const sourceUrl = record.sourceUrl ?? reportSourceUrl(record.id, reportCatalogue.slugs[record.id], language);
+    return { ...record, ...(derivedType ? { topics: [...new Set([...record.topics, derivedType])] } : {}), ...(sourceUrl ? { sourceUrl } : {}) };
+  }), [sourceRecords, reportCatalogue.types, reportCatalogue.slugs, search.active, language]);
   const derivedTypes = useMemo(() => [...new Set(Object.values(reportCatalogue.types))].filter(type => {
     const special = ["Special Report", "EMFI Monthly Review"].includes(type);
     return !filters.reportType || (filters.reportType === "Special Reports" ? special : !special);

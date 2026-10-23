@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion/fade-in";
 import { BrandSign } from "@/components/brand/logo";
 import { ServicesHeroSubtext } from "@/components/sections/services/hero-subtext";
+import { SecurityReference } from "@/components/sections/services/security-reference";
 import { MotionRegion } from "@/components/sections/landing/motion-region";
 import { ConnectedJourney } from "@/components/sections/execution-v2/connected-journey";
 import glass from "@/components/sections/glass-card.module.css";
@@ -64,6 +65,18 @@ export default function ServicesPage() {
               </article>)}
             </div>
           </FadeIn>
+        </Container>
+      </section></CurvedBand>
+
+      <CurvedBand nextBackground="#f4f7fb"><section id="security-reference" className={styles.securityReference} aria-labelledby="security-reference-heading">
+        <Container className={styles.container}>
+          <div className={styles.referenceGrid}>
+            <FadeIn className={styles.referenceIntro}>
+              <h2 id="security-reference-heading" className={styles.referenceTitle}>Know the security<span>before you settle.</span></h2>
+              <p className={styles.referenceDescription}>Search by ISIN, name or Common Code, then open only the reference sections you need.</p>
+            </FadeIn>
+            <FadeIn><SecurityReference /></FadeIn>
+          </div>
         </Container>
       </section></CurvedBand>
 
