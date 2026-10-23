@@ -88,7 +88,7 @@ export function SecurityReference() {
   if (result && detailOpen) return <div className={styles.card}><ReferenceDetails result={result} onBack={() => { setDetailOpen(false); requestAnimationFrame(() => viewButton.current?.focus()); }} onClear={clearSearch} /></div>;
 
   return <div ref={card} className={styles.card} onKeyDown={event => { if (event.key === "Escape" && unavailable) { event.preventDefault(); setUnavailable(null); } }}>
-    <div className={styles.cardIntro}><h3 id={`${id}-heading`}>Search institutional securities</h3><p>Find security reference information using an ISIN, security name or Common Code.</p></div>
+    <div className={styles.cardIntro}><h3 id={`${id}-heading`}>Search Institutional Securities</h3><p>Find security reference information using an ISIN, security name or Common Code.</p></div>
     <form aria-labelledby={`${id}-heading`} onSubmit={search} noValidate>
       <span id={`${id}-search-by`} className={styles.label}>Search by</span>
       <div className={styles.searchMode}>
