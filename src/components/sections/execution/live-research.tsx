@@ -6,6 +6,7 @@ import { emptyExecutionFilters, filterExecutionResearch, invalidResearchDateRang
 import { intelligenceReportFeeds, intelligenceReportLabels, mergeIntelligenceReports, type IntelligenceLanguage } from "@/lib/intelligence-reports";
 import { useIntelligenceReports } from "@/lib/use-intelligence-reports";
 import { useIntelligenceSearch } from "@/lib/use-intelligence-search";
+import { reportSourceUrl } from "@/lib/intelligence-report-types";
 import { useIntelligenceReportTypes } from "@/lib/use-intelligence-report-types";
 import { trailingResearchRange } from "@/lib/research-date-range";
 import { ResearchDateRange } from "./research-date-range";
@@ -33,8 +34,9 @@ function LiveResearchFeed({ language, onLanguageChange, filters, setFilters }: {
   const sourceRecords = search.active ? search.records : allRecords;
   const typedRecords = useMemo(() => sourceRecords.map(record => {
     const derivedType = search.active ? undefined : reportCatalogue.types[record.id];
-    return derivedType ? { ...record, topics: [...new Set([...record.topics, derivedType])] } : record;
-  }), [sourceRecords, reportCatalogue.types, search.active]);
+    const sourceUrl = record.sourceUrl ?? reportSourceUrl(record.id, reportCatalogue.slugs[record.id], language);
+    return { ...record, ...(derivedType ? { topics: [...new Set([...record.topics, derivedType])] } : {}), ...(sourceUrl ? { sourceUrl } : {}) };
+  }), [sourceRecords, reportCatalogue.types, reportCatalogue.slugs, search.active, language]);
   const derivedTypes = useMemo(() => [...new Set(Object.values(reportCatalogue.types))].filter(type => {
     const special = ["Special Report", "EMFI Monthly Review"].includes(type);
     return !filters.reportType || (filters.reportType === "Special Reports" ? special : !special);
@@ -60,20 +62,20 @@ function LiveResearchFeed({ language, onLanguageChange, filters, setFilters }: {
   return <div className={styles.preview}>
     <aside className={styles.filters} aria-label="Research filters">
       <div className={styles.filterFields}>
-        <label className={styles.field}>Search reports<span className={styles.searchField}><Search size={16} aria-hidden="true" /><input type="search" aria-label="Search reports" placeholder="Search reports or countries" value={filters.keyword} onChange={event => updateSearch(event.target.value)} /></span></label>
-        <ResearchFilterSelect className={styles.field} label="Country" allLabel="All countries" options={countryList.countries} value={filters.country} onChange={country => updateFilter({ country })} />
+        <label className={styles.field}>Search Reports<span className={styles.searchField}><Search size={16} aria-hidden="true" /><input type="search" aria-label="Search Reports" placeholder="Search Reports or Countries" value={filters.keyword} onChange={event => updateSearch(event.target.value)} /></span></label>
+        <ResearchFilterSelect className={styles.field} label="Country" allLabel="All Country" options={countryList.countries} value={filters.country} onChange={country => updateFilter({ country })} />
         <ResearchFilterSelect className={styles.field} label="Report Type" options={reportTypes} value={filters.reportType} onChange={reportType => updateFilter({ reportType, derivedType: "" })} />
-        <ResearchFilterSelect className={styles.field} label="Derived Type" allLabel="All derived types" options={derivedTypes} value={filters.derivedType} onChange={derivedType => updateFilter({ derivedType, ...(search.active && derivedType ? { reportType: ["Special Report", "EMFI Monthly Review"].includes(derivedType) ? "Special Reports" : "Other Reports" } : {}) })} />
+        <ResearchFilterSelect className={styles.field} label="Derived Type" allLabel="All Derived Types" options={derivedTypes} value={filters.derivedType} onChange={derivedType => updateFilter({ derivedType, ...(search.active && derivedType ? { reportType: ["Special Report", "EMFI Monthly Review"].includes(derivedType) ? "Special Reports" : "Other Reports" } : {}) })} />
         <ResearchFilterSelect className={styles.field} label="Language" options={["English", "Español"]} value={language === "english" ? "English" : "Español"} onChange={value => onLanguageChange(value === "English" ? "english" : "espanol")} />
         <ResearchDateRange className={styles.field} value={{ from: filters.from, to: filters.to }} onChange={range => updateFilter(range)} />
-        <button type="button" className={styles.reset} aria-label="Reset filters" onClick={() => setFilters(defaultFilters())}>Reset</button>
+        <button type="button" className={styles.reset} aria-label="Reset Filters" onClick={() => setFilters(defaultFilters())}>Reset</button>
       </div>
       {invalidDates ? <p id="research-date-error" role="alert">Choose an end date on or after the start date.</p> : null}
-      {!search.active && reportCatalogue.error ? <p role="alert">Could not load derived types. <button type="button" className={styles.reset} onClick={reportCatalogue.retry}>Try again</button></p> : null}
-      {countryList.error ? <p role="alert">Could not load countries. <button type="button" className={styles.reset} onClick={countryList.retry}>Try again</button></p> : null}
+      {!search.active && reportCatalogue.error ? <p role="alert">Could not load derived types. <button type="button" className={styles.reset} onClick={reportCatalogue.retry}>Try Again</button></p> : null}
+      {countryList.error ? <p role="alert">Could not load countries. <button type="button" className={styles.reset} onClick={countryList.retry}>Try Again</button></p> : null}
     </aside>
     {!initialLoading && error ? <div className={styles.researchStatus}>
-      <p role="alert">{search.active ? "Could not search reports." : `Could not load ${failedFeeds.map(feed => intelligenceReportLabels[feed]).join(" and ")}.`} <button type="button" className={styles.reset} disabled={pending} onClick={() => search.active ? search.retry() : loadMore(selectedFeeds, true)}>Try again</button></p>
+      <p role="alert">{search.active ? "Could not search reports." : `Could not load ${failedFeeds.map(feed => intelligenceReportLabels[feed]).join(" and ")}.`} <button type="button" className={styles.reset} disabled={pending} onClick={() => search.active ? search.retry() : loadMore(selectedFeeds, true)}>Try Again</button></p>
     </div> : null}
     {initialLoading ? <ResearchPublicationsSkeleton /> : null}
     {!initialLoading ? <ResearchPublications

@@ -18,3 +18,20 @@ export function lastQuarterResearchRange(now = new Date()) {
     to: format(new Date(now.getFullYear(), quarterStart, 0)),
   };
 }
+
+export function displayResearchDate(isoDate: string) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(isoDate) ? `${isoDate.slice(5, 7)}-${isoDate.slice(8, 10)}-${isoDate.slice(0, 4)}` : "";
+}
+
+export function parseResearchDate(value: string): string | null {
+  if (!value) return "";
+  if (!/^\d{2}-\d{2}-\d{4}$/.test(value)) return null;
+  const isoDate = `${value.slice(6)}-${value.slice(0, 2)}-${value.slice(3, 5)}`;
+  const parsed = new Date(`${isoDate}T00:00:00Z`);
+  return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === isoDate ? isoDate : null;
+}
+
+export function researchDateInput(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 8);
+  return [digits.slice(0, 2), digits.slice(2, 4), digits.slice(4)].filter(Boolean).join("-");
+}

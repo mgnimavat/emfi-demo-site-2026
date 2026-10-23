@@ -309,3 +309,32 @@ test("six-month, year and previous calendar quarter presets handle date boundari
   assert.deepEqual(lastQuarterResearchRange(now), { from: "2026-07-01", to: "2026-09-30" });
   assert.deepEqual(lastQuarterResearchRange(new Date(2026, 0, 15)), { from: "2025-10-01", to: "2025-12-31" });
 });
+
+test("date range displays MM-DD-YYYY while API requests keep ISO dates", async () => {
+  const { displayResearchDate, parseResearchDate, researchDateInput } = await import("../src/lib/research-date-range.ts");
+  assert.equal(displayResearchDate("2026-10-23"), "10-23-2026");
+  assert.equal(displayResearchDate(""), "");
+  assert.equal(parseResearchDate("10-23-2026"), "2026-10-23");
+  assert.equal(parseResearchDate("02-29-2024"), "2024-02-29");
+  for (const invalid of ["02-29-2026", "02-30-2026", "13-01-2026", "10/23/2026", "1-2-2026", "10-23-"]) assert.equal(parseResearchDate(invalid), null);
+  assert.equal(parseResearchDate(""), "");
+  assert.equal(researchDateInput("10232026"), "10-23-2026");
+  assert.equal(researchDateInput("10/23/2026"), "10-23-2026");
+  assert.equal(researchDateInput(""), "");
+  assert.equal(researchDateInput("102"), "10-2");
+});
+
+test("report previews obtain their full-report links from catalogue IDs and slugs", async () => {
+  const { normalizeReportSlugs, reportSourceUrl } = await import("../src/lib/intelligence-report-types.ts");
+  const slugs = normalizeReportSlugs({ success: true, data: { search_report_list: [
+    { id: 2575, report_slug: " emfi-monthly-review-september " }, { id: 2582, report_slug: "inflation" },
+    { id: 1, report_slug: null }, { id: "invalid", report_slug: "ignored" },
+  ] } });
+  assert.deepEqual(slugs, { "emfi-2575": "emfi-monthly-review-september", "emfi-2582": "inflation" });
+  assert.equal(reportSourceUrl("emfi-2575", slugs["emfi-2575"], "english"), "https://emfi.uk/english/intelligence/details/emfi-monthly-review-september?id=2575");
+  assert.equal(reportSourceUrl("emfi-2582", slugs["emfi-2582"], "espanol"), "https://emfi.uk/espanol/intelligence/details/inflation?id=2582");
+  assert.equal(reportSourceUrl("emfi-1", undefined, "english"), undefined);
+  assert.equal(reportSourceUrl("invalid", "slug", "english"), undefined);
+  assert.equal(reportSourceUrl("emfi-1", "a/b#c", "english"), "https://emfi.uk/english/intelligence/details/a%2Fb%23c?id=1");
+  assert.deepEqual(normalizeReportSlugs({ success: true, data: { search_report_list: false } }), {});
+});

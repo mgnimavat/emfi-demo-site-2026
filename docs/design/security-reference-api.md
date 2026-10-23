@@ -1,0 +1,11 @@
+The Services security lookup posts to `/api/securities/find`. The local route validates the ISIN and forwards the lookup to `https://admin-uat.emfi.uk/api/find-securities` (the supplied HTTP endpoint redirects to HTTPS).
+
+Configure `EMFI_SECURITIES_API_KEY` as a server-only environment variable in each deployment. Local development uses the ignored `.env.local` file. The browser sends only `{ "isin": "..." }`; the server adds the key in the `X-Api-Key` header. Do not use a `NEXT_PUBLIC_` variable for this credential.
+
+Responses dynamically expose all non-empty security fields under the upstream `data` object, including new sections, nested objects and arrays. Credentials are removed recursively before sending data to the browser; response transport metadata is not rendered. Unknown field names get readable labels, and unknown values retain their source text. The returned ISIN is displayed unchanged, even if it differs from the requested ISIN. No result data is invented. The first view shows a compact result card. View details opens Security Details and Settlement tabs; Back to results restores the result without another API request. Missing fields and empty sections are omitted. Fields such as nominal currency, rate, and clearing system appear automatically if present in the returned data. An empty Settlement tab is also omitted. Bridge eligibility uses only the returned bridge_cbl flag; NO is Not available, never Not provided. Numeric zero amounts remain visible.
+
+Only ISIN requests are documented so far. Security name and Common Code remain unavailable for selection. Clicking them opens a dismissible contextual notice that disappears after five seconds; only ISIN remains selected and keyboard navigation skips unavailable modes. Search, result and detail views share a fixed responsive card height, with longer content scrolling inside.
+
+Run `node tests/security-reference.test.mjs` for the response and request-contract checks.
+
+Tab routing follows response content, not a hardcoded ISIN list. Responses with Euroclear fields or explicit settlement reference data show Settlement. Basic-only EMFI responses keep minimum piece/increment and other trading constraints under Security Details, so they do not create a mostly empty Settlement tab.
