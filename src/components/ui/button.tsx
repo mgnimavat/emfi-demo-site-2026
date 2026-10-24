@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 type ButtonProps = {
   children: React.ReactNode;
   href?: string;
-  variant?: "primary" | "outline" | "secondary" | "inverse" | "ghost";
+  variant?: "primary" | "outline" | "secondary" | "inverse" | "ghost" | "circle";
   className?: string;
   type?: "button" | "submit";
   onClick?: () => void;
@@ -34,6 +34,14 @@ function ButtonArrow() {
   );
 }
 
+function CircleMark() {
+  return (
+    <span className="emfi-circle-btn-mark" aria-hidden="true">
+      <ArrowUpRight size={16} strokeWidth={1.75} className="emfi-circle-btn-arrow" />
+    </span>
+  );
+}
+
 export function Button({
   children,
   href,
@@ -44,13 +52,21 @@ export function Button({
   showArrow = true,
   as,
 }: ButtonProps) {
+  const circle = variant === "circle";
   const classes = cn(
-    "emfi-btn group inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[13px] font-bold tracking-wide",
-    variants[variant],
+    circle
+      ? "emfi-circle-btn"
+      : "emfi-btn group inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[13px] font-bold tracking-wide",
+    circle ? undefined : variants[variant],
     className,
   );
 
-  const content = (
+  const content = circle ? (
+    <>
+      <span className="emfi-circle-btn-label">{children}</span>
+      <CircleMark />
+    </>
+  ) : (
     <span className="emfi-btn-label">
       {children}
       {showArrow ? <ButtonArrow /> : null}

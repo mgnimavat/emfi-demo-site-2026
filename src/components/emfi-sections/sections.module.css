@@ -1,0 +1,95 @@
+.chapter h1,
+.chapter h2,
+.chapter h3,
+.chapter h4,
+.chapter h5,
+.chapter h6 {
+  font-family: inherit;
+}
+
+.lockup {
+  container-type: inline-size;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: clamp(88px, 10vw, 140px) clamp(20px, 4vw, 56px);
+  text-align: left;
+}
+
+.chapter .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  color: #c5d0e2;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.eyebrowMark {
+  flex: none;
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+}
+
+.chapter .headline,
+.chapter .subheadline {
+  margin: 0;
+  font-size: clamp(32px, 6.6vw, 104px);
+  font-size: clamp(26px, 8.1cqi, 104px);
+  line-height: 0.9;
+  color: #ffffff;
+}
+
+.chapter .headline {
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+.chapter .subheadline {
+  font-weight: 300;
+  letter-spacing: -0.04em;
+}
+
+.chapter .points {
+  margin: 0.42em 0 0;
+  color: #ffffff;
+  font-size: clamp(18px, 2.55cqi, 30px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.replay {
+  position: absolute;
+  z-index: 10;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(162,194,253,.45);
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.replay:hover,
+.replay:focus {
+  border-color: #ffffff;
+  background: rgba(162,194,253,.12);
+}
+
+.replayIcon {
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  -webkit-mask: url("/emfi/icon-replay.svg") center/contain no-repeat;
+  mask: url("/emfi/icon-replay.svg") center/contain no-repeat;
+}

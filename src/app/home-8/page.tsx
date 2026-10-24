@@ -1,7 +1,7 @@
+import { EmfiSections } from "@/components/emfi-sections/emfi-sections";
 import { Home8Footer } from "@/components/sections/home-8/footer";
 import { Home8Header } from "@/components/sections/home-8/header";
-import { DirectFlowSection } from "@/components/sections/home-8/direct-flow";
-import { ContactSection, ExpectBand, HeroSection, ResponsiveSection } from "@/components/sections/home-8/sections";
+import { DiscussSection, HeroSection } from "@/components/sections/home-8/sections";
 import styles from "@/components/sections/home-8/landing.module.css";
 
 export const metadata = {
@@ -15,11 +15,9 @@ export default function Home8Page() {
       <Home8Header />
       <div className={styles.page}>
         <HeroSection />
-        <ExpectBand />
-        <DirectFlowSection />
-        <ResponsiveSection />
-        <ContactSection />
+        <EmfiSections />
       </div>
+      <DiscussSection />
       <Home8Footer />
     </>
   );

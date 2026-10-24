@@ -812,7 +812,8 @@
     box-shadow: none;
   }
 
-  .emfi-btn-arrow {
+  .emfi-btn-arrow,
+  .emfi-circle-btn-arrow {
     transform: none !important;
   }
 
@@ -1034,6 +1035,49 @@ h6 {
 
 .emfi-btn-arrow {
   transform-origin: center;
+}
+
+.emfi-circle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.emfi-circle-btn-mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(186, 206, 236, 0.85);
+  border-radius: 50%;
+  transition: border-color 0.28s ease, background-color 0.28s ease;
+}
+
+.emfi-circle-btn-arrow {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.emfi-circle-btn:hover .emfi-circle-btn-mark,
+.emfi-circle-btn:focus-visible .emfi-circle-btn-mark {
+  border-color: currentColor;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.emfi-circle-btn:hover .emfi-circle-btn-arrow,
+.emfi-circle-btn:focus-visible .emfi-circle-btn-arrow {
+  transform: translate(2px, -2px);
 }
 
 .emfi-person-card {

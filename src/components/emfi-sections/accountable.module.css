@@ -1,0 +1,19 @@
+.stage { position: relative; min-height: 168px; }
+.slide { position: absolute; inset: 0; }
+.head { display: flex; align-items: center; gap: 16px; }
+.title { margin: 0; color: #fff; font-size: clamp(22px, 2.4vw, 30px); font-weight: 800; letter-spacing: -.03em; line-height: 1; white-space: nowrap; }
+.rule { flex: 1; height: 1px; background: rgb(177 192 226 / 45%); }
+.logos, .pills { display: grid; gap: 12px; margin-top: 18px; }
+.logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.pills { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.logoCard, .pill { display: grid; place-items: center; min-height: 112px; padding: 16px 12px; border-radius: 18px; }
+.logoCard { background: #fff; }
+.logoCard img { width: auto; max-width: 86%; height: auto; max-height: 64px; object-fit: contain; filter: grayscale(1) sepia(.9) hue-rotate(176deg) saturate(2.2) brightness(.58) contrast(1.08); }
+.pill { border: 1px solid rgb(177 192 226 / 50%); background: transparent; color: #fff; font-size: clamp(14px, 1.6vw, 22px); font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+.stack { display: grid; gap: 28px; }
+@container (max-width: 560px) {
+  .pills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .logoCard, .pill { min-height: 92px; padding: 12px 8px; }
+  .logoCard img { max-height: 48px; }
+  .stage { min-height: 248px; }
+}
