@@ -17,6 +17,7 @@ function activeLink(pathname: string, href: string) {
 
 export function Header() {
   const pathname = usePathname();
+  if (pathname === "/home-8") return null;
   return <Navigation key={pathname} pathname={pathname} />;
 }
 

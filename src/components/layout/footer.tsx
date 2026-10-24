@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import footer from "@/content/site-footer.json";
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname === "/home-8") return null;
   return <footer className="emfi-site-footer"><div className="emfi-footer-inner">
     <div className="emfi-footer-top">
       {footer.linkGroups.map((group) => <nav key={group.heading} className="emfi-footer-links" aria-label={`Footer ${group.heading.toLowerCase()}`}>
