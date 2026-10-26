@@ -191,6 +191,7 @@ export function dirVals(t: number, V: boolean) {
     dHand: { left: `${hp[0]}%`, top: `${hp[1]}%`, tf: V ? "translate(14px,-50%)" : "translate(-50%,-32px)", op: hm == null ? 0 : 1 },
     dCount: count,
     dNote: t >= 0.74 ? "Previously 4" : "",
+    dRouteTitle: t >= 0.56 ? "A Direct Route with EMFI" : "A conventional route",
     dCap: t < 0.53 ? "Standard institutional route" : t < 0.74 ? "The same route, fewer layers" : "The same instruction, through EMFI",
     dStageH: V ? "400px" : "180px",
     dBandOp: sg(t, 0.74, 0.86),

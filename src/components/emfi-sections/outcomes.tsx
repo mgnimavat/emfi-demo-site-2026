@@ -33,17 +33,23 @@ export function SectionCopy({
   lead,
   body,
   action,
+  tone = "dark",
 }: {
   title: string;
   lead?: string;
   body: string;
   action?: { href: string; label: string };
+  tone?: "dark" | "light";
 }) {
+  const light = tone === "light";
+  const titleColor = light ? "#071832" : "#FFFFFF";
+  const bodyColor = light ? "#24344b" : "#CBD2E8";
+
   return (
     <div style={{ minWidth: 0 }}>
-      <h2 style={{ fontSize: "clamp(40px,4.6vw,72px)", fontWeight: 800, lineHeight: 0.95, letterSpacing: "-.05em", color: "#FFFFFF" }}>{title}</h2>
-      {lead ? <p style={{ marginTop: 18, fontSize: "clamp(20px,1.7vw,24px)", fontWeight: 800, letterSpacing: "-.02em", lineHeight: 1.25, color: "#FFFFFF" }}>{lead}</p> : null}
-      <p style={{ marginTop: lead ? 12 : 18, maxWidth: 440, fontSize: 17, lineHeight: 1.6, color: "#CBD2E8", textWrap: "pretty" }}>{body}</p>
+      <h2 style={{ fontSize: "clamp(40px,4.6vw,72px)", fontWeight: 800, lineHeight: 0.95, letterSpacing: "-.05em", color: titleColor }}>{title}</h2>
+      {lead ? <p style={{ marginTop: 18, fontSize: "clamp(20px,1.7vw,24px)", fontWeight: 800, letterSpacing: "-.02em", lineHeight: 1.25, color: titleColor }}>{lead}</p> : null}
+      <p style={{ marginTop: lead ? 12 : 18, maxWidth: 440, fontSize: 17, lineHeight: 1.6, color: bodyColor, textWrap: "pretty" }}>{body}</p>
       {action ? (
         <div style={{ marginTop: 28 }}>
           <Button href={action.href} variant="circle">{action.label}</Button>

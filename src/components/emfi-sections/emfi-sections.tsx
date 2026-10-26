@@ -1,11 +1,5 @@
-import { Manrope } from "next/font/google";
 import { ExpectMoreChapter } from "./expect-more-chapter";
 
-const manrope = Manrope({
-  subsets: ["latin"],
-  display: "swap",
-});
-
-export function EmfiSections() {
-  return <ExpectMoreChapter fontClass={manrope.className} />;
+export function EmfiSections({ showPoints = true, showRouteTitle = false, loop = false, stepLabel, highlightSlides = false, staticStandards = false, lightBands = false }: { showPoints?: boolean; showRouteTitle?: boolean; loop?: boolean; stepLabel?: string; highlightSlides?: boolean; staticStandards?: boolean; lightBands?: boolean }) {
+  return <ExpectMoreChapter showPoints={showPoints} showRouteTitle={showRouteTitle} loop={loop} stepLabel={stepLabel} highlightSlides={highlightSlides} staticStandards={staticStandards} lightBands={lightBands} />;
 }
