@@ -1,6 +1,5 @@
 "use client";
 
-import { CurvedBand } from "@/components/layout/curved-band";
 import { ContactHero } from "@/components/sections/contact/hero";
 import contactStyles from "@/components/sections/contact/contact.module.css";
 import { useState } from "react";
@@ -13,8 +12,8 @@ export default function ContactPage() {
   const researchEnquiry = useResearchEnquiry();
   return (
     <div className={styles.page}>
-      <CurvedBand nextBackground="#fff"><ContactHero /></CurvedBand>
-      <CurvedBand nextBackground="#0c1725"><section id="contact-enquiry" className={`${styles.section} ${contactStyles.enquiry}`} aria-labelledby="contact-form-heading">
+      <ContactHero />
+      <section id="contact-enquiry" className={`${styles.section} ${contactStyles.enquiry}`} aria-labelledby="contact-form-heading">
         <div className={styles.container}>
           <div className={contactStyles.enquiryLayout}>
             <h2 id="contact-form-heading" className={`${styles.sectionTitle} ${contactStyles.formTitle}`}>{contact.formEyebrow}</h2>
@@ -32,7 +31,7 @@ export default function ContactPage() {
             </form>
           </div>
         </div>
-      </section></CurvedBand>
+      </section>
       </div>
   );
 }

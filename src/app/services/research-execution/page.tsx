@@ -35,8 +35,7 @@ export default function ResearchExecutionPage() {
       </ExecutionReveal></div>
     </section>
     <section className={styles.flow} aria-labelledby="workflow-heading"><div className={styles.container}><ExecutionReveal><h2 id="workflow-heading" className={styles.title}>{execution.workflow.title}</h2><p className={styles.body}>{execution.workflow.body}</p></ExecutionReveal><DirectExecutionWorkflow /></div></section>
-    {/* Execution preview is temporarily disabled; its implementation is retained. */}
-    <ConnectedExecutionPreviews flatSections showExecution={false} />
+    <ConnectedExecutionPreviews flatSections />
     <ArchiveCta title={execution.contact.title} body={execution.contact.body} action={execution.contact.action} />
   </div>;
 }
