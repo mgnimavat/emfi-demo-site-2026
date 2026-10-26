@@ -1,6 +1,7 @@
 import { about } from "@/content/about";
 import { FadeIn } from "@/components/motion/fade-in";
 import { AboutHero } from "@/components/sections/about-hero";
+import { AboutLocations } from "@/components/sections/about-locations";
 import { AboutTimeline } from "@/components/sections/about-timeline";
 import { PersonCard } from "@/components/sections/person-card";
 import { ArchiveCta } from "@/components/sections/archive/cta";
@@ -21,6 +22,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <AboutLocations />
       <ArchiveCta className={styles.ctaBlue} title={about.ctaTitle} body={about.ctaBody} action={about.ctaButton} />
     </div>
   );
