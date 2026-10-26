@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { trust } from "@/content/trust";
 import { cardStyle } from "./css";
 import { SectionCopy } from "./outcomes";
@@ -14,17 +14,43 @@ const HOLD_MS = 3800;
 const standards = ["Authorised", "Regulated", "Auditable"] as const;
 
 function StandardsPanel() {
+  const listRef = useRef<HTMLOListElement>(null);
+  const reduceMotion = useReducedMotion();
+  const inView = useInView(listRef, { once: true, amount: 0.4 });
+  const [shown, setShown] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (reduceMotion || inView) setShown(true);
+    if (reduceMotion) setReady(true);
+  }, [reduceMotion, inView]);
+
   return (
     <div className={styles.standards}>
       <p className={styles.standardsTitle}>
         <span aria-hidden="true" className={chapterStyles.eyebrowMark} />
         The standard behind the service
       </p>
-      <ol className={styles.standardsLines}>
+      <ol
+        ref={listRef}
+        className={styles.standardsLines}
+        data-shown={shown ? "true" : undefined}
+        data-ready={ready ? "true" : undefined}
+      >
         {standards.map((line, index) => (
-          <li key={line} className={styles.standardsLine}>
-            <span className={styles.standardsNum} aria-hidden="true">{index + 1}.</span>
-            <span className={styles.standardsWord}>{line}</span>
+          <li
+            key={line}
+            className={styles.standardsLine}
+            style={{ animationDelay: `${index * 0.18}s` }}
+            onAnimationEnd={(event) => {
+              if (event.target !== event.currentTarget || index !== standards.length - 1) return;
+              setReady(true);
+            }}
+          >
+            <span className={styles.standardsPull}>
+              <span className={styles.standardsNum} aria-hidden="true">{index + 1}.</span>
+              <span className={styles.standardsWord}>{line}</span>
+            </span>
           </li>
         ))}
       </ol>

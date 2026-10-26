@@ -6,7 +6,7 @@ import footer from "@/content/site-footer.json";
 
 export function Footer() {
   const pathname = usePathname();
-  if (pathname === "/home-8" || pathname === "/home-9" || pathname === "/home-10") return null;
+  if (pathname === "/home-8" || pathname === "/home-9" || pathname === "/home-10" || pathname === "/home-11") return null;
   return <footer className="emfi-site-footer"><div className="emfi-footer-inner">
     <div className="emfi-footer-top">
       {footer.linkGroups.map((group) => <nav key={group.heading} className="emfi-footer-links" aria-label={`Footer ${group.heading.toLowerCase()}`}>

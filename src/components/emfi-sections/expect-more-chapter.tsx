@@ -20,7 +20,7 @@ function MarkProgress({ blend, progress, tint }: { blend?: CSSProperties["mixBle
   const wash = (alpha: number) => `linear-gradient(102deg, rgba(162,194,253,${alpha}) 0%, rgba(128,152,204,${alpha}) 48%, rgba(0,201,167,${alpha}) 100%)`;
   return (
     <span style={{ position: "absolute", inset: 0, mixBlendMode: blend }}>
-      <span style={{ position: "absolute", inset: 0, WebkitMask: markMask, mask: markMask }}>
+      <span style={{ position: "absolute", inset: 0, WebkitMask: markMask, mask: markMask, maskMode: "alpha" }}>
         <span style={{ position: "absolute", inset: 0, background: wash(tint), clipPath: `inset(0 0 ${hidden} 0)` }} />
       </span>
     </span>
@@ -38,7 +38,7 @@ function MarkArt({ blend, fill, stroke, strokeOpacity, strokeWidth, dashOffset }
   );
 }
 
-export function ExpectMoreChapter({ showPoints = true, showRouteTitle = false, loop = false, stepLabel = "Handover", highlightSlides = false, staticStandards = false, lightBands = false }: { showPoints?: boolean; showRouteTitle?: boolean; loop?: boolean; stepLabel?: string; highlightSlides?: boolean; staticStandards?: boolean; lightBands?: boolean }) {
+export function ExpectMoreChapter({ showPoints = true, showRouteTitle = false, loop = false, stepLabel = "Handover", highlightSlides = false, staticStandards = false, lightBands = false, markFill = true }: { showPoints?: boolean; showRouteTitle?: boolean; loop?: boolean; stepLabel?: string; highlightSlides?: boolean; staticStandards?: boolean; lightBands?: boolean; markFill?: boolean }) {
   const { chapRef, dRef, w, hdr, chapP, tD, canReplay, replayD } = useAnimTimeline({ loopDirect: loop });
   const V = w < 760;
   const compact = w < 1000;
@@ -62,10 +62,10 @@ export function ExpectMoreChapter({ showPoints = true, showRouteTitle = false, l
           <div style={{ position: "absolute", left: V ? "-45vw" : "-18vw", top: V ? "calc(50% - 60vw)" : "calc(50% - min(55vh, 39vw))", width: V ? "120vw" : "min(110vh, 78vw)", aspectRatio: "1" }}>
             {lightBands ? (
               <>
-                <MarkShape blend="screen" fill="rgba(186,206,236,.012)" />
-                <MarkProgress blend="screen" progress={chapP} tint={0.07} />
-                <MarkShape blend="multiply" fill="rgba(168,188,214,.018)" />
-                <MarkProgress blend="multiply" progress={chapP} tint={0.24} />
+                <MarkShape blend="screen" fill="rgba(186,206,236,.026)" />
+                {markFill && <MarkProgress blend="screen" progress={chapP} tint={0.016} />}
+                <MarkShape blend="multiply" fill="rgba(168,188,214,.032)" />
+                {markFill && <MarkProgress blend="multiply" progress={chapP} tint={0.05} />}
               </>
             ) : (
               <MarkArt fill="rgba(162,194,253,.02)" stroke="url(#emfiGrad)" strokeOpacity={0.18} strokeWidth={V ? 0.9 : 0.45} dashOffset={trOff} />
