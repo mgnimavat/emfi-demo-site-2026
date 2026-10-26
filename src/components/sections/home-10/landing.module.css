@@ -19,7 +19,7 @@
     radial-gradient(ellipse 68% 78% at 86% 44%, rgb(197 212 234 / 36%) 0%, rgb(162 194 253 / 10%) 40%, transparent 72%),
     linear-gradient(105deg, transparent 46%, rgb(255 255 255 / 40%) 62%, transparent 78%);
 }
-.heroStage { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; width: 100%; max-width: 1440px; margin: 0 auto; }
+.heroStage { position: relative; top: -10px; z-index: 1; flex: 1; display: flex; flex-direction: column; width: 100%; max-width: 1440px; margin: 0 auto; }
 .heroLayout { flex: 1 1 auto; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: clamp(24px,4vw,56px); align-items: center; padding: clamp(12px,2.2vh,28px) clamp(20px,4vw,56px) 12px; }
 .heroCopy { position: relative; z-index: 2; min-width: 0; }
 .page .heroEyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; color: var(--ink); font-size: 12px; font-weight: 300; letter-spacing: .08em; line-height: 1.45; text-transform: uppercase; }
@@ -40,43 +40,46 @@
 .heroSymbol { position: relative; pointer-events: none; width: 100%; height: min(380px,36vw); justify-self: stretch; color: var(--glyph); overflow: visible; clip-path: inset(-20% -40% -20% 0); }
 .heroSymbolOrbit { position: absolute; top: 50%; left: 50%; width: min(380px,100%); height: min(380px,100%); aspect-ratio: 1; transform: translate(-50%,-50%); transform-origin: 50% 50%; }
 .heroPillars {
+  position: relative;
+  top: -30px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(14px, 1.5vw, 20px);
+  gap: 0;
   margin: 0 clamp(20px, 4vw, 56px) clamp(20px, 3vh, 36px);
-  padding-top: clamp(12px, 2vh, 20px);
+  overflow: hidden;
+  border: 1px solid rgb(162 194 253 / 28%);
+  border-radius: 20px;
+  background: var(--navy);
+  box-shadow: 0 18px 36px rgb(7 25 50 / 16%);
+  color: #fff;
 }
 .heroPillar {
   position: relative;
   min-width: 0;
   padding: clamp(22px, 2.2vw, 30px) clamp(22px, 2vw, 28px) clamp(24px, 2.4vw, 32px);
-  overflow: hidden;
-  border: 1px solid rgb(255 255 255 / 16%);
-  border-radius: 20px;
-  background: linear-gradient(160deg, #12294f, #0b1d3b);
-  box-shadow: 0 18px 36px rgb(7 25 50 / 16%);
   color: #fff;
 }
+.heroPillar + .heroPillar { border-left: 1px solid rgb(162 194 253 / 32%); }
 .heroPillar h2 {
   margin-top: 0;
   color: #fff;
   font-size: clamp(26px, 2.2vw, 34px);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.12;
   letter-spacing: -.03em;
 }
 .heroPillar p:last-child {
   margin-top: 10px;
-  max-width: 36ch;
+  max-width: none;
   color: #d5e0ee;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   line-height: 1.55;
 }
 [data-revealed="true"] .heroPillar { animation: principle-enter .7s ease backwards; }
 [data-revealed="true"] .heroPillar:nth-child(2) { animation-delay: .12s; }
 [data-revealed="true"] .heroPillar:nth-child(3) { animation-delay: .24s; }
-.heroSymbol svg { display: block; width: 100%; height: 100%; animation: hero-symbol-spin 6s linear infinite; }
+.heroSymbol svg { display: block; width: 100%; height: 100%; }
 .chapter { background: #071932; color: #fff; }
 .storyMark {
   position: absolute;
@@ -321,7 +324,20 @@
 }
 .ownerMark svg { width: 20px; height: 20px; }
 .discuss {
-  background: #fff;
+  background: linear-gradient(
+    90deg,
+    #a7c4fd 0%,
+    #a1bcf3 10%,
+    #9ab5ea 20%,
+    #94aee1 30%,
+    #90a7d9 40%,
+    #899fd0 50%,
+    #75a5c9 60%,
+    #5aafc3 70%,
+    #42b7bc 80%,
+    #2dc0b5 90%,
+    #1ecaae 100%
+  );
   color: #fff;
   font-family: var(--font-inter), Inter, Arial, sans-serif;
 }
@@ -373,12 +389,9 @@
   box-shadow: none;
 }
 .discussCard {
-  background:
-    radial-gradient(60% 120% at 50% 0%, rgb(162 194 253 / 16%), transparent 70%),
-    #071832;
+  background: transparent;
   box-shadow: none;
 }
-@keyframes hero-symbol-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes principle-enter { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: none; } }
 @media (min-width: 900px) and (max-width: 1279.98px) { .heroLayout { gap: 20px; } .heroSymbol { height: min(320px,34vw); } }
 @media (max-width: 899.98px) {
@@ -387,7 +400,7 @@
   .responsiveInner { grid-template-columns: minmax(0, 1fr); }
   .responsiveCopy { order: -1; }
 }
-@media (max-width: 759.98px) { .heroPillars { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 759.98px) { .heroPillars { grid-template-columns: minmax(0, 1fr); } .heroPillar + .heroPillar { border-left: 0; border-top: 1px solid rgb(162 194 253 / 32%); } }
 @media (max-width: 639.98px) { .heroLayout { grid-template-columns: minmax(0, 1fr); } .heroSymbol { width: min(168px, 42vw); height: min(168px, 42vw); justify-self: end; } .opsRow { grid-template-columns: minmax(0, 1fr) auto; } .opsRow span { grid-column: 1 / -1; } }
 @media (max-width: 760px) {
  .heroLayout { padding-block: 36px 12px; }

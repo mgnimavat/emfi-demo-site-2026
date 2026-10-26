@@ -14,6 +14,7 @@ import {
   Settings,
   X,
 } from "lucide-react";
+import { HeroDashboardScreen } from "@/components/mockups/operating-view";
 
 const HOLD_MS = 3400;
 
@@ -36,9 +37,10 @@ const VIEWS = [
   "OrderEur",
   "OrderAapl",
 ] as const;
-type View = (typeof VIEWS)[number];
+type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances";
 
 export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] as const satisfies readonly View[];
+export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
@@ -84,6 +86,18 @@ const VIEW_META: Record<
     date: "09/12/26 – 10/21/26",
     activeModule: "Clients",
     kind: "app",
+  },
+  HeroDashboard: {
+    crumbs: "",
+    date: "",
+    activeModule: "Clients",
+    kind: "public",
+  },
+  MobileBalances: {
+    crumbs: "",
+    date: "",
+    activeModule: "Clients",
+    kind: "public",
   },
 };
 
@@ -1041,7 +1055,33 @@ function ViewPanel({ view }: { view: View }) {
       return <OrderEntryPanel symbol="EURUSD" title="EURUSD" chart="line" />;
     case "OrderAapl":
       return <OrderEntryPanel symbol="AAPL" title="APPLE INC" chart="candle" />;
+    case "HeroDashboard":
+      return (
+        <div className="h-full">
+          <HeroDashboardScreen />
+        </div>
+      );
+    case "MobileBalances":
+      return <MobileBalancesSlide />;
   }
+}
+
+const balancesGradient = "linear-gradient(165deg, #f5f9fd 0%, #d7e6f8 100%)";
+const ctaBorderGradient = "linear-gradient(90deg, #a7c4fd 0%, #a1bcf3 10%, #9ab5ea 20%, #94aee1 30%, #90a7d9 40%, #899fd0 50%, #75a5c9 60%, #5aafc3 70%, #42b7bc 80%, #2dc0b5 90%, #1ecaae 100%)";
+
+function MobileBalancesSlide() {
+  return (
+    <div className="flex h-full items-center justify-center">
+      <Image
+        src="/images/services/balances-iphone.png"
+        alt="Balances on the EMFI mobile app"
+        width={489}
+        height={1024}
+        className="h-full w-auto max-w-full object-contain"
+        unoptimized
+      />
+    </div>
+  );
 }
 
 export function ResearchExecutionHeroMockup({ views = VIEWS }: { views?: readonly View[] } = {}) {
@@ -1060,7 +1100,12 @@ export function ResearchExecutionHeroMockup({ views = VIEWS }: { views?: readonl
   }, [reduced, views]);
 
   return (
-    <div className="rounded-xl border border-line bg-page p-2 md:p-3">
+    <div
+      className="rounded-xl border border-transparent p-2 md:p-3"
+      style={{
+        background: `${view === "MobileBalances" ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${ctaBorderGradient} border-box`,
+      }}
+    >
       {/* Fixed stage height so public + app slides never resize the hero */}
       <div className="relative h-[438px] overflow-hidden md:h-[478px]">
         <AnimatePresence mode="wait">

@@ -1,4 +1,4 @@
-import { ResearchExecutionHeroMockup, responsiveHighlightSlides } from "@/components/mockups/research-execution-hero";
+import { ResearchExecutionHeroMockup, home10ResponsiveSlides, responsiveHighlightSlides } from "@/components/mockups/research-execution-hero";
 import { SectionCopy } from "./outcomes";
 import styles from "./sections.module.css";
 
@@ -7,11 +7,13 @@ export function ResponsiveSection({
   textOrder,
   highlightSlides = false,
   light = false,
+  homeSlides = false,
 }: {
   cols: string;
   textOrder: number;
   highlightSlides?: boolean;
   light?: boolean;
+  homeSlides?: boolean;
 }) {
   return (
     <section id="responsive" data-screen-label="04 Responsive" style={{ position: "relative", background: light ? "#e6effb" : "radial-gradient(50% 60% at 100% 50%,rgba(0,201,167,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
@@ -25,7 +27,7 @@ export function ResponsiveSection({
           />
         </div>
         <div style={{ minWidth: 0, color: "#071832", fontFamily: "var(--font-inter), Inter, Arial, sans-serif" }}>
-          <ResearchExecutionHeroMockup views={highlightSlides ? responsiveHighlightSlides : undefined} />
+          <ResearchExecutionHeroMockup views={homeSlides ? home10ResponsiveSlides : highlightSlides ? responsiveHighlightSlides : undefined} />
         </div>
       </div>
     </section>

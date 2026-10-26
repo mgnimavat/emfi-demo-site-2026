@@ -15,7 +15,7 @@ export default function Home10Page() {
       <Home10Header />
       <div className={styles.page}>
         <HeroSection />
-        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Order" highlightSlides staticStandards lightBands />
+        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Order" highlightSlides staticStandards lightBands homeSlides />
       </div>
       <DiscussSection />
       <Home10Footer />

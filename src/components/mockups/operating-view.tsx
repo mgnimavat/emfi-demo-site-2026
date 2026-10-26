@@ -668,10 +668,12 @@ const TAB_LABEL: Record<View, string> = {
 export function OperatingView({
   tabs = false,
   views = VIEWS,
+  fill = false,
 }: {
   compact?: boolean;
   tabs?: boolean;
   views?: readonly View[];
+  fill?: boolean;
 } = {}) {
   const reduced = useReducedMotion();
   const sequence = views.length ? views : VIEWS;
@@ -690,7 +692,7 @@ export function OperatingView({
   }, [reduced, sequence.length]);
 
   const frame = (
-    <div className="pointer-events-none overflow-hidden rounded-md border border-line bg-page shadow-sm">
+    <div className={cn("pointer-events-none overflow-hidden rounded-md border border-line bg-page shadow-sm", fill && "flex h-full min-h-0 flex-col")}>
       <header className="flex items-center gap-2 bg-nav px-3 py-2">
         <Image
           src="/brand/emfi-logo.svg"
@@ -744,7 +746,7 @@ export function OperatingView({
         </div>
       </div>
 
-      <div className="relative h-[332px] overflow-hidden bg-page p-2 md:h-[372px] md:p-2.5">
+      <div className={cn("relative overflow-hidden bg-page p-2 md:p-2.5", fill ? "min-h-0 flex-1" : "h-[332px] md:h-[372px]")}>
         <AnimatePresence mode="wait">
           <motion.div
             key={view}
@@ -795,4 +797,8 @@ export function HeroMockup() {
       <OperatingView compact />
     </div>
   );
+}
+
+export function HeroDashboardScreen() {
+  return <OperatingView views={["Dashboard"]} fill />;
 }

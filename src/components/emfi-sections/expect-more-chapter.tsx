@@ -38,7 +38,7 @@ function MarkArt({ blend, fill, stroke, strokeOpacity, strokeWidth, dashOffset }
   );
 }
 
-export function ExpectMoreChapter({ showPoints = true, showRouteTitle = false, loop = false, stepLabel = "Handover", highlightSlides = false, staticStandards = false, lightBands = false, markFill = true }: { showPoints?: boolean; showRouteTitle?: boolean; loop?: boolean; stepLabel?: string; highlightSlides?: boolean; staticStandards?: boolean; lightBands?: boolean; markFill?: boolean }) {
+export function ExpectMoreChapter({ showPoints = true, showRouteTitle = false, loop = false, stepLabel = "Handover", highlightSlides = false, staticStandards = false, lightBands = false, markFill = true, homeSlides = false }: { showPoints?: boolean; showRouteTitle?: boolean; loop?: boolean; stepLabel?: string; highlightSlides?: boolean; staticStandards?: boolean; lightBands?: boolean; markFill?: boolean; homeSlides?: boolean }) {
   const { chapRef, dRef, w, hdr, chapP, tD, canReplay, replayD } = useAnimTimeline({ loopDirect: loop });
   const V = w < 760;
   const compact = w < 1000;
@@ -75,7 +75,7 @@ export function ExpectMoreChapter({ showPoints = true, showRouteTitle = false, l
       </div>
       <ExpectSection showPoints={showPoints} raiseContent={lightBands} />
       <DirectSection cols={cCols} cardRef={dRef} canReplay={canReplay} onReplay={replayD} values={dirVals(tD, V)} showRouteTitle={showRouteTitle} showReplay={!loop} stepLabel={stepLabel} light={lightBands} />
-      <ResponsiveSection cols={cColsR} textOrder={V ? 0 : 2} highlightSlides={highlightSlides} light={lightBands} />
+      <ResponsiveSection cols={cColsR} textOrder={V ? 0 : 2} highlightSlides={highlightSlides} light={lightBands} homeSlides={homeSlides} />
       <AccountableSection cols={cCols} canReplay={canReplay} showReplay={!loop} staticStandards={staticStandards} raiseContent={lightBands} />
     </div>
   );

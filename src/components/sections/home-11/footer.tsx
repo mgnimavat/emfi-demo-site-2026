@@ -42,11 +42,16 @@ export function Home11Footer() {
     <footer className={styles.footer}>
       <div className={styles.footerInner}>
         <div className={styles.footerTop}>
+          <nav className={styles.footerLinks} aria-label="Footer services">
+            <h2>Services</h2>
+            <ul>
+              <FooterLinkItems links={home11.navLinks} />
+            </ul>
+          </nav>
           <nav className={styles.footerLinks} aria-label="Footer resources">
             <h2>Resources</h2>
             <ul>
               {resources.map((label) => <li key={label}>{label}</li>)}
-              <FooterLinkItems links={home11.utilityLinks} />
             </ul>
           </nav>
           {legalGroup ? (
