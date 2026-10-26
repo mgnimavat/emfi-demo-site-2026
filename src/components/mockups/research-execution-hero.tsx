@@ -38,6 +38,8 @@ const VIEWS = [
 ] as const;
 type View = (typeof VIEWS)[number];
 
+export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] as const satisfies readonly View[];
+
 const VIEW_META: Record<
   View,
   {
@@ -1042,20 +1044,20 @@ function ViewPanel({ view }: { view: View }) {
   }
 }
 
-export function ResearchExecutionHeroMockup() {
+export function ResearchExecutionHeroMockup({ views = VIEWS }: { views?: readonly View[] } = {}) {
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
-  const view = VIEWS[index];
+  const view = views[index] ?? views[0];
   const meta = VIEW_META[view];
 
   useEffect(() => {
     if (reduced) return;
     const id = window.setInterval(
-      () => setIndex((i) => (i + 1) % VIEWS.length),
+      () => setIndex((i) => (i + 1) % views.length),
       HOLD_MS,
     );
     return () => window.clearInterval(id);
-  }, [reduced]);
+  }, [reduced, views]);
 
   return (
     <div className="rounded-xl border border-line bg-page p-2 md:p-3">

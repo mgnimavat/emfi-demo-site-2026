@@ -13,7 +13,7 @@ function headerHeight() {
   return header.offsetHeight;
 }
 
-export function useAnimTimeline() {
+export function useAnimTimeline({ loopDirect = false }: { loopDirect?: boolean } = {}) {
   const chapRef = useRef<HTMLDivElement>(null);
   const dRef = useRef<HTMLDivElement>(null);
   const rRef = useRef<HTMLDivElement>(null);
@@ -24,7 +24,11 @@ export function useAnimTimeline() {
   const [tl, setTl] = useState({ tD: 0, tR: 0, tA: 0 });
   const [canReplay, setCanReplay] = useState(true);
   const reducedRef = useRef(false);
+  const loopDirectRef = useRef(loopDirect);
+  loopDirectRef.current = loopDirect;
   const startRef = useRef<Partial<Record<TimelineKey, number>>>({});
+  const elapsedRef = useRef<Partial<Record<TimelineKey, number>>>({});
+  const visibleRef = useRef<Partial<Record<TimelineKey, boolean>>>({});
   const valuesRef = useRef({ tD: 0, tR: 0, tA: 0 });
   const rafRef = useRef(0);
   const srafRef = useRef(0);
@@ -65,12 +69,15 @@ export function useAnimTimeline() {
       (Object.keys(DUR) as TimelineKey[]).forEach((key) => {
         const start = startRef.current[key];
         if (start == null) return;
-        const value = Math.min(1, (now - start) / DUR[key]);
+        const duration = DUR[key];
+        const looping = loopDirectRef.current && key === "tD" && visibleRef.current[key] !== false;
+        const elapsed = now - start;
+        const value = looping ? (elapsed % duration) / duration : Math.min(1, elapsed / duration);
         if (value !== valuesRef.current[key]) {
           next[key] = value;
           changed = true;
         }
-        if (value < 1) run = true;
+        if (looping || value < 1) run = true;
       });
       if (changed) {
         valuesRef.current = next;
@@ -87,11 +94,23 @@ export function useAnimTimeline() {
       if (observer || !animOn || !("IntersectionObserver" in window)) return;
       observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const match = map.find((item) => item[0].current === entry.target);
           if (!match) return;
-          observer?.unobserve(entry.target);
-          startRef.current[match[1]] = performance.now();
+          const key = match[1];
+          const loops = loopDirectRef.current && key === "tD";
+          visibleRef.current[key] = entry.isIntersecting;
+          if (!entry.isIntersecting) {
+            if (loops && startRef.current[key] != null) {
+              elapsedRef.current[key] = performance.now() - startRef.current[key];
+              delete startRef.current[key];
+            }
+            return;
+          }
+          if (startRef.current[key] == null) {
+            const carried = loops ? elapsedRef.current[key] ?? 0 : 0;
+            startRef.current[key] = performance.now() - carried;
+          }
+          if (!loops) observer?.unobserve(entry.target);
           if (!rafRef.current) rafRef.current = requestAnimationFrame(() => tickRef.current());
         });
       }, { threshold: 0.25 });
