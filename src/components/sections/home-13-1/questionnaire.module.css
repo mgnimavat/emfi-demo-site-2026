@@ -53,7 +53,7 @@
   line-height: 1.04;
   letter-spacing: -.055em;
 }
-.intro span, .resultTitle span {
+.intro .accent, .resultTitle span {
   color: inherit;
   font-weight: 300;
   letter-spacing: -.04em;
