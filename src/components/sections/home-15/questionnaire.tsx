@@ -43,7 +43,10 @@ export const QuestionnaireSection = () => {
     <section id="say-less" className={styles.section} aria-label="Review your current infrastructure">
       <div className={styles.card}>
         <aside className={styles.sidebar}>
-        <h2 className={styles.intro}>{copy.title} <span>{copy.accent}</span></h2>
+        <h2 className={styles.intro}>
+          {copy.title}<br />
+          <span>{copy.accent}</span>
+        </h2>
         <div className={styles.progressCorner}>
           <progress className={styles.progress} value={progress} max={questionCount} aria-label="Questionnaire progress" />
           <span className={styles.stepNumber} aria-live="polite">{progress} / {questionCount}</span>
@@ -82,12 +85,12 @@ export const QuestionnaireSection = () => {
                   <input key={field.name} aria-label={field.label} name={field.name} type={field.type} placeholder={field.placeholder} autoComplete={field.autoComplete} required={field.required} />
                 ))}
               </div>
-              <div className={styles.contactActions}>
+              <div className={styles.actions}>
+                <button type="button" className={styles.back} onClick={() => goToStep(questionCount - 1)}><ArrowLeft aria-hidden="true" />{copy.back}</button>
                 <button type="submit" className={styles.next}>{copy.submit}<ArrowUpRight aria-hidden="true" /></button>
               </div>
               {draftReady && <p role="status" className={styles.description}>{copy.draftNotice}</p>}
             </form>
-            <div className={styles.contactBack}><button type="button" className={styles.back} onClick={() => goToStep(questionCount - 1)}><ArrowLeft aria-hidden="true" />{copy.backToQuestions}</button></div>
           </div>
         </div>
       </div>

@@ -3,10 +3,9 @@ import { EmfiSections } from "@/components/emfi-sections/emfi-sections";
 // after restoring the previous shared chrome in site-shell.tsx.
 // import { Home15Footer } from "@/components/sections/home-15/footer";
 // import { Home15Header } from "@/components/sections/home-15/header";
-import { HeroSection } from "@/components/sections/home-15/sections";
 import { PrinciplesSection } from "@/components/sections/home-15/principles";
 import { QuestionnaireSection } from "@/components/sections/home-15/questionnaire";
-import styles from "@/components/sections/home-15/landing.module.css";
+import styles from "@/components/sections/home-12/landing.module.css";
 
 export const metadata = {
   title: { absolute: "EMFI — Settle For Less." },
@@ -18,8 +17,22 @@ export default function Home15Page() {
     <>
       {/* <Home15Header /> */}
       <div className={styles.page}>
-        <HeroSection />
-        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Order" highlightSlides staticStandards lightBands markFill={false} homeSlides />
+        <EmfiSections
+          showPoints={false}
+          showRouteTitle
+          loop
+          stepLabel="Handover"
+          highlightSlides
+          standardsEyebrow
+          lightBands
+          markFill={false}
+          homeSlides
+          whyTimeline
+          blendHeader
+          responsiveBody="Technology that works. People who respond."
+          dependableBody="Institutional safeguards. Clear accountability."
+          routeTitles={{ conventional: "Conventional Route", direct: "Direct Route EMFI" }}
+        />
       </div>
       <PrinciplesSection />
       <QuestionnaireSection />

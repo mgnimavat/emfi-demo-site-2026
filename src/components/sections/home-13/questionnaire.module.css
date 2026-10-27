@@ -1,11 +1,23 @@
 .section {
-  --quiz-heading-gradient: linear-gradient(90deg, #7a9cc3 0%, #69a6bb 36%, #5db1b5 68%, #59beac 100%);
   --quiz-border: color-mix(in srgb, var(--color-blue-100) 65%, white);
   --quiz-muted: color-mix(in srgb, var(--text-primary) 65%, white);
   --quiz-accent: var(--color-blue-200);
   --quiz-gradient: linear-gradient(100deg, var(--color-blue-100), var(--quiz-accent));
   padding: clamp(60px, 7vw, 120px) var(--space-5);
-  background: var(--bg-page);
+  background: linear-gradient(
+    90deg,
+    #a7c4fd 0%,
+    #a1bcf3 10%,
+    #9ab5ea 20%,
+    #94aee1 30%,
+    #90a7d9 40%,
+    #899fd0 50%,
+    #75a5c9 60%,
+    #5aafc3 70%,
+    #42b7bc 80%,
+    #2dc0b5 90%,
+    #1ecaae 100%
+  );
   color: var(--text-primary);
   font-family: var(--font-sans);
 }
@@ -55,11 +67,9 @@
   letter-spacing: -.055em;
 }
 .intro span, .resultTitle span {
-  background-image: var(--quiz-heading-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: inherit;
+  font-weight: 300;
+  letter-spacing: -.04em;
 }
 .panels { display: grid; margin-top: var(--space-7); }
 .panel { grid-area: 1 / 1; min-width: 0; display: flex; flex-direction: column; justify-content: flex-start; }

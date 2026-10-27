@@ -7,6 +7,7 @@ import { contact } from '@/content/contact';
 import styles from './questionnaire.module.css';
 
 const questionCount = copy.questions.length;
+const titleBreak = copy.title.lastIndexOf(' ');
 
 export const QuestionnaireSection = () => {
   const [step, setStep] = useState(0);
@@ -43,12 +44,18 @@ export const QuestionnaireSection = () => {
     <section id="say-less" className={styles.section} aria-label="Review your current infrastructure">
       <div className={styles.card}>
         <aside className={styles.sidebar}>
-        <h2 className={styles.intro}>{copy.title}<br /><span>{copy.accent}</span></h2>
+          <h2 className={styles.intro}>
+            {copy.title.slice(0, titleBreak)}<br />
+            <span className={styles.headingEnding}>
+              {copy.title.slice(titleBreak + 1)} <span className={styles.accent}>{copy.accent}</span>
+            </span>
+          </h2>
+        </aside>
+        <div className={styles.questionCard}>
         <div className={styles.progressCorner}>
           <progress className={styles.progress} value={progress} max={questionCount} aria-label="Questionnaire progress" />
           <span className={styles.stepNumber} aria-live="polite">{progress} / {questionCount}</span>
         </div>
-        </aside>
         {/* Overlapping panels reserve the tallest step's space at every screen size. */}
         <div className={styles.panels}>
           {copy.questions.map((question, index) => (
@@ -69,7 +76,7 @@ export const QuestionnaireSection = () => {
                 </fieldset>
                 <div className={styles.actions}>
                   <button type="button" className={styles.back} disabled={index === 0} onClick={() => goToStep(index - 1)}><ArrowLeft aria-hidden="true" />{copy.back}</button>
-                  <button type="submit" className={styles.next}>{index === questionCount - 1 ? copy.finish : copy.next}<ArrowRight aria-hidden="true" /></button>
+                  <button type="submit" className={styles.next}>{copy.next}<ArrowRight aria-hidden="true" /></button>
                 </div>
               </form>
             </div>
@@ -82,13 +89,14 @@ export const QuestionnaireSection = () => {
                   <input key={field.name} aria-label={field.label} name={field.name} type={field.type} placeholder={field.placeholder} autoComplete={field.autoComplete} required={field.required} />
                 ))}
               </div>
-              <div className={styles.contactActions}>
+              <div className={styles.actions}>
+                <button type="button" className={styles.back} onClick={() => goToStep(questionCount - 1)}><ArrowLeft aria-hidden="true" />{copy.backToQuestions}</button>
                 <button type="submit" className={styles.next}>{copy.submit}<ArrowUpRight aria-hidden="true" /></button>
               </div>
               {draftReady && <p role="status" className={styles.description}>{copy.draftNotice}</p>}
             </form>
-            <div className={styles.contactBack}><button type="button" className={styles.back} onClick={() => goToStep(questionCount - 1)}><ArrowLeft aria-hidden="true" />{copy.backToQuestions}</button></div>
           </div>
+        </div>
         </div>
       </div>
     </section>

@@ -1,3 +1,5 @@
+import "./home-13.css";
+
 export default function Home13Layout({
   children,
 }: Readonly<{
