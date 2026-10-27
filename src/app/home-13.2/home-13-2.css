@@ -1,0 +1,29 @@
+body:has(.home-13-2-shell) {
+  --home-12-header-h: 77.36px;
+}
+
+body:has(.home-13-2-shell) > div {
+  background-color: #071932;
+}
+
+@keyframes home-13-2-header-fill {
+  to { background-color: #071932; }
+}
+
+body:has(.home-13-2-shell) header {
+  background: transparent;
+  border-bottom: none;
+  animation: home-13-2-header-fill linear both;
+  animation-timeline: scroll();
+  animation-range: 0 5vh;
+}
+
+body.home-12-header-solid:has(.home-13-2-shell) header {
+  background: #071932;
+  animation: none;
+}
+
+.home-13-2-shell #expect {
+  margin-top: calc(-1 * var(--home-12-header-h, 77.36px));
+  padding-top: var(--home-12-header-h, 77.36px);
+}
