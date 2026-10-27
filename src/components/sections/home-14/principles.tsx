@@ -14,7 +14,7 @@ export const PrinciplesSection = () => {
     <section className={styles.section} aria-labelledby="home-14-principles-heading">
       <div className={styles.container}>
         <h2 id="home-14-principles-heading" className={styles.title}>
-          {copy.title} <span className={styles.gradient}>{copy.accent}</span>
+          {copy.title} <span className={styles.emphasis}>{copy.accent}</span>
         </h2>
         <div className={styles.layout}>
         <div className={styles.cards}>
@@ -29,7 +29,7 @@ export const PrinciplesSection = () => {
               onClick={() => setActiveId(item.id)}
             >
               <span className={styles.cardTitle}>
-                <span className={styles.gradient}>{copy.prefix}</span> {item.label}.
+                <span className={styles.emphasis}>{copy.prefix}</span> {item.label}.
               </span>
               <span className={styles.cardBottom}>
                 <span className={styles.summary}>{item.summary}</span>
@@ -50,7 +50,6 @@ export const PrinciplesSection = () => {
               inert={activeId !== item.id}
             >
               <div className={styles.detailHeading}>
-                <p className={styles.eyebrow}>{copy.prefix} {item.label}</p>
                 <h3>{item.heading}</h3>
               </div>
               <div className={styles.detailBody}>

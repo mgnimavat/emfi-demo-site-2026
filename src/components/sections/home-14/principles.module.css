@@ -1,14 +1,22 @@
 .section {
+  --principle-background: radial-gradient(60% 120% at 50% 0%,rgba(162,194,253,.16),transparent 70%), #071832;
   --principle-gradient: linear-gradient(90deg, #7a9cc3 0%, #69a6bb 36%, #5db1b5 68%, #59beac 100%);
-  --principle-border: color-mix(in srgb, var(--color-blue-100) 65%, white);
+  --principle-border: color-mix(in srgb, var(--color-blue-100) 22%, transparent);
+  --principle-surface: color-mix(in srgb, var(--color-blue-200) 8%, var(--bg-inverse));
+  --principle-active: color-mix(in srgb, var(--color-blue-200) 18%, var(--bg-inverse));
   padding: clamp(60px, 7vw, 112px) var(--space-5);
-  background: var(--bg-page);
-  color: var(--text-primary);
+  background: var(--principle-background);
+  color: var(--text-inverse);
   font-family: var(--font-sans);
 }
 .container { max-width: 1320px; margin: 0 auto; }
 .title { margin: 0 0 clamp(40px, 5vw, 64px); font-size: clamp(42px, 6vw, 88px); font-weight: 800; line-height: 1.05; letter-spacing: -.055em; }
-.gradient { display: inline-block; background-image: var(--principle-gradient); background-clip: text; -webkit-background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+.emphasis {
+  display: inline-block;
+  color: inherit;
+  font-weight: 300;
+  letter-spacing: -.04em;
+}
 .layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 72px); align-items: stretch; }
 .cards { display: flex; flex-direction: column; justify-content: center; }
 .card {
@@ -21,33 +29,31 @@
   border: 0;
   border-bottom: 1px solid var(--principle-border);
   background: transparent;
-  color: var(--text-primary);
+  color: var(--text-inverse);
   font: inherit;
   text-align: left;
   cursor: pointer;
   transition: background-color .2s ease;
 }
 .card::before { content: ''; position: absolute; top: var(--space-6); bottom: var(--space-6); left: 0; width: 3px; background: var(--principle-gradient); opacity: 0; transition: opacity .2s ease; }
-.card[aria-expanded='true'] { background: linear-gradient(90deg, var(--bg-soft), transparent); }
+.card[aria-expanded='true'] { background: linear-gradient(90deg, var(--principle-active), transparent); }
 .card[aria-expanded='true']::before { opacity: 1; }
 .cardTitle { font-size: clamp(28px, 2.7vw, 40px); font-weight: 750; line-height: 1.12; letter-spacing: -.045em; }
 .cardBottom { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-3); }
-.summary { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
-.arrow { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: var(--radius-pill); color: var(--text-primary); transition: background-color .2s ease, color .2s ease; }
+.summary { color: var(--text-inverse-muted); font-size: 14px; line-height: 1.6; }
+.arrow { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: var(--radius-pill); color: var(--text-inverse); transition: background-color .2s ease, color .2s ease; }
 .arrow svg { width: 18px; height: 18px; transition: transform .2s ease; }
 .card:hover .arrow svg { transform: translate(2px, -2px); }
-.card[aria-expanded='true'] .arrow { background: var(--text-primary); color: var(--text-inverse); }
+.card[aria-expanded='true'] .arrow { background: var(--principle-active); color: var(--text-inverse); }
 .card[aria-expanded='true'] .arrow svg { transform: rotate(45deg); }
 .card:focus-visible { outline: 3px solid var(--color-blue-200); outline-offset: 4px; z-index: 1; }
 .details { display: grid; }
-.detail { grid-area: 1 / 1; display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 4vw, 56px); border: 1px solid var(--principle-border); border-radius: var(--radius-surface); background: var(--bg-soft); color: var(--text-primary); }
+.detail { grid-area: 1 / 1; display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 4vw, 56px); border: 1px solid var(--principle-border); border-radius: var(--radius-surface); background: var(--principle-active); color: var(--text-inverse); }
 .detail[aria-hidden='true'] { visibility: hidden; pointer-events: none; }
-.eyebrow { display: flex; align-items: center; gap: var(--space-3); margin: 0 0 var(--space-5); color: var(--color-blue-550); font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
-.eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--principle-gradient); }
 .detailHeading h3 { margin: 0; max-width: 440px; font-size: clamp(30px, 3vw, 42px); font-weight: 700; line-height: 1.1; letter-spacing: -.04em; }
 .detailBody { margin-top: var(--space-5); }
-.detailBody > p { margin: 0; color: var(--text-secondary); font-size: 15px; line-height: 1.75; }
-.detailBody ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-5); margin: var(--space-5) 0; padding-left: var(--space-4); color: var(--text-primary); font-size: 13px; line-height: 1.5; list-style: disc; }
+.detailBody > p { margin: 0; color: var(--text-inverse-muted); font-size: 15px; line-height: 1.75; }
+.detailBody ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-5); margin: var(--space-5) 0; padding-left: var(--space-4); color: var(--text-inverse); font-size: 13px; line-height: 1.5; list-style: disc; }
 .detailBody li::marker { color: var(--color-blue-200); }
 .detailBody .note { padding-top: var(--space-4); border-top: 1px solid var(--principle-border); font-size: 12px; }
 @media (max-width: 800px) {
@@ -58,7 +64,7 @@
   .cardBottom { flex-direction: column; align-items: flex-start; }
   .summary { font-size: 13px; }
   .card::before { top: 0; bottom: auto; width: 100%; height: 2px; }
-  .card[aria-expanded='true'] { background: linear-gradient(180deg, var(--bg-soft), transparent); }
+  .card[aria-expanded='true'] { background: linear-gradient(180deg, var(--principle-active), transparent); }
 }
 @media (max-width: 540px) {
   .section { padding-inline: var(--space-4); }
@@ -66,7 +72,7 @@
   .card { border-top: 0; padding: var(--space-5); }
   .cardBottom { flex-direction: row; align-items: center; }
   .card::before { top: var(--space-5); bottom: var(--space-5); height: auto; width: 3px; }
-  .card[aria-expanded='true'] { background: linear-gradient(90deg, var(--bg-soft), transparent); }
+  .card[aria-expanded='true'] { background: linear-gradient(90deg, var(--principle-active), transparent); }
   .detailBody ul { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) { .card, .card::before, .arrow, .arrow svg { transition: none; } }
