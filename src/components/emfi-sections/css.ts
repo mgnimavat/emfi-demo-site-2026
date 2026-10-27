@@ -37,3 +37,5 @@ export const cardStyle: CSSProperties = {
   padding: "clamp(20px,2.6vw,36px)",
   paddingTop: "calc(clamp(20px,2.6vw,36px) + 34px)",
 };
+
+export const centeredCardSpace = "32px";

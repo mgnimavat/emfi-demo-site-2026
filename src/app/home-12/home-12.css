@@ -23,6 +23,15 @@ body.home-12-header-solid:has(.home-12-shell) header {
   animation: none;
 }
 
+body:has(.home-122-shell) header {
+  background-color: #071832;
+  background-image: radial-gradient(60% 120% at 50% 0%, rgb(162 194 253 / 16%), transparent 70%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  border-bottom: none;
+  animation: none;
+}
+
 .home-12-shell #expect {
   margin-top: calc(-1 * var(--home-12-header-h, 77.36px));
   padding-top: var(--home-12-header-h, 77.36px);

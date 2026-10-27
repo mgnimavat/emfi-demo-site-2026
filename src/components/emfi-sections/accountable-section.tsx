@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { trust } from "@/content/trust";
-import { cardStyle } from "./css";
+import { cardStyle, centeredCardSpace } from "./css";
 import { SectionCopy } from "./outcomes";
 import { ReplayButton } from "./replay-button";
 import chapterStyles from "./sections.module.css";
@@ -14,16 +14,18 @@ import { sectionPad, useWhyActive, WhyMarker } from "./why-flow";
 const HOLD_MS = 3800;
 const standards = ["Authorised", "Regulated", "Auditable"] as const;
 
-function StandardsEyebrow({ lead = false }: { lead?: boolean }) {
+function StandardsEyebrow({ lead = false, centered = false }: { lead?: boolean; centered?: boolean }) {
+  const classes = [styles.standardsTitle, lead ? styles.standardsLead : "", centered ? styles.standardsCenter : ""].filter(Boolean).join(" ");
   return (
-    <p className={lead ? `${styles.standardsTitle} ${styles.standardsLead}` : styles.standardsTitle}>
+    <p className={classes}>
       <span aria-hidden="true" className={chapterStyles.eyebrowMark} />
       The standard behind the service
+      {centered ? <span aria-hidden="true" className={chapterStyles.eyebrowMark} /> : null}
     </p>
   );
 }
 
-function StandardsPanel() {
+function StandardsPanel({ centered = false }: { centered?: boolean }) {
   const listRef = useRef<HTMLOListElement>(null);
   const reduceMotion = useReducedMotion();
   const inView = useInView(listRef, { once: true, amount: 0.4 });
@@ -37,7 +39,7 @@ function StandardsPanel() {
 
   return (
     <div className={styles.standards}>
-      <StandardsEyebrow />
+      <StandardsEyebrow centered={centered} />
       <ol
         ref={listRef}
         className={styles.standardsLines}
@@ -93,11 +95,11 @@ const slides = [
   },
 ];
 
-function EvidenceSlide({ slide, plain = false }: { slide: (typeof slides)[number]; plain?: boolean }) {
+function EvidenceSlide({ slide, plain = false, centered = false }: { slide: (typeof slides)[number]; plain?: boolean; centered?: boolean }) {
   const title = plain ? slide.title.replace(/\.$/, "") : slide.title;
   return (
     <>
-      <div className={styles.head}>
+      <div className={centered ? `${styles.head} ${styles.headCenter}` : styles.head}>
         <h3 className={styles.title}>{title}</h3>
         {plain ? null : <span className={styles.rule} />}
       </div>
@@ -130,6 +132,7 @@ export function AccountableSection({
   light = false,
   step,
   body = "Institutional safeguards, clear accountability and the relevant regulatory oversight behind the services we provide.",
+  centered = false,
 }: {
   cols: string;
   canReplay: boolean;
@@ -140,6 +143,7 @@ export function AccountableSection({
   light?: boolean;
   step?: number;
   body?: string;
+  centered?: boolean;
 }) {
   const [index, setIndex] = useState(0);
   const [run, setRun] = useState(0);
@@ -163,16 +167,19 @@ export function AccountableSection({
   return (
     <section id="accountable" data-screen-label="05 Dependable" data-why-step={marked ? "" : undefined} style={{ position: "relative", background: light ? "#ffffff" : "radial-gradient(55% 60% at 0% 100%,rgba(128,152,204,.14),transparent 70%)", zIndex: light || raiseContent ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
       {marked && step ? <WhyMarker n={step} active={active} /> : null}
-      <div className={light ? chapterStyles.lightCopy : undefined} style={{ position: "relative", zIndex: light || raiseContent ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked), borderTop: light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: "grid", gridTemplateColumns: cols, gap: "40px clamp(40px,5vw,80px)", alignItems: "center" }}>
-        <SectionCopy
-          title="Dependable."
-          body={body}
-          action={{ href: "/why-emfi", label: "See the standards" }}
-          tone={light ? "light" : "dark"}
-        />
-        <div style={{ ...cardStyle, containerType: "inline-size", paddingTop: !staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding }}>
-          {staticStandards ? <StandardsPanel /> : null}
-          {!staticStandards && standardsEyebrow ? <StandardsEyebrow lead /> : null}
+      <div className={light ? chapterStyles.lightCopy : undefined} style={{ position: "relative", zIndex: light || raiseContent ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked), borderTop: light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: centered ? "flex" : "grid", flexDirection: centered ? "column" : undefined, gridTemplateColumns: centered ? undefined : cols, gap: centered ? 64 : "40px clamp(40px,5vw,80px)", alignItems: centered ? "stretch" : "center" }}>
+        <div style={{ position: "relative" }}>
+          <SectionCopy
+            title="Dependable."
+            body={body}
+            action={{ href: "/why-emfi", label: "See the standards" }}
+            tone={light ? "light" : "dark"}
+            align={centered ? "center" : "start"}
+          />
+        </div>
+        <div style={{ ...cardStyle, containerType: "inline-size", width: centered ? "100%" : undefined, paddingTop: `calc(${!staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding}${centered ? ` + ${centeredCardSpace}` : ""})`, paddingBottom: centered ? `calc(${cardStyle.padding} + ${centeredCardSpace})` : undefined }}>
+          {staticStandards ? <StandardsPanel centered={centered} /> : null}
+          {!staticStandards && standardsEyebrow ? <StandardsEyebrow lead centered={centered} /> : null}
           {!staticStandards && showReplay && canReplay ? <ReplayButton onClick={replay} /> : null}
           {!staticStandards && canReplay ? (
             <div className={styles.stage} aria-live="polite">
@@ -185,13 +192,13 @@ export function AccountableSection({
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <EvidenceSlide slide={slide} plain={standardsEyebrow} />
+                  <EvidenceSlide slide={slide} plain={standardsEyebrow} centered={centered} />
                 </motion.div>
               </AnimatePresence>
             </div>
           ) : !staticStandards ? (
             <div className={styles.stack}>
-              {slides.map((item) => <EvidenceSlide key={item.title} slide={item} plain={standardsEyebrow} />)}
+              {slides.map((item) => <EvidenceSlide key={item.title} slide={item} plain={standardsEyebrow} centered={centered} />)}
             </div>
           ) : null}
         </div>

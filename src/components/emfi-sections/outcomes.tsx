@@ -34,24 +34,27 @@ export function SectionCopy({
   body,
   action,
   tone = "dark",
+  align = "start",
 }: {
   title: string;
   lead?: string;
   body: string;
   action?: { href: string; label: string };
   tone?: "dark" | "light";
+  align?: "start" | "center";
 }) {
   const light = tone === "light";
+  const centered = align === "center";
   const titleColor = light ? "#071832" : "#FFFFFF";
   const bodyColor = light ? "#24344b" : "#CBD2E8";
 
   return (
-    <div style={{ minWidth: 0 }}>
+    <div style={{ minWidth: 0, width: centered ? "100%" : undefined, textAlign: centered ? "center" : undefined }}>
       <h2 style={{ fontSize: "clamp(40px,4.6vw,72px)", fontWeight: 800, lineHeight: 0.95, letterSpacing: "-.05em", color: titleColor }}>{title}</h2>
       {lead ? <p style={{ marginTop: 18, fontSize: "clamp(20px,1.7vw,24px)", fontWeight: 800, letterSpacing: "-.02em", lineHeight: 1.25, color: titleColor }}>{lead}</p> : null}
-      <p style={{ marginTop: lead ? 12 : 18, maxWidth: 440, fontSize: 17, lineHeight: 1.6, color: bodyColor, textWrap: "pretty" }}>{body}</p>
+      <p style={{ marginTop: lead ? 12 : 18, maxWidth: 440, marginInline: centered ? "auto" : undefined, fontSize: 17, lineHeight: 1.6, color: bodyColor, textWrap: "pretty" }}>{body}</p>
       {action ? (
-        <div style={{ marginTop: 28 }}>
+        <div style={{ marginTop: 28, display: centered ? "flex" : undefined, justifyContent: centered ? "center" : undefined }}>
           <Button href={action.href} variant="circle">{action.label}</Button>
         </div>
       ) : null}

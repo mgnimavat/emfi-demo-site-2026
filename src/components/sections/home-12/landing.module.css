@@ -11,6 +11,15 @@
     radial-gradient(60% 120% at 50% 100%, rgb(162 194 253 / 16%), transparent 70%),
     #071932 !important;
 }
+.fullHero :global(#expect) {
+  min-height: 100vh;
+  background:
+    radial-gradient(60% 120% at 50% 0%, rgb(162 194 253 / 16%), transparent 70%),
+    #071832 !important;
+}
+.fullHero :global(#expect) > div {
+  padding-top: calc(clamp(88px, 10vw, 140px) + 10vh);
+}
 .page :global(#accountable) {
   background: #ffffff !important;
   color: #071832;
@@ -27,9 +36,24 @@
   aspect-ratio: 1;
   pointer-events: none;
   transform: translateX(calc(10% + 40px));
-  background: rgb(232 240 250 / 10%);
+  background: rgb(232 240 250 / 4%);
   -webkit-mask: url("/emfi/emfi-mark.svg") center / contain no-repeat;
   mask: url("/emfi/emfi-mark.svg") center / contain no-repeat;
+}
+.fullHero :global(#expect)::after {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  height: 78%;
+  transform: translate(10%, 10%);
+}
+.spinMark :global(#expect)::after {
+  transform-origin: center;
+  animation: hero-mark-spin 40s linear infinite;
+}
+@keyframes hero-mark-spin {
+  from { transform: translateX(calc(10% + 40px)) rotate(0deg); }
+  to { transform: translateX(calc(10% + 40px)) rotate(360deg); }
 }
 .page :focus-visible { outline: 3px solid #8098cc; outline-offset: 5px; }
 .page [data-motion-region] { transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1); }
