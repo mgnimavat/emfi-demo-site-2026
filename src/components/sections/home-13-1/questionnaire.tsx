@@ -50,7 +50,7 @@ export const QuestionnaireSection = () => {
         <div className={styles.panels}>
           {copy.questions.map((question, index) => (
             <div key={question.id} className={`${styles.panel} ${step !== index ? styles.inactive : ''}`} inert={step !== index} aria-hidden={step !== index}>
-              <h2 className={styles.intro}>{copy.title}<br /><span>{copy.accent}</span></h2>
+              <h2 className={styles.intro}>{copy.title} <span>{copy.accent}</span></h2>
               <form onSubmit={(event) => { event.preventDefault(); goToStep(index + 1); }}>
                 <fieldset className={styles.question}>
                   <legend className={styles.legend}>
