@@ -37,11 +37,11 @@ const VIEWS = [
   "OrderEur",
   "OrderAapl",
 ] as const;
-type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances";
+type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances" | "MobileScreens";
 
 export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] as const satisfies readonly View[];
 export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
-export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
+export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreens"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
@@ -95,6 +95,12 @@ const VIEW_META: Record<
     kind: "public",
   },
   MobileBalances: {
+    crumbs: "",
+    date: "",
+    activeModule: "Clients",
+    kind: "public",
+  },
+  MobileScreens: {
     crumbs: "",
     date: "",
     activeModule: "Clients",
@@ -1064,6 +1070,8 @@ function ViewPanel({ view }: { view: View }) {
       );
     case "MobileBalances":
       return <MobileBalancesSlide />;
+    case "MobileScreens":
+      return <MobileScreensSlide />;
   }
 }
 
@@ -1079,6 +1087,21 @@ function MobileBalancesSlide() {
         width={489}
         height={1024}
         className="h-full w-auto max-w-full object-contain"
+        unoptimized
+      />
+    </div>
+  );
+}
+
+function MobileScreensSlide() {
+  return (
+    <div className="flex h-full items-center justify-center">
+      <Image
+        src="/images/services/balances-three-phones.jpg"
+        alt="EMFI mobile app showing order entry, balances, and activity"
+        width={1024}
+        height={794}
+        className="h-auto max-h-full w-auto max-w-full object-contain"
         unoptimized
       />
     </div>
@@ -1104,7 +1127,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS }: { views?: readonl
     <div
       className="rounded-xl border border-transparent p-2 md:p-3"
       style={{
-        background: `${view === "MobileBalances" ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${ctaBorderGradient} border-box`,
+        background: `${view === "MobileBalances" || view === "MobileScreens" ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${ctaBorderGradient} border-box`,
       }}
     >
       {/* Fixed stage height so public + app slides never resize the hero */}
