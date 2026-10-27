@@ -6,7 +6,6 @@ import styles from "./chrome.module.css";
 
 const copyright = [
   "©2026 EMFI Group Limited. All Rights Reserved.",
-  "Authorised and Regulated by the Financial Conduct Authority (FCA).",
   "25-26 Dering Street, Mayfair, London W1S 1AW, United Kingdom.",
   "Intended for Professional Clients Only. Not Suitable for Retail Clients or US Persons.",
 ] as const;

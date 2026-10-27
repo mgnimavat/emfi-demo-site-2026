@@ -1,12 +1,13 @@
 .section {
-  --quiz-border: color-mix(in srgb, var(--color-blue-100) 65%, white);
-  --quiz-muted: color-mix(in srgb, var(--text-primary) 65%, white);
+  --quiz-word-gradient: linear-gradient(90deg, #7a9cc3 0%, #69a6bb 36%, #5db1b5 68%, #59beac 100%);
+  --quiz-border: color-mix(in srgb, var(--color-blue-100) 22%, transparent);
+  --quiz-muted: var(--text-inverse-muted);
   --quiz-accent: var(--color-blue-200);
   --quiz-gradient: linear-gradient(100deg, var(--color-blue-100), var(--quiz-accent));
-  --quiz-input-background: color-mix(in srgb, var(--bg-soft) 35%, white);
+  --quiz-input-background: color-mix(in srgb, var(--color-white) 4%, transparent);
   padding: clamp(60px, 7vw, 120px) var(--space-5);
   background: var(--bg-page);
-  color: var(--text-primary);
+  color: var(--text-inverse);
   font-family: var(--font-sans);
 }
 .card {
@@ -17,20 +18,41 @@
   max-width: 1320px;
   margin: 0 auto;
   padding: clamp(32px, 5vw, 80px);
-  border: 1px solid color-mix(in srgb, var(--color-blue-100) 65%, white);
+  border: 1px solid var(--quiz-border);
   border-radius: var(--radius-surface);
-  background: linear-gradient(120deg, var(--bg-soft), color-mix(in srgb, var(--bg-soft) 35%, white));
+  background: radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--color-blue-200) 16%, transparent), transparent 65%), var(--bg-inverse);
   box-shadow: 0 20px 60px color-mix(in srgb, var(--text-primary) 10%, transparent);
 }
-.sidebar { min-width: 0; color: var(--text-primary); }
-.intro { margin: 0; max-width: 480px; font-size: clamp(38px, 4vw, 62px); font-weight: 750; line-height: 1.04; letter-spacing: -.055em; }
+.sidebar { min-width: 0; color: var(--text-inverse); }
+.sidebarHeadings { display: grid; }
+.sidebarHeadings > .intro { grid-area: 1 / 1; align-self: center; }
+.intro { margin: 0; max-width: 100%; font-size: clamp(38px, 5vw, 80px); font-weight: 750; line-height: 1.04; letter-spacing: -.055em; }
+.contactIntro { font-size: clamp(72px, 9vw, 132px); line-height: .95; }
 .headingEnding { display: inline-block; white-space: nowrap; }
-.intro .accent, .resultTitle span {
-  color: inherit;
-  font-weight: 300;
-  letter-spacing: -.04em;
+.intro:focus { outline: none; }
+.intro .accent {
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: -.055em;
+  padding-right: .14em;
+  margin-right: -.14em;
+  background-image: var(--quiz-word-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
-.questionCard { min-width: 0; padding: clamp(24px, 2.5vw, 36px); border: 1px solid var(--quiz-border); border-radius: var(--radius-card); background: var(--bg-page); }
+.questionCard {
+  --quiz-border: color-mix(in srgb, var(--color-blue-100) 65%, white);
+  --quiz-muted: color-mix(in srgb, var(--text-primary) 65%, white);
+  --quiz-input-background: var(--bg-page);
+  min-width: 0;
+  padding: clamp(24px, 2.5vw, 36px);
+  border: 1px solid var(--quiz-border);
+  border-radius: var(--radius-card);
+  background: var(--bg-soft);
+  color: var(--text-primary);
+}
 .progressCorner { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-3); margin-bottom: var(--space-5); }
 .stepNumber { color: var(--quiz-muted); font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; letter-spacing: .08em; }
 .progress { display: block; appearance: none; width: clamp(80px, 8vw, 112px); height: 3px; overflow: hidden; border: 0; border-radius: var(--radius-pill); background: var(--quiz-input-background); color: var(--quiz-accent); }
@@ -44,10 +66,11 @@
 .legend { width: 100%; padding: 0; margin-bottom: var(--space-5); }
 .questionTitle { display: block; width: 100%; font-size: clamp(21px, 1.7vw, 25px); font-weight: 650; line-height: 1.3; letter-spacing: -.025em; }
 .questionTitle:focus { outline: none; }
+.formTitle { margin: 0 0 var(--space-5); font-size: clamp(21px, 1.7vw, 25px); font-weight: 650; line-height: 1.3; letter-spacing: -.025em; }
 .options { display: grid; gap: var(--space-3); }
 .option { display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding: var(--space-3) var(--space-4); border: 1px solid var(--quiz-border); border-radius: var(--radius-control); background: var(--quiz-input-background); font-size: 14px; font-weight: 500; cursor: pointer; transition: border-color .2s ease, background-color .2s ease; }
 .option:hover { border-color: var(--color-blue-200); }
-.option:has(input:checked) { border-color: var(--color-blue-200); background: var(--bg-soft); }
+.option:has(input:checked) { border-color: var(--color-blue-200); background: color-mix(in srgb, var(--color-blue-200) 15%, transparent); }
 .option input { appearance: none; display: grid; place-content: center; flex: none; width: 18px; height: 18px; margin: 0; border: 1px solid var(--color-blue-200); border-radius: var(--radius-pill); background: transparent; transition: transform .15s ease; }
 .option:hover input { transform: scale(1.2); }
 .option input::before { content: ''; width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--color-blue-550); transform: scale(0); }
@@ -63,13 +86,11 @@
 .next:hover svg { transform: translateX(3px); }
 .back svg, .next svg { width: 14px; height: 14px; }
 .card :is(button, a):focus-visible, .option input:focus-visible { outline: 2px solid var(--quiz-accent); outline-offset: 4px; }
-.resultTitle { margin: 0; font-size: clamp(38px, 3vw, 48px); font-weight: 750; line-height: 1.1; letter-spacing: -.055em; }
-.resultTitle:focus { outline: none; }
-.contact > form { margin-top: var(--space-5); }
 .description { margin: var(--space-4) 0 0; color: var(--quiz-muted); font-size: 13px; line-height: 1.5; }
 .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
 .fields input { width: 100%; min-width: 0; min-height: 48px; padding: var(--space-3); border: 1px solid var(--quiz-border); border-radius: var(--space-3); background: var(--quiz-input-background); color: var(--text-primary); font: inherit; font-size: 13px; }
 .fields input::placeholder { color: var(--quiz-muted); opacity: .8; }
+.fields input[name='email'] { grid-column: 1 / -1; }
 .fields input:focus-visible { outline: none; border-color: var(--color-blue-200); }
 @media (max-width: 900px) {
   .card { grid-template-columns: minmax(0, 1fr); }
