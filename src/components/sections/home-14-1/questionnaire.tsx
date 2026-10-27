@@ -1,13 +1,13 @@
 'use client';
 
 import { useRef, useState, type FormEvent } from 'react';
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { questionnaire as copy } from '@/content/home-14-1-questionnaire';
 import { contact } from '@/content/contact';
 import styles from './questionnaire.module.css';
 
 const questionCount = copy.questions.length;
-const titleBreak = copy.title.lastIndexOf(' a bit');
+const titleBreak = copy.title.lastIndexOf(' ');
 
 export const QuestionnaireSection = () => {
   const [step, setStep] = useState(0);
@@ -24,11 +24,6 @@ export const QuestionnaireSection = () => {
       const target = nextStep === questionCount ? contactHeading.current : heading.current;
       target?.focus({ preventScroll: true });
     });
-  };
-
-  const selectAnswer = (questionId: string, answer: string, nextStep: number) => {
-    setAnswers((current) => ({ ...current, [questionId]: answer }));
-    goToStep(nextStep);
   };
 
   const submitEnquiry = (event: FormEvent<HTMLFormElement>) => {
@@ -49,17 +44,12 @@ export const QuestionnaireSection = () => {
     <section id="say-less" className={styles.section} aria-label="Review your current infrastructure">
       <div className={styles.card}>
         <aside className={styles.sidebar}>
-          <div className={styles.sidebarHeadings}>
-          <h2 className={`${styles.intro} ${isContact ? styles.inactive : ''}`} aria-hidden={isContact}>
+          <h2 className={styles.intro}>
             {copy.title.slice(0, titleBreak)}<br />
             <span className={styles.headingEnding}>
               {copy.title.slice(titleBreak + 1)} <span className={styles.accent}>{copy.accent}</span>
             </span>
           </h2>
-          <h2 id="home-14-1-contact-heading" ref={contactHeading} tabIndex={-1} className={`${styles.intro} ${styles.contactIntro} ${!isContact ? styles.inactive : ''}`} aria-hidden={!isContact}>
-            {copy.resultTitle}<br /><span className={styles.accent}>{copy.resultAccent}</span>
-          </h2>
-          </div>
         </aside>
         <div className={styles.questionCard}>
         <div className={styles.progressCorner}>
@@ -70,7 +60,7 @@ export const QuestionnaireSection = () => {
         <div className={styles.panels}>
           {copy.questions.map((question, index) => (
             <div key={question.id} className={`${styles.panel} ${step !== index ? styles.inactive : ''}`} inert={step !== index} aria-hidden={step !== index}>
-              <div>
+              <form onSubmit={(event) => { event.preventDefault(); goToStep(index + 1); }}>
                 <fieldset className={styles.question}>
                   <legend className={styles.legend}>
                     <span ref={step === index ? heading : undefined} role="heading" aria-level={3} tabIndex={-1} className={styles.questionTitle}>{question.title}</span>
@@ -78,9 +68,7 @@ export const QuestionnaireSection = () => {
                   <div className={styles.options}>
                     {question.options.map((option) => (
                       <label key={option} className={styles.option}>
-                        <input type="radio" name={question.id} value={option} checked={answers[question.id] === option} onChange={() => selectAnswer(question.id, option, index + 1)} onClick={() => {
-                          if (answers[question.id] === option) goToStep(index + 1);
-                        }} />
+                        <input type="radio" name={question.id} value={option} checked={answers[question.id] === option} onChange={() => setAnswers((current) => ({ ...current, [question.id]: option }))} />
                         <span>{option}</span>
                       </label>
                     ))}
@@ -88,13 +76,14 @@ export const QuestionnaireSection = () => {
                 </fieldset>
                 <div className={styles.actions}>
                   <button type="button" className={styles.back} disabled={index === 0} onClick={() => goToStep(index - 1)}><ArrowLeft aria-hidden="true" />{copy.back}</button>
+                  <button type="submit" className={styles.next}>{copy.next}<ArrowRight aria-hidden="true" /></button>
                 </div>
-              </div>
+              </form>
             </div>
           ))}
           <div className={`${styles.panel} ${styles.contact} ${!isContact ? styles.inactive : ''}`} inert={!isContact} aria-hidden={!isContact}>
-            <form aria-labelledby="home-14-1-form-heading" onSubmit={submitEnquiry}>
-              <h3 id="home-14-1-form-heading" className={styles.formTitle}>{copy.contactTitle}</h3>
+            <h2 ref={contactHeading} tabIndex={-1} className={styles.resultTitle}>{copy.resultTitle} <span>{copy.resultAccent}</span></h2>
+            <form onSubmit={submitEnquiry}>
               <div className={styles.fields}>
                 {copy.fields.map((field) => (
                   <input key={field.name} aria-label={field.label} name={field.name} type={field.type} placeholder={field.placeholder} autoComplete={field.autoComplete} required={field.required} />
