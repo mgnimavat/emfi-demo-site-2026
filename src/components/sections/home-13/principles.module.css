@@ -1,11 +1,11 @@
 .section {
-  --principle-border: color-mix(in srgb, var(--color-blue-100) 22%, transparent);
-  --principle-surface: color-mix(in srgb, var(--color-blue-200) 8%, var(--bg-inverse));
-  --principle-active: color-mix(in srgb, var(--color-blue-200) 18%, var(--bg-inverse));
-  --principle-background: radial-gradient(60% 120% at 50% 0%,rgba(162,194,253,.16),transparent 70%), #071832;
+  --principle-border: color-mix(in srgb, var(--color-blue-100) 65%, white);
+  --principle-surface: var(--bg-page);
+  --principle-active: var(--bg-soft);
+  --principle-background: var(--bg-soft);
   padding: clamp(60px, 7vw, 112px) var(--space-5);
   background: var(--principle-background);
-  color: var(--text-inverse);
+  color: var(--text-primary);
   font-family: var(--font-sans);
 }
 .container { max-width: 1320px; margin: 0 auto; }
@@ -33,25 +33,27 @@
   border: 1px solid var(--principle-border);
   border-radius: var(--radius-card);
   background: var(--principle-surface);
-  color: var(--text-inverse);
+  color: var(--text-primary);
   font: inherit;
   text-align: left;
   cursor: pointer;
   transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 .cardTitle { font-size: clamp(26px, 2.5vw, 38px); font-weight: 750; line-height: 1.15; letter-spacing: -.045em; }
-.summary { color: var(--text-inverse-muted); font-size: 14px; line-height: 1.6; }
+.summary { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
 .cardBottom { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding-top: var(--space-6); margin-top: auto; }
 .arrow { display: grid; place-items: center; flex: none; width: 32px; height: 32px; border: 1px solid var(--principle-border); border-radius: var(--radius-pill); transition: background-color .2s ease, color .2s ease; }
 .arrow svg { width: 16px; height: 16px; transition: transform .2s ease; }
 .card:hover { transform: translateY(-2px); border-color: var(--color-blue-200); box-shadow: 0 8px 24px color-mix(in srgb, var(--text-primary) 6%, transparent); }
 .card[aria-expanded='true'] {
   border-color: var(--color-blue-200);
-  background: color-mix(in srgb, var(--principle-active) 35%, var(--principle-surface));
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
   box-shadow: 0 8px 24px color-mix(in srgb, var(--text-primary) 8%, transparent), 0 0 0 2px color-mix(in srgb, var(--color-blue-200) 12%, transparent);
 }
-.card:is(:hover, [aria-expanded='true']) .arrow { background: var(--principle-active); color: var(--text-inverse); border-color: var(--color-blue-200); }
-.card[aria-expanded='true'] .arrow svg { transform: rotate(45deg); }
+.card[aria-expanded='true'] .summary { color: var(--text-inverse-muted); }
+.card:is(:hover, [aria-expanded='true']) .arrow { background: var(--text-primary); color: var(--text-inverse); border-color: var(--color-blue-200); }
+.card[aria-expanded='true'] .arrow svg { transform: rotate(90deg); }
 .card:focus-visible { outline: 3px solid var(--color-blue-200); outline-offset: 4px; }
 .details { display: grid; }
 .detail {
@@ -63,7 +65,7 @@
   padding: clamp(28px, 3.5vw, 48px);
   border-radius: var(--radius-card);
   border: 1px solid var(--principle-border);
-  background: var(--principle-active);
+  background: var(--bg-inverse);
   color: var(--text-inverse);
   animation: reveal .25s ease;
 }

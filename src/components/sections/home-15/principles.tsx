@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus, Minus } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { principles as copy } from '@/content/home-15-principles';
 import styles from './principles.module.css';
 
@@ -19,7 +19,6 @@ export const PrinciplesSection = () => {
         <div className={styles.accordion}>
           {copy.items.map((item) => {
             const active = activeId === item.id;
-            const Icon = active ? Minus : Plus;
             return (
               <div key={item.id} className={styles.item} data-active={active}>
                 <h3 className={styles.itemHeading}>
@@ -35,7 +34,7 @@ export const PrinciplesSection = () => {
                       <span className={styles.emphasis}>{copy.prefix}</span> {item.label}.
                     </span>
                     <span className={styles.summary}>{item.summary}</span>
-                    <span className={styles.toggle}><Icon aria-hidden="true" /></span>
+                    <span className={styles.toggle}><ArrowRight aria-hidden="true" /></span>
                   </button>
                 </h3>
                 <div

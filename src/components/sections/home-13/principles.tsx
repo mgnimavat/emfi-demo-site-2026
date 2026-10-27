@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { principles as copy } from '@/content/home-13-principles';
 import styles from './principles.module.css';
 
@@ -32,7 +32,7 @@ export const PrinciplesSection = () => {
               </span>
               <span className={styles.cardBottom}>
                 <span className={styles.summary}>{item.summary}</span>
-                <span className={styles.arrow}><ArrowUpRight aria-hidden="true" /></span>
+                <span className={styles.arrow}><ArrowRight aria-hidden="true" /></span>
               </span>
             </button>
           ))}
