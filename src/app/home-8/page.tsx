@@ -1,6 +1,8 @@
 import { EmfiSections } from "@/components/emfi-sections/emfi-sections";
-import { Home8Footer } from "@/components/sections/home-8/footer";
-import { Home8Header } from "@/components/sections/home-8/header";
+// Navbar and footer now come from SiteShell; uncomment these imports and JSX
+// after restoring the previous shared chrome in site-shell.tsx.
+// import { Home8Footer } from "@/components/sections/home-8/footer";
+// import { Home8Header } from "@/components/sections/home-8/header";
 import { DiscussSection, HeroSection } from "@/components/sections/home-8/sections";
 import styles from "@/components/sections/home-8/landing.module.css";
 
@@ -12,13 +14,13 @@ export const metadata = {
 export default function Home8Page() {
   return (
     <>
-      <Home8Header />
+      {/* <Home8Header /> */}
       <div className={styles.page}>
         <HeroSection />
         <EmfiSections />
       </div>
       <DiscussSection />
-      <Home8Footer />
+      {/* <Home8Footer /> */}
     </>
   );
 }

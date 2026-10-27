@@ -1,6 +1,8 @@
 import { EmfiSections } from "@/components/emfi-sections/emfi-sections";
-import { Home10Footer } from "@/components/sections/home-10/footer";
-import { Home10Header } from "@/components/sections/home-10/header";
+// Navbar and footer now come from SiteShell; uncomment these imports and JSX
+// after restoring the previous shared chrome in site-shell.tsx.
+// import { Home10Footer } from "@/components/sections/home-10/footer";
+// import { Home10Header } from "@/components/sections/home-10/header";
 import { DiscussSection, HeroSection } from "@/components/sections/home-10/sections";
 import styles from "@/components/sections/home-10/landing.module.css";
 
@@ -12,13 +14,13 @@ export const metadata = {
 export default function Home10Page() {
   return (
     <>
-      <Home10Header />
+      {/* <Home10Header /> */}
       <div className={styles.page}>
         <HeroSection />
         <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Order" highlightSlides staticStandards lightBands homeSlides />
       </div>
       <DiscussSection />
-      <Home10Footer />
+      {/* <Home10Footer /> */}
     </>
   );
 }
