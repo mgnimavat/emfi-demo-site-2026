@@ -119,6 +119,17 @@ function tok(p: number[], op: number, bg: string) {
 const CONVENTIONAL_END = 0.56;
 const CONVENTIONAL_STRETCH = 1.75;
 export const directTimelineScale = CONVENTIONAL_END * CONVENTIONAL_STRETCH + (1 - CONVENTIONAL_END);
+const HOME12_CONV_MS = 20000;
+const HOME12_EMFI_MS = 6500;
+const HOME12_HOLD_MS = 30000;
+const HOME12_TOTAL_MS = HOME12_CONV_MS + HOME12_EMFI_MS + HOME12_HOLD_MS;
+const HOME12_EMFI_END = 0.92;
+
+export type DirectPace = "home12";
+
+export function directPaceScale(pace?: DirectPace) {
+  return pace === "home12" ? HOME12_TOTAL_MS / 13000 : directTimelineScale;
+}
 
 function slowConventionalRoute(t: number) {
   const scaled = t * directTimelineScale;
@@ -126,8 +137,19 @@ function slowConventionalRoute(t: number) {
   return scaled <= firstSpan ? scaled / CONVENTIONAL_STRETCH : CONVENTIONAL_END + (scaled - firstSpan);
 }
 
-export function dirVals(t: number, V: boolean, routeTitles?: { conventional: string; direct: string }) {
-  t = slowConventionalRoute(t);
+function home12Route(t: number) {
+  const ms = t * HOME12_TOTAL_MS;
+  if (ms <= HOME12_CONV_MS) return (ms / HOME12_CONV_MS) * CONVENTIONAL_END;
+  if (ms <= HOME12_CONV_MS + HOME12_EMFI_MS) {
+    const k = (ms - HOME12_CONV_MS) / HOME12_EMFI_MS;
+    return CONVENTIONAL_END + k * (HOME12_EMFI_END - CONVENTIONAL_END);
+  }
+  return HOME12_EMFI_END;
+}
+
+export function dirVals(t: number, V: boolean, routeTitles?: { conventional: string; direct: string }, pace?: DirectPace) {
+  const home12 = pace === "home12";
+  t = home12 ? home12Route(t) : slowConventionalRoute(t);
   const { sg, ez, lp } = H();
   const P0 = [6, 28, 50, 72, 94];
   const ws = (i: number) => 0.06 + (i - 1) * 0.11;
@@ -164,12 +186,16 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   }
   const depOn = (arr(4) && t < 0.56) || t >= 0.87;
   const fs = V ? "14px" : "14px";
+  const emfiDone = home12 && t >= 0.87;
   const nodes = [node(S(cpos), { op: sg(t, 0, 0.03), dot: dot("c"), name: "Client", lp: pos, sz: 18, fs })];
   ["Settlement agent", "Sub-custodian", "Custodian"].forEach((name, j) => {
     const i = j + 1;
-    nodes.push(node(S(lp(P0[i], 50, k)), { op: ap(i) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i)), name, sub: arr(i) && t < ws(i) + 0.11 ? (name === "Custodian" ? "Received" : "Processing") : "", lp: pos, sz: 16, fs }));
+    const processingUntil = home12 ? ws(i + 1) + 0.065 : ws(i) + 0.11;
+    const processingLabel = home12 ? "Processing" : name === "Custodian" ? "Received" : "Processing";
+    nodes.push(node(S(lp(P0[i], 50, k)), { op: ap(i) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i)), name, sub: arr(i) && t < processingUntil ? processingLabel : "", lp: pos, sz: 16, fs }));
   });
-  nodes.push(node(S(dpos), { op: ap(4), dot: dot("i", depOn), name: "Depository", sub: depOn ? "Done" : "", lp: pos, sz: 18, fs }));
+  const depositorySub = !depOn ? "" : home12 && t < CONVENTIONAL_END ? "Received" : "Done";
+  nodes.push(node(S(dpos), { op: ap(4), dot: dot("i", depOn), name: "Depository", sub: depositorySub, lp: pos, sz: 18, fs }));
   const es = V ? 52 : 64;
   const sk = ez(sg(t, 0.64, 0.71));
   nodes.push(node(S(50), {
@@ -181,7 +207,7 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     ms: `${V ? 28 : 35}px`,
     name: "EMFI",
     fs: "16px",
-    sub: t >= 0.79 && t < 0.825 ? "Received" : "",
+    sub: emfiDone ? "Received" : !home12 && t >= 0.79 && t < 0.825 ? "Received" : "",
     lp: pos,
     sz: es,
   }));
@@ -193,6 +219,11 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   ];
   const hm = !replay && trav > 0 ? (P0[trav - 1] + P0[trav]) / 2 : replay && travB > 0 ? (travB === 1 ? 34 : 66) : null;
   const hp = S(hm ?? 50);
+  const orderTf = V ? "translate(14px,-50%)" : "translate(-50%,-32px)";
+  const orderTag = (along: number) => {
+    const p = S(along);
+    return { left: `${p[0]}%`, top: `${p[1]}%`, tf: orderTf, op: 1, text: "Order" };
+  };
   let count = [1, 2, 3, 4].filter(arr).length;
   if (t >= 0.56) count = 4;
   if (replay) count = (t >= 0.79 ? 1 : 0) + (t >= 0.87 ? 1 : 0);
@@ -201,6 +232,7 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     dLines: lines,
     dTok: tok(S(replay ? tokB : tokA), replay ? (t < 0.8 ? sg(t, 0.72, 0.74) * (1 - sg(t, 0.775, 0.79)) : sg(t, 0.825, 0.835)) : sg(t, 0.03, 0.05) * (1 - sg(t, 0.56, 0.6)), replay ? "linear-gradient(135deg,#A2C2FD,#00C9A7)" : routeBlue),
     dHand: { left: `${hp[0]}%`, top: `${hp[1]}%`, tf: V ? "translate(14px,-50%)" : "translate(-50%,-32px)", op: hm == null ? 0 : 1 },
+    dTags: emfiDone ? [orderTag((cpos + 50) / 2), orderTag((50 + dpos) / 2)] : [],
     dCount: count,
     dNote: t >= 0.74 ? "Previously 4" : "",
     dRouteTitle: t >= 0.56 ? (routeTitles?.direct ?? "A Direct Route with EMFI") : (routeTitles?.conventional ?? "A conventional route"),

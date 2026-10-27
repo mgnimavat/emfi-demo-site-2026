@@ -16,7 +16,7 @@ export default function Home12Page() {
     <>
       {/* <Home12Header /> */}
       <div className={styles.page}>
-        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Handover" highlightSlides standardsEyebrow lightBands markFill={false} homeSlides whyTimeline blendHeader responsiveBody="Technology that works. People who respond." dependableBody="Institutional safeguards. Clear accountability." routeTitles={{ conventional: "Conventional Route", direct: "Direct Route EMFI" }} />
+        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Handover" highlightSlides standardsEyebrow lightBands markFill={false} homeSlides whyTimeline blendHeader directPace="home12" responsiveBody="Technology that works. People who respond." dependableBody="Institutional safeguards. Clear accountability." routeTitles={{ conventional: "Conventional Route", direct: "Direct Route EMFI" }} />
       </div>
       <DiscussSection />
       {/* <Home12Footer /> */}

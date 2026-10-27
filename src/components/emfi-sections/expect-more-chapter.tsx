@@ -8,7 +8,7 @@ import { ResponsiveSection } from "./responsive-section";
 import styles from "./sections.module.css";
 import { useAnimTimeline } from "./use-anim-timeline";
 import { useHeaderBlend } from "./use-header-blend";
-import { dirVals } from "./values";
+import { dirVals, directPaceScale, type DirectPace } from "./values";
 import { WhyFlow } from "./why-flow";
 
 const markMask = 'url("/emfi/emfi-mark.svg") center/contain no-repeat';
@@ -40,9 +40,9 @@ function MarkArt({ blend, fill, stroke, strokeOpacity, strokeWidth, dashOffset }
   );
 }
 
-export function ExpectMoreChapter({ showPoints = true, showRouteTitle = false, loop = false, stepLabel = "Handover", highlightSlides = false, staticStandards = false, standardsEyebrow = false, lightBands = false, markFill = true, homeSlides = false, routeTitles, whyTimeline = false, responsiveBody, dependableBody, blendHeader = false }: { showPoints?: boolean; showRouteTitle?: boolean; loop?: boolean; stepLabel?: string; highlightSlides?: boolean; staticStandards?: boolean; standardsEyebrow?: boolean; lightBands?: boolean; markFill?: boolean; homeSlides?: boolean; routeTitles?: { conventional: string; direct: string }; whyTimeline?: boolean; responsiveBody?: string; dependableBody?: string; blendHeader?: boolean }) {
+export function ExpectMoreChapter({ showPoints = true, showRouteTitle = false, loop = false, stepLabel = "Handover", highlightSlides = false, staticStandards = false, standardsEyebrow = false, lightBands = false, markFill = true, homeSlides = false, routeTitles, whyTimeline = false, responsiveBody, dependableBody, blendHeader = false, centerDirect = false, directPace }: { showPoints?: boolean; showRouteTitle?: boolean; loop?: boolean; stepLabel?: string; highlightSlides?: boolean; staticStandards?: boolean; standardsEyebrow?: boolean; lightBands?: boolean; markFill?: boolean; homeSlides?: boolean; routeTitles?: { conventional: string; direct: string }; whyTimeline?: boolean; responsiveBody?: string; dependableBody?: string; blendHeader?: boolean; centerDirect?: boolean; directPace?: DirectPace }) {
   useHeaderBlend(blendHeader);
-  const { chapRef, dRef, w, hdr, chapP, tD, canReplay, replayD } = useAnimTimeline({ loopDirect: loop });
+  const { chapRef, dRef, w, hdr, chapP, tD, canReplay, replayD } = useAnimTimeline({ loopDirect: loop, directScale: directPaceScale(directPace) });
   const V = w < 760;
   const compact = w < 1000;
   const cCols = compact ? "minmax(0,1fr)" : "minmax(0,38fr) minmax(0,62fr)";
@@ -79,15 +79,15 @@ export function ExpectMoreChapter({ showPoints = true, showRouteTitle = false, l
       <ExpectSection showPoints={showPoints} raiseContent={lightBands} />
       {whyTimeline ? (
         <WhyFlow>
-          <DirectSection cols={cCols} cardRef={dRef} canReplay={canReplay} onReplay={replayD} values={dirVals(tD, V, routeTitles)} showRouteTitle={showRouteTitle} showReplay={!loop} stepLabel={stepLabel} light={lightBands} step={1} />
-          <ResponsiveSection cols={cColsR} textOrder={V ? 0 : 2} highlightSlides={highlightSlides} light={lightBands} homeSlides={homeSlides} step={2} body={responsiveBody} />
-          <AccountableSection cols={cCols} canReplay={canReplay} showReplay={!standardsEyebrow} staticStandards={staticStandards} standardsEyebrow={standardsEyebrow} raiseContent={lightBands} light={lightBands} step={3} body={dependableBody} />
+          <DirectSection cols={cCols} cardRef={dRef} canReplay={canReplay} onReplay={replayD} values={dirVals(tD, V, routeTitles, directPace)} showRouteTitle={showRouteTitle} showReplay={!loop} stepLabel={stepLabel} light={lightBands} step={1} centered={centerDirect} />
+          <ResponsiveSection cols={cColsR} textOrder={V ? 0 : 2} highlightSlides={highlightSlides} light={lightBands} homeSlides={homeSlides} step={2} body={responsiveBody} centered={centerDirect} />
+          <AccountableSection cols={cCols} canReplay={canReplay} showReplay={!standardsEyebrow} staticStandards={staticStandards} standardsEyebrow={standardsEyebrow} raiseContent={lightBands} light={lightBands} step={3} body={dependableBody} centered={centerDirect} />
         </WhyFlow>
       ) : (
         <>
-          <DirectSection cols={cCols} cardRef={dRef} canReplay={canReplay} onReplay={replayD} values={dirVals(tD, V, routeTitles)} showRouteTitle={showRouteTitle} showReplay={!loop} stepLabel={stepLabel} light={lightBands} />
-          <ResponsiveSection cols={cColsR} textOrder={V ? 0 : 2} highlightSlides={highlightSlides} light={lightBands} homeSlides={homeSlides} body={responsiveBody} />
-          <AccountableSection cols={cCols} canReplay={canReplay} showReplay={!standardsEyebrow} staticStandards={staticStandards} standardsEyebrow={standardsEyebrow} raiseContent={lightBands} light={lightBands} body={dependableBody} />
+          <DirectSection cols={cCols} cardRef={dRef} canReplay={canReplay} onReplay={replayD} values={dirVals(tD, V, routeTitles, directPace)} showRouteTitle={showRouteTitle} showReplay={!loop} stepLabel={stepLabel} light={lightBands} centered={centerDirect} />
+          <ResponsiveSection cols={cColsR} textOrder={V ? 0 : 2} highlightSlides={highlightSlides} light={lightBands} homeSlides={homeSlides} body={responsiveBody} centered={centerDirect} />
+          <AccountableSection cols={cCols} canReplay={canReplay} showReplay={!standardsEyebrow} staticStandards={staticStandards} standardsEyebrow={standardsEyebrow} raiseContent={lightBands} light={lightBands} body={dependableBody} centered={centerDirect} />
         </>
       )}
     </div>

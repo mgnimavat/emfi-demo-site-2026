@@ -88,6 +88,10 @@
   line-height: 1.3;
   text-transform: uppercase;
 }
+.routeTitleCenter {
+  top: calc(clamp(20px, 2.6vw, 36px) + 32px);
+  justify-content: center;
+}
 .replay {
   position: absolute;
   z-index: 10;

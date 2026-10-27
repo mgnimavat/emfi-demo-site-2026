@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { directTimelineScale } from "./values";
 
-const DUR = { tD: Math.round(13000 * directTimelineScale), tR: 13000, tA: 12000 } as const;
+const BASE_DIRECT_MS = 13000;
+const DUR = { tD: Math.round(BASE_DIRECT_MS * directTimelineScale), tR: 13000, tA: 12000 } as const;
 type TimelineKey = keyof typeof DUR;
 
 function headerHeight() {
@@ -14,7 +15,7 @@ function headerHeight() {
   return header.offsetHeight;
 }
 
-export function useAnimTimeline({ loopDirect = false }: { loopDirect?: boolean } = {}) {
+export function useAnimTimeline({ loopDirect = false, directScale = directTimelineScale }: { loopDirect?: boolean; directScale?: number } = {}) {
   const chapRef = useRef<HTMLDivElement>(null);
   const dRef = useRef<HTMLDivElement>(null);
   const rRef = useRef<HTMLDivElement>(null);
@@ -26,7 +27,9 @@ export function useAnimTimeline({ loopDirect = false }: { loopDirect?: boolean }
   const [canReplay, setCanReplay] = useState(true);
   const reducedRef = useRef(false);
   const loopDirectRef = useRef(loopDirect);
+  const directScaleRef = useRef(directScale);
   loopDirectRef.current = loopDirect;
+  directScaleRef.current = directScale;
   const startRef = useRef<Partial<Record<TimelineKey, number>>>({});
   const elapsedRef = useRef<Partial<Record<TimelineKey, number>>>({});
   const visibleRef = useRef<Partial<Record<TimelineKey, boolean>>>({});
@@ -70,7 +73,7 @@ export function useAnimTimeline({ loopDirect = false }: { loopDirect?: boolean }
       (Object.keys(DUR) as TimelineKey[]).forEach((key) => {
         const start = startRef.current[key];
         if (start == null) return;
-        const duration = DUR[key];
+        const duration = key === "tD" ? Math.round(BASE_DIRECT_MS * directScaleRef.current) : DUR[key];
         const looping = loopDirectRef.current && key === "tD" && visibleRef.current[key] !== false;
         const elapsed = now - start;
         const value = looping ? (elapsed % duration) / duration : Math.min(1, elapsed / duration);
