@@ -112,11 +112,22 @@ function node(pt: number[], o: NodeOpts): RouteNode {
   };
 }
 
-function tok(p: number[], op: number) {
-  return { left: `${p[0]}%`, top: `${p[1]}%`, op };
+function tok(p: number[], op: number, bg: string) {
+  return { left: `${p[0]}%`, top: `${p[1]}%`, op, bg };
 }
 
-export function dirVals(t: number, V: boolean) {
+const CONVENTIONAL_END = 0.56;
+const CONVENTIONAL_STRETCH = 1.75;
+export const directTimelineScale = CONVENTIONAL_END * CONVENTIONAL_STRETCH + (1 - CONVENTIONAL_END);
+
+function slowConventionalRoute(t: number) {
+  const scaled = t * directTimelineScale;
+  const firstSpan = CONVENTIONAL_END * CONVENTIONAL_STRETCH;
+  return scaled <= firstSpan ? scaled / CONVENTIONAL_STRETCH : CONVENTIONAL_END + (scaled - firstSpan);
+}
+
+export function dirVals(t: number, V: boolean, routeTitles?: { conventional: string; direct: string }) {
+  t = slowConventionalRoute(t);
   const { sg, ez, lp } = H();
   const P0 = [6, 28, 50, 72, 94];
   const ws = (i: number) => 0.06 + (i - 1) * 0.11;
@@ -156,9 +167,9 @@ export function dirVals(t: number, V: boolean) {
   const nodes = [node(S(cpos), { op: sg(t, 0, 0.03), dot: dot("c"), name: "Client", lp: pos, sz: 18, fs })];
   ["Settlement agent", "Sub-custodian", "Custodian"].forEach((name, j) => {
     const i = j + 1;
-    nodes.push(node(S(lp(P0[i], 50, k)), { op: ap(i) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i)), name, sub: arr(i) && t < ws(i) + 0.11 ? "Processing" : "", lp: pos, sz: 16, fs }));
+    nodes.push(node(S(lp(P0[i], 50, k)), { op: ap(i) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i)), name, sub: arr(i) && t < ws(i) + 0.11 ? (name === "Custodian" ? "Received" : "Processing") : "", lp: pos, sz: 16, fs }));
   });
-  nodes.push(node(S(dpos), { op: ap(4), dot: dot("i", depOn), name: "Depository", sub: depOn ? "Received" : "", lp: pos, sz: 18, fs }));
+  nodes.push(node(S(dpos), { op: ap(4), dot: dot("i", depOn), name: "Depository", sub: depOn ? "Done" : "", lp: pos, sz: 18, fs }));
   const es = V ? 52 : 64;
   const sk = ez(sg(t, 0.64, 0.71));
   nodes.push(node(S(50), {
@@ -170,14 +181,15 @@ export function dirVals(t: number, V: boolean) {
     ms: `${V ? 28 : 35}px`,
     name: "EMFI",
     fs: "16px",
-    sub: t >= 0.79 && t < 0.825 ? "Processing" : "",
+    sub: t >= 0.79 && t < 0.825 ? "Received" : "",
     lp: pos,
     sz: es,
   }));
-  const g = `linear-gradient(${V ? "180deg" : "90deg"},#A2C2FD,#8098CC,#00C9A7)`;
+  const routeBlue = "#A2C2FD";
+  const routeGradient = `linear-gradient(${V ? "180deg" : "90deg"},#A2C2FD,#8098CC,#00C9A7)`;
   const lines = [
     { s: rect(S(t >= 0.56 ? cpos : P0[0]), S(t >= 0.56 ? dpos : trackEnd), 2), c: "#3A4A66", op: 1 },
-    { s: rect(S(replay ? 18 : P0[0]), S(replay ? tokB : tokA), replay ? 3 : 2), c: replay ? g : "#A2C2FD", op: replay ? 1 : 1 - sg(t, 0.56, 0.6) },
+    { s: rect(S(replay ? 18 : P0[0]), S(replay ? tokB : tokA), replay ? 3 : 2), c: replay ? routeGradient : routeBlue, op: replay ? 1 : 1 - sg(t, 0.56, 0.6) },
   ];
   const hm = !replay && trav > 0 ? (P0[trav - 1] + P0[trav]) / 2 : replay && travB > 0 ? (travB === 1 ? 34 : 66) : null;
   const hp = S(hm ?? 50);
@@ -187,11 +199,11 @@ export function dirVals(t: number, V: boolean) {
   return {
     dNodes: nodes,
     dLines: lines,
-    dTok: tok(S(replay ? tokB : tokA), replay ? (t < 0.8 ? sg(t, 0.72, 0.74) * (1 - sg(t, 0.775, 0.79)) : sg(t, 0.825, 0.835)) : sg(t, 0.03, 0.05) * (1 - sg(t, 0.56, 0.6))),
+    dTok: tok(S(replay ? tokB : tokA), replay ? (t < 0.8 ? sg(t, 0.72, 0.74) * (1 - sg(t, 0.775, 0.79)) : sg(t, 0.825, 0.835)) : sg(t, 0.03, 0.05) * (1 - sg(t, 0.56, 0.6)), replay ? "linear-gradient(135deg,#A2C2FD,#00C9A7)" : routeBlue),
     dHand: { left: `${hp[0]}%`, top: `${hp[1]}%`, tf: V ? "translate(14px,-50%)" : "translate(-50%,-32px)", op: hm == null ? 0 : 1 },
     dCount: count,
     dNote: t >= 0.74 ? "Previously 4" : "",
-    dRouteTitle: t >= 0.56 ? "A Direct Route with EMFI" : "A conventional route",
+    dRouteTitle: t >= 0.56 ? (routeTitles?.direct ?? "A Direct Route with EMFI") : (routeTitles?.conventional ?? "A conventional route"),
     dCap: t < 0.53 ? "Standard institutional route" : t < 0.74 ? "The same route, fewer layers" : "The same instruction, through EMFI",
     dStageH: V ? "400px" : "180px",
     dBandOp: sg(t, 0.74, 0.86),

@@ -19,7 +19,7 @@
   container-type: inline-size;
   max-width: 1320px;
   margin: 0 auto;
-  padding: clamp(88px, 10vw, 140px) clamp(20px, 4vw, 56px);
+  padding: clamp(88px, 10vw, 140px) clamp(20px, 4vw, 56px) clamp(88px, 10vw, 140px) 0;
   text-align: left;
 }
 
@@ -117,4 +117,116 @@
   background: #ffffff;
   -webkit-mask: url("/emfi/icon-replay.svg") center/contain no-repeat;
   mask: url("/emfi/icon-replay.svg") center/contain no-repeat;
+}
+
+.whyFlow {
+  position: relative;
+  z-index: 3;
+}
+
+.whyKicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  grid-column: 1 / -1;
+  margin: 0 0 28px;
+  color: #2a578f;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.whyMarker {
+  position: absolute;
+  z-index: 6;
+  top: 50%;
+  left: calc(max(20px, (100% - 1320px) / 2 + clamp(20px, 4vw, 56px)) - 25px);
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #1e5278;
+  border-radius: 50%;
+  background: #1e5278;
+  color: #fff;
+  box-shadow: 0 0 0 5px rgba(30, 82, 120, 0.16);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  transform: translateY(-50%);
+  transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.whyMarkerActive {
+  border-color: #55c6b0;
+  background: #55c6b0;
+  color: #fff;
+  box-shadow: 0 0 0 5px rgba(85, 198, 176, 0.15);
+}
+
+.whyRail {
+  position: absolute;
+  z-index: 4;
+  width: 2px;
+  margin-left: -1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.whyRailTrack {
+  position: absolute;
+  inset: 0;
+  border-radius: 99px;
+  background: #d9e3ee;
+}
+
+.whyRailFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  border-radius: 99px;
+  background-image: linear-gradient(180deg, #a2c2fd 0%, #8098cc 48%, #00c9a7 100%);
+  background-repeat: no-repeat;
+  background-size: 100% var(--rail-span, 100%);
+  box-shadow: 0 0 12px rgba(0, 201, 167, 0.28);
+}
+
+.whyRailElbow,
+.whyRailElbowFill {
+  position: absolute;
+  top: 0;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 99px;
+}
+
+.whyRailElbow {
+  left: 1px;
+  background: #d9e3ee;
+}
+
+.whyRailElbowFill {
+  background-image: linear-gradient(90deg, #a2c2fd 0%, #8098cc 48%, #00c9a7 100%);
+}
+
+.whyRailPulse {
+  position: absolute;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #55c6b0;
+  box-shadow: 0 0 0 4px rgba(85, 198, 176, 0.18), 0 0 18px rgba(76, 185, 173, 0.62);
+  transform: translate(-50%, -50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whyMarker,
+  .whyRailPulse {
+    transition: none;
+  }
 }

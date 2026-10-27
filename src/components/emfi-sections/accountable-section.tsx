@@ -9,9 +9,19 @@ import { SectionCopy } from "./outcomes";
 import { ReplayButton } from "./replay-button";
 import chapterStyles from "./sections.module.css";
 import styles from "./accountable.module.css";
+import { sectionPad, useWhyActive, WhyMarker } from "./why-flow";
 
 const HOLD_MS = 3800;
 const standards = ["Authorised", "Regulated", "Auditable"] as const;
+
+function StandardsEyebrow({ lead = false }: { lead?: boolean }) {
+  return (
+    <p className={lead ? `${styles.standardsTitle} ${styles.standardsLead}` : styles.standardsTitle}>
+      <span aria-hidden="true" className={chapterStyles.eyebrowMark} />
+      The standard behind the service
+    </p>
+  );
+}
 
 function StandardsPanel() {
   const listRef = useRef<HTMLOListElement>(null);
@@ -27,10 +37,7 @@ function StandardsPanel() {
 
   return (
     <div className={styles.standards}>
-      <p className={styles.standardsTitle}>
-        <span aria-hidden="true" className={chapterStyles.eyebrowMark} />
-        The standard behind the service
-      </p>
+      <StandardsEyebrow />
       <ol
         ref={listRef}
         className={styles.standardsLines}
@@ -86,12 +93,13 @@ const slides = [
   },
 ];
 
-function EvidenceSlide({ slide }: { slide: (typeof slides)[number] }) {
+function EvidenceSlide({ slide, plain = false }: { slide: (typeof slides)[number]; plain?: boolean }) {
+  const title = plain ? slide.title.replace(/\.$/, "") : slide.title;
   return (
     <>
       <div className={styles.head}>
-        <h3 className={styles.title}>{slide.title}</h3>
-        <span className={styles.rule} />
+        <h3 className={styles.title}>{title}</h3>
+        {plain ? null : <span className={styles.rule} />}
       </div>
       {slide.kind === "logos" ? (
         <div className={styles.logos}>
@@ -117,16 +125,26 @@ export function AccountableSection({
   canReplay,
   showReplay = true,
   staticStandards = false,
+  standardsEyebrow = false,
   raiseContent = false,
+  light = false,
+  step,
+  body = "Institutional safeguards, clear accountability and the relevant regulatory oversight behind the services we provide.",
 }: {
   cols: string;
   canReplay: boolean;
   showReplay?: boolean;
   staticStandards?: boolean;
+  standardsEyebrow?: boolean;
   raiseContent?: boolean;
+  light?: boolean;
+  step?: number;
+  body?: string;
 }) {
   const [index, setIndex] = useState(0);
   const [run, setRun] = useState(0);
+  const marked = step != null;
+  const active = useWhyActive(step ?? 0);
   const slide = slides[index] ?? slides[0];
 
   useEffect(() => {
@@ -143,15 +161,18 @@ export function AccountableSection({
   }
 
   return (
-    <section id="accountable" data-screen-label="05 Dependable" style={{ position: "relative", background: "radial-gradient(55% 60% at 0% 100%,rgba(128,152,204,.14),transparent 70%)", zIndex: raiseContent ? undefined : 1, color: "#FFFFFF" }}>
-      <div style={{ position: "relative", zIndex: raiseContent ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: "clamp(88px,10vw,144px) clamp(20px,4vw,56px)", borderTop: "1px solid rgba(162,194,253,.16)", display: "grid", gridTemplateColumns: cols, gap: "40px clamp(40px,5vw,80px)", alignItems: "center" }}>
+    <section id="accountable" data-screen-label="05 Dependable" data-why-step={marked ? "" : undefined} style={{ position: "relative", background: light ? "#ffffff" : "radial-gradient(55% 60% at 0% 100%,rgba(128,152,204,.14),transparent 70%)", zIndex: light || raiseContent ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
+      {marked && step ? <WhyMarker n={step} active={active} /> : null}
+      <div className={light ? chapterStyles.lightCopy : undefined} style={{ position: "relative", zIndex: light || raiseContent ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked), borderTop: light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: "grid", gridTemplateColumns: cols, gap: "40px clamp(40px,5vw,80px)", alignItems: "center" }}>
         <SectionCopy
           title="Dependable."
-          body="Institutional safeguards, clear accountability and the relevant regulatory oversight behind the services we provide."
+          body={body}
           action={{ href: "/why-emfi", label: "See the standards" }}
+          tone={light ? "light" : "dark"}
         />
         <div style={{ ...cardStyle, containerType: "inline-size", paddingTop: !staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding }}>
           {staticStandards ? <StandardsPanel /> : null}
+          {!staticStandards && standardsEyebrow ? <StandardsEyebrow lead /> : null}
           {!staticStandards && showReplay && canReplay ? <ReplayButton onClick={replay} /> : null}
           {!staticStandards && canReplay ? (
             <div className={styles.stage} aria-live="polite">
@@ -164,13 +185,13 @@ export function AccountableSection({
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <EvidenceSlide slide={slide} />
+                  <EvidenceSlide slide={slide} plain={standardsEyebrow} />
                 </motion.div>
               </AnimatePresence>
             </div>
           ) : !staticStandards ? (
             <div className={styles.stack}>
-              {slides.map((item) => <EvidenceSlide key={item.title} slide={item} />)}
+              {slides.map((item) => <EvidenceSlide key={item.title} slide={item} plain={standardsEyebrow} />)}
             </div>
           ) : null}
         </div>

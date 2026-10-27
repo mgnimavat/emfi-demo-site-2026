@@ -7,6 +7,7 @@ import { SectionCopy } from "./outcomes";
 import { ReplayButton } from "./replay-button";
 import styles from "./sections.module.css";
 import type { dirVals } from "./values";
+import { sectionPad, useWhyActive, WhyMarker } from "./why-flow";
 
 export function DirectSection({
   cols,
@@ -18,6 +19,7 @@ export function DirectSection({
   showReplay = true,
   stepLabel = "Handover",
   light = false,
+  step,
 }: {
   cols: string;
   cardRef: RefObject<HTMLDivElement | null>;
@@ -28,15 +30,20 @@ export function DirectSection({
   showReplay?: boolean;
   stepLabel?: string;
   light?: boolean;
+  step?: number;
 }) {
   const { dNodes, dLines, dTok, dHand, dCount, dNote, dRouteTitle, dStageH, dBandOp, dBandS } = values;
+  const marked = step != null;
+  const active = useWhyActive(step ?? 0);
 
   return (
-    <section id="direct" data-screen-label="03 More direct" style={{ position: "relative", background: light ? "#ffffff" : "radial-gradient(50% 60% at 0% 20%,rgba(162,194,253,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
-      <div className={light ? styles.lightCopy : undefined} style={{ position: "relative", zIndex: light ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: "clamp(88px,10vw,144px) clamp(20px,4vw,56px)", borderTop: light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: "grid", gridTemplateColumns: cols, gap: "40px clamp(40px,5vw,80px)", alignItems: "center" }}>
+    <section id="direct" data-screen-label="03 More direct" data-why-step={marked ? "" : undefined} style={{ position: "relative", background: light ? "#ffffff" : "radial-gradient(50% 60% at 0% 20%,rgba(162,194,253,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
+      {marked && step ? <WhyMarker n={step} active={active} /> : null}
+      <div className={light ? styles.lightCopy : undefined} style={{ position: "relative", zIndex: light ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked), borderTop: light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: "grid", gridTemplateColumns: cols, gap: "40px clamp(40px,5vw,80px)", alignItems: "center" }}>
+        {marked ? <p className={styles.whyKicker} data-why-origin>Why EMFI</p> : null}
         <SectionCopy
           title="Direct."
-          body="Fewer unnecessary intermediaries. A more direct route through the infrastructure, where the market and service arrangements permit."
+          body="Fewer unnecessary intermediaries. A more direct route to market."
           action={{ href: "/services/settlement-custody", label: "Explore direct access" }}
           tone={light ? "light" : "dark"}
         />
@@ -60,7 +67,7 @@ export function DirectSection({
               </div>
             ))}
             <span style={{ position: "absolute", zIndex: 3, left: dHand.left, top: dHand.top, transform: dHand.tf, fontSize: 12, fontWeight: 700, color: "#B1C0E2", whiteSpace: "nowrap", opacity: dHand.op }}>{stepLabel}</span>
-            <span style={{ position: "absolute", zIndex: 4, left: dTok.left, top: dTok.top, width: 14, height: 14, margin: "-7px 0 0 -7px", borderRadius: "50%", background: "linear-gradient(135deg,#A2C2FD,#00C9A7)", boxShadow: "0 0 0 4px #0E2242", opacity: dTok.op }} />
+            <span style={{ position: "absolute", zIndex: 4, left: dTok.left, top: dTok.top, width: 14, height: 14, margin: "-7px 0 0 -7px", borderRadius: "50%", background: dTok.bg, boxShadow: "0 0 0 4px #0E2242", opacity: dTok.op }} />
           </div>
           {showRouteTitle ? null : (
             <div style={{ marginTop: 12, paddingTop: 14, borderTop: "1px solid rgba(162,194,253,.18)", display: "flex", justifyContent: "center", alignItems: "baseline", gap: 10 }}>

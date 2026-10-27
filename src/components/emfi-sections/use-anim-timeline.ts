@@ -1,8 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { directTimelineScale } from "./values";
 
-const DUR = { tD: 13000, tR: 13000, tA: 12000 } as const;
+const DUR = { tD: Math.round(13000 * directTimelineScale), tR: 13000, tA: 12000 } as const;
 type TimelineKey = keyof typeof DUR;
 
 function headerHeight() {
