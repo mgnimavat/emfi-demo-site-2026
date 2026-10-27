@@ -11,11 +11,12 @@ body:has(.home-16-shell) > div {
 }
 
 body:has(.home-16-shell) header {
-  background: transparent;
+  background-color: #071832;
+  background-image: radial-gradient(60% 120% at 50% 0%, rgb(162 194 253 / 16%), transparent 70%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   border-bottom: none;
-  animation: home-16-header-fill linear both;
-  animation-timeline: scroll();
-  animation-range: 0 5vh;
+  animation: none;
 }
 
 body.home-12-header-solid:has(.home-16-shell) header {

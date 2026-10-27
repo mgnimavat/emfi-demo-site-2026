@@ -42,6 +42,9 @@
   color: transparent;
   -webkit-text-fill-color: transparent;
 }
+.intro:not(.contactIntro) .accent {
+  background-image: linear-gradient(90deg, #ef8ccd 0%, #ec6782 50%, #eb483e 100%);
+}
 .questionCard {
   --quiz-border: color-mix(in srgb, var(--color-blue-100) 65%, white);
   --quiz-muted: color-mix(in srgb, var(--text-primary) 65%, white);
