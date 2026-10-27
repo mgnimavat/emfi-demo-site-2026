@@ -41,12 +41,12 @@ export function DirectSection({
   return (
     <section id="direct" data-screen-label="03 More direct" data-why-step={marked ? "" : undefined} style={{ position: "relative", background: light ? "#ffffff" : "radial-gradient(50% 60% at 0% 20%,rgba(162,194,253,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
       {marked && step ? <WhyMarker n={step} active={active} /> : null}
-      <div className={light ? styles.lightCopy : undefined} style={{ position: "relative", zIndex: light ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked), borderTop: light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: centered ? "flex" : "grid", flexDirection: centered ? "column" : undefined, gridTemplateColumns: centered ? undefined : cols, gap: centered ? 64 : "40px clamp(40px,5vw,80px)", alignItems: centered ? "stretch" : "center" }}>
+      <div className={light ? styles.lightCopy : undefined} style={{ position: "relative", zIndex: light ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked, !light), borderTop: light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: centered ? "flex" : "grid", flexDirection: centered ? "column" : undefined, gridTemplateColumns: centered ? undefined : cols, gap: centered ? 64 : "30px clamp(30px,5vw,30px)", alignItems: centered ? "stretch" : "center" }}>
         {marked ? <p className={styles.whyKicker} data-why-origin style={centered ? { width: "100%", justifyContent: "center", marginBottom: 0 } : undefined}>Why EMFI</p> : null}
         <div style={{ position: "relative" }}>
           <SectionCopy
             title="Direct."
-            body="Fewer unnecessary intermediaries. A more direct route to market."
+            body={"Fewer unnecessary intermediaries.\nA more direct route to market."}
             action={{ href: "/services/settlement-custody", label: "Explore direct access" }}
             tone={light ? "light" : "dark"}
             align={centered ? "center" : "start"}
@@ -58,7 +58,7 @@ export function DirectSection({
           <div role="img" aria-label="An instruction moves from Client to Settlement agent, Sub-custodian, Custodian and Depository. The same route then shortens to Client, EMFI, Depository." style={{ position: "relative", height: dStageH }}>
             <span style={{ position: "absolute", zIndex: 0, borderRadius: 999, background: "linear-gradient(90deg,rgba(162,194,253,.22),rgba(128,152,204,.16),rgba(0,201,167,.22))", opacity: dBandOp, ...css(dBandS) }} />
             {dLines.map((line, index) => (
-              <span key={index} style={{ position: "absolute", zIndex: 1, background: line.c, opacity: line.op, ...css(line.s) }} />
+              <span key={index} style={{ position: "absolute", zIndex: 1, background: line.c, backgroundSize: line.size, backgroundRepeat: line.size ? "no-repeat" : undefined, opacity: line.op, ...css(line.s) }} />
             ))}
             {dNodes.map((n) => (
               <div key={n.name} style={{ position: "absolute", zIndex: 2, left: n.left, top: n.top, width: 0, height: 0, opacity: n.op }}>

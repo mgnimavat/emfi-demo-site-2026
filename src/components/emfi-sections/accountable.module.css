@@ -1,5 +1,5 @@
-.stage { position: relative; min-height: 168px; }
-.slide { position: absolute; inset: 0; }
+.stage { position: relative; min-height: 260px; }
+.slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; }
 .head { display: flex; align-items: center; gap: 16px; }
 .title { margin: 0; color: #fff; font-size: clamp(22px, 2.4vw, 30px); font-weight: 800; letter-spacing: -.03em; line-height: 1; white-space: nowrap; }
 .rule { flex: 1; height: 1px; background: rgb(177 192 226 / 45%); }
@@ -15,7 +15,6 @@
 .standardsTitle { display: flex; align-items: center; gap: 12px; margin: 0; color: #d5deee; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; line-height: 1.3; text-transform: uppercase; }
 .standardsCenter { justify-content: center; }
 .headCenter { justify-content: center; }
-.standardsLead { padding-bottom: 40px; }
 .standardsLines { display: grid; gap: clamp(16px, 2.4cqi, 24px); margin: 0; padding: 0; list-style: none; }
 .standardsLine { display: flex; align-items: baseline; gap: clamp(12px, 1.8cqi, 18px); margin: 0; font-size: clamp(36px, 6.4cqi, 48px); opacity: 0; }
 .standardsPull { display: inline-flex; align-items: baseline; gap: inherit; transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1); }
@@ -35,5 +34,5 @@
   .pills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .logoCard, .pill { min-height: 92px; padding: 12px 8px; }
   .logoCard img { max-height: 48px; }
-  .stage { min-height: 248px; }
+  .stage { min-height: 270px; }
 }

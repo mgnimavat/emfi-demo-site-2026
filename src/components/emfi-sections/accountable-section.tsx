@@ -14,8 +14,8 @@ import { sectionPad, useWhyActive, WhyMarker } from "./why-flow";
 const HOLD_MS = 3800;
 const standards = ["Authorised", "Regulated", "Auditable"] as const;
 
-function StandardsEyebrow({ lead = false, centered = false }: { lead?: boolean; centered?: boolean }) {
-  const classes = [styles.standardsTitle, lead ? styles.standardsLead : "", centered ? styles.standardsCenter : ""].filter(Boolean).join(" ");
+function StandardsEyebrow({ centered = false }: { centered?: boolean }) {
+  const classes = [styles.standardsTitle, centered ? styles.standardsCenter : ""].filter(Boolean).join(" ");
   return (
     <p className={classes}>
       <span aria-hidden="true" className={chapterStyles.eyebrowMark} />
@@ -167,7 +167,7 @@ export function AccountableSection({
   return (
     <section id="accountable" data-screen-label="05 Dependable" data-why-step={marked ? "" : undefined} style={{ position: "relative", background: light ? "#ffffff" : "radial-gradient(55% 60% at 0% 100%,rgba(128,152,204,.14),transparent 70%)", zIndex: light || raiseContent ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
       {marked && step ? <WhyMarker n={step} active={active} /> : null}
-      <div className={light ? chapterStyles.lightCopy : undefined} style={{ position: "relative", zIndex: light || raiseContent ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked), borderTop: light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: centered ? "flex" : "grid", flexDirection: centered ? "column" : undefined, gridTemplateColumns: centered ? undefined : cols, gap: centered ? 64 : "40px clamp(40px,5vw,80px)", alignItems: centered ? "stretch" : "center" }}>
+      <div className={light ? chapterStyles.lightCopy : undefined} style={{ position: "relative", zIndex: light || raiseContent ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked, !light), borderTop: light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: centered ? "flex" : "grid", flexDirection: centered ? "column" : undefined, gridTemplateColumns: centered ? undefined : cols, gap: centered ? 64 : "30px clamp(30px,5vw,30px)", alignItems: centered ? "stretch" : "center" }}>
         <div style={{ position: "relative" }}>
           <SectionCopy
             title="Dependable."
@@ -179,7 +179,6 @@ export function AccountableSection({
         </div>
         <div style={{ ...cardStyle, containerType: "inline-size", width: centered ? "100%" : undefined, paddingTop: `calc(${!staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding}${centered ? ` + ${centeredCardSpace}` : ""})`, paddingBottom: centered ? `calc(${cardStyle.padding} + ${centeredCardSpace})` : undefined }}>
           {staticStandards ? <StandardsPanel centered={centered} /> : null}
-          {!staticStandards && standardsEyebrow ? <StandardsEyebrow lead centered={centered} /> : null}
           {!staticStandards && showReplay && canReplay ? <ReplayButton onClick={replay} /> : null}
           {!staticStandards && canReplay ? (
             <div className={styles.stage} aria-live="polite">
