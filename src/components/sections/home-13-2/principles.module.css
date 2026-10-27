@@ -1,6 +1,6 @@
 .section {
   --principle-border: color-mix(in srgb, var(--color-blue-100) 22%, transparent);
-  --principle-surface: color-mix(in srgb, var(--color-blue-200) 8%, var(--bg-inverse));
+  --principle-surface: var(--bg-page);
   --principle-active: color-mix(in srgb, var(--color-blue-200) 18%, var(--bg-inverse));
   --principle-background: var(--bg-soft);
   padding: clamp(60px, 7vw, 112px) var(--space-5);
@@ -33,20 +33,20 @@
   border: 1px solid var(--principle-border);
   border-radius: var(--radius-card);
   background: var(--principle-surface);
-  color: var(--text-inverse);
+  color: var(--text-primary);
   font: inherit;
   text-align: left;
   cursor: pointer;
   transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 .cardTitle { font-size: clamp(26px, 2.5vw, 38px); font-weight: 750; line-height: 1.15; letter-spacing: -.045em; }
-.summary { color: var(--text-inverse-muted); font-size: 14px; line-height: 1.6; }
+.summary { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
 .cardBottom { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding-top: var(--space-6); margin-top: auto; }
 .arrow { display: grid; place-items: center; flex: none; width: 32px; height: 32px; border: 1px solid var(--principle-border); border-radius: var(--radius-pill); transition: background-color .2s ease, color .2s ease; }
 .arrow svg { width: 16px; height: 16px; transition: transform .2s ease; }
 .card:hover { transform: translateY(-2px); border-color: var(--color-blue-200); box-shadow: 0 8px 24px color-mix(in srgb, var(--text-primary) 6%, transparent); }
 .card[aria-expanded='true'] {
-  border-color: var(--color-blue-200);
+  border-color: var(--color-blue-300);
   background: var(--bg-page);
   color: var(--text-primary);
   box-shadow: 0 8px 24px color-mix(in srgb, var(--text-primary) 8%, transparent), 0 0 0 2px color-mix(in srgb, var(--color-blue-200) 12%, transparent);
@@ -65,15 +65,15 @@
   padding: clamp(28px, 3.5vw, 48px);
   border-radius: var(--radius-card);
   border: 1px solid var(--principle-border);
-  background: var(--principle-active);
-  color: var(--text-inverse);
+  background: var(--bg-page);
+  color: var(--text-primary);
   animation: reveal .25s ease;
 }
 .detail[aria-hidden='true'] { visibility: hidden; pointer-events: none; }
 .details:not(:has(.detail[aria-hidden='false'])) { display: none; }
 .detailHeading h3 { margin: 0; font-size: clamp(26px, 2.5vw, 36px); font-weight: 700; line-height: 1.15; letter-spacing: -.035em; }
-.detailBody > p { margin: 0; color: var(--text-inverse-muted); font-size: 15px; line-height: 1.75; }
-.detailBody ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-5); margin: var(--space-5) 0; padding-left: var(--space-4); color: var(--text-inverse-muted); font-size: 13px; list-style: disc; line-height: 1.5; }
+.detailBody > p { margin: 0; color: var(--text-secondary); font-size: 15px; line-height: 1.75; }
+.detailBody ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-5); margin: var(--space-5) 0; padding-left: var(--space-4); color: var(--text-secondary); font-size: 13px; list-style: disc; line-height: 1.5; }
 .detailBody li::marker { color: var(--color-blue-200); }
 .detailBody .note { font-size: 12px; }
 @keyframes reveal { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
