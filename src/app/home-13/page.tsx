@@ -27,6 +27,7 @@ export default function Home13Page() {
           lightBands
           markFill={false}
           homeSlides
+          omitSecondSlide
           whyTimeline
           blendHeader
           responsiveBody="Technology that works. People who respond."

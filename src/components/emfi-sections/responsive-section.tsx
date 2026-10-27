@@ -1,6 +1,6 @@
 "use client";
 
-import { ResearchExecutionHeroMockup, home10ResponsiveSlides, responsiveHighlightSlides } from "@/components/mockups/research-execution-hero";
+import { ResearchExecutionHeroMockup, home10ResponsiveSlides, home12ResponsiveSlides, responsiveHighlightSlides } from "@/components/mockups/research-execution-hero";
 import { SectionCopy } from "./outcomes";
 import styles from "./sections.module.css";
 import { sectionPad, useWhyActive, WhyMarker } from "./why-flow";
@@ -11,6 +11,7 @@ export function ResponsiveSection({
   highlightSlides = false,
   light = false,
   homeSlides = false,
+  omitSecondSlide = false,
   step,
   body = "Technology that works. People who respond. Clearer workflows with support from people who can help resolve issues.",
   centered = false,
@@ -20,6 +21,7 @@ export function ResponsiveSection({
   highlightSlides?: boolean;
   light?: boolean;
   homeSlides?: boolean;
+  omitSecondSlide?: boolean;
   step?: number;
   body?: string;
   centered?: boolean;
@@ -41,7 +43,7 @@ export function ResponsiveSection({
           />
         </div>
         <div style={{ minWidth: 0, width: centered ? "100%" : undefined, color: "#071832", fontFamily: "var(--font-inter), Inter, Arial, sans-serif" }}>
-          <ResearchExecutionHeroMockup views={homeSlides ? home10ResponsiveSlides : highlightSlides ? responsiveHighlightSlides : undefined} />
+          <ResearchExecutionHeroMockup views={homeSlides ? (omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
         </div>
       </div>
     </section>

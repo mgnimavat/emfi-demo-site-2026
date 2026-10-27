@@ -3,7 +3,8 @@ import { EmfiSections } from "@/components/emfi-sections/emfi-sections";
 // after restoring the previous shared chrome in site-shell.tsx.
 // import { Home12Footer } from "@/components/sections/home-12/footer";
 // import { Home12Header } from "@/components/sections/home-12/header";
-import { DiscussSection } from "@/components/sections/home-12/sections";
+import { PrinciplesSection } from "@/components/sections/home-13/principles";
+import { QuestionnaireSection } from "@/components/sections/home-13/questionnaire";
 import styles from "@/components/sections/home-12/landing.module.css";
 
 export const metadata = {
@@ -16,9 +17,10 @@ export default function Home121Page() {
     <>
       {/* <Home12Header /> */}
       <div className={`${styles.page} ${styles.spinMark}`}>
-        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Handover" highlightSlides standardsEyebrow lightBands markFill={false} homeSlides whyTimeline blendHeader centerDirect directPace="home12" responsiveBody="Technology that works. People who respond." dependableBody="Institutional safeguards. Clear accountability." routeTitles={{ conventional: "Conventional Route", direct: "Direct Route EMFI" }} />
+        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Handover" highlightSlides standardsEyebrow lightBands markFill={false} homeSlides omitSecondSlide whyTimeline blendHeader centerDirect directPace="home12" responsiveBody="Technology that works. People who respond." dependableBody="Institutional safeguards. Clear accountability." routeTitles={{ conventional: "Conventional Route", direct: "Direct Route EMFI" }} />
       </div>
-      <DiscussSection />
+      <PrinciplesSection />
+      <QuestionnaireSection />
       {/* <Home12Footer /> */}
     </>
   );

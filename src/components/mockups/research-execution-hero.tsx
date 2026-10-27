@@ -41,6 +41,7 @@ type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances";
 
 export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] as const satisfies readonly View[];
 export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
+export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
