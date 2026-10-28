@@ -17,14 +17,14 @@
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-  gap: clamp(48px, 5vw, 76px);
-  grid-template-columns: minmax(0, .6fr) minmax(0, 1.4fr);
+  gap: clamp(64px, 6vw, 88px);
+  grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr);
 }
 .section .headingColumn { container-type: inline-size; color: var(--text-primary); text-align: left; }
-.section h1 { font-size: min(10.875rem, 46cqi); line-height: .95; white-space: nowrap; }
+.section h1 { font-size: min(10.875rem, 42cqi); line-height: .95; white-space: nowrap; }
 .section .formPanel { box-sizing: border-box; width: 100%; min-width: 0; padding: clamp(24px, 2.7vw, 32px); }
 .section form { min-width: 0; }
-.section form .fields { gap: var(--space-3); }
+.section form .fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--space-3); }
 .section .fields input, .section .fields select {
   box-sizing: border-box;
   width: 100%;
@@ -66,7 +66,7 @@
   .section h1 { font-size: clamp(4.5rem, 20cqi, 7rem); }
 }
 @media (max-width: 540px) {
-  .fields { grid-template-columns: minmax(0, 1fr); }
+  .section form .fields { grid-template-columns: minmax(0, 1fr); }
   .attachment { flex-basis: 100%; }
   .actions > button { margin-left: auto; }
 }
