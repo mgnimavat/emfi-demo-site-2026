@@ -13,6 +13,14 @@ import { sectionPad, useWhyActive, WhyMarker } from "./why-flow";
 
 const HOLD_MS = 3800;
 const standards = ["Authorised", "Regulated", "Auditable"] as const;
+const brandLogoSrc: Record<string, string> = {
+  "/brand/regulators/fca.svg?v=2": "/brand/regulators/fca-brand.svg",
+  "/brand/regulators/dfsa.png": "/brand/regulators/dfsa-brand.png",
+  "/brand/regulators/cima.png": "/brand/regulators/cima-brand.png",
+  "/brand/auditors/baker-tilly.png": "/brand/auditors/baker-tilly-brand.png",
+  "/brand/auditors/buzzacott.png": "/brand/auditors/buzzacott-brand.png",
+  "/brand/auditors/bdo.png": "/brand/auditors/bdo-brand.png",
+};
 
 function StandardsEyebrow({ centered = false }: { centered?: boolean }) {
   const classes = [styles.standardsTitle, centered ? styles.standardsCenter : ""].filter(Boolean).join(" ");
@@ -95,7 +103,7 @@ const slides = [
   },
 ];
 
-function EvidenceSlide({ slide, plain = false, centered = false }: { slide: (typeof slides)[number]; plain?: boolean; centered?: boolean }) {
+function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = false }: { slide: (typeof slides)[number]; plain?: boolean; centered?: boolean; brandLogos?: boolean }) {
   const title = plain ? slide.title.replace(/\.$/, "") : slide.title;
   return (
     <>
@@ -104,15 +112,15 @@ function EvidenceSlide({ slide, plain = false, centered = false }: { slide: (typ
         {plain ? null : <span className={styles.rule} />}
       </div>
       {slide.kind === "logos" ? (
-        <div className={styles.logos}>
+        <div className={brandLogos ? `${styles.logos} ${styles.brandLogos}` : styles.logos}>
           {slide.items.map((item) => (
             <div key={item.name} className={styles.logoCard}>
-              <Image src={item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
+              <Image src={brandLogos ? brandLogoSrc[item.src] ?? item.src : item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
             </div>
           ))}
         </div>
       ) : (
-        <div className={styles.pills}>
+        <div className={brandLogos ? `${styles.pills} ${styles.brandLogos}` : styles.pills}>
           {slide.items.map((code) => (
             <div key={code} className={styles.pill}>{code}</div>
           ))}
@@ -133,6 +141,8 @@ export function AccountableSection({
   step,
   body = "Institutional safeguards, clear accountability and the relevant regulatory oversight behind the services we provide.",
   centered = false,
+  brandLogos = false,
+  eyebrow,
 }: {
   cols: string;
   canReplay: boolean;
@@ -144,6 +154,8 @@ export function AccountableSection({
   step?: number;
   body?: string;
   centered?: boolean;
+  brandLogos?: boolean;
+  eyebrow?: string;
 }) {
   const [index, setIndex] = useState(0);
   const [run, setRun] = useState(0);
@@ -171,13 +183,14 @@ export function AccountableSection({
         <div style={{ position: "relative" }}>
           <SectionCopy
             title="Dependable."
+            eyebrow={eyebrow}
             body={body}
             action={{ href: "/why-emfi", label: "See the standards" }}
             tone={light ? "light" : "dark"}
             align={centered ? "center" : "start"}
           />
         </div>
-        <div style={{ ...cardStyle, containerType: "inline-size", width: centered ? "100%" : undefined, paddingTop: `calc(${!staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding}${centered ? ` + ${centeredCardSpace}` : ""})`, paddingBottom: centered ? `calc(${cardStyle.padding} + ${centeredCardSpace})` : undefined }}>
+        <div style={{ ...cardStyle, containerType: "inline-size", width: centered ? "100%" : undefined, paddingTop: `calc(${!staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding}${centered ? ` + ${centeredCardSpace}` : ""})`, paddingBottom: centered ? `calc(${cardStyle.padding} + ${centeredCardSpace})` : cardStyle.padding }}>
           {staticStandards ? <StandardsPanel centered={centered} /> : null}
           {!staticStandards && showReplay && canReplay ? <ReplayButton onClick={replay} /> : null}
           {!staticStandards && canReplay ? (
@@ -191,13 +204,13 @@ export function AccountableSection({
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <EvidenceSlide slide={slide} plain={standardsEyebrow} centered={centered} />
+                  <EvidenceSlide slide={slide} plain={standardsEyebrow} centered={centered} brandLogos={brandLogos} />
                 </motion.div>
               </AnimatePresence>
             </div>
           ) : !staticStandards ? (
             <div className={styles.stack}>
-              {slides.map((item) => <EvidenceSlide key={item.title} slide={item} plain={standardsEyebrow} centered={centered} />)}
+              {slides.map((item) => <EvidenceSlide key={item.title} slide={item} plain={standardsEyebrow} centered={centered} brandLogos={brandLogos} />)}
             </div>
           ) : null}
         </div>

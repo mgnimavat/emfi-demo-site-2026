@@ -200,7 +200,7 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     const k = Math.max(0, Math.min(1, (along - P0[0]) / (P0[4] - P0[0])));
     return k <= 0.5 ? mixHex("#ef8ccd", "#ec6782", k / 0.5) : mixHex("#ec6782", "#eb483e", (k - 0.5) / 0.5);
   };
-  const nodes = [node(S(cpos), { op: sg(t, 0, 0.03), dot: dot("c"), name: "Client", lp: pos, sz: 18, fs })];
+  const nodes = [node(S(cpos), { op: sg(t, 0, 0.03), dot: dot("c"), name: "You", lp: pos, sz: 18, fs })];
   ["Settlement agent", "Sub-custodian", "Custodian"].forEach((name, j) => {
     const i = j + 1;
     const processingUntil = home12 ? ws(i + 1) + 0.02 : ws(i) + 0.11;

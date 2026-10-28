@@ -7,8 +7,7 @@ export const questionnaire = {
   finish: 'Say Less',
   resultTitle: 'Say',
   resultAccent: 'Less.',
-  contactTitle: 'A simpler setup starts here.',
-  submit: 'Submit',
+  submit: "Let's talk",
   backToQuestions: 'Back',
   emailSubject: 'Home-13 — Custody infrastructure enquiry',
   draftNotice: 'Continue in your email app to send this enquiry to EMFI.',
@@ -23,7 +22,6 @@ export const questionnaire = {
   fields: [
     { name: 'name', label: 'Name', placeholder: 'Your name', type: 'text', autoComplete: 'name', required: true },
     { name: 'firm', label: 'Firm', placeholder: 'Company name', type: 'text', autoComplete: 'organization', required: true },
-    { name: 'country', label: 'Country', placeholder: 'Country', type: 'text', autoComplete: 'country-name', required: true },
     { name: 'telephone', label: 'Telephone', placeholder: 'Telephone (optional)', type: 'tel', autoComplete: 'tel', required: false },
     { name: 'email', label: 'Work email', placeholder: 'you@company.com', type: 'email', autoComplete: 'email', required: true },
   ],

@@ -23,11 +23,17 @@
   background: radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--color-blue-200) 16%, transparent), transparent 65%), var(--bg-inverse);
   box-shadow: 0 20px 60px color-mix(in srgb, var(--text-primary) 10%, transparent);
 }
-.sidebar { min-width: 0; color: var(--text-inverse); }
+.sidebar { min-width: 0; color: var(--text-inverse); container-type: inline-size; }
 .sidebarHeadings { display: grid; }
 .sidebarHeadings > .intro { grid-area: 1 / 1; align-self: center; }
 .intro { margin: 0; max-width: 100%; font-size: clamp(38px, 5vw, 80px); font-weight: 750; line-height: 1.04; letter-spacing: -.055em; }
-.contactIntro { font-size: clamp(72px, 9vw, 132px); line-height: .95; }
+.contactIntro { padding-left: 60px; font-size: 174px; line-height: 1; }
+@container (max-width: 500px) {
+  .contactIntro {
+    padding-left: clamp(16px, 12cqw, 60px);
+    font-size: clamp(56px, 34.8cqw, 174px);
+  }
+}
 .headingEnding { display: inline-block; white-space: nowrap; }
 .intro:focus { outline: none; }
 .intro .accent {
@@ -44,6 +50,12 @@
 }
 .intro:not(.contactIntro) .accent {
   background-image: linear-gradient(90deg, #ef8ccd 0%, #ec6782 50%, #eb483e 100%);
+}
+.accentMark {
+  color: var(--color-white);
+  -webkit-text-fill-color: var(--color-white);
+  font-weight: 800;
+  letter-spacing: -.055em;
 }
 .questionCard {
   --quiz-border: color-mix(in srgb, var(--color-blue-100) 65%, white);
@@ -69,7 +81,6 @@
 .legend { width: 100%; padding: 0; margin-bottom: var(--space-5); }
 .questionTitle { display: block; width: 100%; font-size: clamp(21px, 1.7vw, 25px); font-weight: 650; line-height: 1.3; letter-spacing: -.025em; }
 .questionTitle:focus { outline: none; }
-.formTitle { margin: 0 0 var(--space-5); font-size: clamp(21px, 1.7vw, 25px); font-weight: 650; line-height: 1.3; letter-spacing: -.025em; }
 .options { display: grid; gap: var(--space-3); }
 .option { display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding: var(--space-3) var(--space-4); border: 1px solid var(--quiz-border); border-radius: var(--radius-control); background: var(--quiz-input-background); font-size: 14px; font-weight: 500; cursor: pointer; transition: border-color .2s ease, background-color .2s ease; }
 .option:hover { border-color: var(--color-blue-200); }
@@ -90,10 +101,9 @@
 .back svg, .next svg { width: 14px; height: 14px; }
 .card :is(button, a):focus-visible, .option input:focus-visible { outline: 2px solid var(--quiz-accent); outline-offset: 4px; }
 .description { margin: var(--space-4) 0 0; color: var(--quiz-muted); font-size: 13px; line-height: 1.5; }
-.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.fields { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
 .fields input { width: 100%; min-width: 0; min-height: 48px; padding: var(--space-3); border: 1px solid var(--quiz-border); border-radius: var(--space-3); background: var(--quiz-input-background); color: var(--text-primary); font: inherit; font-size: 13px; }
 .fields input::placeholder { color: var(--quiz-muted); opacity: .8; }
-.fields input[name='email'] { grid-column: 1 / -1; }
 .fields input:focus-visible { outline: none; border-color: var(--color-blue-200); }
 @media (max-width: 900px) {
   .card { grid-template-columns: minmax(0, 1fr); }
@@ -103,7 +113,6 @@
   .section { padding-inline: var(--space-4); }
   .card { padding: var(--space-5); gap: var(--space-6); }
   .questionCard { padding: var(--space-5); }
-  .fields { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) {
   .option, .option input, .next, .next svg { transition: none; }
