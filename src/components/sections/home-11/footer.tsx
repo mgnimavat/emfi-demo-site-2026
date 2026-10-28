@@ -6,8 +6,6 @@ import styles from "./chrome.module.css";
 
 const copyright = [
   "©2026 EMFI Group Limited. All Rights Reserved.",
-  "25-26 Dering Street, Mayfair, London W1S 1AW, United Kingdom.",
-  "Intended for Professional Clients Only. Not Suitable for Retail Clients or US Persons.",
 ] as const;
 const whyEmfiGroup = footer.linkGroups.find((group) => group.heading === "Why EMFI");
 const companyGroup = footer.linkGroups.find((group) => group.heading === "Company");
@@ -76,6 +74,7 @@ export function Home11Footer() {
             ))}
           </ul>
           {copyright.map((line) => <p key={line}>{line}</p>)}
+          <p>Intended for Professional Clients Only.<br />Not Suitable for Retail Clients or US Persons.</p>
         </div>
       </div>
     </footer>

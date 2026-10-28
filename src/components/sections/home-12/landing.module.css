@@ -12,13 +12,20 @@
     #071932 !important;
 }
 .fullHero :global(#expect) {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
   min-height: 100vh;
+  min-height: 100dvh;
+  padding-bottom: var(--home-12-header-h, 77.36px);
   background:
     radial-gradient(60% 120% at 50% 0%, rgb(162 194 253 / 16%), transparent 70%),
     #071832 !important;
 }
 .fullHero :global(#expect) > div {
-  padding-top: calc(clamp(88px, 10vw, 140px) + 10vh);
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .page :global(#accountable) {
   background: #ffffff !important;
@@ -41,19 +48,23 @@
   mask: url("/emfi/emfi-mark.svg") center / contain no-repeat;
 }
 .fullHero :global(#expect)::after {
-  top: auto;
-  right: 0;
-  bottom: 0;
-  height: 78%;
-  transform: translate(10%, 10%);
+  top: calc(var(--home-12-header-h, 77.36px) + 20px);
+  height: calc(100% - var(--home-12-header-h, 77.36px) + 36px);
 }
 .spinMark :global(#expect)::after {
   transform-origin: center;
   animation: hero-mark-spin 40s linear infinite;
 }
+.fullHero.spinMark :global(#expect)::after {
+  animation-name: hero-mark-spin-full;
+}
 @keyframes hero-mark-spin {
   from { transform: translateX(calc(10% + 40px)) rotate(0deg); }
   to { transform: translateX(calc(10% + 40px)) rotate(360deg); }
+}
+@keyframes hero-mark-spin-full {
+  from { transform: translateX(56px) rotate(0deg); }
+  to { transform: translateX(56px) rotate(360deg); }
 }
 .page :focus-visible { outline: 3px solid #8098cc; outline-offset: 5px; }
 .page [data-motion-region] { transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1); }

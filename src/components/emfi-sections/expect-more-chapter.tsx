@@ -45,8 +45,8 @@ export function ExpectMoreChapter({ showPoints = true, showRouteTitle = false, l
   const { chapRef, dRef, w, hdr, chapP, tD, canReplay, replayD } = useAnimTimeline({ loopDirect: loop, directScale: directPaceScale(directPace) });
   const V = w < 760;
   const compact = w < 1000;
-  const cCols = compact ? "minmax(0,1fr)" : "minmax(0,38fr) minmax(0,62fr)";
-  const cColsR = V ? "minmax(0,1fr)" : compact ? "minmax(0,58fr) minmax(0,42fr)" : "minmax(0,62fr) minmax(0,38fr)";
+  const cCols = compact ? "minmax(0,1fr)" : "minmax(0,48fr) minmax(0,52fr)";
+  const cColsR = V ? "minmax(0,1fr)" : compact ? "minmax(0,58fr) minmax(0,42fr)" : "minmax(0,52fr) minmax(0,48fr)";
   const trOff = (100 * (1 - chapP)).toFixed(2);
 
   return (

@@ -16,8 +16,8 @@ export default function Home122Page() {
   return (
     <>
       {/* <Home12Header /> */}
-      <div className={`${styles.page} ${styles.fullHero}`}>
-        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Handover" highlightSlides standardsEyebrow lightBands markFill={false} homeSlides omitSecondSlide whyTimeline blendHeader directPace="home12" responsiveBody="Technology that works. People who respond." dependableBody="Institutional safeguards. Clear accountability." routeTitles={{ conventional: "Conventional Route", direct: "Direct Route EMFI" }} />
+      <div className={`${styles.page} ${styles.fullHero} ${styles.spinMark}`}>
+        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Handover" highlightSlides standardsEyebrow lightBands markFill={false} homeSlides omitSecondSlide whyTimeline blendHeader directPace="home12" responsiveBody="Technology that works. People who respond." dependableBody="Institutional safeguards. Clear accountability." routeTitles={{ conventional: "Conventional Route", direct: "EMFI Route" }} />
       </div>
       <PrinciplesSection />
       <QuestionnaireSection />

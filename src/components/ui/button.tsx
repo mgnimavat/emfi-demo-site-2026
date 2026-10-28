@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 type ButtonProps = {
@@ -37,7 +37,7 @@ function ButtonArrow() {
 function CircleMark() {
   return (
     <span className="emfi-circle-btn-mark" aria-hidden="true">
-      <ArrowUpRight size={16} strokeWidth={1.75} className="emfi-circle-btn-arrow" />
+      <ArrowRight size={16} strokeWidth={1.75} className="emfi-circle-btn-arrow" />
     </span>
   );
 }

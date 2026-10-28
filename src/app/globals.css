@@ -1058,26 +1058,24 @@ h6 {
   display: grid;
   flex: none;
   place-items: center;
-  width: 42px;
-  height: 42px;
-  border: 1px solid rgba(186, 206, 236, 0.85);
-  border-radius: 50%;
-  transition: border-color 0.28s ease, background-color 0.28s ease;
+  width: 32px;
+  height: 32px;
+  border: 1px solid color-mix(in srgb, var(--color-blue-100) 22%, transparent);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-.emfi-circle-btn-arrow {
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+.emfi-circle-btn-mark svg {
+  width: 16px;
+  height: 16px;
 }
 
 .emfi-circle-btn:hover .emfi-circle-btn-mark,
 .emfi-circle-btn:focus-visible .emfi-circle-btn-mark {
-  border-color: currentColor;
-  background: color-mix(in srgb, currentColor 10%, transparent);
-}
-
-.emfi-circle-btn:hover .emfi-circle-btn-arrow,
-.emfi-circle-btn:focus-visible .emfi-circle-btn-arrow {
-  transform: translate(2px, -2px);
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  border-color: var(--color-blue-200);
 }
 
 .emfi-person-card {

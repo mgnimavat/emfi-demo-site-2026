@@ -56,6 +56,14 @@ export function eSw(k: number): MarkDraw {
   return o;
 }
 
+function mixHex(from: string, to: string, t: number) {
+  const read = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const a = read(from);
+  const b = read(to);
+  const k = Math.max(0, Math.min(1, t));
+  return `#${a.map((v, i) => Math.round(v + (b[i] - v) * k).toString(16).padStart(2, "0")).join("")}`;
+}
+
 export function rect(a: number[], b: number[], th: number) {
   if (Math.abs(a[0] - b[0]) < 0.01) return `left:${a[0]}%;top:${Math.min(a[1], b[1])}%;width:${th}px;height:${Math.abs(a[1] - b[1])}%;margin-left:-${th / 2}px`;
   return `left:${Math.min(a[0], b[0])}%;top:${a[1]}%;height:${th}px;width:${Math.abs(a[0] - b[0])}%;margin-top:-${th / 2}px`;
@@ -71,14 +79,15 @@ export function lab(pos: string, sz: number, wrap?: boolean) {
   return `left:${o}px;top:0;transform:translateY(-50%);align-items:flex-start;text-align:left;${ws}`;
 }
 
-function dot(kind: string, on?: boolean, dark = true) {
+function dot(kind: string, on?: boolean, dark = true, fillOverride?: string) {
   const bd = dark ? "#B1C0E2" : "#071832";
-  const fill = dark ? "#A2C2FD" : "#071832";
+  const fill = fillOverride ?? (dark ? "#A2C2FD" : "#071832");
+  const edge = on && fillOverride ? fill : bd;
   const bg = dark ? "#0E2242" : "#FFFFFF";
   if (kind === "c") return `width:18px;height:18px;border-radius:50%;background:${dark ? "#FFFFFF" : "#071832"}`;
-  if (kind === "i") return `width:18px;height:18px;border-radius:4px;border:2px solid ${bd};background:${on ? fill : bg}`;
+  if (kind === "i") return `width:18px;height:18px;border-radius:4px;border:2px solid ${edge};background:${on ? fill : bg}`;
   if (kind === "r") return `width:16px;height:16px;border-radius:50%;border:2px solid #8098CC;background:${on ? "#8098CC" : bg}`;
-  return `width:16px;height:16px;border-radius:50%;border:2px solid ${bd};background:${on ? fill : bg}`;
+  return `width:16px;height:16px;border-radius:50%;border:2px solid ${edge};background:${on ? fill : bg}`;
 }
 
 function swDot(sz: number, k: number, _ring: string, bump = 0) {
@@ -121,7 +130,7 @@ const CONVENTIONAL_STRETCH = 1.75;
 export const directTimelineScale = CONVENTIONAL_END * CONVENTIONAL_STRETCH + (1 - CONVENTIONAL_END);
 const HOME12_CONV_MS = 20000;
 const HOME12_EMFI_MS = 6500;
-const HOME12_HOLD_MS = 30000;
+const HOME12_HOLD_MS = 5000;
 const HOME12_TOTAL_MS = HOME12_CONV_MS + HOME12_EMFI_MS + HOME12_HOLD_MS;
 const HOME12_EMFI_END = 0.92;
 
@@ -186,16 +195,20 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   }
   const depOn = (arr(4) && t < 0.56) || t >= 0.87;
   const fs = V ? "14px" : "14px";
-  const emfiDone = home12 && t >= 0.87;
+  const emfiHold = home12 && t >= HOME12_EMFI_END;
+  const convColor = (along: number) => {
+    const k = Math.max(0, Math.min(1, (along - P0[0]) / (P0[4] - P0[0])));
+    return k <= 0.5 ? mixHex("#ef8ccd", "#ec6782", k / 0.5) : mixHex("#ec6782", "#eb483e", (k - 0.5) / 0.5);
+  };
   const nodes = [node(S(cpos), { op: sg(t, 0, 0.03), dot: dot("c"), name: "Client", lp: pos, sz: 18, fs })];
   ["Settlement agent", "Sub-custodian", "Custodian"].forEach((name, j) => {
     const i = j + 1;
-    const processingUntil = home12 ? ws(i + 1) + 0.065 : ws(i) + 0.11;
+    const processingUntil = home12 ? ws(i + 1) + 0.02 : ws(i) + 0.11;
     const processingLabel = home12 ? "Processing" : name === "Custodian" ? "Received" : "Processing";
-    nodes.push(node(S(lp(P0[i], 50, k)), { op: ap(i) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i)), name, sub: arr(i) && t < processingUntil ? processingLabel : "", lp: pos, sz: 16, fs }));
+    nodes.push(node(S(lp(P0[i], 50, k)), { op: ap(i) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i), true, home12 ? convColor(P0[i]) : undefined), name, sub: arr(i) && t < processingUntil ? processingLabel : "", lp: pos, sz: 16, fs }));
   });
-  const depositorySub = !depOn ? "" : home12 && t < CONVENTIONAL_END ? "Received" : "Done";
-  nodes.push(node(S(dpos), { op: ap(4), dot: dot("i", depOn), name: "Depository", sub: depositorySub, lp: pos, sz: 18, fs }));
+  const depositorySub = !depOn ? "" : home12 && t < CONVENTIONAL_END ? "Received" : home12 && emfiHold ? "" : "Done";
+  nodes.push(node(S(dpos), { op: ap(4), dot: dot("i", depOn, true, home12 ? convColor(P0[4]) : undefined), name: "Depository", sub: depositorySub, lp: pos, sz: 18, fs }));
   const es = V ? 52 : 64;
   const sk = ez(sg(t, 0.64, 0.71));
   nodes.push(node(S(50), {
@@ -207,22 +220,28 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     ms: `${V ? 28 : 35}px`,
     name: "EMFI",
     fs: "16px",
-    sub: emfiDone ? "Received" : !home12 && t >= 0.79 && t < 0.825 ? "Received" : "",
+    sub: t >= 0.79 && t < 0.825 ? (home12 ? "Processed" : "Received") : "",
     lp: pos,
     sz: es,
   }));
   const routeBlue = "#A2C2FD";
   const routeGradient = `linear-gradient(${V ? "180deg" : "90deg"},#A2C2FD,#8098CC,#00C9A7)`;
+  const convGradient = `linear-gradient(${V ? "180deg" : "90deg"}, #ef8ccd 0%, #ec6782 50%, #eb483e 100%)`;
+  const progressFrom = replay ? 18 : P0[0];
+  const progressTo = replay ? tokB : tokA;
+  const progressSpan = Math.abs(progressTo - progressFrom);
+  const convTrack = P0[4] - P0[0];
+  const convSize = home12 && !replay && progressSpan > 0.4 ? (V ? `100% ${(convTrack / progressSpan) * 100}%` : `${(convTrack / progressSpan) * 100}% 100%`) : undefined;
   const lines = [
-    { s: rect(S(t >= 0.56 ? cpos : P0[0]), S(t >= 0.56 ? dpos : trackEnd), 2), c: "#3A4A66", op: 1 },
-    { s: rect(S(replay ? 18 : P0[0]), S(replay ? tokB : tokA), replay ? 3 : 2), c: replay ? routeGradient : routeBlue, op: replay ? 1 : 1 - sg(t, 0.56, 0.6) },
+    { s: rect(S(t >= 0.56 ? cpos : P0[0]), S(t >= 0.56 ? dpos : trackEnd), 2), c: "#3A4A66", op: 1, size: undefined },
+    { s: rect(S(progressFrom), S(progressTo), replay ? 3 : 2), c: replay ? routeGradient : home12 ? convGradient : routeBlue, op: replay ? 1 : 1 - sg(t, 0.56, 0.6), size: convSize },
   ];
-  const hm = !replay && trav > 0 ? (P0[trav - 1] + P0[trav]) / 2 : replay && travB > 0 ? (travB === 1 ? 34 : 66) : null;
+  const hm = !replay && trav > 0 ? (P0[trav - 1] + P0[trav]) / 2 : null;
   const hp = S(hm ?? 50);
   const orderTf = V ? "translate(14px,-50%)" : "translate(-50%,-32px)";
-  const orderTag = (along: number) => {
+  const orderTag = (along: number, text: string) => {
     const p = S(along);
-    return { left: `${p[0]}%`, top: `${p[1]}%`, tf: orderTf, op: 1, text: "Order" };
+    return { left: `${p[0]}%`, top: `${p[1]}%`, tf: orderTf, op: 1, text };
   };
   let count = [1, 2, 3, 4].filter(arr).length;
   if (t >= 0.56) count = 4;
@@ -230,9 +249,9 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   return {
     dNodes: nodes,
     dLines: lines,
-    dTok: tok(S(replay ? tokB : tokA), replay ? (t < 0.8 ? sg(t, 0.72, 0.74) * (1 - sg(t, 0.775, 0.79)) : sg(t, 0.825, 0.835)) : sg(t, 0.03, 0.05) * (1 - sg(t, 0.56, 0.6)), replay ? "linear-gradient(135deg,#A2C2FD,#00C9A7)" : routeBlue),
+    dTok: tok(S(replay ? tokB : tokA), replay ? (t < 0.8 ? sg(t, 0.72, 0.74) * (1 - sg(t, 0.775, 0.79)) : sg(t, 0.825, 0.835)) : sg(t, 0.03, 0.05) * (1 - sg(t, 0.56, 0.6)), replay ? "linear-gradient(135deg,#A2C2FD,#00C9A7)" : home12 ? convColor(tokA) : routeBlue),
     dHand: { left: `${hp[0]}%`, top: `${hp[1]}%`, tf: V ? "translate(14px,-50%)" : "translate(-50%,-32px)", op: hm == null ? 0 : 1 },
-    dTags: emfiDone ? [orderTag((cpos + 50) / 2), orderTag((50 + dpos) / 2)] : [],
+    dTags: home12 && travB === 1 ? [orderTag((18 + 50) / 2, "Order")] : home12 && travB === 2 ? [orderTag((50 + 82) / 2, "Handover")] : [],
     dCount: count,
     dNote: t >= 0.74 ? "Previously 4" : "",
     dRouteTitle: t >= 0.56 ? (routeTitles?.direct ?? "A Direct Route with EMFI") : (routeTitles?.conventional ?? "A conventional route"),

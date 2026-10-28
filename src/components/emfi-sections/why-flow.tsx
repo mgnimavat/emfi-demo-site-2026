@@ -7,8 +7,10 @@ const Y = "clamp(88px,10vw,144px)";
 const X = "clamp(20px,4vw,56px)";
 const WhyFrameContext = createContext(0);
 
-export function sectionPad(rail: boolean) {
-  return rail ? `${Y} ${X} ${Y} calc(${X} + 54px)` : `${Y} ${X}`;
+export function sectionPad(rail: boolean, horizontal = true) {
+  const left = `calc(${X} + 54px)`;
+  if (!horizontal) return rail ? `${Y} 0 ${Y} ${left}` : `${Y} 0`;
+  return rail ? `${Y} ${X} ${Y} ${left}` : `${Y} ${X}`;
 }
 
 export function WhyMarker({ n, active }: { n: number; active: boolean }) {
@@ -66,7 +68,7 @@ export function WhyFlow({ children }: { children: ReactNode }) {
       const traveled = progress * (elbowWidth + height);
       const onElbow = elbowWidth > 0 && traveled < elbowWidth;
       const down = onElbow ? 0 : Math.max(0, traveled - elbowWidth);
-      const passed = flowRect.bottom <= 0 ? points.length : points.filter((point) => down >= point.y - top).length;
+      const passed = flowRect.bottom <= 0 ? points.length : points.filter((point) => down + 7 >= point.y - top - 15).length;
 
       rail.style.left = `${first.x}px`;
       rail.style.top = `${top}px`;

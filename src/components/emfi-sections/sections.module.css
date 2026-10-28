@@ -2,6 +2,23 @@
   font-family: var(--font-inter), Inter, Arial, sans-serif;
 }
 
+.sectionCopy {
+  container-type: inline-size;
+}
+
+.sectionTitle {
+  font-size: min(56px, 17cqi);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+@media (min-width: 1000px) {
+  .sectionTitle {
+    font-size: min(88px, 17cqi);
+  }
+}
+
 .lightCopy :global(.emfi-circle-btn-mark) {
   border-color: rgb(7 24 50 / 32%);
 }
