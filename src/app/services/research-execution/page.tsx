@@ -5,11 +5,13 @@ import { ExecutionReveal } from "@/components/sections/execution/reveal";
 import { ExecutionHeroPhrases } from "@/components/sections/execution/hero-phrases";
 import { DirectExecutionWorkflow } from "@/components/sections/execution/direct-workflow";
 import { ConnectedExecutionPreviews } from "@/components/sections/execution/connected-previews";
+import { SecurityReference } from "@/components/sections/services/security-reference";
 import { ArchiveCta } from "@/components/sections/archive/cta";
 import theme from "@/components/sections/archive/theme.module.css";
 import { FileSearch, ArrowRightLeft } from "lucide-react";
 import landing from "@/components/sections/landing/landing.module.css";
 import styles from "@/components/sections/execution/page.module.css";
+import serviceStyles from "../services.module.css";
 
 export const metadata = { title: execution.title, description: execution.description };
 
@@ -35,7 +37,19 @@ export default function ResearchExecutionPage() {
       </ExecutionReveal></div>
     </section>
     <section className={styles.flow} aria-labelledby="workflow-heading"><div className={styles.container}><ExecutionReveal><h2 id="workflow-heading" className={styles.title}>{execution.workflow.title}</h2><p className={styles.body}>{execution.workflow.body}</p></ExecutionReveal><DirectExecutionWorkflow /></div></section>
-    <ConnectedExecutionPreviews flatSections />
+    {/* Execution preview is temporarily disabled; its implementation is retained. */}
+    <ConnectedExecutionPreviews flatSections showExecution={false} />
+    <section id="security-reference" className={`${serviceStyles.page} ${serviceStyles.securityReference}`} aria-labelledby="security-reference-heading">
+      <div className={styles.container}>
+        <div className={serviceStyles.referenceGrid}>
+          <ExecutionReveal className={serviceStyles.referenceIntro}>
+            <h2 id="security-reference-heading" className={serviceStyles.referenceTitle}>Know the security<span>before you settle.</span></h2>
+            <p className={serviceStyles.referenceDescription}>Search by ISIN, name or Common Code, then open only the reference sections you need.</p>
+          </ExecutionReveal>
+          <ExecutionReveal><SecurityReference /></ExecutionReveal>
+        </div>
+      </div>
+    </section>
     <ArchiveCta title={execution.contact.title} body={execution.contact.body} action={execution.contact.action} />
   </div>;
 }
