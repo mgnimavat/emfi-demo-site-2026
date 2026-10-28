@@ -26,8 +26,9 @@ export function useWhyActive(step: number) {
   return step > 0 && passed >= step;
 }
 
-export function WhyFlow({ children }: { children: ReactNode }) {
+export function WhyFlow({ children, stickyLabel = false }: { children: ReactNode; stickyLabel?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
+  const slotRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLSpanElement>(null);
   const elbowRef = useRef<HTMLSpanElement>(null);
@@ -42,6 +43,7 @@ export function WhyFlow({ children }: { children: ReactNode }) {
     const elbow = elbowRef.current;
     const elbowFill = elbowFillRef.current;
     const pulse = pulseRef.current;
+    const slot = slotRef.current;
     if (!flow || !rail || !fill || !elbow || !elbowFill || !pulse) return;
     let raf = 0;
 
@@ -53,28 +55,35 @@ export function WhyFlow({ children }: { children: ReactNode }) {
       const flowRect = flow.getBoundingClientRect();
       const originRect = origin.getBoundingClientRect();
       const originY = originRect.top + originRect.height / 2;
+      const nudge = stickyLabel ? 21 : 0;
       const points = marks.map((mark) => {
         const rect = mark.getBoundingClientRect();
-        return { x: rect.left + rect.width / 2 - flowRect.left, y: rect.top + rect.height / 2 - flowRect.top, viewY: rect.top + rect.height / 2 };
+        return { x: rect.left + rect.width / 2 - flowRect.left - nudge, y: rect.top + rect.height / 2 - flowRect.top, viewY: rect.top + rect.height / 2 };
       });
       const first = points[0];
       const last = points[points.length - 1];
-      const top = originY - flowRect.top;
-      const height = Math.max(0, last.y - top);
-      const elbowWidth = Math.max(0, originRect.left - flowRect.left - first.x - 22);
-      const span = Math.max(1, last.viewY - originY);
+      const lead = stickyLabel ? 150 : 0;
+      const startY = originY - lead;
+      const top = startY - flowRect.top;
+      const beforeFirst = Math.max(0, first.y - top);
+      const tail = stickyLabel ? beforeFirst + 20 : 0;
+      const height = Math.max(0, last.y - top + tail);
+      const elbowWidth = lead ? 0 : Math.max(0, originRect.left - flowRect.left - first.x - 22);
+      const span = Math.max(1, last.viewY - startY + tail);
       const midpoint = window.innerHeight * 0.52;
-      const progress = Math.max(0, Math.min(1, (midpoint - originY) / span));
+      const progress = Math.max(0, Math.min(1, (midpoint - startY) / span));
       const traveled = progress * (elbowWidth + height);
       const onElbow = elbowWidth > 0 && traveled < elbowWidth;
       const down = onElbow ? 0 : Math.max(0, traveled - elbowWidth);
       const passed = flowRect.bottom <= 0 ? points.length : points.filter((point) => down + 7 >= point.y - top - 15).length;
 
-      rail.style.left = `${first.x}px`;
+      rail.style.left = `${first.x + nudge}px`;
       rail.style.top = `${top}px`;
       rail.style.height = `${height}px`;
       rail.style.opacity = "1";
       rail.style.setProperty("--rail-span", `${height}px`);
+      elbow.style.display = lead ? "none" : "";
+      elbowFill.style.display = lead ? "none" : "";
       elbow.style.width = `${elbowWidth}px`;
       elbowFill.style.left = "1px";
       elbowFill.style.width = `${elbowWidth}px`;
@@ -90,6 +99,15 @@ export function WhyFlow({ children }: { children: ReactNode }) {
         elbowFill.style.clipPath = "none";
         pulse.style.left = "50%";
         pulse.style.top = `${vertical * 100}%`;
+      }
+      if (slot) {
+        const label = slot.querySelector("span");
+        if (label) {
+          const wordBox = label.parentElement?.getBoundingClientRect();
+          const textBox = label.getBoundingClientRect();
+          const overhang = wordBox ? Math.max(0, wordBox.bottom - textBox.bottom) : 0;
+          slot.style.bottom = `${100 - overhang}px`;
+        }
       }
       setActive((current) => (current === passed ? current : passed));
     };
@@ -109,10 +127,15 @@ export function WhyFlow({ children }: { children: ReactNode }) {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
     };
-  }, []);
+  }, [stickyLabel]);
 
   return (
-    <div ref={ref} className={styles.whyFlow}>
+    <div ref={ref} className={stickyLabel ? `${styles.whyFlow} ${styles.whyFlowSticky}` : styles.whyFlow}>
+      {stickyLabel ? (
+        <div ref={slotRef} className={styles.whyStickySlot} aria-hidden="true">
+          <p className={styles.whyStickyWord}><span>Why EMFI</span></p>
+        </div>
+      ) : null}
       <div ref={railRef} className={styles.whyRail} aria-hidden="true">
         <span className={styles.whyRailTrack} />
         <span ref={fillRef} className={styles.whyRailFill} />

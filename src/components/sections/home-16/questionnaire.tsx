@@ -8,6 +8,10 @@ import styles from './questionnaire.module.css';
 
 const questionCount = copy.questions.length;
 const titleBreak = copy.title.lastIndexOf(' a bit');
+const accentWord = copy.accent.endsWith('?') ? copy.accent.slice(0, -1) : copy.accent;
+const accentMark = copy.accent.endsWith('?') ? '?' : '';
+const resultWord = copy.resultAccent.endsWith('.') ? copy.resultAccent.slice(0, -1) : copy.resultAccent;
+const resultMark = copy.resultAccent.endsWith('.') ? '.' : '';
 
 export const QuestionnaireSection = () => {
   const [step, setStep] = useState(0);
@@ -53,11 +57,11 @@ export const QuestionnaireSection = () => {
           <h2 className={`${styles.intro} ${isContact ? styles.inactive : ''}`} aria-hidden={isContact}>
             {copy.title.slice(0, titleBreak)}<br />
             <span className={styles.headingEnding}>
-              {copy.title.slice(titleBreak + 1)} <span className={styles.accent}>{copy.accent}</span>
+              {copy.title.slice(titleBreak + 1)} <span className={styles.accent}>{accentWord}</span>{accentMark && <span className={styles.accentMark}>{accentMark}</span>}
             </span>
           </h2>
           <h2 id="home-16-contact-heading" ref={contactHeading} tabIndex={-1} className={`${styles.intro} ${styles.contactIntro} ${!isContact ? styles.inactive : ''}`} aria-hidden={!isContact}>
-            {copy.resultTitle}<br /><span className={styles.accent}>{copy.resultAccent}</span>
+            {copy.resultTitle}<br /><span className={styles.accent}>{resultWord}</span>{resultMark && <span className={styles.accentMark}>{resultMark}</span>}
           </h2>
           </div>
         </aside>
@@ -93,8 +97,7 @@ export const QuestionnaireSection = () => {
             </div>
           ))}
           <div className={`${styles.panel} ${styles.contact} ${!isContact ? styles.inactive : ''}`} inert={!isContact} aria-hidden={!isContact}>
-            <form aria-labelledby="home-16-form-heading" onSubmit={submitEnquiry}>
-              <h3 id="home-16-form-heading" className={styles.formTitle}>{copy.contactTitle}</h3>
+            <form aria-label="Let's talk" onSubmit={submitEnquiry}>
               <div className={styles.fields}>
                 {copy.fields.map((field) => (
                   <input key={field.name} aria-label={field.label} name={field.name} type={field.type} placeholder={field.placeholder} autoComplete={field.autoComplete} required={field.required} />

@@ -32,7 +32,6 @@ export function OutcomeRow({ items }: { items: readonly { label: string; opacity
 const TWO_LINE_BODIES = [
   ["Fewer unnecessary intermediaries.", "A more direct route to market."],
   ["Technology that works.", "People who respond."],
-  ["Institutional safeguards.", "Clear accountability."],
 ] as const;
 
 function bodyLines(body: string) {
@@ -48,6 +47,8 @@ export function SectionCopy({
   action,
   tone = "dark",
   align = "start",
+  eyebrow,
+  origin = false,
 }: {
   title: string;
   lead?: string;
@@ -55,6 +56,8 @@ export function SectionCopy({
   action?: { href: string; label: string };
   tone?: "dark" | "light";
   align?: "start" | "center";
+  eyebrow?: string;
+  origin?: boolean;
 }) {
   const light = tone === "light";
   const centered = align === "center";
@@ -63,6 +66,12 @@ export function SectionCopy({
 
   return (
     <div className={styles.sectionCopy} style={{ minWidth: 0, width: centered ? "100%" : undefined, textAlign: centered ? "center" : undefined }}>
+      {eyebrow ? (
+        <p className={styles.eyebrow} data-why-origin={origin ? "" : undefined} style={{ color: light ? "#2a578f" : undefined, justifyContent: centered ? "center" : undefined }}>
+          <span className={styles.eyebrowMark} aria-hidden="true" />
+          <span>{eyebrow}</span>
+        </p>
+      ) : null}
       <h2 className={styles.sectionTitle} style={{ color: titleColor }}>{title}</h2>
       {lead ? <p style={{ marginTop: 18, fontSize: "clamp(20px,1.7vw,24px)", fontWeight: 800, letterSpacing: "-.02em", lineHeight: 1.25, color: titleColor }}>{lead}</p> : null}
       <p style={{ marginTop: lead ? 12 : 18, maxWidth: 440, marginInline: centered ? "auto" : undefined, fontSize: 17, lineHeight: 1.6, color: bodyColor, textWrap: "pretty" }}>{bodyLines(body).flatMap((line, index) => (index === 0 ? [line] : [<br key={index} />, line]))}</p>

@@ -9,6 +9,8 @@
 .logoCard, .pill { display: grid; place-items: center; min-height: 112px; padding: 16px 12px; border-radius: 18px; }
 .logoCard { background: #fff; }
 .logoCard img { width: auto; max-width: 86%; height: auto; max-height: 64px; object-fit: contain; filter: grayscale(1) sepia(.9) hue-rotate(176deg) saturate(2.2) brightness(.58) contrast(1.08); }
+.brandLogos img { filter: none; }
+.brandLogos .pill { background: #fff; border-color: transparent; color: #071932; font-size: clamp(24px, calc(1.6vw + 10px), 32px); font-weight: 500; }
 .pill { border: 1px solid rgb(177 192 226 / 50%); background: transparent; color: #fff; font-size: clamp(14px, 1.6vw, 22px); font-weight: 800; letter-spacing: -.02em; line-height: 1; }
 .stack { display: grid; gap: 28px; }
 .standards { display: flex; flex-direction: column; justify-content: center; gap: clamp(26px, 3.6cqi, 40px); min-height: 220px; }

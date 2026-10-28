@@ -32,6 +32,7 @@
   --text-muted: var(--color-gray-700);
   --text-inverse: var(--color-white);
   --text-inverse-muted: var(--color-blue-100);
+  --principle-word-gradient: linear-gradient(90deg, #7a9cc3 0%, #69a6bb 36%, #5db1b5 68%, #59beac 100%);
 
   --border-default: var(--color-gray-200);
   --border-strong: var(--color-gray-300);

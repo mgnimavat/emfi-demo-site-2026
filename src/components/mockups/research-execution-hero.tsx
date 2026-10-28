@@ -37,11 +37,12 @@ const VIEWS = [
   "OrderEur",
   "OrderAapl",
 ] as const;
-type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances" | "MobileScreens";
+type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances" | "MobileScreens" | "MobileScreensPerspective";
 
 export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] as const satisfies readonly View[];
 export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
 export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreens"] as const satisfies readonly View[];
+export const home16ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreensPerspective"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
@@ -101,6 +102,12 @@ const VIEW_META: Record<
     kind: "public",
   },
   MobileScreens: {
+    crumbs: "",
+    date: "",
+    activeModule: "Clients",
+    kind: "public",
+  },
+  MobileScreensPerspective: {
     crumbs: "",
     date: "",
     activeModule: "Clients",
@@ -1072,6 +1079,14 @@ function ViewPanel({ view }: { view: View }) {
       return <MobileBalancesSlide />;
     case "MobileScreens":
       return <MobileScreensSlide />;
+    case "MobileScreensPerspective":
+      return (
+        <MobileScreensSlide
+          src="/images/services/balances-three-screens-perspective.jpg"
+          width={2048}
+          height={1564}
+        />
+      );
   }
 }
 
@@ -1093,14 +1108,22 @@ function MobileBalancesSlide() {
   );
 }
 
-function MobileScreensSlide() {
+function MobileScreensSlide({
+  src = "/images/services/balances-three-phones.jpg",
+  width = 1024,
+  height = 794,
+}: {
+  src?: string;
+  width?: number;
+  height?: number;
+} = {}) {
   return (
     <div className="flex h-full items-center justify-center">
       <Image
-        src="/images/services/balances-three-phones.jpg"
+        src={src}
         alt="EMFI mobile app showing order entry, balances, and activity"
-        width={1024}
-        height={794}
+        width={width}
+        height={height}
         className="h-auto max-h-full w-auto max-w-full object-contain"
         unoptimized
       />

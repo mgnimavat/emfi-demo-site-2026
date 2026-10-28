@@ -33,7 +33,7 @@ export function Home11Header() {
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
-        <Link href="/home-11" aria-label="EMFI home" className={styles.home} onClick={() => setOpen(false)}>
+        <Link href="/" aria-label="EMFI home" className={styles.home} onClick={() => setOpen(false)}>
           <BrandWordmark className={styles.logo} priority />
         </Link>
         <nav aria-label="Main navigation" className={styles.navShell}>
