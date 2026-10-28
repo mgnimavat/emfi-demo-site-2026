@@ -14,9 +14,7 @@ import { CtaFeatured } from "@/components/sections/cta-featured";
 import { Marquee } from "@/components/ui/marquee";
 
 export const metadata = {
-  title: {
-    absolute: home.title,
-  },
+  title: "Home (old design)",
   description: home.hero.body,
   robots: { index: false, follow: true },
 };

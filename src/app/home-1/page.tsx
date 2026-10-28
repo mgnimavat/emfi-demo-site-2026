@@ -13,9 +13,7 @@ import { GlobalPresence } from "@/components/sections/global-presence";
 import { CtaFeatured } from "@/components/sections/cta-featured";
 
 export const metadata = {
-  title: {
-    absolute: `${home.title} — Home 1`,
-  },
+  title: "Home 1",
   description: home.hero.body,
 };
 

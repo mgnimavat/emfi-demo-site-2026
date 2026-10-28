@@ -48,7 +48,7 @@ export const ContactEnquirySection = () => {
                 <strong>{researchEnquiry.record.title}</strong>
               </div>
             ) : null}
-            <div className={`${ctaStyles.fields} ${styles.fields}`}>
+            <div className={styles.fields}>
               {copy.fields.map((field) => (
                 <input key={field.name} aria-label={field.label} name={field.name} type={field.type}
                   placeholder={field.placeholder} autoComplete={field.autoComplete}

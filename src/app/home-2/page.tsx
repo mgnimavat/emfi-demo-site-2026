@@ -10,9 +10,7 @@ import { CtaFeatured } from "@/components/sections/home-2/cta-featured";
 import { Marquee } from "@/components/ui/marquee";
 
 export const metadata = {
-  title: {
-    absolute: `${home.title} — Home 2`,
-  },
+  title: "Home 2",
   description: home.hero.body,
 };
 

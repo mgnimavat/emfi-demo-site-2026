@@ -25,8 +25,8 @@ const ibmPlexMono = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "EMFI: Switched On — Institutional infrastructure without the institutional layers",
-    template: "%s — EMFI",
+    default: "EMFI | Home",
+    template: "EMFI | %s",
   },
   description:
     "EMFI provides institutional investment infrastructure — research and execution, settlement and custody, wealth and asset management — through one operating relationship, without unnecessary institutional layers.",

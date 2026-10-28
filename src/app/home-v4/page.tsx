@@ -5,7 +5,7 @@ import { CurvedBand } from "@/components/layout/curved-band";
 import styles from "@/components/sections/landing/landing.module.css";
 
 export const metadata = {
-  title: { absolute: "EMFI — Settle For Less." },
+  title: "Home v4",
   description: "Institutional infrastructure. Without the institutional layers. Research, execution, settlement, custody and asset management for professional clients.",
   robots: { index: false, follow: true },
 };
