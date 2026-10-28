@@ -9,7 +9,7 @@ export const about = {
     mark: "EMFI",
     caption: "10 years of expertise",
   },
-  yearsEyebrow: "2016 → 2026",
+  yearsEyebrow: "10 years of EMFI",
   yearsTitle: "The evolution of the platform.",
   badge: "EMFI 2016-2026",
   badgeSub: "10 years of expertise",

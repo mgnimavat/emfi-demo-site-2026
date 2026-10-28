@@ -39,7 +39,7 @@
 .nav a:hover,
 .loginSlot > a:not(.clientLogin):hover { color: #fff; }
 .nav a[aria-current="page"],
-.loginSlot > a:not(.clientLogin)[aria-current="page"] { color: #fff; border-bottom-color: #fff; }
+.loginSlot > a:not(.clientLogin)[aria-current="page"] { color: #fff; }
 .loginSlot { justify-self: end; display: flex; align-items: center; justify-content: flex-end; gap: clamp(14px, 1.6vw, 24px); min-height: 44px; }
 .clientIcon { display: block; flex: none; width: 28px; height: 28px; transform: rotate(0); transform-origin: center; transition: transform .3s ease; }
 .clientLogin {

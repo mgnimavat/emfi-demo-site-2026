@@ -1,33 +1,47 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
 import { about } from "@/content/about";
 import styles from "./about-timeline.module.css";
 
-export function AboutTimeline() {
+export const AboutTimeline = ({ headingAs: Heading = "h2" }: { headingAs?: "h1" | "h2" }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
+  const [headerHeight, setHeaderHeight] = useState(0);
+  useEffect(() => {
+    const header = document.querySelector("header");
+    if (!header) return;
+    const updateHeader = () => {
+      const height = header.getBoundingClientRect().height;
+      setHeaderHeight(height);
+      sectionRef.current?.style.setProperty("--journey-header-height", `${height}px`);
+    };
+    const observer = new ResizeObserver(updateHeader);
+    observer.observe(header);
+    updateHeader();
+    return () => observer.disconnect();
+  }, []);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: [`start ${headerHeight}px`, "end end"] });
   const count = about.milestones.length;
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     setActive(Math.min(count - 1, Math.max(0, Math.floor(progress * count))));
   });
   const [year, title, description] = about.milestones[active];
 
-  function selectMilestone(index: number) {
+  const selectMilestone = (index: number) => {
     const section = sectionRef.current;
     if (!section) return;
-    if (reduceMotion || matchMedia("(max-height: 700px), (prefers-reduced-motion: reduce)").matches) {
+    if (reduceMotion || matchMedia("(max-height: 560px), (prefers-reduced-motion: reduce)").matches) {
       setActive(index);
       return;
     }
-    const start = section.getBoundingClientRect().top + window.scrollY;
-    const distance = section.offsetHeight - window.innerHeight;
+    const start = section.getBoundingClientRect().top + window.scrollY - headerHeight;
+    const distance = section.offsetHeight - window.innerHeight + headerHeight;
     // Land in the middle of this milestone's scroll range, in either direction.
     window.scrollTo({ top: start + ((index + 0.5) / count) * distance, behavior: "instant" });
-  }
+  };
 
   return (
     <section id="about-journey" ref={sectionRef} className={styles.timeline} data-static={Boolean(reduceMotion)} aria-labelledby="timeline-heading">
@@ -35,7 +49,7 @@ export function AboutTimeline() {
         <div className={styles.inner}>
           <div className={styles.heading}>
             <p>{about.yearsEyebrow}</p>
-            <h2 id="timeline-heading">{about.yearsTitle}</h2>
+            <Heading id="timeline-heading">{about.yearsTitle}</Heading>
           </div>
           <div className={styles.layout}>
             <div className={styles.feature} aria-hidden="true">
@@ -63,4 +77,4 @@ export function AboutTimeline() {
       </div>
     </section>
   );
-}
+};

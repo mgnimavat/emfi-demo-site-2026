@@ -1,4 +1,75 @@
-.enquiry { scroll-margin-top: 96px; background: #fff; }
-.enquiryLayout { width: 100%; max-width: 900px; margin-inline: auto; }
-.formTitle { margin: 0 auto 32px; text-align: center; }
-.enquiryLayout > form { border: 1px solid #e4eaf2; }
+.section {
+  --quiz-muted: var(--text-muted);
+  --quiz-border: var(--border-default);
+  --quiz-input-background: var(--bg-page);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - 77.36px);
+  padding-block: clamp(20px, 3vh, 28px);
+}
+.section > div {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1320px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  gap: clamp(48px, 5vw, 76px);
+  grid-template-columns: minmax(0, .6fr) minmax(0, 1.4fr);
+}
+.section .headingColumn { container-type: inline-size; color: var(--text-primary); text-align: left; }
+.section h1 { font-size: min(10.875rem, 46cqi); line-height: .95; white-space: nowrap; }
+.section .formPanel { box-sizing: border-box; width: 100%; min-width: 0; padding: clamp(24px, 2.7vw, 32px); }
+.section form { min-width: 0; }
+.section form .fields { gap: var(--space-3); }
+.section .fields input, .section .fields select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  padding: var(--space-3);
+  border: 1px solid var(--quiz-border);
+  border-radius: var(--space-3);
+  background: var(--quiz-input-background);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 13px;
+}
+.fields input[name='email'] { grid-column: auto; }
+.section .fields input::placeholder { color: var(--quiz-muted); opacity: .85; }
+.section .fields select:invalid { color: var(--quiz-muted); }
+.fields select option { background: var(--bg-page); color: var(--text-primary); }
+.selectWrap { position: relative; min-width: 0; }
+.section .fields .selectWrap select { appearance: none; padding-inline: var(--space-4) 48px; cursor: pointer; transition: border-color .2s ease, box-shadow .2s ease; }
+.selectWrap > svg { position: absolute; top: 50%; right: var(--space-3); width: 18px; height: 18px; color: var(--text-secondary); transform: translateY(-50%); pointer-events: none; }
+.section .selectWrap select:hover { border-color: var(--color-blue-200); box-shadow: 0 2px 8px color-mix(in srgb, var(--color-blue-200) 12%, transparent); }
+.selectWrap:focus-within > svg { color: var(--text-primary); }
+.section :is(input, select, textarea):focus-visible { outline: none; box-shadow: none; border-color: var(--color-blue-200); }
+.section .fields .selectWrap select:focus-visible { outline: none; box-shadow: none; border-color: var(--color-blue-200); }
+.message { display: grid; gap: var(--space-2); margin-top: var(--space-3); color: var(--quiz-muted); font-size: 13px; }
+.message textarea::placeholder { color: var(--quiz-muted); opacity: .85; }
+.message textarea { box-sizing: border-box; width: 100%; min-width: 0; min-height: 164px; resize: vertical; padding: var(--space-3); border: 1px solid var(--quiz-border); border-radius: var(--space-3); background: var(--quiz-input-background); color: var(--text-primary); font: inherit; }
+.section .actions { justify-content: space-between; flex-wrap: wrap; margin-top: var(--space-5); gap: var(--space-3); }
+.attachment { flex: 1; min-width: 0; }
+.attachment input { display: block; width: 100%; min-width: 0; color: var(--quiz-muted); font: inherit; font-size: 12px; }
+.attachment input::file-selector-button { min-height: 44px; margin-right: var(--space-2); padding: var(--space-2) var(--space-3); border: 1px solid var(--quiz-border); border-radius: var(--radius-control); background: var(--quiz-input-background); color: var(--text-primary); font: inherit; cursor: pointer; }
+.section .submit { background: var(--text-primary); color: var(--color-white); border-color: var(--text-primary); }
+.researchContext { margin-bottom: var(--space-4); padding: var(--space-3); border: 1px solid var(--quiz-border); border-radius: var(--radius-control); background: var(--quiz-input-background); color: var(--text-primary); font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+.researchContext p { margin: 0 0 var(--space-2); color: var(--quiz-muted); }
+@media (max-width: 900px) {
+  .section { min-height: 0; }
+  .section > div { max-width: 720px; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+  .section .headingColumn { text-align: center; }
+  .section h1 { font-size: clamp(4.5rem, 20cqi, 7rem); }
+}
+@media (max-width: 540px) {
+  .fields { grid-template-columns: minmax(0, 1fr); }
+  .attachment { flex-basis: 100%; }
+  .actions > button { margin-left: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section .fields .selectWrap select { transition: none; }
+}

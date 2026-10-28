@@ -1,6 +1,5 @@
 import { about } from "@/content/about";
 import { FadeIn } from "@/components/motion/fade-in";
-import { AboutHero } from "@/components/sections/about-hero";
 import { AboutLocations } from "@/components/sections/about-locations";
 import { AboutTimeline } from "@/components/sections/about-timeline";
 import { PersonCard } from "@/components/sections/person-card";
@@ -12,8 +11,7 @@ export const metadata = { title: "About", description: about.body };
 export default function AboutPage() {
   return (
     <div className={styles.page}>
-      <AboutHero />
-      <AboutTimeline />
+      <AboutTimeline headingAs="h1" />
       <section className={styles.soft} aria-labelledby="people-heading">
         <div className={styles.section}>
           <div className={styles.container}>
