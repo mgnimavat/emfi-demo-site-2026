@@ -7,7 +7,7 @@ import { DiscussSection, HeroSection } from "@/components/sections/home-8/sectio
 import styles from "@/components/sections/home-8/landing.module.css";
 
 export const metadata = {
-  title: { absolute: "EMFI — Settle For Less." },
+  title: "Home 8",
   description: "Institutional infrastructure. Without the institutional layers. Research, execution, settlement, custody and asset management for professional clients.",
 };
 

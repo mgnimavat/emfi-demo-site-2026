@@ -9,9 +9,7 @@ import { MoreAccountable } from "@/components/sections/home-3/more-accountable";
 import { Home3Contact } from "@/components/sections/home-3/contact";
 
 export const metadata = {
-  title: {
-    absolute: `${home.title} — Home 3`,
-  },
+  title: "Home 3",
   description: home.hero.body,
 };
 
