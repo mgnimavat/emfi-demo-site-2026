@@ -1,14 +1,27 @@
 "use client";
 
-import { createContext, useContext, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { Children, createContext, useContext, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from "react";
+import { ArrowDown } from "lucide-react";
 import styles from "./sections.module.css";
 
 const Y = "clamp(88px,10vw,144px)";
 const X = "clamp(20px,4vw,56px)";
 const WhyFrameContext = createContext(0);
+const WhyPinContext = createContext(false);
 
-export function sectionPad(rail: boolean, horizontal = true) {
+export function useWhyPinned() {
+  return useContext(WhyPinContext);
+}
+
+export function sectionPad(rail: boolean, horizontal = true, pinned = false) {
   const left = `calc(${X} + 54px)`;
+  if (pinned) {
+    const top = "clamp(112px, 14vh, 148px)";
+    const bottom = "clamp(100px, 13vh, 132px)";
+    const right = "clamp(52px, 4vw, 56px)";
+    const pinLeft = `calc(${X} + 54px + clamp(28px, 7vw, 100px))`;
+    return `${top} ${right} ${bottom} ${pinLeft}`;
+  }
   if (!horizontal) return rail ? `${Y} 0 ${Y} ${left}` : `${Y} 0`;
   return rail ? `${Y} ${X} ${Y} ${left}` : `${Y} ${X}`;
 }
@@ -26,15 +39,40 @@ export function useWhyActive(step: number) {
   return step > 0 && passed >= step;
 }
 
+function Rail({
+  railRef,
+  fillRef,
+  elbowRef,
+  elbowFillRef,
+  pulseRef,
+}: {
+  railRef: RefObject<HTMLDivElement | null>;
+  fillRef: RefObject<HTMLSpanElement | null>;
+  elbowRef: RefObject<HTMLSpanElement | null>;
+  elbowFillRef: RefObject<HTMLSpanElement | null>;
+  pulseRef: RefObject<HTMLSpanElement | null>;
+}) {
+  return (
+    <div ref={railRef} className={styles.whyRail} aria-hidden="true">
+      <span className={styles.whyRailTrack} />
+      <span ref={fillRef} className={styles.whyRailFill} />
+      <span ref={elbowRef} className={styles.whyRailElbow} />
+      <span ref={elbowFillRef} className={styles.whyRailElbowFill} />
+      <span ref={pulseRef} className={styles.whyRailPulse} />
+    </div>
+  );
+}
+
 export function WhyFlow({ children, stickyLabel = false }: { children: ReactNode; stickyLabel?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const slotRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLSpanElement>(null);
   const elbowRef = useRef<HTMLSpanElement>(null);
   const elbowFillRef = useRef<HTMLSpanElement>(null);
   const pulseRef = useRef<HTMLSpanElement>(null);
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(stickyLabel ? 1 : 0);
 
   useLayoutEffect(() => {
     const flow = ref.current;
@@ -47,10 +85,57 @@ export function WhyFlow({ children, stickyLabel = false }: { children: ReactNode
     if (!flow || !rail || !fill || !elbow || !elbowFill || !pulse) return;
     let raf = 0;
 
+    const measurePin = () => {
+      const stage = stageRef.current;
+      if (!stage) return false;
+      const marks = [...stage.querySelectorAll<HTMLElement>("[data-why-pin-marker]")];
+      const slides = [...stage.querySelectorAll<HTMLElement>("[data-why-slide]")];
+      const markerBox = stage.querySelector<HTMLElement>("[data-why-pin-markers]");
+      if (!markerBox || marks.length < 2 || slides.length < 2) return false;
+      const flowRect = flow.getBoundingClientRect();
+      const distance = Math.max(1, flow.offsetHeight - window.innerHeight);
+      const progress = Math.max(0, Math.min(1, -flowRect.top / distance));
+      const steps = slides.length;
+      const step = progress >= 1 ? steps : Math.min(steps, Math.floor(progress * steps + 1e-6) + 1);
+
+      rail.style.left = "";
+      rail.style.top = "";
+      rail.style.height = "";
+      rail.style.opacity = "1";
+      rail.style.setProperty("--rail-span", "100%");
+      elbow.style.display = "none";
+      elbowFill.style.display = "none";
+      pulse.style.display = "none";
+      fill.style.height = "100%";
+      const railRect = rail.getBoundingClientRect();
+      const activeRect = marks[step - 1].getBoundingClientRect();
+      const end = activeRect.left + activeRect.width / 2;
+      const fillPx = Math.max(0, Math.min(railRect.width, end - railRect.left));
+      fill.style.width = `${fillPx}px`;
+      fill.style.backgroundSize = `${railRect.width}px 100%`;
+      marks.forEach((mark, index) => {
+        const on = index === step - 1;
+        mark.className = on ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep;
+      });
+      stage.dataset.whyStep = String(step);
+      slides.forEach((slide, index) => {
+        const on = index === step - 1;
+        slide.style.opacity = on ? "1" : "0";
+        slide.style.visibility = on ? "visible" : "hidden";
+        slide.style.pointerEvents = on ? "auto" : "none";
+        slide.style.transform = "none";
+        slide.setAttribute("aria-hidden", on ? "false" : "true");
+        if ("inert" in slide) (slide as HTMLElement & { inert: boolean }).inert = !on;
+      });
+      setActive((current) => (current === step ? current : step));
+      return true;
+    };
+
     const measure = () => {
       raf = 0;
+      if (stickyLabel && !window.matchMedia("(prefers-reduced-motion: reduce)").matches && measurePin()) return;
       const origin = flow.querySelector<HTMLElement>("[data-why-origin]");
-      const marks = [...flow.querySelectorAll<HTMLElement>("[data-why-marker]")];
+      const marks = [...flow.querySelectorAll<HTMLElement>("[data-why-marker]")].filter((mark) => mark.getClientRects().length > 0);
       if (!origin || marks.length < 2) return;
       const flowRect = flow.getBoundingClientRect();
       const originRect = origin.getBoundingClientRect();
@@ -127,22 +212,46 @@ export function WhyFlow({ children, stickyLabel = false }: { children: ReactNode
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
     };
-  }, [stickyLabel]);
+  }, [active, stickyLabel]);
+
+  const rail = <Rail railRef={railRef} fillRef={fillRef} elbowRef={elbowRef} elbowFillRef={elbowFillRef} pulseRef={pulseRef} />;
+
+  if (stickyLabel) {
+    return (
+      <WhyPinContext.Provider value={true}>
+        <WhyFrameContext.Provider value={active}>
+          <div ref={ref} className={styles.whyPin}>
+            <div ref={stageRef} className={`${styles.whyPinStage} ${styles.whyFlow} ${styles.whyFlowSticky}`}>
+              <div ref={slotRef} className={styles.whyStickySlot} aria-hidden="true">
+                <p className={styles.whyStickyWord}><span>Why EMFI</span></p>
+              </div>
+              <div className={styles.whyPinMarkers} data-why-pin-markers aria-hidden="true">
+                {[1, 2, 3].map((n) => (
+                  <span key={n} data-why-pin-marker className={n === active ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep}>
+                    {String(n).padStart(2, "0")}
+                  </span>
+                ))}
+                {rail}
+              </div>
+              <div className={styles.whyPinSlides}>
+                {Children.map(children, (child, index) => (
+                  <div key={index} className={styles.whyPinSlide} data-why-slide>{child}</div>
+                ))}
+              </div>
+              <a className={`${styles.heroCue} ${styles.heroCueOnLight}`} href="#settle">
+                What less means for you
+                <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </WhyFrameContext.Provider>
+      </WhyPinContext.Provider>
+    );
+  }
 
   return (
-    <div ref={ref} className={stickyLabel ? `${styles.whyFlow} ${styles.whyFlowSticky}` : styles.whyFlow}>
-      {stickyLabel ? (
-        <div ref={slotRef} className={styles.whyStickySlot} aria-hidden="true">
-          <p className={styles.whyStickyWord}><span>Why EMFI</span></p>
-        </div>
-      ) : null}
-      <div ref={railRef} className={styles.whyRail} aria-hidden="true">
-        <span className={styles.whyRailTrack} />
-        <span ref={fillRef} className={styles.whyRailFill} />
-        <span ref={elbowRef} className={styles.whyRailElbow} />
-        <span ref={elbowFillRef} className={styles.whyRailElbowFill} />
-        <span ref={pulseRef} className={styles.whyRailPulse} />
-      </div>
+    <div ref={ref} className={styles.whyFlow}>
+      {rail}
       <WhyFrameContext.Provider value={active}>{children}</WhyFrameContext.Provider>
     </div>
   );

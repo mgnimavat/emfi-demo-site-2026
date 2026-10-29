@@ -48,6 +48,7 @@ export function SectionCopy({
   tone = "dark",
   align = "start",
   eyebrow,
+  plainEyebrow = false,
   origin = false,
 }: {
   title: string;
@@ -57,6 +58,7 @@ export function SectionCopy({
   tone?: "dark" | "light";
   align?: "start" | "center";
   eyebrow?: string;
+  plainEyebrow?: boolean;
   origin?: boolean;
 }) {
   const light = tone === "light";
@@ -67,8 +69,8 @@ export function SectionCopy({
   return (
     <div className={styles.sectionCopy} style={{ minWidth: 0, width: centered ? "100%" : undefined, textAlign: centered ? "center" : undefined }}>
       {eyebrow ? (
-        <p className={styles.eyebrow} data-why-origin={origin ? "" : undefined} style={{ color: light ? "#2a578f" : undefined, justifyContent: centered ? "center" : undefined }}>
-          <span className={styles.eyebrowMark} aria-hidden="true" />
+        <p className={plainEyebrow ? `${styles.eyebrow} ${styles.eyebrowPlain}` : styles.eyebrow} data-why-origin={origin ? "" : undefined} style={{ color: plainEyebrow ? "#071932" : light ? "#2a578f" : undefined, justifyContent: centered ? "center" : undefined }}>
+          {plainEyebrow ? null : <span className={styles.eyebrowMark} aria-hidden="true" />}
           <span>{eyebrow}</span>
         </p>
       ) : null}

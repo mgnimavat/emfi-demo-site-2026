@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState, type FormEvent } from 'react';
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { questionnaire as copy } from '@/content/home-16-questionnaire';
 import { contact } from '@/content/contact';
 import styles from './questionnaire.module.css';
@@ -103,11 +103,11 @@ export const QuestionnaireSection = () => {
                   <input key={field.name} aria-label={field.label} name={field.name} type={field.type} placeholder={field.placeholder} autoComplete={field.autoComplete} required={field.required} />
                 ))}
               </div>
+              {draftReady && <p role="status" className={styles.description}>{copy.draftNotice}</p>}
               <div className={styles.actions}>
                 <button type="button" className={styles.back} onClick={() => goToStep(questionCount - 1)}><ArrowLeft aria-hidden="true" />{copy.backToQuestions}</button>
-                <button type="submit" className={styles.next}>{copy.submit}<ArrowUpRight aria-hidden="true" /></button>
+                <button type="submit" className={styles.next}>{copy.submit}<ArrowRight aria-hidden="true" /></button>
               </div>
-              {draftReady && <p role="status" className={styles.description}>{copy.draftNotice}</p>}
             </form>
           </div>
         </div>

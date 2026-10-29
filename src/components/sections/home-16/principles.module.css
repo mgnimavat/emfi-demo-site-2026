@@ -1,10 +1,25 @@
+.section,
+.openSection {
+  scroll-margin-top: var(--home-12-header-h, 80px);
+  --principle-from: #5c84d0;
+  --principle-mid: #3f9eb4;
+  --principle-to: #14c2a4;
+  --principle-word-gradient: linear-gradient(
+    90deg,
+    var(--principle-from) 0%,
+    var(--principle-mid) 48%,
+    var(--principle-to) 100%
+  );
+}
+
 .section {
-  --principle-background: var(--bg-soft);
-  --principle-border: color-mix(in srgb, var(--color-blue-100) 65%, white);
-  --principle-surface: var(--bg-page);
+  --principle-background: #fff;
+  --principle-border: color-mix(in srgb, #071932 16%, white);
+  --principle-surface: #fff;
+  --principle-navy: #071932;
   padding: clamp(60px, 7vw, 112px) var(--space-5) clamp(20px, 2vw, 36px);
   background: var(--principle-background);
-  color: var(--text-primary);
+  color: var(--principle-navy);
   font-family: var(--font-sans);
 }
 
@@ -25,12 +40,19 @@
 .stackedSection {
   position: relative;
   overflow: clip;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - var(--home-12-header-h, 77.36px));
+  min-height: calc(100dvh - var(--home-12-header-h, 77.36px));
   padding-bottom: clamp(60px, 7vw, 112px);
+  background: #e6effb;
 }
 
 .stackedSection .container {
   position: relative;
   z-index: 1;
+  width: 100%;
 }
 
 .stackedSection .mark {
@@ -41,14 +63,31 @@
   width: 105vh;
   max-width: none;
   aspect-ratio: 1;
-  opacity: 0.55;
+  opacity: 1;
   pointer-events: none;
+  transform: rotate(0turn);
+  transform-origin: calc(100% * 72 / 145) calc(100% * 72 / 145);
+  transition: transform 0.7s ease;
 }
 
 .stackedSection .mark svg {
+  display: block;
   width: 100%;
   max-width: none;
-  height: auto;
+  height: 100%;
+  shape-rendering: geometricPrecision;
+}
+
+.stackedSection:has(.stackedCard:nth-child(1):hover) .mark {
+  transform: rotate(0.33turn);
+}
+
+.stackedSection:has(.stackedCard:nth-child(2):hover) .mark {
+  transform: rotate(0.66turn);
+}
+
+.stackedSection:has(.stackedCard:nth-child(3):hover) .mark {
+  transform: rotate(1turn);
 }
 
 .stackedIntro {
@@ -91,32 +130,13 @@
 .mark {
   width: 500px;
   max-width: 100%;
+  opacity: 1;
 }
 
 .mark svg {
   display: block;
   width: 100%;
   height: auto;
-}
-
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 18px;
-  color: #2a578f;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.eyebrowMark {
-  flex: none;
-  width: 22px;
-  height: 1px;
-  background: currentColor;
 }
 
 .title {
@@ -172,6 +192,28 @@
   background: var(--principle-surface);
 }
 
+.stackedCard {
+  background: linear-gradient(
+    165deg,
+    #fff 0%,
+    color-mix(in srgb, var(--color-blue-25) 70%, #fff) 38%,
+    color-mix(in srgb, var(--color-blue-100) 58%, #fff) 100%
+  );
+  border-color: color-mix(in srgb, var(--color-blue-100) 62%, #fff);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 90%),
+    0 16px 34px color-mix(in srgb, var(--color-blue-500) 12%, transparent),
+    0 3px 8px color-mix(in srgb, var(--color-blue-400) 8%, transparent);
+  transition: box-shadow 0.35s ease;
+}
+
+.stackedCard:hover {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 96%),
+    0 20px 42px color-mix(in srgb, var(--color-blue-500) 16%, transparent),
+    0 6px 14px color-mix(in srgb, var(--color-blue-400) 10%, transparent);
+}
+
 .cardHeading {
   margin: 0;
 }
@@ -211,8 +253,8 @@
   height: 36px;
   border: 1px solid var(--principle-border);
   border-radius: var(--radius-pill);
-  background: var(--bg-soft);
-  color: var(--text-primary);
+  background: #fff;
+  color: var(--principle-navy);
 }
 
 .toggle svg {
@@ -279,7 +321,7 @@
 
 .detail p {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--principle-navy);
   font-size: 15px;
   line-height: 1.6;
 }
@@ -318,17 +360,23 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .toggle {
+  .toggle,
+  .stackedCard {
+    transition: none;
+  }
+
+  .stackedSection .mark {
     transition: none;
   }
 }
 
 .openSection {
-  --principle-background: var(--bg-soft);
+  --principle-background: #fff;
+  --principle-navy: #071932;
   --principle-active: var(--bg-inverse);
   padding: clamp(60px, 7vw, 112px) var(--space-5);
   background: var(--principle-background);
-  color: var(--text-primary);
+  color: var(--principle-navy);
   font-family: var(--font-sans);
 }
 
@@ -378,7 +426,7 @@
 
 .openSummary {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--principle-navy);
   font-size: 14px;
   line-height: 1.6;
 }

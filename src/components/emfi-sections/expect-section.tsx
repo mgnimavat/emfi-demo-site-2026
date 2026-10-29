@@ -1,3 +1,4 @@
+import { ArrowDown } from "lucide-react";
 import { HeroRotatingText } from "@/components/sections/hero-rotating-text";
 import styles from "./sections.module.css";
 
@@ -15,9 +16,7 @@ export function ExpectSection({ showPoints = true, raiseContent = false, rewrite
       {heroCue ? (
         <a className={styles.heroCue} href="#direct">
           Why EMFI
-          <svg viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M8 3.25v8.1M4.75 8.6 8 11.85l3.25-3.25" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
         </a>
       ) : null}
     </section>

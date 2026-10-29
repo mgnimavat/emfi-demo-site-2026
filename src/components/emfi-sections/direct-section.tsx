@@ -1,13 +1,14 @@
 "use client";
 
 import type { RefObject } from "react";
+import { useReducedMotion } from "framer-motion";
 import { cardStyle, centeredCardSpace, css } from "./css";
 import { MarkSwitch } from "./mark-trace";
 import { SectionCopy } from "./outcomes";
 import { ReplayButton } from "./replay-button";
 import styles from "./sections.module.css";
 import type { dirVals } from "./values";
-import { sectionPad, useWhyActive, WhyMarker } from "./why-flow";
+import { sectionPad, useWhyActive, useWhyPinned, WhyMarker } from "./why-flow";
 
 export function DirectSection({
   cols,
@@ -41,28 +42,31 @@ export function DirectSection({
   const { dNodes, dLines, dTok, dHand, dTags, dCount, dNote, dRouteTitle, dStageH, dBandOp, dBandS } = values;
   const marked = step != null;
   const active = useWhyActive(step ?? 0);
+  const pinned = useWhyPinned();
+  const reduceMotion = useReducedMotion();
   const routeCols = cols.includes("52fr") ? "minmax(0, 1fr) minmax(0, calc((100% - 30px) * 0.52 + 150px))" : cols;
 
   return (
-    <section id="direct" data-screen-label="03 More direct" data-why-step={marked ? "" : undefined} style={{ position: "relative", background: light ? "#ffffff" : "radial-gradient(50% 60% at 0% 20%,rgba(162,194,253,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
+    <section id="direct" data-screen-label="03 More direct" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: pinned && light && !reduceMotion ? "transparent" : light ? "#ffffff" : "radial-gradient(50% 60% at 0% 20%,rgba(162,194,253,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
       {marked && step ? <WhyMarker n={step} active={active} /> : null}
-      <div className={light ? styles.lightCopy : undefined} style={{ position: "relative", zIndex: light ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked, !light), borderTop: light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: centered ? "flex" : "grid", flexDirection: centered ? "column" : undefined, gridTemplateColumns: centered ? undefined : routeCols, gap: centered ? 64 : "30px clamp(30px,5vw,30px)", alignItems: centered ? "stretch" : "center" }}>
+      <div className={light ? styles.lightCopy : undefined} style={{ position: "relative", zIndex: light ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked, !light, pinned), borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: centered ? "flex" : "grid", flexDirection: centered ? "column" : undefined, gridTemplateColumns: centered ? undefined : routeCols, gap: centered ? 64 : "30px clamp(30px,5vw,30px)", alignItems: centered ? "stretch" : "center" }}>
         {marked && !eyebrow ? <p className={styles.whyKicker} data-why-origin style={centered ? { width: "100%", justifyContent: "center", marginBottom: 0 } : undefined}>Why EMFI</p> : null}
         <div style={{ position: "relative" }}>
           <SectionCopy
             title="Direct."
             eyebrow={eyebrow}
+            plainEyebrow={pinned && Boolean(eyebrow)}
             origin={marked && Boolean(eyebrow)}
             body={body}
-            action={{ href: "/services/settlement-custody", label: "Explore direct access" }}
+            action={{ href: "/services/settlement-custody", label: "Learn More" }}
             tone={light ? "light" : "dark"}
             align={centered ? "center" : "start"}
           />
         </div>
-        <div ref={cardRef} style={centered ? { ...cardStyle, width: "100%", paddingTop: `calc(${cardStyle.paddingTop} + ${centeredCardSpace})`, paddingBottom: `calc(${cardStyle.padding} + ${centeredCardSpace})` } : cardStyle}>
+        <div ref={cardRef} className={pinned ? styles.pinVisual : undefined} style={centered ? { ...cardStyle, width: "100%", paddingTop: `calc(${cardStyle.paddingTop} + ${centeredCardSpace})`, paddingBottom: `calc(${cardStyle.padding} + ${centeredCardSpace})` } : cardStyle}>
           {showReplay && canReplay ? <ReplayButton onClick={onReplay} /> : null}
-          {showRouteTitle ? <p className={centered ? `${styles.routeTitle} ${styles.routeTitleCenter}` : styles.routeTitle}><span aria-hidden="true" className={styles.eyebrowMark} /><span className={dRouteTitle === "EMFI Route" ? styles.routeTitleEmfi : dRouteTitle === "Conventional Route" ? styles.routeTitleConventional : undefined}>{dRouteTitle}</span>{centered ? <span aria-hidden="true" className={styles.eyebrowMark} /> : null}</p> : null}
-          <div role="img" aria-label="An instruction moves from You to Settlement agent, Sub-custodian, Custodian and Depository. The same route then shortens to You, EMFI, Depository." style={{ position: "relative", height: dStageH }}>
+          {showRouteTitle ? <p className={centered ? `${styles.routeTitle} ${styles.routeTitleCenter}` : styles.routeTitle}>{pinned ? null : <span aria-hidden="true" className={styles.eyebrowMark} />}<span className={dRouteTitle === "EMFI Route" ? styles.routeTitleEmfi : dRouteTitle === "Conventional Route" ? styles.routeTitleConventional : undefined}>{dRouteTitle}</span>{centered && !pinned ? <span aria-hidden="true" className={styles.eyebrowMark} /> : null}</p> : null}
+          <div role="img" aria-label="An instruction moves from You to Settlement agent, Sub-custodian, Custodian and Depository. The same route then shortens to You, EMFI, Depository." style={{ position: "relative", height: pinned ? undefined : dStageH, flex: pinned ? "1 1 auto" : undefined, minHeight: pinned ? 0 : undefined }}>
             <span style={{ position: "absolute", zIndex: 0, borderRadius: 999, background: "linear-gradient(90deg,rgba(162,194,253,.22),rgba(128,152,204,.16),rgba(0,201,167,.22))", opacity: dBandOp, ...css(dBandS) }} />
             {dLines.map((line, index) => (
               <span key={index} style={{ position: "absolute", zIndex: 1, background: line.c, backgroundSize: line.size, backgroundRepeat: line.size ? "no-repeat" : undefined, opacity: line.op, ...css(line.s) }} />

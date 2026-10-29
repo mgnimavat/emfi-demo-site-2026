@@ -1273,6 +1273,7 @@ function ViewPanel({ view, apple = false }: { view: View; apple?: boolean }) {
           src="/images/services/balances-three-screens-perspective.jpg"
           width={2048}
           height={1564}
+          rounded
         />
       );
     case "FloatingPhones":
@@ -1304,10 +1305,12 @@ function MobileScreensSlide({
   src = "/images/services/balances-three-phones.jpg",
   width = 1024,
   height = 794,
+  rounded = false,
 }: {
   src?: string;
   width?: number;
   height?: number;
+  rounded?: boolean;
 } = {}) {
   return (
     <div className="flex h-full items-center justify-center">
@@ -1316,7 +1319,7 @@ function MobileScreensSlide({
         alt="EMFI mobile app showing order entry, balances, and activity"
         width={width}
         height={height}
-        className="h-auto max-h-full w-auto max-w-full object-contain"
+        className={`h-auto max-h-full w-auto max-w-full object-contain${rounded ? " rounded-xl" : ""}`}
         unoptimized
       />
     </div>

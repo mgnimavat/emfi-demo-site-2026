@@ -1071,13 +1071,6 @@ h6 {
   height: 16px;
 }
 
-.emfi-circle-btn:hover .emfi-circle-btn-mark,
-.emfi-circle-btn:focus-visible .emfi-circle-btn-mark {
-  background: var(--text-primary);
-  color: var(--text-inverse);
-  border-color: var(--color-blue-200);
-}
-
 .emfi-person-card {
   perspective: 1200px;
 }

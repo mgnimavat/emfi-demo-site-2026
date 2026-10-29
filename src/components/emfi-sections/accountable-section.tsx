@@ -9,17 +9,17 @@ import { SectionCopy } from "./outcomes";
 import { ReplayButton } from "./replay-button";
 import chapterStyles from "./sections.module.css";
 import styles from "./accountable.module.css";
-import { sectionPad, useWhyActive, WhyMarker } from "./why-flow";
+import { sectionPad, useWhyActive, useWhyPinned, WhyMarker } from "./why-flow";
 
 const HOLD_MS = 3800;
 const standards = ["Authorised", "Regulated", "Auditable"] as const;
 const brandLogoSrc: Record<string, string> = {
-  "/brand/regulators/fca.svg?v=2": "/brand/regulators/fca-brand.svg",
-  "/brand/regulators/dfsa.png": "/brand/regulators/dfsa-brand.png",
-  "/brand/regulators/cima.png": "/brand/regulators/cima-brand.png",
-  "/brand/auditors/baker-tilly.png": "/brand/auditors/baker-tilly-brand.png",
-  "/brand/auditors/buzzacott.png": "/brand/auditors/buzzacott-brand.png",
-  "/brand/auditors/bdo.png": "/brand/auditors/bdo-brand.png",
+  "/brand/regulators/fca.svg?v=2": "/brand/regulators/fca-white.svg",
+  "/brand/regulators/dfsa.png": "/brand/regulators/dfsa-white.png",
+  "/brand/regulators/cima.png": "/brand/regulators/cima-white.png",
+  "/brand/auditors/baker-tilly.png": "/brand/auditors/baker-tilly-white.png",
+  "/brand/auditors/buzzacott.png": "/brand/auditors/buzzacott-white.png",
+  "/brand/auditors/bdo.png": "/brand/auditors/bdo-white.png",
 };
 
 function StandardsEyebrow({ centered = false }: { centered?: boolean }) {
@@ -112,9 +112,9 @@ function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = fa
         {plain ? null : <span className={styles.rule} />}
       </div>
       {slide.kind === "logos" ? (
-        <div className={brandLogos ? `${styles.logos} ${styles.brandLogos}` : styles.logos}>
+        <div className={[styles.logos, brandLogos && styles.brandLogos, brandLogos && slide.title.startsWith("Authorised") && styles.authorityLogos].filter(Boolean).join(" ")}>
           {slide.items.map((item) => (
-            <div key={item.name} className={styles.logoCard}>
+            <div key={item.name} className={[styles.logoCard, brandLogos && (item.name.startsWith("Dubai") || item.name.startsWith("Cayman")) && styles.markLogo, brandLogos && (item.name.startsWith("Cayman") || item.name.startsWith("Baker")) && styles.largeLogo].filter(Boolean).join(" ")}>
               <Image src={brandLogos ? brandLogoSrc[item.src] ?? item.src : item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
             </div>
           ))}
@@ -161,6 +161,8 @@ export function AccountableSection({
   const [run, setRun] = useState(0);
   const marked = step != null;
   const active = useWhyActive(step ?? 0);
+  const pinned = useWhyPinned();
+  const reduceMotion = useReducedMotion();
   const slide = slides[index] ?? slides[0];
 
   useEffect(() => {
@@ -177,24 +179,25 @@ export function AccountableSection({
   }
 
   return (
-    <section id="accountable" data-screen-label="05 Dependable" data-why-step={marked ? "" : undefined} style={{ position: "relative", background: light ? "#ffffff" : "radial-gradient(55% 60% at 0% 100%,rgba(128,152,204,.14),transparent 70%)", zIndex: light || raiseContent ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
+    <section id="accountable" data-screen-label="05 Dependable" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: pinned && light && !reduceMotion ? "transparent" : light ? "#ffffff" : "radial-gradient(55% 60% at 0% 100%,rgba(128,152,204,.14),transparent 70%)", zIndex: light || raiseContent ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
       {marked && step ? <WhyMarker n={step} active={active} /> : null}
-      <div className={light ? chapterStyles.lightCopy : undefined} style={{ position: "relative", zIndex: light || raiseContent ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked, !light), borderTop: light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: centered ? "flex" : "grid", flexDirection: centered ? "column" : undefined, gridTemplateColumns: centered ? undefined : cols, gap: centered ? 64 : "30px clamp(30px,5vw,30px)", alignItems: centered ? "stretch" : "center" }}>
+      <div className={light ? chapterStyles.lightCopy : undefined} style={{ position: "relative", zIndex: light || raiseContent ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked, !light, pinned), borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: centered ? "flex" : "grid", flexDirection: centered ? "column" : undefined, gridTemplateColumns: centered ? undefined : cols, gap: centered ? 64 : "30px clamp(30px,5vw,30px)", alignItems: centered ? "stretch" : "center" }}>
         <div style={{ position: "relative" }}>
           <SectionCopy
             title="Dependable."
             eyebrow={eyebrow}
+            plainEyebrow={pinned && Boolean(eyebrow)}
             body={body}
-            action={{ href: "/why-emfi", label: "See the standards" }}
+            action={{ href: "/why-emfi", label: "Learn More" }}
             tone={light ? "light" : "dark"}
             align={centered ? "center" : "start"}
           />
         </div>
-        <div style={{ ...cardStyle, containerType: "inline-size", width: centered ? "100%" : undefined, paddingTop: `calc(${!staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding}${centered ? ` + ${centeredCardSpace}` : ""})`, paddingBottom: centered ? `calc(${cardStyle.padding} + ${centeredCardSpace})` : cardStyle.padding }}>
+        <div className={pinned ? chapterStyles.pinVisual : undefined} style={{ ...cardStyle, containerType: "inline-size", width: centered ? "100%" : undefined, paddingTop: `calc(${!staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding}${centered ? ` + ${centeredCardSpace}` : ""})`, paddingBottom: centered ? `calc(${cardStyle.padding} + ${centeredCardSpace})` : cardStyle.padding }}>
           {staticStandards ? <StandardsPanel centered={centered} /> : null}
           {!staticStandards && showReplay && canReplay ? <ReplayButton onClick={replay} /> : null}
           {!staticStandards && canReplay ? (
-            <div className={styles.stage} aria-live="polite">
+            <div className={`${styles.stage}${pinned ? ` ${styles.pinStage} ${chapterStyles.pinVisualFill}` : ""}`} aria-live="polite">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`${run}-${slide.title}`}

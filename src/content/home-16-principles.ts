@@ -1,5 +1,4 @@
 export const principles = {
-  eyebrow: "What less means for you",
   title: "Settle for",
   accent: "Less.",
   prefix: "Less",

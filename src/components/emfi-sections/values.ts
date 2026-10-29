@@ -64,9 +64,17 @@ function mixHex(from: string, to: string, t: number) {
   return `#${a.map((v, i) => Math.round(v + (b[i] - v) * k).toString(16).padStart(2, "0")).join("")}`;
 }
 
-export function rect(a: number[], b: number[], th: number) {
-  if (Math.abs(a[0] - b[0]) < 0.01) return `left:${a[0]}%;top:${Math.min(a[1], b[1])}%;width:${th}px;height:${Math.abs(a[1] - b[1])}%;margin-left:-${th / 2}px`;
-  return `left:${Math.min(a[0], b[0])}%;top:${a[1]}%;height:${th}px;width:${Math.abs(a[0] - b[0])}%;margin-top:-${th / 2}px`;
+type RoutePt = [number, number | string];
+
+function pct(v: number | string) {
+  return typeof v === "number" ? `${v}%` : v;
+}
+
+export function rect(a: RoutePt, b: RoutePt, th: number) {
+  if (typeof a[1] === "number" && typeof b[1] === "number" && Math.abs(a[0] - b[0]) < 0.01) {
+    return `left:${a[0]}%;top:${Math.min(a[1], b[1])}%;width:${th}px;height:${Math.abs(a[1] - b[1])}%;margin-left:-${th / 2}px`;
+  }
+  return `left:${Math.min(a[0], b[0])}%;top:${pct(a[1])};height:${th}px;width:${Math.abs(a[0] - b[0])}%;margin-top:-${th / 2}px`;
 }
 
 export function lab(pos: string, sz: number, wrap?: boolean) {
@@ -94,7 +102,7 @@ function swDot(sz: number, k: number, _ring: string, bump = 0) {
   return `width:${sz}px;height:${sz}px;border-radius:50%;background:#071832;border:1px solid ${k > 0.99 ? "#8098CC" : "#3A4A66"};box-shadow:0 0 ${Math.round(sz * (0.45 * bump + 0.17 * k))}px rgba(0,201,167,.45)`;
 }
 
-function node(pt: number[], o: NodeOpts): RouteNode {
+function node(pt: RoutePt, o: NodeOpts): RouteNode {
   const mix = (k: number) => {
     const c = [[58, 255], [74, 255], [102, 255]].map(([x, y]) => Math.round(x + (y - x) * k));
     return `rgb(${c.join(",")})`;
@@ -104,7 +112,7 @@ function node(pt: number[], o: NodeOpts): RouteNode {
     e: o.sw ? eSw(1 - swOff / 100) : null,
     eb: mix(Math.max(0, Math.min(1, 1 - swOff / 100))),
     left: `${pt[0]}%`,
-    top: `${pt[1]}%`,
+    top: pct(pt[1]),
     op: o.op ?? 1,
     tf: `translate(-50%,-50%) scale(${o.sc ?? 1})`,
     dot: o.dot,
@@ -121,8 +129,8 @@ function node(pt: number[], o: NodeOpts): RouteNode {
   };
 }
 
-function tok(p: number[], op: number, bg: string) {
-  return { left: `${p[0]}%`, top: `${p[1]}%`, op, bg };
+function tok(p: RoutePt, op: number, bg: string) {
+  return { left: `${p[0]}%`, top: pct(p[1]), op, bg };
 }
 
 const CONVENTIONAL_END = 0.56;
@@ -161,9 +169,13 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   t = home12 ? home12Route(t) : slowConventionalRoute(t);
   const { sg, ez, lp } = H();
   const P0 = [6, 28, 50, 72, 94];
+  // EMFI route spans nearly as wide as the conventional track (6–94).
+  const emfiL = 10;
+  const emfiR = 90;
   const ws = (i: number) => 0.06 + (i - 1) * 0.11;
   const k = ez(sg(t, 0.56, 0.72));
-  const S = (a: number) => (V ? [14, a] : [a, 34]);
+  // Lift 10px so bottom labels don't make the chart look low in the card.
+  const S = (a: number): RoutePt => (V ? [14, a] : [a, "calc(46% - 10px)"]);
   const pos = V ? "r" : "b";
   const ap = (i: number) => sg(t, ws(i), ws(i) + 0.02);
   const arr = (i: number) => t >= ws(i) + 0.065;
@@ -178,19 +190,19 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
       if (f < 1) trav = i;
     }
   }
-  const cpos = lp(6, 18, k);
-  const dpos = lp(94, 82, k);
+  const cpos = lp(6, emfiL, k);
+  const dpos = lp(94, emfiR, k);
   const replay = t >= 0.72;
-  let tokB = 18;
+  let tokB = emfiL;
   let travB = -1;
   if (t >= 0.745) {
     const f1 = ez(sg(t, 0.745, 0.79));
-    tokB = lp(18, 50, f1);
+    tokB = lp(emfiL, 50, f1);
     if (f1 < 1) travB = 1;
   }
   if (t >= 0.825) {
     const f2 = ez(sg(t, 0.825, 0.87));
-    tokB = lp(50, 82, f2);
+    tokB = lp(50, emfiR, f2);
     if (f2 < 1) travB = 2;
   }
   const depOn = (arr(4) && t < 0.56) || t >= 0.87;
@@ -227,7 +239,7 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   const routeBlue = "#A2C2FD";
   const routeGradient = `linear-gradient(${V ? "180deg" : "90deg"},#A2C2FD,#8098CC,#00C9A7)`;
   const convGradient = `linear-gradient(${V ? "180deg" : "90deg"}, #ef8ccd 0%, #ec6782 50%, #eb483e 100%)`;
-  const progressFrom = replay ? 18 : P0[0];
+  const progressFrom = replay ? emfiL : P0[0];
   const progressTo = replay ? tokB : tokA;
   const progressSpan = Math.abs(progressTo - progressFrom);
   const convTrack = P0[4] - P0[0];
@@ -241,7 +253,7 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   const orderTf = V ? "translate(14px,-50%)" : "translate(-50%,-32px)";
   const orderTag = (along: number, text: string) => {
     const p = S(along);
-    return { left: `${p[0]}%`, top: `${p[1]}%`, tf: orderTf, op: 1, text };
+    return { left: `${p[0]}%`, top: pct(p[1]), tf: orderTf, op: 1, text };
   };
   let count = [1, 2, 3, 4].filter(arr).length;
   if (t >= 0.56) count = 4;
@@ -250,15 +262,15 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     dNodes: nodes,
     dLines: lines,
     dTok: tok(S(replay ? tokB : tokA), replay ? (t < 0.8 ? sg(t, 0.72, 0.74) * (1 - sg(t, 0.775, 0.79)) : sg(t, 0.825, 0.835)) : sg(t, 0.03, 0.05) * (1 - sg(t, 0.56, 0.6)), replay ? "linear-gradient(135deg,#A2C2FD,#00C9A7)" : home12 ? convColor(tokA) : routeBlue),
-    dHand: { left: `${hp[0]}%`, top: `${hp[1]}%`, tf: V ? "translate(14px,-50%)" : "translate(-50%,-32px)", op: hm == null ? 0 : 1 },
-    dTags: home12 && travB === 1 ? [orderTag((18 + 50) / 2, "Order")] : home12 && travB === 2 ? [orderTag((50 + 82) / 2, "Handover")] : [],
+    dHand: { left: `${hp[0]}%`, top: pct(hp[1]), tf: V ? "translate(14px,-50%)" : "translate(-50%,-32px)", op: hm == null ? 0 : 1 },
+    dTags: home12 && travB === 1 ? [orderTag((emfiL + 50) / 2, "Order")] : home12 && travB === 2 ? [orderTag((50 + emfiR) / 2, "Handover")] : [],
     dCount: count,
     dNote: t >= 0.74 ? "Previously 4" : "",
     dRouteTitle: t >= 0.56 ? (routeTitles?.direct ?? "A Direct Route with EMFI") : (routeTitles?.conventional ?? "A conventional route"),
     dCap: t < 0.53 ? "Standard institutional route" : t < 0.74 ? "The same route, fewer layers" : "The same instruction, through EMFI",
     dStageH: V ? "400px" : "180px",
     dBandOp: sg(t, 0.74, 0.86),
-    dBandS: V ? "left:14%;width:22px;margin-left:-11px;top:12%;height:76%" : "left:16%;width:68%;top:34%;height:22px;margin-top:-11px",
+    dBandS: V ? "left:14%;width:22px;margin-left:-11px;top:12%;height:76%" : `left:${emfiL}%;width:${emfiR - emfiL}%;top:calc(46% - 10px);height:22px;margin-top:-11px`,
     dO0: sg(t, 0.88, 0.91),
     dO1: sg(t, 0.91, 0.94),
     dO2: sg(t, 0.94, 0.97),
