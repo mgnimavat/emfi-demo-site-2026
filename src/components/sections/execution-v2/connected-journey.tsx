@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
-import { animate, useInView, useMotionValue, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
+import { animate, useInView, useMotionValue, useReducedMotion } from 'framer-motion';
 import {
   ArrowUpRight,
   ArrowRightLeft,
@@ -14,11 +14,14 @@ import {
   ClipboardList,
   FileSearch,
   Handshake,
+  FileCheck2,
+  Landmark,
   type LucideIcon,
-} from "lucide-react";
-import { services } from "@/content/services";
-import { execution } from "@/content/execution";
-import styles from "./connected-journey.module.css";
+} from 'lucide-react';
+import { settlement } from '@/content/settlement';
+import { services } from '@/content/services';
+import { execution } from '@/content/execution';
+import styles from './connected-journey.module.css';
 
 const icons: LucideIcon[] = [
   FileSearch,
@@ -27,6 +30,8 @@ const icons: LucideIcon[] = [
   ArrowUpRight,
   BadgeCheck,
   Handshake,
+  FileCheck2,
+  Landmark,
 ];
 
 /** Full Research → Settlement pass; linear so pace stays even across every segment. */
@@ -37,25 +42,41 @@ function clamp01(value: number) {
   return Math.min(1, Math.max(0, value));
 }
 
-export function ConnectedJourney({ variant = "execution" }: { variant?: "execution" | "lifecycle" }) {
+type ConnectedJourneyProps = { variant?: 'execution' | 'lifecycle' | 'settlement' };
+type JourneyStep = { label: string; detail?: string };
+
+export const ConnectedJourney = ({ variant = 'execution' }: ConnectedJourneyProps) => {
   const ref = useRef<HTMLOListElement>(null);
   const visible = useInView(ref, { amount: 0.15 });
   const prefersReducedMotion = useReducedMotion();
   const reduced = Boolean(prefersReducedMotion);
-  const lifecycle = variant === "lifecycle";
-  const steps = lifecycle
-    ? services.lifecycle.stages.map(stage => ({ label: stage.title.toLowerCase().replace(/\b\w/g, letter => letter.toUpperCase()) }))
-    : execution.workflow.steps;
-  const stageIcons = lifecycle
-    ? [ChartNoAxesCombined, ArrowRightLeft, CircleCheck, ShieldCheck, BriefcaseBusiness]
-    : icons;
+  const lifecycle = variant === 'lifecycle';
+  const custody = variant === 'settlement';
+  const steps: readonly JourneyStep[] = custody
+    ? settlement.chain.map(([label, detail]) => ({
+        label:
+          label === 'EMFI'
+            ? label
+            : label.toLowerCase().replace(/\b\w/g, (letter) => letter.toUpperCase()),
+        detail,
+      }))
+    : lifecycle
+      ? services.lifecycle.stages.map((stage) => ({
+          label: stage.title.toLowerCase().replace(/\b\w/g, (letter) => letter.toUpperCase()),
+        }))
+      : execution.workflow.steps;
+  const stageIcons = custody
+    ? [ArrowRightLeft, FileCheck2, Landmark, ShieldCheck]
+    : lifecycle
+      ? [ChartNoAxesCombined, ArrowRightLeft, CircleCheck, ShieldCheck, BriefcaseBusiness]
+      : icons;
   const journeyDuration = lifecycle ? 15500 : JOURNEY_MS;
   const lastIndex = steps.length - 1;
   const progress = useMotionValue(0);
   const [progressValue, setProgressValue] = useState(0);
 
   useEffect(() => {
-    return progress.on("change", setProgressValue);
+    return progress.on('change', setProgressValue);
   }, [progress]);
 
   useEffect(() => {
@@ -76,7 +97,7 @@ export function ConnectedJourney({ variant = "execution" }: { variant?: "executi
       progress.set(0);
       controls = animate(progress, 1, {
         duration: journeyDuration / 1000,
-        ease: "linear",
+        ease: 'linear',
         onComplete: () => {
           if (!active) return;
           window.setTimeout(() => {
@@ -98,26 +119,37 @@ export function ConnectedJourney({ variant = "execution" }: { variant?: "executi
   const frontier = flow * lastIndex;
 
   function onKeyDown(event: KeyboardEvent<HTMLLIElement>, index: number) {
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
       event.preventDefault();
       const next = (index + 1) % steps.length;
-      ref.current?.querySelectorAll<HTMLElement>("[data-step]")[next]?.focus();
+      ref.current?.querySelectorAll<HTMLElement>('[data-step]')[next]?.focus();
       return;
     }
-    if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
       event.preventDefault();
       const prev = (index - 1 + steps.length) % steps.length;
-      ref.current?.querySelectorAll<HTMLElement>("[data-step]")[prev]?.focus();
+      ref.current?.querySelectorAll<HTMLElement>('[data-step]')[prev]?.focus();
     }
   }
 
   return (
     <ol
       ref={ref}
-      aria-label={lifecycle ? "Five connected stages of the investment lifecycle" : "Research to settlement process"}
+      aria-label={
+        custody
+          ? 'Trade to custody process'
+          : lifecycle
+            ? 'Five connected stages of the investment lifecycle'
+            : 'Research to settlement process'
+      }
       className={styles.journey}
-      data-reduced={reduced ? "true" : "false"}
-      style={{ "--play-state": visible && !reduced ? "running" : "paused", "--journey-columns": steps.length } as CSSProperties}
+      data-reduced={reduced ? 'true' : 'false'}
+      style={
+        {
+          '--play-state': visible && !reduced ? 'running' : 'paused',
+          '--journey-columns': steps.length,
+        } as CSSProperties
+      }
     >
       {steps.map((step, index) => {
         const Icon = stageIcons[index];
@@ -125,32 +157,27 @@ export function ConnectedJourney({ variant = "execution" }: { variant?: "executi
         const nodePos = index / lastIndex;
         const isReached = flow >= nodePos - 0.002;
         const isActive = !reduced && Math.abs(frontier - index) < 0.55;
-        const segmentFill = isLast
-          ? 0
-          : clamp01((flow - index / lastIndex) / (1 / lastIndex));
+        const segmentFill = isLast ? 0 : clamp01((flow - index / lastIndex) / (1 / lastIndex));
 
         return (
           <li
             key={step.label}
             data-step
             className={styles.step}
-            data-active={isActive ? "true" : "false"}
-            data-reached={isReached ? "true" : "false"}
+            data-active={isActive ? 'true' : 'false'}
+            data-reached={isReached ? 'true' : 'false'}
             tabIndex={0}
-            aria-current={isActive ? "step" : undefined}
+            aria-current={isActive ? 'step' : undefined}
             onKeyDown={(event) => onKeyDown(event, index)}
           >
             {!isLast ? (
               <span
                 aria-hidden
                 className={styles.connector}
-                style={{ "--segment-fill": segmentFill } as CSSProperties}
+                style={{ '--segment-fill': segmentFill } as CSSProperties}
               >
                 <span className={styles.track} />
-                <span
-                  className={styles.beam}
-                  style={{ opacity: segmentFill > 0.01 ? 1 : 0 }}
-                />
+                <span className={styles.beam} style={{ opacity: segmentFill > 0.01 ? 1 : 0 }} />
                 <span
                   className={styles.pulse}
                   style={{
@@ -162,10 +189,13 @@ export function ConnectedJourney({ variant = "execution" }: { variant?: "executi
             <span className={styles.disc} aria-hidden>
               <Icon strokeWidth={1.6} />
             </span>
-            <span className={styles.label}>{step.label}</span>
+            <span className={styles.label}>
+              {step.label}
+              {step.detail ? <span className="sr-only">: {step.detail}</span> : null}
+            </span>
           </li>
         );
       })}
     </ol>
   );
-}
+};

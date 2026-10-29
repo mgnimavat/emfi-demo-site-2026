@@ -1,17 +1,17 @@
 import { about } from "@/content/about";
 import { FadeIn } from "@/components/motion/fade-in";
-import { AboutLocations } from "@/components/sections/about-locations";
+import { About1Locations } from "@/components/sections/about-1-locations";
 import { AboutTimeline } from "@/components/sections/about-timeline";
 import { PersonCard } from "@/components/sections/person-card";
-import { ArchiveCta } from "@/components/sections/archive/cta";
+// import { ArchiveCta } from "@/components/sections/archive/cta";
 import styles from "@/components/sections/archive/theme.module.css";
 
 export const metadata = { title: "About", description: about.body };
 
-export default function AboutPage() {
+const AboutPage = () => {
   return (
     <div className={styles.page}>
-      <AboutTimeline headingAs="h1" />
+      <AboutTimeline headingAs="h1" showCounter={false} />
       <section className={styles.soft} aria-labelledby="people-heading">
         <div className={styles.section}>
           <div className={styles.container}>
@@ -20,8 +20,10 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <AboutLocations />
-      <ArchiveCta className={styles.ctaBlue} title={about.ctaTitle} body={about.ctaBody} action={about.ctaButton} />
+      <About1Locations />
+      {/* <ArchiveCta className={styles.ctaBlue} title={about.ctaTitle} body={about.ctaBody} action={about.ctaButton} /> */}
     </div>
   );
-}
+};
+
+export default AboutPage;

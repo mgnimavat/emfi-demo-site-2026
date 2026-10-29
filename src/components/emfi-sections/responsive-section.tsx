@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducedMotion } from "framer-motion";
-import { ResearchExecutionHeroMockup, home10ResponsiveSlides, home12ResponsiveSlides, home16ResponsiveSlides, responsiveHighlightSlides } from "@/components/mockups/research-execution-hero";
+import { ResearchExecutionHeroMockup, home10ResponsiveSlides, home12ResponsiveSlides, home16ResponsiveSlides, homeV5ResponsiveSlides, responsiveHighlightSlides } from "@/components/mockups/research-execution-hero";
 import { SectionCopy } from "./outcomes";
 import styles from "./sections.module.css";
 import { sectionPad, useWhyActive, useWhyPinned, WhyMarker } from "./why-flow";
@@ -14,6 +14,7 @@ export function ResponsiveSection({
   homeSlides = false,
   omitSecondSlide = false,
   perspectivePhones = false,
+  floatingPhones = false,
   step,
   body = "Technology that works. People who respond. Clearer workflows with support from people who can help resolve issues.",
   centered = false,
@@ -26,6 +27,7 @@ export function ResponsiveSection({
   homeSlides?: boolean;
   omitSecondSlide?: boolean;
   perspectivePhones?: boolean;
+  floatingPhones?: boolean;
   step?: number;
   body?: string;
   centered?: boolean;
@@ -53,8 +55,8 @@ export function ResponsiveSection({
             align={centered ? "center" : "start"}
           />
         </div>
-        <div className={`${pinColumns ? styles.responsivePinMedia : ""} ${pinned ? `${styles.pinVisualMedia} ${styles.responsivePinVisual}` : ""}`.trim() || undefined} style={{ minWidth: 0, width: centered ? "100%" : undefined, color: "#071832", fontFamily: "var(--font-inter), Inter, Arial, sans-serif" }}>
-          <ResearchExecutionHeroMockup views={homeSlides ? (perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
+        <div style={{ minWidth: 0, width: centered ? "100%" : undefined, color: "#071832", fontFamily: "var(--font-inter), Inter, Arial, sans-serif" }}>
+          <ResearchExecutionHeroMockup quietFrame={floatingPhones} views={homeSlides ? (floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
         </div>
       </div>
     </section>

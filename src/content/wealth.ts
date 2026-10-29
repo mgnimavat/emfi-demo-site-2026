@@ -1,5 +1,8 @@
 export const wealth = {
   title: "Wealth & Asset Management",
+  heroLines: ["Wealth &", "Asset", "Management"],
+  heroPhrases: ["Your portfolio. In view.", "Your assets. Connected.", "Your relationship. Direct."],
+
   eyebrow: "Services / Wealth & Asset Management",
   headline: "Wealth management. Asset management.\nInstitutional rails.",
   body: "Three related activities, clearly distinguished, with the legal entity identified for each. This is not a wrapper around a portfolio. It is infrastructure.",
@@ -24,7 +27,7 @@ export const wealth = {
     },
   ],
   fundNoteEyebrow: "EMFI Fund",
-  fundNoteTitle: "The current structure. Not the old one.",
+  fundNoteTitle: "EMFI Fund. The current structure.",
   fundNoteBody:
     "The business previously operated a master-feeder (EMFI Master Fund + EMFI Feeder Fund). That was simplified into the current EMFI Fund. Historical structures are not presented as current products.",
   problemEyebrow: "The distinction",

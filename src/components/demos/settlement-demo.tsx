@@ -46,9 +46,6 @@ export function SettlementDemo() {
 
   return (
     <div id="settlement-demo" className="rounded-lg border border-line bg-page p-6 md:p-8">
-      <p className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-brand">
-        Interactive demonstration
-      </p>
       <h3 className="mt-2 text-2xl font-bold text-ink">Settlement eligibility</h3>
       <p className="mt-2 max-w-2xl text-sm leading-6 text-ink-secondary">
         Security → eligibility → depository → route. Not every security is

@@ -20,6 +20,19 @@ export function Home11Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const element = headerRef.current;
+    if (!element) return;
+    const updateHeight = () => {
+      document.documentElement.style.setProperty("--site-header-height", `${element.getBoundingClientRect().height}px`);
+    };
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -31,7 +44,7 @@ export function Home11Header() {
   }, [open]);
 
   return (
-    <header className={styles.header}>
+    <header ref={headerRef} className={styles.header}>
       <div className={styles.inner}>
         <Link href="/" aria-label="EMFI home" className={styles.home} onClick={() => setOpen(false)}>
           <BrandWordmark className={styles.logo} priority />
