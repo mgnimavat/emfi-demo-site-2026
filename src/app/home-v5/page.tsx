@@ -1,6 +1,6 @@
-import { EmfiSections } from "@/components/emfi-sections/emfi-sections";
-import { PrinciplesSection } from "@/components/sections/home-16/principles";
-import { QuestionnaireSection } from "@/components/sections/home-16/questionnaire";
+import { EmfiSections } from "@/components/home-v5/emfi-sections/emfi-sections";
+import { PrinciplesSection } from "@/components/home-v5/principles/principles";
+import { QuestionnaireSection } from "@/components/home-v5/questionnaire/questionnaire";
 import styles from "@/components/sections/home-12/landing.module.css";
 import "../home-16/home-16.css";
 

@@ -15,7 +15,7 @@ import {
   Settings,
   X,
 } from "lucide-react";
-import { FloatingPhones, PHONE_POSE_MS } from "@/components/mockups/floating-phones";
+import { FloatingPhones } from "@/components/mockups/floating-phones";
 import { HeroDashboardScreen } from "@/components/mockups/operating-view";
 
 const HOLD_MS = 3400;
@@ -45,7 +45,7 @@ export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] a
 export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
 export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreens"] as const satisfies readonly View[];
 export const home16ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreensPerspective"] as const satisfies readonly View[];
-export const homeV5ResponsiveSlides = ["OrderEur", "HeroDashboard", "FloatingPhones"] as const satisfies readonly View[];
+export const homeV5ResponsiveSlides = ["HeroDashboard", "OrderEur", "FloatingPhones"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
@@ -237,13 +237,28 @@ function ActivePill({ label }: { label: string }) {
   );
 }
 
-function StatusBadge({ status }: { status: "Filled" | "Rejected" | "Placed" }) {
-  const tone =
-    status === "Filled"
-      ? "bg-[#d8f5e4] text-[#1a7a45]"
+function StatusBadge({
+  status,
+  apple = false,
+}: {
+  status: "Filled" | "Rejected" | "Placed" | "Working";
+  apple?: boolean;
+}) {
+  const filled = status === "Filled";
+  const tone = filled
+    ? ""
+    : status === "Working"
+      ? "bg-[#dbe7ff] text-[#2458c5]"
       : "bg-[#ffe4cc] text-[#c45a12]";
   return (
-    <span className={`inline-flex items-center rounded-[5px] px-1 py-px text-[5.5px] font-bold ${tone}`}>
+    <span
+      className={`flex w-full items-center justify-center px-1 text-center text-[5.5px] font-semibold leading-none ${apple ? "h-full min-h-[12px]" : "py-0.5"} ${tone}`}
+      style={
+        filled
+          ? { borderRadius: apple ? 3 : 6, backgroundColor: "#8AFF8E", color: "#36a16b" }
+          : { borderRadius: apple ? 3 : 6 }
+      }
+    >
       {status}
     </span>
   );
@@ -662,14 +677,14 @@ function ExecutionSide({
           <X size={10} className="ml-auto text-[#80909d]" strokeWidth={2} />
         </div>
 
-        <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-hidden px-2 py-1.5">
-          <div className="flex h-[16px] shrink-0 items-center rounded-[6px] border border-[#d8dde5] px-1.5 text-[6px] text-[#8a94a3]">
+        <div className="flex min-h-0 flex-1 flex-col justify-between gap-1 overflow-hidden px-2 py-1.5">
+          <div className="flex h-[16px] shrink-0 items-center border border-[#d8dde5] px-1.5 text-[6px] text-[#8a94a3]" style={{ borderRadius: 6 }}>
             <span className="truncate">Search by ISIN or Ticker...</span>
             <span className="ml-auto pl-1 text-[6px]">▾</span>
           </div>
 
           <div className="flex shrink-0 items-center gap-1">
-            <span className="blur-[3.5px] select-none text-[7.5px] font-bold text-[#2458a6]">APPLE INC</span>
+            <span className="text-[7.5px] font-bold text-[#2458a6]">APPLE INC</span>
             <span className="ml-auto inline-flex items-center gap-1">
               <span className="inline-flex h-[11px] items-center rounded-[4px] border border-[#d8dde5] px-1 text-[5.5px] font-semibold text-[#6b7788]">
                 OPT
@@ -678,54 +693,45 @@ function ExecutionSide({
             </span>
           </div>
 
-          <div className="flex h-[16px] shrink-0 items-center rounded-[6px] border border-[#d8dde5] px-1.5 text-[7px] font-semibold text-[#0a1629]">
-            <span className="blur-[3.5px] select-none">Interactive</span>
-            <span className="ml-auto pl-1 text-[6px] font-normal text-[#8a94a3]">▾</span>
-          </div>
-
-          <div className="relative flex h-[26px] shrink-0 overflow-hidden rounded-[6px]">
+          <div className="relative flex h-[26px] shrink-0 overflow-hidden" style={{ borderRadius: 6 }}>
             <div className="flex min-w-0 flex-1 flex-col justify-center bg-[#e7f8ee] pl-1.5">
               <p className="text-[5px] font-semibold leading-none text-[#16a34a]">BID</p>
-              <p className="mt-0.5 text-[7.5px] font-bold leading-none tabular-nums text-[#16a34a]">0.00 ↑</p>
+              <p className="mt-0.5 text-[7px] font-bold leading-none tabular-nums text-[#16a34a]">343.78 ↑</p>
             </div>
             <div className="pointer-events-none absolute top-1/2 left-1/2 z-[1] flex h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-[4px] bg-[#0a1629] text-[9px] font-bold leading-none text-white">
               −
             </div>
             <div className="flex min-w-0 flex-1 flex-col items-end justify-center bg-[#fdecec] pr-1.5">
               <p className="text-[5px] font-semibold leading-none text-[#e11d2e]">ASK</p>
-              <p className="mt-0.5 text-[7.5px] font-bold leading-none tabular-nums text-[#e11d2e]">↓ 0.00</p>
+              <p className="mt-0.5 text-[7px] font-bold leading-none tabular-nums text-[#e11d2e]">↓ 343.90</p>
             </div>
           </div>
 
           <div className="grid shrink-0 grid-cols-2 gap-1.5">
-            <div>
-              <p className="mb-0.5 text-[5.5px] font-medium leading-none text-[#0a1629]">Order Type</p>
-              <div className="flex h-[16px] items-center rounded-[6px] border border-[#d8dde5] px-1.5 text-[6.5px] font-semibold text-[#0a1629]">
-                MARKET
-                <span className="ml-auto text-[6px] font-normal text-[#8a94a3]">▾</span>
-              </div>
+            <p className="text-[5.5px] font-medium leading-none text-[#0a1629]">Order Type</p>
+            <p className="text-[5.5px] font-medium leading-none text-[#0a1629]">Time</p>
+          </div>
+          <div className="grid shrink-0 grid-cols-2 gap-1.5">
+            <div className="flex h-[16px] items-center border border-[#d8dde5] px-1.5 text-[6.5px] font-semibold text-[#0a1629]" style={{ borderRadius: 6 }}>
+              MARKET
+              <span className="ml-auto text-[6px] font-normal text-[#8a94a3]">▾</span>
             </div>
-            <div>
-              <p className="mb-0.5 text-[5.5px] font-medium leading-none text-[#0a1629]">Time</p>
-              <div className="flex h-[16px] items-center rounded-[6px] border border-[#d8dde5] px-1.5 text-[6.5px] font-semibold text-[#0a1629]">
-                DAY
-                <span className="ml-auto text-[6px] font-normal text-[#8a94a3]">▾</span>
-              </div>
+            <div className="flex h-[16px] items-center border border-[#d8dde5] px-1.5 text-[6.5px] font-semibold text-[#0a1629]" style={{ borderRadius: 6 }}>
+              DAY
+              <span className="ml-auto text-[6px] font-normal text-[#8a94a3]">▾</span>
             </div>
           </div>
 
-          <div className="shrink-0">
-            <p className="mb-0.5 text-[5.5px] font-medium leading-none text-[#0a1629]">Quantity</p>
-            <div className="flex h-[16px] items-center rounded-[6px] border border-[#d8dde5] px-1.5 text-[7px] font-semibold tabular-nums text-[#0a1629]">
-              0
-            </div>
+          <p className="shrink-0 text-[5.5px] font-medium leading-none text-[#0a1629]">Quantity</p>
+          <div className="flex h-[16px] shrink-0 items-center border border-[#d8dde5] px-1.5 text-[7px] font-semibold tabular-nums text-[#0a1629]" style={{ borderRadius: 6 }}>
+            0
           </div>
 
-          <div className="mt-auto grid shrink-0 grid-cols-2 gap-1.5 pt-0.5">
-            <span className="flex h-[22px] items-center justify-center rounded-[0.75rem] bg-[#f07167] text-[8px] font-bold text-white">
+          <div className="grid shrink-0 grid-cols-2 gap-1.5">
+            <span className="flex h-[22px] items-center justify-center bg-[#f02020] text-[8px] font-bold text-white" style={{ borderRadius: 6 }}>
               Sell
             </span>
-            <span className="flex h-[22px] items-center justify-center rounded-[0.75rem] bg-[#2fce73] text-[8px] font-bold text-white">
+            <span className="flex h-[22px] items-center justify-center bg-[#22c55e] text-[8px] font-bold text-white" style={{ borderRadius: 6 }}>
               Buy
             </span>
           </div>
@@ -834,8 +840,6 @@ function TransactionsStrip({ apple = false }: { apple?: boolean }) {
         "Price",
         "Market Value",
         "Accrued",
-        "Portfolio",
-        "Counterparty",
         "Status",
       ]
     : [
@@ -868,8 +872,6 @@ function TransactionsStrip({ apple = false }: { apple?: boolean }) {
         "Price",
         "Market Value",
         "Accrued",
-        "Portfolio",
-        "Counterparty",
         "All",
       ]
     : [
@@ -890,11 +892,11 @@ function TransactionsStrip({ apple = false }: { apple?: boolean }) {
       ];
 
   const appleRows = [
-    ["T8722354762-1", "10/29/2026", "10/30/2026", "PEMEX 6 5/8 03/15/35", "Limit", "US71654MAF67", "Buy", "0/15,000", "99.800", "30,871.33", "15,988.33", "EMFI Securities", "Intesa Sanpaolo", "Rejected"],
-    ["T872354761-1", "10/29/2026", "10/30/2026", "PEMEX 6 5/8 03/15/35", "Limit", "US71654MAF67", "Buy", "0/15,000", "98.860", "30,817.33", "15,988.33", "EMFI Securities", "Intesa Sanpaolo", "Rejected"],
-    ["T670119876-1", "10/29/2026", "10/30/2026", "ARGENT 0.75 07/09/30", "Limit", "US040114HS26", "Buy", "0/25,000", "98.560", "19,758.25", "46.25", "Guillermo Sabal", "BMFI Securities", "Rejected"],
-    ["T722990606-1", "10/29/2026", "10/30/2026", "PDVSA 6 05/16/24", "Limit", "USP7807HAT25", "Buy", "0/20,000", "85.675", "17,135.10", "0.00", "Guillermo Sabal", "EMFI Securities", "Rejected"],
-    ["T238026082-1", "10/29/2026", "10/30/2026", "PDVSA 6 05/16/24", "Limit", "USP7807HAT25", "Buy", "1,000/1,000", "154.258", "1,689.01", "147.33", "EMFI Securities", "Intesa Sanpaolo", "Filled"],
+    ["T933753449-1", "10/29/2026", "10/30/2026", "PEMEX 6 5/8 PERP", "Limit", "US71656MAF67", "Buy", "0/25,000", "98.960", "51,387.22", "26,447.22", "Filled"],
+    ["T282545185-1", "10/29/2026", "10/30/2026", "PEMEX 6 5/8 PERP", "Limit", "US71656MAF67", "Buy", "0/20,000", "98.890", "41,095.78", "21,317.78", "Filled"],
+    ["T282545184-1", "10/29/2026", "10/30/2026", "PEMEX 6 5/8 PERP", "Limit", "US71656MAF67", "Buy", "0/20,000", "98.890", "41,095.78", "21,317.78", "Filled"],
+    ["T8737354762-1", "10/29/2026", "10/30/2026", "PEMEX 6 5/8 PERP", "Limit", "US71656MAF67", "Buy", "0/15,000", "98.860", "30,817.33", "15,988.33", "Filled"],
+    ["T6761119876-1", "10/29/2026", "10/30/2026", "ARGENT 0.75 07/09/30", "Limit", "US040114HS26", "Buy", "0/25,000", "98.560", "19,758.25", "46.25", "Filled"],
   ] as const;
 
   const classicRows = [
@@ -965,22 +967,28 @@ function TransactionsStrip({ apple = false }: { apple?: boolean }) {
                   const sensitive =
                     i === portfolioIdx ||
                     i === counterpartyIdx ||
-                    (apple && (i === tradeDateIdx || i === settlementIdx || i === securityIdx));
-                  const status = cell as "Filled" | "Rejected" | "Placed";
+                    (apple &&
+                      (i === tradeDateIdx ||
+                        i === settlementIdx ||
+                        i === securityIdx ||
+                        i === isinIdx));
+                  const status = cell as "Filled" | "Rejected" | "Placed" | "Working";
                   return (
                     <td
                       key={i}
-                      className={`truncate px-0.5 py-1 leading-none ${
+                      className={`truncate leading-none ${
+                        apple ? (i === statusIdx ? "h-[16px] px-px py-[2px]" : "px-0.5 py-[2px]") : "px-0.5 py-1"
+                      } ${
                         i >= 7 && i <= 10
                           ? "text-right tabular-nums text-[#0a1629]"
                           : "text-[#3d4a5c]"
                       } ${i === refIdx ? "font-medium text-[#3b82c4]" : ""} ${
                         i === securityIdx ? "text-[#2f5f8f]" : ""
                       } ${i === isinIdx ? "text-[#b86b2e]" : ""} ${
-                        sensitive ? "blur-[3.5px] select-none" : ""
-                      }`}
+                        i === statusIdx ? "text-center" : ""
+                      } ${sensitive ? "blur-[3.5px] select-none" : ""}`}
                     >
-                      {i === statusIdx ? <StatusBadge status={status} /> : cell}
+                      {i === statusIdx ? <StatusBadge status={status} apple={apple} /> : cell}
                     </td>
                   );
                 })}
@@ -1018,7 +1026,7 @@ function OrderEntryPanel({
             <div className="flex shrink-0 items-center gap-2 px-2 py-1">
               <span
                 className={`text-[9px] font-bold text-[#0a1629] ${
-                  chart === "candle" || apple ? "blur-[3.5px] select-none" : ""
+                  chart === "candle" ? "blur-[3.5px] select-none" : ""
                 }`}
               >
                 {title}
@@ -1128,15 +1136,17 @@ function AppChrome({
   crumbs,
   date,
   activeModule,
+  bare = false,
   children,
 }: {
   crumbs: string;
   date: string;
   activeModule: (typeof MODULES)[number];
+  bare?: boolean;
   children: ReactNode;
 }) {
   return (
-    <div className="pointer-events-none flex h-full min-h-0 flex-col overflow-hidden rounded-md border border-line bg-page shadow-sm">
+    <div className={`pointer-events-none flex h-full min-h-0 flex-col overflow-hidden rounded-md bg-page ${bare ? "" : "border border-line shadow-sm"}`}>
       <header className="flex shrink-0 items-center gap-2 bg-nav px-3 py-2">
         <Image
           src="/brand/emfi-logo.svg"
@@ -1250,7 +1260,7 @@ function ViewPanel({ view, apple = false }: { view: View; apple?: boolean }) {
     case "HeroDashboard":
       return (
         <div className="h-full">
-          <HeroDashboardScreen />
+          <HeroDashboardScreen bare={apple} />
         </div>
       );
     case "MobileBalances":
@@ -1318,14 +1328,12 @@ function MobileScreensSlide({
 
 export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false }: { views?: readonly View[]; quietFrame?: boolean } = {}) {
   const reduced = useReducedMotion();
-  const [index, setIndex] = useState(() => {
-    const phones = views.indexOf("FloatingPhones");
-    return phones >= 0 ? phones : 0;
-  });
+  const [index, setIndex] = useState(0);
   const view = views[index] ?? views[0];
   const meta = VIEW_META[view];
   const still = phoneViews.has(view);
-  const hold = still ? PHONE_POSE_MS * 2 - 400 : HOLD_MS;
+  const openFrame = quietFrame;
+  const hold = HOLD_MS;
 
   useEffect(() => {
     if (reduced) return;
@@ -1338,10 +1346,14 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false 
 
   return (
     <div
-      className={`rounded-xl border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}
-      style={{
-        background: `${view === "MobileBalances" || view === "MobileScreens" || phoneViews.has(view) ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${quietFrame ? quietBorder : ctaBorderGradient} border-box`,
-      }}
+      className={`rounded-xl ${openFrame ? "" : `border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}`}
+      style={
+        openFrame
+          ? undefined
+          : {
+              background: `${view === "MobileBalances" || view === "MobileScreens" || phoneViews.has(view) ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${quietFrame ? quietBorder : ctaBorderGradient} border-box`,
+            }
+      }
     >
       {/* Fixed stage height so public + app slides never resize the hero */}
       <div className={`relative h-[438px] md:h-[478px] ${still ? "" : "overflow-hidden"}`} style={quietFrame ? { borderRadius: 29 } : undefined}>
@@ -1361,6 +1373,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false 
                 crumbs={meta.crumbs}
                 date={meta.date}
                 activeModule={meta.activeModule}
+                bare={quietFrame}
               >
                 <ViewPanel view={view} apple={quietFrame} />
               </AppChrome>
