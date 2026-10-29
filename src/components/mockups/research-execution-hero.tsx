@@ -8,12 +8,14 @@ import {
   Calendar,
   Eye,
   Folder,
+  GripVertical,
   Pencil,
   Power,
   Search,
   Settings,
   X,
 } from "lucide-react";
+import { FloatingPhones, PHONE_POSE_MS } from "@/components/mockups/floating-phones";
 import { HeroDashboardScreen } from "@/components/mockups/operating-view";
 
 const HOLD_MS = 3400;
@@ -37,12 +39,13 @@ const VIEWS = [
   "OrderEur",
   "OrderAapl",
 ] as const;
-type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances" | "MobileScreens" | "MobileScreensPerspective";
+type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances" | "MobileScreens" | "MobileScreensPerspective" | "FloatingPhones";
 
 export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] as const satisfies readonly View[];
 export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
 export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreens"] as const satisfies readonly View[];
 export const home16ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreensPerspective"] as const satisfies readonly View[];
+export const homeV5ResponsiveSlides = ["OrderEur", "HeroDashboard", "FloatingPhones"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
@@ -108,6 +111,12 @@ const VIEW_META: Record<
     kind: "public",
   },
   MobileScreensPerspective: {
+    crumbs: "",
+    date: "",
+    activeModule: "Clients",
+    kind: "public",
+  },
+  FloatingPhones: {
     crumbs: "",
     date: "",
     activeModule: "Clients",
@@ -228,14 +237,13 @@ function ActivePill({ label }: { label: string }) {
   );
 }
 
-function StatusBadge({ status }: { status: "Filled" | "Placed" }) {
-  const filled = status === "Filled";
+function StatusBadge({ status }: { status: "Filled" | "Rejected" | "Placed" }) {
+  const tone =
+    status === "Filled"
+      ? "bg-[#d8f5e4] text-[#1a7a45]"
+      : "bg-[#ffe4cc] text-[#c45a12]";
   return (
-    <span
-      className={`inline-flex items-center rounded-[5px] px-1 py-px text-[5.5px] font-bold ${
-        filled ? "bg-[#d8f5e4] text-[#1a7a45]" : "bg-[#ffe4cc] text-[#c45a12]"
-      }`}
-    >
+    <span className={`inline-flex items-center rounded-[5px] px-1 py-px text-[5.5px] font-bold ${tone}`}>
       {status}
     </span>
   );
@@ -638,11 +646,93 @@ function PublicArticlePanel({
 
 function ExecutionSide({
   symbol,
+  apple = false,
 }: {
   symbol: string;
+  apple?: boolean;
 }) {
   const ccy = symbol === "AAPL" ? "USD" : "EUR";
   const label = symbol === "AAPL" ? "APPLE INC" : symbol;
+  if (apple) {
+    return (
+      <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[10px] border border-[#e0e4ea] bg-white">
+        <div className="flex shrink-0 items-center gap-1 bg-[#f3f5f8] px-2 py-1">
+          <GripVertical size={9} className="shrink-0 text-[#98a2b3]" strokeWidth={2} />
+          <span className="text-[8.5px] font-bold text-[#0a1629]">Execution</span>
+          <X size={10} className="ml-auto text-[#80909d]" strokeWidth={2} />
+        </div>
+
+        <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-hidden px-2 py-1.5">
+          <div className="flex h-[16px] shrink-0 items-center rounded-[6px] border border-[#d8dde5] px-1.5 text-[6px] text-[#8a94a3]">
+            <span className="truncate">Search by ISIN or Ticker...</span>
+            <span className="ml-auto pl-1 text-[6px]">▾</span>
+          </div>
+
+          <div className="flex shrink-0 items-center gap-1">
+            <span className="blur-[3.5px] select-none text-[7.5px] font-bold text-[#2458a6]">APPLE INC</span>
+            <span className="ml-auto inline-flex items-center gap-1">
+              <span className="inline-flex h-[11px] items-center rounded-[4px] border border-[#d8dde5] px-1 text-[5.5px] font-semibold text-[#6b7788]">
+                OPT
+              </span>
+              <Eye size={9} className="text-[#80909d]" strokeWidth={2} />
+            </span>
+          </div>
+
+          <div className="flex h-[16px] shrink-0 items-center rounded-[6px] border border-[#d8dde5] px-1.5 text-[7px] font-semibold text-[#0a1629]">
+            <span className="blur-[3.5px] select-none">Interactive</span>
+            <span className="ml-auto pl-1 text-[6px] font-normal text-[#8a94a3]">▾</span>
+          </div>
+
+          <div className="relative flex h-[26px] shrink-0 overflow-hidden rounded-[6px]">
+            <div className="flex min-w-0 flex-1 flex-col justify-center bg-[#e7f8ee] pl-1.5">
+              <p className="text-[5px] font-semibold leading-none text-[#16a34a]">BID</p>
+              <p className="mt-0.5 text-[7.5px] font-bold leading-none tabular-nums text-[#16a34a]">0.00 ↑</p>
+            </div>
+            <div className="pointer-events-none absolute top-1/2 left-1/2 z-[1] flex h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-[4px] bg-[#0a1629] text-[9px] font-bold leading-none text-white">
+              −
+            </div>
+            <div className="flex min-w-0 flex-1 flex-col items-end justify-center bg-[#fdecec] pr-1.5">
+              <p className="text-[5px] font-semibold leading-none text-[#e11d2e]">ASK</p>
+              <p className="mt-0.5 text-[7.5px] font-bold leading-none tabular-nums text-[#e11d2e]">↓ 0.00</p>
+            </div>
+          </div>
+
+          <div className="grid shrink-0 grid-cols-2 gap-1.5">
+            <div>
+              <p className="mb-0.5 text-[5.5px] font-medium leading-none text-[#0a1629]">Order Type</p>
+              <div className="flex h-[16px] items-center rounded-[6px] border border-[#d8dde5] px-1.5 text-[6.5px] font-semibold text-[#0a1629]">
+                MARKET
+                <span className="ml-auto text-[6px] font-normal text-[#8a94a3]">▾</span>
+              </div>
+            </div>
+            <div>
+              <p className="mb-0.5 text-[5.5px] font-medium leading-none text-[#0a1629]">Time</p>
+              <div className="flex h-[16px] items-center rounded-[6px] border border-[#d8dde5] px-1.5 text-[6.5px] font-semibold text-[#0a1629]">
+                DAY
+                <span className="ml-auto text-[6px] font-normal text-[#8a94a3]">▾</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="shrink-0">
+            <p className="mb-0.5 text-[5.5px] font-medium leading-none text-[#0a1629]">Quantity</p>
+            <div className="flex h-[16px] items-center rounded-[6px] border border-[#d8dde5] px-1.5 text-[7px] font-semibold tabular-nums text-[#0a1629]">
+              0
+            </div>
+          </div>
+
+          <div className="mt-auto grid shrink-0 grid-cols-2 gap-1.5 pt-0.5">
+            <span className="flex h-[22px] items-center justify-center rounded-[0.75rem] bg-[#f07167] text-[8px] font-bold text-white">
+              Sell
+            </span>
+            <span className="flex h-[22px] items-center justify-center rounded-[0.75rem] bg-[#2fce73] text-[8px] font-bold text-white">
+              Buy
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[10px] border border-[#e0e4ea] bg-white">
       <div className="flex shrink-0 items-center justify-between px-2 py-1">
@@ -653,17 +743,19 @@ function ExecutionSide({
       <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-hidden px-2 pb-1.5">
         <div className="flex h-[18px] shrink-0 items-center gap-1 rounded-[10px] border border-[#d8dde5] px-1.5 text-[6px] text-[#8a94a3]">
           <Search size={8} className="shrink-0 text-[#8a94a3]" />
-          <span className="truncate">Search by ISIN or Ticker</span>
+          <span className="truncate">{apple ? "Search by ISIN or Ticker..." : "Search by ISIN or Ticker"}</span>
         </div>
 
         <div className="flex shrink-0 items-center gap-1">
           <span className="text-[7.5px] font-bold text-[#0a1629]">{label}</span>
-          {symbol !== "AAPL" ? (
+          {apple ? (
+            <span className="ml-auto text-[6px] font-semibold text-[#6b7788]">OPT</span>
+          ) : symbol !== "AAPL" ? (
             <span className="inline-flex h-2.5 items-center rounded-full bg-[#eef1f5] px-1 text-[4.5px] font-semibold text-[#6b7788]">
               FUT
             </span>
           ) : null}
-          <Eye size={9} className="ml-auto text-[#2b6cb0]" strokeWidth={2} />
+          {apple ? null : <Eye size={9} className="ml-auto text-[#2b6cb0]" strokeWidth={2} />}
         </div>
 
         <div className="shrink-0 rounded-[10px] border border-[#d8dde5] px-1.5 py-0.5">
@@ -675,16 +767,16 @@ function ExecutionSide({
         </div>
 
         <div className="relative flex shrink-0 items-stretch gap-1.5">
-          <div className="min-w-0 flex-1 rounded-[10px] border border-[#d8dde5] px-1 py-0.5 text-center">
+          <div className={`min-w-0 flex-1 rounded-[10px] px-1 py-0.5 text-center ${apple ? "border border-[#d7f3e3] bg-[#e9f9ef]" : "border border-[#d8dde5]"}`}>
             <p className="text-[5px] font-semibold leading-none text-[#8a94a3]">BID</p>
-            <p className="mt-0.5 text-[8px] font-bold leading-none tabular-nums text-[#22c55e]">▲ 0</p>
+            <p className={`mt-0.5 text-[8px] font-bold leading-none tabular-nums ${apple ? "text-[#16a34a]" : "text-[#22c55e]"}`}>{apple ? "0.00 ↑" : "▲ 0"}</p>
           </div>
           <div className="pointer-events-none absolute top-1/2 left-1/2 z-[1] flex h-[18px] w-[18px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#0a1629] text-[7px] font-bold text-white ring-2 ring-white">
             0
           </div>
-          <div className="min-w-0 flex-1 rounded-[10px] border border-[#d8dde5] px-1 py-0.5 text-center">
+          <div className={`min-w-0 flex-1 rounded-[10px] px-1 py-0.5 text-center ${apple ? "border border-[#f8d4d2] bg-[#fdeceb]" : "border border-[#d8dde5]"}`}>
             <p className="text-[5px] font-semibold leading-none text-[#8a94a3]">ASK</p>
-            <p className="mt-0.5 text-[8px] font-bold leading-none tabular-nums text-[#f04438]">▼ 0</p>
+            <p className={`mt-0.5 text-[8px] font-bold leading-none tabular-nums ${apple ? "text-[#e11d2e]" : "text-[#f04438]"}`}>{apple ? "↓ 0.00" : "▼ 0"}</p>
           </div>
         </div>
 
@@ -716,10 +808,10 @@ function ExecutionSide({
         </div>
 
         <div className="mt-auto grid shrink-0 grid-cols-2 gap-1.5 pt-0.5">
-          <span className="flex h-6 items-center justify-center rounded-[10px] bg-[#f04438] text-[8px] font-bold text-white">
+          <span className={`flex h-6 items-center justify-center rounded-[10px] text-[8px] font-bold text-white ${apple ? "bg-[#f07167]" : "bg-[#f04438]"}`}>
             Sell
           </span>
-          <span className="flex h-6 items-center justify-center rounded-[10px] bg-[#22c55e] text-[8px] font-bold text-white">
+          <span className={`flex h-6 items-center justify-center rounded-[10px] text-[8px] font-bold text-white ${apple ? "bg-[#2fce73]" : "bg-[#22c55e]"}`}>
             Buy
           </span>
         </div>
@@ -728,43 +820,84 @@ function ExecutionSide({
   );
 }
 
-function TransactionsStrip() {
-  const headers = [
-    "Reference",
-    "Trade Date",
-    "Settlement",
-    "Security",
-    "Order Type",
-    "ISIN",
-    "Direction",
-    "Amount",
-    "Price",
-    "Accrued",
-    "Market Value",
-    "Portfolio",
-    "Counterparty",
-    "Status",
+function TransactionsStrip({ apple = false }: { apple?: boolean }) {
+  const headers = (apple
+    ? [
+        "Reference",
+        "Trade Date",
+        "Settlement",
+        "Security",
+        "Order Type",
+        "ISIN",
+        "Direction",
+        "Amount",
+        "Price",
+        "Market Value",
+        "Accrued",
+        "Portfolio",
+        "Counterparty",
+        "Status",
+      ]
+    : [
+        "Reference",
+        "Trade Date",
+        "Settlement",
+        "Security",
+        "Order Type",
+        "ISIN",
+        "Direction",
+        "Amount",
+        "Price",
+        "Accrued",
+        "Market Value",
+        "Portfolio",
+        "Counterparty",
+        "Status",
+      ]) as readonly string[];
+
+  const filterPlaceholders = apple
+    ? [
+        "Reference",
+        "mm/dd/yyyy",
+        "mm/dd/yyyy",
+        "Security",
+        "Order Type",
+        "ISIN",
+        "Direction",
+        "Amount",
+        "Price",
+        "Market Value",
+        "Accrued",
+        "Portfolio",
+        "Counterparty",
+        "All",
+      ]
+    : [
+        "Reference",
+        "mm/dd/yyyy",
+        "mm/dd/yyyy",
+        "Security",
+        "Order Type",
+        "ISIN",
+        "Direction",
+        "Amount",
+        "Price",
+        "Accrued",
+        "Market Value",
+        "Portfolio",
+        "Counterparty",
+        "All",
+      ];
+
+  const appleRows = [
+    ["T8722354762-1", "10/29/2026", "10/30/2026", "PEMEX 6 5/8 03/15/35", "Limit", "US71654MAF67", "Buy", "0/15,000", "99.800", "30,871.33", "15,988.33", "EMFI Securities", "Intesa Sanpaolo", "Rejected"],
+    ["T872354761-1", "10/29/2026", "10/30/2026", "PEMEX 6 5/8 03/15/35", "Limit", "US71654MAF67", "Buy", "0/15,000", "98.860", "30,817.33", "15,988.33", "EMFI Securities", "Intesa Sanpaolo", "Rejected"],
+    ["T670119876-1", "10/29/2026", "10/30/2026", "ARGENT 0.75 07/09/30", "Limit", "US040114HS26", "Buy", "0/25,000", "98.560", "19,758.25", "46.25", "Guillermo Sabal", "BMFI Securities", "Rejected"],
+    ["T722990606-1", "10/29/2026", "10/30/2026", "PDVSA 6 05/16/24", "Limit", "USP7807HAT25", "Buy", "0/20,000", "85.675", "17,135.10", "0.00", "Guillermo Sabal", "EMFI Securities", "Rejected"],
+    ["T238026082-1", "10/29/2026", "10/30/2026", "PDVSA 6 05/16/24", "Limit", "USP7807HAT25", "Buy", "1,000/1,000", "154.258", "1,689.01", "147.33", "EMFI Securities", "Intesa Sanpaolo", "Filled"],
   ] as const;
 
-  const filterPlaceholders = [
-    "Reference",
-    "mm/dd/yyyy",
-    "mm/dd/yyyy",
-    "Security",
-    "Order Type",
-    "ISIN",
-    "Direction",
-    "Amount",
-    "Price",
-    "Accrued",
-    "Market Value",
-    "Portfolio",
-    "Counterparty",
-    "All",
-  ] as const;
-
-  // Five rows fill the panel without leaving empty space at the bottom
-  const rows = [
+  const classicRows = [
     ["T261019083-1", "10/19/2026", "10/21/2026", "MSFT | NMS | USD", "MARKET", "US5949181045", "Buy", "0/5", "MARKET", "0", "24.00", "Alpha Desk 003", "Intesa Desk EU", "Placed"],
     ["T261018044-2", "10/18/2026", "10/20/2026", "AAPL | NMS | USD", "LIMIT", "US0378331005", "Sell", "2/2", "218.40", "0", "436.80", "Equity Book 02", "Prime Broker EU", "Filled"],
     ["T261017019-1", "10/17/2026", "10/19/2026", "EURUSD | FX | EUR", "MARKET", "EU0009652759", "Buy", "1/1", "1.0874", "0", "108.74", "FX Overlay 01", "Clearstream SA", "Filled"],
@@ -772,8 +905,12 @@ function TransactionsStrip() {
     ["T261015028-1", "10/15/2026", "10/17/2026", "META | NMS | USD", "LIMIT", "US30303M1027", "Buy", "4/4", "512.30", "0", "2,049.20", "Tech Book 05", "Agency Desk LTD", "Filled"],
   ] as const;
 
+  const rows = apple ? appleRows : classicRows;
+
   const portfolioIdx = headers.indexOf("Portfolio");
   const counterpartyIdx = headers.indexOf("Counterparty");
+  const tradeDateIdx = headers.indexOf("Trade Date");
+  const settlementIdx = headers.indexOf("Settlement");
   const statusIdx = headers.indexOf("Status");
   const refIdx = headers.indexOf("Reference");
   const securityIdx = headers.indexOf("Security");
@@ -782,7 +919,7 @@ function TransactionsStrip() {
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[10px] border border-[#e0e4ea] bg-white">
       <div className="flex shrink-0 items-center justify-between bg-[#e8edf3] px-2.5 py-1.5">
-        <span className="text-[9px] font-bold text-[#0a1629]">Transactions</span>
+        <span className="text-[9px] font-bold text-[#0a1629]">{apple ? "Transaction" : "Transactions"}</span>
         <div className="flex items-center gap-1">
           <span className="inline-flex h-[18px] items-center rounded-[10px] bg-[#f04438] px-2 text-[6.5px] font-bold text-white">
             Kill All
@@ -825,8 +962,11 @@ function TransactionsStrip() {
                 className={`border-t border-[#eef1f5] ${ri % 2 === 1 ? "bg-[#f5f7fa]" : "bg-white"}`}
               >
                 {row.map((cell, i) => {
-                  const sensitive = i === portfolioIdx || i === counterpartyIdx;
-                  const status = cell as "Filled" | "Placed";
+                  const sensitive =
+                    i === portfolioIdx ||
+                    i === counterpartyIdx ||
+                    (apple && (i === tradeDateIdx || i === settlementIdx || i === securityIdx));
+                  const status = cell as "Filled" | "Rejected" | "Placed";
                   return (
                     <td
                       key={i}
@@ -857,10 +997,12 @@ function OrderEntryPanel({
   symbol,
   title,
   chart,
+  apple = false,
 }: {
   symbol: string;
   title: string;
   chart: "line" | "candle";
+  apple?: boolean;
 }) {
   return (
     <div className="relative h-full overflow-hidden bg-[#eef1f5]">
@@ -876,7 +1018,7 @@ function OrderEntryPanel({
             <div className="flex shrink-0 items-center gap-2 px-2 py-1">
               <span
                 className={`text-[9px] font-bold text-[#0a1629] ${
-                  chart === "candle" ? "blur-[3.5px] select-none" : ""
+                  chart === "candle" || apple ? "blur-[3.5px] select-none" : ""
                 }`}
               >
                 {title}
@@ -913,13 +1055,33 @@ function OrderEntryPanel({
                       ))}
                     </div>
                   </>
+                ) : apple ? (
+                  <>
+                    <span className="inline-flex h-4 w-4 items-center justify-center rounded-[3px] text-[#8a94a3]">
+                      <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden>
+                        <path d="M1 7.5 L3 5 L5 6 L7 3.5 L9 2" fill="none" stroke="currentColor" strokeWidth="1.2" />
+                      </svg>
+                    </span>
+                    <span className="inline-flex h-4 w-4 items-center justify-center rounded-[3px] bg-[#e8eef8] text-[#3b6db5]">
+                      <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden>
+                        <line x1="2.5" y1="1.5" x2="2.5" y2="8.5" stroke="currentColor" strokeWidth="1" />
+                        <rect x="1.5" y="3" width="2" height="3.5" fill="currentColor" />
+                        <line x1="7.5" y1="1.5" x2="7.5" y2="8.5" stroke="currentColor" strokeWidth="1" />
+                        <rect x="6.5" y="2.5" width="2" height="4" fill="currentColor" />
+                      </svg>
+                    </span>
+                    <div className="flex items-center gap-1 text-[6.5px] text-[#6b7788]">
+                      {["1D", "5D", "1M", "6M", "YTD", "1Y", "5Y", "MAX"].map((t) => (
+                        <span key={t} className="font-medium">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </>
                 ) : (
                   <div className="flex items-center gap-1.5 text-[6.5px] text-[#6b7788]">
                     {["5D", "1M", "6M", "YTD", "1Y", "5Y", "MAX"].map((t, i) => (
-                      <span
-                        key={t}
-                        className={i === 1 ? "font-bold text-[#0a1629]" : "font-medium"}
-                      >
+                      <span key={t} className={i === 1 ? "font-bold text-[#0a1629]" : "font-medium"}>
                         {t}
                       </span>
                     ))}
@@ -931,19 +1093,31 @@ function OrderEntryPanel({
             <div className="min-h-0 flex-1 px-1.5 pb-1.5">
               {chart === "line" ? (
                 <AreaChart
-                  path="M0 88 C28 80, 48 72, 70 78 C96 86, 118 54, 148 48 C176 42, 198 58, 228 40 C256 24, 286 32, 320 28"
-                  labels={["22 Sep", "29 Sep", "06 Oct", "13 Oct", "20 Oct"]}
-                  yLabels={["1.150", "1.135", "1.120", "1.105"]}
+                  path={
+                    apple
+                      ? "M0 122 C36 108, 62 72, 96 58 C128 46, 168 52, 206 46 C244 40, 278 30, 320 16"
+                      : "M0 88 C28 80, 48 72, 70 78 C96 86, 118 54, 148 48 C176 42, 198 58, 228 40 C256 24, 286 32, 320 28"
+                  }
+                  labels={
+                    apple
+                      ? ["4. May", "11. May", "18. May", "25. May", "1. Jun", "8. Jun"]
+                      : ["22 Sep", "29 Sep", "06 Oct", "13 Oct", "20 Oct"]
+                  }
+                  yLabels={
+                    apple
+                      ? ["320.0000", "310.0000", "300.0000", "290.0000", "280.0000", "270.0000"]
+                      : ["1.150", "1.135", "1.120", "1.105"]
+                  }
                 />
               ) : (
                 <CandleChart />
               )}
             </div>
           </div>
-          <ExecutionSide symbol={symbol} />
+          <ExecutionSide symbol={symbol} apple={apple} />
         </div>
         <div className="min-h-0 overflow-hidden">
-          <TransactionsStrip />
+          <TransactionsStrip apple={apple} />
         </div>
       </div>
     </div>
@@ -1023,7 +1197,7 @@ function AppChrome({
   );
 }
 
-function ViewPanel({ view }: { view: View }) {
+function ViewPanel({ view, apple = false }: { view: View; apple?: boolean }) {
   switch (view) {
     case "Dashboard":
       return <ResearchDashboardPanel />;
@@ -1066,7 +1240,11 @@ function ViewPanel({ view }: { view: View }) {
         />
       );
     case "OrderEur":
-      return <OrderEntryPanel symbol="EURUSD" title="EURUSD" chart="line" />;
+      return apple ? (
+        <OrderEntryPanel symbol="AAPL" title="APPLE INC" chart="line" apple />
+      ) : (
+        <OrderEntryPanel symbol="EURUSD" title="EURUSD" chart="line" />
+      );
     case "OrderAapl":
       return <OrderEntryPanel symbol="AAPL" title="APPLE INC" chart="candle" />;
     case "HeroDashboard":
@@ -1087,11 +1265,15 @@ function ViewPanel({ view }: { view: View }) {
           height={1564}
         />
       );
+    case "FloatingPhones":
+      return <FloatingPhones />;
   }
 }
 
 const balancesGradient = "linear-gradient(165deg, #f5f9fd 0%, #d7e6f8 100%)";
 const ctaBorderGradient = "linear-gradient(90deg, #a7c4fd 0%, #a1bcf3 10%, #9ab5ea 20%, #94aee1 30%, #90a7d9 40%, #899fd0 50%, #75a5c9 60%, #5aafc3 70%, #42b7bc 80%, #2dc0b5 90%, #1ecaae 100%)";
+const quietBorder = "linear-gradient(90deg, rgb(186 214 246 / 80%), rgb(168 206 220 / 55%))";
+const phoneViews = new Set<View>(["FloatingPhones"]);
 
 function MobileBalancesSlide() {
   return (
@@ -1131,48 +1313,53 @@ function MobileScreensSlide({
   );
 }
 
-export function ResearchExecutionHeroMockup({ views = VIEWS }: { views?: readonly View[] } = {}) {
+export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false }: { views?: readonly View[]; quietFrame?: boolean } = {}) {
   const reduced = useReducedMotion();
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(() => {
+    const phones = views.indexOf("FloatingPhones");
+    return phones >= 0 ? phones : 0;
+  });
   const view = views[index] ?? views[0];
   const meta = VIEW_META[view];
+  const still = phoneViews.has(view);
+  const hold = still ? PHONE_POSE_MS * 2 - 400 : HOLD_MS;
 
   useEffect(() => {
     if (reduced) return;
     const id = window.setInterval(
       () => setIndex((i) => (i + 1) % views.length),
-      HOLD_MS,
+      hold,
     );
     return () => window.clearInterval(id);
-  }, [reduced, views]);
+  }, [reduced, views, hold]);
 
   return (
     <div
-      className="rounded-xl border border-transparent p-2 md:p-3"
+      className={`rounded-xl border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}
       style={{
-        background: `${view === "MobileBalances" || view === "MobileScreens" ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${ctaBorderGradient} border-box`,
+        background: `${view === "MobileBalances" || view === "MobileScreens" || phoneViews.has(view) ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${quietFrame ? quietBorder : ctaBorderGradient} border-box`,
       }}
     >
       {/* Fixed stage height so public + app slides never resize the hero */}
-      <div className="relative h-[438px] overflow-hidden md:h-[478px]">
+      <div className={`relative h-[438px] md:h-[478px] ${still ? "" : "overflow-hidden"}`} style={quietFrame ? { borderRadius: 29 } : undefined}>
         <AnimatePresence mode="wait">
           <motion.div
             key={view}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            initial={still ? false : { opacity: 0, y: 12 }}
+            animate={still ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            exit={still ? { opacity: 0 } : { opacity: 0, y: -10 }}
             transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0 h-full overflow-hidden"
+            className={`absolute inset-0 h-full ${still ? "" : "overflow-hidden"}`}
           >
             {meta.kind === "public" ? (
-              <ViewPanel view={view} />
+              <ViewPanel view={view} apple={quietFrame} />
             ) : (
               <AppChrome
                 crumbs={meta.crumbs}
                 date={meta.date}
                 activeModule={meta.activeModule}
               >
-                <ViewPanel view={view} />
+                <ViewPanel view={view} apple={quietFrame} />
               </AppChrome>
             )}
           </motion.div>
