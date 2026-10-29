@@ -145,11 +145,6 @@ function AxisBars({
       </div>
       <div className="flex min-h-0 min-w-0 flex-1 flex-col">
         <div className="relative flex min-h-0 flex-1 items-end border-b border-l border-[#e4e8ee]">
-          <div className="pointer-events-none absolute inset-0 flex flex-col justify-between">
-            {ticks.map((tick) => (
-              <div key={tick} className="border-t border-[#e8edf2]" />
-            ))}
-          </div>
           {bars.map((bar) => (
             <div key={bar.label} className="relative z-[1] flex h-full flex-1 items-end justify-center">
               <div
