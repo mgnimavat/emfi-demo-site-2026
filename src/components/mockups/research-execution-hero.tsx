@@ -14,6 +14,7 @@ import {
   Settings,
   X,
 } from "lucide-react";
+import { FloatingPhones, PHONE_POSE_MS } from "@/components/mockups/floating-phones";
 import { HeroDashboardScreen } from "@/components/mockups/operating-view";
 
 const HOLD_MS = 3400;
@@ -37,12 +38,13 @@ const VIEWS = [
   "OrderEur",
   "OrderAapl",
 ] as const;
-type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances" | "MobileScreens" | "MobileScreensPerspective";
+type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances" | "MobileScreens" | "MobileScreensPerspective" | "FloatingPhones";
 
 export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] as const satisfies readonly View[];
 export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
 export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreens"] as const satisfies readonly View[];
 export const home16ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreensPerspective"] as const satisfies readonly View[];
+export const homeV5ResponsiveSlides = ["OrderEur", "HeroDashboard", "FloatingPhones"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
@@ -108,6 +110,12 @@ const VIEW_META: Record<
     kind: "public",
   },
   MobileScreensPerspective: {
+    crumbs: "",
+    date: "",
+    activeModule: "Clients",
+    kind: "public",
+  },
+  FloatingPhones: {
     crumbs: "",
     date: "",
     activeModule: "Clients",
@@ -1087,11 +1095,15 @@ function ViewPanel({ view }: { view: View }) {
           height={1564}
         />
       );
+    case "FloatingPhones":
+      return <FloatingPhones />;
   }
 }
 
 const balancesGradient = "linear-gradient(165deg, #f5f9fd 0%, #d7e6f8 100%)";
 const ctaBorderGradient = "linear-gradient(90deg, #a7c4fd 0%, #a1bcf3 10%, #9ab5ea 20%, #94aee1 30%, #90a7d9 40%, #899fd0 50%, #75a5c9 60%, #5aafc3 70%, #42b7bc 80%, #2dc0b5 90%, #1ecaae 100%)";
+const quietBorder = "linear-gradient(90deg, rgb(186 214 246 / 80%), rgb(168 206 220 / 55%))";
+const phoneViews = new Set<View>(["FloatingPhones"]);
 
 function MobileBalancesSlide() {
   return (
@@ -1131,38 +1143,43 @@ function MobileScreensSlide({
   );
 }
 
-export function ResearchExecutionHeroMockup({ views = VIEWS }: { views?: readonly View[] } = {}) {
+export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false }: { views?: readonly View[]; quietFrame?: boolean } = {}) {
   const reduced = useReducedMotion();
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(() => {
+    const phones = views.indexOf("FloatingPhones");
+    return phones >= 0 ? phones : 0;
+  });
   const view = views[index] ?? views[0];
   const meta = VIEW_META[view];
+  const still = phoneViews.has(view);
+  const hold = still ? PHONE_POSE_MS * 2 - 400 : HOLD_MS;
 
   useEffect(() => {
     if (reduced) return;
     const id = window.setInterval(
       () => setIndex((i) => (i + 1) % views.length),
-      HOLD_MS,
+      hold,
     );
     return () => window.clearInterval(id);
-  }, [reduced, views]);
+  }, [reduced, views, hold]);
 
   return (
     <div
-      className="rounded-xl border border-transparent p-2 md:p-3"
+      className={`rounded-xl border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}
       style={{
-        background: `${view === "MobileBalances" || view === "MobileScreens" ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${ctaBorderGradient} border-box`,
+        background: `${view === "MobileBalances" || view === "MobileScreens" || phoneViews.has(view) ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${quietFrame ? quietBorder : ctaBorderGradient} border-box`,
       }}
     >
       {/* Fixed stage height so public + app slides never resize the hero */}
-      <div className="relative h-[438px] overflow-hidden md:h-[478px]">
+      <div className={`relative h-[438px] md:h-[478px] ${still ? "" : "overflow-hidden"}`} style={quietFrame ? { borderRadius: 29 } : undefined}>
         <AnimatePresence mode="wait">
           <motion.div
             key={view}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            initial={still ? false : { opacity: 0, y: 12 }}
+            animate={still ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            exit={still ? { opacity: 0 } : { opacity: 0, y: -10 }}
             transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0 h-full overflow-hidden"
+            className={`absolute inset-0 h-full ${still ? "" : "overflow-hidden"}`}
           >
             {meta.kind === "public" ? (
               <ViewPanel view={view} />
