@@ -64,7 +64,7 @@ const ACCENT = {
   barGrey: "#c5cbd3",
 } as const;
 
-function SemiDonut() {
+function SemiDonut({ tone = ACCENT.rust }: { tone?: string }) {
   return (
     <svg viewBox="0 0 220 118" className="mx-auto mt-0.5 h-[88px] w-full" aria-hidden>
       <path
@@ -77,7 +77,7 @@ function SemiDonut() {
       <path
         d="M22 108 A 88 88 0 1 1 198 108"
         fill="none"
-        stroke={ACCENT.rust}
+        stroke={tone}
         strokeWidth="22"
         strokeDasharray="230 277"
         strokeDashoffset="0"
@@ -212,18 +212,51 @@ function FilterCell({
   );
 }
 
-function DashboardPanel() {
+function DashboardPanel({ demo = false }: { demo?: boolean }) {
+  const usd = demo ? ACCENT.barNavy : ACCENT.rust;
   const currencies = [
-    ["USD", ACCENT.rust],
+    ["USD", usd],
     ["EUR", ACCENT.barBlue],
     ["GBP", ACCENT.barMuted],
     ["JPY", ACCENT.barGrey],
   ] as const;
+  const exposure = demo
+    ? [
+        { label: "DEMO CAPITAL", width: 94, color: ACCENT.barNavy },
+        { label: "SAMPLE CUSTODY", width: 72, color: ACCENT.barMuted },
+        { label: "DUMMY BROKER", width: 58, color: ACCENT.barBlue },
+        { label: "DEMO BANK", width: 44, color: ACCENT.barGrey },
+        { label: "PILOT CLEARING", width: 36, color: ACCENT.barMuted },
+        { label: "TEST COUNTERPARTY", width: 28, color: ACCENT.barBlue },
+      ]
+    : [
+        { label: "NETOFF", width: 94, color: ACCENT.barNavy },
+        { label: "A.G.P. / ALLIANCE GLOBAL PARTNERS CORP", width: 72, color: ACCENT.barMuted },
+        { label: "EUROPEAN DEPOSITARY BANK SA", width: 58, color: ACCENT.barBlue },
+        { label: "CLEARSTREAM BANKING S.A.", width: 44, color: ACCENT.barGrey },
+        { label: "BANCO BTG PACTUAL S.A.", width: 36, color: ACCENT.barMuted },
+        { label: "INTERACTIVE BROKERS (U.K.) LIMITED", width: 28, color: ACCENT.barBlue },
+      ];
+  const positions = demo
+    ? [
+        { label: "DEMO BOND 5.50 2030", width: 96, color: ACCENT.barMuted },
+        { label: "SAMPLE EQUITY A", width: 48, color: ACCENT.barNavy },
+        { label: "DUMMY NOTE 2028", width: 36, color: ACCENT.barBlue },
+        { label: "TEST CORP 4.25", width: 30, color: ACCENT.barGrey },
+        { label: "PILOT 3.00 2032", width: 24, color: ACCENT.barMuted },
+      ]
+    : [
+        { label: "PEMEX 6 5/8 PERP", width: 96, color: ACCENT.barMuted },
+        { label: "GRUPO SUPERVIELLE SA-SP ADR", width: 48, color: ACCENT.barNavy },
+        { label: "META PLATFORMS INC-CLASS A", width: 36, color: ACCENT.barBlue },
+        { label: "ARGENTINA REPUBLIC 3.5 2041", width: 30, color: ACCENT.barGrey },
+        { label: "TURKEY 9.375 2033", width: 24, color: ACCENT.barMuted },
+      ];
 
   return (
     <div className="grid h-full grid-cols-3 grid-rows-2 gap-2">
       <CardShell title="Balances" value="$85,604,878">
-        <SemiDonut />
+        <SemiDonut tone={usd} />
         <div className="mt-1 flex flex-wrap justify-center gap-x-3 gap-y-0.5">
           {currencies.map(([ccy, color]) => (
             <span key={ccy} className="flex items-center gap-1 text-[7px] text-ink-muted">
@@ -243,27 +276,10 @@ function DashboardPanel() {
         />
       </CardShell>
       <CardShell title="Exposure" value="$13,750,261">
-        <HBars
-          items={[
-            { label: "NETOFF", width: 94, color: ACCENT.barNavy },
-            { label: "A.G.P. / ALLIANCE GLOBAL PARTNERS CORP", width: 72, color: ACCENT.barMuted },
-            { label: "EUROPEAN DEPOSITARY BANK SA", width: 58, color: ACCENT.barBlue },
-            { label: "CLEARSTREAM BANKING S.A.", width: 44, color: ACCENT.barGrey },
-            { label: "BANCO BTG PACTUAL S.A.", width: 36, color: ACCENT.barMuted },
-            { label: "INTERACTIVE BROKERS (U.K.) LIMITED", width: 28, color: ACCENT.barBlue },
-          ]}
-        />
+        <HBars items={exposure} />
       </CardShell>
       <CardShell title="Positions" value="$38,339,254">
-        <HBars
-          items={[
-            { label: "PEMEX 6 5/8 PERP", width: 96, color: ACCENT.barMuted },
-            { label: "GRUPO SUPERVIELLE SA-SP ADR", width: 48, color: ACCENT.barNavy },
-            { label: "META PLATFORMS INC-CLASS A", width: 36, color: ACCENT.barBlue },
-            { label: "ARGENTINA REPUBLIC 3.5 2041", width: 30, color: ACCENT.barGrey },
-            { label: "TURKEY 9.375 2033", width: 24, color: ACCENT.barMuted },
-          ]}
-        />
+        <HBars items={positions} />
       </CardShell>
       <CardShell title="Charges" value="$330">
         <VBars
@@ -651,8 +667,7 @@ function CashPanel() {
   );
 }
 
-const panels: Record<View, () => ReactNode> = {
-  Dashboard: DashboardPanel,
+const panels: Record<Exclude<View, "Dashboard">, () => ReactNode> = {
   Securities: SecuritiesPanel,
   Balances: BalancesPanel,
   Cash: CashPanel,
@@ -669,18 +684,20 @@ export function OperatingView({
   tabs = false,
   views = VIEWS,
   fill = false,
+  demo = false,
 }: {
   compact?: boolean;
   tabs?: boolean;
   views?: readonly View[];
   fill?: boolean;
+  demo?: boolean;
 } = {}) {
   const reduced = useReducedMotion();
   const sequence = views.length ? views : VIEWS;
   const [index, setIndex] = useState(0);
   const view = sequence[index] ?? sequence[0];
   const meta = VIEW_META[view];
-  const Panel = panels[view];
+  const Panel = view === "Dashboard" ? () => <DashboardPanel demo={demo} /> : panels[view];
 
   useEffect(() => {
     if (reduced || sequence.length < 2) return;
@@ -800,5 +817,5 @@ export function HeroMockup() {
 }
 
 export function HeroDashboardScreen() {
-  return <OperatingView views={["Dashboard"]} fill />;
+  return <OperatingView views={["Dashboard"]} fill demo />;
 }

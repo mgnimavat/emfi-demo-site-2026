@@ -26,7 +26,39 @@ function GradientMark() {
 
 type PrincipleId = (typeof copy.items)[number]["id"];
 
-export const PrinciplesSection = () => {
+function OpenPrinciples() {
+  return (
+    <section className={styles.openSection} aria-labelledby="home-16-principles-heading">
+      <div className={styles.container}>
+        <h2 id="home-16-principles-heading" className={styles.openTitle}>
+          {copy.title} <span className={styles.emphasis}>{copy.accent}</span>
+        </h2>
+        <div className={styles.openRows}>
+          {copy.items.map((item) => (
+            <article key={item.id} className={styles.openRow}>
+              <div className={styles.openCard}>
+                <h3 className={styles.openCardTitle}>
+                  <span className={styles.emphasis}>{copy.prefix}</span> {item.label}.
+                </h3>
+                <p className={styles.openSummary}>{item.summary}</p>
+              </div>
+              <div className={styles.openDetail}>
+                <h3 className={styles.openDetailHeading}>{item.heading}</h3>
+                <div className={styles.openDetailBody}>
+                  <p>{item.detail}</p>
+                  <ul>{item.points.map((point) => <li key={point}>{point}</li>)}</ul>
+                  <p className={styles.openNote}>{item.note}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InteractivePrinciples() {
   const [activeId, setActiveId] = useState<PrincipleId | null>(null);
 
   return (
@@ -103,4 +135,43 @@ export const PrinciplesSection = () => {
       </div>
     </section>
   );
+}
+
+function StackedPrinciples() {
+  return (
+    <section className={`${styles.section} ${styles.stackedSection}`} aria-labelledby="home-16-principles-heading">
+      <div className={styles.mark} aria-hidden="true">
+        <GradientMark />
+      </div>
+      <div className={styles.container}>
+        <div className={`${styles.intro} ${styles.stackedIntro}`}>
+          <div className={styles.introCopy}>
+            <p className={styles.eyebrow}><span className={styles.eyebrowMark} aria-hidden="true" /><span>{copy.eyebrow}</span></p>
+            <h2 id="home-16-principles-heading" className={styles.title}>
+              <span>{copy.title}</span>
+              <span className={styles.accent}><span className={styles.emphasis}>{copy.accent.replace(/\.$/, "")}</span><span className={styles.period}>.</span></span>
+            </h2>
+            <div className={styles.stackedCards}>
+              {copy.items.map((item) => (
+                <article key={item.id} className={`${styles.card} ${styles.stackedCard}`}>
+                  <h3 className={styles.stackedCardTitle}>
+                    <span className={styles.emphasis}>{copy.prefix}</span> {item.label}.
+                  </h3>
+                  <div className={styles.detail}>
+                    <p>{item.body}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export const PrinciplesSection = ({ open = false, stacked = false }: { open?: boolean; stacked?: boolean }) => {
+  if (open) return <OpenPrinciples />;
+  if (stacked) return <StackedPrinciples />;
+  return <InteractivePrinciples />;
 };
