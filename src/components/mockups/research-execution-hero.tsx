@@ -15,7 +15,7 @@ import {
   Settings,
   X,
 } from "lucide-react";
-import { FloatingPhones, PHONE_POSE_MS } from "@/components/mockups/floating-phones";
+import { FloatingPhones } from "@/components/mockups/floating-phones";
 import { HeroDashboardScreen } from "@/components/mockups/operating-view";
 
 const HOLD_MS = 3400;
@@ -45,7 +45,7 @@ export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] a
 export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
 export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreens"] as const satisfies readonly View[];
 export const home16ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreensPerspective"] as const satisfies readonly View[];
-export const homeV5ResponsiveSlides = ["OrderEur", "HeroDashboard", "FloatingPhones"] as const satisfies readonly View[];
+export const homeV5ResponsiveSlides = ["HeroDashboard", "OrderEur", "FloatingPhones"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
@@ -1136,15 +1136,17 @@ function AppChrome({
   crumbs,
   date,
   activeModule,
+  bare = false,
   children,
 }: {
   crumbs: string;
   date: string;
   activeModule: (typeof MODULES)[number];
+  bare?: boolean;
   children: ReactNode;
 }) {
   return (
-    <div className="pointer-events-none flex h-full min-h-0 flex-col overflow-hidden rounded-md border border-line bg-page shadow-sm">
+    <div className={`pointer-events-none flex h-full min-h-0 flex-col overflow-hidden rounded-md bg-page ${bare ? "" : "border border-line shadow-sm"}`}>
       <header className="flex shrink-0 items-center gap-2 bg-nav px-3 py-2">
         <Image
           src="/brand/emfi-logo.svg"
@@ -1258,7 +1260,7 @@ function ViewPanel({ view, apple = false }: { view: View; apple?: boolean }) {
     case "HeroDashboard":
       return (
         <div className="h-full">
-          <HeroDashboardScreen />
+          <HeroDashboardScreen bare={apple} />
         </div>
       );
     case "MobileBalances":
@@ -1323,14 +1325,12 @@ function MobileScreensSlide({
 
 export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false }: { views?: readonly View[]; quietFrame?: boolean } = {}) {
   const reduced = useReducedMotion();
-  const [index, setIndex] = useState(() => {
-    const phones = views.indexOf("FloatingPhones");
-    return phones >= 0 ? phones : 0;
-  });
+  const [index, setIndex] = useState(0);
   const view = views[index] ?? views[0];
   const meta = VIEW_META[view];
   const still = phoneViews.has(view);
-  const hold = still ? PHONE_POSE_MS * 2 - 400 : HOLD_MS;
+  const openFrame = quietFrame;
+  const hold = HOLD_MS;
 
   useEffect(() => {
     if (reduced) return;
@@ -1343,10 +1343,14 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false 
 
   return (
     <div
-      className={`rounded-xl border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}
-      style={{
-        background: `${view === "MobileBalances" || view === "MobileScreens" || phoneViews.has(view) ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${quietFrame ? quietBorder : ctaBorderGradient} border-box`,
-      }}
+      className={`rounded-xl ${openFrame ? "" : `border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}`}
+      style={
+        openFrame
+          ? undefined
+          : {
+              background: `${view === "MobileBalances" || view === "MobileScreens" || phoneViews.has(view) ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${quietFrame ? quietBorder : ctaBorderGradient} border-box`,
+            }
+      }
     >
       {/* Fixed stage height so public + app slides never resize the hero */}
       <div className={`relative h-[438px] md:h-[478px] ${still ? "" : "overflow-hidden"}`} style={quietFrame ? { borderRadius: 29 } : undefined}>
@@ -1366,6 +1370,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false 
                 crumbs={meta.crumbs}
                 date={meta.date}
                 activeModule={meta.activeModule}
+                bare={quietFrame}
               >
                 <ViewPanel view={view} apple={quietFrame} />
               </AppChrome>
