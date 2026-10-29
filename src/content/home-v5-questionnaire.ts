@@ -1,0 +1,28 @@
+export const questionnaire = {
+  title: 'Is your current infrastructure a bit',
+  accent: 'extra?',
+  back: 'Back',
+  next: 'Next',
+  unanswered: 'Not answered',
+  finish: 'Say Less',
+  resultTitle: 'Say',
+  resultAccent: 'Less.',
+  submit: "Let's talk",
+  backToQuestions: 'Back',
+  emailSubject: 'Home-13 — Custody infrastructure enquiry',
+  draftNotice: 'Continue in your email app to send this enquiry to EMFI.',
+  questions: [
+    { id: 'custody-fee', title: 'What is your annual custody fee?', options: ['5 bps', '3 bps', '1 bp'] },
+    { id: 'minimum-fee', title: 'What is your monthly minimum fee?', options: ['$10,000', '$5,000', '$1,000'] },
+    { id: 'minimum-term', title: 'What is the minimum term of your custody agreement?', options: ['5 years', '3 years', '1 year'] },
+    { id: 'settlement-status', title: 'When can you see settlement status?', options: ['Next business day', 'Intraday', 'Real-time'] },
+    { id: 'middlemen', title: 'How many middlemen sit between you and your assets?', options: ['3', '2', '1'] },
+    { id: 'segregated-account', title: 'Do you have a direct, segregated account at the depository?', options: ['No', 'Not sure', 'Yes'] },
+  ],
+  fields: [
+    { name: 'name', label: 'Name', placeholder: 'Your name', type: 'text', autoComplete: 'name', required: true },
+    { name: 'firm', label: 'Firm', placeholder: 'Company name', type: 'text', autoComplete: 'organization', required: true },
+    { name: 'telephone', label: 'Telephone', placeholder: 'Telephone (optional)', type: 'tel', autoComplete: 'tel', required: false },
+    { name: 'email', label: 'Work email', placeholder: 'you@company.com', type: 'email', autoComplete: 'email', required: true },
+  ],
+} as const;

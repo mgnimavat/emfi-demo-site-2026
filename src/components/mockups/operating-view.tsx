@@ -64,21 +64,21 @@ const ACCENT = {
   barGrey: "#c5cbd3",
 } as const;
 
-function SemiDonut({ tone = ACCENT.rust }: { tone?: string }) {
+function SemiDonut({ tone = ACCENT.rust, weight = 22 }: { tone?: string; weight?: number }) {
   return (
     <svg viewBox="0 0 220 118" className="mx-auto mt-0.5 h-[88px] w-full" aria-hidden>
       <path
         d="M22 108 A 88 88 0 1 1 198 108"
         fill="none"
         stroke="var(--border-strong)"
-        strokeWidth="22"
+        strokeWidth={weight}
         strokeLinecap="butt"
       />
       <path
         d="M22 108 A 88 88 0 1 1 198 108"
         fill="none"
         stroke={tone}
-        strokeWidth="22"
+        strokeWidth={weight}
         strokeDasharray="230 277"
         strokeDashoffset="0"
       />
@@ -86,7 +86,7 @@ function SemiDonut({ tone = ACCENT.rust }: { tone?: string }) {
         d="M22 108 A 88 88 0 1 1 198 108"
         fill="none"
         stroke={ACCENT.barMuted}
-        strokeWidth="22"
+        strokeWidth={weight}
         strokeDasharray="38 469"
         strokeDashoffset="-232"
       />
@@ -94,7 +94,7 @@ function SemiDonut({ tone = ACCENT.rust }: { tone?: string }) {
         d="M22 108 A 88 88 0 1 1 198 108"
         fill="none"
         stroke={ACCENT.barBlue}
-        strokeWidth="22"
+        strokeWidth={weight}
         strokeDasharray="8 499"
         strokeDashoffset="-270"
       />
@@ -129,19 +129,62 @@ function VBars({
   );
 }
 
-function HBars({
-  items,
+function AxisBars({
+  bars,
+  ticks,
 }: {
-  items: { label: string; width: number; color: string }[];
+  bars: { label: string; height: number; color: string; breadth?: string }[];
+  ticks: string[];
 }) {
   return (
-    <div className="mt-2 space-y-1.5">
+    <div className="mt-1 flex min-h-0 flex-1 gap-1">
+      <div className="flex flex-col justify-between pb-3.5 text-[6px] leading-none text-ink-muted">
+        {ticks.map((tick) => (
+          <span key={tick}>{tick}</span>
+        ))}
+      </div>
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <div className="relative flex min-h-0 flex-1 items-end border-b border-l border-[#e4e8ee]">
+          {bars.map((bar) => (
+            <div key={bar.label} className="relative z-[1] flex h-full flex-1 items-end justify-center">
+              <div
+                className="rounded-t-[3px]"
+                style={{
+                  height: `${bar.height}%`,
+                  width: bar.breadth ?? "62%",
+                  backgroundColor: bar.color,
+                }}
+              />
+            </div>
+          ))}
+        </div>
+        <div className="mt-1 flex">
+          {bars.map((bar) => (
+            <span key={bar.label} className="min-w-0 flex-1 text-center text-[5.5px] leading-none text-ink-muted">
+              {bar.label}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HBars({
+  items,
+  dense = false,
+}: {
+  items: { label: string; width: number; color: string }[];
+  dense?: boolean;
+}) {
+  return (
+    <div className={dense ? "mt-2 flex flex-col gap-2" : "mt-2 space-y-1.5"}>
       {items.map((item) => (
         <div key={item.label} className="flex items-center gap-2">
-          <span className="w-[42%] truncate text-[7.5px] leading-tight text-ink-muted">
+          <span className={`w-[42%] truncate leading-tight text-ink-muted ${dense ? "text-[6.5px]" : "text-[7.5px]"}`}>
             {item.label}
           </span>
-          <div className="h-2.5 flex-1 rounded-[2px] bg-subtle">
+          <div className={`flex-1 rounded-[2px] bg-subtle ${dense ? "h-2" : "h-2.5"}`}>
             <div
               className="h-full rounded-[2px]"
               style={{ width: `${item.width}%`, backgroundColor: item.color }}
@@ -159,16 +202,18 @@ function CardShell({
   children,
 }: {
   title: string;
-  value: string;
+  value?: string;
   children: ReactNode;
 }) {
   return (
-    <div className="min-h-0 overflow-hidden rounded-md border border-line bg-page px-2.5 py-2 shadow-sm">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-md border border-line bg-page px-2.5 py-2 shadow-sm">
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-[11px] font-semibold text-ink">{title}</h3>
-        <p className="shrink-0 text-[11px] font-semibold tabular-nums text-ink blur-[5px] select-none">
-          {value}
-        </p>
+        {value ? (
+          <p className="shrink-0 text-[11px] font-semibold tabular-nums text-ink blur-[5px] select-none">
+            {value}
+          </p>
+        ) : null}
       </div>
       {children}
     </div>
@@ -222,12 +267,13 @@ function DashboardPanel({ demo = false }: { demo?: boolean }) {
   ] as const;
   const exposure = demo
     ? [
-        { label: "DEMO CAPITAL", width: 94, color: ACCENT.barNavy },
-        { label: "SAMPLE CUSTODY", width: 72, color: ACCENT.barMuted },
-        { label: "DUMMY BROKER", width: 58, color: ACCENT.barBlue },
-        { label: "DEMO BANK", width: 44, color: ACCENT.barGrey },
-        { label: "PILOT CLEARING", width: 36, color: ACCENT.barMuted },
-        { label: "TEST COUNTERPARTY", width: 28, color: ACCENT.barBlue },
+        { label: "Demo Capital 1", width: 87, color: "#8b95a3" },
+        { label: "Demo Capital 2", width: 55, color: "#b7cfe6" },
+        { label: "Demo Capital 4", width: 20, color: "#2c3138" },
+        { label: "Demo Capital 5", width: 16, color: "#9aa3ad" },
+        { label: "Demo Capital 6", width: 20, color: "#2c3138" },
+        { label: "Demo Capital 7", width: 15, color: "#1a2744" },
+        { label: "Demo Capital 8", width: 12, color: "#c5d8ea" },
       ]
     : [
         { label: "NETOFF", width: 94, color: ACCENT.barNavy },
@@ -239,11 +285,12 @@ function DashboardPanel({ demo = false }: { demo?: boolean }) {
       ];
   const positions = demo
     ? [
-        { label: "DEMO BOND 5.50 2030", width: 96, color: ACCENT.barMuted },
-        { label: "SAMPLE EQUITY A", width: 48, color: ACCENT.barNavy },
-        { label: "DUMMY NOTE 2028", width: 36, color: ACCENT.barBlue },
-        { label: "TEST CORP 4.25", width: 30, color: ACCENT.barGrey },
-        { label: "PILOT 3.00 2032", width: 24, color: ACCENT.barMuted },
+        { label: "Demo Securities 1", width: 93, color: "#8b95a3" },
+        { label: "Demo Securities 2", width: 21, color: "#c5d4e6" },
+        { label: "Demo Securities 3", width: 19, color: "#2a2a2a" },
+        { label: "Demo Securities 4", width: 15, color: "#8d97a3" },
+        { label: "Demo Securities 5", width: 8, color: "#3a3f46" },
+        { label: "Demo Securities 6", width: 5, color: "#1a2744" },
       ]
     : [
         { label: "PEMEX 6 5/8 PERP", width: 96, color: ACCENT.barMuted },
@@ -255,8 +302,8 @@ function DashboardPanel({ demo = false }: { demo?: boolean }) {
 
   return (
     <div className="grid h-full grid-cols-3 grid-rows-2 gap-2">
-      <CardShell title="Balances" value="$85,604,878">
-        <SemiDonut tone={usd} />
+      <CardShell title="Balances" value={demo ? undefined : "$85,604,878"}>
+        <SemiDonut tone={usd} weight={demo ? 36 : 22} />
         <div className="mt-1 flex flex-wrap justify-center gap-x-3 gap-y-0.5">
           {currencies.map(([ccy, color]) => (
             <span key={ccy} className="flex items-center gap-1 text-[7px] text-ink-muted">
@@ -266,37 +313,73 @@ function DashboardPanel({ demo = false }: { demo?: boolean }) {
           ))}
         </div>
       </CardShell>
-      <CardShell title="Transactions" value="10,460">
-        <VBars
-          maxLabel="12.5k"
-          bars={[
-            { label: "Submitted", height: 78, color: ACCENT.barNavy },
-            { label: "Settled", height: 92, color: ACCENT.barBlue },
-          ]}
-        />
+      <CardShell title="Transactions" value={demo ? undefined : "10,460"}>
+        {demo ? (
+          <AxisBars
+            ticks={["30", "20", "10", "0"]}
+            bars={[
+              { label: "Submitted", height: 53, color: "#8d97a3" },
+              { label: "Unmatched", height: 83, color: "#b7cfe6" },
+              { label: "Matched", height: 77, color: "#2c3138" },
+              { label: "Settled", height: 50, color: "#8d97a3" },
+              { label: "Failing", height: 80, color: "#1a2744" },
+            ]}
+          />
+        ) : (
+          <VBars
+            maxLabel="12.5k"
+            bars={[
+              { label: "Submitted", height: 78, color: ACCENT.barNavy },
+              { label: "Settled", height: 92, color: ACCENT.barBlue },
+            ]}
+          />
+        )}
       </CardShell>
-      <CardShell title="Exposure" value="$13,750,261">
-        <HBars items={exposure} />
+      <CardShell title="Exposure" value={demo ? undefined : "$13,750,261"}>
+        <HBars items={exposure} dense={demo} />
       </CardShell>
-      <CardShell title="Positions" value="$38,339,254">
-        <HBars items={positions} />
+      <CardShell title="Positions" value={demo ? undefined : "$38,339,254"}>
+        <HBars items={positions} dense={demo} />
       </CardShell>
-      <CardShell title="Charges" value="$330">
-        <VBars
-          maxLabel="400"
-          bars={[{ label: "", height: 72, color: ACCENT.barMuted }]}
-        />
+      <CardShell title="Charges" value={demo ? undefined : "$330"}>
+        {demo ? (
+          <AxisBars
+            ticks={["1500", "1000", "500", "0"]}
+            bars={[
+              { label: "Ticket", height: 93, color: "#8d97a3", breadth: "46%" },
+              { label: "Financing", height: 4, color: "#c5d8ea", breadth: "22%" },
+            ]}
+          />
+        ) : (
+          <VBars
+            maxLabel="400"
+            bars={[{ label: "", height: 72, color: ACCENT.barMuted }]}
+          />
+        )}
       </CardShell>
-      <CardShell title="Performance" value="+$128,420">
+      <CardShell title="Performance" value={demo ? undefined : "+$128,420"}>
         <HBars
-          items={[
-            { label: "EM Fixed Income Book", width: 88, color: ACCENT.barNavy },
-            { label: "LatAm Sovereign Desk", width: 66, color: ACCENT.barBlue },
-            { label: "CEEMEA Credit Portfolio", width: 52, color: ACCENT.barMuted },
-            { label: "Asia Hard Currency", width: 40, color: ACCENT.barGrey },
-            { label: "Equity Linked Notes", width: 28, color: ACCENT.barBlue },
-            { label: "FX & Rates Overlay", width: 18, color: ACCENT.barMuted },
-          ]}
+          dense={demo}
+          items={
+            demo
+              ? [
+                  { label: "Demo Securities 1", width: 88, color: "#8b95a3" },
+                  { label: "Demo Securities 2", width: 53, color: "#b7cfe6" },
+                  { label: "Demo Securities 3", width: 50, color: "#2c3138" },
+                  { label: "Demo Securities 4", width: 21, color: "#9aa3ad" },
+                  { label: "Demo Securities 5", width: 11, color: "#3a3f46" },
+                  { label: "Demo Securities 6", width: 4, color: "#1a2744" },
+                  { label: "Demo Securities 7", width: 2, color: "#d5e0ea" },
+                ]
+              : [
+                  { label: "EM Fixed Income Book", width: 88, color: ACCENT.barNavy },
+                  { label: "LatAm Sovereign Desk", width: 66, color: ACCENT.barBlue },
+                  { label: "CEEMEA Credit Portfolio", width: 52, color: ACCENT.barMuted },
+                  { label: "Asia Hard Currency", width: 40, color: ACCENT.barGrey },
+                  { label: "Equity Linked Notes", width: 28, color: ACCENT.barBlue },
+                  { label: "FX & Rates Overlay", width: 18, color: ACCENT.barMuted },
+                ]
+          }
         />
       </CardShell>
     </div>
@@ -685,12 +768,14 @@ export function OperatingView({
   views = VIEWS,
   fill = false,
   demo = false,
+  bare = false,
 }: {
   compact?: boolean;
   tabs?: boolean;
   views?: readonly View[];
   fill?: boolean;
   demo?: boolean;
+  bare?: boolean;
 } = {}) {
   const reduced = useReducedMotion();
   const sequence = views.length ? views : VIEWS;
@@ -709,7 +794,7 @@ export function OperatingView({
   }, [reduced, sequence.length]);
 
   const frame = (
-    <div className={cn("pointer-events-none overflow-hidden rounded-md border border-line bg-page shadow-sm", fill && "flex h-full min-h-0 flex-col")}>
+    <div className={cn("pointer-events-none overflow-hidden rounded-md bg-page", bare ? "" : "border border-line shadow-sm", fill && "flex h-full min-h-0 flex-col")}>
       <header className="flex items-center gap-2 bg-nav px-3 py-2">
         <Image
           src="/brand/emfi-logo.svg"
@@ -816,6 +901,6 @@ export function HeroMockup() {
   );
 }
 
-export function HeroDashboardScreen() {
-  return <OperatingView views={["Dashboard"]} fill demo />;
+export function HeroDashboardScreen({ bare = false }: { bare?: boolean } = {}) {
+  return <OperatingView views={["Dashboard"]} fill demo bare={bare} />;
 }
