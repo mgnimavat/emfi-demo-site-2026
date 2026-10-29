@@ -5,7 +5,7 @@ import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer
 import { about } from "@/content/about";
 import styles from "./about-timeline.module.css";
 
-export const AboutTimeline = ({ headingAs: Heading = "h2" }: { headingAs?: "h1" | "h2" }) => {
+export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true }: { headingAs?: "h1" | "h2"; showCounter?: boolean }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
@@ -57,7 +57,7 @@ export const AboutTimeline = ({ headingAs: Heading = "h2" }: { headingAs?: "h1" 
                 <p className={styles.year}>{year}</p>
                 <span className={styles.rule} />
                 <p className={styles.achievement}>{description}</p>
-                <p className={styles.counter}>{String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}</p>
+                {showCounter ? <p className={styles.counter}>{String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}</p> : null}
               </motion.div>
             </div>
             <ol className={styles.milestones} aria-label="Platform milestones">

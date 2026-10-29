@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { home11 } from "@/content/home-11";
 import { trust } from "@/content/trust";
 import footer from "@/content/site-footer.json";
 import styles from "./chrome.module.css";
@@ -20,7 +19,6 @@ const entityLinks = trust.entities.flatMap((entity) => {
   return label ? [{ label, href: entity.href }] : [];
 });
 const linkGroups = [
-  { heading: "Services", links: home11.navLinks },
   whyEmfiGroup,
   companyGroup,
   { heading: "Entities", links: entityLinks },
@@ -35,23 +33,23 @@ const socialLinks = [
   { title: "Google Play Store", href: "https://play.google.com/store/apps/details?id=com.emfi.emfi", viewBox: "0 0 512 512", d: "M325.3 234.3 104.6 13l280.8 161.2zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256zm425.2 225.6-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8M104.6 499l280.8-161.2-60.1-60.1z" },
 ] as const;
 
-function BrandIcon({ d, viewBox, evenodd }: { d: string; viewBox: string; evenodd?: boolean }) {
+const BrandIcon = ({ d, viewBox, evenodd }: { d: string; viewBox: string; evenodd?: boolean }) => {
   return (
     <svg viewBox={viewBox} aria-hidden="true" focusable="false">
       <path d={d} fillRule={evenodd ? "evenodd" : "nonzero"} />
     </svg>
   );
-}
+};
 
-function FooterLinkItems({ links }: { links: readonly { label: string; href: string }[] }) {
+const FooterLinkItems = ({ links }: { links: readonly { label: string; href: string }[] }) => {
   return links.map((link) => (
     <li key={link.href}>
       {link.href.startsWith("http") ? <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a> : <Link href={link.href}>{link.label}</Link>}
     </li>
   ));
-}
+};
 
-export function Home11Footer() {
+export const Home11Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerInner}>
@@ -73,10 +71,11 @@ export function Home11Footer() {
               </li>
             ))}
           </ul>
+          <p>Intended for Professional Clients Only.</p>
+          <p>Not Suitable for Retail Clients or US Persons.</p>
           {copyright.map((line) => <p key={line}>{line}</p>)}
-          <p>Intended for Professional Clients Only.<br />Not Suitable for Retail Clients or US Persons.</p>
         </div>
       </div>
     </footer>
   );
-}
+};

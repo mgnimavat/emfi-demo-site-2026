@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { execution } from "@/content/execution";
 import { ResearchToTrade } from "@/components/sections/execution/research-to-trade";
 import { ExecutionReveal } from "@/components/sections/execution/reveal";
@@ -6,7 +5,7 @@ import { ExecutionHeroPhrases } from "@/components/sections/execution/hero-phras
 import { DirectExecutionWorkflow } from "@/components/sections/execution/direct-workflow";
 import { ConnectedExecutionPreviews } from "@/components/sections/execution/connected-previews";
 import { SecurityReference } from "@/components/sections/services/security-reference";
-import { ArchiveCta } from "@/components/sections/archive/cta";
+// import { ArchiveCta } from "@/components/sections/archive/cta";
 import theme from "@/components/sections/archive/theme.module.css";
 import { FileSearch, ArrowRightLeft } from "lucide-react";
 import landing from "@/components/sections/landing/landing.module.css";
@@ -19,7 +18,7 @@ export default function ResearchExecutionPage() {
   return <div className={theme.page}>
     <section className={styles.hero}>
       <div className={styles.container}><div className={styles.heroGrid}>
-        <ExecutionReveal className={styles.heroCopy}><h1>{execution.headline.split("\n").map((line) => <span key={line}>{line}</span>)}</h1><ExecutionHeroPhrases /><Button href="#research-execution-capabilities" className={styles.heroAction}>Know More</Button></ExecutionReveal>
+        <ExecutionReveal className={styles.heroCopy}><h1>{execution.headline.split("\n").map((line) => <span key={line}>{line}</span>)}</h1><ExecutionHeroPhrases /></ExecutionReveal>
         <ExecutionReveal delay={0.12} className={styles.heroMedia}><ResearchToTrade /></ExecutionReveal>
       </div></div>
     </section>
@@ -50,6 +49,6 @@ export default function ResearchExecutionPage() {
         </div>
       </div>
     </section>
-    <ArchiveCta title={execution.contact.title} body={execution.contact.body} action={execution.contact.action} />
+    {/* <ArchiveCta title={execution.contact.title} body={execution.contact.body} action={execution.contact.action} /> */}
   </div>;
 }

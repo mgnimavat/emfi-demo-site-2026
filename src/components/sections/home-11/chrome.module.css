@@ -154,7 +154,7 @@
   letter-spacing: normal;
 }
 .footerInner { display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: 32px 70px; align-items: start; width: calc(100% - 64px); max-width: 1320px; margin: 0 auto; padding: clamp(48px, 5vw, 72px) 0 calc(clamp(48px, 5vw, 72px) - 10px); box-sizing: border-box; }
-.footerTop { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.3fr) repeat(3, minmax(0, 1fr)); align-items: start; gap: 24px; }
+.footerTop { display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr)); align-items: start; gap: 32px; }
 .footerLinks { min-width: 0; }
 .footerLinks h2 { margin: 0; color: #fff; font-family: inherit; font-size: 14px; font-weight: 800; line-height: 1.2; letter-spacing: -.02em; }
 .footerLinks h2:not(:first-child) { margin-top: 22px; }
@@ -162,13 +162,12 @@
 .footerLinks li { color: #cbd2e8; font-size: 13px; font-weight: 500; line-height: 1.4; }
 .footerLinks a { color: inherit; text-decoration: none; transition: color .2s; }
 .footerLinks a:hover { color: #fff; }
-.footerLegal { padding-top: 0; border-top: 0; text-align: right; }
-.social { display: flex; justify-content: flex-end; gap: 10px; margin: 0 0 16px; padding: 0; list-style: none; }
+.footerLegal { display: flex; flex-direction: column; gap: 6px; padding-top: 0; border-top: 0; text-align: right; }
+.social { display: flex; justify-content: flex-end; gap: 10px; margin: 0 0 10px; padding: 0; list-style: none; }
 .social a { display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 36px; height: 36px; border: 1px solid #fff; border-radius: 50%; background: #fff; color: #072139; }
 .social a:hover { background: transparent; color: #fff; }
 .social svg { display: block; width: auto; height: 18px; fill: currentColor; }
 .footerLegal p { max-width: none; margin: 0; color: #cbd2e8; font-size: 11px !important; font-weight: 500; line-height: 1.45; }
-.footerLegal p + p { margin-top: 6px; }
 .footer a:focus-visible { outline: 3px solid #8098cc; outline-offset: 5px; }
 
 @media (max-width: 999px) {

@@ -20,7 +20,7 @@ const matchingPreset = (value: Range) => presets.find(preset => {
 const textRange = (range: Range): Range => ({ from: displayResearchDate(range.from), to: displayResearchDate(range.to) });
 const label = displayResearchDate;
 
-export function ResearchDateRange({ value, onChange, className }: { value: Range; onChange: (range: Range) => void; className?: string }) {
+export function ResearchDateRange({ value, onChange, className, label: fieldLabel = "Date Range" }: { value: Range; onChange: (range: Range) => void; className?: string; label?: string }) {
   const id = useId();
   const root = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -42,7 +42,7 @@ export function ResearchDateRange({ value, onChange, className }: { value: Range
   const summary = value.from && value.to ? `${label(value.from)} – ${label(value.to)}` : value.from ? `From ${label(value.from)}` : value.to ? `Until ${label(value.to)}` : "Custom";
 
   return <div ref={root} className={`${className ?? ""} ${styles.field}`} onKeyDown={event => { if (event.key === "Escape" && open) { event.preventDefault(); event.stopPropagation(); close(); } }} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false); }}>
-    <span id={`${id}-label`}>Date Range</span>
+    <span id={`${id}-label`}>{fieldLabel}</span>
     <button ref={trigger} type="button" className={styles.trigger} aria-labelledby={`${id}-label ${id}-value`} aria-haspopup="dialog" aria-expanded={open} aria-controls={open ? `${id}-popup` : undefined} onClick={() => { setDraft(textRange(value)); setSelectedPreset(matchingPreset(value)); setOpen(!open); }}><span id={`${id}-value`}>{summary}</span><CalendarDays size={16} aria-hidden="true" /></button>
     {open ? <div id={`${id}-popup`} role="dialog" aria-labelledby={`${id}-title`} className={styles.popup}>
       <h3 id={`${id}-title`}>Report Dates</h3>

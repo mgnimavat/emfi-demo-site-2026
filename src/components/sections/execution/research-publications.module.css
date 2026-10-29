@@ -49,3 +49,68 @@
 @media (max-width: 899px) { .researchLayout { --research-panel-height: clamp(480px,72vh,680px); } .researchLayout .previewPanel { height: 760px; } }
 @media (max-width: 599px) { .chart { padding: 14px 8px 8px; } .chart figcaption { font-size: 11px; } .resultsPanel .resultsHeader { padding: 20px 20px 16px; } .scrollViewport { padding: 0 12px 20px 20px; } .researchLayout .previewPanel { padding: 24px 20px; } .chartSkeleton { min-height: 240px; padding: 16px; } .skeletonPlot { height: 180px; } }
 @media (prefers-reduced-motion: reduce) { .skeletonBlock { animation: none; } }
+
+.publications { margin-top: var(--space-6); color: var(--text-primary); }
+.filterBar { position: relative; z-index: 5; display: grid; gap: var(--space-3); margin-bottom: var(--space-6); padding: var(--space-5); border: 1px solid color-mix(in srgb, var(--color-blue-100) 50%, var(--bg-page)); border-radius: var(--radius-card); background: linear-gradient(120deg, var(--bg-page) 40%, color-mix(in srgb, var(--bg-soft) 35%, var(--bg-page))); box-shadow: 0 8px 24px color-mix(in srgb, var(--text-primary) 3%, transparent); }
+.filterFields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: end; gap: var(--space-5); }
+.filterControls { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(0,1fr) auto; align-items: end; gap: var(--space-3); min-width: 0; }
+.researchSearch { display: flex; align-items: center; gap: var(--space-3); height: 44px; padding-inline: var(--space-4); border: 1px solid var(--color-blue-100); border-radius: var(--radius-control); background: var(--bg-page); color: var(--color-blue-550); transition: border-color .2s,box-shadow .2s; }
+.researchSearch:focus-within { border-color: var(--action-focus); box-shadow: 0 0 0 3px color-mix(in srgb, var(--action-focus) 12%, transparent); }
+.researchSearch > svg { flex: none; }
+.researchSearch input { width: 100%; min-width: 0; padding: 0; border: 0; outline: none; background: transparent; color: var(--text-primary); font: inherit; font-size: 14px; font-weight: 400; }
+.researchSearch input::placeholder { color: var(--text-muted); }
+.researchSearch input::-webkit-search-cancel-button { display: none; }
+.researchSearch button { display: grid; flex: none; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: var(--radius-pill); background: var(--bg-soft); color: var(--color-blue-550); cursor: pointer; }
+.researchSearch button:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 2px; }
+.filterField { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; color: var(--text-secondary); font-size: 12px; font-weight: 600; line-height: 1.5; }
+.filterField:first-child > [role="dialog"] { left: 0; right: auto; }
+.resetFilters { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: var(--space-3); border: 1px solid var(--border-strong); border-radius: var(--radius-control); background: var(--bg-page); color: var(--color-blue-550); cursor: pointer; }
+.resetFilters:hover { background: var(--bg-soft); }
+.filterBar > p, .feedStatus { margin: 0; color: var(--text-secondary); font-size: 13px; line-height: 1.6; }
+.filterBar > p button, .feedStatus button { color: var(--action-primary); text-decoration: underline; cursor: pointer; }
+.feedStatus { margin-bottom: var(--space-5); }
+.accordionGrid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: start; gap: var(--space-5); }
+.accordionColumn { display: flex; flex-direction: column; gap: var(--space-5); min-width: 0; }
+.accordionCard { --report-border: color-mix(in srgb, var(--color-blue-100) 65%, var(--color-white)); min-width: 0; overflow: hidden; border: 1px solid var(--report-border); border-radius: var(--radius-card); background: var(--bg-page); transition: border-color .2s,box-shadow .2s; }
+.accordionCard:hover, .accordionCard[open] { border-color: var(--border-strong); box-shadow: var(--elevation-card-hover); }
+.accordionSummary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-5); background: linear-gradient(120deg, var(--bg-page) 60%, color-mix(in srgb, var(--bg-soft) 50%, var(--bg-page))); color: var(--text-primary); list-style: none; cursor: pointer; }
+.accordionSummary::-webkit-details-marker { display: none; }
+.accordionHeading { display: grid; gap: var(--space-2); min-width: 0; }
+.accordionMeta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); color: var(--color-blue-550); font-size: 11px; font-weight: 500; line-height: 1.5; }
+.accordionTitle { color: var(--text-primary); font-size: clamp(17px,1.5vw,21px); font-weight: 700; line-height: 1.4; letter-spacing: -.025em; overflow-wrap: anywhere; }
+.accordionHeading time { color: var(--text-muted); font-size: 13px; line-height: 1.5; }
+.accordionToggle { display: grid; flex: none; place-items: center; width: 32px; height: 32px; border: 1px solid var(--report-border); border-radius: var(--radius-pill); background: var(--bg-page); color: var(--color-blue-550); }
+.accordionToggle svg { transition: transform .2s; }
+.accordionCard[open] .accordionToggle { background: var(--bg-soft); color: var(--text-primary); }
+.accordionCard[open] .accordionToggle svg { transform: rotate(180deg); }
+.accordionContent { padding: var(--space-5); border-top: 1px solid var(--border-default); background: linear-gradient(180deg, color-mix(in srgb, var(--bg-soft) 24%, var(--bg-page)), var(--bg-page) 65%); }
+.accordionChart { display: flex; aspect-ratio: 3 / 2; min-width: 0; margin-bottom: var(--space-5); }
+.accordionChart .chart { display: flex; flex-direction: column; box-sizing: border-box; width: 100%; height: 100%; max-width: none; min-width: 0; margin: 0; padding: var(--space-4); border: 1px solid var(--report-border); border-radius: var(--radius-control); background: var(--bg-page); }
+.accordionChart .priceChart, .accordionChart .worldMap { flex: 1; min-height: 0; }
+.accordionChart .chartMessage { box-sizing: border-box; width: 100%; height: 100%; min-height: 0; margin: 0; background: var(--bg-subtle); }
+.accordionChart .chartSkeleton { display: flex; flex-direction: column; box-sizing: border-box; width: 100%; height: 100%; min-height: 0; }
+.accordionChart .skeletonPlot { flex: 1; height: auto; min-height: 0; }
+.accordionBody { --report-summary-lines: 4; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: var(--report-summary-lines); line-clamp: var(--report-summary-lines); overflow: hidden; margin: 0; color: var(--text-secondary); font-size: 15px; line-height: 1.75; overflow-wrap: anywhere; }
+.sourceLink { display: inline-flex; align-items: center; gap: var(--space-2); margin-top: var(--space-5); color: var(--action-primary); font-size: 13px; font-weight: 600; text-decoration: none; }
+.sourceLink:hover { text-decoration: underline; text-underline-offset: 4px; }
+.loadMoreRow { display: flex; justify-content: center; margin-top: var(--space-6); }
+.loadMoreRow button { min-height: 44px; padding: var(--space-3) var(--space-5); border: 1px solid var(--border-strong); border-radius: var(--radius-pill); background: var(--bg-page); color: var(--text-primary); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.loadMoreRow button:hover { background: var(--bg-soft); }
+.loadMoreRow button:disabled { opacity: .5; cursor: default; }
+.emptyState { display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-8) var(--space-5); border: 1px dashed var(--border-strong); border-radius: var(--radius-card); background: var(--bg-page); text-align: center; }
+.emptyState h4, .emptyState p { margin: 0; }
+.emptyState p { color: var(--text-secondary); font-size: 14px; }
+.accordionSummary:focus-visible, .sourceLink:focus-visible, .resetFilters:focus-visible, .loadMoreRow button:focus-visible { outline: 2px solid var(--action-focus); outline-offset: -3px; }
+@media (max-width: 1199px) { .filterFields { grid-template-columns: minmax(0,1fr); gap: var(--space-4); } }
+@media (max-width: 639px) {
+  .filterBar { padding: var(--space-4); }
+  .filterFields, .accordionGrid { grid-template-columns: minmax(0,1fr); }
+  .filterControls { grid-template-columns: minmax(0,1fr) auto; }
+  .filterControls > :first-child { grid-column: 1 / -1; }
+  .researchSearch input { font-size: 16px; }
+  .resetFilters { justify-self: start; }
+  .accordionSummary { padding: var(--space-4); }
+  .accordionContent { padding: var(--space-4); }
+  .accordionTitle { font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .accordionCard, .accordionToggle svg { transition: none; } }
