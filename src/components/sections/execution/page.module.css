@@ -1,5 +1,5 @@
 .container { width: calc(100% - 64px); max-width: 1320px; margin-inline: auto; }
-.hero { padding-block: clamp(56px,6vw,88px); background: var(--hero-page-background); }
+.hero { box-sizing: border-box; display: grid; align-items: center; min-height: calc(100vh - var(--site-header-height, 78px)); min-height: calc(100svh - var(--site-header-height, 78px)); padding-block: clamp(56px,6vw,88px); background: var(--hero-page-background); }
 .heroGrid { display: grid; align-items: center; gap: 40px; }
 .heroGrid > * { min-width: 0; }
 .heroCopy { container-type: inline-size; }

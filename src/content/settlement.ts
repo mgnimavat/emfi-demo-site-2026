@@ -1,5 +1,8 @@
 export const settlement = {
   title: "Settlement & Custody",
+  heroLines: ["Settlement &", "Custody"],
+  heroPhrases: ["From trade to settlement.", "Clear custody. Clear view.", "One connected relationship."],
+
   eyebrow: "Services / Settlement & Custody",
   headline: "The infrastructure\nbehind the transaction.",
   body: "What happens after the investment decision. Securities settlement, custody, asset servicing, cash movement where appropriate, and operational visibility — through institutional depository relationships, not a single logo.",

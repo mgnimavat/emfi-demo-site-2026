@@ -1,0 +1,431 @@
+.page {
+  --service-line: color-mix(in srgb, var(--color-blue-100) 60%, var(--color-white));
+  --service-muted: color-mix(in srgb, var(--text-primary) 70%, var(--color-white));
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-inter), Inter, Arial, sans-serif;
+}
+.container {
+  width: calc(100% - 64px);
+  max-width: 1320px;
+  margin-inline: auto;
+}
+.section {
+  padding-block: clamp(64px, 7vw, 104px);
+}
+.section[id] {
+  scroll-margin-top: 88px;
+}
+.softBand {
+  background: var(--bg-soft);
+}
+.sectionHeading {
+  min-width: 0;
+}
+.sectionTitle {
+  max-width: 25ch;
+  margin: 0;
+  font-size: clamp(32px, 3.6vw, 50px);
+  font-weight: 750;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+.sectionBody {
+  max-width: 65ch;
+  margin: var(--space-5) 0 0;
+  color: var(--service-muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+.introGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 80px);
+}
+.introBody {
+  margin: 0;
+  color: var(--service-muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+.introBody > p {
+  margin: 0;
+}
+.introBody .entityNote,
+.entityNote {
+  margin: var(--space-5) 0 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.75;
+}
+.entityNote a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-blue-550);
+  font-weight: 600;
+  text-decoration: none;
+}
+.entityNote a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.twoColumns,
+.threeColumns {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-7);
+}
+.twoColumns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.threeColumns {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.fillHeight {
+  min-width: 0;
+  height: 100%;
+}
+.serviceCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  min-width: 0;
+  padding: clamp(24px, 3vw, 40px);
+  border: 1px solid var(--service-line);
+  border-radius: var(--radius-card);
+  background: var(--bg-page);
+}
+.cardIcon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: var(--space-5);
+  border: 1px solid var(--service-line);
+  border-radius: var(--radius-control);
+  background: var(--bg-soft);
+  color: var(--text-primary);
+}
+.serviceCard h3 {
+  max-width: 25ch;
+  margin: 0;
+  font-size: clamp(22px, 2vw, 27px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.serviceCard > p:not(.cardEyebrow):not(.cardLegal) {
+  margin: var(--space-4) 0 0;
+  color: var(--service-muted);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  width: 100%;
+}
+.regime {
+  max-width: 22ch;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--bg-soft);
+  color: var(--color-blue-550);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.serviceCard .cardLegal {
+  width: 100%;
+  margin: auto 0 0;
+  padding-top: var(--space-5);
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.cardEyebrow {
+  margin: 0 0 var(--space-5);
+  color: var(--color-blue-550);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+}
+.checkList {
+  display: grid;
+  gap: var(--space-4);
+  width: 100%;
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.checkList li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--service-line);
+  color: var(--service-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.checkList li:last-child {
+  padding-bottom: 0;
+  border: 0;
+}
+.checkList svg {
+  flex: none;
+  color: var(--color-blue-550);
+}
+.cardAction {
+  margin-top: auto;
+  padding-top: var(--space-6);
+}
+.roleCard h3 {
+  max-width: 34ch;
+  font-size: clamp(21px, 2vw, 26px);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.roleCard:nth-child(even) {
+  background: color-mix(in srgb, var(--bg-soft) 45%, var(--bg-page));
+}
+.demoSurface {
+  min-width: 0;
+  margin-top: var(--space-7);
+  border-radius: var(--radius-card);
+}
+.demoSurface > div {
+  border-radius: var(--radius-card);
+  border-color: var(--service-line);
+}
+.onboarding .sectionBody {
+  color: var(--text-inverse-muted);
+}
+.connectedChain {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: var(--space-7) 0 var(--space-6);
+  padding: 0;
+  list-style: none;
+}
+.connectedChain li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-blue-550);
+}
+.connectedChain li > span {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--service-line);
+  border-radius: var(--radius-control);
+  background: var(--bg-soft);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+.capabilityGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.capabilityGrid li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: 1px solid var(--service-line);
+  border-radius: var(--radius-control);
+  background: var(--bg-page);
+  color: var(--service-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.capabilityGrid svg {
+  flex: none;
+  color: var(--color-blue-550);
+}
+.fundNote {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-6);
+  padding: clamp(28px, 4vw, 56px);
+  border: 1px solid var(--service-line);
+  border-radius: var(--radius-surface);
+  background: linear-gradient(120deg, var(--bg-soft), var(--bg-page));
+}
+.fundIcon {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border: 1px solid var(--service-line);
+  border-radius: var(--radius-card);
+  background: var(--bg-page);
+}
+.fundNote .sectionTitle {
+  max-width: none;
+  font-size: clamp(28px, 3vw, 40px);
+}
+.comparisonCard {
+  padding: clamp(28px, 4vw, 48px);
+  border: 1px solid var(--service-line);
+  border-radius: var(--radius-card);
+}
+.comparisonCard ul {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.comparisonCard li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--service-line);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.conventional {
+  background: var(--bg-page);
+  color: var(--text-secondary);
+}
+.direct {
+  background: color-mix(in srgb, var(--bg-soft) 50%, var(--bg-page));
+  color: var(--text-primary);
+}
+.direct svg {
+  flex: none;
+  color: var(--color-blue-550);
+}
+.comparisonDash {
+  flex: none;
+  width: 16px;
+  height: 1px;
+  background: var(--text-muted);
+}
+.portfolioGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+}
+.portfolioGrid > * {
+  min-width: 0;
+}
+.portfolioPreview {
+  min-width: 0;
+}
+.portfolioPreview > div {
+  border-radius: var(--radius-card);
+  border-color: var(--service-line);
+  background: var(--bg-page);
+}
+.onboarding {
+  padding: clamp(28px, 5vw, 72px);
+  border: 1px solid color-mix(in srgb, var(--color-blue-100) 25%, transparent);
+  border-radius: var(--radius-surface);
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      color-mix(in srgb, var(--color-blue-200) 16%, transparent),
+      transparent 65%
+    ),
+    var(--bg-inverse);
+  color: var(--text-inverse);
+}
+.criteria {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: var(--space-7) 0;
+  padding: 0;
+  list-style: none;
+}
+.criteria li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: 1px solid color-mix(in srgb, var(--color-blue-100) 25%, transparent);
+  border-radius: var(--radius-control);
+  background: color-mix(in srgb, var(--color-white) 4%, transparent);
+  color: var(--text-inverse-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.criteria svg {
+  flex: none;
+  color: var(--color-blue-100);
+}
+@media (max-width: 1023px) {
+  .introGrid,
+  .portfolioGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+  .threeColumns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cardTop {
+    flex-wrap: nowrap;
+  }
+  .serviceCard .cardLegal {
+    margin-top: var(--space-5);
+  }
+}
+@media (max-width: 699px) {
+  .twoColumns,
+  .criteria {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .capabilityGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fundNote {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+  .fundIcon {
+    width: 60px;
+    height: 60px;
+  }
+  .sectionTitle {
+    max-width: none;
+  }
+  .sectionBody,
+  .introBody {
+    font-size: 16px;
+  }
+}
+@media (max-width: 599px) {
+  .container {
+    width: calc(100% - 40px);
+  }
+  .section {
+    padding-block: var(--space-8);
+  }
+  .serviceCard {
+    padding: var(--space-5);
+  }
+  .capabilityGrid li {
+    align-items: flex-start;
+    padding: var(--space-4);
+    font-size: 12px;
+  }
+}
