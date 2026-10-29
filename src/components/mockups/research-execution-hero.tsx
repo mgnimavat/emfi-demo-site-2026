@@ -42,7 +42,7 @@ type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances" | "Mobil
 export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] as const satisfies readonly View[];
 export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
 export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreens"] as const satisfies readonly View[];
-export const home16ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreensPerspective"] as const satisfies readonly View[];
+export const home16ResponsiveSlides = ["OrderEur", "HeroDashboard"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
@@ -1085,6 +1085,7 @@ function ViewPanel({ view }: { view: View }) {
           src="/images/services/balances-three-screens-perspective.jpg"
           width={2048}
           height={1564}
+          rounded
         />
       );
   }
@@ -1112,10 +1113,12 @@ function MobileScreensSlide({
   src = "/images/services/balances-three-phones.jpg",
   width = 1024,
   height = 794,
+  rounded = false,
 }: {
   src?: string;
   width?: number;
   height?: number;
+  rounded?: boolean;
 } = {}) {
   return (
     <div className="flex h-full items-center justify-center">
@@ -1124,14 +1127,14 @@ function MobileScreensSlide({
         alt="EMFI mobile app showing order entry, balances, and activity"
         width={width}
         height={height}
-        className="h-auto max-h-full w-auto max-w-full object-contain"
+        className={`h-auto max-h-full w-auto max-w-full object-contain${rounded ? " rounded-xl" : ""}`}
         unoptimized
       />
     </div>
   );
 }
 
-export function ResearchExecutionHeroMockup({ views = VIEWS }: { views?: readonly View[] } = {}) {
+export function ResearchExecutionHeroMockup({ views = VIEWS, plain = false }: { views?: readonly View[]; plain?: boolean } = {}) {
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
   const view = views[index] ?? views[0];
@@ -1148,13 +1151,17 @@ export function ResearchExecutionHeroMockup({ views = VIEWS }: { views?: readonl
 
   return (
     <div
-      className="rounded-xl border border-transparent p-2 md:p-3"
-      style={{
-        background: `${view === "MobileBalances" || view === "MobileScreens" ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${ctaBorderGradient} border-box`,
-      }}
+      className={plain ? "overflow-hidden rounded-xl" : "rounded-xl border border-transparent p-2 md:p-3"}
+      style={
+        plain
+          ? undefined
+          : {
+              background: `${view === "MobileBalances" || view === "MobileScreens" ? balancesGradient : "linear-gradient(#fff, #fff)"} padding-box, ${ctaBorderGradient} border-box`,
+            }
+      }
     >
       {/* Fixed stage height so public + app slides never resize the hero */}
-      <div className="relative h-[438px] overflow-hidden md:h-[478px]">
+      <div className={`relative h-[438px] overflow-hidden md:h-[478px]${plain ? " rounded-xl" : ""}`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={view}

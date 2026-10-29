@@ -1,9 +1,10 @@
 "use client";
 
 import { useId, useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowDown, ChevronDown, ChevronUp } from "lucide-react";
 import { principles as copy } from "@/content/home-16-principles";
 import navigation from "@/content/site-navigation.json";
+import cueStyles from "@/components/emfi-sections/sections.module.css";
 import styles from "./principles.module.css";
 
 function GradientMark() {
@@ -13,13 +14,12 @@ function GradientMark() {
     <svg viewBox="0 0 145 145" aria-hidden="true" focusable="false">
       <defs>
         <linearGradient id={gradientId} x1="0" y1="72.5" x2="145" y2="72.5" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#7a9cc3" />
-          <stop offset="36%" stopColor="#69a6bb" />
-          <stop offset="68%" stopColor="#5db1b5" />
-          <stop offset="100%" stopColor="#59beac" />
+          <stop offset="0%" stopColor="var(--principle-from)" stopOpacity="1" />
+          <stop offset="48%" stopColor="var(--principle-mid)" stopOpacity="1" />
+          <stop offset="100%" stopColor="var(--principle-to)" stopOpacity="1" />
         </linearGradient>
       </defs>
-      <path d={navigation.markPath} fill={`url(#${gradientId})`} />
+      <path d={navigation.markPath} fill={`url(#${gradientId})`} fillOpacity="1" />
     </svg>
   );
 }
@@ -28,7 +28,7 @@ type PrincipleId = (typeof copy.items)[number]["id"];
 
 function OpenPrinciples() {
   return (
-    <section className={styles.openSection} aria-labelledby="home-16-principles-heading">
+    <section id="settle" className={styles.openSection} aria-labelledby="home-16-principles-heading">
       <div className={styles.container}>
         <h2 id="home-16-principles-heading" className={styles.openTitle}>
           {copy.title} <span className={styles.emphasis}>{copy.accent}</span>
@@ -62,14 +62,13 @@ function InteractivePrinciples() {
   const [activeId, setActiveId] = useState<PrincipleId | null>(null);
 
   return (
-    <section className={styles.section} aria-labelledby="home-16-principles-heading">
+    <section id="settle" className={styles.section} aria-labelledby="home-16-principles-heading">
       <div className={styles.container}>
         <div className={styles.intro}>
           <div className={styles.mark} aria-hidden="true">
             <GradientMark />
           </div>
           <div className={styles.introCopy}>
-            <p className={styles.eyebrow}><span className={styles.eyebrowMark} aria-hidden="true" /><span>{copy.eyebrow}</span></p>
             <h2 id="home-16-principles-heading" className={styles.title}>
               <span>{copy.title}</span>
               <span className={styles.accent}><span className={styles.emphasis}>{copy.accent.replace(/\.$/, "")}</span><span className={styles.period}>.</span></span>
@@ -139,14 +138,13 @@ function InteractivePrinciples() {
 
 function StackedPrinciples() {
   return (
-    <section className={`${styles.section} ${styles.stackedSection}`} aria-labelledby="home-16-principles-heading">
+    <section id="settle" className={`${styles.section} ${styles.stackedSection}`} aria-labelledby="home-16-principles-heading">
       <div className={styles.mark} aria-hidden="true">
         <GradientMark />
       </div>
       <div className={styles.container}>
         <div className={`${styles.intro} ${styles.stackedIntro}`}>
           <div className={styles.introCopy}>
-            <p className={styles.eyebrow}><span className={styles.eyebrowMark} aria-hidden="true" /><span>{copy.eyebrow}</span></p>
             <h2 id="home-16-principles-heading" className={styles.title}>
               <span>{copy.title}</span>
               <span className={styles.accent}><span className={styles.emphasis}>{copy.accent.replace(/\.$/, "")}</span><span className={styles.period}>.</span></span>
@@ -166,6 +164,10 @@ function StackedPrinciples() {
           </div>
         </div>
       </div>
+      <a className={`${cueStyles.heroCue} ${cueStyles.heroCueOnLight}`} href="#say-less">
+        Let&apos;s Talk
+        <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
+      </a>
     </section>
   );
 }
