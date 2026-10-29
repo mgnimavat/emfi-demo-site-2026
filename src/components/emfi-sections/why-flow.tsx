@@ -63,7 +63,7 @@ function Rail({
   );
 }
 
-export function WhyFlow({ children, stickyLabel = false }: { children: ReactNode; stickyLabel?: boolean }) {
+export function WhyFlow({ children, stickyLabel = false, formProgress = false }: { children: ReactNode; stickyLabel?: boolean; formProgress?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const slotRef = useRef<HTMLDivElement>(null);
@@ -91,7 +91,8 @@ export function WhyFlow({ children, stickyLabel = false }: { children: ReactNode
       const marks = [...stage.querySelectorAll<HTMLElement>("[data-why-pin-marker]")];
       const slides = [...stage.querySelectorAll<HTMLElement>("[data-why-slide]")];
       const markerBox = stage.querySelector<HTMLElement>("[data-why-pin-markers]");
-      if (!markerBox || marks.length < 2 || slides.length < 2) return false;
+      const formBar = markerBox?.hasAttribute("data-why-form-progress") ?? false;
+      if (!markerBox || slides.length < 2 || (!formBar && marks.length < 2)) return false;
       const flowRect = flow.getBoundingClientRect();
       const distance = Math.max(1, flow.offsetHeight - window.innerHeight);
       const progress = Math.max(0, Math.min(1, -flowRect.top / distance));
@@ -107,16 +108,21 @@ export function WhyFlow({ children, stickyLabel = false }: { children: ReactNode
       elbowFill.style.display = "none";
       pulse.style.display = "none";
       fill.style.height = "100%";
-      const railRect = rail.getBoundingClientRect();
-      const activeRect = marks[step - 1].getBoundingClientRect();
-      const end = activeRect.left + activeRect.width / 2;
-      const fillPx = Math.max(0, Math.min(railRect.width, end - railRect.left));
-      fill.style.width = `${fillPx}px`;
-      fill.style.backgroundSize = `${railRect.width}px 100%`;
-      marks.forEach((mark, index) => {
-        const on = index === step - 1;
-        mark.className = on ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep;
-      });
+      if (formBar) {
+        fill.style.width = `${(step / steps) * 100}%`;
+        fill.style.backgroundSize = "100% 100%";
+      } else {
+        const railRect = rail.getBoundingClientRect();
+        const activeRect = marks[step - 1].getBoundingClientRect();
+        const end = activeRect.left + activeRect.width / 2;
+        const fillPx = Math.max(0, Math.min(railRect.width, end - railRect.left));
+        fill.style.width = `${fillPx}px`;
+        fill.style.backgroundSize = `${railRect.width}px 100%`;
+        marks.forEach((mark, index) => {
+          const on = index === step - 1;
+          mark.className = on ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep;
+        });
+      }
       stage.dataset.whyStep = String(step);
       slides.forEach((slide, index) => {
         const on = index === step - 1;
@@ -225,13 +231,22 @@ export function WhyFlow({ children, stickyLabel = false }: { children: ReactNode
               <div ref={slotRef} className={styles.whyStickySlot} aria-hidden="true">
                 <p className={styles.whyStickyWord}><span>Why EMFI</span></p>
               </div>
-              <div className={styles.whyPinMarkers} data-why-pin-markers aria-hidden="true">
-                {[1, 2, 3].map((n) => (
-                  <span key={n} data-why-pin-marker className={n === active ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep}>
-                    {String(n).padStart(2, "0")}
-                  </span>
-                ))}
-                {rail}
+              <div className={formProgress ? `${styles.whyPinMarkers} ${styles.whyFormProgress}` : styles.whyPinMarkers} data-why-pin-markers data-why-form-progress={formProgress ? "" : undefined} aria-hidden="true">
+                {formProgress ? (
+                  <>
+                    <span className={styles.whyFormTrack}>{rail}</span>
+                    <span className={styles.whyFormCount}>{Math.max(active, 1)} / {Children.count(children)}</span>
+                  </>
+                ) : (
+                  <>
+                    {[1, 2, 3].map((n) => (
+                      <span key={n} data-why-pin-marker className={n === active ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep}>
+                        {String(n).padStart(2, "0")}
+                      </span>
+                    ))}
+                    {rail}
+                  </>
+                )}
               </div>
               <div className={styles.whyPinSlides}>
                 {Children.map(children, (child, index) => (

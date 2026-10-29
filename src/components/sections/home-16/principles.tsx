@@ -136,7 +136,7 @@ function InteractivePrinciples() {
   );
 }
 
-function StackedPrinciples() {
+function StackedPrinciples({ whiteCards = false, breakTitle = false }: { whiteCards?: boolean; breakTitle?: boolean }) {
   return (
     <section id="settle" className={`${styles.section} ${styles.stackedSection}`} aria-labelledby="home-16-principles-heading">
       <div className={styles.mark} aria-hidden="true">
@@ -145,13 +145,13 @@ function StackedPrinciples() {
       <div className={styles.container}>
         <div className={`${styles.intro} ${styles.stackedIntro}`}>
           <div className={styles.introCopy}>
-            <h2 id="home-16-principles-heading" className={styles.title}>
+            <h2 id="home-16-principles-heading" className={breakTitle ? `${styles.title} ${styles.stackedTitleBreak}` : styles.title}>
               <span>{copy.title}</span>
               <span className={styles.accent}><span className={styles.emphasis}>{copy.accent.replace(/\.$/, "")}</span><span className={styles.period}>.</span></span>
             </h2>
             <div className={styles.stackedCards}>
               {copy.items.map((item) => (
-                <article key={item.id} className={`${styles.card} ${styles.stackedCard}`}>
+                <article key={item.id} className={whiteCards ? `${styles.card} ${styles.stackedCard} ${styles.stackedCardPlain}` : `${styles.card} ${styles.stackedCard}`}>
                   <h3 className={styles.stackedCardTitle}>
                     <span className={styles.emphasis}>{copy.prefix}</span> {item.label}.
                   </h3>
@@ -172,8 +172,8 @@ function StackedPrinciples() {
   );
 }
 
-export const PrinciplesSection = ({ open = false, stacked = false }: { open?: boolean; stacked?: boolean }) => {
+export const PrinciplesSection = ({ open = false, stacked = false, whiteCards = false, breakTitle = false }: { open?: boolean; stacked?: boolean; whiteCards?: boolean; breakTitle?: boolean }) => {
   if (open) return <OpenPrinciples />;
-  if (stacked) return <StackedPrinciples />;
+  if (stacked) return <StackedPrinciples whiteCards={whiteCards} breakTitle={breakTitle} />;
   return <InteractivePrinciples />;
 };

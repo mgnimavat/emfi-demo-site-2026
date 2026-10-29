@@ -103,6 +103,17 @@
   column-gap: 0.22em;
 }
 
+.stackedIntro .stackedTitleBreak {
+  flex-direction: column;
+  align-items: flex-start;
+  white-space: normal;
+  row-gap: 0.04em;
+}
+
+.stackedIntro .stackedTitleBreak > span:first-child {
+  white-space: nowrap;
+}
+
 .stackedIntro .introCopy {
   grid-column: 2;
 }
@@ -110,8 +121,8 @@
 .stackedCards {
   display: flex;
   flex-direction: column;
-  gap: clamp(16px, 1.6vw, 24px);
-  margin-top: 32px;
+  gap: clamp(12px, 1.2vw, 16px);
+  margin-top: 24px;
 }
 
 .stackedCardTitle {
@@ -193,6 +204,7 @@
 }
 
 .stackedCard {
+  padding: clamp(16px, 1.5vw, 20px) clamp(16px, 1.4vw, 20px);
   background: linear-gradient(
     165deg,
     #fff 0%,
@@ -201,17 +213,21 @@
   );
   border-color: color-mix(in srgb, var(--color-blue-100) 62%, #fff);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 90%),
-    0 16px 34px color-mix(in srgb, var(--color-blue-500) 12%, transparent),
-    0 3px 8px color-mix(in srgb, var(--color-blue-400) 8%, transparent);
+    inset 0 1px 0 transparent,
+    0 8px 16px transparent,
+    0 1px 3px transparent;
   transition: box-shadow 0.35s ease;
 }
 
 .stackedCard:hover {
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 96%),
-    0 20px 42px color-mix(in srgb, var(--color-blue-500) 16%, transparent),
-    0 6px 14px color-mix(in srgb, var(--color-blue-400) 10%, transparent);
+    inset 0 1px 0 rgb(255 255 255 / 90%),
+    0 8px 16px color-mix(in srgb, var(--color-blue-500) 8%, transparent),
+    0 1px 3px color-mix(in srgb, var(--color-blue-400) 5%, transparent);
+}
+
+.stackedCardPlain {
+  background: #fff;
 }
 
 .cardHeading {
@@ -356,6 +372,10 @@
 
   .card {
     padding: var(--space-5);
+  }
+
+  .stackedCard {
+    padding: 16px;
   }
 }
 
