@@ -1137,16 +1137,18 @@ function AppChrome({
   date,
   activeModule,
   bare = false,
+  square = false,
   children,
 }: {
   crumbs: string;
   date: string;
   activeModule: (typeof MODULES)[number];
   bare?: boolean;
+  square?: boolean;
   children: ReactNode;
 }) {
   return (
-    <div className={`pointer-events-none flex h-full min-h-0 flex-col overflow-hidden rounded-md bg-page ${bare ? "" : "border border-line shadow-sm"}`}>
+    <div className={`pointer-events-none flex h-full min-h-0 flex-col overflow-hidden ${square ? "rounded-none" : "rounded-md"} bg-page ${bare ? "" : "border border-line shadow-sm"}`}>
       <header className="flex shrink-0 items-center gap-2 bg-nav px-3 py-2">
         <Image
           src="/brand/emfi-logo.svg"
@@ -1207,7 +1209,7 @@ function AppChrome({
   );
 }
 
-function ViewPanel({ view, apple = false }: { view: View; apple?: boolean }) {
+function ViewPanel({ view, apple = false, square = false }: { view: View; apple?: boolean; square?: boolean }) {
   switch (view) {
     case "Dashboard":
       return <ResearchDashboardPanel />;
@@ -1260,7 +1262,7 @@ function ViewPanel({ view, apple = false }: { view: View; apple?: boolean }) {
     case "HeroDashboard":
       return (
         <div className="h-full">
-          <HeroDashboardScreen bare={apple} />
+          <HeroDashboardScreen bare={apple} square={square} />
         </div>
       );
     case "MobileBalances":
@@ -1326,7 +1328,7 @@ function MobileScreensSlide({
   );
 }
 
-export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false }: { views?: readonly View[]; quietFrame?: boolean } = {}) {
+export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false, square = false }: { views?: readonly View[]; quietFrame?: boolean; square?: boolean } = {}) {
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
   const view = views[index] ?? views[0];
@@ -1346,7 +1348,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false 
 
   return (
     <div
-      className={`rounded-xl ${openFrame ? "" : `border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}`}
+      className={`${square ? "rounded-none" : "rounded-xl"} ${openFrame ? "" : `border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}`}
       style={
         openFrame
           ? undefined
@@ -1356,7 +1358,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false 
       }
     >
       {/* Fixed stage height so public + app slides never resize the hero */}
-      <div className={`relative h-[438px] md:h-[478px] ${still ? "" : "overflow-hidden"}`} style={quietFrame ? { borderRadius: 29 } : undefined}>
+      <div className={`relative h-[438px] md:h-[478px] ${still ? "" : "overflow-hidden"}`} style={square ? { borderRadius: 0 } : quietFrame ? { borderRadius: 29 } : undefined}>
         <AnimatePresence mode="wait">
           <motion.div
             key={view}
@@ -1367,15 +1369,16 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false 
             className={`absolute inset-0 h-full ${still ? "" : "overflow-hidden"}`}
           >
             {meta.kind === "public" ? (
-              <ViewPanel view={view} apple={quietFrame} />
+              <ViewPanel view={view} apple={quietFrame} square={square} />
             ) : (
               <AppChrome
                 crumbs={meta.crumbs}
                 date={meta.date}
                 activeModule={meta.activeModule}
                 bare={quietFrame}
+                square={square}
               >
-                <ViewPanel view={view} apple={quietFrame} />
+                <ViewPanel view={view} apple={quietFrame} square={square} />
               </AppChrome>
             )}
           </motion.div>

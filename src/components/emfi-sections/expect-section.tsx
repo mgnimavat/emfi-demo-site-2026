@@ -14,8 +14,8 @@ export function ExpectSection({ showPoints = true, raiseContent = false, rewrite
         {showPoints ? <p className={styles.points}>Direct. Responsive. Dependable.</p> : null}
       </div>
       {heroCue ? (
-        <a className={styles.heroCue} href="#direct">
-          Why EMFI
+        <a className={`${styles.heroCue} section-bottom-cue`} href="#direct">
+          <span className="section-bottom-cue-label"><span>Why EMFI</span></span>
           <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
         </a>
       ) : null}

@@ -769,6 +769,7 @@ export function OperatingView({
   fill = false,
   demo = false,
   bare = false,
+  square = false,
 }: {
   compact?: boolean;
   tabs?: boolean;
@@ -776,6 +777,7 @@ export function OperatingView({
   fill?: boolean;
   demo?: boolean;
   bare?: boolean;
+  square?: boolean;
 } = {}) {
   const reduced = useReducedMotion();
   const sequence = views.length ? views : VIEWS;
@@ -794,7 +796,7 @@ export function OperatingView({
   }, [reduced, sequence.length]);
 
   const frame = (
-    <div className={cn("pointer-events-none overflow-hidden rounded-md bg-page", bare ? "" : "border border-line shadow-sm", fill && "flex h-full min-h-0 flex-col")}>
+    <div className={cn("pointer-events-none overflow-hidden bg-page", square ? "rounded-none" : "rounded-md", bare ? "" : "border border-line shadow-sm", fill && "flex h-full min-h-0 flex-col")}>
       <header className="flex items-center gap-2 bg-nav px-3 py-2">
         <Image
           src="/brand/emfi-logo.svg"
@@ -901,6 +903,6 @@ export function HeroMockup() {
   );
 }
 
-export function HeroDashboardScreen({ bare = false }: { bare?: boolean } = {}) {
-  return <OperatingView views={["Dashboard"]} fill demo bare={bare} />;
+export function HeroDashboardScreen({ bare = false, square = false }: { bare?: boolean; square?: boolean } = {}) {
+  return <OperatingView views={["Dashboard"]} fill demo bare={bare} square={square} />;
 }

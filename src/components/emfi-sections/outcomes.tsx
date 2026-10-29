@@ -78,7 +78,7 @@ export function SectionCopy({
       {lead ? <p style={{ marginTop: 18, fontSize: "clamp(20px,1.7vw,24px)", fontWeight: 800, letterSpacing: "-.02em", lineHeight: 1.25, color: titleColor }}>{lead}</p> : null}
       <p style={{ marginTop: lead ? 12 : 18, maxWidth: 440, marginInline: centered ? "auto" : undefined, fontSize: 17, lineHeight: 1.6, color: bodyColor, textWrap: "pretty" }}>{bodyLines(body).flatMap((line, index) => (index === 0 ? [line] : [<br key={index} />, line]))}</p>
       {action ? (
-        <div style={{ marginTop: 28, display: centered ? "flex" : undefined, justifyContent: centered ? "center" : undefined }}>
+        <div className="section-bottom-action" style={{ marginTop: 28, display: centered ? "flex" : undefined, justifyContent: centered ? "center" : undefined }}>
           <Button href={action.href} variant="circle">{action.label}</Button>
         </div>
       ) : null}

@@ -253,8 +253,8 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false }:
                   <div key={index} className={styles.whyPinSlide} data-why-slide>{child}</div>
                 ))}
               </div>
-              <a className={`${styles.heroCue} ${styles.heroCueOnLight}`} href="#settle">
-                What less means for you
+              <a className={`${styles.heroCue} ${styles.heroCueOnLight} section-bottom-cue`} href="#settle">
+                <span className="section-bottom-cue-label"><span>What less means for you</span></span>
                 <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
               </a>
             </div>

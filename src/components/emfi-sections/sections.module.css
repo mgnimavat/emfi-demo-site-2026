@@ -331,6 +331,16 @@
   max-height: none;
 }
 
+.responsivePinMedia :global(.h-\[438px\]) {
+  height: 438px;
+}
+
+@media (min-width: 768px) {
+  .responsivePinMedia :global(.md\:h-\[478px\]) {
+    height: 478px;
+  }
+}
+
 @media (max-width: 759px) {
   .pinVisual,
   .pinVisualMedia {

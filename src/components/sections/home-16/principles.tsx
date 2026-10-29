@@ -164,8 +164,8 @@ function StackedPrinciples({ whiteCards = false, breakTitle = false }: { whiteCa
           </div>
         </div>
       </div>
-      <a className={`${cueStyles.heroCue} ${cueStyles.heroCueOnLight}`} href="#say-less">
-        Let&apos;s Talk
+      <a className={`${cueStyles.heroCue} ${cueStyles.heroCueOnLight} section-bottom-cue`} href="#say-less">
+        <span className="section-bottom-cue-label"><span>Let&apos;s Talk</span></span>
         <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
       </a>
     </section>
