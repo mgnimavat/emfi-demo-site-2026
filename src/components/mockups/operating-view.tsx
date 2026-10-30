@@ -64,19 +64,9 @@ const ACCENT = {
   barGrey: "#c5cbd3",
 } as const;
 
-function SemiDonut({
-  tone = ACCENT.rust,
-  weight = 22,
-  extra = false,
-  className = "mx-auto mt-0.5 h-[88px] w-full",
-}: {
-  tone?: string;
-  weight?: number;
-  extra?: boolean;
-  className?: string;
-}) {
+function SemiDonut({ tone = ACCENT.rust, weight = 22 }: { tone?: string; weight?: number }) {
   return (
-    <svg viewBox="0 0 220 118" className={className} aria-hidden>
+    <svg viewBox="0 0 220 118" className="mx-auto mt-0.5 h-[88px] w-full" aria-hidden>
       <path
         d="M22 108 A 88 88 0 1 1 198 108"
         fill="none"
@@ -89,7 +79,7 @@ function SemiDonut({
         fill="none"
         stroke={tone}
         strokeWidth={weight}
-        strokeDasharray={extra ? "214 277" : "230 277"}
+        strokeDasharray="230 277"
         strokeDashoffset="0"
       />
       <path
@@ -108,16 +98,6 @@ function SemiDonut({
         strokeDasharray="8 499"
         strokeDashoffset="-270"
       />
-      {extra ? (
-        <path
-          d="M22 108 A 88 88 0 1 1 198 108"
-          fill="none"
-          stroke="#7f97b0"
-          strokeWidth={weight}
-          strokeDasharray="16 540"
-          strokeDashoffset="-214"
-        />
-      ) : null}
     </svg>
   );
 }
@@ -152,30 +132,10 @@ function VBars({
 function AxisBars({
   bars,
   ticks,
-  axes = true,
 }: {
   bars: { label: string; height: number; color: string; breadth?: string }[];
   ticks: string[];
-  axes?: boolean;
 }) {
-  if (!axes) {
-    return (
-      <div className="mt-2 flex min-h-0 flex-1 items-end">
-        {bars.map((bar) => (
-          <div key={bar.label} className="flex h-full flex-1 items-end justify-center">
-            <div
-              className="rounded-t-[3px]"
-              style={{
-                height: `${bar.height}%`,
-                width: bar.breadth ?? "62%",
-                backgroundColor: bar.color,
-              }}
-            />
-          </div>
-        ))}
-      </div>
-    );
-  }
   return (
     <div className="mt-1 flex min-h-0 flex-1 gap-1">
       <div className="flex flex-col justify-between pb-3.5 text-[6px] leading-none text-ink-muted">
@@ -213,30 +173,20 @@ function AxisBars({
 function HBars({
   items,
   dense = false,
-  fill = false,
 }: {
   items: { label: string; width: number; color: string }[];
   dense?: boolean;
-  fill?: boolean;
 }) {
   return (
-    <div
-      className={
-        fill
-          ? "mt-2 flex min-h-0 flex-1 flex-col gap-2"
-          : dense
-            ? "mt-2 flex flex-col gap-2"
-            : "mt-2 space-y-1.5"
-      }
-    >
+    <div className={dense ? "mt-2 flex flex-col gap-2" : "mt-2 space-y-1.5"}>
       {items.map((item) => (
-        <div key={item.label} className={`flex items-center gap-2 ${fill ? "min-h-0 flex-1" : ""}`}>
+        <div key={item.label} className="flex items-center gap-2">
           <span className={`w-[42%] truncate leading-tight text-ink-muted ${dense ? "text-[6.5px]" : "text-[7.5px]"}`}>
             {item.label}
           </span>
-          <div className={`flex-1 bg-subtle ${fill ? "h-full rounded-[3px]" : dense ? "h-2 rounded-[2px]" : "h-2.5 rounded-[2px]"}`}>
+          <div className={`flex-1 rounded-[2px] bg-subtle ${dense ? "h-2" : "h-2.5"}`}>
             <div
-              className={`h-full ${fill ? "rounded-[3px]" : "rounded-[2px]"}`}
+              className="h-full rounded-[2px]"
               style={{ width: `${item.width}%`, backgroundColor: item.color }}
             />
           </div>
@@ -249,16 +199,14 @@ function HBars({
 function CardShell({
   title,
   value,
-  radius,
   children,
 }: {
   title: string;
   value?: string;
-  radius?: number;
   children: ReactNode;
 }) {
   return (
-    <div className={`flex h-full min-h-0 flex-col overflow-hidden ${radius === 8 ? "rounded-[8px]" : "rounded-md"} border border-line bg-page px-2.5 py-2 shadow-sm`}>
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-md border border-line bg-page px-2.5 py-2 shadow-sm">
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-[11px] font-semibold text-ink">{title}</h3>
         {value ? (
@@ -309,24 +257,14 @@ function FilterCell({
   );
 }
 
-function DashboardPanel({ demo = false, quiet = false, radius }: { demo?: boolean; quiet?: boolean; radius?: number }) {
+function DashboardPanel({ demo = false }: { demo?: boolean }) {
   const usd = demo ? ACCENT.barNavy : ACCENT.rust;
-  const currencies = (
-    quiet
-      ? [
-          ["USD", usd],
-          ["EUR", ACCENT.barBlue],
-          ["GBP", ACCENT.barMuted],
-          ["JPY", ACCENT.barGrey],
-          ["CHF", "#7f97b0"],
-        ]
-      : [
-          ["USD", usd],
-          ["EUR", ACCENT.barBlue],
-          ["GBP", ACCENT.barMuted],
-          ["JPY", ACCENT.barGrey],
-        ]
-  ) as [string, string][];
+  const currencies = [
+    ["USD", usd],
+    ["EUR", ACCENT.barBlue],
+    ["GBP", ACCENT.barMuted],
+    ["JPY", ACCENT.barGrey],
+  ] as const;
   const exposure = demo
     ? [
         { label: "Demo Capital 1", width: 87, color: "#8b95a3" },
@@ -364,46 +302,20 @@ function DashboardPanel({ demo = false, quiet = false, radius }: { demo?: boolea
 
   return (
     <div className="grid h-full grid-cols-3 grid-rows-2 gap-2">
-      <CardShell title="Balances" value={demo ? undefined : "$85,604,878"} radius={radius}>
-        {quiet ? (
-          <div className="flex min-h-0 flex-1 flex-col justify-between">
-            <SemiDonut
-              tone={usd}
-              weight={36}
-              extra
-              className="mx-auto mt-1 aspect-[220/118] h-auto w-full"
-            />
-            <div className="flex flex-col items-center gap-1.5">
-              {[currencies.slice(0, 3), currencies.slice(3)].map((row) => (
-                <div key={row[0][0]} className="flex justify-center gap-x-3">
-                  {row.map(([ccy, color]) => (
-                    <span key={ccy} className="flex items-center gap-1 text-[7px] text-ink-muted">
-                      <span className="h-2.5 w-[2px] rounded-sm" style={{ backgroundColor: color }} />
-                      {ccy}
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <>
-            <SemiDonut tone={usd} weight={demo ? 36 : 22} />
-            <div className="mt-1 flex flex-wrap justify-center gap-x-3 gap-y-0.5">
-              {currencies.map(([ccy, color]) => (
-                <span key={ccy} className="flex items-center gap-1 text-[7px] text-ink-muted">
-                  <span className="h-2.5 w-[2px] rounded-sm" style={{ backgroundColor: color }} />
-                  {ccy}
-                </span>
-              ))}
-            </div>
-          </>
-        )}
+      <CardShell title="Balances" value={demo ? undefined : "$85,604,878"}>
+        <SemiDonut tone={usd} weight={demo ? 36 : 22} />
+        <div className="mt-1 flex flex-wrap justify-center gap-x-3 gap-y-0.5">
+          {currencies.map(([ccy, color]) => (
+            <span key={ccy} className="flex items-center gap-1 text-[7px] text-ink-muted">
+              <span className="h-2.5 w-[2px] rounded-sm" style={{ backgroundColor: color }} />
+              {ccy}
+            </span>
+          ))}
+        </div>
       </CardShell>
-      <CardShell title="Transactions" value={demo ? undefined : "10,460"} radius={radius}>
+      <CardShell title="Transactions" value={demo ? undefined : "10,460"}>
         {demo ? (
           <AxisBars
-            axes={!quiet}
             ticks={["30", "20", "10", "0"]}
             bars={[
               { label: "Submitted", height: 53, color: "#8d97a3" },
@@ -423,20 +335,19 @@ function DashboardPanel({ demo = false, quiet = false, radius }: { demo?: boolea
           />
         )}
       </CardShell>
-      <CardShell title="Exposure" value={demo ? undefined : "$13,750,261"} radius={radius}>
-        <HBars items={exposure} dense={demo} fill={quiet} />
+      <CardShell title="Exposure" value={demo ? undefined : "$13,750,261"}>
+        <HBars items={exposure} dense={demo} />
       </CardShell>
-      <CardShell title="Positions" value={demo ? undefined : "$38,339,254"} radius={radius}>
-        <HBars items={positions} dense={demo} fill={quiet} />
+      <CardShell title="Positions" value={demo ? undefined : "$38,339,254"}>
+        <HBars items={positions} dense={demo} />
       </CardShell>
-      <CardShell title="Charges" value={demo ? undefined : "$330"} radius={radius}>
+      <CardShell title="Charges" value={demo ? undefined : "$330"}>
         {demo ? (
           <AxisBars
-            axes={!quiet}
             ticks={["1500", "1000", "500", "0"]}
             bars={[
-              { label: "Ticket", height: 93, color: "#8d97a3", breadth: quiet ? "42%" : "46%" },
-              { label: "Financing", height: quiet ? 36 : 4, color: "#c5d8ea", breadth: quiet ? "42%" : "22%" },
+              { label: "Ticket", height: 93, color: "#8d97a3", breadth: "46%" },
+              { label: "Financing", height: 4, color: "#c5d8ea", breadth: "22%" },
             ]}
           />
         ) : (
@@ -446,10 +357,9 @@ function DashboardPanel({ demo = false, quiet = false, radius }: { demo?: boolea
           />
         )}
       </CardShell>
-      <CardShell title="Performance" value={demo ? undefined : "+$128,420"} radius={radius}>
+      <CardShell title="Performance" value={demo ? undefined : "+$128,420"}>
         <HBars
           dense={demo}
-          fill={quiet}
           items={
             demo
               ? [
@@ -860,8 +770,6 @@ export function OperatingView({
   demo = false,
   bare = false,
   square = false,
-  trimChrome = false,
-  appBar = false,
 }: {
   compact?: boolean;
   tabs?: boolean;
@@ -870,15 +778,13 @@ export function OperatingView({
   demo?: boolean;
   bare?: boolean;
   square?: boolean;
-  trimChrome?: boolean;
-  appBar?: boolean;
 } = {}) {
   const reduced = useReducedMotion();
   const sequence = views.length ? views : VIEWS;
   const [index, setIndex] = useState(0);
   const view = sequence[index] ?? sequence[0];
   const meta = VIEW_META[view];
-  const Panel = view === "Dashboard" ? () => <DashboardPanel demo={demo} quiet={trimChrome} radius={appBar ? 8 : undefined} /> : panels[view];
+  const Panel = view === "Dashboard" ? () => <DashboardPanel demo={demo} /> : panels[view];
 
   useEffect(() => {
     if (reduced || sequence.length < 2) return;
@@ -890,8 +796,8 @@ export function OperatingView({
   }, [reduced, sequence.length]);
 
   const frame = (
-    <div className={cn("pointer-events-none overflow-hidden bg-page", appBar ? "h-full rounded-[8px]" : square ? "rounded-none" : "rounded-md", !appBar && !bare && "border border-line shadow-sm", fill && "flex h-full min-h-0 flex-col")}>
-      {trimChrome && !appBar ? null : <header className={cn("flex items-center gap-2 bg-nav px-3 py-2", appBar && "relative")}>
+    <div className={cn("pointer-events-none overflow-hidden bg-page", square ? "rounded-none" : "rounded-md", bare ? "" : "border border-line shadow-sm", fill && "flex h-full min-h-0 flex-col")}>
+      <header className="flex items-center gap-2 bg-nav px-3 py-2">
         <Image
           src="/brand/emfi-logo.svg"
           alt="emfi"
@@ -900,10 +806,10 @@ export function OperatingView({
           className="h-[26px] w-auto shrink-0"
           unoptimized
         />
-        {appBar ? null : <p className="hidden max-w-[200px] truncate text-[9px] text-ink-inverse/70 lg:block">
+        <p className="hidden max-w-[200px] truncate text-[9px] text-ink-inverse/70 lg:block">
           {meta.crumbs}
-        </p>}
-        <div className={appBar ? "absolute left-1/2 flex h-7 w-[min(62%,320px)] -translate-x-1/2 items-center rounded-md bg-page px-2.5" : "mx-auto hidden h-7 w-[min(42%,220px)] shrink items-center rounded-md bg-page px-2.5 sm:flex"}>
+        </p>
+        <div className="mx-auto hidden h-7 w-[min(42%,220px)] shrink items-center rounded-md bg-page px-2.5 sm:flex">
           <span className="truncate text-[9px] text-ink-muted">
             Search by Reference, ISIN, Ticker or Counterparty
           </span>
@@ -914,9 +820,9 @@ export function OperatingView({
           <Folder size={13} />
           <Power size={13} />
         </div>
-      </header>}
+      </header>
 
-      {trimChrome ? null : <div className="relative flex h-9 items-end bg-page pl-2 pr-2 sm:pl-3 sm:pr-3">
+      <div className="relative flex h-9 items-end bg-page pl-2 pr-2 sm:pl-3 sm:pr-3">
         {/* Border starts after the left gap so it doesn't show before Clients */}
         <div className="pointer-events-none absolute bottom-0 left-2 right-0 border-b border-brand sm:left-3" />
         <div className="relative z-[1] flex min-w-0 flex-1 items-end overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -942,7 +848,7 @@ export function OperatingView({
             <Settings size={11} />
           </span>
         </div>
-      </div>}
+      </div>
 
       <div className={cn("relative overflow-hidden bg-page p-2 md:p-2.5", fill ? "min-h-0 flex-1" : "h-[332px] md:h-[372px]")}>
         <AnimatePresence mode="wait">
@@ -997,6 +903,6 @@ export function HeroMockup() {
   );
 }
 
-export function HeroDashboardScreen({ bare = false, square = false, trimChrome = false, appBar = false }: { bare?: boolean; square?: boolean; trimChrome?: boolean; appBar?: boolean } = {}) {
-  return <OperatingView views={["Dashboard"]} fill demo bare={bare} square={square} trimChrome={trimChrome} appBar={appBar} />;
+export function HeroDashboardScreen({ bare = false, square = false }: { bare?: boolean; square?: boolean } = {}) {
+  return <OperatingView views={["Dashboard"]} fill demo bare={bare} square={square} />;
 }
