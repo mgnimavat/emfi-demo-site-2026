@@ -67,6 +67,26 @@
     inset 0 0 0 1px rgb(255 255 255 / 14%);
 }
 
+.stage[data-slim] .phone {
+  width: 21%;
+}
+
+.stage[data-slim] .bezel {
+  padding: 3px;
+  border-radius: 20px;
+  box-shadow: 0 6px 10px rgb(7 24 50 / 5%);
+}
+
+.stage[data-slim] .screen {
+  border-radius: 17px;
+}
+
+.stage[data-slim] .pedestal {
+  box-shadow:
+    0 4px 0 #eef3f8,
+    0 8px 12px rgb(36 79 136 / 4%);
+}
+
 .screen {
   display: block;
   width: 100%;

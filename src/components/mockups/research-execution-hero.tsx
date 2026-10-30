@@ -240,11 +240,14 @@ function ActivePill({ label }: { label: string }) {
 function StatusBadge({
   status,
   apple = false,
+  radius,
 }: {
   status: "Filled" | "Rejected" | "Placed" | "Working";
   apple?: boolean;
+  radius?: number;
 }) {
   const filled = status === "Filled";
+  const corner = radius ?? (apple ? 3 : 6);
   const tone = filled
     ? ""
     : status === "Working"
@@ -255,8 +258,8 @@ function StatusBadge({
       className={`flex w-full items-center justify-center px-1 text-center text-[5.5px] font-semibold leading-none ${apple ? "h-full min-h-[12px]" : "py-0.5"} ${tone}`}
       style={
         filled
-          ? { borderRadius: apple ? 3 : 6, backgroundColor: "#8AFF8E", color: "#36a16b" }
-          : { borderRadius: apple ? 3 : 6 }
+          ? { borderRadius: corner, backgroundColor: "#8AFF8E", color: "#36a16b" }
+          : { borderRadius: corner }
       }
     >
       {status}
@@ -662,9 +665,11 @@ function PublicArticlePanel({
 function ExecutionSide({
   symbol,
   apple = false,
+  radius = 6,
 }: {
   symbol: string;
   apple?: boolean;
+  radius?: number;
 }) {
   const ccy = symbol === "AAPL" ? "USD" : "EUR";
   const label = symbol === "AAPL" ? "APPLE INC" : symbol;
@@ -678,7 +683,7 @@ function ExecutionSide({
         </div>
 
         <div className="flex min-h-0 flex-1 flex-col justify-between gap-1 overflow-hidden px-2 py-1.5">
-          <div className="flex h-[16px] shrink-0 items-center border border-[#d8dde5] px-1.5 text-[6px] text-[#8a94a3]" style={{ borderRadius: 6 }}>
+          <div className="flex h-[16px] shrink-0 items-center border border-[#d8dde5] px-1.5 text-[6px] text-[#8a94a3]" style={{ borderRadius: radius }}>
             <span className="truncate">Search by ISIN or Ticker...</span>
             <span className="ml-auto pl-1 text-[6px]">▾</span>
           </div>
@@ -693,7 +698,7 @@ function ExecutionSide({
             </span>
           </div>
 
-          <div className="relative flex h-[26px] shrink-0 overflow-hidden" style={{ borderRadius: 6 }}>
+          <div className="relative flex h-[26px] shrink-0 overflow-hidden" style={{ borderRadius: radius }}>
             <div className="flex min-w-0 flex-1 flex-col justify-center bg-[#e7f8ee] pl-1.5">
               <p className="text-[5px] font-semibold leading-none text-[#16a34a]">BID</p>
               <p className="mt-0.5 text-[7px] font-bold leading-none tabular-nums text-[#16a34a]">343.78 ↑</p>
@@ -712,26 +717,26 @@ function ExecutionSide({
             <p className="text-[5.5px] font-medium leading-none text-[#0a1629]">Time</p>
           </div>
           <div className="grid shrink-0 grid-cols-2 gap-1.5">
-            <div className="flex h-[16px] items-center border border-[#d8dde5] px-1.5 text-[6.5px] font-semibold text-[#0a1629]" style={{ borderRadius: 6 }}>
+            <div className="flex h-[16px] items-center border border-[#d8dde5] px-1.5 text-[6.5px] font-semibold text-[#0a1629]" style={{ borderRadius: radius }}>
               MARKET
               <span className="ml-auto text-[6px] font-normal text-[#8a94a3]">▾</span>
             </div>
-            <div className="flex h-[16px] items-center border border-[#d8dde5] px-1.5 text-[6.5px] font-semibold text-[#0a1629]" style={{ borderRadius: 6 }}>
+            <div className="flex h-[16px] items-center border border-[#d8dde5] px-1.5 text-[6.5px] font-semibold text-[#0a1629]" style={{ borderRadius: radius }}>
               DAY
               <span className="ml-auto text-[6px] font-normal text-[#8a94a3]">▾</span>
             </div>
           </div>
 
           <p className="shrink-0 text-[5.5px] font-medium leading-none text-[#0a1629]">Quantity</p>
-          <div className="flex h-[16px] shrink-0 items-center border border-[#d8dde5] px-1.5 text-[7px] font-semibold tabular-nums text-[#0a1629]" style={{ borderRadius: 6 }}>
+          <div className="flex h-[16px] shrink-0 items-center border border-[#d8dde5] px-1.5 text-[7px] font-semibold tabular-nums text-[#0a1629]" style={{ borderRadius: radius }}>
             0
           </div>
 
           <div className="grid shrink-0 grid-cols-2 gap-1.5">
-            <span className="flex h-[22px] items-center justify-center bg-[#f02020] text-[8px] font-bold text-white" style={{ borderRadius: 6 }}>
+            <span className="flex h-[22px] items-center justify-center bg-[#f02020] text-[8px] font-bold text-white" style={{ borderRadius: radius }}>
               Sell
             </span>
-            <span className="flex h-[22px] items-center justify-center bg-[#22c55e] text-[8px] font-bold text-white" style={{ borderRadius: 6 }}>
+            <span className="flex h-[22px] items-center justify-center bg-[#22c55e] text-[8px] font-bold text-white" style={{ borderRadius: radius }}>
               Buy
             </span>
           </div>
@@ -826,7 +831,7 @@ function ExecutionSide({
   );
 }
 
-function TransactionsStrip({ apple = false }: { apple?: boolean }) {
+function TransactionsStrip({ apple = false, statusRadius }: { apple?: boolean; statusRadius?: number }) {
   const headers = (apple
     ? [
         "Reference",
@@ -988,7 +993,7 @@ function TransactionsStrip({ apple = false }: { apple?: boolean }) {
                         i === statusIdx ? "text-center" : ""
                       } ${sensitive ? "blur-[3.5px] select-none" : ""}`}
                     >
-                      {i === statusIdx ? <StatusBadge status={status} apple={apple} /> : cell}
+                      {i === statusIdx ? <StatusBadge status={status} apple={apple} radius={statusRadius} /> : cell}
                     </td>
                   );
                 })}
@@ -1006,14 +1011,19 @@ function OrderEntryPanel({
   title,
   chart,
   apple = false,
+  radius = 6,
 }: {
   symbol: string;
   title: string;
   chart: "line" | "candle";
   apple?: boolean;
+  radius?: number;
 }) {
   return (
-    <div className="relative h-full overflow-hidden bg-[#eef1f5]">
+    <div
+      className="relative h-full overflow-hidden bg-[#eef1f5]"
+      style={radius > 6 ? { borderRadius: "max(0px, calc(var(--radius-xl) - 10px))" } : undefined}
+    >
       {/* Scale the full Order Entry so chart + execution + transactions all fit */}
       <div
         className="absolute inset-0 grid gap-2 p-1.5"
@@ -1021,7 +1031,7 @@ function OrderEntryPanel({
           gridTemplateRows: "minmax(0, 58%) minmax(0, 42%)",
         }}
       >
-        <div className="grid min-h-0 grid-cols-[1.35fr_1fr] gap-2 overflow-hidden">
+        <div className={`grid min-h-0 gap-2 overflow-hidden ${radius > 6 ? "grid-cols-[minmax(0,1fr)_228px]" : "grid-cols-[1.35fr_1fr]"}`}>
           <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[10px] border border-[#e0e4ea] bg-white">
             <div className="flex shrink-0 items-center gap-2 px-2 py-1">
               <span
@@ -1122,10 +1132,10 @@ function OrderEntryPanel({
               )}
             </div>
           </div>
-          <ExecutionSide symbol={symbol} apple={apple} />
+          <ExecutionSide symbol={symbol} apple={apple} radius={apple ? radius : undefined} />
         </div>
         <div className="min-h-0 overflow-hidden">
-          <TransactionsStrip apple={apple} />
+          <TransactionsStrip apple={apple} statusRadius={radius > 6 ? radius : undefined} />
         </div>
       </div>
     </div>
@@ -1138,6 +1148,7 @@ function AppChrome({
   activeModule,
   bare = false,
   square = false,
+  trimChrome = false,
   children,
 }: {
   crumbs: string;
@@ -1145,11 +1156,12 @@ function AppChrome({
   activeModule: (typeof MODULES)[number];
   bare?: boolean;
   square?: boolean;
+  trimChrome?: boolean;
   children: ReactNode;
 }) {
   return (
-    <div className={`pointer-events-none flex h-full min-h-0 flex-col overflow-hidden ${square ? "rounded-none" : "rounded-md"} bg-page ${bare ? "" : "border border-line shadow-sm"}`}>
-      <header className="flex shrink-0 items-center gap-2 bg-nav px-3 py-2">
+    <div className={`pointer-events-none flex h-full min-h-0 flex-col overflow-hidden ${trimChrome ? "rounded-xl border border-line" : square ? "rounded-none" : "rounded-md"} bg-page ${bare || trimChrome ? "" : "border border-line shadow-sm"}`}>
+      {trimChrome ? null : <header className="flex shrink-0 items-center gap-2 bg-nav px-3 py-2">
         <Image
           src="/brand/emfi-logo.svg"
           alt="emfi"
@@ -1172,9 +1184,9 @@ function AppChrome({
           <Folder size={13} />
           <Power size={13} />
         </div>
-      </header>
+      </header>}
 
-      <div className="relative flex h-9 shrink-0 items-end bg-page pl-2 pr-2 sm:pl-3 sm:pr-3">
+      {trimChrome ? null : <div className="relative flex h-9 shrink-0 items-end bg-page pl-2 pr-2 sm:pl-3 sm:pr-3">
         {/* Border starts after the left gap so it doesn't show before Clients */}
         <div className="pointer-events-none absolute bottom-0 left-2 right-0 border-b border-brand sm:left-3" />
         <div className="relative z-[1] flex min-w-0 flex-1 items-end overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -1200,7 +1212,7 @@ function AppChrome({
             <Settings size={11} />
           </span>
         </div>
-      </div>
+      </div>}
 
       <div className="relative min-h-0 flex-1 overflow-hidden bg-page p-2 md:p-2.5">
         {children}
@@ -1209,7 +1221,7 @@ function AppChrome({
   );
 }
 
-function ViewPanel({ view, apple = false, square = false }: { view: View; apple?: boolean; square?: boolean }) {
+function ViewPanel({ view, apple = false, square = false, trimChrome = false }: { view: View; apple?: boolean; square?: boolean; trimChrome?: boolean }) {
   switch (view) {
     case "Dashboard":
       return <ResearchDashboardPanel />;
@@ -1253,7 +1265,7 @@ function ViewPanel({ view, apple = false, square = false }: { view: View; apple?
       );
     case "OrderEur":
       return apple ? (
-        <OrderEntryPanel symbol="AAPL" title="APPLE INC" chart="line" apple />
+        <OrderEntryPanel symbol="AAPL" title="APPLE INC" chart="line" apple radius={trimChrome ? 10 : 6} />
       ) : (
         <OrderEntryPanel symbol="EURUSD" title="EURUSD" chart="line" />
       );
@@ -1262,7 +1274,7 @@ function ViewPanel({ view, apple = false, square = false }: { view: View; apple?
     case "HeroDashboard":
       return (
         <div className="h-full">
-          <HeroDashboardScreen bare={apple} square={square} />
+          <HeroDashboardScreen bare={apple} square={square} trimChrome={trimChrome} />
         </div>
       );
     case "MobileBalances":
@@ -1279,7 +1291,7 @@ function ViewPanel({ view, apple = false, square = false }: { view: View; apple?
         />
       );
     case "FloatingPhones":
-      return <FloatingPhones />;
+      return <FloatingPhones slim={trimChrome} />;
   }
 }
 
@@ -1328,13 +1340,14 @@ function MobileScreensSlide({
   );
 }
 
-export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false, square = false }: { views?: readonly View[]; quietFrame?: boolean; square?: boolean } = {}) {
+export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false, square = false, trimChrome = false }: { views?: readonly View[]; quietFrame?: boolean; square?: boolean; trimChrome?: boolean } = {}) {
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
   const view = views[index] ?? views[0];
   const meta = VIEW_META[view];
   const still = phoneViews.has(view);
   const openFrame = quietFrame;
+  const tradeRound = trimChrome && view === "OrderEur";
   const hold = HOLD_MS;
 
   useEffect(() => {
@@ -1348,7 +1361,8 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
 
   return (
     <div
-      className={`${square ? "rounded-none" : "rounded-xl"} ${openFrame ? "" : `border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}`}
+      data-trade={tradeRound ? "" : undefined}
+      className={`${tradeRound || !square ? "rounded-xl" : "rounded-none"} ${openFrame ? "" : `border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}`}
       style={
         openFrame
           ? undefined
@@ -1358,7 +1372,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
       }
     >
       {/* Fixed stage height so public + app slides never resize the hero */}
-      <div className={`relative h-[438px] md:h-[478px] ${still ? "" : "overflow-hidden"}`} style={square ? { borderRadius: 0 } : quietFrame ? { borderRadius: 29 } : undefined}>
+      <div className={`relative h-[438px] md:h-[478px] ${still ? "" : "overflow-hidden"}`} style={tradeRound ? { borderRadius: "var(--radius-xl)" } : square ? { borderRadius: 0 } : quietFrame ? { borderRadius: 29 } : undefined}>
         <AnimatePresence mode="wait">
           <motion.div
             key={view}
@@ -1369,7 +1383,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
             className={`absolute inset-0 h-full ${still ? "" : "overflow-hidden"}`}
           >
             {meta.kind === "public" ? (
-              <ViewPanel view={view} apple={quietFrame} square={square} />
+              <ViewPanel view={view} apple={quietFrame} square={square} trimChrome={trimChrome} />
             ) : (
               <AppChrome
                 crumbs={meta.crumbs}
@@ -1377,8 +1391,9 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
                 activeModule={meta.activeModule}
                 bare={quietFrame}
                 square={square}
+                trimChrome={trimChrome}
               >
-                <ViewPanel view={view} apple={quietFrame} square={square} />
+                <ViewPanel view={view} apple={quietFrame} square={square} trimChrome={trimChrome} />
               </AppChrome>
             )}
           </motion.div>
