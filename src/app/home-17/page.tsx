@@ -18,7 +18,7 @@ export default function Home17Page() {
     <div className="home-16-shell home-17">
       {/* <Home16Header /> */}
       <div className={`${styles.page} ${styles.fullHero} ${styles.spinMark}`}>
-        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Handover" highlightSlides standardsEyebrow lightBands markFill={false} homeSlides omitSecondSlide perspectivePhones floatingPhones brandLogos whyTimeline blendHeader directPace="home12" responsiveBody="Tech that works. People who respond." dependableBody="Institutional safeguards. Clear accountability." routeTitles={{ conventional: "Conventional Route", direct: "EMFI Route" }} rewriteLastWord directEyebrow="EMFI IS" directBody="Fewer intermediaries. Fewer handovers." whySticky heroCue formProgress trimChrome />
+        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Handover" highlightSlides standardsEyebrow lightBands markFill={false} homeSlides omitSecondSlide perspectivePhones floatingPhones brandLogos whyTimeline blendHeader directPace="home12" responsiveBody="Tech that works. People who respond." dependableBody="Institutional safeguards. Clear accountability." routeTitles={{ conventional: "Conventional Route", direct: "EMFI Route" }} rewriteLastWord directEyebrow="EMFI IS" directBody="Fewer intermediaries. Fewer handovers." whySticky heroCue formProgress />
       </div>
       <PrinciplesSection stacked whiteCards breakTitle />
       <QuestionnaireSection />
