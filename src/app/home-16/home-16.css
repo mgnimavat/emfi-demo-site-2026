@@ -93,6 +93,15 @@ body.home-12-header-solid:has(.home-16-shell) header {
     max-width: 9em;
     opacity: 1;
   }
+
+  .home-17 .section-bottom-action-visible .emfi-circle-btn {
+    gap: 16px;
+  }
+
+  .home-17 .section-bottom-action-visible .emfi-circle-btn-label {
+    max-width: 9em;
+    opacity: 1;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) {

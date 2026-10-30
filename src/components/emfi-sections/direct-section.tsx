@@ -24,6 +24,7 @@ export function DirectSection({
   centered = false,
   eyebrow,
   body = "Fewer unnecessary intermediaries.\nA more direct route to market.",
+  stackView = false,
 }: {
   cols: string;
   cardRef: RefObject<HTMLDivElement | null>;
@@ -38,6 +39,7 @@ export function DirectSection({
   centered?: boolean;
   eyebrow?: string;
   body?: string;
+  stackView?: boolean;
 }) {
   const { dNodes, dLines, dTok, dHand, dTags, dCount, dNote, dRouteTitle, dStageH, dBandOp, dBandS } = values;
   const marked = step != null;
@@ -49,9 +51,9 @@ export function DirectSection({
   return (
     <section id="direct" data-screen-label="03 More direct" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: pinned && light && !reduceMotion ? "transparent" : light ? "#ffffff" : "radial-gradient(50% 60% at 0% 20%,rgba(162,194,253,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
       {marked && step ? <WhyMarker n={step} active={active} /> : null}
-      <div className={light ? styles.lightCopy : undefined} style={{ position: "relative", zIndex: light ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked, !light, pinned), borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: centered ? "flex" : "grid", flexDirection: centered ? "column" : undefined, gridTemplateColumns: centered ? undefined : routeCols, gap: centered ? 64 : "30px clamp(30px,5vw,30px)", alignItems: centered ? "stretch" : "center" }}>
+      <div className={`${light ? styles.lightCopy : ""} ${stackView ? `${styles.responsiveStack} ${styles.stackDirect}` : ""}`.trim()} style={{ position: "relative", zIndex: light ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked, !light, pinned), borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", display: centered || stackView ? "flex" : "grid", flexDirection: centered || stackView ? "column" : undefined, gridTemplateColumns: stackView || centered ? undefined : routeCols, gap: stackView ? 18 : centered ? 64 : "30px clamp(30px,5vw,30px)", alignItems: stackView ? "flex-start" : centered ? "stretch" : "center" }}>
         {marked && !eyebrow ? <p className={styles.whyKicker} data-why-origin style={centered ? { width: "100%", justifyContent: "center", marginBottom: 0 } : undefined}>Why EMFI</p> : null}
-        <div style={{ position: "relative" }}>
+        <div style={{ position: "relative", width: stackView ? "100%" : undefined, minWidth: stackView ? "auto" : undefined, flexShrink: stackView ? 0 : undefined }}>
           <SectionCopy
             title="Direct."
             eyebrow={eyebrow}
@@ -59,6 +61,7 @@ export function DirectSection({
             origin={marked && Boolean(eyebrow)}
             body={body}
             action={{ href: "/services/settlement-custody", label: "Learn More" }}
+            actionInline={stackView}
             tone={light ? "light" : "dark"}
             align={centered ? "center" : "start"}
           />

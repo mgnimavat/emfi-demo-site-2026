@@ -9,9 +9,9 @@ const PHONES = [
   { src: "/images/services/phone-securities.png?v=3", alt: "Securities on the EMFI mobile app", place: "right" },
 ] as const;
 
-export function FloatingPhones() {
+export function FloatingPhones({ slim = false }: { slim?: boolean } = {}) {
   return (
-    <div className={styles.stage} data-pose="cards">
+    <div className={styles.stage} data-pose="cards" data-slim={slim ? "" : undefined}>
       <div className={styles.pedestal} aria-hidden="true" />
       {PHONES.map((phone) => (
         <div key={phone.src} className={`${styles.phone} ${styles[phone.place]}`}>
