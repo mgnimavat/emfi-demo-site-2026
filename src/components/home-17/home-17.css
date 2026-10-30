@@ -1,0 +1,9 @@
+.home-17 .section-bottom-action.section-bottom-action-visible .emfi-circle-btn {
+  gap: 16px;
+}
+
+.home-17 .section-bottom-action.section-bottom-action-visible .emfi-circle-btn-label {
+  display: inline-block;
+  max-width: 9em;
+  opacity: 1;
+}
