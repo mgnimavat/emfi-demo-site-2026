@@ -23,10 +23,11 @@
 .compactCta { display: none; }
 .entityAction:focus-within { outline: 2px solid var(--action-focus); outline-offset: 4px; }
 .mapPanel { --location-details-height: 184px; display: grid; grid-template-rows: minmax(0,1fr) var(--location-details-height); min-width: 0; min-height: 0; overflow: hidden; border: 1px solid var(--location-card-border); border-radius: var(--radius-card); background: var(--bg-page); }
-.mapFrame { --map-toolbar-offset: 88px; position: relative; min-width: 0; min-height: 0; overflow: hidden; border-bottom: 1px solid var(--location-line); background: var(--bg-soft); }
-.map { position: absolute; top: calc(-1 * var(--map-toolbar-offset)); left: 0; display: block; width: 100%; height: calc(100% + var(--map-toolbar-offset)); border: 0; filter: grayscale(.7); pointer-events: auto; }
+.mapFrame { --map-toolbar-offset: 88px; position: relative; min-width: 0; min-height: 0; overflow: hidden; border-bottom: 1px solid var(--location-line); background: color-mix(in srgb, var(--color-blue-25) 70%, white); }
+.mapFrame::after { content: ""; position: absolute; inset: 0; z-index: 1; background: color-mix(in srgb, var(--color-blue-100) 42%, white); mix-blend-mode: color; pointer-events: none; }
+.map { position: absolute; top: calc(-1 * var(--map-toolbar-offset)); left: 0; display: block; width: 100%; height: calc(100% + var(--map-toolbar-offset)); border: 0; filter: saturate(.45) brightness(1.06) contrast(.98); pointer-events: auto; }
 .map[data-active="false"] { visibility: hidden; pointer-events: none; }
-.mapLoading { position: absolute; inset: 0; display: grid; place-items: center; background: var(--bg-soft); color: var(--color-blue-550); font-size: 13px; font-weight: 500; }
+.mapLoading { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; background: color-mix(in srgb, var(--color-blue-25) 70%, white); color: var(--color-blue-550); font-size: 13px; font-weight: 500; }
 .locationDetails { display: grid; grid-template-rows: auto minmax(0,1fr); box-sizing: border-box; height: 100%; min-height: 0; gap: var(--space-4); padding: var(--space-5); }
 .locationHeading { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
 .locationHeading h3 { margin: 0; color: var(--text-primary); font-size: clamp(18px,1.6vw,22px); font-weight: 750; line-height: 1.25; letter-spacing: -.025em; }

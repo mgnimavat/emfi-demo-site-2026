@@ -1328,7 +1328,7 @@ function MobileScreensSlide({
   );
 }
 
-export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false, square = false }: { views?: readonly View[]; quietFrame?: boolean; square?: boolean } = {}) {
+export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false, square = false, active }: { views?: readonly View[]; quietFrame?: boolean; square?: boolean; active?: boolean } = {}) {
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
   const view = views[index] ?? views[0];
@@ -1338,13 +1338,13 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
   const hold = HOLD_MS;
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || active === false) return;
     const id = window.setInterval(
       () => setIndex((i) => (i + 1) % views.length),
       hold,
     );
     return () => window.clearInterval(id);
-  }, [reduced, views, hold]);
+  }, [reduced, views, hold, active]);
 
   return (
     <div

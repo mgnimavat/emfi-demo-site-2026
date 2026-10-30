@@ -13,9 +13,9 @@ export const questionnaire = {
   draftNotice: 'Continue in your email app to send this enquiry to EMFI.',
   questions: [
     { id: 'custody-fee', title: 'What is your annual custody cost?', options: ['5 basis points', '3 basis points', '1 basis point'] },
-    { id: 'minimum-fee', title: 'What is your monthly minimum cost?', options: ['$10,000', '$5,000', '$1,000'] },
-    { id: 'minimum-term', title: 'What is the minimum term of your custody agreement?', options: ['5 years', '3 years', '1 year'] },
-    { id: 'settlement-status', title: 'When can you see settlement status?', options: ['Next business day', 'Intraday', 'Real-time'] },
+    { id: 'minimum-fee', title: 'What is your monthly minimum fees?', options: ['$10,000', '$5,000', '$1,000'] },
+    { id: 'minimum-term', title: 'What is your minimum contract term?', options: ['5 years', '3 years', '1 year'] },
+    { id: 'settlement-status', title: 'How often does your settlement status update?', options: ['Next business day', 'Intraday', 'Real-time'] },
     { id: 'middlemen', title: 'How many middlemen sit between you and your assets?', options: ['3', '2', '1'] },
     { id: 'segregated-account', title: 'Do you have a direct, segregated account at the depository?', options: ['No', 'Not sure', 'Yes'] },
   ],

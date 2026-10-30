@@ -167,6 +167,7 @@ export function useAnimTimeline({ loopDirect = false, directScale = directTimeli
 
   const replay = useCallback((key: TimelineKey) => {
     if (reducedRef.current) return;
+    elapsedRef.current[key] = 0;
     startRef.current[key] = performance.now();
     valuesRef.current = { ...valuesRef.current, [key]: 0 };
     setTl((prev) => ({ ...prev, [key]: 0 }));

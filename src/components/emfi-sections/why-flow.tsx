@@ -1,6 +1,6 @@
 "use client";
 
-import { Children, createContext, useContext, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from "react";
+import { Children, createContext, useContext, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
 import { ArrowDown } from "lucide-react";
 import styles from "./sections.module.css";
 
@@ -8,22 +8,51 @@ const Y = "clamp(88px,10vw,144px)";
 const X = "clamp(20px,4vw,56px)";
 const WhyFrameContext = createContext(0);
 const WhyPinContext = createContext(false);
+const WhyEngagedContext = createContext(false);
 
 export function useWhyPinned() {
   return useContext(WhyPinContext);
 }
 
+export function useWhyEngaged() {
+  return useContext(WhyEngagedContext);
+}
+
 export function sectionPad(rail: boolean, horizontal = true, pinned = false) {
   const left = `calc(${X} + 54px)`;
   if (pinned) {
-    const top = "clamp(112px, 14vh, 148px)";
+    const top = "80px";
     const bottom = "clamp(100px, 13vh, 132px)";
-    const right = "clamp(52px, 4vw, 56px)";
-    const pinLeft = `calc(${X} + 54px + clamp(28px, 7vw, 100px))`;
-    return `${top} ${right} ${bottom} ${pinLeft}`;
+    return `${top} var(--pin-side, 120px) ${bottom}`;
   }
   if (!horizontal) return rail ? `${Y} 0 ${Y} ${left}` : `${Y} 0`;
   return rail ? `${Y} ${X} ${Y} ${left}` : `${Y} ${X}`;
+}
+
+export function sectionFrame(pinned: boolean, centered: boolean, columns: string): CSSProperties {
+  if (pinned) {
+    return {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      gap: "clamp(16px, 2.4vh, 28px)",
+    };
+  }
+  if (centered) {
+    return {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "stretch",
+      gap: 64,
+    };
+  }
+  return {
+    display: "grid",
+    gridTemplateColumns: columns,
+    alignItems: "center",
+    gap: "30px clamp(30px,5vw,30px)",
+  };
 }
 
 export function WhyMarker({ n, active }: { n: number; active: boolean }) {
@@ -37,6 +66,10 @@ export function WhyMarker({ n, active }: { n: number; active: boolean }) {
 export function useWhyActive(step: number) {
   const passed = useContext(WhyFrameContext);
   return step > 0 && passed >= step;
+}
+
+export function useWhyStep() {
+  return useContext(WhyFrameContext);
 }
 
 function Rail({
@@ -72,7 +105,9 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false }:
   const elbowRef = useRef<HTMLSpanElement>(null);
   const elbowFillRef = useRef<HTMLSpanElement>(null);
   const pulseRef = useRef<HTMLSpanElement>(null);
+  const wheelLockRef = useRef({ coolUntil: 0, blocked: false, timer: 0 });
   const [active, setActive] = useState(stickyLabel ? 1 : 0);
+  const [engaged, setEngaged] = useState(false);
 
   useLayoutEffect(() => {
     const flow = ref.current;
@@ -114,15 +149,24 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false }:
       } else {
         const railRect = rail.getBoundingClientRect();
         const activeRect = marks[step - 1].getBoundingClientRect();
-        const end = activeRect.left + activeRect.width / 2;
-        const fillPx = Math.max(0, Math.min(railRect.width, end - railRect.left));
-        fill.style.width = `${fillPx}px`;
-        fill.style.backgroundSize = `${railRect.width}px 100%`;
+        const end = activeRect.top + activeRect.height / 2;
+        const fillPx = Math.max(0, Math.min(railRect.height, end - railRect.top));
+        fill.style.width = "100%";
+        fill.style.height = `${fillPx}px`;
+        fill.style.backgroundSize = `100% ${Math.max(railRect.height, 1)}px`;
         marks.forEach((mark, index) => {
           const on = index === step - 1;
-          mark.className = on ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep;
+          const done = index < step - 1;
+          mark.className = on
+            ? `${styles.whyPinStep} ${styles.whyPinStepActive}`
+            : done
+              ? `${styles.whyPinStep} ${styles.whyPinStepDone}`
+              : styles.whyPinStep;
         });
       }
+      const stageRect = stage.getBoundingClientRect();
+      const inView = stageRect.top < 90 && stageRect.bottom > window.innerHeight - 8;
+      setEngaged((current) => (current === inView ? current : inView));
       stage.dataset.whyStep = String(step);
       slides.forEach((slide, index) => {
         const on = index === step - 1;
@@ -212,11 +256,78 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false }:
     observer.observe(flow);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
+
+    const wheelLock = wheelLockRef.current;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const pinMetrics = () => {
+      const rect = flow.getBoundingClientRect();
+      const distance = Math.max(1, flow.offsetHeight - window.innerHeight);
+      const start = rect.top + window.scrollY;
+      const steps = stageRef.current?.querySelectorAll("[data-why-slide]").length ?? 0;
+      const progress = Math.max(0, Math.min(1, (window.scrollY - start) / distance));
+      const step = steps === 0 ? 1 : progress >= 1 ? steps : Math.min(steps, Math.floor(progress * steps + 1e-6) + 1);
+      return { rect, distance, start, steps, progress, step };
+    };
+
+    const onWheel = (event: WheelEvent) => {
+      if (!stickyLabel || reduceMotion.matches || event.deltaY === 0) return;
+      const { rect, distance, start, steps, step } = pinMetrics();
+      const pinned = rect.top <= 1 && rect.bottom >= window.innerHeight - 1;
+      if (!pinned || steps < 2) {
+        wheelLock.blocked = true;
+        window.clearTimeout(wheelLock.timer);
+        wheelLock.timer = window.setTimeout(() => { wheelLock.blocked = false; }, 180);
+        return;
+      }
+      const target = event.target;
+      if (target instanceof Element) {
+        let node: Element | null = target;
+        while (node && node !== flow) {
+          const overflow = getComputedStyle(node).overflowY;
+          if ((overflow === "auto" || overflow === "scroll") && node.scrollHeight > node.clientHeight + 1) return;
+          node = node.parentElement;
+        }
+      }
+      event.preventDefault();
+      if (wheelLock.blocked) {
+        window.clearTimeout(wheelLock.timer);
+        wheelLock.timer = window.setTimeout(() => { wheelLock.blocked = false; }, 180);
+        return;
+      }
+      if (performance.now() < wheelLock.coolUntil) return;
+      wheelLock.coolUntil = performance.now() + 720;
+      const dir = event.deltaY > 0 ? 1 : -1;
+      const header = stageRef.current?.getBoundingClientRect().top ?? 0;
+      if (dir > 0 && step >= steps) {
+        let node: HTMLElement | null = flow;
+        let top = start + distance + window.innerHeight;
+        while (node) {
+          const next = node.nextElementSibling;
+          if (next instanceof HTMLElement) {
+            top = next.getBoundingClientRect().top + window.scrollY - header;
+            break;
+          }
+          node = node.parentElement;
+        }
+        window.scrollTo({ top, behavior: "smooth" });
+        return;
+      }
+      if (dir < 0 && step <= 1) {
+        window.scrollTo({ top: Math.max(0, start - window.innerHeight + header), behavior: "smooth" });
+        return;
+      }
+      const nextProgress = Math.min((step + dir - 0.5) / steps, 0.999);
+      window.scrollTo({ top: start + distance * nextProgress, behavior: "smooth" });
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       cancelAnimationFrame(raf);
       observer.disconnect();
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
+      window.removeEventListener("wheel", onWheel);
     };
   }, [active, stickyLabel]);
 
@@ -225,6 +336,7 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false }:
   if (stickyLabel) {
     return (
       <WhyPinContext.Provider value={true}>
+        <WhyEngagedContext.Provider value={engaged}>
         <WhyFrameContext.Provider value={active}>
           <div ref={ref} className={styles.whyPin}>
             <div ref={stageRef} className={`${styles.whyPinStage} ${styles.whyFlow} ${styles.whyFlowSticky}`}>
@@ -241,7 +353,7 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false }:
                   <>
                     {[1, 2, 3].map((n) => (
                       <span key={n} data-why-pin-marker className={n === active ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep}>
-                        {String(n).padStart(2, "0")}
+                        {n}
                       </span>
                     ))}
                     {rail}
@@ -260,6 +372,7 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false }:
             </div>
           </div>
         </WhyFrameContext.Provider>
+        </WhyEngagedContext.Provider>
       </WhyPinContext.Provider>
     );
   }

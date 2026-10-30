@@ -85,3 +85,11 @@ export function SectionCopy({
     </div>
   );
 }
+
+export function SectionAction({ href, label }: { href: string; label: string }) {
+  return (
+    <div className="section-bottom-action" style={{ display: "flex", justifyContent: "center" }}>
+      <Button href={href} variant="circle">{label}</Button>
+    </div>
+  );
+}
