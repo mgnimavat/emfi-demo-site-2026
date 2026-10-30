@@ -391,8 +391,8 @@
   position: absolute;
   z-index: 6;
   top: 50%;
-  /* Align to the right edge of the header/content container. */
-  right: calc(max(0px, (100% - 1440px) / 2) + clamp(20px, 4vw, 56px) - 3px);
+  /* Align to the right edge of the header/content container, then 90px left. */
+  right: calc(max(0px, (100% - 1440px) / 2) + clamp(20px, 4vw, 56px) - 3px + 90px);
   bottom: auto;
   left: auto;
   display: flex;

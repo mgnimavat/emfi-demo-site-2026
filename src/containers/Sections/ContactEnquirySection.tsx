@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { contact } from '@/content/contact';
 import { useResearchEnquiry } from '@/lib/use-research-enquiry';
 import ctaStyles from '@/components/sections/home-16/questionnaire.module.css';
@@ -79,7 +79,7 @@ export const ContactEnquirySection = () => {
                   onChange={(event) => setAttachmentName(event.target.files?.[0]?.name ?? '')} />
               </div>
               <button type="submit" className={`${ctaStyles.next} ${styles.submit}`}>
-                {contact.submit}<ArrowUpRight aria-hidden="true" />
+                {contact.submit}<ArrowRight aria-hidden="true" />
               </button>
             </div>
             {attachmentName ? <p id="contact-attachment-notice" className={ctaStyles.description}>{copy.attachmentNotice}</p> : null}

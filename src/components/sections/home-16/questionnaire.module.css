@@ -105,7 +105,7 @@
 .next:hover { box-shadow: 0 4px 16px color-mix(in srgb, var(--color-blue-200) 15%, transparent); }
 .back svg, .next svg { width: 14px; height: 14px; }
 .next svg { transform: rotate(-45deg); transform-origin: center; transition: transform .2s ease; }
-.next:hover svg { transform: rotate(0deg); }
+.next:hover svg, .next:focus-visible svg { transform: rotate(0deg); }
 .card :is(button, a):focus-visible, .option input:focus-visible { outline: 2px solid var(--quiz-accent); outline-offset: 4px; }
 .description { margin: var(--space-4) 0 0; color: var(--quiz-muted); font-size: 13px; line-height: 1.5; }
 .fields { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }

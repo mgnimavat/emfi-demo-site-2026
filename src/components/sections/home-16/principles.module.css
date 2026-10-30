@@ -162,6 +162,7 @@
 
 .stackedIntro .introCopy {
   grid-column: 2;
+  margin-left: 80px;
 }
 
 .stackedCards {
@@ -468,6 +469,7 @@
 
   .stackedIntro .introCopy {
     grid-column: 1;
+    margin-left: 0;
   }
 
   .cards {
