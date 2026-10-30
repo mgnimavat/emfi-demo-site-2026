@@ -1149,6 +1149,7 @@ function AppChrome({
   bare = false,
   square = false,
   trimChrome = false,
+  appBar = false,
   children,
 }: {
   crumbs: string;
@@ -1157,11 +1158,12 @@ function AppChrome({
   bare?: boolean;
   square?: boolean;
   trimChrome?: boolean;
+  appBar?: boolean;
   children: ReactNode;
 }) {
   return (
     <div className={`pointer-events-none flex h-full min-h-0 flex-col overflow-hidden ${trimChrome ? "rounded-xl border border-line" : square ? "rounded-none" : "rounded-md"} bg-page ${bare || trimChrome ? "" : "border border-line shadow-sm"}`}>
-      {trimChrome ? null : <header className="flex shrink-0 items-center gap-2 bg-nav px-3 py-2">
+      {trimChrome && !appBar ? null : <header className="flex shrink-0 items-center gap-2 bg-nav px-3 py-2">
         <Image
           src="/brand/emfi-logo.svg"
           alt="emfi"
@@ -1170,10 +1172,10 @@ function AppChrome({
           className="h-[26px] w-auto shrink-0"
           unoptimized
         />
-        <p className="hidden max-w-[200px] truncate text-[9px] text-ink-inverse/70 lg:block">
+        {appBar ? null : <p className="hidden max-w-[200px] truncate text-[9px] text-ink-inverse/70 lg:block">
           {crumbs}
-        </p>
-        <div className="mx-auto hidden h-7 w-[min(42%,220px)] shrink items-center rounded-md bg-page px-2.5 sm:flex">
+        </p>}
+        <div className={`${appBar ? "flex min-w-0 flex-1" : "mx-auto hidden w-[min(42%,220px)] sm:flex"} h-7 shrink items-center rounded-md bg-page px-2.5`}>
           <span className="truncate text-[9px] text-ink-muted">
             Search by Reference, ISIN, Ticker or Counterparty
           </span>
@@ -1221,7 +1223,7 @@ function AppChrome({
   );
 }
 
-function ViewPanel({ view, apple = false, square = false, trimChrome = false }: { view: View; apple?: boolean; square?: boolean; trimChrome?: boolean }) {
+function ViewPanel({ view, apple = false, square = false, trimChrome = false, appBar = false }: { view: View; apple?: boolean; square?: boolean; trimChrome?: boolean; appBar?: boolean }) {
   switch (view) {
     case "Dashboard":
       return <ResearchDashboardPanel />;
@@ -1274,7 +1276,7 @@ function ViewPanel({ view, apple = false, square = false, trimChrome = false }: 
     case "HeroDashboard":
       return (
         <div className="h-full">
-          <HeroDashboardScreen bare={apple} square={square} trimChrome={trimChrome} />
+          <HeroDashboardScreen bare={apple} square={square} trimChrome={trimChrome} appBar={appBar} />
         </div>
       );
     case "MobileBalances":
@@ -1340,7 +1342,7 @@ function MobileScreensSlide({
   );
 }
 
-export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false, square = false, trimChrome = false }: { views?: readonly View[]; quietFrame?: boolean; square?: boolean; trimChrome?: boolean } = {}) {
+export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false, square = false, trimChrome = false, appBar = false }: { views?: readonly View[]; quietFrame?: boolean; square?: boolean; trimChrome?: boolean; appBar?: boolean } = {}) {
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
   const view = views[index] ?? views[0];
@@ -1383,7 +1385,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
             className={`absolute inset-0 h-full ${still ? "" : "overflow-hidden"}`}
           >
             {meta.kind === "public" ? (
-              <ViewPanel view={view} apple={quietFrame} square={square} trimChrome={trimChrome} />
+              <ViewPanel view={view} apple={quietFrame} square={square} trimChrome={trimChrome} appBar={appBar} />
             ) : (
               <AppChrome
                 crumbs={meta.crumbs}
@@ -1392,8 +1394,9 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
                 bare={quietFrame}
                 square={square}
                 trimChrome={trimChrome}
+                appBar={appBar}
               >
-                <ViewPanel view={view} apple={quietFrame} square={square} trimChrome={trimChrome} />
+                <ViewPanel view={view} apple={quietFrame} square={square} trimChrome={trimChrome} appBar={appBar} />
               </AppChrome>
             )}
           </motion.div>

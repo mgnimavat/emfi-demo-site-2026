@@ -16,6 +16,7 @@ export function ResponsiveSection({
   perspectivePhones = false,
   floatingPhones = false,
   trimChrome = false,
+  appBar = false,
   step,
   body = "Technology that works. People who respond. Clearer workflows with support from people who can help resolve issues.",
   centered = false,
@@ -30,6 +31,7 @@ export function ResponsiveSection({
   perspectivePhones?: boolean;
   floatingPhones?: boolean;
   trimChrome?: boolean;
+  appBar?: boolean;
   step?: number;
   body?: string;
   centered?: boolean;
@@ -60,7 +62,7 @@ export function ResponsiveSection({
           />
         </div>
         <div className={pinColumns ? styles.responsivePinMedia : undefined} style={{ minWidth: 0, width: centered ? "100%" : undefined, color: "#071832", fontFamily: "var(--font-inter), Inter, Arial, sans-serif" }}>
-          <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} views={homeSlides ? (floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
+          <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} views={homeSlides ? (floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
         </div>
       </div>
     </section>

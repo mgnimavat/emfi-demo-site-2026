@@ -859,6 +859,7 @@ export function OperatingView({
   bare = false,
   square = false,
   trimChrome = false,
+  appBar = false,
 }: {
   compact?: boolean;
   tabs?: boolean;
@@ -868,6 +869,7 @@ export function OperatingView({
   bare?: boolean;
   square?: boolean;
   trimChrome?: boolean;
+  appBar?: boolean;
 } = {}) {
   const reduced = useReducedMotion();
   const sequence = views.length ? views : VIEWS;
@@ -887,7 +889,7 @@ export function OperatingView({
 
   const frame = (
     <div className={cn("pointer-events-none overflow-hidden bg-page", square ? "rounded-none" : "rounded-md", bare ? "" : "border border-line shadow-sm", fill && "flex h-full min-h-0 flex-col")}>
-      {trimChrome ? null : <header className="flex items-center gap-2 bg-nav px-3 py-2">
+      {trimChrome && !appBar ? null : <header className="flex items-center gap-2 bg-nav px-3 py-2">
         <Image
           src="/brand/emfi-logo.svg"
           alt="emfi"
@@ -896,10 +898,10 @@ export function OperatingView({
           className="h-[26px] w-auto shrink-0"
           unoptimized
         />
-        <p className="hidden max-w-[200px] truncate text-[9px] text-ink-inverse/70 lg:block">
+        {appBar ? null : <p className="hidden max-w-[200px] truncate text-[9px] text-ink-inverse/70 lg:block">
           {meta.crumbs}
-        </p>
-        <div className="mx-auto hidden h-7 w-[min(42%,220px)] shrink items-center rounded-md bg-page px-2.5 sm:flex">
+        </p>}
+        <div className={`${appBar ? "flex min-w-0 flex-1" : "mx-auto hidden w-[min(42%,220px)] sm:flex"} h-7 shrink items-center rounded-md bg-page px-2.5`}>
           <span className="truncate text-[9px] text-ink-muted">
             Search by Reference, ISIN, Ticker or Counterparty
           </span>
@@ -993,6 +995,6 @@ export function HeroMockup() {
   );
 }
 
-export function HeroDashboardScreen({ bare = false, square = false, trimChrome = false }: { bare?: boolean; square?: boolean; trimChrome?: boolean } = {}) {
-  return <OperatingView views={["Dashboard"]} fill demo bare={bare} square={square} trimChrome={trimChrome} />;
+export function HeroDashboardScreen({ bare = false, square = false, trimChrome = false, appBar = false }: { bare?: boolean; square?: boolean; trimChrome?: boolean; appBar?: boolean } = {}) {
+  return <OperatingView views={["Dashboard"]} fill demo bare={bare} square={square} trimChrome={trimChrome} appBar={appBar} />;
 }
