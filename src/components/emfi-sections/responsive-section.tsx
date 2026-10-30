@@ -5,6 +5,7 @@ import { ResearchExecutionHeroMockup, home10ResponsiveSlides, home12ResponsiveSl
 import { SectionCopy } from "./outcomes";
 import styles from "./sections.module.css";
 import { sectionPad, useWhyActive, useWhyPinned, WhyMarker } from "./why-flow";
+import { Button } from "@/components/ui/button";
 
 export function ResponsiveSection({
   cols,
@@ -17,6 +18,7 @@ export function ResponsiveSection({
   floatingPhones = false,
   trimChrome = false,
   appBar = false,
+  home15Trade = false,
   step,
   body = "Technology that works. People who respond. Clearer workflows with support from people who can help resolve issues.",
   centered = false,
@@ -32,6 +34,7 @@ export function ResponsiveSection({
   floatingPhones?: boolean;
   trimChrome?: boolean;
   appBar?: boolean;
+  home15Trade?: boolean;
   step?: number;
   body?: string;
   centered?: boolean;
@@ -55,15 +58,19 @@ export function ResponsiveSection({
             eyebrow={eyebrow}
             plainEyebrow={pinned && Boolean(eyebrow)}
             body={body}
-            action={{ href: "/services/settlement-custody#workstation-demo", label: "Learn More" }}
-            actionInline={stackView}
+            action={stackView ? undefined : { href: "/services/settlement-custody#workstation-demo", label: "Learn More" }}
             tone={light ? "light" : "dark"}
             align={centered ? "center" : "start"}
           />
         </div>
         <div className={pinColumns ? styles.responsivePinMedia : undefined} style={{ minWidth: 0, width: centered ? "100%" : undefined, color: "#071832", fontFamily: "var(--font-inter), Inter, Arial, sans-serif" }}>
-          <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} views={homeSlides ? (floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
+          <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} views={homeSlides ? (floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
         </div>
+        {stackView ? (
+          <div className="section-bottom-action section-bottom-action-visible">
+            <Button href="/services/settlement-custody#workstation-demo" variant="circle">Learn More</Button>
+          </div>
+        ) : null}
       </div>
     </section>
   );

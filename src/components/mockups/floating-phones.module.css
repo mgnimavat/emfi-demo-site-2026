@@ -72,13 +72,13 @@
 }
 
 .stage[data-slim] .bezel {
-  padding: 3px;
+  padding: 2px;
   border-radius: 20px;
   box-shadow: 0 6px 10px rgb(7 24 50 / 5%);
 }
 
 .stage[data-slim] .screen {
-  border-radius: 17px;
+  border-radius: 18px;
 }
 
 .stage[data-slim] .pedestal {

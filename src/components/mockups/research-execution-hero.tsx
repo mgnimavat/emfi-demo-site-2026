@@ -666,16 +666,18 @@ function ExecutionSide({
   symbol,
   apple = false,
   radius = 6,
+  spread = false,
 }: {
   symbol: string;
   apple?: boolean;
   radius?: number;
+  spread?: boolean;
 }) {
   const ccy = symbol === "AAPL" ? "USD" : "EUR";
   const label = symbol === "AAPL" ? "APPLE INC" : symbol;
   if (apple) {
     return (
-      <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[10px] border border-[#e0e4ea] bg-white">
+      <div className={`flex h-full min-h-0 flex-col overflow-hidden ${radius === 8 ? "rounded-[8px] border border-[#e0e4ea]" : radius > 6 ? "rounded-md border border-line shadow-sm" : "rounded-[10px] border border-[#e0e4ea]"} bg-white`}>
         <div className="flex shrink-0 items-center gap-1 bg-[#f3f5f8] px-2 py-1">
           <GripVertical size={9} className="shrink-0 text-[#98a2b3]" strokeWidth={2} />
           <span className="text-[8.5px] font-bold text-[#0a1629]">Execution</span>
@@ -751,8 +753,8 @@ function ExecutionSide({
         <X size={10} className="text-[#80909d]" strokeWidth={2} />
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-hidden px-2 pb-1.5">
-        <div className="flex h-[18px] shrink-0 items-center gap-1 rounded-[10px] border border-[#d8dde5] px-1.5 text-[6px] text-[#8a94a3]">
+      <div className={`flex min-h-0 flex-1 flex-col gap-1 overflow-hidden px-2 ${spread ? "pb-2" : "pb-1.5"}`}>
+        <div className={`flex shrink-0 items-center gap-1 rounded-[10px] border border-[#d8dde5] px-1.5 text-[6px] text-[#8a94a3] ${spread ? "h-[22px]" : "h-[18px]"}`}>
           <Search size={8} className="shrink-0 text-[#8a94a3]" />
           <span className="truncate">{apple ? "Search by ISIN or Ticker..." : "Search by ISIN or Ticker"}</span>
         </div>
@@ -769,7 +771,7 @@ function ExecutionSide({
           {apple ? null : <Eye size={9} className="ml-auto text-[#2b6cb0]" strokeWidth={2} />}
         </div>
 
-        <div className="shrink-0 rounded-[10px] border border-[#d8dde5] px-1.5 py-0.5">
+        <div className={`shrink-0 rounded-[10px] border border-[#d8dde5] px-1.5 ${spread ? "py-1" : "py-0.5"}`}>
           <p className="text-[5px] font-medium leading-none text-[#8a94a3]">Broker</p>
           <div className="mt-0.5 flex items-center justify-between text-[7px] font-semibold text-[#0a1629]">
             <span className="blur-[3.5px] select-none">Interactive</span>
@@ -778,28 +780,28 @@ function ExecutionSide({
         </div>
 
         <div className="relative flex shrink-0 items-stretch gap-1.5">
-          <div className={`min-w-0 flex-1 rounded-[10px] px-1 py-0.5 text-center ${apple ? "border border-[#d7f3e3] bg-[#e9f9ef]" : "border border-[#d8dde5]"}`}>
+          <div className={`min-w-0 flex-1 rounded-[10px] px-1 text-center ${spread ? "py-1" : "py-0.5"} ${apple ? "border border-[#d7f3e3] bg-[#e9f9ef]" : "border border-[#d8dde5]"}`}>
             <p className="text-[5px] font-semibold leading-none text-[#8a94a3]">BID</p>
-            <p className={`mt-0.5 text-[8px] font-bold leading-none tabular-nums ${apple ? "text-[#16a34a]" : "text-[#22c55e]"}`}>{apple ? "0.00 ↑" : "▲ 0"}</p>
+            <p className={`mt-0.5 text-[8px] font-bold leading-none tabular-nums ${apple ? "text-[#16a34a]" : "text-[#22c55e]"}`}>{spread ? "▲ 1.1189" : apple ? "0.00 ↑" : "▲ 0"}</p>
           </div>
           <div className="pointer-events-none absolute top-1/2 left-1/2 z-[1] flex h-[18px] w-[18px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#0a1629] text-[7px] font-bold text-white ring-2 ring-white">
             0
           </div>
-          <div className={`min-w-0 flex-1 rounded-[10px] px-1 py-0.5 text-center ${apple ? "border border-[#f8d4d2] bg-[#fdeceb]" : "border border-[#d8dde5]"}`}>
+          <div className={`min-w-0 flex-1 rounded-[10px] px-1 text-center ${spread ? "py-1" : "py-0.5"} ${apple ? "border border-[#f8d4d2] bg-[#fdeceb]" : "border border-[#d8dde5]"}`}>
             <p className="text-[5px] font-semibold leading-none text-[#8a94a3]">ASK</p>
-            <p className={`mt-0.5 text-[8px] font-bold leading-none tabular-nums ${apple ? "text-[#e11d2e]" : "text-[#f04438]"}`}>{apple ? "↓ 0.00" : "▼ 0"}</p>
+            <p className={`mt-0.5 text-[8px] font-bold leading-none tabular-nums ${apple ? "text-[#e11d2e]" : "text-[#f04438]"}`}>{spread ? "▼ 1.1190" : apple ? "↓ 0.00" : "▼ 0"}</p>
           </div>
         </div>
 
         <div className="grid shrink-0 grid-cols-2 gap-1.5">
-          <div className="rounded-[10px] border border-[#d8dde5] px-1.5 py-0.5">
+          <div className={`rounded-[10px] border border-[#d8dde5] px-1.5 ${spread ? "py-1" : "py-0.5"}`}>
             <p className="text-[5px] font-medium leading-none text-[#8a94a3]">Order Type</p>
             <div className="mt-0.5 flex items-center justify-between text-[6.5px] font-semibold text-[#0a1629]">
               MARKET
               <span className="text-[5.5px] text-[#8a94a3]">▾</span>
             </div>
           </div>
-          <div className="rounded-[10px] border border-[#d8dde5] px-1.5 py-0.5">
+          <div className={`rounded-[10px] border border-[#d8dde5] px-1.5 ${spread ? "py-1" : "py-0.5"}`}>
             <p className="text-[5px] font-medium leading-none text-[#8a94a3]">Time</p>
             <div className="mt-0.5 flex items-center justify-between text-[6.5px] font-semibold text-[#0a1629]">
               DAY
@@ -809,7 +811,7 @@ function ExecutionSide({
         </div>
 
         <div className="flex shrink-0 overflow-hidden rounded-[10px] border border-[#d8dde5]">
-          <div className="min-w-0 flex-1 px-1.5 py-0.5">
+          <div className={`min-w-0 flex-1 px-1.5 ${spread ? "py-1" : "py-0.5"}`}>
             <p className="text-[5px] font-medium leading-none text-[#8a94a3]">Quantity</p>
             <p className="mt-0.5 text-[7px] font-semibold tabular-nums text-[#0a1629]">0</p>
           </div>
@@ -818,7 +820,7 @@ function ExecutionSide({
           </span>
         </div>
 
-        <div className="mt-auto grid shrink-0 grid-cols-2 gap-1.5 pt-0.5">
+        <div className={`${spread ? "" : "mt-auto pt-0.5"} grid shrink-0 grid-cols-2 gap-1.5`}>
           <span className={`flex h-6 items-center justify-center rounded-[10px] text-[8px] font-bold text-white ${apple ? "bg-[#f07167]" : "bg-[#f04438]"}`}>
             Sell
           </span>
@@ -924,7 +926,7 @@ function TransactionsStrip({ apple = false, statusRadius }: { apple?: boolean; s
   const isinIdx = headers.indexOf("ISIN");
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[10px] border border-[#e0e4ea] bg-white">
+    <div className={`flex min-h-0 flex-col overflow-hidden ${statusRadius === 8 ? "rounded-[8px] border border-[#e0e4ea]" : statusRadius ? "h-full rounded-md border border-line shadow-sm" : "h-full rounded-[10px] border border-[#e0e4ea]"} bg-white`}>
       <div className="flex shrink-0 items-center justify-between bg-[#e8edf3] px-2.5 py-1.5">
         <span className="text-[9px] font-bold text-[#0a1629]">{apple ? "Transaction" : "Transactions"}</span>
         <div className="flex items-center gap-1">
@@ -939,7 +941,7 @@ function TransactionsStrip({ apple = false, statusRadius }: { apple?: boolean; s
           </span>
         </div>
       </div>
-      <div className="min-h-0 flex-1 overflow-hidden px-0.5 pb-1.5">
+      <div className={`min-h-0 px-0.5 ${statusRadius === 8 ? "pb-2" : "flex-1 overflow-hidden pb-1.5"}`}>
         <table className="w-full table-fixed border-collapse text-left text-[5.5px]">
           <thead>
             <tr className="bg-white text-[#485666]">
@@ -1012,27 +1014,29 @@ function OrderEntryPanel({
   chart,
   apple = false,
   radius = 6,
+  spread = false,
 }: {
   symbol: string;
   title: string;
   chart: "line" | "candle";
   apple?: boolean;
   radius?: number;
+  spread?: boolean;
 }) {
   return (
     <div
-      className="relative h-full overflow-hidden bg-[#eef1f5]"
-      style={radius > 6 ? { borderRadius: "max(0px, calc(var(--radius-xl) - 10px))" } : undefined}
+      className={`relative h-full overflow-hidden ${spread ? "rounded-xl" : ""} ${radius > 6 && radius !== 8 ? "bg-transparent" : "bg-[#eef1f5]"}`}
+      style={radius === 8 ? { borderRadius: 8 } : undefined}
     >
       {/* Scale the full Order Entry so chart + execution + transactions all fit */}
       <div
-        className="absolute inset-0 grid gap-2 p-1.5"
+        className={`absolute inset-0 grid gap-2 ${radius === 8 ? "px-1.5 pt-1.5 pb-2" : spread ? "p-4" : "p-1.5"}`}
         style={{
-          gridTemplateRows: "minmax(0, 58%) minmax(0, 42%)",
+          gridTemplateRows: radius === 8 ? "minmax(0, 1fr) auto" : spread ? "minmax(0, 61%) minmax(0, 39%)" : "minmax(0, 58%) minmax(0, 42%)",
         }}
       >
         <div className={`grid min-h-0 gap-2 overflow-hidden ${radius > 6 ? "grid-cols-[minmax(0,1fr)_228px]" : "grid-cols-[1.35fr_1fr]"}`}>
-          <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[10px] border border-[#e0e4ea] bg-white">
+          <div className={`flex h-full min-h-0 flex-col overflow-hidden ${radius === 8 ? "rounded-[8px] border border-[#e0e4ea]" : radius > 6 ? "rounded-md border border-line shadow-sm" : "rounded-[10px] border border-[#e0e4ea]"} bg-white`}>
             <div className="flex shrink-0 items-center gap-2 px-2 py-1">
               <span
                 className={`text-[9px] font-bold text-[#0a1629] ${
@@ -1132,9 +1136,9 @@ function OrderEntryPanel({
               )}
             </div>
           </div>
-          <ExecutionSide symbol={symbol} apple={apple} radius={apple ? radius : undefined} />
+          <ExecutionSide symbol={symbol} apple={apple} radius={apple ? radius : undefined} spread={spread} />
         </div>
-        <div className="min-h-0 overflow-hidden">
+        <div className={radius === 8 ? "" : "min-h-0 overflow-hidden"}>
           <TransactionsStrip apple={apple} statusRadius={radius > 6 ? radius : undefined} />
         </div>
       </div>
@@ -1150,6 +1154,7 @@ function AppChrome({
   square = false,
   trimChrome = false,
   appBar = false,
+  home15Round = false,
   children,
 }: {
   crumbs: string;
@@ -1159,11 +1164,12 @@ function AppChrome({
   square?: boolean;
   trimChrome?: boolean;
   appBar?: boolean;
+  home15Round?: boolean;
   children: ReactNode;
 }) {
   return (
-    <div className={`pointer-events-none flex h-full min-h-0 flex-col overflow-hidden ${trimChrome ? "rounded-xl border border-line" : square ? "rounded-none" : "rounded-md"} bg-page ${bare || trimChrome ? "" : "border border-line shadow-sm"}`}>
-      {trimChrome && !appBar ? null : <header className="flex shrink-0 items-center gap-2 bg-nav px-3 py-2">
+    <div className={`pointer-events-none flex h-full min-h-0 flex-col overflow-hidden ${appBar ? "rounded-[8px] bg-page" : trimChrome ? `${home15Round ? "rounded-xl" : "rounded-md"} bg-transparent` : square ? "rounded-none bg-page" : "rounded-md bg-page"} ${bare || trimChrome || appBar ? "" : "border border-line shadow-sm"}`}>
+      {trimChrome && !appBar ? null : <header className={`flex shrink-0 items-center gap-2 bg-nav px-3 py-2 ${appBar ? "relative" : ""}`}>
         <Image
           src="/brand/emfi-logo.svg"
           alt="emfi"
@@ -1175,7 +1181,7 @@ function AppChrome({
         {appBar ? null : <p className="hidden max-w-[200px] truncate text-[9px] text-ink-inverse/70 lg:block">
           {crumbs}
         </p>}
-        <div className={`${appBar ? "flex min-w-0 flex-1" : "mx-auto hidden w-[min(42%,220px)] sm:flex"} h-7 shrink items-center rounded-md bg-page px-2.5`}>
+        <div className={appBar ? "absolute left-1/2 flex h-7 w-[min(62%,320px)] -translate-x-1/2 items-center rounded-md bg-page px-2.5" : "mx-auto hidden h-7 w-[min(42%,220px)] shrink items-center rounded-md bg-page px-2.5 sm:flex"}>
           <span className="truncate text-[9px] text-ink-muted">
             Search by Reference, ISIN, Ticker or Counterparty
           </span>
@@ -1216,14 +1222,14 @@ function AppChrome({
         </div>
       </div>}
 
-      <div className="relative min-h-0 flex-1 overflow-hidden bg-page p-2 md:p-2.5">
+      <div className={`relative min-h-0 flex-1 overflow-hidden p-2 md:p-2.5 ${trimChrome && !appBar ? "bg-transparent" : "bg-page"}`}>
         {children}
       </div>
     </div>
   );
 }
 
-function ViewPanel({ view, apple = false, square = false, trimChrome = false, appBar = false }: { view: View; apple?: boolean; square?: boolean; trimChrome?: boolean; appBar?: boolean }) {
+function ViewPanel({ view, apple = false, square = false, trimChrome = false, appBar = false, home15Trade = false }: { view: View; apple?: boolean; square?: boolean; trimChrome?: boolean; appBar?: boolean; home15Trade?: boolean }) {
   switch (view) {
     case "Dashboard":
       return <ResearchDashboardPanel />;
@@ -1266,8 +1272,10 @@ function ViewPanel({ view, apple = false, square = false, trimChrome = false, ap
         />
       );
     case "OrderEur":
-      return apple ? (
-        <OrderEntryPanel symbol="AAPL" title="APPLE INC" chart="line" apple radius={trimChrome ? 10 : 6} />
+      return home15Trade ? (
+        <OrderEntryPanel symbol="EURUSD" title="EURUSD" chart="line" spread />
+      ) : apple ? (
+        <OrderEntryPanel symbol="AAPL" title="APPLE INC" chart="line" apple radius={appBar ? 8 : trimChrome ? 10 : 6} />
       ) : (
         <OrderEntryPanel symbol="EURUSD" title="EURUSD" chart="line" />
       );
@@ -1342,14 +1350,15 @@ function MobileScreensSlide({
   );
 }
 
-export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false, square = false, trimChrome = false, appBar = false }: { views?: readonly View[]; quietFrame?: boolean; square?: boolean; trimChrome?: boolean; appBar?: boolean } = {}) {
+export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false, square = false, trimChrome = false, appBar = false, home15Trade = false }: { views?: readonly View[]; quietFrame?: boolean; square?: boolean; trimChrome?: boolean; appBar?: boolean; home15Trade?: boolean } = {}) {
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
   const view = views[index] ?? views[0];
   const meta = VIEW_META[view];
   const still = phoneViews.has(view);
   const openFrame = quietFrame;
-  const tradeRound = trimChrome && view === "OrderEur";
+  const tradeRound = trimChrome && !appBar && !home15Trade && view === "OrderEur";
+  const home15Round = home15Trade && view === "OrderEur";
   const hold = HOLD_MS;
 
   useEffect(() => {
@@ -1364,7 +1373,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
   return (
     <div
       data-trade={tradeRound ? "" : undefined}
-      className={`${tradeRound || !square ? "rounded-xl" : "rounded-none"} ${openFrame ? "" : `border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}`}
+      className={`${appBar ? "overflow-hidden" : home15Round ? "rounded-xl" : tradeRound ? "rounded-md" : !square ? "rounded-xl" : "rounded-none"} ${openFrame ? "" : `border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}`}
       style={
         openFrame
           ? undefined
@@ -1374,7 +1383,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
       }
     >
       {/* Fixed stage height so public + app slides never resize the hero */}
-      <div className={`relative h-[438px] md:h-[478px] ${still ? "" : "overflow-hidden"}`} style={tradeRound ? { borderRadius: "var(--radius-xl)" } : square ? { borderRadius: 0 } : quietFrame ? { borderRadius: 29 } : undefined}>
+      <div className={`relative h-[438px] md:h-[478px] ${appBar || still ? "" : "overflow-hidden"}`} style={appBar ? undefined : home15Round ? { borderRadius: "var(--radius-surface)" } : tradeRound ? { borderRadius: "var(--radius-control)" } : square ? { borderRadius: 0 } : quietFrame ? { borderRadius: 29 } : undefined}>
         <AnimatePresence mode="wait">
           <motion.div
             key={view}
@@ -1382,10 +1391,10 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
             animate={still ? { opacity: 1 } : { opacity: 1, y: 0 }}
             exit={still ? { opacity: 0 } : { opacity: 0, y: -10 }}
             transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-            className={`absolute inset-0 h-full ${still ? "" : "overflow-hidden"}`}
+            className={`absolute inset-0 h-full ${still ? "" : "overflow-hidden"} ${appBar && !still ? "rounded-[8px] border border-line" : ""}`}
           >
             {meta.kind === "public" ? (
-              <ViewPanel view={view} apple={quietFrame} square={square} trimChrome={trimChrome} appBar={appBar} />
+              <ViewPanel view={view} apple={quietFrame} square={square} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} />
             ) : (
               <AppChrome
                 crumbs={meta.crumbs}
@@ -1395,8 +1404,9 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
                 square={square}
                 trimChrome={trimChrome}
                 appBar={appBar}
+                home15Round={home15Round}
               >
-                <ViewPanel view={view} apple={quietFrame} square={square} trimChrome={trimChrome} appBar={appBar} />
+                <ViewPanel view={view} apple={quietFrame} square={square} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} />
               </AppChrome>
             )}
           </motion.div>

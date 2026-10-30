@@ -249,14 +249,16 @@ function HBars({
 function CardShell({
   title,
   value,
+  radius,
   children,
 }: {
   title: string;
   value?: string;
+  radius?: number;
   children: ReactNode;
 }) {
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-md border border-line bg-page px-2.5 py-2 shadow-sm">
+    <div className={`flex h-full min-h-0 flex-col overflow-hidden ${radius === 8 ? "rounded-[8px]" : "rounded-md"} border border-line bg-page px-2.5 py-2 shadow-sm`}>
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-[11px] font-semibold text-ink">{title}</h3>
         {value ? (
@@ -307,7 +309,7 @@ function FilterCell({
   );
 }
 
-function DashboardPanel({ demo = false, quiet = false }: { demo?: boolean; quiet?: boolean }) {
+function DashboardPanel({ demo = false, quiet = false, radius }: { demo?: boolean; quiet?: boolean; radius?: number }) {
   const usd = demo ? ACCENT.barNavy : ACCENT.rust;
   const currencies = (
     quiet
@@ -362,7 +364,7 @@ function DashboardPanel({ demo = false, quiet = false }: { demo?: boolean; quiet
 
   return (
     <div className="grid h-full grid-cols-3 grid-rows-2 gap-2">
-      <CardShell title="Balances" value={demo ? undefined : "$85,604,878"}>
+      <CardShell title="Balances" value={demo ? undefined : "$85,604,878"} radius={radius}>
         {quiet ? (
           <div className="flex min-h-0 flex-1 flex-col justify-between">
             <SemiDonut
@@ -398,7 +400,7 @@ function DashboardPanel({ demo = false, quiet = false }: { demo?: boolean; quiet
           </>
         )}
       </CardShell>
-      <CardShell title="Transactions" value={demo ? undefined : "10,460"}>
+      <CardShell title="Transactions" value={demo ? undefined : "10,460"} radius={radius}>
         {demo ? (
           <AxisBars
             axes={!quiet}
@@ -421,13 +423,13 @@ function DashboardPanel({ demo = false, quiet = false }: { demo?: boolean; quiet
           />
         )}
       </CardShell>
-      <CardShell title="Exposure" value={demo ? undefined : "$13,750,261"}>
+      <CardShell title="Exposure" value={demo ? undefined : "$13,750,261"} radius={radius}>
         <HBars items={exposure} dense={demo} fill={quiet} />
       </CardShell>
-      <CardShell title="Positions" value={demo ? undefined : "$38,339,254"}>
+      <CardShell title="Positions" value={demo ? undefined : "$38,339,254"} radius={radius}>
         <HBars items={positions} dense={demo} fill={quiet} />
       </CardShell>
-      <CardShell title="Charges" value={demo ? undefined : "$330"}>
+      <CardShell title="Charges" value={demo ? undefined : "$330"} radius={radius}>
         {demo ? (
           <AxisBars
             axes={!quiet}
@@ -444,7 +446,7 @@ function DashboardPanel({ demo = false, quiet = false }: { demo?: boolean; quiet
           />
         )}
       </CardShell>
-      <CardShell title="Performance" value={demo ? undefined : "+$128,420"}>
+      <CardShell title="Performance" value={demo ? undefined : "+$128,420"} radius={radius}>
         <HBars
           dense={demo}
           fill={quiet}
@@ -876,7 +878,7 @@ export function OperatingView({
   const [index, setIndex] = useState(0);
   const view = sequence[index] ?? sequence[0];
   const meta = VIEW_META[view];
-  const Panel = view === "Dashboard" ? () => <DashboardPanel demo={demo} quiet={trimChrome} /> : panels[view];
+  const Panel = view === "Dashboard" ? () => <DashboardPanel demo={demo} quiet={trimChrome} radius={appBar ? 8 : undefined} /> : panels[view];
 
   useEffect(() => {
     if (reduced || sequence.length < 2) return;
@@ -888,8 +890,8 @@ export function OperatingView({
   }, [reduced, sequence.length]);
 
   const frame = (
-    <div className={cn("pointer-events-none overflow-hidden bg-page", square ? "rounded-none" : "rounded-md", bare ? "" : "border border-line shadow-sm", fill && "flex h-full min-h-0 flex-col")}>
-      {trimChrome && !appBar ? null : <header className="flex items-center gap-2 bg-nav px-3 py-2">
+    <div className={cn("pointer-events-none overflow-hidden bg-page", appBar ? "h-full rounded-[8px]" : square ? "rounded-none" : "rounded-md", !appBar && !bare && "border border-line shadow-sm", fill && "flex h-full min-h-0 flex-col")}>
+      {trimChrome && !appBar ? null : <header className={cn("flex items-center gap-2 bg-nav px-3 py-2", appBar && "relative")}>
         <Image
           src="/brand/emfi-logo.svg"
           alt="emfi"
@@ -901,7 +903,7 @@ export function OperatingView({
         {appBar ? null : <p className="hidden max-w-[200px] truncate text-[9px] text-ink-inverse/70 lg:block">
           {meta.crumbs}
         </p>}
-        <div className={`${appBar ? "flex min-w-0 flex-1" : "mx-auto hidden w-[min(42%,220px)] sm:flex"} h-7 shrink items-center rounded-md bg-page px-2.5`}>
+        <div className={appBar ? "absolute left-1/2 flex h-7 w-[min(62%,320px)] -translate-x-1/2 items-center rounded-md bg-page px-2.5" : "mx-auto hidden h-7 w-[min(42%,220px)] shrink items-center rounded-md bg-page px-2.5 sm:flex"}>
           <span className="truncate text-[9px] text-ink-muted">
             Search by Reference, ISIN, Ticker or Counterparty
           </span>
