@@ -86,6 +86,14 @@ function StandardsPanel({ centered = false }: { centered?: boolean }) {
   );
 }
 
+type LogoItem = {
+  name: string;
+  src: string;
+  width: number;
+  height: number;
+  entities?: readonly string[];
+};
+
 const slides = [
   {
     title: "Authorised by",
@@ -95,6 +103,7 @@ const slides = [
       src: item.logo,
       width: item.logoWidth,
       height: item.logoHeight,
+      entities: item.entries.map((entry) => entry.entity),
     })),
   },
   {
@@ -119,7 +128,7 @@ const slides = [
       { name: "EMTA", src: "/brand/standing/emta.svg", width: 290, height: 85 },
       { name: "CISI", src: "/brand/standing/cisi.png", width: 572, height: 288 },
       { name: "Bloomberg", src: "/brand/standing/bloomberg.png", width: 280, height: 56 },
-    ],
+    ] satisfies LogoItem[],
   },
   {
     title: "Quoted in",
@@ -132,15 +141,31 @@ function plainTitle(slide: (typeof slides)[number]) {
   return slide.title.replace(/\.$/, "");
 }
 
+function logoEntities(item: LogoItem) {
+  return item.entities?.length ? item.entities : null;
+}
+
 function PlainEvidenceLogos({ slide }: { slide: (typeof slides)[number] }) {
   return (
     <div className={styles.plainRow}>
       {slide.kind === "logos"
-        ? slide.items.map((item) => (
-            <div key={item.name} className={[styles.plainItem, item.name === "Financial Conduct Authority" && styles.plainItemFca, item.name === "BDO" && styles.plainItemBdo].filter(Boolean).join(" ")}>
-              <Image src={brandMarkSrc[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
-            </div>
-          ))
+        ? (slide.items as LogoItem[]).map((item) => {
+            const entities = logoEntities(item);
+            return (
+              <div key={item.name} className={[styles.plainItem, item.name === "Financial Conduct Authority" && styles.plainItemFca, item.name === "BDO" && styles.plainItemBdo, entities && styles.plainItemWithEntities].filter(Boolean).join(" ")}>
+                <div className={styles.plainLogo}>
+                  <Image src={brandMarkSrc[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
+                </div>
+                {entities ? (
+                  <ul className={styles.plainEntities}>
+                    {entities.map((entity) => (
+                      <li key={entity}>{entity}</li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+            );
+          })
         : slide.items.map((code) => (
             <div key={code} className={styles.plainItem}>
               <span className={styles.plainLabel}>{code}</span>
@@ -267,7 +292,7 @@ export function AccountableSection({
             align={centered || pinned ? "center" : "start"}
           />
         </div>
-        <div className={pinned ? `${chapterStyles.pinVisual} ${styles.plainVisual}` : undefined} style={pinned ? { containerType: "inline-size" } : { ...cardStyle, containerType: "inline-size", width: centered ? "100%" : undefined, paddingTop: `calc(${!staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding}${centered ? ` + ${centeredCardSpace}` : ""})`, paddingBottom: centered ? `calc(${cardStyle.padding} + ${centeredCardSpace})` : cardStyle.padding }}>
+        <div className={pinned ? `${chapterStyles.pinVisual} ${styles.plainVisual}${shortWhy ? ` ${styles.plainWide}` : ""}` : undefined} style={pinned ? { containerType: "inline-size" } : { ...cardStyle, containerType: "inline-size", width: centered ? "100%" : undefined, paddingTop: `calc(${!staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding}${centered ? ` + ${centeredCardSpace}` : ""})`, paddingBottom: centered ? `calc(${cardStyle.padding} + ${centeredCardSpace})` : cardStyle.padding }}>
           {staticStandards ? <StandardsPanel centered={centered} /> : null}
           {!staticStandards && showReplay && canReplay ? <ReplayButton onClick={replay} /> : null}
           {!staticStandards && canReplay ? (
@@ -327,6 +352,11 @@ export function AccountableSection({
             </div>
           ) : null}
         </div>
+        {shortWhy && pinned ? (
+          <p className={styles.slideDisclaimer}>
+            Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.
+          </p>
+        ) : null}
         {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} /> : <SectionAction href="/why-emfi" label="Learn More" />) : null}
       </div>
     </section>

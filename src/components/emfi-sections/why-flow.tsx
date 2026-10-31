@@ -348,44 +348,46 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
               <div ref={slotRef} className={styles.whyStickySlot} aria-hidden="true">
                 <p className={shortWhy ? `${styles.whyStickyWord} ${styles.whyWordLarge}` : styles.whyStickyWord}><span>{shortWhy ? "Why" : "Why EMFI"}</span></p>
               </div>
-              <div className={[styles.whyPinMarkers, formProgress ? styles.whyFormProgress : "", shortWhy ? styles.whyPinMarkersStart : ""].filter(Boolean).join(" ")} data-why-pin-markers data-why-form-progress={formProgress ? "" : undefined} aria-hidden="true">
+              <div className={[styles.whyPinMarkers, formProgress ? styles.whyFormProgress : "", shortWhy ? styles.whyPinMarkersOut : ""].filter(Boolean).join(" ")} data-why-pin-markers data-why-form-progress={formProgress ? "" : undefined} aria-hidden={shortWhy ? undefined : "true"}>
                 {formProgress ? (
                   <>
-                    <span className={styles.whyFormTrack}>{rail}</span>
-                    <span className={styles.whyFormCount}>{Math.max(active, 1)} / {Children.count(children)}</span>
+                    <span className={styles.whyFormTrack} aria-hidden="true">{rail}</span>
+                    <span className={styles.whyFormCount} aria-hidden="true">{Math.max(active, 1)} / {Children.count(children)}</span>
                   </>
                 ) : (
                   <>
                     {[1, 2, 3].map((n) => (
-                      <span key={n} data-why-pin-marker className={n === active ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep}>
+                      <span key={n} data-why-pin-marker className={n === active ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep} aria-hidden="true">
                         {n}
                       </span>
                     ))}
-                    {rail}
+                    <span aria-hidden="true">{rail}</span>
                   </>
                 )}
+                {shortWhy ? (
+                  <a
+                    className={`${styles.heroCue} ${styles.heroCueOnLight} ${styles.heroCueUnderProgress} section-bottom-cue`}
+                    href={WHY_LEARN_MORE_HREFS[Math.max(1, Math.min(WHY_LEARN_MORE_HREFS.length, active)) - 1]}
+                  >
+                    <span className="section-bottom-cue-label"><span>Learn More</span></span>
+                    <ArrowRight size={16} strokeWidth={1.75} className={styles.heroCueLearnArrow} aria-hidden="true" />
+                  </a>
+                ) : null}
               </div>
               <div className={styles.whyPinSlides}>
                 {Children.map(children, (child, index) => (
                   <div key={index} className={styles.whyPinSlide} data-why-slide>{child}</div>
                 ))}
               </div>
-              <a
-                className={`${styles.heroCue} ${styles.heroCueOnLight} section-bottom-cue`}
-                href={shortWhy ? WHY_LEARN_MORE_HREFS[Math.max(1, Math.min(WHY_LEARN_MORE_HREFS.length, active)) - 1] : "#settle"}
-              >
-                {shortWhy ? (
-                  <>
-                    <span className="section-bottom-cue-label"><span>Learn More</span></span>
-                    <ArrowRight size={16} strokeWidth={1.75} className={styles.heroCueLearnArrow} aria-hidden="true" />
-                  </>
-                ) : (
-                  <>
-                    <span className="section-bottom-cue-label"><span>What less means for you</span></span>
-                    <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
-                  </>
-                )}
-              </a>
+              {!shortWhy ? (
+                <a
+                  className={`${styles.heroCue} ${styles.heroCueOnLight} section-bottom-cue`}
+                  href="#settle"
+                >
+                  <span className="section-bottom-cue-label"><span>What less means for you</span></span>
+                  <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
+                </a>
+              ) : null}
             </div>
           </div>
         </WhyFrameContext.Provider>

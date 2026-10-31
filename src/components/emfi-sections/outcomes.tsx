@@ -108,7 +108,9 @@ export function SectionAction({ href, label }: { href: string; label: string }) 
 export function SectionFooterBody({ body }: { body: string; tone?: "dark" | "light" }) {
   return (
     <div className="section-bottom-action" style={{ display: "flex", justifyContent: "center" }}>
-      <BodyText body={body} color="#071932" centered />
+      <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: "#071932", textAlign: "center", whiteSpace: "nowrap" }}>
+        {body.replace(/\s+/g, " ").trim()}
+      </p>
     </div>
   );
 }

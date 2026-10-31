@@ -3,8 +3,8 @@ import { EmfiSections } from "@/components/emfi-sections/emfi-sections";
 // after restoring the previous shared chrome in site-shell.tsx.
 // import { Home16Footer } from "@/components/sections/home-16/footer";
 // import { Home16Header } from "@/components/sections/home-16/header";
-import { PrinciplesSection } from "@/components/sections/home-16/principles";
-import { QuestionnaireSection } from "@/components/sections/home-16/questionnaire";
+import { PrinciplesSection } from "@/components/home/principles/principles";
+import { QuestionnaireSection } from "@/components/home/questionnaire/questionnaire";
 import styles from "@/components/sections/home-12/landing.module.css";
 import "./home-16/home-16.css";
 
