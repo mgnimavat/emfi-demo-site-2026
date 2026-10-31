@@ -3,6 +3,9 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: center;
+  height: calc(100vh - var(--home-12-header-h, 77.36px));
+  height: calc(100dvh - var(--home-12-header-h, 77.36px));
   min-height: calc(100vh - var(--home-12-header-h, 77.36px));
   min-height: calc(100dvh - var(--home-12-header-h, 77.36px));
   --quiz-word-gradient: linear-gradient(90deg, #7a9cc3 0%, #69a6bb 36%, #5db1b5 68%, #59beac 100%);
@@ -11,7 +14,7 @@
   --quiz-accent: var(--color-blue-200);
   --quiz-gradient: linear-gradient(100deg, var(--color-blue-100), var(--quiz-accent));
   --quiz-input-background: color-mix(in srgb, var(--color-white) 4%, transparent);
-  padding: clamp(60px, 7vw, 120px) var(--space-5);
+  padding: clamp(20px, 3vh, 36px) var(--space-5);
   background: var(--bg-page);
   color: var(--text-inverse);
   font-family: var(--font-sans);
@@ -22,24 +25,47 @@
   align-items: center;
   gap: clamp(32px, 5vw, 72px);
   width: 100%;
-  max-width: 1320px;
+  max-width: 1380px;
   margin: 0 auto;
   padding: clamp(32px, 5vw, 80px);
+  padding-right: calc(clamp(32px, 5vw, 80px) + 60px);
   border: 1px solid var(--quiz-border);
   border-radius: var(--radius-surface);
   background: radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--color-blue-200) 16%, transparent), transparent 65%), var(--bg-inverse);
   box-shadow: 0 20px 60px color-mix(in srgb, var(--text-primary) 10%, transparent);
 }
-.sidebar { min-width: 0; color: var(--text-inverse); container-type: inline-size; }
-.sidebarHeadings { display: grid; }
+.sidebar {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  min-width: 0;
+  color: var(--text-inverse);
+  container-type: inline-size;
+}
+.sidebarHeadings { display: grid; width: 100%; }
 .sidebarHeadings > .intro { grid-area: 1 / 1; align-self: center; }
 .intro { margin: 0; max-width: 100%; font-size: clamp(38px, 5vw, 80px); font-weight: 750; line-height: 1.04; letter-spacing: -.055em; }
-.contactIntro { padding-left: 60px; font-size: 174px; line-height: 1; }
+.promptIntro {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0;
+  box-sizing: border-box;
+  padding-left: 60px;
+  font-size: min(174px, 15.4cqw);
+  font-weight: 800;
+  line-height: 0.9;
+}
+.headlineLine { display: block; white-space: nowrap; }
+.promptIntro.contactIntro {
+  padding-left: 60px;
+  font-size: 174px;
+  line-height: 1;
+}
 @container (max-width: 500px) {
-  .contactIntro {
-    padding-left: clamp(16px, 12cqw, 60px);
-    font-size: clamp(56px, 34.8cqw, 174px);
-  }
+  .promptIntro { padding-left: clamp(16px, 12cqw, 60px); }
+  .promptIntro.contactIntro { font-size: clamp(56px, 34.8cqw, 174px); }
 }
 .headingEnding { display: inline-block; white-space: nowrap; }
 .intro:focus { outline: none; }
@@ -87,7 +113,7 @@
 .inactive { visibility: hidden; pointer-events: none; }
 .question { min-width: 0; margin: 0; padding: 0; border: 0; }
 .legend { width: 100%; padding: 0; margin-bottom: var(--space-5); }
-.questionTitle { display: block; width: 100%; font-size: clamp(21px, 1.7vw, 25px); font-weight: 650; line-height: 1.3; letter-spacing: -.025em; }
+.questionTitle { display: block; width: 100%; font-size: clamp(17px, 1.25vw, 22px); font-weight: 650; line-height: 1.3; letter-spacing: -.025em; white-space: nowrap; }
 .questionTitle:focus { outline: none; }
 .options { display: grid; gap: var(--space-3); }
 .option { display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding: var(--space-3) var(--space-4); border: 1px solid var(--quiz-border); border-radius: var(--radius-control); background: var(--quiz-input-background); font-size: 14px; font-weight: 500; cursor: pointer; transition: border-color .2s ease, background-color .2s ease; }
@@ -113,13 +139,17 @@
 .fields input::placeholder { color: var(--quiz-muted); opacity: .8; }
 .fields input:focus-visible { outline: none; border-color: var(--color-blue-200); }
 @media (max-width: 900px) {
-  .card { grid-template-columns: minmax(0, 1fr); }
+  .card { grid-template-columns: minmax(0, 1fr); padding-right: clamp(32px, 5vw, 80px); }
   .intro { max-width: 660px; }
+  .promptIntro { padding-left: 0; font-size: min(96px, 14.5cqw); }
+  .promptIntro.contactIntro { font-size: clamp(56px, 16vw, 120px); }
+  .section { height: auto; }
 }
 @media (max-width: 540px) {
   .section { padding-inline: var(--space-4); }
   .card { padding: var(--space-5); gap: var(--space-6); }
   .questionCard { padding: var(--space-5); }
+  .questionTitle { white-space: normal; }
 }
 @media (prefers-reduced-motion: reduce) {
   .option, .option input, .next, .next svg { transition: none; }

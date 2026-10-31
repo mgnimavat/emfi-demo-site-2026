@@ -6,10 +6,20 @@ import { questionnaire as copy } from '@/content/home-16-questionnaire';
 import { contact } from '@/content/contact';
 import styles from './questionnaire.module.css';
 
-const questionCount = copy.questions.length;
-const titleBreak = copy.title.lastIndexOf(' a bit');
-const accentWord = copy.accent.endsWith('?') ? copy.accent.slice(0, -1) : copy.accent;
-const accentMark = copy.accent.endsWith('?') ? '?' : '';
+const questionTitles = [
+  'Your Annual Custody Cost',
+  'Your monthly minimum fee',
+  'Your minimum contract term',
+  'Frequency of settlement status',
+  'Middleman between you and your assets',
+  'Segregated depository account',
+] as const;
+const questions = copy.questions.map((question, index) => ({
+  ...question,
+  title: questionTitles[index] ?? question.title,
+}));
+const fields = contact.cta.fields;
+const questionCount = questions.length;
 const resultWord = copy.resultAccent.endsWith('.') ? copy.resultAccent.slice(0, -1) : copy.resultAccent;
 const resultMark = copy.resultAccent.endsWith('.') ? '.' : '';
 
@@ -38,10 +48,10 @@ export const QuestionnaireSection = () => {
   const submitEnquiry = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const details = copy.fields.map((field) =>
+    const details = fields.map((field) =>
       `${field.label}: ${String(data.get(field.name) ?? '').trim()}`
     );
-    const responses = copy.questions.map((item) =>
+    const responses = questions.map((item) =>
       `${item.title} ${answers[item.id] ?? copy.unanswered}`
     );
     const body = [...details, '', ...responses].join('\n');
@@ -54,14 +64,15 @@ export const QuestionnaireSection = () => {
       <div className={styles.card}>
         <aside className={styles.sidebar}>
           <div className={styles.sidebarHeadings}>
-          <h2 className={`${styles.intro} ${isContact ? styles.inactive : ''}`} aria-hidden={isContact}>
-            {copy.title.slice(0, titleBreak)}<br />
-            <span className={styles.headingEnding}>
-              {copy.title.slice(titleBreak + 1)} <span className={styles.accent}>{accentWord}</span>{accentMark && <span className={styles.accentMark}>{accentMark}</span>}
-            </span>
+          <h2 className={`${styles.intro} ${styles.promptIntro} ${isContact ? styles.inactive : ''}`} aria-hidden={isContact}>
+            <span className={styles.headlineLine}>Is Your</span>
+            <span className={styles.headlineLine}>current</span>
+            <span className={styles.headlineLine}>infrastructure</span>
+            <span className={styles.headlineLine}>a bit <span className={styles.accent}>extra</span><span className={styles.accentMark}>?</span></span>
           </h2>
-          <h2 id="home-16-contact-heading" ref={contactHeading} tabIndex={-1} className={`${styles.intro} ${styles.contactIntro} ${!isContact ? styles.inactive : ''}`} aria-hidden={!isContact}>
-            {copy.resultTitle}<br /><span className={styles.accent}>{resultWord}</span>{resultMark && <span className={styles.accentMark}>{resultMark}</span>}
+          <h2 id="home-16-contact-heading" ref={contactHeading} tabIndex={-1} className={`${styles.intro} ${styles.promptIntro} ${styles.contactIntro} ${!isContact ? styles.inactive : ''}`} aria-hidden={!isContact}>
+            <span className={styles.headlineLine}>{copy.resultTitle}</span>
+            <span className={styles.headlineLine}><span className={styles.accent}>{resultWord}</span>{resultMark && <span className={styles.accentMark}>{resultMark}</span>}</span>
           </h2>
           </div>
         </aside>
@@ -72,7 +83,7 @@ export const QuestionnaireSection = () => {
         </div>
         {/* Overlapping panels reserve the tallest step's space at every screen size. */}
         <div className={styles.panels}>
-          {copy.questions.map((question, index) => (
+          {questions.map((question, index) => (
             <div key={question.id} className={`${styles.panel} ${step !== index ? styles.inactive : ''}`} inert={step !== index} aria-hidden={step !== index}>
               <div>
                 <fieldset className={styles.question}>
@@ -99,7 +110,7 @@ export const QuestionnaireSection = () => {
           <div className={`${styles.panel} ${styles.contact} ${!isContact ? styles.inactive : ''}`} inert={!isContact} aria-hidden={!isContact}>
             <form aria-label="Let's talk" onSubmit={submitEnquiry}>
               <div className={styles.fields}>
-                {copy.fields.map((field) => (
+                {fields.map((field) => (
                   <input key={field.name} aria-label={field.label} name={field.name} type={field.type} placeholder={field.placeholder} autoComplete={field.autoComplete} required={field.required} />
                 ))}
               </div>

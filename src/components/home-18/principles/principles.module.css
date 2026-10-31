@@ -79,15 +79,15 @@
 }
 
 .stackedSection:has(.stackedCard:nth-child(1):hover) .mark {
-  transform: rotate(0.33turn);
+  transform: rotate(calc(1turn / 6));
 }
 
 .stackedSection:has(.stackedCard:nth-child(2):hover) .mark {
-  transform: rotate(0.66turn);
+  transform: rotate(calc(2turn / 6));
 }
 
 .stackedSection:has(.stackedCard:nth-child(3):hover) .mark {
-  transform: rotate(1turn);
+  transform: rotate(calc(3turn / 6));
 }
 
 @media (min-width: 1901px) {
@@ -145,6 +145,9 @@
 .stackedIntro .title {
   flex-direction: row;
   align-items: baseline;
+  justify-content: flex-start;
+  width: 100%;
+  text-align: left;
   white-space: nowrap;
   column-gap: 0.22em;
 }
