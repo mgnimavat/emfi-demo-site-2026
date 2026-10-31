@@ -9,7 +9,16 @@
 .rule { display: block; width: 80px; height: 3px; margin: 28px 0 24px; background: #a2c2fd; }
 .achievement { max-width: 35ch; margin: 0; min-height: 3em; font-size: clamp(18px,1.9vw,25px); font-weight: 400; line-height: 1.5; letter-spacing: -.02em; }
 .counter { margin: 28px 0 0; color: #c9d4e5; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.milestones { list-style: none; display: flex; flex-direction: column; justify-content: space-evenly; min-height: 0; margin: 0; padding: 0 0 0 clamp(24px,4vw,64px); border-left: 1px solid rgb(255 255 255 / 16%); }
+.milestones { --gutter: clamp(36px,4vw,72px); position: relative; list-style: none; display: flex; flex-direction: column; justify-content: space-evenly; min-height: 0; margin: 0; padding: 0 0 0 var(--gutter); }
+.rail { position: absolute; left: 0; top: 0; bottom: 0; width: 2px; transform: translateX(-50%); pointer-events: none; }
+.rail::before { content: ""; position: absolute; inset: 0; border-radius: 99px; background: rgb(255 255 255 / 16%); }
+.railFill { position: absolute; top: 0; left: 0; width: 100%; height: var(--rail, 0px); border-radius: 99px; background-image: linear-gradient(180deg, #a2c2fd 0%, #8098cc 48%, #3dceb6 100%); transition: height .28s ease; }
+.step { position: absolute; z-index: 1; left: calc(-1 * var(--gutter)); top: 50%; display: grid; place-items: center; width: 16px; height: 16px; border: 1.5px solid rgb(162 194 253 / 55%); border-radius: 50%; background: #071932; box-shadow: 0 0 0 5px rgb(162 194 253 / 14%); transform: translate(-50%, -50%); pointer-events: none; transition: width .25s ease, height .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.step::after { content: ""; position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; border-radius: 50%; background: #3dceb6; transform: translate(-50%, -50%); }
+.milestones [data-done="true"] .step { border-color: #3dceb6; background: #3dceb6; box-shadow: 0 0 0 5px rgb(61 206 182 / 18%); }
+.milestones [data-done="true"] .step::after { content: none; }
+.milestones [data-active="true"] .step { width: 36px; height: 36px; border: 0; background: #3dceb6; box-shadow: 0 0 0 8px rgb(61 206 182 / 22%), 0 0 18px rgb(61 206 182 / 36%); }
+.milestones [data-active="true"] .step::after { content: none; }
 .milestones li { position: relative; }
 .milestones button { display: grid; grid-template-columns: 52px minmax(0,1fr); align-items: center; gap: 20px; width: 100%; min-height: 56px; padding: 8px 0; border: 0; background: transparent; text-align: left; color: #a1adc0; cursor: pointer; transition: color .25s ease; }
 .listYear { color: #a1adc0; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -32,7 +41,8 @@
   .rule { width: 48px; margin: 14px 0 12px; }
   .achievement { max-width: 42ch; min-height: 3em; font-size: 16px; }
   .counter { margin-top: 12px; font-size: 12px; }
-  .milestones { border-left: 0; border-top: 1px solid rgb(255 255 255 / 16%); padding: 10px 0 0; }
+  .rail, .step { display: none; }
+  .milestones { border-top: 1px solid rgb(255 255 255 / 16%); padding: 10px 0 0; }
   .milestones button { min-height: 36px; grid-template-columns: 44px minmax(0,1fr); gap: 16px; padding-block: 5px; }
   .listYear { font-size: 12px; }
   .listTitle { font-size: 16px; }
@@ -42,6 +52,7 @@
 .timeline[data-static="true"] .stage { position: relative; top: auto; height: auto; padding-bottom: 96px; }
 .timeline[data-static="true"] .feature { display: none; }
 .timeline[data-static="true"] .layout { display: block; }
+.timeline[data-static="true"] .rail, .timeline[data-static="true"] .step { display: none; }
 .timeline[data-static="true"] .milestones { border: 0; padding: 0; gap: 24px; }
 .timeline[data-static="true"] .listDescription { position: static; width: auto; height: auto; margin: 4px 0 0 72px; overflow: visible; clip-path: none; white-space: normal; color: #c9d4e5; font-size: 16px; line-height: 1.6; }
 @media (max-height: 800px) and (min-height: 561px) {
@@ -58,7 +69,8 @@
   .stage { position: relative; top: auto; height: auto; padding-bottom: 96px; }
   .feature { display: none; }
   .layout { display: block; }
+  .rail, .step { display: none; }
   .milestones { border: 0; padding: 0; gap: 20px; }
   .listDescription { position: static; width: auto; height: auto; margin: 4px 0 0 72px; overflow: visible; clip-path: none; white-space: normal; color: #c9d4e5; font-size: 16px; line-height: 1.6; }
 }
-@media (prefers-reduced-motion: reduce) { .milestones button, .listTitle { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .milestones button, .listTitle, .step, .railFill { transition: none; } }

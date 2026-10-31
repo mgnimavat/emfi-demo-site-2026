@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
 import { about } from "@/content/about";
 import styles from "./about-timeline.module.css";
@@ -29,6 +29,20 @@ export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true }:
     setActive(Math.min(count - 1, Math.max(0, Math.floor(progress * count))));
   });
   const [year, title, description] = about.milestones[active];
+  const listRef = useRef<HTMLOListElement>(null);
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+    const place = () => {
+      const item = list.querySelectorAll("li")[active];
+      if (!item) return;
+      list.style.setProperty("--rail", `${item.offsetTop + item.offsetHeight / 2}px`);
+    };
+    place();
+    const observer = new ResizeObserver(place);
+    observer.observe(list);
+    return () => observer.disconnect();
+  }, [active]);
 
   const selectMilestone = (index: number) => {
     const section = sectionRef.current;
@@ -60,9 +74,11 @@ export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true }:
                 {showCounter ? <p className={styles.counter}>{String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}</p> : null}
               </motion.div>
             </div>
-            <ol className={styles.milestones} aria-label="Platform milestones">
+            <ol ref={listRef} className={styles.milestones} aria-label="Platform milestones">
+              <span className={styles.rail} aria-hidden="true"><span className={styles.railFill} /></span>
               {about.milestones.map(([itemYear, itemTitle, itemDescription], index) => (
-                <li key={itemYear} data-active={index === active}>
+                <li key={itemYear} data-active={index === active} data-done={index < active}>
+                  <span className={styles.step} aria-hidden="true" />
                   <button type="button" onClick={() => selectMilestone(index)} aria-current={index === active ? "step" : undefined} aria-describedby={`milestone-description-${itemYear}`}>
                     <span className={styles.listYear}>{itemYear}</span>
                     <span className={styles.listTitle}>{itemTitle}</span>
