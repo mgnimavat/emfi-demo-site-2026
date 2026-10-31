@@ -1,7 +1,25 @@
 .stage { position: relative; min-height: 260px; }
 .plainVisual { background: transparent; border: 0; border-radius: 0; padding: 0; box-shadow: none; }
 .plainStage { display: flex; align-items: center; }
-.plainSlide { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; gap: 22px; }
+.plainSlide { display: flex; flex-direction: column; align-items: center; justify-content: center; box-sizing: border-box; width: 100%; height: 100%; gap: 22px; padding: 28px 24px 24px; border: 1px solid #a2c2fd; border-radius: 20px; background: #fff; box-shadow: 0 6px 20px rgb(7 25 50 / 6%); }
+.plainSlideViewport {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+  perspective: 1200px;
+}
+.plainSlideContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  width: 100%;
+}
 .plainTitle { margin: 0; color: #071932; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
 .plainRule { width: 100%; height: 1px; background: #a2c2fd; }
 .plainRow { display: flex; align-items: stretch; justify-content: center; width: 100%; }

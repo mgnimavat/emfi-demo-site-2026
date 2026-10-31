@@ -1,11 +1,16 @@
 "use client";
 
 import { Children, createContext, useContext, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import styles from "./sections.module.css";
 
 const Y = "clamp(88px,10vw,144px)";
 const X = "clamp(20px,4vw,56px)";
+const WHY_LEARN_MORE_HREFS = [
+  "/services/settlement-custody",
+  "/services/settlement-custody#workstation-demo",
+  "/why-emfi",
+] as const;
 const WhyFrameContext = createContext(0);
 const WhyPinContext = createContext(false);
 const WhyEngagedContext = createContext(false);
@@ -21,7 +26,7 @@ export function useWhyEngaged() {
 export function sectionPad(rail: boolean, horizontal = true, pinned = false) {
   const left = `calc(${X} + 54px)`;
   if (pinned) {
-    const top = "80px";
+    const top = "60px";
     const bottom = "clamp(100px, 13vh, 132px)";
     return `${top} var(--pin-side, 120px) ${bottom}`;
   }
@@ -96,7 +101,7 @@ function Rail({
   );
 }
 
-export function WhyFlow({ children, stickyLabel = false, formProgress = false }: { children: ReactNode; stickyLabel?: boolean; formProgress?: boolean }) {
+export function WhyFlow({ children, stickyLabel = false, formProgress = false, shortWhy = false }: { children: ReactNode; stickyLabel?: boolean; formProgress?: boolean; shortWhy?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const slotRef = useRef<HTMLDivElement>(null);
@@ -341,9 +346,9 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false }:
           <div ref={ref} className={styles.whyPin}>
             <div ref={stageRef} className={`${styles.whyPinStage} ${styles.whyFlow} ${styles.whyFlowSticky}`}>
               <div ref={slotRef} className={styles.whyStickySlot} aria-hidden="true">
-                <p className={styles.whyStickyWord}><span>Why EMFI</span></p>
+                <p className={shortWhy ? `${styles.whyStickyWord} ${styles.whyWordLarge}` : styles.whyStickyWord}><span>{shortWhy ? "Why" : "Why EMFI"}</span></p>
               </div>
-              <div className={formProgress ? `${styles.whyPinMarkers} ${styles.whyFormProgress}` : styles.whyPinMarkers} data-why-pin-markers data-why-form-progress={formProgress ? "" : undefined} aria-hidden="true">
+              <div className={[styles.whyPinMarkers, formProgress ? styles.whyFormProgress : "", shortWhy ? styles.whyPinMarkersStart : ""].filter(Boolean).join(" ")} data-why-pin-markers data-why-form-progress={formProgress ? "" : undefined} aria-hidden="true">
                 {formProgress ? (
                   <>
                     <span className={styles.whyFormTrack}>{rail}</span>
@@ -365,9 +370,21 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false }:
                   <div key={index} className={styles.whyPinSlide} data-why-slide>{child}</div>
                 ))}
               </div>
-              <a className={`${styles.heroCue} ${styles.heroCueOnLight} section-bottom-cue`} href="#settle">
-                <span className="section-bottom-cue-label"><span>What less means for you</span></span>
-                <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
+              <a
+                className={`${styles.heroCue} ${styles.heroCueOnLight} section-bottom-cue`}
+                href={shortWhy ? WHY_LEARN_MORE_HREFS[Math.max(1, Math.min(WHY_LEARN_MORE_HREFS.length, active)) - 1] : "#settle"}
+              >
+                {shortWhy ? (
+                  <>
+                    <span className="section-bottom-cue-label"><span>Learn More</span></span>
+                    <ArrowRight size={16} strokeWidth={1.75} className={styles.heroCueLearnArrow} aria-hidden="true" />
+                  </>
+                ) : (
+                  <>
+                    <span className="section-bottom-cue-label"><span>What less means for you</span></span>
+                    <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
+                  </>
+                )}
               </a>
             </div>
           </div>

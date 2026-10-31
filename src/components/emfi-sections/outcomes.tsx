@@ -31,13 +31,24 @@ export function OutcomeRow({ items }: { items: readonly { label: string; opacity
 
 const TWO_LINE_BODIES = [
   ["Fewer unnecessary intermediaries.", "A more direct route to market."],
+  ["Fewer intermediaries.", "Fewer handovers."],
   ["Technology that works.", "People who respond."],
+  ["Tech that works.", "People who respond."],
+  ["Institutional safeguards.", "Clear accountability."],
 ] as const;
 
 function bodyLines(body: string) {
   const normalized = body.replace(/\s+/g, " ").trim();
   const match = TWO_LINE_BODIES.find(([first, second]) => normalized === `${first} ${second}`);
   return match ? [...match] : body.split("\n");
+}
+
+function BodyText({ body, color, centered = false, className }: { body: string; color: string; centered?: boolean; className?: string }) {
+  return (
+    <p className={className} style={{ marginTop: 0, maxWidth: 440, marginInline: centered ? "auto" : undefined, fontSize: 17, lineHeight: 1.6, color, textWrap: "pretty", textAlign: centered ? "center" : undefined }}>
+      {bodyLines(body).flatMap((line, index) => (index === 0 ? [line] : [<br key={index} />, line]))}
+    </p>
+  );
 }
 
 export function SectionCopy({
@@ -53,7 +64,7 @@ export function SectionCopy({
 }: {
   title: string;
   lead?: string;
-  body: string;
+  body?: string;
   action?: { href: string; label: string };
   tone?: "dark" | "light";
   align?: "start" | "center";
@@ -76,7 +87,7 @@ export function SectionCopy({
       ) : null}
       <h2 className={styles.sectionTitle} style={{ color: titleColor }}>{title}</h2>
       {lead ? <p style={{ marginTop: 18, fontSize: "clamp(20px,1.7vw,24px)", fontWeight: 800, letterSpacing: "-.02em", lineHeight: 1.25, color: titleColor }}>{lead}</p> : null}
-      <p style={{ marginTop: lead ? 12 : 18, maxWidth: 440, marginInline: centered ? "auto" : undefined, fontSize: 17, lineHeight: 1.6, color: bodyColor, textWrap: "pretty" }}>{bodyLines(body).flatMap((line, index) => (index === 0 ? [line] : [<br key={index} />, line]))}</p>
+      {body ? <div style={{ marginTop: lead ? 12 : 18 }}><BodyText body={body} color={bodyColor} centered={centered} /></div> : null}
       {action ? (
         <div className="section-bottom-action" style={{ marginTop: 28, display: centered ? "flex" : undefined, justifyContent: centered ? "center" : undefined }}>
           <Button href={action.href} variant="circle">{action.label}</Button>
@@ -90,6 +101,14 @@ export function SectionAction({ href, label }: { href: string; label: string }) 
   return (
     <div className="section-bottom-action" style={{ display: "flex", justifyContent: "center" }}>
       <Button href={href} variant="circle">{label}</Button>
+    </div>
+  );
+}
+
+export function SectionFooterBody({ body }: { body: string; tone?: "dark" | "light" }) {
+  return (
+    <div className="section-bottom-action" style={{ display: "flex", justifyContent: "center" }}>
+      <BodyText body={body} color="#071932" centered />
     </div>
   );
 }

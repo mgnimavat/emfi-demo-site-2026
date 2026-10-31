@@ -35,23 +35,6 @@
       ]
     },
     {
-      "heading": "Company",
-      "links": [
-        {
-          "label": "About EMFI",
-          "href": "/about"
-        },
-        {
-          "label": "Contact EMFI",
-          "href": "/contact"
-        },
-        {
-          "label": "Client Login \u2197",
-          "href": "https://login.emfi.uk/"
-        }
-      ]
-    },
-    {
       "heading": "Legal",
       "links": [
         {

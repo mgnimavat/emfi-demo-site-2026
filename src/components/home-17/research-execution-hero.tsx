@@ -1035,7 +1035,7 @@ function OrderEntryPanel({
           gridTemplateRows: radius === 8 ? "minmax(0, 1fr) auto" : spread ? "minmax(0, 61%) minmax(0, 39%)" : "minmax(0, 58%) minmax(0, 42%)",
         }}
       >
-        <div className={`grid min-h-0 gap-2 overflow-hidden ${radius > 6 ? "grid-cols-[minmax(0,1fr)_228px]" : "grid-cols-[1.35fr_1fr]"}`}>
+        <div className={`grid min-h-0 gap-2 overflow-hidden ${radius === 8 ? "grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]" : radius > 6 ? "grid-cols-[minmax(0,1fr)_228px]" : "grid-cols-[1.35fr_1fr]"}`}>
           <div className={`flex h-full min-h-0 flex-col overflow-hidden ${radius === 8 ? "rounded-[8px] border border-[#e0e4ea]" : radius > 6 ? "rounded-md border border-line shadow-sm" : "rounded-[10px] border border-[#e0e4ea]"} bg-white`}>
             <div className="flex shrink-0 items-center gap-2 px-2 py-1">
               <span

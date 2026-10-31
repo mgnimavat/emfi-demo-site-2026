@@ -2,7 +2,7 @@
 
 import { useReducedMotion } from "framer-motion";
 import { ResearchExecutionHeroMockup, home10ResponsiveSlides, home12ResponsiveSlides, home16ResponsiveSlides, homeV5ResponsiveSlides, responsiveHighlightSlides } from "@/components/home-17/research-execution-hero";
-import { SectionAction, SectionCopy } from "./outcomes";
+import { SectionAction, SectionCopy, SectionFooterBody } from "./outcomes";
 import styles from "./sections.module.css";
 import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhyStep, WhyMarker } from "./why-flow";
 
@@ -22,6 +22,7 @@ export function ResponsiveSection({
   body = "Technology that works. People who respond. Clearer workflows with support from people who can help resolve issues.",
   centered = false,
   eyebrow,
+  shortWhy = false,
 }: {
   cols: string;
   textOrder: number;
@@ -38,6 +39,7 @@ export function ResponsiveSection({
   body?: string;
   centered?: boolean;
   eyebrow?: string;
+  shortWhy?: boolean;
 }) {
   const marked = step != null;
   const active = useWhyActive(step ?? 0);
@@ -56,7 +58,7 @@ export function ResponsiveSection({
             title="Responsive."
             eyebrow={eyebrow}
             plainEyebrow={pinned && Boolean(eyebrow)}
-            body={body}
+            body={shortWhy && pinned ? undefined : body}
             action={pinned ? undefined : { href: "/services/settlement-custody#workstation-demo", label: "Learn More" }}
             tone={light ? "light" : "dark"}
             align={centered || pinned ? "center" : "start"}
@@ -67,7 +69,7 @@ export function ResponsiveSection({
             <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} views={homeSlides ? (floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
           ) : null}
         </div>
-        {pinned ? <SectionAction href="/services/settlement-custody#workstation-demo" label="Learn More" /> : null}
+        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} /> : <SectionAction href="/services/settlement-custody#workstation-demo" label="Learn More" />) : null}
       </div>
     </section>
   );

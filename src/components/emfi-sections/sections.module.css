@@ -28,16 +28,18 @@
   --pin-side: calc(clamp(20px, 4vw, 56px) + 54px + clamp(28px, 7vw, 100px));
 }
 
-.pinStack .sectionTitle {
+.pinStack .sectionTitle,
+.responsiveStack .sectionTitle {
   margin-inline: 0;
+  margin-bottom: 12px;
   line-height: 0.8;
 }
 
 .pinStack .pinVisual,
 .pinStack .pinStackMedia {
-  width: min(100%, 715px);
-  height: clamp(225px, calc(100dvh - 510px), 375px);
-  max-height: clamp(225px, calc(100dvh - 510px), 375px);
+  width: min(100%, 760px);
+  height: 420px;
+  max-height: 420px;
   min-height: 0;
 }
 
@@ -103,7 +105,7 @@
 
 .chapter .eyebrow.eyebrowPlain {
   gap: 0;
-  margin-bottom: 4px;
+  margin-bottom: -11px;
   letter-spacing: 0.08em;
   color: #071932;
 }
@@ -335,10 +337,6 @@
   gap: 18px;
 }
 
-.responsiveStack .sectionTitle {
-  font-size: clamp(40px, 4.4vw, 64px);
-}
-
 .responsiveStack .responsivePinMedia {
   flex: 0 0 auto;
   width: min(100%, 760px);
@@ -434,6 +432,12 @@
   height: min(280px, 46vh);
   transform: translateY(-50%);
   pointer-events: none;
+}
+
+/* Homepage: pin the progress column to the left edge, clear of the content. */
+.whyPinMarkers.whyPinMarkersStart {
+  right: auto;
+  left: calc(clamp(24px, 1.8vw, 40px) + 50px);
 }
 
 .whyPinStep {
@@ -754,6 +758,13 @@
   transform: translate(-50%, -50%);
 }
 
+.chapter .whyPinStage .whyStickyWord.whyWordLarge {
+  --why-size: calc((100dvh - var(--home-12-header-h, 77.36px)) / 2.41);
+  top: 50%;
+  left: calc(100% - 0.41 * var(--why-size) + 0.0487em);
+  font-size: var(--why-size);
+}
+
 .chapter .whyPinStage .whyStickyWord span {
   background-image: linear-gradient(270deg, #9bb6d4 0%, #7fb0c6 42%, #6db8b4 72%, #5fc4ad 100%);
   -webkit-background-clip: text;
@@ -776,6 +787,11 @@
   .whyPinMarkers {
     right: clamp(12px, 3vw, 20px);
     width: 40px;
+  }
+
+  .whyPinMarkers.whyPinMarkersStart {
+    right: auto;
+    left: 66px;
   }
 }
 
@@ -840,6 +856,16 @@
 .heroCue:hover svg,
 .heroCue:focus-visible svg {
   transform: translateY(2px);
+}
+
+.heroCueLearnArrow {
+  transform: rotate(-45deg);
+  transition: transform 0.2s ease;
+}
+
+.heroCue:hover .heroCueLearnArrow,
+.heroCue:focus-visible .heroCueLearnArrow {
+  transform: none;
 }
 
 @keyframes heroCueBorder {
