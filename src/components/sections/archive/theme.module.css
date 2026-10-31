@@ -110,6 +110,7 @@
 .card[id] { scroll-margin-top: 100px; }
 @media (prefers-reduced-motion: reduce) { .cursor { animation: none; display: none; } .locationNav a { transition: none; } }
 
+.peopleBand { background: #fff; }
 .peopleIntro { text-align: center; }
 .peopleIntro h2, .peopleIntro p { margin-inline: auto; }
 .peopleIntro h2 { max-width: 28ch; }
