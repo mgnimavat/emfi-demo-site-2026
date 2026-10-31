@@ -22,9 +22,9 @@ export function PersonCard({ person }: { person: (typeof about.people)[number] }
       </div>
       <div className={styles.body}>
         <h3 id={headingId} className={styles.name}>{person.name}</h3>
+        <p className={styles.role}>{person.role}</p>
         <div className={styles.details}>
           <div className={styles.detailsInner}>
-            <p className={styles.role}>{person.role}</p>
             <p id={`${headingId}-details`} className={styles.description}>{person.description}</p>
             {isBoard ? (
               <div className={styles.board}>

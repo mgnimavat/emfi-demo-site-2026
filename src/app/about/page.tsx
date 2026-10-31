@@ -12,7 +12,7 @@ const AboutPage = () => {
   return (
     <div className={styles.page}>
       <AboutTimeline headingAs="h1" showCounter={false} />
-      <section className={styles.soft} aria-labelledby="people-heading">
+      <section className={styles.peopleBand} aria-labelledby="people-heading">
         <div className={styles.section}>
           <div className={styles.container}>
             <FadeIn className={styles.peopleIntro}><h2 id="people-heading" className={styles.sectionTitle}>{about.peopleTitle}</h2><p className={styles.sectionBody}>{about.peopleBody}</p></FadeIn>
