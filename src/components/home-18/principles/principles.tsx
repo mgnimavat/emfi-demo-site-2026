@@ -154,7 +154,7 @@ function StackedPrinciples({ whiteCards = false, breakTitle = false }: { whiteCa
                 <article key={item.id} className={whiteCards ? `${styles.card} ${styles.stackedCard} ${styles.stackedCardPlain}` : `${styles.card} ${styles.stackedCard}`}>
                   <h3 className={styles.stackedCardTitle}>
                     <span className={styles.stackedCardTitleText}>
-                      <span className={styles.emphasis}>{copy.prefix}</span> {item.label}.
+                      <span className={styles.emphasis}>{copy.prefix}</span> {item.label}
                     </span>
                   </h3>
                   <div className={styles.detail}>

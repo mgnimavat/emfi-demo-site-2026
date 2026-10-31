@@ -38,6 +38,10 @@
 }
 
 .stackedSection {
+  --nav-pad: clamp(20px, 4vw, 56px);
+  --settle-clearance: clamp(96px, 8vw, 140px);
+  --settle-mark: 105vh;
+  --settle-copy: 720px;
   position: relative;
   overflow: clip;
   box-sizing: border-box;
@@ -45,6 +49,7 @@
   align-items: center;
   min-height: calc(100vh - var(--home-12-header-h, 77.36px));
   min-height: calc(100dvh - var(--home-12-header-h, 77.36px));
+  padding-inline: 0;
   padding-bottom: clamp(60px, 7vw, 112px);
   background: #e6effb;
 }
@@ -52,15 +57,22 @@
 .stackedSection .container {
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
   width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--nav-pad);
 }
 
 .stackedSection .mark {
   position: absolute;
   z-index: 0;
-  left: -150px;
+  /* Right edge stays --settle-clearance left of the text block, which shares the navbar mark's right edge. */
+  left: calc(
+    max(0px, (100% - 1440px) / 2) + min(1440px, 100%) - var(--nav-pad) - min(var(--settle-copy), min(1440px, 100%) - 2 * var(--nav-pad) - max(160px, 26vw) - clamp(28px, 5vw, 88px)) - var(--settle-clearance) - var(--settle-mark)
+  );
   bottom: -8.5vh;
-  width: 105vh;
+  width: var(--settle-mark);
   max-width: none;
   aspect-ratio: 1;
   opacity: 0.6;
@@ -79,22 +91,18 @@
 }
 
 .stackedSection:has(.stackedCard:nth-child(1):hover) .mark {
-  transform: rotate(0.33turn);
+  transform: rotate(calc(1turn / 6));
 }
 
 .stackedSection:has(.stackedCard:nth-child(2):hover) .mark {
-  transform: rotate(0.66turn);
+  transform: rotate(calc(2turn / 6));
 }
 
 .stackedSection:has(.stackedCard:nth-child(3):hover) .mark {
-  transform: rotate(1turn);
+  transform: rotate(calc(3turn / 6));
 }
 
 @media (min-width: 1901px) {
-  .stackedSection .mark {
-    left: -280px;
-  }
-
   .stackedIntro {
     grid-template-columns: minmax(120px, clamp(120px, 22vw, 300px)) minmax(0, 1fr);
   }
@@ -103,36 +111,6 @@
     width: 100%;
     max-width: min(640px, 100%);
     justify-self: start;
-  }
-}
-
-@media (max-width: 1600px) {
-  .stackedSection .mark {
-    left: -175px;
-  }
-}
-
-@media (max-width: 1440px) {
-  .stackedSection .mark {
-    left: -200px;
-  }
-}
-
-@media (max-width: 1280px) {
-  .stackedSection .mark {
-    left: -220px;
-  }
-}
-
-@media (max-width: 1100px) {
-  .stackedSection .mark {
-    left: -300px;
-  }
-}
-
-@media (max-width: 900px) {
-  .stackedSection .mark {
-    left: -42vw;
   }
 }
 
@@ -145,8 +123,13 @@
 .stackedIntro .title {
   flex-direction: row;
   align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
   white-space: nowrap;
   column-gap: 0.22em;
+  font-size: 14.85cqi;
 }
 
 .stackedIntro .stackedTitleBreak {
@@ -161,7 +144,17 @@
 }
 
 .stackedIntro .introCopy {
+  container-type: inline-size;
   grid-column: 2;
+  width: min(var(--settle-copy), 100%);
+  max-width: 100%;
+  justify-self: end;
+}
+
+@media (min-width: 1901px) {
+  .stackedSection {
+    --settle-clearance: 48px;
+  }
 }
 
 .stackedCards {
@@ -470,6 +463,12 @@
     grid-column: 1;
   }
 
+  .stackedSection .mark {
+    left: calc(
+      max(0px, (100% - 1440px) / 2) + min(1440px, 100%) - var(--nav-pad) - min(var(--settle-copy), min(1440px, 100%) - 2 * var(--nav-pad)) - var(--settle-clearance) - var(--settle-mark)
+    );
+  }
+
   .cards {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -482,6 +481,10 @@
 @media (max-width: 540px) {
   .section {
     padding-inline: var(--space-4);
+  }
+
+  .stackedSection {
+    padding-inline: 0;
   }
 
   .card {
