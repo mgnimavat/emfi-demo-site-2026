@@ -28,6 +28,9 @@ const brandMarkSrc: Record<string, string> = {
   "/brand/auditors/baker-tilly.png": "/brand/auditors/baker-tilly-brand.png",
   "/brand/auditors/buzzacott.png": "/brand/auditors/buzzacott-brand.png",
   "/brand/auditors/bdo.png": "/brand/auditors/bdo-brand.png",
+  "/brand/standing/emta.svg": "/brand/standing/emta-brand.svg",
+  "/brand/standing/cisi.png": "/brand/standing/cisi-brand.png",
+  "/brand/standing/bloomberg.png": "/brand/standing/bloomberg-brand.png",
 };
 
 function StandardsEyebrow({ centered = false }: { centered?: boolean }) {
@@ -85,9 +88,9 @@ function StandardsPanel({ centered = false }: { centered?: boolean }) {
 
 const slides = [
   {
-    title: "Authorised.",
+    title: "Authorised by",
     kind: "logos" as const,
-    items: trust.regulators.map((item) => ({
+    items: [trust.regulators[2], trust.regulators[0], trust.regulators[1]].map((item) => ({
       name: item.name,
       src: item.logo,
       width: item.logoWidth,
@@ -95,41 +98,63 @@ const slides = [
     })),
   },
   {
-    title: "Regulated.",
+    title: "Regulated under",
     kind: "pills" as const,
     items: trust.regimes.map((item) => item.code).filter((code) => code !== "MIFIDPRU"),
   },
   {
-    title: "Auditable.",
+    title: "Audited by",
     kind: "logos" as const,
-    items: [trust.auditors[2], trust.auditors[1], trust.auditors[0]].map((item) => ({
+    items: trust.auditors.map((item) => ({
       name: item.name,
       src: item.logo,
       width: item.logoWidth,
       height: item.logoHeight,
     })),
   },
+  {
+    title: "Connected to",
+    kind: "logos" as const,
+    items: [
+      { name: "EMTA", src: "/brand/standing/emta.svg", width: 290, height: 85 },
+      { name: "CISI", src: "/brand/standing/cisi.png", width: 572, height: 288 },
+      { name: "Bloomberg", src: "/brand/standing/bloomberg.png", width: 280, height: 56 },
+    ],
+  },
+  {
+    title: "Quoted in",
+    kind: "pills" as const,
+    items: ["Reuters", "WSJ", "NYT"],
+  },
 ];
 
+function plainTitle(slide: (typeof slides)[number]) {
+  return slide.title.replace(/\.$/, "");
+}
+
+function PlainEvidenceLogos({ slide }: { slide: (typeof slides)[number] }) {
+  return (
+    <div className={styles.plainRow}>
+      {slide.kind === "logos"
+        ? slide.items.map((item) => (
+            <div key={item.name} className={[styles.plainItem, item.name === "Financial Conduct Authority" && styles.plainItemFca, item.name === "BDO" && styles.plainItemBdo].filter(Boolean).join(" ")}>
+              <Image src={brandMarkSrc[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
+            </div>
+          ))
+        : slide.items.map((code) => (
+            <div key={code} className={styles.plainItem}>
+              <span className={styles.plainLabel}>{code}</span>
+            </div>
+          ))}
+    </div>
+  );
+}
+
 function PlainEvidenceContent({ slide }: { slide: (typeof slides)[number] }) {
-  const title = slide.title.replace(/\.$/, "");
   return (
     <>
-      <h3 className={styles.plainTitle}>{title}</h3>
-      <span className={styles.plainRule} aria-hidden="true" />
-      <div className={styles.plainRow}>
-        {slide.kind === "logos"
-          ? slide.items.map((item) => (
-              <div key={item.name} className={[styles.plainItem, item.name === "Financial Conduct Authority" && styles.plainItemFca, item.name === "BDO" && styles.plainItemBdo].filter(Boolean).join(" ")}>
-                <Image src={brandMarkSrc[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
-              </div>
-            ))
-          : slide.items.map((code) => (
-              <div key={code} className={styles.plainItem}>
-                <span className={styles.plainLabel}>{code}</span>
-              </div>
-            ))}
-      </div>
+      <h3 className={styles.plainTitle}>{plainTitle(slide)}</h3>
+      <PlainEvidenceLogos slide={slide} />
     </>
   );
 }
@@ -249,10 +274,24 @@ export function AccountableSection({
             shortWhy && pinned ? (
               <div className={`${styles.stage} ${styles.pinStage} ${styles.plainStage} ${chapterStyles.pinVisualFill}`} aria-live="polite">
                 <div className={styles.plainSlide}>
+                  <div className={styles.plainTitleSlot}>
+                    <AnimatePresence mode="wait">
+                      <motion.h3
+                        key={`title-${run}-${slide.title}`}
+                        className={styles.plainTitle}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                      >
+                        {plainTitle(slide)}
+                      </motion.h3>
+                    </AnimatePresence>
+                  </div>
                   <div className={styles.plainSlideViewport}>
                     <AnimatePresence mode="wait">
                       <motion.div
-                        key={`${run}-${slide.title}`}
+                        key={`logos-${run}-${slide.title}`}
                         className={styles.plainSlideContent}
                         initial={{ opacity: 0, y: "55%", rotateX: 55 }}
                         animate={{ opacity: 1, y: 0, rotateX: 0 }}
@@ -260,7 +299,7 @@ export function AccountableSection({
                         transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
                         style={{ transformOrigin: "center center" }}
                       >
-                        <PlainEvidenceContent slide={slide} />
+                        <PlainEvidenceLogos slide={slide} />
                       </motion.div>
                     </AnimatePresence>
                   </div>
