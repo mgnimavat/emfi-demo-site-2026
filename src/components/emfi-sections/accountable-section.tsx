@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { trust } from "@/content/trust";
 import { cardStyle, centeredCardSpace } from "./css";
-import { SectionAction, SectionCopy } from "./outcomes";
+import { SectionAction, SectionCopy, SectionFooterBody } from "./outcomes";
 import { ReplayButton } from "./replay-button";
 import chapterStyles from "./sections.module.css";
 import styles from "./accountable.module.css";
@@ -97,7 +97,7 @@ const slides = [
   {
     title: "Regulated.",
     kind: "pills" as const,
-    items: trust.regimes.map((item) => item.code),
+    items: trust.regimes.map((item) => item.code).filter((code) => code !== "MIFIDPRU"),
   },
   {
     title: "Auditable.",
@@ -111,26 +111,35 @@ const slides = [
   },
 ];
 
+function PlainEvidenceContent({ slide }: { slide: (typeof slides)[number] }) {
+  const title = slide.title.replace(/\.$/, "");
+  return (
+    <>
+      <h3 className={styles.plainTitle}>{title}</h3>
+      <span className={styles.plainRule} aria-hidden="true" />
+      <div className={styles.plainRow}>
+        {slide.kind === "logos"
+          ? slide.items.map((item) => (
+              <div key={item.name} className={[styles.plainItem, item.name === "Financial Conduct Authority" && styles.plainItemFca, item.name === "BDO" && styles.plainItemBdo].filter(Boolean).join(" ")}>
+                <Image src={brandMarkSrc[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
+              </div>
+            ))
+          : slide.items.map((code) => (
+              <div key={code} className={styles.plainItem}>
+                <span className={styles.plainLabel}>{code}</span>
+              </div>
+            ))}
+      </div>
+    </>
+  );
+}
+
 function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = false, open = false }: { slide: (typeof slides)[number]; plain?: boolean; centered?: boolean; brandLogos?: boolean; open?: boolean }) {
   const title = plain || open ? slide.title.replace(/\.$/, "") : slide.title;
   if (open) {
     return (
       <div className={styles.plainSlide}>
-        <h3 className={styles.plainTitle}>{title}</h3>
-        <span className={styles.plainRule} aria-hidden="true" />
-        <div className={styles.plainRow}>
-          {slide.kind === "logos"
-            ? slide.items.map((item) => (
-                <div key={item.name} className={[styles.plainItem, item.name === "Financial Conduct Authority" && styles.plainItemFca, item.name === "BDO" && styles.plainItemBdo].filter(Boolean).join(" ")}>
-                  <Image src={brandMarkSrc[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
-                </div>
-              ))
-            : slide.items.map((code) => (
-                <div key={code} className={styles.plainItem}>
-                  <span className={styles.plainLabel}>{code}</span>
-                </div>
-              ))}
-        </div>
+        <PlainEvidenceContent slide={slide} />
       </div>
     );
   }
@@ -172,6 +181,7 @@ export function AccountableSection({
   centered = false,
   brandLogos = false,
   eyebrow,
+  shortWhy = false,
 }: {
   cols: string;
   canReplay: boolean;
@@ -185,6 +195,7 @@ export function AccountableSection({
   centered?: boolean;
   brandLogos?: boolean;
   eyebrow?: string;
+  shortWhy?: boolean;
 }) {
   const [index, setIndex] = useState(0);
   const [run, setRun] = useState(0);
@@ -225,7 +236,7 @@ export function AccountableSection({
             title="Dependable."
             eyebrow={eyebrow}
             plainEyebrow={pinned && Boolean(eyebrow)}
-            body={body}
+            body={shortWhy && pinned ? undefined : body}
             action={pinned ? undefined : { href: "/why-emfi", label: "Learn More" }}
             tone={light ? "light" : "dark"}
             align={centered || pinned ? "center" : "start"}
@@ -235,27 +246,49 @@ export function AccountableSection({
           {staticStandards ? <StandardsPanel centered={centered} /> : null}
           {!staticStandards && showReplay && canReplay ? <ReplayButton onClick={replay} /> : null}
           {!staticStandards && canReplay ? (
-            <div className={`${styles.stage}${pinned ? ` ${styles.pinStage} ${styles.plainStage} ${chapterStyles.pinVisualFill}` : ""}`} aria-live="polite">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`${run}-${slide.title}`}
-                  className={styles.slide}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <EvidenceSlide slide={slide} plain={standardsEyebrow} centered={centered || pinned} brandLogos={brandLogos} open={pinned} />
-                </motion.div>
-              </AnimatePresence>
-            </div>
+            shortWhy && pinned ? (
+              <div className={`${styles.stage} ${styles.pinStage} ${styles.plainStage} ${chapterStyles.pinVisualFill}`} aria-live="polite">
+                <div className={styles.plainSlide}>
+                  <div className={styles.plainSlideViewport}>
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={`${run}-${slide.title}`}
+                        className={styles.plainSlideContent}
+                        initial={{ opacity: 0, y: "55%", rotateX: 55 }}
+                        animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                        exit={{ opacity: 0, y: "-55%", rotateX: -55 }}
+                        transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+                        style={{ transformOrigin: "center center" }}
+                      >
+                        <PlainEvidenceContent slide={slide} />
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className={`${styles.stage}${pinned ? ` ${styles.pinStage} ${styles.plainStage} ${chapterStyles.pinVisualFill}` : ""}`} aria-live="polite">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`${run}-${slide.title}`}
+                    className={styles.slide}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <EvidenceSlide slide={slide} plain={standardsEyebrow} centered={centered || pinned} brandLogos={brandLogos} open={pinned} />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            )
           ) : !staticStandards ? (
             <div className={styles.stack}>
               {slides.map((item) => <EvidenceSlide key={item.title} slide={item} plain={standardsEyebrow} centered={centered || pinned} brandLogos={brandLogos} open={pinned} />)}
             </div>
           ) : null}
         </div>
-        {pinned ? <SectionAction href="/why-emfi" label="Learn More" /> : null}
+        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} /> : <SectionAction href="/why-emfi" label="Learn More" />) : null}
       </div>
     </section>
   );

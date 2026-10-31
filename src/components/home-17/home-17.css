@@ -7,3 +7,15 @@
   max-width: 9em;
   opacity: 1;
 }
+
+@media (hover: hover) and (pointer: fine) {
+  .home-17 [class*="whyPinSlide"] .section-bottom-action .emfi-circle-btn {
+    gap: 16px;
+  }
+
+  .home-17 [class*="whyPinSlide"] .section-bottom-action .emfi-circle-btn-label {
+    max-width: none;
+    overflow: visible;
+    opacity: 1;
+  }
+}

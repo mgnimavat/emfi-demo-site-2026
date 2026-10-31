@@ -7,7 +7,6 @@ const copyright = [
   "©2026 EMFI Group Limited. All Rights Reserved.",
 ] as const;
 const whyEmfiGroup = footer.linkGroups.find((group) => group.heading === "Why EMFI");
-const companyGroup = footer.linkGroups.find((group) => group.heading === "Company");
 const legalGroup = footer.linkGroups.find((group) => group.heading === "Legal");
 const entityLabels: Record<string, string> = {
   "EMFI Securities Limited": "EMFI Securities",
@@ -20,7 +19,6 @@ const entityLinks = trust.entities.flatMap((entity) => {
 });
 const linkGroups = [
   whyEmfiGroup,
-  companyGroup,
   { heading: "Entities", links: entityLinks },
   legalGroup,
 ].filter((group) => group !== undefined);

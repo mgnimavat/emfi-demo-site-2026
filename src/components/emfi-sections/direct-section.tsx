@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, type RefObject } from "react";
 import { useReducedMotion } from "framer-motion";
 import { cardStyle, centeredCardSpace, css } from "./css";
 import { MarkSwitch } from "./mark-trace";
-import { SectionAction, SectionCopy } from "./outcomes";
+import { SectionAction, SectionCopy, SectionFooterBody } from "./outcomes";
 import { ReplayButton } from "./replay-button";
 import styles from "./sections.module.css";
 import type { dirVals } from "./values";
@@ -24,6 +24,7 @@ export function DirectSection({
   centered = false,
   eyebrow,
   body = "Fewer unnecessary intermediaries.\nA more direct route to market.",
+  shortWhy = false,
 }: {
   cols: string;
   cardRef: RefObject<HTMLDivElement | null>;
@@ -38,6 +39,7 @@ export function DirectSection({
   centered?: boolean;
   eyebrow?: string;
   body?: string;
+  shortWhy?: boolean;
 }) {
   const { dNodes, dLines, dTok, dHand, dTags, dCount, dNote, dRouteTitle, dStageH, dBandOp, dBandS } = values;
   const marked = step != null;
@@ -67,7 +69,7 @@ export function DirectSection({
             eyebrow={eyebrow}
             plainEyebrow={pinned && Boolean(eyebrow)}
             origin={marked && Boolean(eyebrow)}
-            body={body}
+            body={shortWhy && pinned ? undefined : body}
             action={pinned ? undefined : { href: "/services/settlement-custody", label: "Learn More" }}
             tone={light ? "light" : "dark"}
             align={centered || pinned ? "center" : "start"}
@@ -106,7 +108,7 @@ export function DirectSection({
             </div>
           )}
         </div>
-        {pinned ? <SectionAction href="/services/settlement-custody" label="Learn More" /> : null}
+        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} /> : <SectionAction href="/services/settlement-custody" label="Learn More" />) : null}
       </div>
     </section>
   );
