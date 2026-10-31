@@ -18,7 +18,12 @@ const questions = copy.questions.map((question, index) => ({
   ...question,
   title: questionTitles[index] ?? question.title,
 }));
-const fields = copy.fields;
+const placeholders: Record<string, string> = { firm: 'Organization', email: 'Email Address', telephone: 'Phone' };
+const fields = copy.fields.map((field) => ({
+  ...field,
+  label: field.name === 'telephone' ? 'Phone' : field.label,
+  placeholder: placeholders[field.name] ?? field.placeholder,
+}));
 const questionCount = questions.length;
 const resultWord = copy.resultAccent.endsWith('.') ? copy.resultAccent.slice(0, -1) : copy.resultAccent;
 const resultMark = copy.resultAccent.endsWith('.') ? '.' : '';
