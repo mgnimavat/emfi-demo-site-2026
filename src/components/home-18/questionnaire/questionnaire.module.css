@@ -25,10 +25,9 @@
   align-items: center;
   gap: clamp(32px, 5vw, 72px);
   width: 100%;
-  max-width: 1380px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: clamp(32px, 5vw, 80px);
-  padding-right: calc(clamp(32px, 5vw, 80px) + 60px);
   border: 1px solid var(--quiz-border);
   border-radius: var(--radius-surface);
   background: radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--color-blue-200) 16%, transparent), transparent 65%), var(--bg-inverse);
@@ -113,7 +112,7 @@
 .inactive { visibility: hidden; pointer-events: none; }
 .question { min-width: 0; margin: 0; padding: 0; border: 0; }
 .legend { width: 100%; padding: 0; margin-bottom: var(--space-5); }
-.questionTitle { display: block; width: 100%; font-size: clamp(17px, 1.25vw, 22px); font-weight: 650; line-height: 1.3; letter-spacing: -.025em; white-space: nowrap; }
+.questionTitle { display: block; width: 100%; font-size: clamp(21px, 1.7vw, 25px); font-weight: 650; line-height: 1.3; letter-spacing: -.025em; }
 .questionTitle:focus { outline: none; }
 .options { display: grid; gap: var(--space-3); }
 .option { display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding: var(--space-3) var(--space-4); border: 1px solid var(--quiz-border); border-radius: var(--radius-control); background: var(--quiz-input-background); font-size: 14px; font-weight: 500; cursor: pointer; transition: border-color .2s ease, background-color .2s ease; }
@@ -139,7 +138,7 @@
 .fields input::placeholder { color: var(--quiz-muted); opacity: .8; }
 .fields input:focus-visible { outline: none; border-color: var(--color-blue-200); }
 @media (max-width: 900px) {
-  .card { grid-template-columns: minmax(0, 1fr); padding-right: clamp(32px, 5vw, 80px); }
+  .card { grid-template-columns: minmax(0, 1fr); }
   .intro { max-width: 660px; }
   .promptIntro { padding-left: 0; font-size: min(96px, 14.5cqw); }
   .promptIntro.contactIntro { font-size: clamp(56px, 16vw, 120px); }
@@ -149,7 +148,6 @@
   .section { padding-inline: var(--space-4); }
   .card { padding: var(--space-5); gap: var(--space-6); }
   .questionCard { padding: var(--space-5); }
-  .questionTitle { white-space: normal; }
 }
 @media (prefers-reduced-motion: reduce) {
   .option, .option input, .next, .next svg { transition: none; }

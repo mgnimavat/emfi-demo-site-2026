@@ -18,7 +18,7 @@ const questions = copy.questions.map((question, index) => ({
   ...question,
   title: questionTitles[index] ?? question.title,
 }));
-const fields = contact.cta.fields;
+const fields = copy.fields;
 const questionCount = questions.length;
 const resultWord = copy.resultAccent.endsWith('.') ? copy.resultAccent.slice(0, -1) : copy.resultAccent;
 const resultMark = copy.resultAccent.endsWith('.') ? '.' : '';
