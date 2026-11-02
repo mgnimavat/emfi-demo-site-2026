@@ -1,0 +1,39 @@
+export const responsiveTechnology = {
+  title: "Responsive Technology",
+  description:
+    "Technology should make financial services simpler. People should make them work. We combine direct access to specialists with technology designed to provide greater visibility, flexibility and control across the investment lifecycle.",
+  headline: "Responsive\nTechnology",
+  phrases: ["the people", "the detail", "a solution"],
+  fixed: "Straight to",
+  specialist: {
+    title: "Not everything fits a dropdown.",
+    lead: "Financial markets do not always follow standard workflows. Neither do client requirements.",
+    paragraphs: [
+      "Some transactions involve unusual instruments, complex settlement arrangements, restricted liquidity or operational requirements that do not fit an off-the-shelf process.",
+      "We take a practical, case-by-case approach. Our specialists assess the underlying requirement, identify the relevant operational and regulatory constraints and, where feasible, work with clients and counterparties to identify an appropriate solution.",
+    ],
+    callout: "Good technology handles the routine. Experienced people handle the exceptions.",
+    closing:
+      "Where standard arrangements are insufficient, our objective is to find a workable alternative within our permissions, risk framework and available infrastructure.",
+    steps: [
+      { title: "Understand", body: "Clarify the client requirement and transaction context." },
+      { title: "Assess", body: "Review permissions, counterparties, controls and constraints." },
+      { title: "Coordinate", body: "Where feasible, identify and implement an appropriate route." },
+    ],
+  },
+  technology: {
+    title: "Technology with people behind it.",
+    lead: "Our technology is designed to bring together execution, account information and portfolio visibility.",
+    paragraphs: [
+      "The tools provide the information and workflows. Our people provide the expertise, communication and judgement required when something falls outside the ordinary course of business.",
+      "A connected technology environment supports the routine, while direct access to specialists helps address the exceptions.",
+    ],
+  },
+  disclosure: {
+    title: "Digital services information",
+    paragraphs: [
+      "Our digital services are provided to eligible clients and authorised users in accordance with the relevant account arrangements.",
+      "Available functionality varies according to the service, account and instrument. Official statements, confirmations and contractual records remain authoritative.",
+    ],
+  },
+} as const;

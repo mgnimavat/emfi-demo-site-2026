@@ -14,6 +14,7 @@ import {
   ClipboardList,
   FileSearch,
   Handshake,
+  Search,
   FileCheck2,
   Landmark,
   type LucideIcon,
@@ -42,35 +43,56 @@ function clamp01(value: number) {
   return Math.min(1, Math.max(0, value));
 }
 
-type ConnectedJourneyProps = { variant?: 'execution' | 'lifecycle' | 'settlement' };
+const namedIcons = { search: Search, shield: ShieldCheck, handshake: Handshake } satisfies Record<string, LucideIcon>;
 type JourneyStep = { label: string; detail?: string };
+type ConnectedJourneyProps = {
+  variant?: 'execution' | 'lifecycle' | 'settlement';
+  steps?: readonly JourneyStep[];
+  icons?: readonly (keyof typeof namedIcons)[];
+  label?: string;
+  orientation?: 'vertical';
+};
 
-export const ConnectedJourney = ({ variant = 'execution' }: ConnectedJourneyProps) => {
+export const ConnectedJourney = ({
+  variant = 'execution',
+  steps: customSteps,
+  icons: customIcons,
+  label,
+  orientation,
+}: ConnectedJourneyProps) => {
   const ref = useRef<HTMLOListElement>(null);
   const visible = useInView(ref, { amount: 0.15 });
   const prefersReducedMotion = useReducedMotion();
   const reduced = Boolean(prefersReducedMotion);
   const lifecycle = variant === 'lifecycle';
   const custody = variant === 'settlement';
-  const steps: readonly JourneyStep[] = custody
-    ? settlement.chain.map(([label, detail]) => ({
-        label:
-          label === 'EMFI'
-            ? label
-            : label.toLowerCase().replace(/\b\w/g, (letter) => letter.toUpperCase()),
-        detail,
-      }))
-    : lifecycle
-      ? services.lifecycle.stages.map((stage) => ({
-          label: stage.title.toLowerCase().replace(/\b\w/g, (letter) => letter.toUpperCase()),
+  const steps: readonly JourneyStep[] =
+    customSteps ??
+    (custody
+      ? settlement.chain.map(([name, detail]) => ({
+          label:
+            name === 'EMFI'
+              ? name
+              : name.toLowerCase().replace(/\b\w/g, (letter) => letter.toUpperCase()),
+          detail,
         }))
-      : execution.workflow.steps;
-  const stageIcons = custody
-    ? [ArrowRightLeft, FileCheck2, Landmark, ShieldCheck]
+      : lifecycle
+        ? services.lifecycle.stages.map((stage) => ({
+            label: stage.title.toLowerCase().replace(/\b\w/g, (letter) => letter.toUpperCase()),
+          }))
+        : execution.workflow.steps);
+  const stageIcons = customIcons
+    ? customIcons.map((name) => namedIcons[name])
+    : custody
+      ? [ArrowRightLeft, FileCheck2, Landmark, ShieldCheck]
+      : lifecycle
+        ? [ChartNoAxesCombined, ArrowRightLeft, CircleCheck, ShieldCheck, BriefcaseBusiness]
+        : icons;
+  const journeyDuration = customSteps
+    ? 1600 * Math.max(steps.length - 1, 1)
     : lifecycle
-      ? [ChartNoAxesCombined, ArrowRightLeft, CircleCheck, ShieldCheck, BriefcaseBusiness]
-      : icons;
-  const journeyDuration = lifecycle ? 15500 : JOURNEY_MS;
+      ? 15500
+      : JOURNEY_MS;
   const lastIndex = steps.length - 1;
   const progress = useMotionValue(0);
   const [progressValue, setProgressValue] = useState(0);
@@ -136,13 +158,15 @@ export const ConnectedJourney = ({ variant = 'execution' }: ConnectedJourneyProp
     <ol
       ref={ref}
       aria-label={
-        custody
+        label ??
+        (custody
           ? 'Trade to custody process'
           : lifecycle
             ? 'Five connected stages of the investment lifecycle'
-            : 'Research to settlement process'
+            : 'Research to settlement process')
       }
       className={styles.journey}
+      data-orientation={orientation}
       data-reduced={reduced ? 'true' : 'false'}
       style={
         {
@@ -191,7 +215,13 @@ export const ConnectedJourney = ({ variant = 'execution' }: ConnectedJourneyProp
             </span>
             <span className={styles.label}>
               {step.label}
-              {step.detail ? <span className="sr-only">: {step.detail}</span> : null}
+              {step.detail ? (
+                orientation === 'vertical' ? (
+                  <span className={styles.detail}>{step.detail}</span>
+                ) : (
+                  <span className="sr-only">: {step.detail}</span>
+                )
+              ) : null}
             </span>
           </li>
         );
