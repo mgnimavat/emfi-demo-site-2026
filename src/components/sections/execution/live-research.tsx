@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { RotateCcw, Search, X } from "lucide-react";
 import { emptyExecutionFilters, filterExecutionResearch, invalidResearchDateRange, type ExecutionResearchFilters } from "@/lib/execution-research";
-import { intelligenceReportFeeds, intelligenceReportLabels, mergeIntelligenceReports, type IntelligenceLanguage } from "@/lib/intelligence-reports";
+import { alternateIntelligenceReports, intelligenceReportFeeds, intelligenceReportLabels, mergeIntelligenceReports, type IntelligenceLanguage } from "@/lib/intelligence-reports";
 import { useIntelligenceReports } from "@/lib/use-intelligence-reports";
 import { useIntelligenceSearch } from "@/lib/use-intelligence-search";
 import { reportSourceUrl } from "@/lib/intelligence-report-types";
@@ -32,7 +32,7 @@ export const LiveResearch = () => {
     const sourceUrl = record.sourceUrl ?? reportSourceUrl(record.id, reportCatalogue.slugs[record.id], language);
     return { ...record, ...(derivedType ? { topics: [...new Set([...record.topics, derivedType])] } : {}), ...(sourceUrl ? { sourceUrl } : {}) };
   }), [sourceRecords, reportCatalogue.types, reportCatalogue.slugs]);
-  const records = useMemo(() => filterExecutionResearch(typedRecords, filters), [typedRecords, filters]);
+  const records = useMemo(() => alternateIntelligenceReports(filterExecutionResearch(typedRecords, filters)), [typedRecords, filters]);
   const invalidDates = invalidResearchDateRange(filters);
   const failedFeeds = selectedFeeds.filter(feed => feeds[feed].error);
   const hasMore = search.active ? search.next !== null : selectedFeeds.some(feed => feeds[feed].next !== null);

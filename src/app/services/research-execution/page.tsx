@@ -1,16 +1,16 @@
 import { execution } from "@/content/execution";
 import { ResearchToTrade } from "@/components/sections/execution/research-to-trade";
 import { ExecutionReveal } from "@/components/sections/execution/reveal";
-import { ExecutionHeroPhrases } from "@/components/sections/execution/hero-phrases";
-import { DirectExecutionWorkflow } from "@/components/sections/execution/direct-workflow";
-import { ConnectedExecutionPreviews } from "@/components/sections/execution/connected-previews";
-import { SecurityReference } from "@/components/sections/services/security-reference";
+import { ExecutionHeroTitle } from "@/components/sections/execution/hero-title";
+// import { DirectExecutionWorkflow } from "@/components/sections/execution/direct-workflow";
+import { ResearchSection } from "@/components/sections/execution/research-section";
+import { WorkstationSection } from "@/components/sections/execution/workstation-section";
+import { ResearchDisclosures } from "@/components/sections/execution/research-disclosures";
 // import { ArchiveCta } from "@/components/sections/archive/cta";
 import theme from "@/components/sections/archive/theme.module.css";
-import { FileSearch, ArrowRightLeft } from "lucide-react";
-import landing from "@/components/sections/landing/landing.module.css";
+// import { FileSearch, ArrowRightLeft } from "lucide-react";
+// import landing from "@/components/sections/landing/landing.module.css";
 import styles from "@/components/sections/execution/page.module.css";
-import serviceStyles from "../services.module.css";
 
 export const metadata = { title: execution.title, description: execution.description };
 
@@ -18,10 +18,14 @@ export default function ResearchExecutionPage() {
   return <div className={theme.page}>
     <section className={styles.hero}>
       <div className={styles.container}><div className={styles.heroGrid}>
-        <ExecutionReveal className={styles.heroCopy}><h1>{execution.headline.split("\n").map((line) => <span key={line}>{line}</span>)}</h1><ExecutionHeroPhrases /></ExecutionReveal>
+        <ExecutionReveal className={styles.heroCopy}><ExecutionHeroTitle /></ExecutionReveal>
         <ExecutionReveal delay={0.12} className={styles.heroMedia}><ResearchToTrade /></ExecutionReveal>
       </div></div>
     </section>
+    <ResearchSection />
+    <WorkstationSection />
+    <ResearchDisclosures />
+    {/*
     <section id="research-execution-capabilities" className={styles.section} aria-label="Research and execution capabilities">
       <div className={styles.container}><ExecutionReveal>
         <div className={`${landing.principles} ${styles.capabilities}`}>
@@ -36,8 +40,6 @@ export default function ResearchExecutionPage() {
       </ExecutionReveal></div>
     </section>
     <section className={styles.flow} aria-labelledby="workflow-heading"><div className={styles.container}><ExecutionReveal><h2 id="workflow-heading" className={styles.title}>{execution.workflow.title}</h2><p className={styles.body}>{execution.workflow.body}</p></ExecutionReveal><DirectExecutionWorkflow /></div></section>
-    {/* Execution preview is temporarily disabled; its implementation is retained. */}
-    <ConnectedExecutionPreviews flatSections showExecution={false} />
     <section id="security-reference" className={`${serviceStyles.page} ${serviceStyles.securityReference}`} aria-labelledby="security-reference-heading">
       <div className={styles.container}>
         <div className={serviceStyles.referenceGrid}>
@@ -49,6 +51,7 @@ export default function ResearchExecutionPage() {
         </div>
       </div>
     </section>
+    */}
     {/* <ArchiveCta title={execution.contact.title} body={execution.contact.body} action={execution.contact.action} /> */}
   </div>;
 }
