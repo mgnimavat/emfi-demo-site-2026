@@ -23,6 +23,7 @@ export function ResponsiveSection({
   centered = false,
   eyebrow,
   shortWhy = false,
+  pairedCue = false,
 }: {
   cols: string;
   textOrder: number;
@@ -40,6 +41,7 @@ export function ResponsiveSection({
   centered?: boolean;
   eyebrow?: string;
   shortWhy?: boolean;
+  pairedCue?: boolean;
 }) {
   const marked = step != null;
   const active = useWhyActive(step ?? 0);
@@ -69,7 +71,7 @@ export function ResponsiveSection({
             <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} views={homeSlides ? (home15Trade ? homeDeskResponsiveSlides : floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
           ) : null}
         </div>
-        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} /> : <SectionAction href="/services/settlement-custody#workstation-demo" label="Learn More" />) : null}
+        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/services/settlement-custody#workstation-demo" : undefined} /> : <SectionAction href="/services/settlement-custody#workstation-demo" label="Learn More" />) : null}
       </div>
     </section>
   );
