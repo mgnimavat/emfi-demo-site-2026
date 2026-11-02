@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { HeroDashboardScreen } from "@/components/home-17/operating-view";
 import { ResearchExecutionHeroMockup } from "@/components/home-17/research-execution-hero";
@@ -25,6 +25,11 @@ export function ResponsiveShowcase() {
   const reduced = useReducedMotion();
   const wide = useWide();
   const play = wide && !reduced;
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => window.scrollTo(0, 0));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   return (
     <div className={styles.stage} aria-hidden>

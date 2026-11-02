@@ -2,10 +2,15 @@
   position: relative;
   aspect-ratio: 100 / 104;
   container-type: inline-size;
+  margin-left: auto;
+}
+
+@media (min-width: 900px) {
+  .stage { width: min(100%, calc((100dvh - var(--site-header-height, 78px) - 140px) * 100 / 104)); }
 }
 
 @media (min-width: 1400px) {
-  .stage { width: calc(100% + 4px); }
+  .stage { width: min(calc(100% + 4px), calc((100dvh - var(--site-header-height, 78px) - 140px) * 100 / 104)); }
 }
 
 .dashboard,

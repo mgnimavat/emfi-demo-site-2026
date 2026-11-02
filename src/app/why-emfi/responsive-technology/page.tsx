@@ -12,7 +12,7 @@ export const metadata = { title: copy.title, description: copy.description };
 export default function ResponsiveTechnologyPage() {
   return (
     <div>
-      <section className={hero.hero}>
+      <section className={`${hero.hero} ${styles.screen}`}>
         <div className={hero.container}>
           <div className={hero.heroGrid}>
             <ExecutionReveal className={hero.heroCopy}>
