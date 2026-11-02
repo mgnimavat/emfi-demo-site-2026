@@ -382,7 +382,7 @@ function DashboardPanel({ demo = false, quiet = false, radius }: { demo?: boolea
     <div className="grid h-full grid-cols-3 grid-rows-2 gap-2">
       <CardShell title="Balances" value={demo ? undefined : "$85,604,878"} radius={radius}>
         {quiet ? (
-          <div className="flex min-h-0 flex-1 flex-col justify-between [container-type:inline-size]">
+          <div className="flex min-h-0 flex-1 flex-col">
             <div className="flex min-h-0 flex-1 items-center">
               <SemiDonut
                 tone={usd}
@@ -391,9 +391,9 @@ function DashboardPanel({ demo = false, quiet = false, radius }: { demo?: boolea
                 className="mx-auto aspect-[220/118] h-auto max-h-full w-full"
               />
             </div>
-            <div aria-label="Balance currencies" className="flex flex-nowrap justify-center gap-x-[2cqw]">
+            <div className="flex flex-nowrap justify-center gap-x-3">
               {currencies.map(([ccy, color]) => (
-                <span key={ccy} className="flex shrink-0 items-center gap-x-[1cqw] whitespace-nowrap text-[clamp(4px,2.2cqw,7px)] text-ink-muted">
+                <span key={ccy} className="flex items-center gap-1 whitespace-nowrap text-[7px] text-ink-muted">
                   <span className="h-2.5 w-[2px] rounded-sm" style={{ backgroundColor: color }} />
                   {ccy}
                 </span>
