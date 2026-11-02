@@ -1,176 +1,140 @@
-import Link from 'next/link';
-import {
-  ArrowRight,
-  Check,
-  Headphones,
-  Landmark,
-  Layers3,
-  ShieldCheck,
-  Wallet,
-} from 'lucide-react';
 import { wealth } from '@/content/wealth';
-import { Button } from '@/components/ui/button';
-import { PortfolioView } from '@/components/mockups/portfolio-view';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
-import { ServiceSectionHeading } from './ServiceSectionHeading';
-import styles from './ServicePage.module.css';
+import { ServiceDisclosures } from './ServiceDisclosures';
+import styles from './WealthAssetSections.module.css';
 
-const pillarIcons = [Wallet, Layers3, Landmark] as const;
-const benefitIcons = [ArrowRight, ShieldCheck, Headphones] as const;
+const MandateFramework = () => {
+  const content = wealth.management;
 
-export const WealthAssetSections = () => (
-  <>
-    <section
-      className={`${styles.section} ${styles.softBand}`}
-      aria-label="Wealth and asset management activities"
-    >
-      <div className={styles.container}>
-        <div className={styles.introGrid}>
-          <ServiceSectionHeading title={wealth.headline.replace('\n', ' ')} />
-          <p className={styles.introBody}>{wealth.body}</p>
-        </div>
-        <div className={styles.threeColumns}>
-          {wealth.pillars.map((pillar, index) => {
-            const Icon = pillarIcons[index] ?? ShieldCheck;
-            return (
-              <ExecutionReveal key={pillar.title} className={styles.fillHeight}>
-                <article className={styles.serviceCard}>
-                  <div className={styles.cardTop}>
-                    <span className={styles.cardIcon}>
-                      <Icon size={24} strokeWidth={1.5} aria-hidden="true" />
-                    </span>
-                    <span className={styles.regime}>{pillar.regime}</span>
-                  </div>
-                  <h3>{pillar.title}</h3>
-                  <p>{pillar.body}</p>
-                  <p className={styles.cardLegal}>{pillar.entity}</p>
-                </article>
-              </ExecutionReveal>
-            );
-          })}
-        </div>
+  return (
+    <figure className={styles.framework} aria-label={content.visualTitle}>
+      <div className={styles.frameworkBody}>
+        <h3>{content.visualTitle}</h3>
+        <ol className={styles.dimensions}>
+          {content.dimensions.map((dimension, index) => (
+            <li key={dimension}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{dimension}</strong>
+            </li>
+          ))}
+        </ol>
+        <table className={styles.mandateTable}>
+          <caption className="sr-only">{content.visualTitle}</caption>
+          <thead><tr>{content.columns.map((column) => <th key={column} scope="col">{column}</th>)}</tr></thead>
+          <tbody>
+            {content.rows.map((row) => (
+              <tr key={row.dimension}>
+                <th scope="row">{row.dimension}</th>
+                <td>{row.approach}</td>
+                <td>{row.review}</td>
+                <td>{row.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </section>
+    </figure>
+  );
+};
 
-    <section className={styles.section} aria-labelledby="wealth-fund-heading">
-      <div className={styles.container}>
-        <div className={styles.fundNote}>
-          <span className={styles.fundIcon}>
-            <Layers3 size={34} strokeWidth={1.25} aria-hidden="true" />
-          </span>
-          <ServiceSectionHeading
-            title={wealth.fundNoteTitle}
-            body={wealth.fundNoteBody}
-            id="wealth-fund-heading"
-          />
-        </div>
-      </div>
-    </section>
+const WealthManagement = () => {
+  const content = wealth.management;
 
-    <section
-      className={`${styles.section} ${styles.softBand}`}
-      aria-labelledby="wealth-distinction-heading"
-    >
-      <div className={styles.container}>
-        <ServiceSectionHeading title={wealth.problemTitle} id="wealth-distinction-heading" />
-        <div className={styles.twoColumns}>
-          <article className={`${styles.comparisonCard} ${styles.conventional}`}>
-            <p className={styles.cardEyebrow}>{wealth.typicallyLabel}</p>
-            <ul>
-              {wealth.typically.map((item) => (
-                <li key={item}>
-                  <span className={styles.comparisonDash} aria-hidden="true" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </article>
-          <article className={`${styles.comparisonCard} ${styles.direct}`}>
-            <p className={styles.cardEyebrow}>{wealth.emfiLabel}</p>
-            <ul>
-              {wealth.emfiProvides.map((item) => (
-                <li key={item}>
-                  <Check size={18} aria-hidden="true" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section className={styles.section} aria-labelledby="wealth-benefits-heading">
-      <div className={styles.container}>
-        <ServiceSectionHeading title={wealth.getTitle} id="wealth-benefits-heading" />
-        <div className={styles.threeColumns}>
-          {wealth.getItems.map((title, index) => {
-            const Icon = benefitIcons[index] ?? ShieldCheck;
-            return (
-              <ExecutionReveal key={title} className={styles.fillHeight}>
-                <article className={styles.serviceCard}>
-                  <span className={styles.cardIcon}>
-                    <Icon size={25} strokeWidth={1.5} aria-hidden="true" />
-                  </span>
-                  <h3>{title}</h3>
-                  <p>{wealth.getBody}</p>
-                </article>
-              </ExecutionReveal>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-
-    <section
-      className={`${styles.section} ${styles.softBand}`}
-      aria-labelledby="wealth-portfolio-heading"
-    >
-      <div className={styles.container}>
-        <div className={styles.portfolioGrid}>
-          <div>
-            <ServiceSectionHeading
-              title={wealth.visTitle}
-              body={wealth.visBody}
-              id="wealth-portfolio-heading"
-            />
-            <p className={styles.entityNote}>
-              Legal entities for each activity are listed on{' '}
-              <Link href="/why-emfi">
-                Why EMFI
-                <ArrowRight size={13} aria-hidden="true" />
-              </Link>
-              .
-            </p>
+  return (
+    <section id="wealth-management" className={`${styles.section} ${styles.navy}`} aria-labelledby="wealth-management-heading">
+      <div className={`${styles.container} ${styles.sectionGrid}`}>
+        <ExecutionReveal className={styles.copy}>
+          <h2 id="wealth-management-heading" className={styles.title}>{content.title}</h2>
+          <p className={styles.lead}>{content.lead}</p>
+          <div className={styles.paragraphs}>
+            {content.paragraphs.map((paragraph) => <p key={paragraph} className={styles.body}>{paragraph}</p>)}
           </div>
-          <ExecutionReveal className={styles.portfolioPreview}>
-            <PortfolioView />
-          </ExecutionReveal>
-        </div>
+        </ExecutionReveal>
+        <ExecutionReveal delay={0.12} className={styles.visual}>
+          <MandateFramework />
+        </ExecutionReveal>
       </div>
     </section>
+  );
+};
 
-    <section className={styles.section} aria-labelledby="wealth-onboarding-heading">
-      <div className={styles.container}>
-        <div className={styles.onboarding}>
-          <ServiceSectionHeading
-            title={wealth.onboardTitle}
-            body={wealth.onboardBody}
-            id="wealth-onboarding-heading"
-          />
-          <ul className={styles.criteria}>
-            {wealth.criteria.map((item) => (
-              <li key={item}>
-                <ShieldCheck size={20} strokeWidth={1.5} aria-hidden="true" />
-                {item}
+const FundStructure = () => {
+  const content = wealth.fund;
+
+  return (
+    <figure className={styles.fundStructure}>
+      <figcaption className={styles.fundRoot}>
+        <h3>{content.name}</h3>
+        <p>{content.jurisdiction}</p>
+      </figcaption>
+      <ul className={styles.branches}>
+        {content.portfolios.map((portfolio) => (
+          <li key={portfolio}>
+            <h4>{portfolio}</h4>
+            <p>{content.portfolioDescription}</p>
+          </li>
+        ))}
+      </ul>
+    </figure>
+  );
+};
+
+const AssetManagement = () => {
+  const content = wealth.fund;
+
+  return (
+    <section id="asset-management" className={styles.section} aria-labelledby="asset-management-heading">
+      <div className={`${styles.container} ${styles.sectionGrid}`}>
+        <ExecutionReveal className={styles.copy}>
+          <h2 id="asset-management-heading" className={styles.title}>{content.title}</h2>
+          <p className={styles.lead}>{content.lead}</p>
+          <div className={styles.paragraphs}>
+            <p className={styles.body}>{content.body}</p>
+            <p className={styles.body}><strong>{content.name}</strong> {content.introduction}</p>
+            <p className={styles.body}>{content.detail}</p>
+          </div>
+          <div className={styles.network}>
+            <h3 id="fund-provider-heading">{content.networkTitle}</h3>
+            <p className={styles.body}>{content.networkBody}</p>
+          </div>
+        </ExecutionReveal>
+        <ExecutionReveal delay={0.12} className={styles.visual}>
+          <FundStructure />
+          <ul className={styles.providers} aria-labelledby="fund-provider-heading">
+            {content.providers.map((provider) => (
+              <li key={provider.id}>
+                <strong>{provider.name}</strong>
+                <span>{provider.role}</span>
               </li>
             ))}
           </ul>
-          <Button href="/contact" variant="inverse">
-            {wealth.cta}
-          </Button>
-        </div>
+          <p className={styles.providerNotice}>{content.providerNotice}</p>
+        </ExecutionReveal>
       </div>
     </section>
+  );
+};
+
+const FundDisclosures = () => {
+  const content = wealth.disclosures;
+
+  return (
+    <ServiceDisclosures
+      headingId="fund-disclosures-heading"
+      title={content.title}
+      action={content.action}
+      actionPlacement="panel"
+    >
+      <p><strong>{content.entity}</strong> {content.introduction}</p>
+      {content.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+    </ServiceDisclosures>
+  );
+};
+
+export const WealthAssetSections = () => (
+  <>
+    <WealthManagement />
+    <AssetManagement />
+    <FundDisclosures />
   </>
 );

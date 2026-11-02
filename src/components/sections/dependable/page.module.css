@@ -1,0 +1,151 @@
+.panel {
+  background: #e7eef8;
+  border-radius: 28px;
+  padding: clamp(24px, 3vw, 40px) clamp(16px, 2vw, 28px) clamp(20px, 2.4vw, 32px);
+}
+
+.kicker {
+  margin: 0;
+  color: #071932;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.marks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 28px;
+}
+
+.mark {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding-inline: 10px;
+  text-align: center;
+}
+
+.mark + .mark { border-left: 1px solid #c5d0e4; }
+
+.mark img {
+  width: auto;
+  height: 72px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.mark p {
+  margin: 0;
+  color: #24344b;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.mark p span { display: block; }
+
+.entities { display: grid; gap: 12px; }
+
+.entity {
+  display: block;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: #fff;
+  color: #071932;
+  text-decoration: none;
+}
+
+.entity:hover { background: #f4f7fb; }
+
+.entity span {
+  display: block;
+  color: #5c6d86;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.entity strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 18px;
+}
+
+.entity p {
+  margin: 6px 0 0;
+  color: #24344b;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.cycle {
+  align-self: center;
+  position: relative;
+  width: 100%;
+  height: 248px;
+  overflow: hidden;
+  background: #e7eef8;
+  border-radius: 28px;
+  box-shadow: 0 10px 28px rgb(7 25 50 / 6%);
+}
+
+.cycleFrame {
+  position: absolute;
+  inset: 28px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+}
+
+.groupLabel {
+  margin: 0;
+  color: #5c6d86;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.cycleRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+}
+
+.cycleCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 84px;
+  padding-inline: 16px;
+}
+
+.cycleCell + .cycleCell { border-left: 1px solid #c5d0e4; }
+
+.cycleCell span {
+  color: #071932;
+  font-size: clamp(20px, 1.7vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.cycleCell img {
+  width: 100%;
+  height: 56px;
+  object-fit: contain;
+}
+
+@media (max-width: 699px) {
+  .marks { grid-template-columns: 1fr; gap: 22px; }
+  .mark + .mark { border-left: 0; padding-top: 22px; border-top: 1px solid #c5d0e4; }
+}

@@ -22,7 +22,7 @@ const axisDate = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "shor
 const tooltipDate = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
 const timeFormat = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "UTC" });
 
-export function ExecutionChart({ security }: { security: ExecutionSecurity }) {
+export function ExecutionChart({ security, staticPreview = false }: { security: ExecutionSecurity; staticPreview?: boolean }) {
   const [range, setRange] = useState<Range>("1M");
   const [cursor, setCursor] = useState<number | null>(null);
   const [size, setSize] = useState({ width: 820, height: 380 });
@@ -96,12 +96,12 @@ export function ExecutionChart({ security }: { security: ExecutionSecurity }) {
   return <figure className={styles.chart} aria-label={`${security.symbol} demo price chart`}>
     <div className={styles.header}>
       <span className={styles.title}><strong>{security.symbol}</strong></span>
-      <div className={styles.ranges} role="group" aria-label="Chart time range">{ranges.map((item) => <button key={item.label} type="button" aria-pressed={range === item.label} aria-controls={`${id}-plot`} onClick={() => { setRange(item.label); setCursor(null); }}>{item.label}</button>)}</div>
+      <div className={styles.ranges} role="group" aria-label="Chart time range">{ranges.map((item) => <button key={item.label} type="button" disabled={staticPreview} aria-pressed={range === item.label} aria-controls={`${id}-plot`} onClick={() => { setRange(item.label); setCursor(null); }}>{item.label}</button>)}</div>
     </div>
     <div ref={plotRef} className={styles.plot}>
-      <svg id={`${id}-plot`} viewBox={`0 0 ${size.width} ${size.height}`} className={styles.svg} role="img" aria-labelledby={`${id}-title ${id}-description`} tabIndex={0} onPointerMove={move} onPointerLeave={() => setCursor(null)} onFocus={() => setCursor(data.length - 1)} onBlur={() => setCursor(null)} onKeyDown={keyDown}>
+      <svg id={`${id}-plot`} viewBox={`0 0 ${size.width} ${size.height}`} className={styles.svg} role="img" aria-labelledby={`${id}-title ${id}-description`} tabIndex={staticPreview ? undefined : 0} onPointerMove={staticPreview ? undefined : move} onPointerLeave={staticPreview ? undefined : () => setCursor(null)} onFocus={staticPreview ? undefined : () => setCursor(data.length - 1)} onBlur={staticPreview ? undefined : () => setCursor(null)} onKeyDown={staticPreview ? undefined : keyDown}>
         <title id={`${id}-title`}>{`${security.name} · ${range} demo price chart`}</title>
-        <desc id={`${id}-description`}>Synthetic USD prices for a local demonstration, not historical or live market data. Use Left and Right arrow keys to explore points, or Home and End to jump to the first and last point.</desc>
+        <desc id={`${id}-description`}>Synthetic USD prices for a local demonstration, not historical or live market data. {staticPreview ? "" : "Use Left and Right arrow keys to explore points, or Home and End to jump to the first and last point."}</desc>
         <defs><linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#4d6fb8" stopOpacity=".24" /><stop offset="100%" stopColor="#dce8f8" stopOpacity=".03" /></linearGradient></defs>
         <g className={styles.yTicks}>{ticks.map((tick) => <g key={tick}><line x1={left} x2={right} y1={y(tick)} y2={y(tick)} /><text x={left - 12} y={y(tick)} dominantBaseline="middle" textAnchor="end">{priceFormat.format(tick)}</text></g>)}</g>
         <line x1={left} x2={right} y1={y(lastPrice)} y2={y(lastPrice)} stroke="#8098cc" strokeOpacity=".45" strokeDasharray="4 5" />
@@ -117,6 +117,6 @@ export function ExecutionChart({ security }: { security: ExecutionSecurity }) {
         {active && cursor !== null ? <g className={styles.cursor} pointerEvents="none" data-chart-cursor><line x1={x(cursor)} x2={x(cursor)} y1={top} y2={bottom} strokeDasharray="3 4" /><circle cx={x(cursor)} cy={y(active.value)} r="4" /><rect x={tooltipX} y={top + 4} width="160" height="48" rx="6" /><text x={tooltipX + 12} y={top + 23}>{range === "1D" ? timeFormat.format(active.date) : tooltipDate.format(active.date)}</text><text x={tooltipX + 12} y={top + 42} className={styles.tooltipPrice}>{`${priceFormat.format(active.value)} USD`}</text></g> : null}
       </svg>
     </div>
-    <figcaption>Demo price chart · USD · Not live</figcaption>
+    {!staticPreview ? <figcaption>Demo price chart · USD · Not live</figcaption> : null}
   </figure>;
 }

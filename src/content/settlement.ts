@@ -1,7 +1,70 @@
 export const settlement = {
   title: "Settlement & Custody",
+  description: 'Institutional custody and settlement services, supported by technology that brings greater visibility to positions, balances and transactions.',
   heroLines: ["Settlement &", "Custody"],
   heroPhrases: ["From trade to settlement.", "Clear custody. Clear view.", "One connected relationship."],
+  heroTypewriter: {
+    prefix: 'Your assets.',
+    words: ['visible', 'accounted for', 'in view'],
+  },
+  overview: {
+    title: 'Nothing left in the dark.',
+    titleLines: ['Nothing left', 'in the dark.'],
+    lead: 'The trade is only one part of the transaction.',
+    body: 'Cash movements, securities positions and outstanding trades all need to be accounted for. Our post-trade infrastructure connects settlement activity with account information, providing a clearer picture of what has happened and what remains outstanding.',
+    dashboardTitle: 'Your portfolio at a glance.',
+    dashboardBody: 'The EMFI Dashboard brings together key account information:',
+    items: ['Cash balances', 'Securities positions', 'Outstanding trades', 'Transaction history', 'Fees and charges'],
+  },
+  custody: {
+    title: 'Custody is a responsibility not a feature.',
+    titleLines: ['Custody is a responsibility', 'not a feature.'],
+    lead: 'Holding client money and securities comes with specific obligations.',
+    body: "Our UK custody and safeguarding arrangements operate within the FCA's Client Assets Sourcebook (CASS).",
+    rules: [
+      {
+        id: 'client-money',
+        code: 'CASS 7',
+        title: 'Client Money',
+        summary: 'Segregation · records · reconciliations',
+        paragraphs: [
+          'Client money held or controlled by EMFI Capital Limited is subject to applicable segregation requirements. These include appropriate records, reconciliations and arrangements with the banks holding client money.',
+          "The statutory trust framework is designed to protect client money in the event of a firm's failure.",
+        ],
+      },
+      {
+        id: 'safe-custody',
+        code: 'CASS 6',
+        title: 'Safe Custody Assets',
+        summary: 'Safekeeping · ownership records · reconciliations',
+        paragraphs: [
+          'Safe custody assets are subject to separate requirements governing their safekeeping, records and reconciliations.',
+          "These rules are designed to protect clients' ownership rights and help distinguish client assets from those belonging to the firm or other clients.",
+        ],
+      },
+    ],
+    oversight: {
+      title: 'Defined responsibilities',
+      code: 'Oversight',
+      summary: 'Controls · acknowledgements · escalation',
+    },
+    calloutTitle: 'Protection through process.',
+    callout: 'Segregation, accurate records, reconciliations and oversight are fundamental to the way custody arrangements operate.',
+    relatedBody: 'Our wider control framework and regulatory oversight are explained on the',
+    relatedLabel: 'Dependable Operations',
+    relatedHref: '/why-emfi#framework',
+    mobileImage: '/images/services/balances-iphone.png',
+    mobileAlt: 'Cash balances in the EMFI mobile app',
+  },
+  disclosures: {
+    title: 'Client asset information',
+    entities: [
+      { name: 'EMFI Capital Limited', body: 'is authorised and regulated by the FCA and is subject to the applicable CASS requirements in respect of client money and safe custody assets it holds or controls.' },
+      { name: 'EMFI Capital (DIFC) Limited', body: 'is separately regulated by the DFSA and subject to the applicable DIFC client asset requirements.' },
+    ],
+    notice: 'Client asset protections do not eliminate all custody, banking or third-party risks and do not protect against investment losses.',
+    action: { label: 'Client Asset Disclosures', href: 'https://emfi.uk/english/policydocuments' },
+  },
 
   eyebrow: "Services / Settlement & Custody",
   headline: "The infrastructure\nbehind the transaction.",
