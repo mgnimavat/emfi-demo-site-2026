@@ -1,0 +1,37 @@
+"use client";
+
+import { CurvedBand } from "@/components/layout/curved-band";
+import { useState } from "react";
+import { execution } from "@/containers/Sections/ArchivedServices/a3d0954/content/execution";
+import { demoExecutionSecurities, type ExecutionSymbol } from "@/content/execution-securities";
+import { InteractiveExecutionTicket } from "@/components/sections/execution/interactive-execution-ticket";
+import { LiveResearch } from "@/containers/Sections/ArchivedServices/a3d0954/components/sections/execution/live-research";
+import { ExecutionChart } from "@/components/sections/execution/execution-chart";
+import { ExecutionWatchlists } from "@/components/sections/execution/execution-watchlists";
+import { ExecutionTransactions } from "@/components/sections/execution/execution-transactions";
+import { ExecutionReveal } from "@/components/sections/execution/reveal";
+import styles from "@/components/sections/execution/page.module.css";
+
+export function ConnectedExecutionPreviews({ flatSections = false, showExecution = true }: { flatSections?: boolean; showExecution?: boolean }) {
+  const [securitySymbol, setSecuritySymbol] = useState<ExecutionSymbol>("XXXX-01");
+  const chartSecurity = demoExecutionSecurities.find((security) => security.symbol === securitySymbol) ?? demoExecutionSecurities[0];
+
+  return <>
+    <CurvedBand flat={flatSections} nextBackground="#fff"><section id="research" aria-labelledby="research-heading" className={`${styles.section} ${styles.soft} ${styles.researchSection} scroll-mt-24`}>
+      <div className={styles.container}>
+        <ExecutionReveal className={styles.researchIntro}><h2 id="research-heading" className={styles.title}>{execution.research.title}</h2><p className={styles.body}>{execution.research.body}</p></ExecutionReveal>
+        <LiveResearch />
+      </div>
+    </section></CurvedBand>
+    {showExecution ? <CurvedBand flat={flatSections} nextBackground="#f4f7fb"><section id="execution-preview" aria-label="Execution window" className={`${styles.section} ${styles.executionStage} scroll-mt-24`}>
+      <div className={styles.container}>
+        <ExecutionReveal className={styles.executionCaption}><h2>Put Insight Into Action,</h2><p>across relevant markets and securities.</p></ExecutionReveal>
+        <ExecutionReveal className={styles.executionLayout}>
+          <ExecutionChart security={chartSecurity} />
+          <div className={styles.executionWindow}><InteractiveExecutionTicket fillHeight onSecurityChange={setSecuritySymbol} /></div>
+        </ExecutionReveal>
+        <ExecutionReveal className={styles.executionSecondaryLayout}><ExecutionWatchlists /><ExecutionTransactions /></ExecutionReveal>
+      </div>
+    </section></CurvedBand> : null}
+  </>;
+}

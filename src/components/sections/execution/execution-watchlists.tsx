@@ -1,5 +1,6 @@
 import { executionWatchlists, type ExecutionWatchlist } from "@/content/execution-watchlists";
 import styles from "./execution-watchlists.module.css";
+import { workstationWatchlist } from '@/content/workstation-preview';
 
 function WatchlistPanel({ definition }: { definition: ExecutionWatchlist }) {
   const titleId = `watchlist-${definition.id}-heading`;
@@ -25,9 +26,9 @@ function WatchlistPanel({ definition }: { definition: ExecutionWatchlist }) {
   </article>;
 }
 
-export function ExecutionWatchlists() {
+export function ExecutionWatchlists({ staticPreview = false }: { staticPreview?: boolean }) {
   return <section className={styles.watchlists} aria-label="Equity monitor">
-    <div className={styles.categoryPanel}><WatchlistPanel definition={executionWatchlists[0]} /></div>
-    <p className={styles.note}>Sample prices and sizes · Not a live market feed.</p>
+    <div className={styles.categoryPanel}><WatchlistPanel definition={staticPreview ? workstationWatchlist : executionWatchlists[0]} /></div>
+    {!staticPreview ? <p className={styles.note}>Sample prices and sizes · Not a live market feed.</p> : null}
   </section>;
 }

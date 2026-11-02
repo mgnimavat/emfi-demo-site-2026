@@ -76,9 +76,33 @@
   letter-spacing: -.045em;
 }
 
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: clamp(32px, 4vw, 64px);
+}
+
+.split .introduction {
+  position: sticky;
+  top: calc(var(--site-header-height, 78px) + var(--space-6));
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-6);
+  margin-bottom: 0;
+}
+
+.split .copy .lead {
+  font-size: clamp(22px, 1.8vw, 26px);
+  line-height: 1.4;
+}
+
 @media (max-width: 900px) {
   .introduction { grid-template-columns: minmax(0, 1fr); }
   .title { font-size: clamp(42px, 10cqi, 80px); }
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .split .introduction { position: static; }
 }
 
 @media (max-width: 599px) {

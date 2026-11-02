@@ -1,0 +1,41 @@
+{
+  "sourceRevision": "a3d095486aee6fa71f1e2f66ef3c087ffceeb602",
+  "routes": {
+    "research-and-execution-old": "src/app/services/research-execution/page.tsx",
+    "settlement-custody-old": "src/app/services/settlement-custody/page.tsx",
+    "wealth-asset-management-old": "src/app/services/wealth-asset-management/page.tsx"
+  },
+  "files": [
+    "src/app/services/research-execution/page.tsx",
+    "src/app/services/settlement-custody/page.tsx",
+    "src/app/services/wealth-asset-management/page.tsx",
+    "src/components/demos/workstation-demo.tsx",
+    "src/components/sections/archive/cta.tsx",
+    "src/components/sections/archive/theme.module.css",
+    "src/components/sections/execution-v2/connected-journey.tsx",
+    "src/components/sections/execution/connected-previews.tsx",
+    "src/components/sections/execution/direct-workflow.tsx",
+    "src/components/sections/execution/hero-phrases.tsx",
+    "src/components/sections/execution/live-research.tsx",
+    "src/components/sections/execution/publication-chart.tsx",
+    "src/components/sections/execution/publication-world-map.tsx",
+    "src/components/sections/execution/research-date-range.module.css",
+    "src/components/sections/execution/research-date-range.tsx",
+    "src/components/sections/execution/research-filter-select.module.css",
+    "src/components/sections/execution/research-filter-select.tsx",
+    "src/components/sections/execution/research-publications.module.css",
+    "src/components/sections/execution/research-publications.tsx",
+    "src/containers/Sections/ServiceHero.tsx",
+    "src/containers/Sections/SettlementCustodySections.tsx",
+    "src/containers/Sections/WealthAssetSections.tsx",
+    "src/content/execution.ts",
+    "src/content/intelligence-publications.ts",
+    "src/content/settlement.ts",
+    "src/content/wealth.ts",
+    "src/lib/execution-research.ts",
+    "src/lib/intelligence-reports.ts",
+    "src/lib/use-intelligence-reports.ts",
+    "src/lib/use-intelligence-search.ts",
+    "src/lib/use-report-chart.ts"
+  ]
+}

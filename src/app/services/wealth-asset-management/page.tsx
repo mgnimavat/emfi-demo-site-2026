@@ -1,7 +1,6 @@
 import { wealth } from '@/content/wealth';
 import { ServiceHero } from '@/containers/Sections/ServiceHero';
 import { WealthAssetSections } from '@/containers/Sections/WealthAssetSections';
-import { PortfolioView } from '@/components/mockups/portfolio-view';
 import wealthStyles from '@/containers/Sections/WealthAssetSections.module.css';
 import styles from '@/containers/Sections/ServicePage.module.css';
 
@@ -14,7 +13,6 @@ const WealthAssetManagementPage = () => (
       phrases={wealth.heroPhrases}
       typewriter={wealth.heroTypewriter}
       taglineClassName={wealthStyles.heroTagline}
-      visual={<PortfolioView />}
     />
     <WealthAssetSections />
   </div>

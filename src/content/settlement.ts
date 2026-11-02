@@ -9,6 +9,7 @@ export const settlement = {
   },
   overview: {
     title: 'Nothing left in the dark.',
+    titleLines: ['Nothing left', 'in the dark.'],
     lead: 'The trade is only one part of the transaction.',
     body: 'Cash movements, securities positions and outstanding trades all need to be accounted for. Our post-trade infrastructure connects settlement activity with account information, providing a clearer picture of what has happened and what remains outstanding.',
     dashboardTitle: 'Your portfolio at a glance.',
@@ -16,7 +17,8 @@ export const settlement = {
     items: ['Cash balances', 'Securities positions', 'Outstanding trades', 'Transaction history', 'Fees and charges'],
   },
   custody: {
-    title: 'Custody is a responsibility, not a feature.',
+    title: 'Custody is a responsibility not a feature.',
+    titleLines: ['Custody is a responsibility', 'not a feature.'],
     lead: 'Holding client money and securities comes with specific obligations.',
     body: "Our UK custody and safeguarding arrangements operate within the FCA's Client Assets Sourcebook (CASS).",
     rules: [
@@ -56,7 +58,6 @@ export const settlement = {
   },
   disclosures: {
     title: 'Client asset information',
-    titleLines: ['Client asset', 'information'],
     entities: [
       { name: 'EMFI Capital Limited', body: 'is authorised and regulated by the FCA and is subject to the applicable CASS requirements in respect of client money and safe custody assets it holds or controls.' },
       { name: 'EMFI Capital (DIFC) Limited', body: 'is separately regulated by the DFSA and subject to the applicable DIFC client asset requirements.' },

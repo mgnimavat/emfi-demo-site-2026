@@ -14,9 +14,7 @@
 .body { margin: 0; font-size: 16px; line-height: 1.7; }
 .navy .body { color: var(--color-blue-100); }
 .framework { margin: 0; overflow: hidden; border: 1px solid var(--color-blue-100); border-radius: var(--radius-control); background: var(--color-white); color: var(--color-blue-500); }
-.frameworkBar { padding: var(--space-4) var(--space-5); background: var(--color-blue-500); color: var(--color-white); font-size: 13px; font-weight: 600; }
 .frameworkBody { padding: var(--space-5); }
-.caption { margin: 0 0 var(--space-2); color: var(--color-blue-550); font-size: 13px; line-height: 1.6; }
 .framework h3, .fundRoot h3, .network h3 { margin: 0; font-size: clamp(24px, 1.9vw, 28px); font-weight: 700; line-height: 1.2; letter-spacing: -.035em; }
 .dimensions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); margin: var(--space-5) 0; padding: 0; list-style: none; }
 .dimensions li { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-4); border-radius: var(--radius-control); background: var(--color-blue-25); }

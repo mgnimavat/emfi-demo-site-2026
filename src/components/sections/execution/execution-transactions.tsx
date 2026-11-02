@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import styles from "./execution-transactions.module.css";
+import { workstationTransactions } from '@/content/workstation-preview';
 
 const columns = ["Reference", "Trade Date", "Settlement", "Security", "Order Type", "ISIN", "Direction", "Amount", "Price", "Market Value", "Accrued", "Portfolio", "Counterparty", "Status"];
 // These rows are constructed placeholders, never copied from a client or trading system.
@@ -9,9 +10,9 @@ const initialRows = Array.from({ length: 10 }, (_, index) => ({
   id: index, cells: ["XXXX", "XXXX", "XXXX", "XXXX", "Market", "XXXX", index % 2 ? "Sell" : "Buy", "XXXX", "XXXX", "XXXX", "XXXX", "XXXX", "XXXX", index < 3 ? "Pending" : "Filled"],
 }));
 
-export function ExecutionTransactions() {
+export function ExecutionTransactions({ staticPreview = false }: { staticPreview?: boolean }) {
   const [filters, setFilters] = useState<Record<number, string>>({});
-  const filtered = useMemo(() => initialRows.filter((row) => Object.entries(filters).every(([index, value]) => row.cells[Number(index)].toLowerCase().includes(value.trim().toLowerCase()))), [filters]);
+  const filtered = useMemo(() => (staticPreview ? workstationTransactions : initialRows).filter((row) => Object.entries(filters).every(([index, value]) => row.cells[Number(index)].toLowerCase().includes(value.trim().toLowerCase()))), [filters, staticPreview]);
 
   return <section className={styles.panel} aria-label="Demo transactions">
     <div className={styles.header}>
@@ -24,6 +25,6 @@ export function ExecutionTransactions() {
       </table>
       {!filtered.length ? <p className={styles.empty}>No demo transactions match these filters.</p> : null}
     </div>
-    <p className={styles.note} role="status">XXXX placeholders · Fictional demo records only · No live orders.</p>
+    {!staticPreview ? <p className={styles.note} role="status">XXXX placeholders · Fictional demo records only · No live orders.</p> : null}
   </section>;
 }

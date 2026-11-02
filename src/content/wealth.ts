@@ -14,8 +14,6 @@ export const wealth = {
       'For asset managers and investors seeking dedicated investment structures, we provide access to established fund arrangements supported by specialist management and professional services.',
     ],
     visualTitle: 'A mandate-led approach',
-    visualCaption: 'Illustrative portfolio framework',
-    brand: 'EMFI / Portfolio oversight',
     dimensions: ['Objectives', 'Risk framework', 'Oversight'],
     columns: ['Portfolio dimension', 'Approach', 'Review', 'Status'],
     rows: [
@@ -48,7 +46,6 @@ export const wealth = {
   },
   disclosures: {
     title: 'Fund structure information',
-    titleLines: ['Fund structure', 'information'],
     entity: 'EMFI Fund SPC',
     introduction: 'is established in the Cayman Islands as a segregated portfolio company and operates within the applicable Cayman Islands regulatory framework.',
     paragraphs: [

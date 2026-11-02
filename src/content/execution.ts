@@ -72,8 +72,8 @@ export const execution = {
     body: "Search EMFI Intelligence reports and filter by date and country. Open a report to see its chart and analysis.",
     introduction: {
       eyebrow: '01 / Research',
-      title: 'Less noise.',
-      accent: 'More signal.',
+      title: 'Less Noise.',
+      accent: 'More Signal.',
       lead: 'Research should help you see beyond the consensus.',
       paragraphs: [
         'Our research combines economic analysis, country-level intelligence, quantitative models and market insight to develop independent views on the markets we cover.',
@@ -86,7 +86,7 @@ export const execution = {
   },
   workstation: {
     title: 'Insight into',
-    accent: 'execution.',
+    accent: 'Execution.',
     lead: 'Understanding the opportunity is only the beginning.',
     paragraphs: [
       'Our sales and trading team works directly with clients and counterparties to source liquidity, assess pricing and execute transactions.',

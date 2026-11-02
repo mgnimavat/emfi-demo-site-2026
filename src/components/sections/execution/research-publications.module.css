@@ -51,14 +51,17 @@
 @media (prefers-reduced-motion: reduce) { .skeletonBlock { animation: none; } }
 
 .publications { margin-top: var(--space-6); color: var(--text-primary); }
+.singleColumn { min-width: 0; margin-top: 0; }
+.singleColumn .filterFields, .singleColumn .accordionGrid { grid-template-columns: minmax(0, 1fr); }
 .filterBar { position: relative; z-index: 5; display: grid; gap: var(--space-3); margin-bottom: var(--space-6); padding: var(--space-5); border: 1px solid var(--research-report-border, color-mix(in srgb, var(--color-blue-100) 50%, var(--bg-page))); border-radius: var(--radius-card); background: var(--research-report-header, linear-gradient(120deg, var(--bg-page) 40%, color-mix(in srgb, var(--bg-soft) 35%, var(--bg-page)))); color-scheme: var(--research-color-scheme, normal); box-shadow: 0 8px 24px color-mix(in srgb, var(--text-primary) 3%, transparent); }
 .filterFields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: end; gap: var(--space-5); }
 .filterControls { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(0,1fr) auto; align-items: end; gap: var(--space-3); min-width: 0; }
 .researchSearch { display: flex; align-items: center; gap: var(--space-3); height: 44px; padding-inline: var(--space-4); border: 1px solid var(--research-report-border, var(--color-blue-100)); border-radius: var(--radius-control); background: var(--research-report-content, var(--bg-page)); color: var(--research-report-muted, var(--color-blue-550)); transition: border-color .2s,box-shadow .2s; }
-.researchSearch:focus-within { border-color: var(--action-focus); box-shadow: 0 0 0 3px color-mix(in srgb, var(--action-focus) 12%, transparent); }
+.researchSearch:focus-within { border-color: var(--action-focus); }
 .researchSearch > svg { flex: none; }
 .researchSearch input { width: 100%; min-width: 0; padding: 0; border: 0; outline: none; background: transparent; color: var(--research-report-text, var(--text-primary)); font: inherit; font-size: 14px; font-weight: 400; }
 .researchSearch input::placeholder { color: var(--research-report-muted, var(--text-muted)); }
+.researchSearch input:focus, .researchSearch input:focus-visible { outline: none; box-shadow: none; }
 .researchSearch input::-webkit-search-cancel-button { display: none; }
 .researchSearch button { display: grid; flex: none; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: var(--radius-pill); background: var(--research-report-toggle, var(--bg-soft)); color: var(--research-report-text, var(--color-blue-550)); cursor: pointer; }
 .researchSearch button:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 2px; }

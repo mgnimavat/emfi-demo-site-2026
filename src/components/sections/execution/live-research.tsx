@@ -18,7 +18,7 @@ import styles from "./research-publications.module.css";
 const language: IntelligenceLanguage = "english";
 const defaultFilters = (): ExecutionResearchFilters => ({ ...emptyExecutionFilters, ...trailingResearchRange(12) });
 
-export const LiveResearch = () => {
+export const LiveResearch = ({ singleColumn = false }: { singleColumn?: boolean }) => {
   const [filters, setFilters] = useState(defaultFilters);
   const search = useIntelligenceSearch(language, filters.keyword);
   const { feeds, loading, loadMore } = useIntelligenceReports(language, filters.from, filters.to, !search.active);
@@ -41,7 +41,7 @@ export const LiveResearch = () => {
   const initialLoading = (pending && !sourceRecords.length) || (Boolean(filters.derivedType) && reportCatalogue.loading);
   const updateFilter = (patch: Partial<ExecutionResearchFilters>) => setFilters(previous => ({ ...previous, ...patch }));
 
-  return <div className={styles.publications}>
+  return <div className={`${styles.publications} ${singleColumn ? styles.singleColumn : ''}`}>
     <aside className={styles.filterBar} aria-label="Research filters">
       <div className={styles.filterFields}>
         <label className={`${styles.filterField} ${styles.searchLabel}`}>Search research
@@ -64,7 +64,8 @@ export const LiveResearch = () => {
     {!initialLoading && error ? <div className={styles.feedStatus}>
       <p role="alert">{search.active ? "Could not search reports." : `Could not load ${failedFeeds.map(feed => intelligenceReportLabels[feed]).join(" and ")}.`} <button type="button" disabled={pending} onClick={() => search.active ? search.retry() : loadMore(selectedFeeds, true)}>Try again</button></p>
     </div> : null}
-    {initialLoading ? <ResearchPublicationsSkeleton /> : <ResearchPublications
+    {initialLoading ? <ResearchPublicationsSkeleton singleColumn={singleColumn} /> : <ResearchPublications
+      singleColumn={singleColumn}
       key={JSON.stringify(filters)}
       records={records}
       language={language}

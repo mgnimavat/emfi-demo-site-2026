@@ -3,9 +3,10 @@
 import { useSyncExternalStore, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
-const subscribeToHydration = () => () => {};
+const subscribeToHydration = () => () => { };
 
-export function ExecutionReveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+export function ExecutionReveal({ children,
+  className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const reducedPreference = useReducedMotion();
   const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
   const reduced = hydrated && reducedPreference;

@@ -7,10 +7,8 @@ const MandateFramework = () => {
   const content = wealth.management;
 
   return (
-    <figure className={styles.framework}>
-      <figcaption className={styles.frameworkBar}>{content.brand}</figcaption>
+    <figure className={styles.framework} aria-label={content.visualTitle}>
       <div className={styles.frameworkBody}>
-        <p className={styles.caption}>{content.visualCaption}</p>
         <h3>{content.visualTitle}</h3>
         <ol className={styles.dimensions}>
           {content.dimensions.map((dimension, index) => (
@@ -124,8 +122,8 @@ const FundDisclosures = () => {
     <ServiceDisclosures
       headingId="fund-disclosures-heading"
       title={content.title}
-      titleLines={content.titleLines}
       action={content.action}
+      actionPlacement="panel"
     >
       <p><strong>{content.entity}</strong> {content.introduction}</p>
       {content.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}

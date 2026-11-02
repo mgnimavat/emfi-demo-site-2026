@@ -22,8 +22,8 @@ const isMobileLayout = () => window.matchMedia(mobileLayoutQuery).matches;
 const serverLayout = () => false;
 const skeletonReports = Array.from({ length: reportsPerColumn }, (_, index) => `report-placeholder-${index + 1}`);
 
-const SkeletonRows = () => <div className={styles.accordionGrid} aria-hidden="true">
-  {["left", "right"].map(column => <div key={column} className={styles.accordionColumn}>
+const SkeletonRows = ({ singleColumn = false }: { singleColumn?: boolean }) => <div className={styles.accordionGrid} aria-hidden="true">
+  {(singleColumn ? ["single"] : ["left", "right"]).map(column => <div key={column} className={styles.accordionColumn}>
     {skeletonReports.map(key => <div key={key} className={styles.skeletonCard}>
       <span className={`${styles.skeletonBlock} ${styles.skeletonMeta}`} />
       <span className={`${styles.skeletonBlock} ${styles.skeletonTitle}`} />
@@ -32,7 +32,7 @@ const SkeletonRows = () => <div className={styles.accordionGrid} aria-hidden="tr
   </div>)}
 </div>;
 
-export const ResearchPublicationsSkeleton = () => <div role="status" aria-label="Loading reports" aria-busy="true"><SkeletonRows /></div>;
+export const ResearchPublicationsSkeleton = ({ singleColumn = false }: { singleColumn?: boolean }) => <div role="status" aria-label="Loading reports" aria-busy="true"><SkeletonRows singleColumn={singleColumn} /></div>;
 
 const ReportDetails = ({ report, language }: { report: ExecutionResearchRecord; language: IntelligenceLanguage }) => {
   const chart = useReportChart(report, language);
@@ -62,26 +62,28 @@ const ReportAccordion = ({ report, language, open, onToggle }: { report: Executi
   </details>;
 };
 
-export const ResearchPublications = ({ records, language = "english", hasMore = false, loadingMore = false, loadMoreDisabled = false, onLoadMore }: {
+export const ResearchPublications = ({ records, language = "english", hasMore = false, loadingMore = false, loadMoreDisabled = false, singleColumn = false, onLoadMore }: {
   records: readonly ExecutionResearchRecord[];
   language?: IntelligenceLanguage;
   hasMore?: boolean;
   loadingMore?: boolean;
   loadMoreDisabled?: boolean;
+  singleColumn?: boolean;
   onLoadMore?: () => void;
 }) => {
   const mobile = useSyncExternalStore(subscribeToLayout, isMobileLayout, serverLayout);
-  const [visibleCount, setVisibleCount] = useState(reportsPerPage);
+  const pageSize = singleColumn ? reportsPerColumn : reportsPerPage;
+  const [visibleCount, setVisibleCount] = useState(pageSize);
   const visibleRecords = records.slice(0, visibleCount);
   const hasLocalMore = records.length > visibleCount;
   const canLoadMore = hasLocalMore || Boolean(hasMore && onLoadMore);
   const showMore = () => {
     if (!hasLocalMore) onLoadMore?.();
-    setVisibleCount((count) => Math.min(count, records.length) + reportsPerPage);
+    setVisibleCount((count) => Math.min(count, records.length) + pageSize);
   };
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const toggleReport = (id: string, open: boolean) => setExpanded(previous => previous[id] === open ? previous : { ...previous, [id]: open });
-  const columns = mobile ? [{ id: "mobile", reports: visibleRecords }] : [
+  const columns = mobile || singleColumn ? [{ id: "single", reports: visibleRecords }] : [
     { id: "left", reports: visibleRecords.filter((_, index) => index % 2 === 0) },
     { id: "right", reports: visibleRecords.filter((_, index) => index % 2 !== 0) },
   ];

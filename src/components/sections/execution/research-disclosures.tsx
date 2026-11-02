@@ -9,6 +9,7 @@ export const ResearchDisclosures = () => {
       headingId="research-disclosures-heading"
       title={content.title}
       action={content.action}
+      actionPlacement="panel"
       external
     >
       <p><strong>{content.entity}</strong> {content.regulation}</p>

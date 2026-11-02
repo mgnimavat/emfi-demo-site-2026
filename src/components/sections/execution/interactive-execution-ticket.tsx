@@ -12,8 +12,8 @@ type Draft = { symbol: ExecutionSymbol; orderType: OrderType; timeInForce: "Day"
 const initialDraft: Draft = { symbol: "NVDA", orderType: "Market", timeInForce: "Day", venue: "Interactive", quantity: "100", price: "" };
 type Preview = { stage?: "searching" | "submitting" | "booked"; running: boolean; submissionDuration: number };
 
-export function InteractiveExecutionTicket({ preview, fillHeight = false, onSecurityChange }: { preview?: Preview; fillHeight?: boolean; onSecurityChange?: (symbol: ExecutionSymbol) => void }) {
-  const securities = preview ? executionSecurities : demoExecutionSecurities;
+export function InteractiveExecutionTicket({ preview, fillHeight = false, staticPreview = false, onSecurityChange }: { preview?: Preview; fillHeight?: boolean; staticPreview?: boolean; onSecurityChange?: (symbol: ExecutionSymbol) => void }) {
+  const securities = preview || staticPreview ? executionSecurities : demoExecutionSecurities;
   const [draft, setDraft] = useState<Draft>(() => ({ ...initialDraft, symbol: securities[0].symbol }));
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
@@ -70,7 +70,7 @@ export function InteractiveExecutionTicket({ preview, fillHeight = false, onSecu
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (animated || pending) return;
+    if (staticPreview || animated || pending) return;
     const submitter = (event.nativeEvent as SubmitEvent).submitter;
     const selectedSide: Side = submitter?.getAttribute("value") === "Sell" ? "Sell" : "Buy";
     if (!validQuantity) { setError("Enter a positive whole number of shares."); return; }
@@ -92,7 +92,7 @@ export function InteractiveExecutionTicket({ preview, fillHeight = false, onSecu
   }}>
     <div className={styles.header}><span className={styles.windowTitle}><strong>Execution</strong></span></div>
     <div className={styles.body}>
-      <fieldset disabled={animated || pending} className={styles.fields}>
+      <fieldset disabled={staticPreview || animated || pending} className={styles.fields}>
         <legend className="sr-only">Order details</legend>
         <div className={styles.search} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setSearchOpen(false); }}>
           <div className={styles.searchControl}>
@@ -119,13 +119,13 @@ export function InteractiveExecutionTicket({ preview, fillHeight = false, onSecu
       </fieldset>
       {error ? <p role="alert" className={styles.error}>{error}</p> : null}
       <div className={styles.orderActions}>
-        <button type="submit" name="side" value="Sell" className={styles.sell} disabled={animated || pending} aria-busy={pending && !animated && side === "Sell"} data-booking={pending && !animated && side === "Sell"}>Sell</button>
-        <button ref={buyRef} type="submit" name="side" value="Buy" className={styles.buy} disabled={animated || pending} aria-busy={pending && (animated || side === "Buy")} data-booking={pending && (animated || side === "Buy")} style={animated ? { "--booking-duration": `${preview?.submissionDuration}s`, "--booking-state": preview?.running ? "running" : "paused" } as CSSProperties : undefined}>Buy</button>
+        <button type="submit" name="side" value="Sell" className={styles.sell} disabled={staticPreview || animated || pending} aria-busy={pending && !animated && side === "Sell"} data-booking={pending && !animated && side === "Sell"}>Sell</button>
+        <button ref={buyRef} type="submit" name="side" value="Buy" className={styles.buy} disabled={staticPreview || animated || pending} aria-busy={pending && (animated || side === "Buy")} data-booking={pending && (animated || side === "Buy")} style={animated ? { "--booking-duration": `${preview?.submissionDuration}s`, "--booking-state": preview?.running ? "running" : "paused" } as CSSProperties : undefined}>Buy</button>
       </div>
       <div role={animated ? undefined : "status"} aria-live={animated ? "off" : "polite"} aria-atomic="true" className={styles.status}>
         {pending ? <p>Booking simulated {animated ? "buy" : side.toLowerCase()} order…</p> : booked ? <div className={styles.confirmation}><Check size={15} aria-hidden="true" /><span>{animated ? "Order booked · Buy NVIDIA · Simulation" : `Simulated order booked · ${side} ${quantity.toLocaleString("en-US")} ${security.symbol} · ${draft.orderType} · ${draft.timeInForce} · ${draft.venue}${draft.orderType !== "Market" ? ` · ${money.format(Number(draft.price))} USD` : ""}` }</span></div> : null}
       </div>
-      <p className={styles.disclaimer}>Simulation only · No real order is placed.</p>
+      {!staticPreview ? <p className={styles.disclaimer}>Simulation only · No real order is placed.</p> : null}
     </div>
   </form>;
 }
