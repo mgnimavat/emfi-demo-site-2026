@@ -77,7 +77,7 @@ export const about = {
     },
   ],
   peopleEyebrow: "People",
-  peopleTitle: "The people behind EMFI.",
+  peopleTitle: "The people who respond.",
   peopleBody: "EMFI combines market expertise, investment experience, operational knowledge and technology around a single institutional relationship.",
   people: [
     {
@@ -145,9 +145,15 @@ export const about = {
     },
     {
       name: "Kishan Lashkari",
+      role: "Information Technology",
+      description:
+        "Leading technology operations, cybersecurity, regulatory compliance, and strategic delivery at EMFI.",
+    },
+    {
+      name: "Dinesh Chouhan",
       role: "Software Development",
       description:
-        "Builds the technology that connects EMFI’s workflows, systems and client experience.",
+        "Leading software development, modern architecture, and secure, scalable application delivery at EMFI.",
     },
   ],
   boardLabel: "Board Member",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducedMotion } from "framer-motion";
-import { ResearchExecutionHeroMockup, home10ResponsiveSlides, home12ResponsiveSlides, home16ResponsiveSlides, homeV5ResponsiveSlides, responsiveHighlightSlides } from "@/components/home-17/research-execution-hero";
+import { ResearchExecutionHeroMockup, home10ResponsiveSlides, home12ResponsiveSlides, home16ResponsiveSlides, homeDeskResponsiveSlides, homeV5ResponsiveSlides, responsiveHighlightSlides } from "@/components/home-17/research-execution-hero";
 import { SectionAction, SectionCopy, SectionFooterBody } from "./outcomes";
 import styles from "./sections.module.css";
 import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhyStep, WhyMarker } from "./why-flow";
@@ -66,7 +66,7 @@ export function ResponsiveSection({
         </div>
         <div className={pinned ? (home17Mockup ? styles.responsivePinMedia : styles.pinStackMedia) : undefined} style={{ minWidth: 0, width: centered && !pinned ? "100%" : undefined, color: "#071832", fontFamily: "var(--font-inter), Inter, Arial, sans-serif" }}>
           {!pinned || showing ? (
-            <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} views={homeSlides ? (floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
+            <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} views={homeSlides ? (home15Trade ? homeDeskResponsiveSlides : floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
           ) : null}
         </div>
         {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} /> : <SectionAction href="/services/settlement-custody#workstation-demo" label="Learn More" />) : null}

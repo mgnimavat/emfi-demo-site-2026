@@ -5,17 +5,18 @@ import { AboutTimeline } from "@/components/sections/about-timeline";
 import { PersonCard } from "@/components/sections/person-card";
 // import { ArchiveCta } from "@/components/sections/archive/cta";
 import styles from "@/components/sections/archive/theme.module.css";
+import "./about.css";
 
 export const metadata = { title: "About", description: about.body };
 
 const AboutPage = () => {
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} about-page`}>
       <AboutTimeline headingAs="h1" showCounter={false} />
       <section className={styles.peopleBand} aria-labelledby="people-heading">
         <div className={styles.section}>
           <div className={styles.container}>
-            <FadeIn className={styles.peopleIntro}><h2 id="people-heading" className={styles.sectionTitle}>{about.peopleTitle}</h2><p className={styles.sectionBody}>{about.peopleBody}</p></FadeIn>
+            <FadeIn className={styles.peopleIntro}><h2 id="people-heading" className={styles.sectionTitle}>{about.peopleTitle}</h2></FadeIn>
             <div className={styles.personGrid}>{about.people.map((person, i) => <FadeIn key={person.name} delay={i * 0.04} className="h-full"><PersonCard person={person} /></FadeIn>)}</div>
           </div>
         </div>

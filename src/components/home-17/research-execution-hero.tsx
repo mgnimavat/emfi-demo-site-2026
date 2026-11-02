@@ -46,6 +46,7 @@ export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard",
 export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreens"] as const satisfies readonly View[];
 export const home16ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreensPerspective"] as const satisfies readonly View[];
 export const homeV5ResponsiveSlides = ["HeroDashboard", "OrderEur", "FloatingPhones"] as const satisfies readonly View[];
+export const homeDeskResponsiveSlides = ["HeroDashboard", "OrderEur"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
@@ -130,9 +131,9 @@ const CHART = {
   mist: "#b8c8e1",
   ash: "#9aa3ad",
   fill: "#d8dee8",
-  green: "#22c55e",
-  red: "#ef4444",
-  status: "#22c55e",
+  green: "#6fd89a",
+  red: "#f58a80",
+  status: "#6fd89a",
 } as const;
 
 function CardShell({
@@ -231,7 +232,7 @@ function FilterCell({
 
 function ActivePill({ label }: { label: string }) {
   return (
-    <span className="flex w-full items-center justify-center rounded-[5px] bg-[#8AFF8E] px-2 py-0.5 text-center text-[7px] font-semibold text-[#36a16b]">
+    <span className="flex w-full items-center justify-center rounded-[5px] bg-[#6fd89a] px-2 py-0.5 text-center text-[7px] font-semibold text-white">
       {label}
     </span>
   );
@@ -247,19 +248,22 @@ function StatusBadge({
   radius?: number;
 }) {
   const filled = status === "Filled";
+  const placed = status === "Placed" || status === "Rejected";
   const corner = radius ?? (apple ? 3 : 6);
-  const tone = filled
-    ? ""
+  const tone = filled || placed
+    ? "text-white"
     : status === "Working"
       ? "bg-[#dbe7ff] text-[#2458c5]"
-      : "bg-[#ffe4cc] text-[#c45a12]";
+      : "bg-[#f58a80] text-white";
   return (
     <span
       className={`flex w-full items-center justify-center px-1 text-center text-[5.5px] font-semibold leading-none ${apple ? "h-full min-h-[12px]" : "py-0.5"} ${tone}`}
       style={
         filled
-          ? { borderRadius: corner, backgroundColor: "#8AFF8E", color: "#36a16b" }
-          : { borderRadius: corner }
+          ? { borderRadius: corner, backgroundColor: "#6fd89a", color: "#ffffff" }
+          : placed
+            ? { borderRadius: corner, backgroundColor: "#f58a80", color: "#ffffff" }
+            : { borderRadius: corner }
       }
     >
       {status}
@@ -272,10 +276,14 @@ function AreaChart({
   path,
   labels,
   yLabels,
+  gridLines = true,
+  fill = true,
 }: {
   path: string;
   labels: string[];
   yLabels: string[];
+  gridLines?: boolean;
+  fill?: boolean;
 }) {
   const gradId = `re-area-${labels[0]?.replace(/\s+/g, "") ?? "chart"}`;
   const nY = Math.max(1, yLabels.length - 1);
@@ -295,10 +303,10 @@ function AreaChart({
               <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
             </linearGradient>
           </defs>
-          {gridYs.map((y) => (
-            <line key={y} x1="0" y1={y} x2="320" y2={y} stroke="#e5e9ef" strokeWidth="1" />
-          ))}
-          <path d={`${path} L320 140 L0 140 Z`} fill={`url(#${gradId})`} />
+          {gridLines
+            ? gridYs.map((y) => <line key={y} x1="0" y1={y} x2="320" y2={y} stroke="#e5e9ef" strokeWidth="1" />)
+            : null}
+          {fill ? <path d={`${path} L320 140 L0 140 Z`} fill={`url(#${gradId})`} /> : null}
           <path d={path} fill="none" stroke="#4a5568" strokeWidth="1.8" strokeLinejoin="round" />
         </svg>
       </div>
@@ -440,7 +448,7 @@ function CandleChart() {
           ))}
           {candles.map((c) => {
             const up = c.c < c.o;
-            const color = up ? "#22c55e" : "#f04438";
+            const color = up ? "#6fd89a" : "#f58a80";
             const top = Math.min(c.o, c.c);
             const height = Math.max(3, Math.abs(c.c - c.o));
             return (
@@ -701,16 +709,16 @@ function ExecutionSide({
           </div>
 
           <div className="relative flex h-[26px] shrink-0 overflow-hidden" style={{ borderRadius: radius }}>
-            <div className="flex min-w-0 flex-1 flex-col justify-center bg-[#e7f8ee] pl-1.5">
-              <p className="text-[5px] font-semibold leading-none text-[#16a34a]">BID</p>
-              <p className="mt-0.5 text-[7px] font-bold leading-none tabular-nums text-[#16a34a]">343.78 ↑</p>
+            <div className="flex min-w-0 flex-1 flex-col justify-center bg-[#6fd89a] pl-1.5 text-white">
+              <p className="text-[5px] font-semibold leading-none text-white">BID</p>
+              <p className="mt-0.5 text-[7px] font-bold leading-none tabular-nums text-white">343.78 ↑</p>
             </div>
             <div className="pointer-events-none absolute top-1/2 left-1/2 z-[1] flex h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-[4px] bg-[#0a1629] text-[9px] font-bold leading-none text-white">
               −
             </div>
-            <div className="flex min-w-0 flex-1 flex-col items-end justify-center bg-[#fdecec] pr-1.5">
-              <p className="text-[5px] font-semibold leading-none text-[#e11d2e]">ASK</p>
-              <p className="mt-0.5 text-[7px] font-bold leading-none tabular-nums text-[#e11d2e]">↓ 343.90</p>
+            <div className="flex min-w-0 flex-1 flex-col items-end justify-center bg-[#f58a80] pr-1.5 text-white">
+              <p className="text-[5px] font-semibold leading-none text-white">ASK</p>
+              <p className="mt-0.5 text-[7px] font-bold leading-none tabular-nums text-white">↓ 343.90</p>
             </div>
           </div>
 
@@ -735,10 +743,10 @@ function ExecutionSide({
           </div>
 
           <div className="grid shrink-0 grid-cols-2 gap-1.5">
-            <span className="flex h-[22px] items-center justify-center bg-[#f02020] text-[8px] font-bold text-white" style={{ borderRadius: radius }}>
+            <span className="flex h-[22px] items-center justify-center bg-[#f58a80] text-[8px] font-bold text-white" style={{ borderRadius: radius }}>
               Sell
             </span>
-            <span className="flex h-[22px] items-center justify-center bg-[#22c55e] text-[8px] font-bold text-white" style={{ borderRadius: radius }}>
+            <span className="flex h-[22px] items-center justify-center bg-[#6fd89a] text-[8px] font-bold text-white" style={{ borderRadius: radius }}>
               Buy
             </span>
           </div>
@@ -753,8 +761,8 @@ function ExecutionSide({
         <X size={10} className="text-[#80909d]" strokeWidth={2} />
       </div>
 
-      <div className={`flex min-h-0 flex-1 flex-col gap-1 overflow-hidden px-2 ${spread ? "pb-2" : "pb-1.5"}`}>
-        <div className={`flex shrink-0 items-center gap-1 rounded-[10px] border border-[#d8dde5] px-1.5 text-[6px] text-[#8a94a3] ${spread ? "h-[22px]" : "h-[18px]"}`}>
+      <div className={`flex min-h-0 flex-1 flex-col gap-1 overflow-hidden px-2 ${spread ? "justify-between pb-2" : "pb-1.5"}`}>
+        <div className={`flex shrink-0 items-center gap-1 rounded-[10px] border border-[#d8dde5] px-1.5 text-[6px] text-[#8a94a3] ${spread ? "h-[26px]" : "h-[18px]"}`}>
           <Search size={8} className="shrink-0 text-[#8a94a3]" />
           <span className="truncate">{apple ? "Search by ISIN or Ticker..." : "Search by ISIN or Ticker"}</span>
         </div>
@@ -771,37 +779,39 @@ function ExecutionSide({
           {apple ? null : <Eye size={9} className="ml-auto text-[#2b6cb0]" strokeWidth={2} />}
         </div>
 
-        <div className={`shrink-0 rounded-[10px] border border-[#d8dde5] px-1.5 ${spread ? "py-1" : "py-0.5"}`}>
+        <div className={`shrink-0 rounded-[10px] border border-[#d8dde5] px-1.5 ${spread ? "py-1.5" : "py-0.5"}`}>
           <p className="text-[5px] font-medium leading-none text-[#8a94a3]">Broker</p>
           <div className="mt-0.5 flex items-center justify-between text-[7px] font-semibold text-[#0a1629]">
-            <span className="blur-[3.5px] select-none">Interactive</span>
+            <span>Interactive</span>
             <span className="text-[6px] text-[#8a94a3]">▾</span>
           </div>
         </div>
 
-        <div className="relative flex shrink-0 items-stretch gap-1.5">
-          <div className={`min-w-0 flex-1 rounded-[10px] px-1 text-center ${spread ? "py-1" : "py-0.5"} ${apple ? "border border-[#d7f3e3] bg-[#e9f9ef]" : "border border-[#d8dde5]"}`}>
-            <p className="text-[5px] font-semibold leading-none text-[#8a94a3]">BID</p>
-            <p className={`mt-0.5 text-[8px] font-bold leading-none tabular-nums ${apple ? "text-[#16a34a]" : "text-[#22c55e]"}`}>{spread ? "▲ 1.1189" : apple ? "0.00 ↑" : "▲ 0"}</p>
+        <div className="flex shrink-0 items-stretch gap-1.5">
+          <div className={`flex min-w-0 flex-1 flex-col items-center justify-center rounded-[10px] bg-[#6fd89a] px-2 text-center text-white ${spread ? "gap-1 py-2" : "gap-0.5 py-1"}`}>
+            <p className="text-[6px] font-semibold leading-none tracking-[0.06em] text-white">BID</p>
+            <p className="text-[9px] font-bold leading-none tabular-nums text-white">{spread ? "▲ 1.1189" : apple ? "0.00 ↑" : "▲ 0"}</p>
           </div>
-          <div className="pointer-events-none absolute top-1/2 left-1/2 z-[1] flex h-[18px] w-[18px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#0a1629] text-[7px] font-bold text-white ring-2 ring-white">
-            0
+          <div className="flex w-5 shrink-0 items-center justify-center">
+            <span className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#0a1629] text-[7px] font-bold text-white">
+              0
+            </span>
           </div>
-          <div className={`min-w-0 flex-1 rounded-[10px] px-1 text-center ${spread ? "py-1" : "py-0.5"} ${apple ? "border border-[#f8d4d2] bg-[#fdeceb]" : "border border-[#d8dde5]"}`}>
-            <p className="text-[5px] font-semibold leading-none text-[#8a94a3]">ASK</p>
-            <p className={`mt-0.5 text-[8px] font-bold leading-none tabular-nums ${apple ? "text-[#e11d2e]" : "text-[#f04438]"}`}>{spread ? "▼ 1.1190" : apple ? "↓ 0.00" : "▼ 0"}</p>
+          <div className={`flex min-w-0 flex-1 flex-col items-center justify-center rounded-[10px] bg-[#f58a80] px-2 text-center text-white ${spread ? "gap-1 py-2" : "gap-0.5 py-1"}`}>
+            <p className="text-[6px] font-semibold leading-none tracking-[0.06em] text-white">ASK</p>
+            <p className="text-[9px] font-bold leading-none tabular-nums text-white">{spread ? "▼ 1.1190" : apple ? "↓ 0.00" : "▼ 0"}</p>
           </div>
         </div>
 
         <div className="grid shrink-0 grid-cols-2 gap-1.5">
-          <div className={`rounded-[10px] border border-[#d8dde5] px-1.5 ${spread ? "py-1" : "py-0.5"}`}>
+          <div className={`rounded-[10px] border border-[#d8dde5] px-1.5 ${spread ? "py-1.5" : "py-0.5"}`}>
             <p className="text-[5px] font-medium leading-none text-[#8a94a3]">Order Type</p>
             <div className="mt-0.5 flex items-center justify-between text-[6.5px] font-semibold text-[#0a1629]">
               MARKET
               <span className="text-[5.5px] text-[#8a94a3]">▾</span>
             </div>
           </div>
-          <div className={`rounded-[10px] border border-[#d8dde5] px-1.5 ${spread ? "py-1" : "py-0.5"}`}>
+          <div className={`rounded-[10px] border border-[#d8dde5] px-1.5 ${spread ? "py-1.5" : "py-0.5"}`}>
             <p className="text-[5px] font-medium leading-none text-[#8a94a3]">Time</p>
             <div className="mt-0.5 flex items-center justify-between text-[6.5px] font-semibold text-[#0a1629]">
               DAY
@@ -811,7 +821,7 @@ function ExecutionSide({
         </div>
 
         <div className="flex shrink-0 overflow-hidden rounded-[10px] border border-[#d8dde5]">
-          <div className={`min-w-0 flex-1 px-1.5 ${spread ? "py-1" : "py-0.5"}`}>
+          <div className={`min-w-0 flex-1 px-1.5 ${spread ? "py-1.5" : "py-0.5"}`}>
             <p className="text-[5px] font-medium leading-none text-[#8a94a3]">Quantity</p>
             <p className="mt-0.5 text-[7px] font-semibold tabular-nums text-[#0a1629]">0</p>
           </div>
@@ -821,10 +831,10 @@ function ExecutionSide({
         </div>
 
         <div className={`${spread ? "" : "mt-auto pt-0.5"} grid shrink-0 grid-cols-2 gap-1.5`}>
-          <span className={`flex h-6 items-center justify-center rounded-[10px] text-[8px] font-bold text-white ${apple ? "bg-[#f07167]" : "bg-[#f04438]"}`}>
+          <span className={`flex ${spread ? "h-8" : "h-6"} items-center justify-center rounded-[10px] bg-[#f58a80] text-[8px] font-bold text-white`}>
             Sell
           </span>
-          <span className={`flex h-6 items-center justify-center rounded-[10px] text-[8px] font-bold text-white ${apple ? "bg-[#2fce73]" : "bg-[#22c55e]"}`}>
+          <span className={`flex ${spread ? "h-8" : "h-6"} items-center justify-center rounded-[10px] bg-[#6fd89a] text-[8px] font-bold text-white`}>
             Buy
           </span>
         </div>
@@ -833,7 +843,7 @@ function ExecutionSide({
   );
 }
 
-function TransactionsStrip({ apple = false, statusRadius }: { apple?: boolean; statusRadius?: number }) {
+function TransactionsStrip({ apple = false, statusRadius, blurIds = false }: { apple?: boolean; statusRadius?: number; blurIds?: boolean }) {
   const headers = (apple
     ? [
         "Reference",
@@ -930,7 +940,7 @@ function TransactionsStrip({ apple = false, statusRadius }: { apple?: boolean; s
       <div className="flex shrink-0 items-center justify-between bg-[#e8edf3] px-2.5 py-1.5">
         <span className="text-[9px] font-bold text-[#0a1629]">{apple ? "Transaction" : "Transactions"}</span>
         <div className="flex items-center gap-1">
-          <span className="inline-flex h-[18px] items-center rounded-[10px] bg-[#f04438] px-2 text-[6.5px] font-bold text-white">
+          <span className="inline-flex h-[18px] items-center rounded-[10px] bg-[#f58a80] px-2 text-[6.5px] font-bold text-white">
             Kill All
           </span>
           <span className="inline-flex h-[18px] w-[18px] items-center justify-center rounded-[6px] bg-[#0a1629] text-white">
@@ -974,6 +984,7 @@ function TransactionsStrip({ apple = false, statusRadius }: { apple?: boolean; s
                   const sensitive =
                     i === portfolioIdx ||
                     i === counterpartyIdx ||
+                    (blurIds && (i === refIdx || i === securityIdx || i === isinIdx)) ||
                     (apple &&
                       (i === tradeDateIdx ||
                         i === settlementIdx ||
@@ -1025,7 +1036,7 @@ function OrderEntryPanel({
 }) {
   return (
     <div
-      className={`relative h-full overflow-hidden ${spread ? "rounded-xl" : ""} ${radius > 6 && radius !== 8 ? "bg-transparent" : "bg-[#eef1f5]"}`}
+      className={`relative h-full overflow-hidden ${spread || (radius > 6 && radius !== 8) ? "bg-transparent" : "bg-[#eef1f5]"}`}
       style={radius === 8 ? { borderRadius: 8 } : undefined}
     >
       {/* Scale the full Order Entry so chart + execution + transactions all fit */}
@@ -1130,6 +1141,8 @@ function OrderEntryPanel({
                       ? ["320.0000", "310.0000", "300.0000", "290.0000", "280.0000", "270.0000"]
                       : ["1.150", "1.135", "1.120", "1.105"]
                   }
+                  gridLines
+                  fill={!spread}
                 />
               ) : (
                 <CandleChart />
@@ -1358,7 +1371,6 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
   const still = phoneViews.has(view);
   const openFrame = quietFrame;
   const tradeRound = trimChrome && !appBar && !home15Trade && view === "OrderEur";
-  const home15Round = home15Trade && view === "OrderEur";
   const hold = HOLD_MS;
 
   useEffect(() => {
@@ -1373,7 +1385,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
   return (
     <div
       data-trade={tradeRound ? "" : undefined}
-      className={`${appBar ? "overflow-hidden" : home15Round ? "rounded-xl" : tradeRound ? "rounded-md" : !square ? "rounded-xl" : "rounded-none"} ${openFrame ? "" : `border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}`}
+      className={`${appBar ? "overflow-hidden" : tradeRound ? "rounded-md" : !square ? "rounded-xl" : "rounded-none"} ${openFrame ? "" : `border border-transparent ${quietFrame ? "p-px" : "p-2 md:p-3"}`}`}
       style={
         openFrame
           ? undefined
@@ -1383,7 +1395,7 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
       }
     >
       {/* Fixed stage height so public + app slides never resize the hero */}
-      <div className={`relative h-[438px] md:h-[478px] ${appBar || still ? "" : "overflow-hidden"}`} style={appBar ? undefined : home15Round ? { borderRadius: "var(--radius-surface)" } : tradeRound ? { borderRadius: "var(--radius-control)" } : square ? { borderRadius: 0 } : quietFrame ? { borderRadius: 29 } : undefined}>
+      <div className={`relative h-[438px] md:h-[478px] ${appBar || still ? "" : "overflow-hidden"}`} style={appBar ? undefined : tradeRound ? { borderRadius: "var(--radius-control)" } : square ? { borderRadius: 0 } : quietFrame ? { borderRadius: 29 } : undefined}>
         <AnimatePresence mode="wait">
           <motion.div
             key={view}
@@ -1404,7 +1416,6 @@ export function ResearchExecutionHeroMockup({ views = VIEWS, quietFrame = false,
                 square={square}
                 trimChrome={trimChrome}
                 appBar={appBar}
-                home15Round={home15Round}
               >
                 <ViewPanel view={view} apple={quietFrame} square={square} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} />
               </AppChrome>

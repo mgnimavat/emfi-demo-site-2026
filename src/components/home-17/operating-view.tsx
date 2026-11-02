@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
@@ -219,6 +219,22 @@ function HBars({
   dense?: boolean;
   fill?: boolean;
 }) {
+  if (fill) {
+    return (
+      <div className="mt-2 grid min-h-0 flex-1 auto-rows-fr grid-cols-[max-content_minmax(0,1fr)] gap-x-2 gap-y-2">
+        {items.map((item) => (
+          <Fragment key={item.label}>
+            <span className={`self-center whitespace-nowrap leading-tight text-ink-muted ${dense ? "text-[6.5px]" : "text-[7.5px]"}`}>
+              {item.label}
+            </span>
+            <div className="min-h-0 rounded-[3px] bg-subtle">
+              <div className="h-full rounded-[3px]" style={{ width: `${item.width}%`, backgroundColor: item.color }} />
+            </div>
+          </Fragment>
+        ))}
+      </div>
+    );
+  }
   return (
     <div
       className={
@@ -366,23 +382,21 @@ function DashboardPanel({ demo = false, quiet = false, radius }: { demo?: boolea
     <div className="grid h-full grid-cols-3 grid-rows-2 gap-2">
       <CardShell title="Balances" value={demo ? undefined : "$85,604,878"} radius={radius}>
         {quiet ? (
-          <div className="flex min-h-0 flex-1 flex-col justify-between">
-            <SemiDonut
-              tone={usd}
-              weight={36}
-              extra
-              className="mx-auto mt-1 aspect-[220/118] h-auto w-full"
-            />
-            <div className="flex flex-col items-center gap-1.5">
-              {[currencies.slice(0, 3), currencies.slice(3)].map((row) => (
-                <div key={row[0][0]} className="flex justify-center gap-x-3">
-                  {row.map(([ccy, color]) => (
-                    <span key={ccy} className="flex items-center gap-1 text-[7px] text-ink-muted">
-                      <span className="h-2.5 w-[2px] rounded-sm" style={{ backgroundColor: color }} />
-                      {ccy}
-                    </span>
-                  ))}
-                </div>
+          <div className="flex min-h-0 flex-1 flex-col">
+            <div className="flex min-h-0 flex-1 items-center">
+              <SemiDonut
+                tone={usd}
+                weight={36}
+                extra
+                className="mx-auto aspect-[220/118] h-auto max-h-full w-full"
+              />
+            </div>
+            <div className="flex flex-nowrap justify-center gap-x-3">
+              {currencies.map(([ccy, color]) => (
+                <span key={ccy} className="flex items-center gap-1 whitespace-nowrap text-[7px] text-ink-muted">
+                  <span className="h-2.5 w-[2px] rounded-sm" style={{ backgroundColor: color }} />
+                  {ccy}
+                </span>
               ))}
             </div>
           </div>
@@ -434,10 +448,19 @@ function DashboardPanel({ demo = false, quiet = false, radius }: { demo?: boolea
           <AxisBars
             axes={!quiet}
             ticks={["1500", "1000", "500", "0"]}
-            bars={[
-              { label: "Ticket", height: 93, color: "#8d97a3", breadth: quiet ? "42%" : "46%" },
-              { label: "Financing", height: quiet ? 36 : 4, color: "#c5d8ea", breadth: quiet ? "42%" : "22%" },
-            ]}
+            bars={
+              quiet
+                ? [
+                    { label: "Ticket", height: 93, color: "#8d97a3", breadth: "58%" },
+                    { label: "Financing", height: 36, color: "#c5d8ea", breadth: "58%" },
+                    { label: "Custody", height: 64, color: "#2c3138", breadth: "58%" },
+                    { label: "FX", height: 22, color: "#1a2744", breadth: "58%" },
+                  ]
+                : [
+                    { label: "Ticket", height: 93, color: "#8d97a3", breadth: "46%" },
+                    { label: "Financing", height: 4, color: "#c5d8ea", breadth: "22%" },
+                  ]
+            }
           />
         ) : (
           <VBars

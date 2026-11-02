@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import styles from "./sections.module.css";
 
@@ -105,12 +106,18 @@ export function SectionAction({ href, label }: { href: string; label: string }) 
   );
 }
 
-export function SectionFooterBody({ body }: { body: string; tone?: "dark" | "light" }) {
+export function SectionFooterBody({ body, cueHref }: { body: string; tone?: "dark" | "light"; cueHref?: string }) {
   return (
-    <div className="section-bottom-action" style={{ display: "flex", justifyContent: "center" }}>
+    <div className={cueHref ? "section-bottom-action section-bottom-action-row" : "section-bottom-action"} style={cueHref ? undefined : { display: "flex", justifyContent: "center" }}>
       <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: "#071932", textAlign: "center", whiteSpace: "nowrap" }}>
         {body.replace(/\s+/g, " ").trim()}
       </p>
+      {cueHref ? (
+        <a className={`${styles.heroCue} ${styles.heroCueOnLight} section-bottom-cue`} href={cueHref}>
+          <span className="section-bottom-cue-label"><span>Learn More</span></span>
+          <ArrowRight size={16} strokeWidth={1.75} className={styles.heroCueLearnArrow} aria-hidden="true" />
+        </a>
+      ) : null}
     </div>
   );
 }

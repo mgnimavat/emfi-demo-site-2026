@@ -97,7 +97,7 @@ export const QuestionnaireSection = () => {
             </div>
           ))}
           <div className={`${styles.panel} ${styles.contact} ${!isContact ? styles.inactive : ''}`} inert={!isContact} aria-hidden={!isContact}>
-            <form aria-label="Let's talk" onSubmit={submitEnquiry}>
+            <form aria-label="Let's Talk" onSubmit={submitEnquiry}>
               <div className={styles.fields}>
                 {copy.fields.map((field) => (
                   <input key={field.name} aria-label={field.label} name={field.name} type={field.type} placeholder={field.placeholder} autoComplete={field.autoComplete} required={field.required} />

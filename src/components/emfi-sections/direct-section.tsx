@@ -25,6 +25,7 @@ export function DirectSection({
   eyebrow,
   body = "Fewer unnecessary intermediaries.\nA more direct route to market.",
   shortWhy = false,
+  pairedCue = false,
 }: {
   cols: string;
   cardRef: RefObject<HTMLDivElement | null>;
@@ -40,6 +41,7 @@ export function DirectSection({
   eyebrow?: string;
   body?: string;
   shortWhy?: boolean;
+  pairedCue?: boolean;
 }) {
   const { dNodes, dLines, dTok, dHand, dTags, dCount, dNote, dRouteTitle, dStageH, dBandOp, dBandS } = values;
   const marked = step != null;
@@ -108,7 +110,7 @@ export function DirectSection({
             </div>
           )}
         </div>
-        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} /> : <SectionAction href="/services/settlement-custody" label="Learn More" />) : null}
+        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/services/settlement-custody" : undefined} /> : <SectionAction href="/services/settlement-custody" label="Learn More" />) : null}
       </div>
     </section>
   );

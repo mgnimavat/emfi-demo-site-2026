@@ -1,0 +1,28 @@
+/* About 20% of the vertical Why word sits outside the section, so the type is larger to match. */
+.home-20.home-16-shell [class*="chapter"] [class*="whyPinStage"] [class*="whyStickyWord"][class*="whyWordLarge"] {
+  --why-size: calc((100dvh - var(--home-12-header-h, 77.36px)) / 2.41 * 1.161);
+  letter-spacing: -0.08em;
+}
+
+.home-20 .section-bottom-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 912px);
+  gap: 48px;
+  margin-top: 6px;
+}
+
+.home-20 .section-bottom-action-row > p {
+  text-align: center;
+}
+
+.home-20 .section-bottom-action-row > a.section-bottom-cue {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  z-index: 1;
+  flex: none;
+  transform: none;
+}

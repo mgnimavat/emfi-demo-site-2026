@@ -1,27 +1,35 @@
 .stage { position: relative; min-height: 260px; }
 .plainVisual { background: transparent; border: 0; border-radius: 0; padding: 0; box-shadow: none; }
 .plainWide {
-  width: 100% !important;
-  height: 260px !important;
-  max-height: 260px !important;
+  width: min(100%, 912px) !important;
+  height: 504px !important;
+  max-height: 504px !important;
   min-height: 0 !important;
 }
-.plainWide .plainSlide { padding: 16px 28px 18px; }
+.plainWide .plainSlide { position: relative; padding: 16px 28px 16px; }
+.plainWide .plainTitleSlot { position: absolute; top: 22px; left: clamp(20px, 2.6vw, 36px); right: clamp(20px, 2.6vw, 36px); width: auto; margin: 0; }
+.plainWide .plainSlideViewport { flex: 1 1 auto; height: auto; min-height: 0; }
+.plainWide .slideDisclaimer { flex: none; margin-top: 10px; }
 .plainWide .plainItem:has(img),
 .plainWide .plainItem:has(.plainLabel) { height: 88px; }
 .plainWide .plainItemWithEntities { height: auto; min-height: 88px; flex-direction: column; gap: 10px; padding-block: 4px; }
 .plainWide .plainLogo { display: flex; align-items: center; justify-content: center; width: 100%; height: 72px; min-height: 72px; }
 .plainWide .plainLogo img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.plainWide .plainItemLarge:has(img),
+.plainWide .plainItemLarge:has(.plainLogo) { height: 118px; }
+.plainWide .plainItemLarge .plainLogo { height: 110px; min-height: 110px; }
+.plainWide .plainItemLarge .plainLogo img,
+.plainWide .plainItemLarge.plainItemFca .plainLogo img { width: 100%; height: 100%; max-width: 100%; max-height: 100%; aspect-ratio: auto; transform: none; }
 .plainStage { display: flex; align-items: center; }
 .plainSlide { display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; box-sizing: border-box; width: 100%; height: 100%; gap: 0; padding: 24px; border: 1px solid #a2c2fd; border-radius: 20px; background: #e6effb; box-shadow: 0 6px 20px rgb(7 25 50 / 6%); }
 .plainTitleSlot {
   position: relative;
   flex: none;
-  align-self: center;
+  align-self: stretch;
   width: 100%;
   min-height: 12px;
   margin-bottom: 8px;
-  text-align: center;
+  text-align: left;
 }
 .plainSlideViewport {
   position: relative;
@@ -43,7 +51,7 @@
 }
 .plainTitle {
   flex: none;
-  align-self: center;
+  align-self: flex-start;
   margin: 0;
   color: #071932;
   font-size: 12px;
@@ -52,13 +60,13 @@
   line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
-  text-align: center;
+  text-align: left;
 }
 .plainTitleSlot .plainTitle {
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  transform: none;
 }
 .plainRule { width: 100%; height: 1px; background: #a2c2fd; }
 .plainRow { display: flex; flex: 1 1 auto; align-items: center; justify-content: center; width: 100%; min-height: 0; }
@@ -67,7 +75,7 @@
 .plainItem:has(.plainLabel),
 .plainItem:has(.plainLogo) { height: 96px; }
 .plainItem:has(.plainLabel) { padding: 0 8px; }
-.plainItem + .plainItem { border-left: 1px solid #a2c2fd; }
+.plainItem + .plainItem { border-left: 1px solid #d0d8e6; }
 .plainItem img,
 .plainLogo img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .plainLogo { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; min-height: 0; }
@@ -75,7 +83,10 @@
 .plainItemFca > img { width: auto; height: calc(100% - 15px); max-width: 100%; aspect-ratio: 156 / 89; transform: translateX(2.66%); }
 .plainItemBdo .plainLogo img,
 .plainItemBdo > img { width: calc(100% - 25px * 1022 / 393); height: auto; max-height: 100%; aspect-ratio: 1022 / 393; }
-.plainLabel { color: #071932; font-size: clamp(26px, 2.8vw, 34px); font-weight: 500; letter-spacing: -0.03em; line-height: 1; white-space: nowrap; transform: translateY(0.08em); }
+.plainLabel { color: #98a2b2; font-size: clamp(26px, 2.8vw, 34px); font-weight: 500; letter-spacing: -0.03em; line-height: 1; white-space: nowrap; transform: translateY(0.08em); }
+.plainInk .plainLabel { color: #071932; }
+.plainWide .plainLabel { font-size: clamp(44px, 5vw, 56px); }
+.plainWide .plainItem:has(.plainLabel) { height: 118px; }
 .plainEntities {
   display: grid;
   gap: 2px;
@@ -91,6 +102,7 @@
 }
 .plainEntities li { margin: 0; }
 .slideDisclaimer {
+  flex: none;
   margin: 0;
   max-width: 100%;
   color: #5a6b82;
@@ -103,15 +115,15 @@
 }
 
 @media (max-width: 759px) {
-  .plainWide {
-    height: 220px !important;
-    max-height: 220px !important;
-  }
   .plainWide .plainSlide { padding: 12px 16px; }
-  .plainWide .plainItem:has(img),
-  .plainWide .plainItem:has(.plainLabel) { height: 64px; }
+  .plainWide .plainItem:has(img) { height: 64px; }
+  .plainWide .plainItem:has(.plainLabel) { height: 84px; }
+  .plainWide .plainLabel { font-size: 32px; }
   .plainWide .plainItemWithEntities { min-height: 64px; gap: 6px; }
   .plainWide .plainLogo { height: 52px; min-height: 52px; }
+  .plainWide .plainItemLarge:has(img),
+  .plainWide .plainItemLarge:has(.plainLogo) { height: 84px; }
+  .plainWide .plainItemLarge .plainLogo { height: 76px; min-height: 76px; }
   .plainEntities { font-size: 9px; }
 }
 .slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; }
@@ -184,7 +196,9 @@
   .stage.pinStage { min-height: 0; }
   .plainTitle { font-size: 24px; }
   .plainLabel { font-size: 18px; }
+  .plainWide .plainLabel { font-size: 28px; }
   .plainItem:has(.plainLabel) { height: 64px; }
+  .plainWide .plainItem:has(.plainLabel) { height: 72px; }
   .plainItem { padding: 0 8px; }
   .plainItem:has(img) { height: 64px; }
 }
