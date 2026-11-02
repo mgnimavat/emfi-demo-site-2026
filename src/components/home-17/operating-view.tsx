@@ -366,23 +366,19 @@ function DashboardPanel({ demo = false, quiet = false, radius }: { demo?: boolea
     <div className="grid h-full grid-cols-3 grid-rows-2 gap-2">
       <CardShell title="Balances" value={demo ? undefined : "$85,604,878"} radius={radius}>
         {quiet ? (
-          <div className="flex min-h-0 flex-1 flex-col justify-between">
+          <div className="flex min-h-0 flex-1 flex-col justify-between [container-type:inline-size]">
             <SemiDonut
               tone={usd}
               weight={36}
               extra
               className="mx-auto mt-1 aspect-[220/118] h-auto w-full"
             />
-            <div className="flex flex-col items-center gap-1.5">
-              {[currencies.slice(0, 3), currencies.slice(3)].map((row) => (
-                <div key={row[0][0]} className="flex justify-center gap-x-3">
-                  {row.map(([ccy, color]) => (
-                    <span key={ccy} className="flex items-center gap-1 text-[7px] text-ink-muted">
-                      <span className="h-2.5 w-[2px] rounded-sm" style={{ backgroundColor: color }} />
-                      {ccy}
-                    </span>
-                  ))}
-                </div>
+            <div aria-label="Balance currencies" className="flex flex-nowrap justify-center gap-x-[2cqw]">
+              {currencies.map(([ccy, color]) => (
+                <span key={ccy} className="flex shrink-0 items-center gap-x-[1cqw] whitespace-nowrap text-[clamp(4px,2.2cqw,7px)] text-ink-muted">
+                  <span className="h-2.5 w-[2px] rounded-sm" style={{ backgroundColor: color }} />
+                  {ccy}
+                </span>
               ))}
             </div>
           </div>
