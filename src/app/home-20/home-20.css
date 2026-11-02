@@ -4,6 +4,18 @@
   letter-spacing: -0.08em;
 }
 
+.home-20 [class*="whyPinSlide"] > section {
+  align-items: center;
+  align-items: safe center;
+}
+
+.home-20 [class*="whyPinSlide"] > section > div {
+  height: auto !important;
+  max-height: 100%;
+  box-sizing: border-box;
+  justify-content: center !important;
+}
+
 .home-20 .section-bottom-action-row {
   display: flex;
   align-items: center;
