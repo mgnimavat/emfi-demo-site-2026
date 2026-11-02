@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { readFileSync } from "node:fs";
-import { fetchIntelligenceChart, fetchIntelligenceReports, fetchIntelligenceSearch, intelligenceChartUrl, intelligenceReportsUrl, intelligenceSearchUrl, mergeIntelligenceReports, normalizeIntelligenceChart, normalizeIntelligencePage, normalizeIntelligenceSearchPage } from "../src/lib/intelligence-reports.ts";
+import { alternateIntelligenceReports, fetchIntelligenceChart, fetchIntelligenceReports, fetchIntelligenceSearch, intelligenceChartUrl, intelligenceReportsUrl, intelligenceSearchUrl, mergeIntelligenceReports, normalizeIntelligenceChart, normalizeIntelligencePage, normalizeIntelligenceSearchPage } from "../src/lib/intelligence-reports.ts";
 import { emptyExecutionFilters, filterExecutionResearch } from "../src/lib/execution-research.ts";
 import { countryChangeColor, mapCountryKey } from "../src/lib/intelligence-map.ts";
 
@@ -52,6 +52,26 @@ test("searches titles, summaries, countries and types across both loaded feeds",
   assert.equal(search("reserves", { from: "2026-10-21" }).length, 0);
   assert.equal(search("does not exist").length, 0);
   assert.equal(search(" ").length, 2);
+});
+
+test('alternates API sources newest-first within each feed without losing uneven tails or repeating IDs', () => {
+  const other = normalizeIntelligencePage(response([
+    { ...report, id: 10, display_date: '2026-10-20' },
+    { ...report, id: 11, display_date: '2026-10-22' },
+    { ...report, id: 12, display_date: '2026-10-21' },
+  ]), 'get-other-report', 1).records;
+  const special = normalizeIntelligencePage(response([
+    { ...report, id: 20, display_date: '2026-10-01' },
+    { ...report, id: 21, display_date: '2026-10-02' },
+  ]), 'get-spacial-report', 1).records;
+  const input = [...special, ...other, other[0]];
+  assert.deepEqual(alternateIntelligenceReports(input).map(item => item.id), ['emfi-11', 'emfi-21', 'emfi-12', 'emfi-20', 'emfi-10']);
+  assert.deepEqual(alternateIntelligenceReports(other).map(item => item.id), ['emfi-11', 'emfi-12', 'emfi-10']);
+  assert.deepEqual(alternateIntelligenceReports(special).map(item => item.id), ['emfi-21', 'emfi-20']);
+  assert.deepEqual(alternateIntelligenceReports([]), []);
+  assert.deepEqual(alternateIntelligenceReports(filterExecutionResearch(input, {
+    ...emptyExecutionFilters, from: '2026-10-02', to: '2026-10-21',
+  })).map(item => item.id), ['emfi-12', 'emfi-21', 'emfi-10']);
 });
 
 test("constructs both endpoints and preserves spacial, language, and page", () => {

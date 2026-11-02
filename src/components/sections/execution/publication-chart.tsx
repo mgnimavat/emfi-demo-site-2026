@@ -47,8 +47,8 @@ export function PublicationChart({ chart }: { chart: ExecutionResearchChart }) {
       {primary.ticks.map(tick => <g key={tick}><line x1={left} x2={right} y1={primary.y(tick)} y2={primary.y(tick)} stroke="#e4eaf2" /><text x={left - 14} y={primary.y(tick)} textAnchor="end" dominantBaseline="middle">{Number(tick.toFixed(2))}</text></g>)}
       {secondary?.ticks.map(tick => <text key={tick} x={right + 10} y={secondary.y(tick)} dominantBaseline="middle">{Number(tick.toFixed(2))}</text>)}
       <path d={`${path} L${x(points[points.length - 1].date)},${bottom} L${x(points[0].date)},${bottom} Z`} fill={`url(#${id}-fill)`} />
-      <path d={path} fill="none" stroke="#31558a" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" data-publication-price-line />
-      {secondary ? <path d={line(benchmark, secondary.y)} fill="none" stroke="#9a6d4e" strokeWidth="1.8" strokeLinecap="round" data-publication-benchmark-line /> : null}
+      <path d={path} fill="none" stroke="var(--color-blue-550)" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" data-publication-price-line />
+      {secondary ? <path d={line(benchmark, secondary.y)} fill="none" stroke="var(--flow-to)" strokeWidth="1.8" strokeLinecap="round" data-publication-benchmark-line /> : null}
       {ticks.map((point, index) => <text key={point.date} x={x(point.date)} y={328} textAnchor={index === 0 ? "start" : index === ticks.length - 1 ? "end" : "middle"}>{dateLabel.format(new Date(`${point.date}T00:00:00Z`))}</text>)}
     </svg>
   </figure>;

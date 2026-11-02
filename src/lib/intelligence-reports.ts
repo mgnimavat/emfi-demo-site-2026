@@ -20,6 +20,22 @@ export function mergeIntelligenceReports(...feeds: readonly (readonly ExecutionR
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || b.id.localeCompare(a.id, undefined, { numeric: true }));
 }
 
+export const alternateIntelligenceReports = (
+  records: readonly ExecutionResearchRecord[]
+): ExecutionResearchRecord[] => {
+  const sorted = mergeIntelligenceReports(records);
+  const other = sorted.filter((report) => report.chartSource !== 'special');
+  const special = sorted.filter((report) => report.chartSource === 'special');
+  const result: ExecutionResearchRecord[] = [];
+
+  for (let index = 0; index < Math.max(other.length, special.length); index += 1) {
+    if (other[index]) result.push(other[index]);
+    if (special[index]) result.push(special[index]);
+  }
+
+  return result;
+};
+
 function object(value: unknown): Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
