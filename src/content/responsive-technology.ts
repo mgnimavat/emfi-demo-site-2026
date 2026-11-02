@@ -35,5 +35,6 @@ export const responsiveTechnology = {
       "Our digital services are provided to eligible clients and authorised users in accordance with the relevant account arrangements.",
       "Available functionality varies according to the service, account and instrument. Official statements, confirmations and contractual records remain authoritative.",
     ],
+    action: { label: "Digital services disclosures", href: "https://emfi.uk/english/policydocuments" },
   },
 } as const;
