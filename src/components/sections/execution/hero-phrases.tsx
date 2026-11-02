@@ -10,10 +10,12 @@ type Frame = { index: number; chars: number; phase: 'typing' | 'holding' | 'dele
 
 type ExecutionHeroPhrasesProps = {
   phrases?: readonly string[];
+  fixed?: string;
 };
 
 export const ExecutionHeroPhrases = ({
   phrases = execution.heroPhrases,
+  fixed = "",
 }: ExecutionHeroPhrasesProps) => {
   const ref = useRef<HTMLParagraphElement>(null);
   const visible = useInView(ref, { amount: 0.2 });
@@ -24,10 +26,10 @@ export const ExecutionHeroPhrases = ({
     () => false
   );
   const reduced = Boolean(hydrated && prefersReduced);
-  const [frame, setFrame] = useState<Frame>({ index: 0, chars: 5, phase: 'typing' });
+  const [frame, setFrame] = useState<Frame>({ index: 0, chars: fixed ? 0 : 5, phase: 'typing' });
   const phrase = phrases[frame.index];
   const nextIndex = (frame.index + 1) % phrases.length;
-  const keep = phrase.startsWith('From ') && phrases[nextIndex].startsWith('From ') ? 5 : 0;
+  const keep = fixed ? 0 : phrase.startsWith('From ') && phrases[nextIndex].startsWith('From ') ? 5 : 0;
 
   useEffect(() => {
     if (!visible || reduced) return;
@@ -62,6 +64,24 @@ export const ExecutionHeroPhrases = ({
     return () => window.clearTimeout(timer);
   }, [frame, visible, reduced, phrase.length, keep, nextIndex]);
 
+  const shown = reduced ? phrases[0] : phrase.slice(0, frame.chars);
+  const caret = !reduced ? <span className={styles.cursor} /> : null;
+
+  if (fixed) {
+    return (
+      <p ref={ref} className={`${styles.strapline} ${styles.withFixed}`}>
+        <span className="sr-only">{phrases.map((text) => `${fixed} ${text}`).join('. ')}</span>
+        <span aria-hidden>{fixed}</span>
+        <span className={styles.rotator} aria-hidden>
+          {phrases.map((text) => (
+            <span key={text} className={styles.reserve}>{text}</span>
+          ))}
+          <span className={styles.typed} data-execution-phrase>{shown}{caret}</span>
+        </span>
+      </p>
+    );
+  }
+
   return (
     <p ref={ref} className={styles.strapline}>
       <span className="sr-only">{phrases.join(' ')}</span>
@@ -71,8 +91,7 @@ export const ExecutionHeroPhrases = ({
         </span>
       ))}
       <span aria-hidden className={styles.typed} data-execution-phrase>
-        {reduced ? phrases[0] : phrase.slice(0, frame.chars)}
-        {!reduced ? <span className={styles.cursor} /> : null}
+        {shown}{caret}
       </span>
     </p>
   );

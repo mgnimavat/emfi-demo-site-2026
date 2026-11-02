@@ -1,0 +1,91 @@
+.stage {
+  position: relative;
+  aspect-ratio: 100 / 90;
+  container-type: inline-size;
+  margin-left: auto;
+}
+
+@media (min-width: 900px) {
+  .stage { width: min(100%, calc((100dvh - var(--site-header-height, 78px) - 140px) * 100 / 90)); }
+}
+
+@media (min-width: 1400px) {
+  .stage { width: min(calc(100% + 4px), calc((100dvh - var(--site-header-height, 78px) - 140px) * 100 / 90)); }
+}
+
+.dashboard,
+.execution {
+  position: absolute;
+}
+
+.dashboard,
+.execution {
+  width: 94%;
+  aspect-ratio: 640 / 478;
+  container-type: inline-size;
+}
+
+.dashboard {
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.execution {
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.clip {
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+.execution .clip {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 0 0 1px #e4eaf2;
+}
+
+.dashboardScale > :global(div) {
+  background: transparent;
+  box-shadow: none;
+}
+
+.dashboardScale,
+.executionScale {
+  width: 640px;
+  height: 478px;
+  zoom: calc(100cqw / 640px);
+  pointer-events: none;
+}
+
+.stage :global([class*="blur-"]) {
+  filter: none !important;
+}
+
+@media (max-width: 899px) {
+  .stage {
+    display: grid;
+    height: auto;
+    gap: 0;
+    overflow: visible;
+  }
+
+  .dashboard,
+  .execution {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard,
+  .execution { transform: none; }
+}
