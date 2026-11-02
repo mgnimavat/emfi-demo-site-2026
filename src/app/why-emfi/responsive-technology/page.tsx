@@ -4,6 +4,7 @@ import { ResponsiveShowcase } from "@/components/sections/responsive/showcase";
 import { ExecutionHeroPhrases } from "@/components/sections/execution/hero-phrases";
 import { ExecutionReveal } from "@/components/sections/execution/reveal";
 import hero from "@/components/sections/execution/page.module.css";
+import { ServiceDisclosures } from "@/containers/Sections/ServiceDisclosures";
 import { responsiveTechnology as copy } from "@/content/responsive-technology";
 import styles from "@/components/sections/responsive/page.module.css";
 
@@ -16,7 +17,7 @@ export default function ResponsiveTechnologyPage() {
         <div className={hero.container}>
           <div className={hero.heroGrid}>
             <ExecutionReveal className={hero.heroCopy}>
-              <h1 className={hero.spacedLines}>{copy.headline.split("\n").map((line) => <span key={line}>{line}</span>)}</h1>
+              <h1 className={`${hero.spacedLines} ${styles.headline}`}>{copy.headline}</h1>
               <ExecutionHeroPhrases phrases={copy.phrases} fixed={copy.fixed} />
             </ExecutionReveal>
             <ExecutionReveal delay={0.12} className={hero.heroMedia}>
@@ -67,16 +68,9 @@ export default function ResponsiveTechnologyPage() {
         </div>
       </section>
 
-      <section className={`${styles.band} ${styles.disclosure}`} aria-labelledby="disclosure-heading">
-        <div className={hero.container}>
-          <div className={styles.disclosureGrid}>
-            <h2 id="disclosure-heading" className={styles.title}>{copy.disclosure.title}</h2>
-            <div className={styles.copy}>
-              {copy.disclosure.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            </div>
-          </div>
-        </div>
-      </section>
+      <ServiceDisclosures headingId="disclosure-heading" title={copy.disclosure.title} action={copy.disclosure.action} external>
+        {copy.disclosure.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+      </ServiceDisclosures>
     </div>
   );
 }

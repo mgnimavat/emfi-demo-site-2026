@@ -1,3 +1,5 @@
+.headline { white-space: pre-line; }
+
 .screen {
   height: calc(100dvh - var(--site-header-height, 78px));
   min-height: calc(100svh - var(--site-header-height, 78px));
@@ -92,20 +94,9 @@
 
 .techMedia > * { margin: 0; }
 
-.disclosure { background: #e6effb; }
-
-.disclosureGrid {
-  display: grid;
-  align-items: start;
-  gap: 28px;
-}
-
-.disclosure .copy { color: #24344b; }
-
 @media (min-width: 900px) {
   .layout { grid-template-columns: minmax(0, 1.05fr) minmax(320px, 1fr); gap: clamp(40px, 4vw, 72px); }
   .tech { grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr); gap: 56px; }
-  .disclosureGrid { grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr); gap: 48px; }
 }
 
 @media (max-width: 899px) {

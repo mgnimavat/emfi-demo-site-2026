@@ -1,16 +1,16 @@
 .stage {
   position: relative;
-  aspect-ratio: 100 / 104;
+  aspect-ratio: 100 / 90;
   container-type: inline-size;
   margin-left: auto;
 }
 
 @media (min-width: 900px) {
-  .stage { width: min(100%, calc((100dvh - var(--site-header-height, 78px) - 140px) * 100 / 104)); }
+  .stage { width: min(100%, calc((100dvh - var(--site-header-height, 78px) - 140px) * 100 / 90)); }
 }
 
 @media (min-width: 1400px) {
-  .stage { width: min(calc(100% + 4px), calc((100dvh - var(--site-header-height, 78px) - 140px) * 100 / 104)); }
+  .stage { width: min(calc(100% + 4px), calc((100dvh - var(--site-header-height, 78px) - 140px) * 100 / 90)); }
 }
 
 .dashboard,
@@ -18,11 +18,9 @@
   position: absolute;
 }
 
-.motion { height: 100%; }
-
 .dashboard,
 .execution {
-  width: 84%;
+  width: 94%;
   aspect-ratio: 640 / 478;
   container-type: inline-size;
 }

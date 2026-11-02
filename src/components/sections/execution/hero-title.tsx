@@ -71,9 +71,7 @@ export const ExecutionHeroTitle = ({
 
   return (
     <>
-      <h1>
-        {headline.split('\n').map((line) => <span key={line}>{line}</span>)}
-      </h1>
+      <h1 className={styles.headline}>{headline}</h1>
       <p className={`${styles.strapline} ${taglineClassName ?? ''}`}>
         <span className="sr-only">{words.map((text) => `${prefix} ${text}.`).join(' ')}</span>
         {words.map((text) => (
