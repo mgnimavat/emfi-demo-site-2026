@@ -167,11 +167,11 @@ function home12Route(t: number) {
   return HOME12_EMFI_END;
 }
 
-export function dirVals(t: number, V: boolean, routeTitles?: { conventional: string; direct: string }, pace?: DirectPace) {
+export function dirVals(t: number, V: boolean, routeTitles?: { conventional: string; direct: string }, pace?: DirectPace, stops?: readonly [number, number, number, number, number]) {
   const home12 = pace === "home12";
   t = home12 ? home12Route(t) : slowConventionalRoute(t);
   const { sg, ez, lp } = H();
-  const P0 = [6, 28, 50, 72, 94];
+  const P0 = stops ?? [6, 28, 50, 72, 94];
   // EMFI route spans nearly as wide as the conventional track (6–94).
   const emfiL = 10;
   const emfiR = 90;
@@ -193,8 +193,8 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
       if (f < 1) trav = i;
     }
   }
-  const cpos = lp(6, emfiL, k);
-  const dpos = lp(94, emfiR, k);
+  const cpos = lp(P0[0], emfiL, k);
+  const dpos = lp(P0[4], emfiR, k);
   const replay = t >= 0.72;
   let tokB = emfiL;
   let travB = -1;

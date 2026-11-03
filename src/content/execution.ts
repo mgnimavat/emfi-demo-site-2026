@@ -27,6 +27,16 @@ export type ExecutionResearchRecord = {
   chart?: ExecutionResearchChart;
 };
 
+export const argentinaResearchPreview = {
+  query: 'Argentina',
+  title: 'Country Report: Argentina',
+  summary: 'Argentina has a broad economic base spanning agriculture, energy, manufacturing and services. Its agricultural and livestock industries make it an important food producer.',
+  outlook: 'Natural gas and lithium form part of the country’s resource base. Research into these sectors helps build a picture of Argentina’s economic structure.',
+  focus: 'Focus: agriculture, energy, industry and natural resources.',
+  bond: 'ARGBON 0 1/8 07/09/35',
+  order: { orderType: 'Limit', timeInForce: 'Day' },
+} as const;
+
 export const execution = {
   title: "Research & Execution",
   description: "Research and execution for professional clients across relevant global markets and securities, with specialist market expertise and direct execution support.",
@@ -34,7 +44,7 @@ export const execution = {
   headline: "Research &\nExecution",
   heroTitle: {
     prefix: 'Beyond the',
-    words: ['headlines', 'consensus', 'obvious'],
+    words: ['headlines.', 'consensus.', 'obvious.'],
   },
   body: "From Insight to Action. From Decision to Execution. Across Markets.",
   heroPhrases: ["From Insight to Action.", "From Decision to Execution.", "Across Markets."],

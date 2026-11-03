@@ -1,4 +1,6 @@
 .preview {
+  --workstation-data-size: 12px;
+  --workstation-control-height: 35px;
   min-width: 0;
   max-width: 1160px;
   margin-inline: auto;
@@ -7,7 +9,10 @@
 }
 
 .preview figure { min-height: 400px; }
-.preview article { min-height: 240px; }
+.preview article { display: flex; flex-direction: column; min-height: 240px; height: 100%; }
+.preview article table { flex: 1; }
+.preview article table tbody :is(th, td) { height: 50px; }
+.preview > div + div { margin-top: var(--space-4); }
 .preview :disabled { cursor: default; opacity: 1; }
 
 @media (max-width: 599px) {

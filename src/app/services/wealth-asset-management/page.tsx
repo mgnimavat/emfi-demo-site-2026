@@ -1,8 +1,8 @@
 import { wealth } from '@/content/wealth';
 import { ServiceHero } from '@/containers/Sections/ServiceHero';
 import { WealthAssetSections } from '@/containers/Sections/WealthAssetSections';
-import wealthStyles from '@/containers/Sections/WealthAssetSections.module.css';
 import styles from '@/containers/Sections/ServicePage.module.css';
+import heroStyles from '@/components/sections/execution/page.module.css';
 
 export const metadata = { title: wealth.title, description: wealth.description };
 
@@ -12,7 +12,7 @@ const WealthAssetManagementPage = () => (
       lines={wealth.heroLines}
       phrases={wealth.heroPhrases}
       typewriter={wealth.heroTypewriter}
-      taglineClassName={wealthStyles.heroTagline}
+      headlineClassName={heroStyles.wideHeadline}
     />
     <WealthAssetSections />
   </div>

@@ -16,7 +16,7 @@
 .searchControl input::placeholder { color: #8a96a4; opacity: 1; }
 .searchControl input::-webkit-search-cancel-button { display: none; }
 .searchToggle { position: absolute; top: 0; right: 0; width: 34px; height: 100%; color: #667382; }
-.searchControl:focus-within { border-color: #8098cc; outline: 2px solid rgb(128 152 204 / 20%); outline-offset: 1px; }
+.searchControl:focus-within { border-color: #8098cc; }
 .searchControl input:focus-visible { outline: 0; }
 .results { position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 5; margin: 0; padding: 4px; border: 1px solid #cdd2da; border-radius: 7px; background: #fff; box-shadow: 0 8px 20px rgb(7 25 50 / 12%); list-style: none; }
 .results li { display: flex; flex-direction: column; gap: 3px; padding: 9px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; }
@@ -62,7 +62,7 @@
 .error { margin-top: 12px; color: #b91c1c; font-size: 12px; line-height: 1.5; }
 .closed { width: 100%; max-width: 460px; margin-inline: auto; padding: 20px; border: 1px solid #dce0e6; border-radius: 16px; background: #fff; text-align: center; }
 .closed button { padding: 10px 20px; border: 0; border-radius: 999px; background: #071932; color: #fff; font: inherit; cursor: pointer; }
-.ticket button:focus-visible,.ticket select:focus-visible,.field input:focus-visible,.closed button:focus-visible { outline: 2px solid #8098cc; outline-offset: 3px; }
+.ticket button:focus-visible,.ticket select:focus-visible,.field input:focus-visible,.closed button:focus-visible { outline: 0; border-color: #8098cc; }
 .ticket fieldset:disabled input,.ticket fieldset:disabled select { opacity: 1; -webkit-text-fill-color: #071832; }
 .animatedQuery { position: absolute; top: 50%; left: 12px; padding-right: 2px; transform: translateY(-50%); background: #fff; color: #071832; font-size: 14px; animation: security-search .65s steps(6,end) both; }
 .fillHeight .orderActions { margin-top: 12px; }
