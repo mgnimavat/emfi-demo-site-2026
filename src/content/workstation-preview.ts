@@ -1,13 +1,14 @@
-import { executionSecurities } from './execution-securities';
+import { workstationSecurities as previewSecurities } from './execution-securities';
 import type { ExecutionWatchlist } from './execution-watchlists';
+
+export const maskedWorkstationValue = '*******';
 
 const quantity = 100;
 const transactionCount = 5;
-const previewSecurities = [
-  ...executionSecurities,
-  { symbol: 'META', name: 'META PLATFORMS', isin: 'US30303M1027', bid: 512.28, ask: 512.30 },
-  { symbol: 'AMZN', name: 'AMAZON.COM INC', isin: 'US0231351067', bid: 198.40, ask: 198.44 },
-] as const;
+const referenceMask = 'T-*****';
+const referenceSuffixStart = 23;
+const sampleReferenceNumbers = [121343, 458712, 736084, 294615, 861930] as const;
+const sampleReferencePrefix = 'T-X';
 const money = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
@@ -34,9 +35,9 @@ export const workstationTransactions = Array.from({ length: transactionCount }, 
   return {
     id: `sample-transaction-${index + 1}`,
     cells: [
-      `DEMO-100${index + 1}`,
-      '15 Oct 2026',
-      '16 Oct 2026',
+      `${referenceMask}${referenceSuffixStart + index}`,
+      '',
+      '',
       security.symbol,
       'Market',
       security.isin,
@@ -51,3 +52,8 @@ export const workstationTransactions = Array.from({ length: transactionCount }, 
     ],
   };
 });
+
+export const unmaskedWorkstationTransactions = workstationTransactions.map((row, index) => ({
+  ...row,
+  cells: [`${sampleReferencePrefix}${sampleReferenceNumbers[index]}`, ...row.cells.slice(1)],
+}));

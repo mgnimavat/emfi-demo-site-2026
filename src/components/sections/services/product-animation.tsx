@@ -3,9 +3,19 @@
 import { useRef, useSyncExternalStore } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowRight, FileText, Search } from "lucide-react";
+import { argentinaResearchPreview } from "@/content/execution";
+import { argentinaPreviewSecurities } from "@/content/execution-securities";
 import { InteractiveExecutionTicket } from "@/components/sections/execution/interactive-execution-ticket";
 
 const subscribeToHydration = () => () => {};
+const monthYearFormatter = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' });
+const monthRefreshInterval = 60_000;
+const getCurrentMonthYear = () => monthYearFormatter.format(Date.now());
+const getServerMonthYear = () => '';
+const subscribeToMonthYear = (notify: () => void) => {
+  const timer = window.setInterval(notify, monthRefreshInterval);
+  return () => window.clearInterval(timer);
+};
 
 function Chart({ kind, running, index }: { kind: number; running: boolean; index: number }) {
   const transition = { duration: 6, repeat: Infinity, delay: index * 0.12, ease: "easeInOut" as const };
@@ -31,24 +41,25 @@ function Chart({ kind, running, index }: { kind: number; running: boolean; index
   );
 }
 
-export function ProductAnimation({ view, paused = false, orderStage, fillHeight = false, compact = false, submissionDuration = 2.8, researchQuery, researchStage }: { researchQuery?: string; researchStage?: "typing" | "loading" | "report" | "selected"; view: string; paused?: boolean; orderStage?: "searching" | "submitting" | "booked"; fillHeight?: boolean; compact?: boolean; submissionDuration?: number }) {
+export function ProductAnimation({ view, paused = false, orderStage, fillHeight = false, compact = false, submissionDuration = 2.8, researchQuery, researchStage, argentinaPreview = false }: { argentinaPreview?: boolean; researchQuery?: string; researchStage?: "typing" | "loading" | "report" | "selected"; view: string; paused?: boolean; orderStage?: "searching" | "submitting" | "booked"; fillHeight?: boolean; compact?: boolean; submissionDuration?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.2 });
   const visible = inView;
   const prefersReducedMotion = useReducedMotion();
   const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
+  const monthYear = useSyncExternalStore(subscribeToMonthYear, getCurrentMonthYear, getServerMonthYear);
   const reduced = Boolean(hydrated && prefersReducedMotion);
   const running = visible && !reduced && !paused;
-  const researchTitle = researchStage ? "AI Boom Brings Record-Breaking GPU Sales" : "The AI boom: beyond the headlines";
+  const researchTitle = researchStage ? argentinaResearchPreview.title : "The AI boom: beyond the headlines";
   const reportVisible = researchStage ? (researchStage === "report" || researchStage === "selected") : visible || reduced;
   if (view !== "research" && view !== "backoffice") return (
-    <div ref={ref} role="img" aria-label="Demo animated NVIDIA execution ticket and simulated buy order" className={fillHeight ? "h-full" : "w-full"}>
-      <InteractiveExecutionTicket fillHeight={fillHeight} preview={{ stage: orderStage, running, submissionDuration }} />
+    <div ref={ref} role="img" aria-label={`Demo animated ${argentinaPreview ? argentinaResearchPreview.bond : "NVIDIA"} execution ticket and simulated buy order`} className={fillHeight ? "h-full" : "w-full"}>
+      <InteractiveExecutionTicket securities={argentinaPreview ? argentinaPreviewSecurities : undefined} hideIsin={argentinaPreview} maskPrices={argentinaPreview} orderPreview={argentinaPreview ? argentinaResearchPreview.order : undefined} fillHeight={fillHeight} preview={{ stage: orderStage, running, submissionDuration }} />
     </div>
   );
 
   return (
-    <div ref={ref} role="img" aria-label={`Demo animated ${view === "research" ? `research explorer loading a generic AI-market brief titled ${researchTitle}` : view === "backoffice" ? "client dashboard with six charts and obscured totals" : "NVIDIA NVDA order ticket showing demo bid and ask prices and a simulated order"}`} className={`relative w-full max-w-[620px] overflow-hidden rounded-lg border border-line bg-page shadow-[var(--elevation-card-hover)] ${fillHeight ? "flex h-full flex-col" : ""}`}>
+    <div ref={ref} role="img" aria-label={`Demo animated ${view === "research" ? `research explorer loading ${researchTitle}` : view === "backoffice" ? "client dashboard with six charts and obscured totals" : "NVIDIA NVDA order ticket showing demo bid and ask prices and a simulated order"}`} className={`relative w-full max-w-[620px] overflow-hidden rounded-lg border border-line bg-page shadow-[var(--elevation-card-hover)] ${fillHeight ? "flex h-full flex-col" : ""}`}>
       <div className={`flex min-h-12 items-center justify-between gap-2 border-b px-4 py-3 sm:px-5 ${view === "research" ? "border-[#dce0e6] bg-[#eef0f2] text-[#071832]" : "border-line bg-inverse text-ink-inverse"}`}>
         <span className="text-sm font-semibold tracking-[-0.02em]">{view === "research" ? "Research" : <>EMFI<span className="font-normal text-ink-inverse-muted"> / Client dashboard</span></>}</span>
       </div>
@@ -81,21 +92,14 @@ export function ProductAnimation({ view, paused = false, orderStage, fillHeight 
               animate={{ opacity: reportVisible ? 1 : 0, y: reportVisible ? 0 : 8 }}
               transition={{ delay: reduced || researchStage ? 0 : 1.9, duration: reduced ? 0 : 0.45 }}
             >
-              <div className="mb-4 flex items-center gap-2 text-xs text-ink-secondary"><FileText size={16} className="text-brand" aria-hidden />Technology brief · Example</div>
+              <div className="mb-4 flex items-center gap-2 text-xs text-ink-secondary"><FileText size={16} className="text-brand" aria-hidden />{researchStage ? `Country Report${monthYear ? ` · ${monthYear}` : ''}` : "Technology brief · Example"}</div>
               <p className={`font-semibold leading-tight tracking-[-0.025em] text-ink ${compact ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"}`}>{researchTitle}</p>
-              <p className={`text-sm text-ink-secondary ${compact ? "mt-3 leading-6" : "mt-4 leading-7"}`}>{researchStage ? "A look at how demand for artificial intelligence could accelerate GPU sales and investment in computing infrastructure." : "A look at how demand for computing, data centres and energy could shape the next wave of AI investment."}</p>
+              <p className={`text-sm text-ink-secondary ${compact ? "mt-3 leading-6" : "mt-4 leading-7"}`}>{researchStage ? argentinaResearchPreview.summary : "A look at how demand for computing, data centres and energy could shape the next wave of AI investment."}</p>
               <p className={`mt-3 text-sm text-ink-secondary ${compact ? "leading-6" : "leading-7"}`}>
-                {researchStage ? <>Follow the theme from AI infrastructure and semiconductor demand to <motion.mark
-                  data-research-highlight="NVIDIA"
-                  data-highlighted={researchStage === "selected"}
-                  className="rounded-sm px-0.5 font-bold text-ink"
-                  initial={false}
-                  animate={{ backgroundColor: researchStage === "selected" ? "var(--bg-soft)" : "rgba(220, 232, 248, 0)" }}
-                  transition={{ duration: reduced ? 0 : 0.35 }}
-                >NVIDIA</motion.mark> research and an execution decision.</> : "The longer-term question is how businesses turn new capabilities into useful products and sustainable value."}
+                {researchStage ? <>{argentinaResearchPreview.outlook}</> : "The longer-term question is how businesses turn new capabilities into useful products and sustainable value."}
               </p>
-              <div className={`rounded-md bg-soft px-3 text-xs text-ink ${compact ? "mt-3 py-2 leading-5" : "mt-5 py-3 leading-6"}`}>{researchStage ? "Themes to watch: AI infrastructure, GPUs and semiconductor demand." : "Themes to watch: infrastructure, adoption and productivity."}</div>
-              <div className={`flex items-center justify-between border-t border-line text-xs text-ink-secondary ${compact ? "mt-4 pt-3" : "mt-6 pt-4"}`}><span>{researchStage ? "Research → NVIDIA execution" : "Research → Investment view"}</span><ArrowRight size={15} aria-hidden /></div>
+              <div className={`rounded-md bg-soft px-3 text-xs text-ink ${compact ? "mt-3 py-2 leading-5" : "mt-5 py-3 leading-6"}`}>{researchStage ? argentinaResearchPreview.focus : "Themes to watch: infrastructure, adoption and productivity."}</div>
+              <div className={`flex items-center justify-between border-t border-line text-xs text-ink-secondary ${compact ? "mt-4 pt-3" : "mt-6 pt-4"}`}><span>{researchStage ? "Research" : "Research → Investment view"}</span><ArrowRight size={15} aria-hidden /></div>
             </motion.div>
           </div>
         </div>

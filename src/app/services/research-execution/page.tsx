@@ -23,7 +23,7 @@ export default function ResearchExecutionPage() {
       </div></div>
     </section>
     <ResearchSection />
-    <WorkstationSection />
+    <WorkstationSection maskVariant="initial-stars" />
     <ResearchDisclosures />
     {/*
     <section id="research-execution-capabilities" className={styles.section} aria-label="Research and execution capabilities">

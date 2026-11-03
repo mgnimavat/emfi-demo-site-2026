@@ -1,9 +1,10 @@
 import { ExecutionWorkstation } from '@/containers/Sections/ExecutionWorkstation';
+import type { WorkstationMaskVariant } from '@/containers/Sections/WorkstationPrivacy';
 import { execution } from '@/content/execution';
 import { ExecutionReveal } from './reveal';
 import styles from './workstation-section.module.css';
 
-export const WorkstationSection = () => {
+export const WorkstationSection = ({ maskVariant = 'initial-stars' }: { maskVariant?: WorkstationMaskVariant }) => {
   const content = execution.workstation;
 
   return (
@@ -28,7 +29,7 @@ export const WorkstationSection = () => {
             <h3>{content.name}</h3>
             <p>{content.description}</p>
           </div>
-          <ExecutionWorkstation />
+          <ExecutionWorkstation maskVariant={maskVariant} />
         </ExecutionReveal>
       </div>
     </section>

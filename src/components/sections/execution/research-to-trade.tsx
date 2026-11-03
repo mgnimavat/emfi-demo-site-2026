@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
+import { argentinaResearchPreview } from "@/content/execution";
 import { ProductAnimation } from "@/components/sections/services/product-animation";
 import styles from "./research-to-trade.module.css";
 
-// Type the topic, read its report, highlight NVIDIA in the text, then search and buy it in execution.
+// Follow the country report into a simulated bond purchase.
 const durations = [2000, 650, 800, 1000, 1100, 1600, 1600, 400];
 const cycleDuration = durations.reduce((sum, duration) => sum + duration, 0);
-const keyword = "Artificial Intelligence";
+const keyword = argentinaResearchPreview.query;
 const subscribeToHydration = () => () => {};
 const subscribeToVisibility = (callback: () => void) => {
   document.addEventListener("visibilitychange", callback);
@@ -87,11 +88,11 @@ export function ResearchToTrade() {
           inert={!executionShown}
         >
           <div className="h-full rounded-lg ring-1 ring-brand-focus/20 shadow-[var(--elevation-card-hover)]">
-            <ProductAnimation view="execution" compact fillHeight submissionDuration={1.6} paused={!running || !executionShown} orderStage={phase < 4 ? undefined : phase === 4 ? "searching" : phase === 5 ? "submitting" : "booked"} />
+            <ProductAnimation view="execution" argentinaPreview compact fillHeight submissionDuration={1.6} paused={!running || !executionShown} orderStage={phase < 4 ? undefined : phase === 4 ? "searching" : phase === 5 ? "submitting" : "booked"} />
           </div>
         </motion.div>
       </div>
-      <p className="sr-only">Demo repeating sequence: search Artificial Intelligence, read an example report on AI demand and GPU sales, highlight the word NVIDIA in the report text, then search NVIDIA in execution and book a simulated buy order.</p>
+      <p className="sr-only">Demo repeating sequence: search Argentina, read {argentinaResearchPreview.title}, then find {argentinaResearchPreview.bond} in execution and book a simulated buy order.</p>
     </div>
   );
 }

@@ -43,7 +43,6 @@
 .providers strong { font-size: 20px; font-weight: 700; line-height: 1.2; letter-spacing: -.035em; }
 .providers span { color: var(--color-blue-550); font-size: 13px; line-height: 1.5; }
 .providerNotice { margin: var(--space-4) 0 0; color: var(--color-gray-800); font-size: 13px; line-height: 1.7; }
-p.heroTagline { font-size: clamp(18px, 5.8cqw, 44px); }
 @media (max-width: 1023px) {
   .sectionGrid { grid-template-columns: minmax(0, 1fr); }
   .title { font-size: clamp(36px, 5.6cqi, 48px); }

@@ -3,7 +3,7 @@ export const wealth = {
   description: 'We combine tailored portfolio management with dedicated investment strategies and properly structured investment vehicles.',
   heroTypewriter: {
     prefix: 'Capital, managed with',
-    words: ['purpose', 'discipline', 'perspective'],
+    words: ['purpose.', 'discipline.', 'perspective.'],
   },
   management: {
     title: 'Management built around the mandate.',
@@ -54,7 +54,7 @@ export const wealth = {
     ],
     action: { label: 'Request fund documentation', href: '/contact' },
   },
-  heroLines: ["Wealth &", "Asset", "Management"],
+  heroLines: ["Wealth & Asset", "Management"],
   heroPhrases: ["Your portfolio. In view.", "Your assets. Connected.", "Your relationship. Direct."],
 
   eyebrow: "Services / Wealth & Asset Management",
