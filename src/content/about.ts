@@ -142,6 +142,7 @@ export const about = {
       name: "Matias Montes",
       role: "Strategy",
       photo: "/people/matias-montes-5.jpg",
+      inset: true,
       description:
         "Connects EMFI’s capabilities, people and technology into one operating direction.",
     },

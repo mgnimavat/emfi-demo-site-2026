@@ -7,10 +7,11 @@ const placeholderPhoto = "/people/placeholder-draw-sky.jpg";
 export function PersonCard({ person }: { person: (typeof about.people)[number] }) {
   const headingId = `person-${person.name.toLowerCase().replace(/\s+/g, "-")}`;
   const isBoard = "board" in person && person.board;
+  const inset = "inset" in person && person.inset;
   const photo = "photo" in person && person.photo ? person.photo : placeholderPhoto;
 
   return (
-    <article className={isBoard ? `${styles.card} ${styles.boardCard}` : styles.card} aria-labelledby={headingId} aria-describedby={`${headingId}-details`} tabIndex={0}>
+    <article className={[styles.card, isBoard && styles.boardCard, inset && styles.inset].filter(Boolean).join(" ")} aria-labelledby={headingId} aria-describedby={`${headingId}-details`} tabIndex={0}>
       <div className={styles.portrait} aria-hidden="true">
         <Image
           src={photo}
