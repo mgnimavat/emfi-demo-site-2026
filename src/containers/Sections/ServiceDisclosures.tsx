@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import ctaStyles from '@/components/sections/home-16/questionnaire.module.css';
 import styles from './ServiceDisclosures.module.css';
 
 type ServiceDisclosuresProps = {
@@ -20,17 +21,17 @@ export const ServiceDisclosures = ({
   external = false,
   actionPlacement = 'column',
 }: ServiceDisclosuresProps) => {
-  const ActionIcon = external ? ArrowUpRight : ArrowRight;
   const panelAction = actionPlacement === 'panel';
+  const ActionIcon = panelAction ? ArrowRight : external ? ArrowUpRight : ArrowRight;
   const actionLink = (
     <Link
-      className={styles.action}
+      className={panelAction ? `${ctaStyles.next} ${styles.panelButton}` : styles.action}
       href={action.href}
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
     >
       <span>{action.label}</span>
-      <ActionIcon size={17} aria-hidden="true" />
+      <ActionIcon size={panelAction ? 14 : 17} aria-hidden="true" />
       {external ? <span className="sr-only"> (opens in a new tab)</span> : null}
     </Link>
   );

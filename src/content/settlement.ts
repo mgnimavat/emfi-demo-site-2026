@@ -53,8 +53,6 @@ export const settlement = {
     relatedBody: 'Our wider control framework and regulatory oversight are explained on the',
     relatedLabel: 'Dependable Operations',
     relatedHref: '/why-emfi#framework',
-    mobileImage: '/images/services/balances-iphone.png',
-    mobileAlt: 'Cash balances in the EMFI mobile app',
   },
   disclosures: {
     title: 'Client asset information',

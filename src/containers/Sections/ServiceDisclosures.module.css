@@ -89,6 +89,20 @@
 .action:hover svg { transform: translateX(2px); }
 .action:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 4px; }
 
+.panelButton {
+  justify-self: start;
+  align-self: start;
+  box-sizing: border-box;
+  max-width: 100%;
+  border-color: var(--color-blue-500);
+  background: var(--color-blue-500);
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+}
+.panelButton svg { flex: none; }
+.panelButton:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 4px; }
+
 .panelAction {
   grid-template-areas: 'introduction copy';
   grid-template-rows: auto;
@@ -106,7 +120,7 @@
   font-size: 16px;
   line-height: 1.65;
 }
-.panelAction .copy .action { margin-top: var(--space-6); }
+.panelAction .copy .panelButton { margin-top: var(--space-6); }
 
 @media (max-width: 799px) {
   .container {

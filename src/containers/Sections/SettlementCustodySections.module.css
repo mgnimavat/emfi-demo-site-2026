@@ -42,7 +42,6 @@
 .oversight > svg { flex: none; }
 .oversight h4 { margin: 0; font-size: 20px; font-weight: 700; line-height: 1.3; letter-spacing: -.025em; }
 .mobileVisual { display: flex; justify-content: center; min-width: 0; }
-.mobileImage { display: block; width: min(100%, 290px); height: auto; }
 .related { margin-top: var(--space-5); }
 .related a { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--color-blue-550); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
 .related a:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 4px; }
@@ -50,7 +49,6 @@
   .introGrid { grid-template-columns: minmax(0, 1fr); }
   .title { font-size: clamp(36px, 5.6cqi, 48px); }
   .custodyGrid { grid-template-columns: minmax(0, 1fr); }
-  .mobileImage { width: min(65%, 260px); }
 }
 @media (max-width: 900px) {
   .overviewGrid { grid-template-columns: minmax(0, 1fr); }

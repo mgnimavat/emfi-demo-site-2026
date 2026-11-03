@@ -1,7 +1,8 @@
 "use client";
 
 import { useId, useState, useSyncExternalStore } from "react";
-import { ArrowUpRight, ChevronDown, FileText } from "lucide-react";
+import { ArrowDown, ArrowUpRight, ChevronDown, FileText } from "lucide-react";
+import cueStyles from "@/components/emfi-sections/sections.module.css";
 import type { ExecutionResearchRecord } from "@/content/execution";
 import type { IntelligenceLanguage } from "@/lib/intelligence-reports";
 import { useReportChart } from "@/lib/use-report-chart";
@@ -96,7 +97,7 @@ export const ResearchPublications = ({ records, language = "english", hasMore = 
   </div> : <div className={styles.emptyState}><FileText size={28} strokeWidth={1.5} aria-hidden="true" /><h4>No matching reports</h4><p>Try another search, date or country, or reset your filters.</p></div>}
   <span className="sr-only" role="status" aria-live="polite">{visibleRecords.length} reports shown</span>
   {canLoadMore ? <div className={styles.loadMoreRow}>
-    <button type="button" disabled={loadingMore || (!hasLocalMore && loadMoreDisabled)} onClick={showMore}>{loadingMore ? 'Loading reports…' : 'Load more reports'}<ChevronDown size={16} aria-hidden="true" /></button>
+    <button className={cueStyles.heroCue} type="button" disabled={loadingMore || (!hasLocalMore && loadMoreDisabled)} onClick={showMore}>{loadingMore ? 'Loading reports…' : 'Load more reports'}<ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" /></button>
   </div> : null}
 </section>;
 };
