@@ -1,0 +1,14 @@
+.home-22 [class*="whyPinMarkers"]:not([data-why-form-progress]) {
+  top: clamp(24px, 4vh, 48px) !important;
+  /* Ends 24px above the 46px-tall "Learn More" cue, which sits clamp(20px, 3.2vh, 36px) off the bottom. */
+  height: calc(100% - clamp(24px, 4vh, 48px) - clamp(20px, 3.2vh, 36px) - 70px) !important;
+  transform: none !important;
+}
+
+.home-22 #settle {
+  background: #fff;
+}
+
+.home-22 #say-less {
+  background: #e6effb;
+}

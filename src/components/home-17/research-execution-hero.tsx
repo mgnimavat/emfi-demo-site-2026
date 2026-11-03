@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { FloatingPhones } from "@/components/home-17/floating-phones";
 import { HeroDashboardScreen } from "@/components/home-17/operating-view";
+import { ExecutionWorkstationFit, SettlementDashboardFit } from "@/components/home-17/scaled-mockup";
 
 const HOLD_MS = 3400;
 
@@ -39,7 +40,7 @@ const VIEWS = [
   "OrderEur",
   "OrderAapl",
 ] as const;
-type View = (typeof VIEWS)[number] | "HeroDashboard" | "MobileBalances" | "MobileScreens" | "MobileScreensPerspective" | "FloatingPhones";
+type View = (typeof VIEWS)[number] | "HeroDashboard" | "SettlementDashboard" | "Workstation" | "MobileBalances" | "MobileScreens" | "MobileScreensPerspective" | "FloatingPhones";
 
 export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] as const satisfies readonly View[];
 export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
@@ -47,6 +48,7 @@ export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScree
 export const home16ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreensPerspective"] as const satisfies readonly View[];
 export const homeV5ResponsiveSlides = ["HeroDashboard", "OrderEur", "FloatingPhones"] as const satisfies readonly View[];
 export const homeDeskResponsiveSlides = ["HeroDashboard", "OrderEur"] as const satisfies readonly View[];
+export const homeSettlementResponsiveSlides = ["SettlementDashboard", "Workstation"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
@@ -94,6 +96,18 @@ const VIEW_META: Record<
     kind: "app",
   },
   HeroDashboard: {
+    crumbs: "",
+    date: "",
+    activeModule: "Clients",
+    kind: "public",
+  },
+  SettlementDashboard: {
+    crumbs: "",
+    date: "",
+    activeModule: "Clients",
+    kind: "public",
+  },
+  Workstation: {
     crumbs: "",
     date: "",
     activeModule: "Clients",
@@ -1300,6 +1314,10 @@ function ViewPanel({ view, apple = false, square = false, trimChrome = false, ap
           <HeroDashboardScreen bare={apple} square={square} trimChrome={trimChrome} appBar={appBar} />
         </div>
       );
+    case "SettlementDashboard":
+      return <SettlementDashboardFit />;
+    case "Workstation":
+      return <ExecutionWorkstationFit />;
     case "MobileBalances":
       return <MobileBalancesSlide />;
     case "MobileScreens":
