@@ -1,9 +1,71 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+"use client";
+
+import { Mail, MapPin, Minus, Phone, Plus } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { about1Locations } from "@/content/about-1-locations";
 import styles from "./about-1-locations.module.css";
 
 const places = about1Locations.places;
 const mapsUrl = (query: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+
+const MIN_ZOOM = 13;
+const MAX_ZOOM = 19;
+const START_ZOOM = 16;
+
+type Place = (typeof places)[number];
+
+const clampZoom = (zoom: number) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom));
+
+const LocationMap = ({ place }: { place: Place }) => {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const [zoom, setZoom] = useState(START_ZOOM);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame) return;
+
+    let locked = false;
+    const onWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      if (locked || event.deltaY === 0) return;
+      locked = true;
+      setZoom(current => clampZoom(current + (event.deltaY < 0 ? 1 : -1)));
+      window.setTimeout(() => {
+        locked = false;
+      }, 400);
+    };
+
+    frame.addEventListener("wheel", onWheel, { passive: false });
+    return () => frame.removeEventListener("wheel", onWheel);
+  }, []);
+
+  return (
+    <div className={styles.mapFrame} ref={frameRef}>
+      <iframe
+        key={zoom}
+        className={styles.map}
+        title={`${place.city} map`}
+        src={`https://maps.google.com/maps?ll=${encodeURIComponent(place.mapQuery)}&z=${zoom}&output=embed`}
+        loading="eager"
+        referrerPolicy="no-referrer-when-downgrade"
+      />
+      <span className={styles.pin} aria-hidden="true">
+        <svg viewBox="0 0 32 42">
+          <path fill="currentColor" d="M16 0C7.16 0 0 7.16 0 16c0 10.6 16 26 16 26s16-15.4 16-26C32 7.16 24.84 0 16 0z" />
+          <circle cx="16" cy="16" r="5.5" fill="#fff" />
+        </svg>
+      </span>
+      <div className={styles.zoom}>
+        <button type="button" aria-label={`Zoom in on ${place.city}`} disabled={zoom >= MAX_ZOOM} onClick={() => setZoom(current => clampZoom(current + 1))}>
+          <Plus size={16} aria-hidden="true" />
+        </button>
+        <button type="button" aria-label={`Zoom out on ${place.city}`} disabled={zoom <= MIN_ZOOM} onClick={() => setZoom(current => clampZoom(current - 1))}>
+          <Minus size={16} aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export const About1Locations = () => (
   <section className={styles.section} aria-labelledby="locations-heading">
@@ -14,27 +76,25 @@ export const About1Locations = () => (
       <div className={styles.columns}>
         {places.map(place => (
           <article key={place.city} className={styles.column}>
-            <div className={styles.mapFrame}>
-              <iframe
-                className={styles.map}
-                title={`${place.city} map`}
-                src={`https://maps.google.com/maps?q=${encodeURIComponent(place.mapQuery)}&ll=${place.mapCenter}&z=16&output=embed`}
-                loading="eager"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
+            <LocationMap place={place} />
             <div className={styles.body}>
               <a className={styles.detailsLink} href={mapsUrl(place.mapQuery)} target="_blank" rel="noopener noreferrer">
                 <h3>{place.city}</h3>
-                <p className={styles.kicker}>{place.kicker}</p>
+                <p className={styles.kicker}>{place.kicker.map(line => <span key={line}>{line}</span>)}</p>
                 <span className={styles.address}>
                   <span className={styles.addressIcon}><MapPin size={16} aria-hidden="true" /></span>
                   <address>{place.lines.map(line => <span key={line}>{line}</span>)}</address>
                 </span>
               </a>
               <div className={styles.contacts}>
-                <a href={`mailto:${place.email}`}><Mail size={15} aria-hidden="true" />{place.email}</a>
-                {"phone" in place ? <a href={`tel:${place.phone.replace(/\s/g, "")}`}><Phone size={15} aria-hidden="true" />{place.phone}</a> : null}
+                <a href={`mailto:${place.email}`}>
+                  <span className={styles.addressIcon}><Mail size={16} aria-hidden="true" /></span>
+                  <span>{place.email}</span>
+                </a>
+                {"phone" in place ? <a href={`tel:${place.phone.replace(/\s/g, "")}`}>
+                  <span className={styles.addressIcon}><Phone size={16} aria-hidden="true" /></span>
+                  <span>{place.phone}</span>
+                </a> : null}
               </div>
             </div>
           </article>

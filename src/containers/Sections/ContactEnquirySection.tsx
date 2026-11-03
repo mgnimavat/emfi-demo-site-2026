@@ -22,7 +22,6 @@ export const ContactEnquirySection = () => {
     const body = [
       ...details,
       `${copy.businessUnit}: ${String(data.get('businessUnit') ?? '')}`,
-      `${copy.subject}: ${String(data.get('subject') ?? '')}`,
       '',
       `${contact.message}: ${String(data.get('message') ?? '').trim()}`,
     ];
@@ -58,13 +57,6 @@ export const ContactEnquirySection = () => {
                 <select aria-label={copy.businessUnit} name="businessUnit" required defaultValue="">
                   <option value="" disabled>{copy.businessUnitPlaceholder}</option>
                   {copy.businessUnits.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
-                </select>
-                <ChevronDown aria-hidden="true" />
-              </div>
-              <div className={styles.selectWrap}>
-                <select aria-label={copy.subject} name="subject" required defaultValue="">
-                  <option value="" disabled>{copy.subjectPlaceholder}</option>
-                  {copy.subjects.map((subject) => <option key={subject} value={subject}>{subject}</option>)}
                 </select>
                 <ChevronDown aria-hidden="true" />
               </div>

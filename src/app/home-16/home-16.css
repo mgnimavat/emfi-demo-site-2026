@@ -24,6 +24,10 @@ body.home-12-header-solid:has(.home-16-shell) header {
   animation: none;
 }
 
+.home-page [class*="plainSlide"]:not([class*="Viewport"]):not([class*="Content"]) {
+  background: #fff;
+}
+
 .home-16-shell #expect {
   margin-top: calc(-1 * var(--home-12-header-h, 77.36px));
   padding-top: var(--home-12-header-h, 77.36px);

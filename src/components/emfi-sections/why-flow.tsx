@@ -101,7 +101,7 @@ function Rail({
   );
 }
 
-export function WhyFlow({ children, stickyLabel = false, formProgress = false, shortWhy = false }: { children: ReactNode; stickyLabel?: boolean; formProgress?: boolean; shortWhy?: boolean }) {
+export function WhyFlow({ children, stickyLabel = false, formProgress = false, shortWhy = false, pairedCue = false }: { children: ReactNode; stickyLabel?: boolean; formProgress?: boolean; shortWhy?: boolean; pairedCue?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const slotRef = useRef<HTMLDivElement>(null);
@@ -139,6 +139,19 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
       const steps = slides.length;
       const step = progress >= 1 ? steps : Math.min(steps, Math.floor(progress * steps + 1e-6) + 1);
 
+      const visual = slides[step - 1]?.querySelector<HTMLElement>(`.${styles.pinVisual}, .${styles.responsivePinMedia}, .${styles.pinStackMedia}`);
+      if (visual && !formBar) {
+        const stageRect = stage.getBoundingClientRect();
+        const box = visual.getBoundingClientRect();
+        markerBox.style.top = `${box.top - stageRect.top}px`;
+        markerBox.style.height = `${box.height}px`;
+        markerBox.style.transform = "none";
+      } else {
+        markerBox.style.top = "";
+        markerBox.style.height = "";
+        markerBox.style.transform = "";
+      }
+
       rail.style.left = "";
       rail.style.top = "";
       rail.style.height = "";
@@ -158,7 +171,7 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
         const fillPx = Math.max(0, Math.min(railRect.height, end - railRect.top));
         fill.style.width = "100%";
         fill.style.height = `${fillPx}px`;
-        fill.style.backgroundSize = `100% ${Math.max(railRect.height, 1)}px`;
+        fill.style.backgroundSize = "100% 100%";
         marks.forEach((mark, index) => {
           const on = index === step - 1;
           const done = index < step - 1;
@@ -348,7 +361,7 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
               <div ref={slotRef} className={styles.whyStickySlot} aria-hidden="true">
                 <p className={shortWhy ? `${styles.whyStickyWord} ${styles.whyWordLarge}` : styles.whyStickyWord}><span>{shortWhy ? "Why" : "Why EMFI"}</span></p>
               </div>
-              <div className={[styles.whyPinMarkers, formProgress ? styles.whyFormProgress : "", shortWhy ? styles.whyPinMarkersOut : ""].filter(Boolean).join(" ")} data-why-pin-markers data-why-form-progress={formProgress ? "" : undefined} aria-hidden={shortWhy ? undefined : "true"}>
+              <div className={[styles.whyPinMarkers, formProgress ? styles.whyFormProgress : "", shortWhy ? styles.whyPinMarkersOut : ""].filter(Boolean).join(" ")} data-why-pin-markers data-why-form-progress={formProgress ? "" : undefined} aria-hidden="true">
                 {formProgress ? (
                   <>
                     <span className={styles.whyFormTrack} aria-hidden="true">{rail}</span>
@@ -364,16 +377,16 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
                     <span aria-hidden="true">{rail}</span>
                   </>
                 )}
-                {shortWhy ? (
-                  <a
-                    className={`${styles.heroCue} ${styles.heroCueOnLight} ${styles.heroCueUnderProgress} section-bottom-cue`}
-                    href={WHY_LEARN_MORE_HREFS[Math.max(1, Math.min(WHY_LEARN_MORE_HREFS.length, active)) - 1]}
-                  >
-                    <span className="section-bottom-cue-label"><span>Learn More</span></span>
-                    <ArrowRight size={16} strokeWidth={1.75} className={styles.heroCueLearnArrow} aria-hidden="true" />
-                  </a>
-                ) : null}
               </div>
+              {shortWhy && !pairedCue ? (
+                <a
+                  className={`${styles.heroCue} ${styles.heroCueOnLight} ${styles.heroCueBottomRight} section-bottom-cue`}
+                  href={WHY_LEARN_MORE_HREFS[Math.max(1, Math.min(WHY_LEARN_MORE_HREFS.length, active)) - 1]}
+                >
+                  <span className="section-bottom-cue-label"><span>Learn More</span></span>
+                  <ArrowRight size={16} strokeWidth={1.75} className={styles.heroCueLearnArrow} aria-hidden="true" />
+                </a>
+              ) : null}
               <div className={styles.whyPinSlides}>
                 {Children.map(children, (child, index) => (
                   <div key={index} className={styles.whyPinSlide} data-why-slide>{child}</div>

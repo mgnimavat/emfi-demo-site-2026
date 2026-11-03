@@ -60,10 +60,13 @@ export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true }:
   return (
     <section id="about-journey" ref={sectionRef} className={styles.timeline} data-static={Boolean(reduceMotion)} aria-labelledby="timeline-heading">
       <div className={styles.stage}>
+        <div className={styles.mark} aria-hidden="true">
+          <span className={styles.markScreen} />
+          <span className={styles.markMultiply} />
+        </div>
         <div className={styles.inner}>
           <div className={styles.heading}>
-            <p>{about.yearsEyebrow}</p>
-            <Heading id="timeline-heading">{about.yearsTitle}</Heading>
+            <Heading id="timeline-heading">{about.yearsEyebrow}</Heading>
           </div>
           <div className={styles.layout}>
             <div className={styles.feature} aria-hidden="true">
@@ -79,11 +82,11 @@ export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true }:
               {about.milestones.map(([itemYear, itemTitle, itemDescription], index) => (
                 <li key={itemYear} data-active={index === active} data-done={index < active}>
                   <span className={styles.step} aria-hidden="true" />
-                  <button type="button" onClick={() => selectMilestone(index)} aria-current={index === active ? "step" : undefined} aria-describedby={`milestone-description-${itemYear}`}>
+                  <button type="button" onClick={() => selectMilestone(index)} aria-current={index === active ? "step" : undefined}>
                     <span className={styles.listYear}>{itemYear}</span>
                     <span className={styles.listTitle}>{itemTitle}</span>
+                    <span className={styles.listDescription}>{itemDescription}</span>
                   </button>
-                  <p id={`milestone-description-${itemYear}`} className={styles.listDescription}>{itemDescription}</p>
                 </li>
               ))}
             </ol>

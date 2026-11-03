@@ -7,7 +7,7 @@ import { contact } from '@/content/contact';
 import styles from './questionnaire.module.css';
 
 const questionTitles = [
-  'Your Annual Custody Cost',
+  'Your annual custody cost',
   'Your monthly minimum fee',
   'Your minimum contract term',
   'Frequency of settlement status',
@@ -18,7 +18,7 @@ const questions = copy.questions.map((question, index) => ({
   ...question,
   title: questionTitles[index] ?? question.title,
 }));
-const placeholders: Record<string, string> = { firm: 'Organization', email: 'Email Address', telephone: 'Phone' };
+const placeholders: Record<string, string> = { name: 'Name', firm: 'Organization', email: 'Email', telephone: 'Phone' };
 const fields = copy.fields.map((field) => ({
   ...field,
   label: field.name === 'telephone' ? 'Phone' : field.label,
@@ -70,7 +70,7 @@ export const QuestionnaireSection = () => {
         <aside className={styles.sidebar}>
           <div className={styles.sidebarHeadings}>
           <h2 className={`${styles.intro} ${styles.promptIntro} ${isContact ? styles.inactive : ''}`} aria-hidden={isContact}>
-            <span className={styles.headlineLine}>Is Your</span>
+            <span className={styles.headlineLine}>Is your</span>
             <span className={styles.headlineLine}>current</span>
             <span className={styles.headlineLine}>infrastructure</span>
             <span className={styles.headlineLine}>a bit <span className={styles.accent}>extra</span><span className={styles.accentMark}>?</span></span>
@@ -113,7 +113,7 @@ export const QuestionnaireSection = () => {
             </div>
           ))}
           <div className={`${styles.panel} ${styles.contact} ${!isContact ? styles.inactive : ''}`} inert={!isContact} aria-hidden={!isContact}>
-            <form aria-label="Let's talk" onSubmit={submitEnquiry}>
+            <form aria-label="Let's Talk" onSubmit={submitEnquiry}>
               <div className={styles.fields}>
                 {fields.map((field) => (
                   <input key={field.name} aria-label={field.label} name={field.name} type={field.type} placeholder={field.placeholder} autoComplete={field.autoComplete} required={field.required} />

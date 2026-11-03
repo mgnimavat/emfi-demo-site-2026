@@ -7,7 +7,7 @@ export const questionnaire = {
   finish: 'Say Less',
   resultTitle: 'Say',
   resultAccent: 'Less.',
-  submit: "Let's talk",
+  submit: "Let's Talk",
   backToQuestions: 'Back to questions',
   emailSubject: 'Home-13 — Custody infrastructure enquiry',
   draftNotice: 'Continue in your email app to send this enquiry to EMFI.',

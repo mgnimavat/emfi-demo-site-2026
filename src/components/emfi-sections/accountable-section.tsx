@@ -22,6 +22,17 @@ const brandLogoSrc: Record<string, string> = {
   "/brand/auditors/bdo.png": "/brand/auditors/bdo-white.png",
 };
 const brandMarkSrc: Record<string, string> = {
+  "/brand/regulators/fca.svg?v=2": "/brand/regulators/fca-light.svg",
+  "/brand/regulators/dfsa.png": "/brand/regulators/dfsa-light.png",
+  "/brand/regulators/cima.png": "/brand/regulators/cima-light.png",
+  "/brand/auditors/baker-tilly.png": "/brand/auditors/baker-tilly-light.png",
+  "/brand/auditors/buzzacott.png": "/brand/auditors/buzzacott-light.png",
+  "/brand/auditors/bdo.png": "/brand/auditors/bdo-light.png",
+  "/brand/standing/emta.svg": "/brand/standing/emta-light.svg",
+  "/brand/standing/cisi.png": "/brand/standing/cisi-light.png",
+  "/brand/standing/bloomberg.png": "/brand/standing/bloomberg-light.png",
+};
+const inkMarkSrc: Record<string, string> = {
   "/brand/regulators/fca.svg?v=2": "/brand/regulators/fca-brand.svg",
   "/brand/regulators/dfsa.png": "/brand/regulators/dfsa-brand.png",
   "/brand/regulators/cima.png": "/brand/regulators/cima-brand.png",
@@ -103,7 +114,6 @@ const slides = [
       src: item.logo,
       width: item.logoWidth,
       height: item.logoHeight,
-      entities: item.entries.map((entry) => entry.entity),
     })),
   },
   {
@@ -145,16 +155,18 @@ function logoEntities(item: LogoItem) {
   return item.entities?.length ? item.entities : null;
 }
 
-function PlainEvidenceLogos({ slide }: { slide: (typeof slides)[number] }) {
+function PlainEvidenceLogos({ slide, ink = false }: { slide: (typeof slides)[number]; ink?: boolean }) {
+  const marks = ink ? inkMarkSrc : brandMarkSrc;
   return (
     <div className={styles.plainRow}>
       {slide.kind === "logos"
         ? (slide.items as LogoItem[]).map((item) => {
             const entities = logoEntities(item);
+            const large = slide.title.startsWith("Authorised");
             return (
-              <div key={item.name} className={[styles.plainItem, item.name === "Financial Conduct Authority" && styles.plainItemFca, item.name === "BDO" && styles.plainItemBdo, entities && styles.plainItemWithEntities].filter(Boolean).join(" ")}>
+              <div key={item.name} className={[styles.plainItem, large && styles.plainItemLarge, item.name === "Financial Conduct Authority" && styles.plainItemFca, item.name === "BDO" && styles.plainItemBdo, entities && styles.plainItemWithEntities].filter(Boolean).join(" ")}>
                 <div className={styles.plainLogo}>
-                  <Image src={brandMarkSrc[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
+                  <Image src={marks[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
                 </div>
                 {entities ? (
                   <ul className={styles.plainEntities}>
@@ -175,21 +187,21 @@ function PlainEvidenceLogos({ slide }: { slide: (typeof slides)[number] }) {
   );
 }
 
-function PlainEvidenceContent({ slide }: { slide: (typeof slides)[number] }) {
+function PlainEvidenceContent({ slide, ink = false }: { slide: (typeof slides)[number]; ink?: boolean }) {
   return (
     <>
       <h3 className={styles.plainTitle}>{plainTitle(slide)}</h3>
-      <PlainEvidenceLogos slide={slide} />
+      <PlainEvidenceLogos slide={slide} ink={ink} />
     </>
   );
 }
 
-function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = false, open = false }: { slide: (typeof slides)[number]; plain?: boolean; centered?: boolean; brandLogos?: boolean; open?: boolean }) {
+function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = false, open = false, ink = false }: { slide: (typeof slides)[number]; plain?: boolean; centered?: boolean; brandLogos?: boolean; open?: boolean; ink?: boolean }) {
   const title = plain || open ? slide.title.replace(/\.$/, "") : slide.title;
   if (open) {
     return (
       <div className={styles.plainSlide}>
-        <PlainEvidenceContent slide={slide} />
+        <PlainEvidenceContent slide={slide} ink={ink} />
       </div>
     );
   }
@@ -232,6 +244,8 @@ export function AccountableSection({
   brandLogos = false,
   eyebrow,
   shortWhy = false,
+  brandInk = false,
+  pairedCue = false,
 }: {
   cols: string;
   canReplay: boolean;
@@ -246,6 +260,8 @@ export function AccountableSection({
   brandLogos?: boolean;
   eyebrow?: string;
   shortWhy?: boolean;
+  brandInk?: boolean;
+  pairedCue?: boolean;
 }) {
   const [index, setIndex] = useState(0);
   const [run, setRun] = useState(0);
@@ -292,7 +308,7 @@ export function AccountableSection({
             align={centered || pinned ? "center" : "start"}
           />
         </div>
-        <div className={pinned ? `${chapterStyles.pinVisual} ${styles.plainVisual}${shortWhy ? ` ${styles.plainWide}` : ""}` : undefined} style={pinned ? { containerType: "inline-size" } : { ...cardStyle, containerType: "inline-size", width: centered ? "100%" : undefined, paddingTop: `calc(${!staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding}${centered ? ` + ${centeredCardSpace}` : ""})`, paddingBottom: centered ? `calc(${cardStyle.padding} + ${centeredCardSpace})` : cardStyle.padding }}>
+        <div className={pinned ? `${chapterStyles.pinVisual} ${styles.plainVisual}${shortWhy ? ` ${styles.plainWide}` : ""}${brandInk ? ` ${styles.plainInk}` : ""}` : undefined} style={pinned ? { containerType: "inline-size" } : { ...cardStyle, containerType: "inline-size", width: centered ? "100%" : undefined, paddingTop: `calc(${!staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding}${centered ? ` + ${centeredCardSpace}` : ""})`, paddingBottom: centered ? `calc(${cardStyle.padding} + ${centeredCardSpace})` : cardStyle.padding }}>
           {staticStandards ? <StandardsPanel centered={centered} /> : null}
           {!staticStandards && showReplay && canReplay ? <ReplayButton onClick={replay} /> : null}
           {!staticStandards && canReplay ? (
@@ -324,10 +340,13 @@ export function AccountableSection({
                         transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
                         style={{ transformOrigin: "center center" }}
                       >
-                        <PlainEvidenceLogos slide={slide} />
+                        <PlainEvidenceLogos slide={slide} ink={brandInk} />
                       </motion.div>
                     </AnimatePresence>
                   </div>
+                  <p className={styles.slideDisclaimer}>
+                    Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.
+                  </p>
                 </div>
               </div>
             ) : (
@@ -341,23 +360,18 @@ export function AccountableSection({
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <EvidenceSlide slide={slide} plain={standardsEyebrow} centered={centered || pinned} brandLogos={brandLogos} open={pinned} />
+                    <EvidenceSlide slide={slide} plain={standardsEyebrow} centered={centered || pinned} brandLogos={brandLogos} open={pinned} ink={brandInk} />
                   </motion.div>
                 </AnimatePresence>
               </div>
             )
           ) : !staticStandards ? (
             <div className={styles.stack}>
-              {slides.map((item) => <EvidenceSlide key={item.title} slide={item} plain={standardsEyebrow} centered={centered || pinned} brandLogos={brandLogos} open={pinned} />)}
+              {slides.map((item) => <EvidenceSlide key={item.title} slide={item} plain={standardsEyebrow} centered={centered || pinned} brandLogos={brandLogos} open={pinned} ink={brandInk} />)}
             </div>
           ) : null}
         </div>
-        {shortWhy && pinned ? (
-          <p className={styles.slideDisclaimer}>
-            Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.
-          </p>
-        ) : null}
-        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} /> : <SectionAction href="/why-emfi" label="Learn More" />) : null}
+        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/why-emfi" : undefined} /> : <SectionAction href="/why-emfi" label="Learn More" />) : null}
       </div>
     </section>
   );
