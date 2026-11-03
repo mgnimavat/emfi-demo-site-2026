@@ -10,9 +10,10 @@ type ServiceHeroProps = {
   typewriter?: { prefix: string; words: readonly string[] };
   visual?: ReactNode;
   taglineClassName?: string;
+  headlineClassName?: string;
 };
 
-export const ServiceHero = ({ lines, phrases, typewriter, visual, taglineClassName }: ServiceHeroProps) => (
+export const ServiceHero = ({ lines, phrases, typewriter, visual, taglineClassName, headlineClassName }: ServiceHeroProps) => (
   <section className={heroStyles.hero}>
     <div className={heroStyles.container}>
       <div className={heroStyles.heroGrid}>
@@ -23,10 +24,11 @@ export const ServiceHero = ({ lines, phrases, typewriter, visual, taglineClassNa
               prefix={typewriter.prefix}
               words={typewriter.words}
               taglineClassName={taglineClassName}
+              headlineClassName={headlineClassName}
             />
           ) : (
             <>
-              <h1>
+              <h1 className={headlineClassName}>
                 {lines.map((line) => <span key={line}>{line}</span>)}
               </h1>
               <ExecutionHeroPhrases phrases={phrases} />

@@ -5,9 +5,13 @@
 .heroCopy { container-type: inline-size; }
 .hero h1 { font-family: var(--font-inter), Inter, Arial, sans-serif; font-size: min(clamp(70px,10vw,132px),16cqw); font-weight: 800; line-height: .94; letter-spacing: -.045em; -webkit-text-stroke: .006em currentColor; }
 .hero h1.spacedLines { line-height: 1.05; letter-spacing: -.05em; }
+.hero h1.twoLineHeadline { font-size: min(clamp(70px, 10vw, 132px), 14cqw); }
 .hero h1 > span { display: block; }
 .headline { white-space: pre-line; }
-.strapline { display: grid; position: relative; max-width: 100%; margin-top: 26px; font-size: clamp(20px,7.2cqw,58px); font-weight: 300; line-height: 1.25; letter-spacing: -.03em; white-space: nowrap; }
+@media (min-width: 600px) {
+  .hero h1.wideHeadline { width: max-content; white-space: pre; }
+}
+.strapline { display: grid; position: relative; max-width: 100%; margin-top: 26px; font-size: clamp(20px,7.2cqw,58px); font-weight: 300; line-height: 1.25; letter-spacing: -.03em; white-space: normal; }
 .withFixed { display: flex; align-items: baseline; gap: .35em; }
 .rotator { display: grid; position: relative; }
 .reserve { grid-area: 1 / 1; visibility: hidden; padding-right: 5px; }

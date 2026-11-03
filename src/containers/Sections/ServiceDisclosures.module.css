@@ -96,6 +96,16 @@
 }
 
 .panelAction .introduction { text-align: left; }
+.panelAction .title {
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+}
+.panelAction .copy p {
+  font-size: 16px;
+  line-height: 1.65;
+}
 .panelAction .copy .action { margin-top: var(--space-6); }
 
 @media (max-width: 799px) {

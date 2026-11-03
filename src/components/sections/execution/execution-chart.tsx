@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import type { ExecutionSecurity } from "@/content/execution-securities";
+import { MaskedWorkstationValue } from '@/containers/Sections/WorkstationPrivacy';
 import styles from "./execution-chart.module.css";
 
 const ranges = [
@@ -22,7 +23,7 @@ const axisDate = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "shor
 const tooltipDate = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
 const timeFormat = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "UTC" });
 
-export function ExecutionChart({ security, staticPreview = false }: { security: ExecutionSecurity; staticPreview?: boolean }) {
+export function ExecutionChart({ security, staticPreview = false, controlsEnabled = !staticPreview }: { security: ExecutionSecurity; staticPreview?: boolean; controlsEnabled?: boolean }) {
   const [range, setRange] = useState<Range>("1M");
   const [cursor, setCursor] = useState<number | null>(null);
   const [size, setSize] = useState({ width: 820, height: 380 });
@@ -93,15 +94,15 @@ export function ExecutionChart({ security, staticPreview = false }: { security: 
   }
 
   const tooltipX = cursor === null ? left : Math.min(Math.max(x(cursor) - 80, left), right - 160);
-  return <figure className={styles.chart} aria-label={`${security.symbol} demo price chart`}>
+  return <figure className={styles.chart} aria-label={`${staticPreview ? "Sample security" : security.symbol} demo price chart`}>
     <div className={styles.header}>
-      <span className={styles.title}><strong>{security.symbol}</strong></span>
-      <div className={styles.ranges} role="group" aria-label="Chart time range">{ranges.map((item) => <button key={item.label} type="button" disabled={staticPreview} aria-pressed={range === item.label} aria-controls={`${id}-plot`} onClick={() => { setRange(item.label); setCursor(null); }}>{item.label}</button>)}</div>
+      <span className={styles.title}><strong>{staticPreview ? <MaskedWorkstationValue value={security.symbol} /> : security.symbol}</strong></span>
+      <div className={styles.ranges} role="group" aria-label="Chart time range">{ranges.map((item) => <button key={item.label} type="button" disabled={!controlsEnabled} aria-pressed={range === item.label} aria-controls={`${id}-plot`} onClick={() => { setRange(item.label); setCursor(null); }}>{item.label}</button>)}</div>
     </div>
     <div ref={plotRef} className={styles.plot}>
-      <svg id={`${id}-plot`} viewBox={`0 0 ${size.width} ${size.height}`} className={styles.svg} role="img" aria-labelledby={`${id}-title ${id}-description`} tabIndex={staticPreview ? undefined : 0} onPointerMove={staticPreview ? undefined : move} onPointerLeave={staticPreview ? undefined : () => setCursor(null)} onFocus={staticPreview ? undefined : () => setCursor(data.length - 1)} onBlur={staticPreview ? undefined : () => setCursor(null)} onKeyDown={staticPreview ? undefined : keyDown}>
-        <title id={`${id}-title`}>{`${security.name} · ${range} demo price chart`}</title>
-        <desc id={`${id}-description`}>Synthetic USD prices for a local demonstration, not historical or live market data. {staticPreview ? "" : "Use Left and Right arrow keys to explore points, or Home and End to jump to the first and last point."}</desc>
+      <svg id={`${id}-plot`} viewBox={`0 0 ${size.width} ${size.height}`} className={styles.svg} role="img" aria-labelledby={`${id}-title ${id}-description`} tabIndex={!controlsEnabled ? undefined : 0} onPointerMove={!controlsEnabled ? undefined : move} onPointerLeave={!controlsEnabled ? undefined : () => setCursor(null)} onFocus={!controlsEnabled ? undefined : () => setCursor(data.length - 1)} onBlur={!controlsEnabled ? undefined : () => setCursor(null)} onKeyDown={!controlsEnabled ? undefined : keyDown}>
+        <title id={`${id}-title`}>{`${staticPreview ? "Sample security" : security.name} · ${range} demo price chart`}</title>
+        <desc id={`${id}-description`}>Synthetic USD prices for a local demonstration, not historical or live market data. {!controlsEnabled ? "" : "Use Left and Right arrow keys to explore points, or Home and End to jump to the first and last point."}</desc>
         <defs><linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#4d6fb8" stopOpacity=".24" /><stop offset="100%" stopColor="#dce8f8" stopOpacity=".03" /></linearGradient></defs>
         <g className={styles.yTicks}>{ticks.map((tick) => <g key={tick}><line x1={left} x2={right} y1={y(tick)} y2={y(tick)} /><text x={left - 12} y={y(tick)} dominantBaseline="middle" textAnchor="end">{priceFormat.format(tick)}</text></g>)}</g>
         <line x1={left} x2={right} y1={y(lastPrice)} y2={y(lastPrice)} stroke="#8098cc" strokeOpacity=".45" strokeDasharray="4 5" />

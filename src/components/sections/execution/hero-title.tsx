@@ -24,6 +24,7 @@ type ExecutionHeroTitleProps = {
   prefix?: string;
   words?: readonly string[];
   taglineClassName?: string;
+  headlineClassName?: string;
 };
 
 export const ExecutionHeroTitle = ({
@@ -31,6 +32,7 @@ export const ExecutionHeroTitle = ({
   prefix = execution.heroTitle.prefix,
   words = execution.heroTitle.words,
   taglineClassName,
+  headlineClassName,
 }: ExecutionHeroTitleProps) => {
   const reduced = useSyncExternalStore(subscribeToMotion, getReducedMotion, getServerMotion);
   const [frame, setFrame] = useState<Frame>({
@@ -71,9 +73,9 @@ export const ExecutionHeroTitle = ({
 
   return (
     <>
-      <h1 className={styles.headline}>{headline}</h1>
+      <h1 className={`${styles.headline} ${headlineClassName ?? ''}`}>{headline}</h1>
       <p className={`${styles.strapline} ${taglineClassName ?? ''}`}>
-        <span className="sr-only">{words.map((text) => `${prefix} ${text}.`).join(' ')}</span>
+        <span className="sr-only">{words.map((text) => `${prefix} ${text}${text.endsWith('.') ? '' : '.'}`).join(' ')}</span>
         {words.map((text) => (
           <span key={text} className={styles.reserve} aria-hidden="true">{prefix} {text}</span>
         ))}

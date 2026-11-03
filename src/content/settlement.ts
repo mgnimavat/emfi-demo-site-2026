@@ -4,8 +4,8 @@ export const settlement = {
   heroLines: ["Settlement &", "Custody"],
   heroPhrases: ["From trade to settlement.", "Clear custody. Clear view.", "One connected relationship."],
   heroTypewriter: {
-    prefix: 'Your assets.',
-    words: ['visible', 'accounted for', 'in view'],
+    prefix: 'Your assets,',
+    words: ['visible.', 'accounted for.', 'in view.'],
   },
   overview: {
     title: 'Nothing left in the dark.',
