@@ -16,6 +16,16 @@
   justify-content: center !important;
 }
 
+.home-20 [class*="whyPinMarkers"]:not([data-why-form-progress]) {
+  top: clamp(24px, 4vh, 48px) !important;
+  height: calc(100% - 2 * clamp(24px, 4vh, 48px)) !important;
+  transform: none !important;
+}
+
+.home-20 [class*="whyPinMarkers"] > [class*="whyPinStep"]:not([class*="whyPinStepDone"], [class*="whyPinStepActive"]) {
+  background-color: #fff;
+}
+
 .home-20 .section-bottom-action-row {
   display: flex;
   align-items: center;

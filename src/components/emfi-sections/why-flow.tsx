@@ -168,7 +168,9 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
         const railRect = rail.getBoundingClientRect();
         const activeRect = marks[step - 1].getBoundingClientRect();
         const end = activeRect.top + activeRect.height / 2;
-        const fillPx = Math.max(0, Math.min(railRect.height, end - railRect.top));
+        const toActive = Math.max(0, Math.min(railRect.height, end - railRect.top));
+        const leaving = step >= steps ? Math.max(0, Math.min(1, (progress - (steps - 0.5) / steps) * 2 * steps)) : 0;
+        const fillPx = toActive + leaving * (railRect.height - toActive);
         fill.style.width = "100%";
         fill.style.height = `${fillPx}px`;
         fill.style.backgroundSize = "100% 100%";
@@ -349,6 +351,16 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
     };
   }, [active, stickyLabel]);
 
+  const goToStep = (n: number) => {
+    const flow = ref.current;
+    if (!flow) return;
+    const steps = stageRef.current?.querySelectorAll("[data-why-slide]").length || 1;
+    const start = flow.getBoundingClientRect().top + window.scrollY;
+    const distance = Math.max(1, flow.offsetHeight - window.innerHeight);
+    wheelLockRef.current.coolUntil = performance.now() + 720;
+    window.scrollTo({ top: start + distance * Math.min((n - 0.5) / steps, 0.999), behavior: "smooth" });
+  };
+
   const rail = <Rail railRef={railRef} fillRef={fillRef} elbowRef={elbowRef} elbowFillRef={elbowFillRef} pulseRef={pulseRef} />;
 
   if (stickyLabel) {
@@ -361,7 +373,7 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
               <div ref={slotRef} className={styles.whyStickySlot} aria-hidden="true">
                 <p className={shortWhy ? `${styles.whyStickyWord} ${styles.whyWordLarge}` : styles.whyStickyWord}><span>{shortWhy ? "Why" : "Why EMFI"}</span></p>
               </div>
-              <div className={[styles.whyPinMarkers, formProgress ? styles.whyFormProgress : "", shortWhy ? styles.whyPinMarkersOut : ""].filter(Boolean).join(" ")} data-why-pin-markers data-why-form-progress={formProgress ? "" : undefined} aria-hidden="true">
+              <div className={[styles.whyPinMarkers, formProgress ? styles.whyFormProgress : "", shortWhy ? styles.whyPinMarkersOut : ""].filter(Boolean).join(" ")} data-why-pin-markers data-why-form-progress={formProgress ? "" : undefined} aria-hidden={formProgress ? "true" : undefined}>
                 {formProgress ? (
                   <>
                     <span className={styles.whyFormTrack} aria-hidden="true">{rail}</span>
@@ -370,9 +382,17 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
                 ) : (
                   <>
                     {[1, 2, 3].map((n) => (
-                      <span key={n} data-why-pin-marker className={n === active ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep} aria-hidden="true">
+                      <button
+                        key={n}
+                        type="button"
+                        data-why-pin-marker
+                        className={n === active ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep}
+                        aria-label={`Go to step ${n}`}
+                        aria-current={n === active ? "step" : undefined}
+                        onClick={() => goToStep(n)}
+                      >
                         {n}
-                      </span>
+                      </button>
                     ))}
                     <span aria-hidden="true">{rail}</span>
                   </>

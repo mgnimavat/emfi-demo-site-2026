@@ -12,7 +12,7 @@ export const metadata = { title: "About", description: about.body };
 const AboutPage = () => {
   return (
     <div className={`${styles.page} about-page`}>
-      <AboutTimeline headingAs="h1" showCounter={false} />
+      <AboutTimeline headingAs="h1" showCounter={false} showMark={false} />
       <section className={styles.peopleBand} aria-labelledby="people-heading">
         <div className={styles.section}>
           <div className={styles.container}>

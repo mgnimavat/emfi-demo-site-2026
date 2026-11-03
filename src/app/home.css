@@ -1,0 +1,89 @@
+.home-page [class*="whyPinStage"],
+.home-page [class*="whyPinStage"][data-why-step] {
+  background: #e6effb;
+}
+
+.home-page [class*="whyPinSlide"] #accountable {
+  background: transparent !important;
+}
+
+.home-page #accountable [class*="plainRow"] {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: auto minmax(24px, 1fr);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-inline: clamp(12px, 5cqw, 48px);
+}
+
+.home-page #accountable [class*="plainItem"] {
+  display: contents;
+}
+
+.home-page #accountable [class*="plainItem"] + [class*="plainItem"]::before {
+  content: "";
+  justify-self: center;
+  width: 1px;
+  height: 88px;
+  background: #d0d8e6;
+}
+
+.home-page #accountable [class*="plainLogo"] {
+  display: flex;
+  width: auto;
+  height: auto;
+  min-height: 0;
+}
+
+.home-page #accountable [class*="plainItem"] [class*="plainLogo"] img {
+  width: auto;
+  height: 72px;
+  max-width: 24cqw;
+  max-height: none;
+  aspect-ratio: auto;
+  object-fit: contain;
+  transform: none;
+}
+
+.home-page #accountable [class*="plainItemLarge"] [class*="plainLogo"] img {
+  height: 110px;
+}
+
+.home-page #accountable [class*="plainItemFca"] [class*="plainLogo"] img {
+  height: 95px;
+}
+
+.home-page #accountable [class*="plainItemBdo"] [class*="plainLogo"] img {
+  height: 47px;
+}
+
+@media (max-width: 759px) {
+  .home-page #accountable [class*="plainItem"] + [class*="plainItem"]::before {
+    height: 64px;
+  }
+
+  .home-page #accountable [class*="plainItem"] [class*="plainLogo"] img {
+    height: 52px;
+  }
+
+  .home-page #accountable [class*="plainItemLarge"] [class*="plainLogo"] img {
+    height: 76px;
+  }
+
+  .home-page #accountable [class*="plainItemFca"] [class*="plainLogo"] img {
+    height: 61px;
+  }
+
+  .home-page #accountable [class*="plainItemBdo"] [class*="plainLogo"] img {
+    height: 34px;
+  }
+}
+
+.home-page [class*="chapter"] [class*="whyPinStage"] [class*="whyStickyWord"] span {
+  background-image: linear-gradient(160deg, #527295, #446487);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
