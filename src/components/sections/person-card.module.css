@@ -63,6 +63,8 @@
   .boardCard .photo, .inset .photo { transform: scale(0.9); transform-origin: center top; }
   .card:is(:hover, :focus, :focus-within) .photo { transform: scale(1.03); }
   .boardCard:is(:hover, :focus, :focus-within) .photo, .inset:is(:hover, :focus, :focus-within) .photo { transform: scale(0.93); }
+  .raised .photo { transform: scale(0.8); transform-origin: center top; }
+  .raised:is(:hover, :focus, :focus-within) .photo { transform: scale(0.83); }
   .body { position: absolute; z-index: 2; inset: auto 0 0; display: flex; flex-direction: column; padding: 22px 24px; }
   .name { position: relative; align-self: stretch; font-size: 21px; text-align: left; }
   .details { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.22, 1, .36, 1); }

@@ -1,10 +1,10 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, Check, ShieldCheck } from 'lucide-react';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { settlement } from '@/content/settlement';
 import { ServiceDisclosures } from './ServiceDisclosures';
 import { SettlementDashboard } from './SettlementDashboard';
+import { SettlementMobileHoldings } from './SettlementMobileHoldings';
 import styles from './SettlementCustodySections.module.css';
 
 const SettlementOverview = () => {
@@ -77,7 +77,7 @@ const CustodySafeguarding = () => {
             </div>
           </div>
           <ExecutionReveal delay={0.12} className={styles.mobileVisual}>
-            <Image src={content.mobileImage} alt={content.mobileAlt} width={489} height={1024} className={styles.mobileImage} />
+            <SettlementMobileHoldings />
           </ExecutionReveal>
         </div>
         <p className={`${styles.body} ${styles.related}`}>

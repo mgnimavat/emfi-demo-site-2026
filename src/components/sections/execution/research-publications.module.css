@@ -99,8 +99,7 @@
 .sourceLink:hover { text-decoration: underline; text-underline-offset: 4px; }
 .accordionResults { scroll-margin-top: calc(var(--site-header-height, 78px) + var(--space-5)); }
 .loadMoreRow { display: flex; align-items: center; justify-content: center; gap: var(--space-4); margin-top: var(--space-6); }
-.loadMoreRow button { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 48px; padding: var(--space-3) var(--space-5); border: 1px solid color-mix(in srgb, var(--color-blue-200) 55%, transparent); border-radius: var(--radius-pill); background: var(--research-more-background, var(--text-primary)); color: var(--research-more-color, var(--text-inverse)); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
-.loadMoreRow button:hover { background: var(--research-more-hover, var(--action-hover)); }
+.loadMoreRow button { position: relative; left: auto; bottom: auto; transform: none; font-family: inherit; cursor: pointer; }
 .loadMoreRow button:disabled { opacity: .5; cursor: default; }
 .emptyState { display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-8) var(--space-5); border: 1px dashed var(--border-strong); border-radius: var(--radius-card); background: var(--bg-page); text-align: center; }
 .emptyState h4, .emptyState p { margin: 0; }
