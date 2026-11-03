@@ -83,6 +83,7 @@ export const about = {
     {
       name: "Atif Rashid",
       role: "Finance & Compliance",
+      photo: "/people/atif-rashid-3.jpg",
       board: true,
       description:
         "Maintains financial controls, regulatory compliance and accountability across the business.",
@@ -90,6 +91,7 @@ export const about = {
     {
       name: "Shamroz Bashir",
       role: "Risk & Reporting",
+      photo: "/people/shamroz-bashir-3.jpg",
       board: true,
       description:
         "Oversees risk, exposures and controls to support informed decision-making.",
@@ -97,6 +99,7 @@ export const about = {
     {
       name: "Gustavo Rodrigues",
       role: "Onboarding & KYC",
+      photo: "/people/gustavo-rodrigues-3.jpg",
       board: true,
       description:
         "Leads client onboarding, KYC and due diligence to establish the right relationships.",
@@ -104,24 +107,28 @@ export const about = {
     {
       name: "Robert Hagon",
       role: "Institutional Coverage",
+      photo: "/people/robert-hagon-3.jpg",
       description:
         "Builds and manages institutional relationships, connecting client requirements with the right EMFI capabilities.",
     },
     {
       name: "Mark Cleary",
       role: "Execution, Settlement & Custody",
+      photo: "/people/mark-cleary-3.jpg",
       description:
         "Coordinates execution, settlement and custody to keep the client relationship connected end to end.",
     },
     {
       name: "Jose Bermudez",
       role: "Wealth & Asset Management",
+      photo: "/people/jose-bermudez-4.jpg",
       description:
         "Manages portfolios and investment mandates within EMFI’s broader execution and custody framework.",
     },
     {
       name: "Guillermo Guerrero",
       role: "Research",
+      photo: "/people/guillermo-guerrero-3.jpg",
       description:
         "Provides market and investment research that supports institutional decisions and execution.",
     },
@@ -134,24 +141,28 @@ export const about = {
     {
       name: "Matias Montes",
       role: "Strategy",
+      photo: "/people/matias-montes-5.jpg",
       description:
         "Connects EMFI’s capabilities, people and technology into one operating direction.",
     },
     {
       name: "Zee Amin",
       role: "Operations",
+      photo: "/people/zee-amin-3.jpg",
       description:
         "Ensures instructions move through matching, settlement, exceptions and reporting.",
     },
     {
       name: "Kishan Lashkari",
       role: "Information Technology",
+      photo: "/people/kishan-lashkari-5.jpg",
       description:
         "Leading technology operations, cybersecurity, regulatory compliance, and strategic delivery at EMFI.",
     },
     {
       name: "Dinesh Chouhan",
       role: "Software Development",
+      photo: "/people/dinesh-chouhan-5.jpg",
       description:
         "Leading software development, modern architecture, and secure, scalable application delivery at EMFI.",
     },
