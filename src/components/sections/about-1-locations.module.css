@@ -147,18 +147,10 @@
   pointer-events: none;
 }
 
-.detailsLink {
+.details {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  color: inherit;
-  text-decoration: none;
-  pointer-events: auto;
-}
-
-.detailsLink:focus-visible {
-  outline: 2px solid var(--action-focus);
-  outline-offset: 4px;
 }
 
 .body h3 {
@@ -174,15 +166,10 @@
   font-size: 15px;
   font-weight: 700;
   line-height: 1.4;
+  min-height: 2.8em;
 }
 
-.kicker span { display: inline; }
-
-.kicker span + span::before {
-  content: "·";
-  margin-inline: 0.45em;
-  font-weight: 400;
-}
+.kicker span { display: block; }
 
 .address {
   display: flex;
@@ -207,6 +194,7 @@
   font-size: 14px;
   font-style: normal;
   line-height: 1.55;
+  min-height: 6.2em;
 }
 
 .address address span { display: block; }
@@ -216,7 +204,16 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+  min-height: 76px;
   pointer-events: auto;
+}
+
+@container (min-width: 380px) {
+  .contacts {
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: 0;
+  }
 }
 
 .contacts a {
@@ -224,6 +221,7 @@
   align-items: center;
   gap: 12px;
   width: fit-content;
+  white-space: nowrap;
   color: #24344b;
   font-size: 14px;
   line-height: 1.55;
@@ -241,6 +239,7 @@
 @media (max-width: 900px) {
   .columns { grid-template-columns: 1fr; }
   .column { min-height: calc(100cqw * 1.5); }
+  .kicker, .contacts, .address address { min-height: 0; }
 }
 
 @media (max-width: 599px) {

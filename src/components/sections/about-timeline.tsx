@@ -5,7 +5,7 @@ import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer
 import { about } from "@/content/about";
 import styles from "./about-timeline.module.css";
 
-export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true }: { headingAs?: "h1" | "h2"; showCounter?: boolean }) => {
+export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true, showMark = true }: { headingAs?: "h1" | "h2"; showCounter?: boolean; showMark?: boolean }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
@@ -60,10 +60,12 @@ export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true }:
   return (
     <section id="about-journey" ref={sectionRef} className={styles.timeline} data-static={Boolean(reduceMotion)} aria-labelledby="timeline-heading">
       <div className={styles.stage}>
-        <div className={styles.mark} aria-hidden="true">
-          <span className={styles.markScreen} />
-          <span className={styles.markMultiply} />
-        </div>
+        {showMark ? (
+          <div className={styles.mark} aria-hidden="true">
+            <span className={styles.markScreen} />
+            <span className={styles.markMultiply} />
+          </div>
+        ) : null}
         <div className={styles.inner}>
           <div className={styles.heading}>
             <Heading id="timeline-heading">{about.yearsEyebrow}</Heading>

@@ -42,6 +42,12 @@ const inkMarkSrc: Record<string, string> = {
   "/brand/standing/emta.svg": "/brand/standing/emta-brand.svg",
   "/brand/standing/cisi.png": "/brand/standing/cisi-brand.png",
   "/brand/standing/bloomberg.png": "/brand/standing/bloomberg-brand.png",
+  "/brand/press/reuters.svg": "/brand/press/reuters-brand.svg",
+  "/brand/press/wsj.svg": "/brand/press/wsj-brand.svg",
+  "/brand/press/nyt.svg": "/brand/press/nyt-brand.svg",
+};
+const grayMarkSrc: Record<string, string> = {
+  "/brand/standing/cisi.png": "/brand/standing/cisi-gray.png",
 };
 
 function StandardsEyebrow({ centered = false }: { centered?: boolean }) {
@@ -142,8 +148,12 @@ const slides = [
   },
   {
     title: "Quoted in",
-    kind: "pills" as const,
-    items: ["Reuters", "WSJ", "NYT"],
+    kind: "logos" as const,
+    items: [
+      { name: "Reuters", src: "/brand/press/reuters.svg", width: 280, height: 70 },
+      { name: "The Wall Street Journal", src: "/brand/press/wsj.svg", width: 64, height: 64 },
+      { name: "The New York Times", src: "/brand/press/nyt.svg", width: 184, height: 25 },
+    ] satisfies LogoItem[],
   },
 ];
 
@@ -155,8 +165,8 @@ function logoEntities(item: LogoItem) {
   return item.entities?.length ? item.entities : null;
 }
 
-function PlainEvidenceLogos({ slide, ink = false }: { slide: (typeof slides)[number]; ink?: boolean }) {
-  const marks = ink ? inkMarkSrc : brandMarkSrc;
+function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: (typeof slides)[number]; ink?: boolean; gray?: boolean }) {
+  const marks = gray ? { ...brandMarkSrc, ...grayMarkSrc } : ink ? inkMarkSrc : brandMarkSrc;
   return (
     <div className={styles.plainRow}>
       {slide.kind === "logos"
@@ -187,21 +197,21 @@ function PlainEvidenceLogos({ slide, ink = false }: { slide: (typeof slides)[num
   );
 }
 
-function PlainEvidenceContent({ slide, ink = false }: { slide: (typeof slides)[number]; ink?: boolean }) {
+function PlainEvidenceContent({ slide, ink = false, gray = false }: { slide: (typeof slides)[number]; ink?: boolean; gray?: boolean }) {
   return (
     <>
       <h3 className={styles.plainTitle}>{plainTitle(slide)}</h3>
-      <PlainEvidenceLogos slide={slide} ink={ink} />
+      <PlainEvidenceLogos slide={slide} ink={ink} gray={gray} />
     </>
   );
 }
 
-function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = false, open = false, ink = false }: { slide: (typeof slides)[number]; plain?: boolean; centered?: boolean; brandLogos?: boolean; open?: boolean; ink?: boolean }) {
+function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = false, open = false, ink = false, gray = false }: { slide: (typeof slides)[number]; plain?: boolean; centered?: boolean; brandLogos?: boolean; open?: boolean; ink?: boolean; gray?: boolean }) {
   const title = plain || open ? slide.title.replace(/\.$/, "") : slide.title;
   if (open) {
     return (
       <div className={styles.plainSlide}>
-        <PlainEvidenceContent slide={slide} ink={ink} />
+        <PlainEvidenceContent slide={slide} ink={ink} gray={gray} />
       </div>
     );
   }
@@ -245,6 +255,7 @@ export function AccountableSection({
   eyebrow,
   shortWhy = false,
   brandInk = false,
+  grayLogos = false,
   pairedCue = false,
 }: {
   cols: string;
@@ -261,6 +272,7 @@ export function AccountableSection({
   eyebrow?: string;
   shortWhy?: boolean;
   brandInk?: boolean;
+  grayLogos?: boolean;
   pairedCue?: boolean;
 }) {
   const [index, setIndex] = useState(0);
@@ -340,7 +352,7 @@ export function AccountableSection({
                         transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
                         style={{ transformOrigin: "center center" }}
                       >
-                        <PlainEvidenceLogos slide={slide} ink={brandInk} />
+                        <PlainEvidenceLogos slide={slide} ink={brandInk} gray={grayLogos} />
                       </motion.div>
                     </AnimatePresence>
                   </div>
@@ -360,14 +372,14 @@ export function AccountableSection({
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <EvidenceSlide slide={slide} plain={standardsEyebrow} centered={centered || pinned} brandLogos={brandLogos} open={pinned} ink={brandInk} />
+                    <EvidenceSlide slide={slide} plain={standardsEyebrow} centered={centered || pinned} brandLogos={brandLogos} open={pinned} ink={brandInk} gray={grayLogos} />
                   </motion.div>
                 </AnimatePresence>
               </div>
             )
           ) : !staticStandards ? (
             <div className={styles.stack}>
-              {slides.map((item) => <EvidenceSlide key={item.title} slide={item} plain={standardsEyebrow} centered={centered || pinned} brandLogos={brandLogos} open={pinned} ink={brandInk} />)}
+              {slides.map((item) => <EvidenceSlide key={item.title} slide={item} plain={standardsEyebrow} centered={centered || pinned} brandLogos={brandLogos} open={pinned} ink={brandInk} gray={grayLogos} />)}
             </div>
           ) : null}
         </div>

@@ -6,8 +6,6 @@ import { about1Locations } from "@/content/about-1-locations";
 import styles from "./about-1-locations.module.css";
 
 const places = about1Locations.places;
-const mapsUrl = (query: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-
 const MIN_ZOOM = 13;
 const MAX_ZOOM = 19;
 const START_ZOOM = 16;
@@ -78,14 +76,14 @@ export const About1Locations = () => (
           <article key={place.city} className={styles.column}>
             <LocationMap place={place} />
             <div className={styles.body}>
-              <a className={styles.detailsLink} href={mapsUrl(place.mapQuery)} target="_blank" rel="noopener noreferrer">
+              <div className={styles.details}>
                 <h3>{place.city}</h3>
                 <p className={styles.kicker}>{place.kicker.map(line => <span key={line}>{line}</span>)}</p>
                 <span className={styles.address}>
                   <span className={styles.addressIcon}><MapPin size={16} aria-hidden="true" /></span>
                   <address>{place.lines.map(line => <span key={line}>{line}</span>)}</address>
                 </span>
-              </a>
+              </div>
               <div className={styles.contacts}>
                 <a href={`mailto:${place.email}`}>
                   <span className={styles.addressIcon}><Mail size={16} aria-hidden="true" /></span>
