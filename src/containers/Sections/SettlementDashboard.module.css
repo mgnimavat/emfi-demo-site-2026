@@ -12,10 +12,65 @@
 }
 
 .preview {
-  min-width: 680px;
-  height: clamp(438px, 36vw, 560px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  min-width: 960px;
+  padding: var(--space-3);
 }
 
-.preview h3 {
-  font-size: 13px;
+.card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  box-shadow: var(--elevation-card-hover);
 }
+
+.cardHeader {
+  justify-content: space-between;
+}
+
+.cardHeader h4,
+.cardHeader strong {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.chartBody { position: relative; }
+.chart { display: block; width: 100%; height: auto; }
+.chart text { fill: var(--text-muted); font-family: var(--font-inter), Inter, Arial, sans-serif; font-size: 11px; }
+.gridLine { stroke: var(--border-default); stroke-width: 1; }
+.chart [data-tone='muted'] { fill: var(--color-gray-425); }
+.chart [data-tone='light'] { fill: var(--color-blue-100); }
+.chart [data-tone='dark'] { fill: var(--color-gray-900); }
+.chart [data-tone='gray'] { fill: var(--color-gray-600); }
+.chart [data-tone='navy'] { fill: var(--color-blue-500); }
+.chart [data-tone='steel'] { fill: var(--color-blue-200); }
+.chart .donutSegment { fill: none; }
+.chart .donutSegment[data-tone='muted'] { stroke: var(--color-gray-425); }
+.chart .donutSegment[data-tone='light'] { stroke: var(--color-blue-100); }
+.chart .donutSegment[data-tone='dark'] { stroke: var(--color-gray-900); }
+
+.legend {
+  position: absolute;
+  inset-inline: 0;
+  bottom: var(--space-2);
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-muted);
+  font-size: 9px;
+}
+
+.legend li { display: inline-flex; align-items: center; gap: var(--space-1); }
+.swatch { width: 3px; height: 12px; }
+.swatch[data-tone='muted'] { background: var(--color-gray-425); }
+.swatch[data-tone='light'] { background: var(--color-blue-100); }
+.swatch[data-tone='dark'] { background: var(--color-gray-900); }

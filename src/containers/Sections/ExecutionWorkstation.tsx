@@ -34,7 +34,7 @@ export const ExecutionWorkstation = ({ maskVariant = 'initial-stars' }: { maskVa
         </div>
         <div className={styles.executionSecondaryLayout}>
           <ExecutionWatchlists staticPreview hideIsin />
-          <ExecutionTransactions staticPreview hideIsin referenceStyle={maskVariant === 'blur' ? 'full' : 'masked'} />
+          <ExecutionTransactions staticPreview compact referenceStyle="full" />
         </div>
       </fieldset>
     </WorkstationPrivacyProvider>

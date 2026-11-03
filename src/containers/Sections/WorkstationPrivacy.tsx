@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, type ReactNode } from 'react';
-import { maskedWorkstationValue } from '@/content/workstation-preview';
+import { maskWorkstationValue } from '@/content/workstation-preview';
 import styles from './WorkstationPrivacy.module.css';
 
 export type WorkstationMaskVariant = 'initial-stars' | 'blur';
@@ -20,7 +20,7 @@ export const WorkstationPrivacyProvider = ({
   </WorkstationPrivacyContext.Provider>
 );
 
-export const MaskedWorkstationValue = ({ value }: { value: string }) => {
+export const MaskedWorkstationValue = ({ value, starCount }: { value: string; starCount?: number }) => {
   const variant = useContext(WorkstationPrivacyContext);
 
   return (
@@ -29,7 +29,7 @@ export const MaskedWorkstationValue = ({ value }: { value: string }) => {
       data-workstation-mask={variant}
     >
       {variant === 'initial-stars'
-        ? `${value.trim().slice(0, 1)}${maskedWorkstationValue}`
+        ? maskWorkstationValue(value, starCount)
         : value}
     </span>
   );

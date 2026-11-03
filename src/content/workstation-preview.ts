@@ -3,6 +3,11 @@ import type { ExecutionWatchlist } from './execution-watchlists';
 
 export const maskedWorkstationValue = '*******';
 
+export const maskWorkstationValue = (
+  value: string,
+  starCount = maskedWorkstationValue.length
+): string => `${value.trim().slice(0, 1)}${'*'.repeat(starCount)}`;
+
 const quantity = 100;
 const transactionCount = 5;
 const referenceMask = 'T-*****';
