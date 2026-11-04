@@ -1,0 +1,46 @@
+.page { color: #071932; font-family: var(--font-inter), Inter, Arial, sans-serif; }
+.masthead { background: var(--hero-page-background); border-bottom: 1px solid #e4eaf2; }
+.inner { box-sizing: border-box; width: 100%; max-width: 1440px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 56px); }
+.masthead .inner { padding-block: clamp(40px, 5vw, 72px); }
+.mastheadGrid { container-type: inline-size; }
+.kicker { margin: 0 0 -6px; color: #071932; font-size: 12px; font-weight: 500; letter-spacing: .08em; line-height: 1; text-transform: uppercase; }
+.masthead h1 { margin: 0; color: #071832; font-size: clamp(32px, 5.8cqi, 72px); font-weight: 800; line-height: .95; letter-spacing: -.05em; white-space: nowrap; }
+.mastheadFoot { display: flex; align-items: center; justify-content: space-between; gap: 28px; margin-top: 14px; }
+.group { margin: 0; color: #24344b; font-size: 17px; font-weight: 500; }
+.copy { display: grid; gap: 28px; width: 100%; padding-block: clamp(36px, 5vw, 64px); }
+.lead, .section p, .lead :global(p), .section :global(p), .lead :global(li), .section :global(li) { margin: 0; color: var(--color-blue-500); font-size: 15px; font-weight: 400; line-height: 1.7; text-align: justify; hyphens: auto; }
+.lead + .lead, .lead :global(p + p), .section :global(p + p) { margin-top: 18px; }
+.lead :global(ul), .section :global(ul) { margin: 14px 0 0; padding-left: 1.25em; list-style: disc; }
+.lead :global(li + li), .section :global(li + li) { margin-top: 8px; }
+.lead a, .lead :global(a), .section :global(a) { color: var(--color-blue-550); text-underline-offset: 4px; }
+.section { padding-top: 28px; border-top: 1px solid var(--color-blue-100); }
+.section h2 { margin: 0 0 16px; color: var(--color-blue-500); font-size: clamp(24px, 1.9vw, 28px); font-weight: 700; line-height: 1.2; letter-spacing: -.035em; }
+.section p + p { margin-top: 14px; }
+.search { position: relative; width: 440px; min-width: 440px; max-width: 100%; justify-self: end; }
+.control { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 58px; padding: 6px 6px 6px 16px; border: 1px solid #d3deec; border-radius: 16px; background: #f4f7fb; color: #6a7f9c; }
+.control[data-open="true"], .control:focus-within { border-color: #8098cc; background: #fff; box-shadow: 0 0 0 4px rgb(128 152 204 / 16%); }
+.control input { width: 100%; min-width: 0; flex: 1; border: 0; background: transparent; color: #24344b; font: inherit; font-size: 15px; font-weight: 600; outline: none; text-overflow: ellipsis; }
+.control input::placeholder { color: #24344b; font-weight: 600; opacity: 1; }
+.toggle { display: grid; flex: none; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 12px; background: #d7e2f0; color: #071932; cursor: pointer; }
+.toggle svg { transition: transform .2s; }
+.toggle[data-open="true"] svg { transform: rotate(180deg); }
+.toggle:focus-visible { outline: 2px solid #8098cc; outline-offset: 2px; }
+.panel { position: absolute; z-index: 5; top: calc(100% + 10px); right: 0; left: 0; margin: 0; padding: 8px; list-style: none; border: 1px solid #d3deec; border-radius: 18px; background: #fff; box-shadow: 0 18px 48px rgb(7 25 50 / 10%); }
+.panel button { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border: 0; border-radius: 12px; background: transparent; color: #071932; font: inherit; font-size: 15px; font-weight: 650; text-align: left; white-space: nowrap; cursor: pointer; }
+.panel button span { flex: none; color: #8098cc; font-family: var(--font-ibm-plex-mono), ui-monospace, monospace; font-size: 12px; font-weight: 500; }
+.panel button[data-active="true"], .panel button:hover { background: #f4f7fb; }
+.empty { padding: 12px 14px; color: #585c65; font-size: 14px; }
+.cookies { display: grid; gap: 16px; }
+.cookies p { margin: 0; color: var(--color-blue-500); font-size: 15px; font-weight: 400; line-height: 1.7; text-align: justify; hyphens: auto; }
+.cookieCard { padding: 18px 20px; border: 1px solid #e4eaf2; border-radius: 16px; background: #fff; }
+.cookieCard label { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; color: var(--color-blue-500); font-size: clamp(24px, 1.9vw, 28px); font-weight: 700; line-height: 1.2; letter-spacing: -.035em; cursor: pointer; }
+.cookieCard input { width: 18px; height: 18px; accent-color: #071932; }
+.cookies > button { justify-self: start; min-height: 48px; margin-top: 8px; padding: 12px 28px; border: 0; border-radius: 999px; background: #071932; color: #fff; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.cookies > button:hover { background: #001a34; }
+.cookies > button:focus-visible { outline: 2px solid #8098cc; outline-offset: 3px; }
+.saved { color: #244f88; font-size: 14px; font-weight: 650; }
+@media (max-width: 799px) {
+  .masthead h1 { white-space: normal; }
+  .mastheadFoot { flex-direction: column; align-items: stretch; }
+  .search { width: 100%; min-width: 0; }
+}

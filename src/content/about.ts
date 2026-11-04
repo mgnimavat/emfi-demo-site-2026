@@ -116,7 +116,7 @@ export const about = {
     {
       name: "Mark Cleary",
       role: "Execution, Settlement & Custody",
-      photo: "/people/mark-cleary-3.jpg",
+      photo: "/people/mark-cleary-5.jpg",
       inset: true,
       description:
         "Coordinates execution, settlement and custody to keep the client relationship connected end to end.",
@@ -154,7 +154,7 @@ export const about = {
     {
       name: "Zee Amin",
       role: "Operations",
-      photo: "/people/zee-amin-3.jpg",
+      photo: "/people/zee-amin-5.jpg",
       inset: true,
       description:
         "Ensures instructions move through matching, settlement, exceptions and reporting.",
@@ -162,7 +162,7 @@ export const about = {
     {
       name: "Kishan Lashkari",
       role: "Information Technology",
-      photo: "/people/kishan-lashkari-5.jpg",
+      photo: "/people/kishan-lashkari-12.jpg",
       inset: true,
       description:
         "Leading technology operations, cybersecurity, regulatory compliance, and strategic delivery at EMFI.",
