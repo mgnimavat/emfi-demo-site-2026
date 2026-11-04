@@ -1,0 +1,28 @@
+.section { composes: infrastructure from './DirectAccessSections.module.css'; padding-block: clamp(32px, 4svh, 64px); }
+.container { composes: infrastructureContainer from './DirectAccessSections.module.css'; }
+.introduction { composes: infrastructureLayout from './DirectAccessSections.module.css'; margin-bottom: clamp(32px, 4svh, 48px); }
+.title { composes: infrastructureTitle from './DirectAccessSections.module.css'; }
+.copy { composes: infrastructureCopy from './DirectAccessSections.module.css'; }
+.lead { composes: infrastructureLead from './DirectAccessSections.module.css'; }
+.lightCopy { composes: executionCopy from './DirectAccessSections.module.css'; }
+
+.workflow {
+  min-width: 0;
+  padding: var(--space-6);
+  border: 1px solid color-mix(in srgb, var(--color-blue-100) 28%, transparent);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--color-blue-500) 92%, var(--color-white));
+}
+
+.workflow > * { margin: 0; }
+.technologyVisual { min-width: 0; }
+.technologyVisual > * { margin: 0; }
+
+@media (min-width: 901px) {
+  .section.technology { height: 100svh; padding-block: clamp(24px, 3svh, 40px); }
+  .section.technology { padding-top: calc(var(--site-header-height, 78px) + clamp(24px, 3svh, 40px)); }
+  .technology > .container { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: clamp(16px, 2svh, 24px); height: 100%; }
+  .technology .introduction { margin-bottom: 0; }
+  .technologyVisual { height: 100%; container-type: size; }
+  .technologyVisual > * { width: min(100cqw, calc(100cqh * 100 / 64)); margin-inline: auto; }
+}

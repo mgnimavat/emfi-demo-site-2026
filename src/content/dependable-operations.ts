@@ -2,11 +2,12 @@ export const dependableOperations = {
   title: "Dependable Operations",
   description:
     "Regulation, governance, audit and established professional relationships provide the framework within which EMFI operates.",
-  headline: "Dependable\nOperations",
-  phrases: ["control", "precision", "accountability"],
+  headline: "Dependable\nOperations.",
+  phrases: ["control.", "precision.", "accountability."],
   fixed: "Built on",
   regulation: {
     title: "Regulated. Structured. Accountable.",
+    titleLines: ["Regulated.", "Structured.", "Accountable."],
     lead: "EMFI operates through specialist legal entities, each authorised or licensed for its respective activities.",
     paragraphs: [
       "The regulatory status of each entity, rather than the group name alone, defines the services it may provide.",
@@ -34,7 +35,8 @@ export const dependableOperations = {
     ],
   },
   oversight: {
-    title: "Boring, by design.",
+    title: "Boring by design",
+    titleLines: ["Boring", "by design"],
     lead: "Controls. Reconciliations. Audit trails. Defined responsibilities.",
     paragraphs: [
       "The things that matter most are rarely the things that make the best marketing.",

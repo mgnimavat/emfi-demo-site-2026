@@ -12,7 +12,7 @@ const routeTitles = { conventional: 'Conventional Route', direct: 'EMFI Route' }
 const compactRouteWidth = 500;
 const heroRouteStops = [4, 26, 54, 76, 96] as const;
 
-export const SettlementHeroAnimation = () => {
+export const SettlementHeroAnimation = ({ showTitle = true }: { showTitle?: boolean }) => {
   const { chapRef, dRef, tD } = useAnimTimeline({
     loopDirect: true,
     directScale: directPaceScale('home12'),
@@ -33,14 +33,14 @@ export const SettlementHeroAnimation = () => {
 
   return (
     <div ref={chapRef} className={styles.visual}>
-      <div ref={dRef} style={cardStyle}>
-        <p className={routeStyles.routeTitle}>
+      <div ref={dRef} style={showTitle ? cardStyle : { ...cardStyle, paddingTop: cardStyle.padding }}>
+        {showTitle ? <p className={routeStyles.routeTitle}>
           <span className={values.dRouteTitle === routeTitles.direct
             ? routeStyles.routeTitleEmfi
             : routeStyles.routeTitleConventional}>
             {values.dRouteTitle}
           </span>
-        </p>
+        </p> : null}
         <DirectRouteAnimation values={values} />
       </div>
     </div>
