@@ -39,15 +39,15 @@
       "links": [
         {
           "label": "Terms of Use",
-          "href": "https://emfi.uk/english/termsofuse"
+          "href": "/terms-of-use"
         },
         {
           "label": "Privacy Policy",
-          "href": "https://emfi.uk/english/privacypolicy"
+          "href": "/privacy-policy"
         },
         {
           "label": "Cookies Policy",
-          "href": "https://emfi.uk/english/cookiespolicy"
+          "href": "/cookies-policy"
         }
       ]
     },

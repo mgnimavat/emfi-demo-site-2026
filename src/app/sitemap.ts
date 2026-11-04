@@ -11,6 +11,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/why-emfi",
     "/about",
     "/contact",
+    "/terms-of-use",
+    "/privacy-policy",
+    "/privacy-policy/eea-users",
+    "/privacy-policy/global-employees",
+    "/privacy-policy/eea-employees",
+    "/cookies-policy",
+    "/scam-alert",
   ];
 
   return paths.map((path) => ({
