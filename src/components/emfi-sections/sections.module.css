@@ -315,9 +315,30 @@
   height: auto !important;
   max-height: 100%;
   left: 40px;
-  padding-top: 40px !important;
-  padding-bottom: 40px !important;
+  padding-top: 36px !important;
+  padding-bottom: 36px !important;
   justify-content: center !important;
+}
+
+@media (min-width: 760px) {
+  .whyPinSlide > section > div:has(> :global(.section-bottom-action) > p:only-child) {
+    height: 100% !important;
+    padding-bottom: calc(clamp(20px, 3.2vh, 36px) + 60px) !important;
+  }
+
+  /* Shares the bottom row with the stage's absolutely positioned Learn More cue (44px tall). */
+  .whyPinSlide > section > div > :global(.section-bottom-action):has(> p:only-child) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(20px, 3.2vh, 36px);
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    pointer-events: none;
+  }
 }
 
 .whyPinSlide :global(#accountable) {
@@ -347,10 +368,12 @@
 }
 
 .responsiveStack .responsivePinMedia {
-  flex: 0 0 auto;
+  flex: 0 1 auto;
   box-sizing: border-box;
   width: min(100%, 912px);
   height: 504px;
+  max-height: 504px;
+  min-height: 0;
   align-items: center;
   justify-content: center;
 }

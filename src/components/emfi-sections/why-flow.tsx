@@ -26,12 +26,13 @@ export function useWhyEngaged() {
 export function sectionPad(rail: boolean, horizontal = true, pinned = false) {
   const left = `calc(${X} + 54px)`;
   if (pinned) {
-    const top = "60px";
-    const bottom = "clamp(100px, 13vh, 132px)";
+    const top = "46px";
+    const bottom = "calc(var(--pin-bottom, clamp(100px, 13vh, 132px)) - 14px)";
     return `${top} var(--pin-side, 120px) ${bottom}`;
   }
-  if (!horizontal) return rail ? `${Y} 0 ${Y} ${left}` : `${Y} 0`;
-  return rail ? `${Y} ${X} ${Y} ${left}` : `${Y} ${X}`;
+  const y = `calc(${Y} - 14px)`;
+  if (!horizontal) return rail ? `${y} 0 ${y} ${left}` : `${y} 0`;
+  return rail ? `${y} ${X} ${y} ${left}` : `${y} ${X}`;
 }
 
 export function sectionFrame(pinned: boolean, centered: boolean, columns: string): CSSProperties {

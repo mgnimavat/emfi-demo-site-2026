@@ -3,27 +3,40 @@
   background: #e6effb;
 }
 
+.home-page {
+  --pin-bottom: calc(clamp(100px, 13vh, 132px) - 10px);
+}
+
+.home-page #direct {
+  scroll-margin-top: var(--home-12-header-h, 77.36px);
+}
+
+.home-page [class*="whyPinSlide"] .section-bottom-action {
+  margin-top: 10px;
+}
+
 .home-page [class*="whyPinSlide"] #accountable {
   background: transparent !important;
 }
 
 .home-page #accountable [class*="plainRow"] {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: auto minmax(24px, 1fr);
+  display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   box-sizing: border-box;
-  padding-inline: clamp(12px, 5cqw, 48px);
 }
 
 .home-page #accountable [class*="plainItem"] {
   display: contents;
 }
 
+.home-page #accountable [class*="plainItem"] > * {
+  flex: none;
+}
+
 .home-page #accountable [class*="plainItem"] + [class*="plainItem"]::before {
   content: "";
-  justify-self: center;
+  flex: none;
   width: 1px;
   height: 88px;
   background: #d0d8e6;
