@@ -27,15 +27,15 @@
 
 .compactScroll { max-height: none; overflow: visible; }
 .scroll table.compactTable { min-width: 0; width: 100%; }
-.compactTable col[data-column="Reference"] { width: 14%; }
+.compactTable col[data-column="Reference"] { width: 18%; }
 .compactTable col[data-column="Trade Date"],
-.compactTable col[data-column="Settlement"],
-.compactTable col[data-column="Market Value"] { width: 12%; }
-.compactTable col[data-column="Security"] { width: 10%; }
+.compactTable col[data-column="Settlement"] { width: 12%; }
+.compactTable col[data-column="Market Value"] { width: 16%; }
+.compactTable col[data-column="Security"] { width: 14%; }
 .compactTable col[data-column="Direction"],
-.compactTable col[data-column="Status"] { width: 11%; }
+.compactTable col[data-column="Status"] { width: 14%; }
 .compactTable col[data-column="Amount"],
-.compactTable col[data-column="Price"] { width: 9%; }
+.compactTable col[data-column="Price"] { width: 12%; }
 .compactTable th, .compactTable td { padding-inline: 8px; font-size: var(--workstation-data-size, 12px); white-space: normal; overflow-wrap: anywhere; }
 .compactTable td { height: 40px; padding-block: 8px; vertical-align: middle; font-variant-numeric: tabular-nums; }
 .compactTable input, .compactTable select { height: var(--workstation-control-height, 35px); padding: 6px; font-size: var(--workstation-data-size, 12px); }

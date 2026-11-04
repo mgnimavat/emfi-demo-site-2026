@@ -1,0 +1,36 @@
+export const researchSignup = {
+  title: 'Sign Up',
+  headline: ['Research', 'Sign Up.'],
+  eyebrow: 'EMFI Research',
+  description: 'Sign up for EMFI emerging markets research and commentary.',
+  heading: 'Delivering Emerging Markets Intelligence to Guide Your Decisions',
+  paragraphs: [
+    'Based in London, EMFI Securities Limited provides financial services with research at their core and operates under Financial Conduct Authority authorisation and regulation.',
+    'Our emerging markets coverage examines economies and securities that receive less attention from established research providers. Economists and market specialists combine country analysis with local knowledge to help clients form informed views.',
+    'Discussion and debate are central to our approach. Our international perspective brings regional context to the research, helping us look past headline developments and identify the factors that shape markets.',
+    'Four specialist groups contribute to our research: macroeconomics, strategy, desk analysis and quantitative research. Macroeconomists examine economic conditions using our own models, while strategists and desk analysts assess market developments and fixed income performance.',
+    'Quantitative researchers collaborate across these groups to develop forecasts and analytical models that support our independent views.',
+  ],
+  contactLabel: 'Questions? Contact',
+  email: 'contact@emfi.uk',
+  form: {
+    label: 'Research signup',
+    heading: 'Get EMFI research',
+    type: 'Select Type',
+    types: [
+      { value: 'individual', label: 'Individual' },
+      { value: 'entity', label: 'Entity' },
+    ],
+    fields: [
+      { name: 'first_name', label: 'First Name', type: 'text', autoComplete: 'given-name' },
+      { name: 'last_name', label: 'Last Name', type: 'text', autoComplete: 'family-name' },
+      { name: 'email', label: 'Email', type: 'email', autoComplete: 'email' },
+    ],
+    distributionList: 'Distribution List',
+    distributionHelp: 'Separate multiple email addresses with commas.',
+    jurisdiction: 'Jurisdiction',
+    submit: 'Register',
+    preparedNotice: 'Your details are ready. Registration is not connected yet, so nothing has been submitted.',
+    invalidNotice: 'Please complete all required fields.',
+  },
+} as const;

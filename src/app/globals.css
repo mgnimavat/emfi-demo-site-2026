@@ -64,6 +64,7 @@
 
   --color-info: var(--status-info);
   --color-neutral: var(--status-neutral);
+  --color-negative: var(--status-negative);
 
   --color-nav: var(--nav-bg);
   --color-card: var(--card-bg);

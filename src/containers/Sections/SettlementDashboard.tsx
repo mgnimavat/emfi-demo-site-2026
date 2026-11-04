@@ -8,14 +8,15 @@ import styles from './SettlementDashboard.module.css';
 const chart = {
   width: 440,
   height: 280,
-  top: 16,
-  bottom: 232,
-  right: 400,
-  verticalLeft: 80,
-  horizontalLeft: 104,
+  top: 12,
+  bottom: 244,
+  right: 420,
+  verticalLeft: 64,
+  horizontalLeft: 84,
   barWidthRatio: 0.48,
-  horizontalBarHeight: 16,
-  labelOffset: 14,
+  horizontalBarHeight: 32,
+  horizontalBarRatio: 0.6,
+  labelOffset: 10,
   donut: { centerX: 220, centerY: 226, radius: 160, weight: 68 },
 } as const;
 
@@ -53,7 +54,7 @@ const DashboardCard = ({
       <h4>{title}</h4>
       <strong><MaskedWorkstationValue value={total} starCount={starCount} /></strong>
     </header>
-    <div className={styles.chartBody}>{children}</div>
+    <div className={styles.chartBody}><div className={styles.chartContent}>{children}</div></div>
   </article>
 );
 
@@ -104,16 +105,16 @@ const VerticalChart = ({ series }: { series: DashboardSeries }) => {
 const HorizontalChart = ({ series }: { series: DashboardSeries }) => {
   const plotWidth = chart.right - chart.horizontalLeft;
   const slot = (chart.bottom - chart.top) / series.bars.length;
-  const barHeight = series.barHeight ?? chart.horizontalBarHeight;
+  const barHeight = series.barHeight ?? Math.min(chart.horizontalBarHeight, slot * chart.horizontalBarRatio);
 
   return (
     <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className={styles.chart} aria-hidden="true">
-      {series.ticks.map((tick) => {
+      {series.ticks.map((tick, index) => {
         const x = chart.horizontalLeft + tick / series.maximum * plotWidth;
         return (
           <g key={tick}>
             <line x1={x} y1={chart.top} x2={x} y2={chart.bottom} className={styles.gridLine} />
-            <MaskedChartText value={String(tick)} starCount={series.maskLength} x={x} y={chart.bottom + chart.labelOffset + 6} anchor="middle" />
+            <MaskedChartText value={String(tick)} starCount={series.maskLength} x={x} y={chart.bottom + chart.labelOffset + 6} anchor={index === series.ticks.length - 1 ? 'end' : 'middle'} />
           </g>
         );
       })}
