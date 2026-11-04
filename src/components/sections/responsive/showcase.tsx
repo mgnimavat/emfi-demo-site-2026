@@ -1,37 +1,54 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { HeroDashboardScreen } from "@/components/home-17/operating-view";
-import { ResearchExecutionHeroMockup } from "@/components/home-17/research-execution-hero";
-import styles from "./showcase.module.css";
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { responsiveTechnology } from '@/content/responsive-technology';
+import { SettlementDashboard } from '@/containers/Sections/SettlementDashboard';
+import { ExecutionWorkstation } from '@/containers/Sections/ExecutionWorkstation';
+import styles from './showcase.module.css';
 
-const executionView = ["OrderEur"] as const;
+const compactQuery = '(max-width: 899px)';
+const subscribeToLayout = (onChange: () => void) => {
+  const query = window.matchMedia(compactQuery);
+  query.addEventListener('change', onChange);
+  return () => query.removeEventListener('change', onChange);
+};
+const isCompact = () => window.matchMedia(compactQuery).matches;
+const serverLayout = () => false;
+const dashboardFrames = [
+  { opacity: 1, x: '0%', y: '-50%' },
+  { opacity: 0, x: '-110%', y: '-50%' },
+];
+const workstationFrames = [
+  { opacity: 0, x: '110%', y: '-50%' },
+  { opacity: 1, x: '0%', y: '-50%' },
+];
+const compactFrame = { opacity: 1, x: 0, y: 0 };
 
-export function ResponsiveShowcase() {
+export const ResponsiveShowcase = () => {
   const reduced = useReducedMotion();
+  const compact = useSyncExternalStore(subscribeToLayout, isCompact, serverLayout);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const visible = useInView(stageRef, { amount: 0.15 });
+  const [phase, setPhase] = useState(0);
+  const activePhase = reduced ? 0 : phase;
 
   useEffect(() => {
-    const frame = requestAnimationFrame(() => window.scrollTo(0, 0));
-    return () => cancelAnimationFrame(frame);
-  }, []);
+    if (reduced || compact || !visible) return;
+    const timer = window.setInterval(() => {
+      if (!document.hidden) setPhase((current) => (current + 1) % dashboardFrames.length);
+    }, responsiveTechnology.showcase.heroSequenceStepMs);
+    return () => window.clearInterval(timer);
+  }, [compact, reduced, visible]);
 
   return (
-    <div className={styles.stage} aria-hidden>
-      <motion.div className={styles.dashboard} initial={reduced ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <div className={styles.clip}>
-          <div className={styles.dashboardScale}>
-            <HeroDashboardScreen trimChrome bare square />
-          </div>
-        </div>
+    <div ref={stageRef} className={styles.stage} data-preview-phase={activePhase} aria-hidden inert>
+      <motion.div className={styles.dashboard} initial={false} animate={compact ? compactFrame : dashboardFrames[activePhase]} transition={{ duration: reduced ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}>
+        <div className={styles.clip}><div className={styles.dashboardScale}><SettlementDashboard /></div></div>
       </motion.div>
-      <motion.div className={styles.execution} initial={reduced ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: reduced ? 0 : 0.12 }}>
-        <div className={styles.clip}>
-          <div className={styles.executionScale}>
-            <ResearchExecutionHeroMockup quietFrame square trimChrome views={executionView} />
-          </div>
-        </div>
+      <motion.div className={styles.execution} initial={false} animate={compact ? compactFrame : workstationFrames[activePhase]} transition={{ duration: reduced ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}>
+        <div className={styles.clip}><div className={styles.executionScale}><ExecutionWorkstation /></div></div>
       </motion.div>
     </div>
   );
-}
+};

@@ -16,7 +16,7 @@
 .rotator { display: grid; position: relative; }
 .reserve { grid-area: 1 / 1; visibility: hidden; padding-right: 5px; }
 .typed { position: absolute; inset: 0; }
-.cursor { display: inline-block; width: 2px; height: .85em; margin-left: 2px; background: currentColor; vertical-align: baseline; animation: execution-caret 1.05s steps(1) infinite; }
+.cursor { display: inline-block; width: 2px; height: 1.1em; margin-left: 2px; background: currentColor; vertical-align: -.18em; animation: execution-caret 1.05s steps(1) infinite; }
 @keyframes execution-caret { 0%,45% { opacity: 1; } 50%,100% { opacity: 0; } }
 .heroMedia { min-width: 0; }
 .heroAction { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; margin-top: 28px; padding: 14px 28px; border-radius: 999px; background: #071932; color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
