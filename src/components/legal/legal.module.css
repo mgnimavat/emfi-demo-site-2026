@@ -3,7 +3,6 @@
 .inner { box-sizing: border-box; width: 100%; max-width: 1440px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 56px); }
 .masthead .inner { padding-block: clamp(40px, 5vw, 72px); }
 .mastheadGrid { container-type: inline-size; }
-.kicker { margin: 0 0 -6px; color: #071932; font-size: 12px; font-weight: 500; letter-spacing: .08em; line-height: 1; text-transform: uppercase; }
 .masthead h1 { margin: 0; color: #071832; font-size: clamp(32px, 5.8cqi, 72px); font-weight: 800; line-height: .95; letter-spacing: -.05em; white-space: nowrap; }
 .mastheadFoot { display: flex; align-items: center; justify-content: space-between; gap: 28px; margin-top: 14px; }
 .group { margin: 0; color: #24344b; font-size: 17px; font-weight: 500; }

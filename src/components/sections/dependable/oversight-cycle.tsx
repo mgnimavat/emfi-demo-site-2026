@@ -25,7 +25,14 @@ const slides = [
       { src: "/brand/standing/bloomberg-brand.png", alt: "Bloomberg", width: 280, height: 56 },
     ],
   },
-  { title: "Quoted in", items: ["Reuters", "WSJ", "NYT"] },
+  {
+    title: "Quoted in",
+    logos: [
+      { src: "/brand/press/reuters-brand.svg", alt: "Reuters", width: 280, height: 70 },
+      { src: "/brand/press/wsj-brand.svg", alt: "The Wall Street Journal", width: 64, height: 64 },
+      { src: "/brand/press/nyt-brand.svg", alt: "The New York Times", width: 184, height: 25 },
+    ],
+  },
 ];
 
 export function OversightCycle() {

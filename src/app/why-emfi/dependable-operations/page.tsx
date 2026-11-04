@@ -10,9 +10,9 @@ import styles from "@/components/sections/dependable/page.module.css";
 import feature from "@/containers/Sections/DependableOperationsSections.module.css";
 
 const authorities = [
-  { src: "/brand/regulators/cima-brand.png", alt: "Cayman Islands Monetary Authority", label: "EMFI Fund", width: 80, height: 80 },
-  { src: "/brand/regulators/fca-brand.svg", alt: "Financial Conduct Authority", label: "EMFI Securities Limited\nEMFI Capital Limited", width: 176, height: 100 },
-  { src: "/brand/regulators/dfsa-brand.png", alt: "Dubai Financial Services Authority", label: "EMFI Capital (DIFC) Limited", width: 160, height: 100 },
+  { src: "/brand/regulators/cima-brand.png", alt: "Cayman Islands Monetary Authority", width: 80, height: 80 },
+  { src: "/brand/regulators/fca-brand.svg", alt: "Financial Conduct Authority", width: 176, height: 100 },
+  { src: "/brand/regulators/dfsa-brand.png", alt: "Dubai Financial Services Authority", width: 160, height: 100 },
 ];
 
 export const metadata = { title: copy.title, description: copy.description };
@@ -77,7 +77,6 @@ const DependableOperationsPage = () => {
               {authorities.map((item) => (
                 <div key={item.alt} className={`${styles.mark} ${feature.logoMark}`}>
                   <Image src={item.src} alt={item.alt} width={item.width} height={item.height} unoptimized />
-                  <p>{item.label.split("\n").map((line) => <span key={line}>{line}</span>)}</p>
                 </div>
               ))}
             </div>
