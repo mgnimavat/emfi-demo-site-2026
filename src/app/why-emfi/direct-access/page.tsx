@@ -16,7 +16,7 @@ const DirectAccessPage = () => (
             <ExecutionHeroTitle headline={copy.headline} prefix={copy.heroTitle.prefix} words={copy.heroTitle.words} />
           </ExecutionReveal>
           <ExecutionReveal delay={0.12} className={hero.heroMedia}>
-            <SettlementHeroAnimation showTitle={false} />
+            <SettlementHeroAnimation />
           </ExecutionReveal>
         </div>
       </div>

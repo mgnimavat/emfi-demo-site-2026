@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
+import buttonStyles from '@/components/sections/home-16/questionnaire.module.css';
 import { researchSignup } from '@/content/research-signup';
 import jurisdictions from '@/content/research-signup-jurisdictions.json';
 import { buildResearchSignupPayload } from '@/lib/research-signup';
@@ -30,7 +31,7 @@ export const ResearchSignupForm = () => {
   return (
     <form className={styles.form} aria-label={copy.label} onSubmit={prepareSignup} onChange={clearStatus}>
       <label className={`${styles.field} ${styles.selectField}`}>
-        <span>{copy.type} <span className={styles.required}>*</span></span>
+        <span className="sr-only">{copy.type}</span>
         <select name="type" required value={type} onChange={(event) => {
           const value = event.target.value;
           if (value === 'individual' || value === 'entity') setType(value);
@@ -42,28 +43,28 @@ export const ResearchSignupForm = () => {
       </label>
       {copy.fields.map((field) => (
         <label key={field.name} className={`${styles.field} ${field.name === 'email' ? '' : styles.nameField}`}>
-          <input name={field.name} type={field.type} autoComplete={field.autoComplete} required placeholder=" " />
-          <span className={styles.inputLabel}>{field.label} <span className={styles.required}>*</span></span>
+          <span className="sr-only">{field.label}</span>
+          <input name={field.name} type={field.type} autoComplete={field.autoComplete} required placeholder={field.label} />
         </label>
       ))}
       {type === 'entity' ? (
         <div>
           <label className={styles.field}>
-            <input name="distribution_list" type="email" multiple required placeholder=" " aria-describedby="signup-distribution-help" />
-            <span className={styles.inputLabel}>{copy.distributionList} <span className={styles.required}>*</span></span>
+            <span className="sr-only">{copy.distributionList}</span>
+            <input name="distribution_list" type="email" multiple required placeholder={copy.distributionList} aria-describedby="signup-distribution-help" />
           </label>
           <p id="signup-distribution-help" className={styles.help}>{copy.distributionHelp}</p>
         </div>
       ) : null}
       <label className={`${styles.field} ${styles.selectField}`}>
-        <span>{copy.jurisdiction} <span className={styles.required}>*</span></span>
+        <span className="sr-only">{copy.jurisdiction}</span>
         <select name="jurisdiction" autoComplete="country-name" defaultValue="" required>
           <option value="" disabled>{copy.jurisdiction}</option>
           {jurisdictions.map((name) => <option key={name} value={name}>{name}</option>)}
         </select>
         <ChevronDown size={18} aria-hidden="true" />
       </label>
-      <div className={styles.actions}><button type="submit">{copy.submit}<ArrowUpRight size={18} aria-hidden="true" /></button></div>
+      <div className={styles.actions}><button type="submit" className={buttonStyles.next}>{copy.submit}<ArrowRight aria-hidden="true" /></button></div>
       {error ? <p className={styles.help} role="alert">{copy.invalidNotice}</p> : null}
       {payload ? <p className={styles.help} role="status">{copy.preparedNotice}</p> : null}
     </form>

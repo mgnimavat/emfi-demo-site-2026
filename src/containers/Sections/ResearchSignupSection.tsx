@@ -15,9 +15,11 @@ export const ResearchSignupSection = () => (
           <p>{copy.contactLabel} <a href={`mailto:${copy.email}`}>{copy.email}</a></p>
         </div>
       </div>
-      <div className={styles.formPanel}>
-        <h2>{copy.form.heading}</h2>
-        <ResearchSignupForm />
+      <div className={styles.formColumn}>
+        <div className={styles.formPanel}>
+          <h2>{copy.form.heading}</h2>
+          <ResearchSignupForm />
+        </div>
       </div>
     </div>
   </section>
