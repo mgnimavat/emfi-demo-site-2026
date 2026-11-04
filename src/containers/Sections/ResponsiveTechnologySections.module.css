@@ -17,6 +17,7 @@
 .workflow > * { margin: 0; }
 .technologyVisual { min-width: 0; }
 .technologyVisual > * { margin: 0; }
+.technology .title { line-height: 1.05; }
 
 @media (min-width: 901px) {
   .section.technology { height: 100svh; padding-block: clamp(24px, 3svh, 40px); }
