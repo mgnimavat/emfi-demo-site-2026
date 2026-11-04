@@ -20,6 +20,8 @@
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
   overflow: hidden;
   border: 1px solid var(--border-default);
@@ -40,7 +42,8 @@
   line-height: 1.4;
 }
 
-.chartBody { position: relative; }
+.chartBody { display: flex; flex: 1; align-items: center; min-height: 0; }
+.chartContent { position: relative; width: 100%; }
 .chart { display: block; width: 100%; height: auto; }
 .chart text { fill: var(--text-muted); font-family: var(--font-inter), Inter, Arial, sans-serif; font-size: 11px; }
 .gridLine { stroke: var(--border-default); stroke-width: 1; }
@@ -50,6 +53,7 @@
 .chart [data-tone='gray'] { fill: var(--color-gray-600); }
 .chart [data-tone='navy'] { fill: var(--color-blue-500); }
 .chart [data-tone='steel'] { fill: var(--color-blue-200); }
+.chart [data-tone='negative'] { fill: var(--status-negative); }
 .chart .donutSegment { fill: none; }
 .chart .donutSegment[data-tone='muted'] { stroke: var(--color-gray-425); }
 .chart .donutSegment[data-tone='light'] { stroke: var(--color-blue-100); }

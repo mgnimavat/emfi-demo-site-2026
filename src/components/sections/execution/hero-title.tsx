@@ -80,8 +80,10 @@ export const ExecutionHeroTitle = ({
           <span key={text} className={styles.reserve} aria-hidden="true">{prefix} {text}</span>
         ))}
         <span className={styles.typed} aria-hidden="true">
-          {prefix}{' '}<span data-execution-hero-word>{reduced ? words[0] : word.slice(0, frame.chars)}</span>
-          {!reduced ? <span className={styles.cursor} /> : null}
+          {prefix}{' '}<span className={styles.typedWord}>
+            <span data-execution-hero-word>{reduced ? words[0] : word.slice(0, frame.chars)}</span>
+            {!reduced ? <span className={styles.cursor} /> : null}
+          </span>
         </span>
       </p>
     </>

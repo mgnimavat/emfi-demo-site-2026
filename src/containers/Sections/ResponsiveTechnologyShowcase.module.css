@@ -16,7 +16,7 @@
 .dashboard,
 .execution {
   width: 70%;
-  aspect-ratio: 1160 / 763;
+  aspect-ratio: 1160 / 800;
   container-type: inline-size;
 }
 
@@ -57,8 +57,10 @@
 
 .dashboardScale,
 .executionScale {
+  box-sizing: border-box;
   width: 1160px;
-  height: 763px;
+  height: 800px;
+  padding: var(--space-2);
   zoom: calc(100cqw / 1160px);
   pointer-events: none;
 }
