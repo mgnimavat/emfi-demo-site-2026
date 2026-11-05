@@ -7,7 +7,6 @@ export function LegalPage({ title, children }: { title: string; children: React.
     <article className={styles.page}>
       <header className={styles.masthead}>
         <div className={`${styles.inner} ${styles.mastheadGrid}`}>
-          <p className={styles.kicker}>Legal</p>
           <h1>{title}</h1>
           <div className={styles.mastheadFoot}>
             <p className={styles.group}>EMFI Group</p>

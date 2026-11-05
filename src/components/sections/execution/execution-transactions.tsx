@@ -8,6 +8,13 @@ import { useCurrentMonth } from '@/lib/use-current-month';
 import { previousMonthTransactionDates } from '@/lib/workstation-dates';
 
 const columns = ["Reference", "Trade Date", "Settlement", "Security", "Order Type", "ISIN", "Direction", "Amount", "Price", "Market Value", "Accrued", "Portfolio", "Counterparty", "Status"];
+const displayedColumns = new Set([
+  'Reference',
+  // 'Trade Date',
+  // 'Settlement',
+  'Security', 'Order Type', 'ISIN', 'Direction', 'Amount', 'Price',
+  'Market Value', 'Accrued', 'Portfolio', 'Counterparty', 'Status',
+]);
 const sensitiveColumns = new Set([
   'Security', 'Portfolio', 'Counterparty',
 ]);
@@ -34,7 +41,7 @@ export function ExecutionTransactions({ staticPreview = false, hideIsin = false,
   }, [previewRows, currentMonth]);
   const records = staticPreview ? datedPreviewRows : initialRows;
   const filtered = useMemo(() => records.filter((row) => Object.entries(filters).every(([index, value]) => row.cells[Number(index)].toLowerCase().includes(value.trim().toLowerCase()))), [filters, records]);
-  const isHiddenColumn = (column: string) => (hideIsin && column === 'ISIN') || (compact && compactHiddenColumns.has(column));
+  const isHiddenColumn = (column: string) => !displayedColumns.has(column) || (hideIsin && column === 'ISIN') || (compact && compactHiddenColumns.has(column));
 
   return <section className={styles.panel} aria-label="Demo transactions">
     <div className={styles.header}>

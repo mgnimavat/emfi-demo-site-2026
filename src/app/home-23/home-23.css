@@ -1,0 +1,64 @@
+.home-23 [class*="whyPinMarkers"]:not([data-why-form-progress]) {
+  top: clamp(24px, 4vh, 48px) !important;
+  /* Ends 24px above the 46px-tall "Learn More" cue, which sits clamp(20px, 3.2vh, 36px) off the bottom. */
+  height: calc(100% - clamp(24px, 4vh, 48px) - clamp(20px, 3.2vh, 36px) - 70px) !important;
+  transform: none !important;
+}
+
+@media (min-width: 760px) {
+  .home-23 {
+    /* Mirrors --why-size on the sticky "Why" word; the word's right edge lands at 0.72 of it. */
+    --h23-why-size: calc((100dvh - var(--home-12-header-h, 77.36px)) / 2.41 * 1.05);
+    --h23-slide-left: calc(0.72 * var(--h23-why-size) + 24px);
+    /* Clears the step markers (56px wide, 79px off the stage edge) by 24px. */
+    --h23-slide-right: 159px;
+  }
+
+  .home-23 [class*="whyPinSlide"] > section > div:has(> .section-bottom-action > p:only-child) {
+    container-type: inline-size;
+    left: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    justify-content: flex-start !important;
+    padding: clamp(20px, 3.2vh, 36px) var(--h23-slide-right) calc(clamp(20px, 3.2vh, 36px) + 64px) var(--h23-slide-left) !important;
+  }
+
+  .home-23 [class*="whyPinSlide"] > section > div > .section-bottom-action:has(> p:only-child) {
+    left: var(--h23-slide-left);
+    right: var(--h23-slide-right);
+  }
+
+  .home-23 [class*="whyPinSlide"] > section > div > [class*="pinVisual"],
+  .home-23 [class*="whyPinSlide"] > section > div > [class*="responsivePinMedia"],
+  .home-23 [class*="whyPinSlide"] > section > div > [class*="plainWide"] {
+    flex: 1 1 0 !important;
+    align-self: center;
+    width: auto !important;
+    max-width: 100%;
+    height: auto !important;
+    max-height: calc(100cqw * 504 / 912) !important;
+    min-height: 0 !important;
+    aspect-ratio: 912 / 504;
+  }
+}
+
+.home-23.home-page [class*="chapter"] [class*="whyPinStage"] [class*="whyStickyWord"] span {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, #5c84d0 85%, #fff) 0%,
+    color-mix(in srgb, #3f9eb4 85%, #fff) 48%,
+    color-mix(in srgb, #14c2a4 85%, #fff) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.home-23 #settle {
+  background: #fff;
+}
+
+.home-23 #say-less {
+  background: #e6effb;
+}

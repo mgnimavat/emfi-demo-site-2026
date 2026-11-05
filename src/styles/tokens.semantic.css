@@ -45,6 +45,7 @@
 
   --status-info: var(--color-blue-400);
   --status-neutral: var(--color-gray-600);
+  --status-negative: #ff3b46;
 
   --flow-from: #a2c2fd;
   --flow-mid: #8098cc;

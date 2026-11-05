@@ -12,6 +12,7 @@ const WealthAssetManagementPage = () => (
       lines={wealth.heroLines}
       phrases={wealth.heroPhrases}
       typewriter={wealth.heroTypewriter}
+      taglineClassName={heroStyles.wealthTagline}
       headlineClassName={heroStyles.wideHeadline}
     />
     <WealthAssetSections />

@@ -1,12 +1,12 @@
-.stage { position: relative; width: 100%; aspect-ratio: 1160 / 763; container-type: inline-size; margin-left: auto; overflow: hidden; }
-.dashboard, .execution { position: absolute; top: 50%; left: 0; width: 100%; aspect-ratio: 1160 / 763; container-type: inline-size; }
+.stage { position: relative; width: 100%; aspect-ratio: 1160 / 800; container-type: inline-size; margin-left: auto; overflow: hidden; }
+.dashboard, .execution { position: absolute; top: 50%; left: 0; width: 100%; aspect-ratio: 1160 / 800; container-type: inline-size; }
 .dashboard { z-index: 1; }
 .execution { z-index: 2; }
 .clip { height: 100%; overflow: hidden; background: transparent; }
 .execution .clip { background: var(--color-white); }
 .dashboardScale > div { height: 100%; border: 0; background: transparent; box-shadow: none; }
 .dashboardScale > div > div { height: 100%; }
-.dashboardScale, .executionScale { width: 1160px; height: 763px; zoom: calc(100cqw / 1160px); pointer-events: none; }
+.dashboardScale, .executionScale { box-sizing: border-box; width: 1160px; height: 800px; padding: var(--space-2); zoom: calc(100cqw / 1160px); pointer-events: none; }
 
 @media (min-width: 900px) {
   .stage { width: min(100%, calc((100dvh - var(--site-header-height, 78px) - 140px) * 100 / 90)); }

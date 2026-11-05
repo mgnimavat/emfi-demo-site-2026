@@ -33,7 +33,7 @@ export const SettlementHeroAnimation = ({ showTitle = true }: { showTitle?: bool
 
   return (
     <div ref={chapRef} className={styles.visual}>
-      <div ref={dRef} style={showTitle ? cardStyle : { ...cardStyle, paddingTop: cardStyle.padding }}>
+      <div ref={dRef} className={`${styles.routeCard} ${compact ? styles.compactCard : ''}`} style={showTitle ? cardStyle : { ...cardStyle, paddingTop: cardStyle.padding }}>
         {showTitle ? <p className={routeStyles.routeTitle}>
           <span className={values.dRouteTitle === routeTitles.direct
             ? routeStyles.routeTitleEmfi

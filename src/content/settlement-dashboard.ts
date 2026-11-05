@@ -1,7 +1,7 @@
 export type DashboardBar = {
   label: string;
   value: number;
-  tone: 'muted' | 'light' | 'dark' | 'gray' | 'navy' | 'steel';
+  tone: 'muted' | 'light' | 'dark' | 'gray' | 'navy' | 'steel' | 'negative';
 };
 
 export type DashboardSeries = {
@@ -28,13 +28,16 @@ export const settlementDashboard = {
   },
   transactions: {
     title: 'Transactions',
-    total: '40',
+    total: '39',
     maskLength: 2,
-    maximum: 50,
-    ticks: [0, 10, 20, 30, 40, 50],
+    maximum: 30,
+    ticks: [0, 10, 20, 30],
     bars: [
-      { label: 'Submitted', value: 39, tone: 'muted' },
-      { label: 'Settled', value: 1, tone: 'light' },
+      { label: 'Submitted', value: 3, tone: 'muted' },
+      { label: 'Unmatched', value: 3, tone: 'light' },
+      { label: 'Matched', value: 6, tone: 'dark' },
+      { label: 'Settled', value: 24, tone: 'gray' },
+      { label: 'Failing', value: 3, tone: 'negative' },
     ],
   },
   exposure: {
@@ -69,8 +72,8 @@ export const settlementDashboard = {
     total: '$1,699',
     maskLength: 4,
     maskLabels: true,
-    maximum: 800,
-    ticks: [0, 200, 400, 600, 800],
+    maximum: 300,
+    ticks: [0, 100, 200, 300],
     bars: [
       { label: 'Cross Border', value: 280, tone: 'muted' },
       { label: 'Same Day', value: 200, tone: 'light' },

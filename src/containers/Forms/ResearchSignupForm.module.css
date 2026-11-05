@@ -1,0 +1,15 @@
+.form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: var(--space-5) var(--space-4); min-width: 0; }
+.form > * { grid-column: 1 / -1; }
+.form > .nameField { grid-column: auto; }
+.field { position: relative; display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.field input, .field select { box-sizing: border-box; width: 100%; min-width: 0; min-height: 56px; padding: var(--space-4); border: 1px solid var(--border-default); border-radius: var(--radius-control); background: var(--bg-page); color: var(--text-primary); font: inherit; font-size: 15px; }
+.field input::placeholder { color: var(--text-muted); opacity: 1; }
+.selectField select { appearance: none; padding-right: var(--space-7); }
+.selectField select:invalid { color: var(--text-muted); }
+.selectField svg { position: absolute; right: var(--space-4); bottom: 19px; color: var(--text-muted); pointer-events: none; }
+.field input:focus-visible, .field select:focus-visible { outline: none; border-color: var(--text-muted); box-shadow: none; }
+.actions button:focus-visible { outline: 2px solid var(--text-muted); outline-offset: 3px; }
+.actions { display: flex; justify-content: flex-end; margin-top: var(--space-2); }
+.help { margin: 0; color: var(--text-secondary); font-size: 12px; line-height: 1.6; }
+.field + .help { margin-top: var(--space-2); }
+@media (max-width: 399px) { .form > .nameField { grid-column: 1 / -1; } }

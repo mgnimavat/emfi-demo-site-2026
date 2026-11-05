@@ -11,14 +11,13 @@
 .oversight .logoPanel { display: grid; align-items: center; padding: var(--space-5); }
 .oversight .logoMarks { align-items: stretch; height: 100%; margin-top: 0; }
 .oversight .logoMark { align-content: center; gap: var(--space-5); }
-.oversight .logoMark img { height: clamp(104px, 16svh, 160px); }
-.oversight .logoMark p { font-size: 15px; line-height: 1.5; }
+.oversight .logoMark img { width: auto; height: clamp(84px, 12svh, 110px); aspect-ratio: 135 / 110; object-fit: contain; }
 
 @media (min-width: 901px) {
   .section.oversight { height: 100svh; padding-top: calc(var(--site-header-height, 78px) + clamp(24px, 3svh, 40px)); }
   .oversight > .container { display: grid; grid-template-rows: auto auto; align-content: center; gap: var(--space-6); height: 100%; }
   .oversight .introduction { margin-bottom: 0; }
-  .oversight .logoPanel { height: clamp(290px, 38svh, 360px); }
+  .oversight .logoPanel { height: clamp(220px, 28svh, 270px); }
 }
 
 .entities { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); }
