@@ -83,7 +83,7 @@ export const about = {
     {
       name: "Atif Rashid",
       role: "Finance & Compliance",
-      photo: "/people/atif-rashid-3.jpg",
+      photo: "/people/atif-rashid-4.jpg",
       board: true,
       description:
         "Maintains financial controls, regulatory compliance and accountability across the business.",
@@ -91,7 +91,7 @@ export const about = {
     {
       name: "Shamroz Bashir",
       role: "Risk & Reporting",
-      photo: "/people/shamroz-bashir-3.jpg",
+      photo: "/people/shamroz-bashir-4.jpg",
       board: true,
       raised: true,
       description:
@@ -100,7 +100,7 @@ export const about = {
     {
       name: "Gustavo Rodrigues",
       role: "Onboarding & KYC",
-      photo: "/people/gustavo-rodrigues-3.jpg",
+      photo: "/people/gustavo-rodrigues-4.jpg",
       board: true,
       description:
         "Leads client onboarding, KYC and due diligence to establish the right relationships.",
@@ -108,7 +108,7 @@ export const about = {
     {
       name: "Robert Hagon",
       role: "Institutional Coverage",
-      photo: "/people/robert-hagon-3.jpg",
+      photo: "/people/robert-hagon-4.jpg",
       inset: true,
       description:
         "Builds and manages institutional relationships, connecting client requirements with the right EMFI capabilities.",
@@ -116,7 +116,7 @@ export const about = {
     {
       name: "Mark Cleary",
       role: "Execution, Settlement & Custody",
-      photo: "/people/mark-cleary-5.jpg",
+      photo: "/people/mark-cleary-7.jpg",
       inset: true,
       description:
         "Coordinates execution, settlement and custody to keep the client relationship connected end to end.",
@@ -124,7 +124,7 @@ export const about = {
     {
       name: "Jose Bermudez",
       role: "Wealth & Asset Management",
-      photo: "/people/jose-bermudez-4.jpg",
+      photo: "/people/jose-bermudez-5.jpg",
       inset: true,
       description:
         "Manages portfolios and investment mandates within EMFI’s broader execution and custody framework.",
@@ -132,21 +132,21 @@ export const about = {
     {
       name: "Guillermo Guerrero",
       role: "Research",
-      photo: "/people/guillermo-guerrero-5.jpg",
+      photo: "/people/guillermo-guerrero-6.jpg",
       description:
         "Provides market and investment research that supports institutional decisions and execution.",
     },
     {
       name: "Rosamnis Marcano",
       role: "Economics",
-      photo: "/people/rosamnis-marcano-4.jpg",
+      photo: "/people/rosamnis-marcano-5.jpg",
       description:
         "Provides economic context for allocation, duration and credit decisions.",
     },
     {
       name: "Matias Montes",
       role: "Strategy",
-      photo: "/people/matias-montes-6.jpg",
+      photo: "/people/matias-montes-10.jpg",
       inset: true,
       description:
         "Connects EMFI’s capabilities, people and technology into one operating direction.",
@@ -154,7 +154,7 @@ export const about = {
     {
       name: "Zee Amin",
       role: "Operations",
-      photo: "/people/zee-amin-5.jpg",
+      photo: "/people/zee-amin-7.jpg",
       inset: true,
       description:
         "Ensures instructions move through matching, settlement, exceptions and reporting.",
@@ -162,7 +162,7 @@ export const about = {
     {
       name: "Kishan Lashkari",
       role: "Information Technology",
-      photo: "/people/kishan-lashkari-12.jpg",
+      photo: "/people/kishan-lashkari-13.jpg",
       inset: true,
       description:
         "Leading technology operations, cybersecurity, regulatory compliance, and strategic delivery at EMFI.",
@@ -170,7 +170,7 @@ export const about = {
     {
       name: "Dinesh Chouhan",
       role: "Software Development",
-      photo: "/people/dinesh-chouhan-5.jpg",
+      photo: "/people/dinesh-chouhan-6.jpg",
       inset: true,
       description:
         "Leading software development, modern architecture, and secure, scalable application delivery at EMFI.",
