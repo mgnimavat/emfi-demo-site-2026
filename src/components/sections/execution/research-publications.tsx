@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState, useSyncExternalStore } from "react";
+import { useServiceLocale } from "@/ui/hooks/useServiceLocale";
 import { ArrowDown, ArrowUpRight, ChevronDown, FileText } from "lucide-react";
 import cueStyles from "@/components/emfi-sections/sections.module.css";
 import type { ExecutionResearchRecord } from "@/content/execution";
@@ -9,8 +10,7 @@ import { useReportChart } from "@/lib/use-report-chart";
 import { PublicationChart, PublicationChartSkeleton } from "./publication-chart";
 import styles from "./research-publications.module.css";
 
-const dateFormat = new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "long", year: "numeric", timeZone: "UTC" });
-const dateLabel = (date: string) => dateFormat.format(new Date(`${date}T12:00:00Z`));
+const dateLabel = (date: string, locale: string) => new Intl.DateTimeFormat(locale, { day: "2-digit", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${date}T12:00:00Z`));
 const reportsPerColumn = 7;
 const reportsPerPage = reportsPerColumn * 2;
 const mobileLayoutQuery = "(max-width: 639px)";
@@ -33,27 +33,32 @@ const SkeletonRows = ({ singleColumn = false }: { singleColumn?: boolean }) => <
   </div>)}
 </div>;
 
-export const ResearchPublicationsSkeleton = ({ singleColumn = false }: { singleColumn?: boolean }) => <div role="status" aria-label="Loading reports" aria-busy="true"><SkeletonRows singleColumn={singleColumn} /></div>;
+export const ResearchPublicationsSkeleton = ({ singleColumn = false }: { singleColumn?: boolean }) => {
+  const { t } = useServiceLocale();
+  return <div role="status" aria-label={t("Loading reports")} aria-busy="true"><SkeletonRows singleColumn={singleColumn} /></div>;
+};
 
 const ReportDetails = ({ report, language }: { report: ExecutionResearchRecord; language: IntelligenceLanguage }) => {
+  const { t } = useServiceLocale();
   const chart = useReportChart(report, language);
   return <>
     <div className={styles.accordionChart}>
-      {chart.loading ? <PublicationChartSkeleton /> : chart.error ? <div className={styles.chartMessage} role="alert">Could not load this chart. <button type="button" onClick={chart.retry}>Try again</button></div> : chart.chart ? <PublicationChart chart={chart.chart} /> : <p className={styles.chartMessage}>No chart data available for this report.</p>}
+      {chart.loading ? <PublicationChartSkeleton /> : chart.error ? <div className={styles.chartMessage} role="alert">{t("Could not load this chart.")} <button type="button" onClick={chart.retry}>{t("Try again")}</button></div> : chart.chart ? <PublicationChart chart={chart.chart} /> : <p className={styles.chartMessage}>{t("No chart data available for this report.")}</p>}
     </div>
     <p className={styles.accordionBody}>{report.paragraphs.join(" ")}</p>
-    {report.sourceUrl ? <a href={report.sourceUrl} target="_blank" rel="noopener noreferrer" className={styles.sourceLink}>Read full report <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only"> on EMFI Intelligence (opens in a new tab)</span></a> : null}
+    {report.sourceUrl ? <a href={report.sourceUrl} target="_blank" rel="noopener noreferrer" className={styles.sourceLink}>{t("Read full report")} <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only">  {t("on EMFI Intelligence (opens in a new tab)")}</span></a> : null}
   </>;
 };
 
 const ReportAccordion = ({ report, language, open, onToggle }: { report: ExecutionResearchRecord; language: IntelligenceLanguage; open: boolean; onToggle: (id: string, open: boolean) => void }) => {
+  const { locale, t } = useServiceLocale();
   const id = useId();
   return <details className={styles.accordionCard} open={open} onToggle={event => onToggle(report.id, event.currentTarget.open)}>
     <summary className={styles.accordionSummary} id={`${id}-heading`}>
       <span className={styles.accordionHeading}>
-        <span className={styles.accordionMeta}>{report.country}<span aria-hidden="true">·</span>{report.reportType}</span>
+        <span className={styles.accordionMeta}>{report.country}<span aria-hidden="true">·</span>{t(report.reportType)}</span>
         <span className={styles.accordionTitle}>{report.title}</span>
-        <time dateTime={report.publishedAt}>{dateLabel(report.publishedAt)}</time>
+        <time dateTime={report.publishedAt}>{dateLabel(report.publishedAt, locale)}</time>
       </span>
       <span className={styles.accordionToggle}><ChevronDown size={18} aria-hidden="true" /></span>
     </summary>
@@ -72,6 +77,7 @@ export const ResearchPublications = ({ records, language = "english", hasMore = 
   singleColumn?: boolean;
   onLoadMore?: () => void;
 }) => {
+  const { t } = useServiceLocale();
   const mobile = useSyncExternalStore(subscribeToLayout, isMobileLayout, serverLayout);
   const pageSize = singleColumn ? reportsPerColumn : reportsPerPage;
   const [visibleCount, setVisibleCount] = useState(pageSize);
@@ -89,15 +95,15 @@ export const ResearchPublications = ({ records, language = "english", hasMore = 
     { id: "right", reports: visibleRecords.filter((_, index) => index % 2 !== 0) },
   ];
 
-  return <section className={styles.accordionResults} aria-label="Research reports" aria-busy={loadingMore}>
+  return <section className={styles.accordionResults} aria-label={t("Research reports")} aria-busy={loadingMore}>
   {records.length ? <div className={styles.accordionGrid}>
     {columns.map(column => <div key={column.id} className={styles.accordionColumn}>
       {column.reports.map(report => <ReportAccordion key={report.id} report={report} language={language} open={expanded[report.id] ?? false} onToggle={toggleReport} />)}
     </div>)}
-  </div> : <div className={styles.emptyState}><FileText size={28} strokeWidth={1.5} aria-hidden="true" /><h4>No matching reports</h4><p>Try another search, date or country, or reset your filters.</p></div>}
-  <span className="sr-only" role="status" aria-live="polite">{visibleRecords.length} reports shown</span>
+  </div> : <div className={styles.emptyState}><FileText size={28} strokeWidth={1.5} aria-hidden="true" /><h4>{t("No matching reports")}</h4><p>{t("Try another search, date or country, or reset your filters.")}</p></div>}
+  <span className="sr-only" role="status" aria-live="polite">{visibleRecords.length}  {t("reports shown")}</span>
   {canLoadMore ? <div className={styles.loadMoreRow}>
-    <button className={cueStyles.heroCue} type="button" disabled={loadingMore || (!hasLocalMore && loadMoreDisabled)} onClick={showMore}>{loadingMore ? 'Loading reports…' : 'Load more reports'}<ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" /></button>
+    <button className={cueStyles.heroCue} type="button" disabled={loadingMore || (!hasLocalMore && loadMoreDisabled)} onClick={showMore}>{loadingMore ? t("Loading reports…") : t("Load more reports")}<ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" /></button>
   </div> : null}
 </section>;
 };

@@ -1,4 +1,7 @@
+'use client';
+
 import type { ReactNode } from 'react';
+import { useServiceLocale } from "@/ui/hooks/useServiceLocale";
 import { settlementDashboard, type DashboardSeries } from '@/content/settlement-dashboard';
 import { maskWorkstationValue } from '@/content/workstation-preview';
 import { MaskedWorkstationValue, WorkstationPrivacyProvider } from './WorkstationPrivacy';
@@ -59,6 +62,7 @@ const DashboardCard = ({
 );
 
 const VerticalChart = ({ series }: { series: DashboardSeries }) => {
+  const { t } = useServiceLocale();
   const plotHeight = chart.bottom - chart.top;
   const slot = (chart.right - chart.verticalLeft) / series.bars.length;
 
@@ -89,7 +93,7 @@ const VerticalChart = ({ series }: { series: DashboardSeries }) => {
             {series.maskLabels ? (
               <MaskedChartText value={bar.label} starCount={series.maskLength} x={center} y={chart.bottom + chart.labelOffset + 6} anchor="middle" />
             ) : <text x={center} y={chart.bottom + chart.labelOffset + 6} textAnchor="middle">
-              {bar.label.split(' ').map((word, wordIndex) => (
+              {t(bar.label).split(' ').map((word, wordIndex) => (
                 <tspan key={`${bar.label}-${word}`} x={center} dy={wordIndex === 0 ? 0 : chart.labelOffset}>
                   {word}
                 </tspan>
@@ -139,6 +143,7 @@ const HorizontalChart = ({ series }: { series: DashboardSeries }) => {
 };
 
 const BalanceChart = () => {
+  const { t } = useServiceLocale();
   const { centerX, centerY, radius, weight } = chart.donut;
 
   return (
@@ -162,7 +167,7 @@ const BalanceChart = () => {
           );
         })}
       </svg>
-      <ul className={styles.legend} aria-label="Balance currencies">
+      <ul className={styles.legend} aria-label={t("Balance currencies")}>
         {settlementDashboard.balances.currencies.map((currency) => (
           <li key={currency.label}>
             <span className={styles.swatch} data-tone={currency.tone} aria-hidden="true" />
@@ -174,34 +179,37 @@ const BalanceChart = () => {
   );
 };
 
-export const SettlementDashboard = () => (
+export const SettlementDashboard = () => {
+  const { t } = useServiceLocale();
+  return (
   <div
     className={styles.viewport}
     role="region"
-    aria-label="Illustrative portfolio dashboard"
+    aria-label={t("Illustrative portfolio dashboard")}
     tabIndex={0}
   >
     <WorkstationPrivacyProvider variant="initial-stars">
       <div className={styles.preview}>
-        <DashboardCard title={settlementDashboard.balances.title} total={settlementDashboard.balances.total} starCount={settlementDashboard.balances.maskLength}>
+        <DashboardCard title={t(settlementDashboard.balances.title)} total={settlementDashboard.balances.total} starCount={settlementDashboard.balances.maskLength}>
           <BalanceChart />
         </DashboardCard>
-        <DashboardCard title={settlementDashboard.transactions.title} total={settlementDashboard.transactions.total} starCount={settlementDashboard.transactions.maskLength}>
+        <DashboardCard title={t(settlementDashboard.transactions.title)} total={settlementDashboard.transactions.total} starCount={settlementDashboard.transactions.maskLength}>
           <VerticalChart series={settlementDashboard.transactions} />
         </DashboardCard>
-        <DashboardCard title={settlementDashboard.exposure.title} total={settlementDashboard.exposure.total}>
+        <DashboardCard title={t(settlementDashboard.exposure.title)} total={settlementDashboard.exposure.total}>
           <HorizontalChart series={settlementDashboard.exposure} />
         </DashboardCard>
-        <DashboardCard title={settlementDashboard.positions.title} total={settlementDashboard.positions.total} starCount={settlementDashboard.positions.maskLength}>
+        <DashboardCard title={t(settlementDashboard.positions.title)} total={settlementDashboard.positions.total} starCount={settlementDashboard.positions.maskLength}>
           <HorizontalChart series={settlementDashboard.positions} />
         </DashboardCard>
-        <DashboardCard title={settlementDashboard.charges.title} total={settlementDashboard.charges.total} starCount={settlementDashboard.charges.maskLength}>
+        <DashboardCard title={t(settlementDashboard.charges.title)} total={settlementDashboard.charges.total} starCount={settlementDashboard.charges.maskLength}>
           <VerticalChart series={settlementDashboard.charges} />
         </DashboardCard>
-        <DashboardCard title={settlementDashboard.performance.title} total={settlementDashboard.performance.total}>
+        <DashboardCard title={t(settlementDashboard.performance.title)} total={settlementDashboard.performance.total}>
           <HorizontalChart series={settlementDashboard.performance} />
         </DashboardCard>
       </div>
     </WorkstationPrivacyProvider>
   </div>
 );
+};

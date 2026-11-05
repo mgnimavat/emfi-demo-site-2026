@@ -1,0 +1,68 @@
+{
+  "language": "Language",
+  "about": "About",
+  "contact": "Contact",
+  "menu": "Menu",
+  "close": "Close",
+  "login": "Client Login",
+  "loginHint": "Click here to Login",
+  "navigation": "Main navigation",
+  "mobileNavigation": "Mobile navigation",
+  "services": [
+    "Research & Execution",
+    "Settlement & Custody",
+    "Wealth & Asset Management"
+  ],
+  "map": "Map of",
+  "zoomIn": "Zoom in on",
+  "zoomOut": "Zoom out on",
+  "locations": {
+    "title": "Cayman. London. Dubai.",
+    "places": [
+      {
+        "city": "Cayman",
+        "kicker": [
+          "EMFI Fund SPC"
+        ],
+        "lines": [
+          "802 West Bay Road",
+          "P.O. Box 10250",
+          "Grand Cayman KY1-1003",
+          "Cayman Islands"
+        ],
+        "email": "contact@emfi.uk",
+        "mapQuery": "19.3292414,-81.3805402"
+      },
+      {
+        "city": "London",
+        "kicker": [
+          "EMFI Securities Limited",
+          "EMFI Capital Limited"
+        ],
+        "lines": [
+          "25-26 Dering Street",
+          "Mayfair, London W1S 1AW",
+          "United Kingdom"
+        ],
+        "email": "contact@emfi.uk",
+        "phone": "+44 20 3983 3634",
+        "mapQuery": "51.514390,-0.145650"
+      },
+      {
+        "city": "Dubai",
+        "kicker": [
+          "EMFI Capital (DIFC) Limited"
+        ],
+        "lines": [
+          "P7A-10, Tower A",
+          "Damac Park Towers",
+          "DIFC, Dubai",
+          "United Arab Emirates"
+        ],
+        "email": "contact@emfi.ae",
+        "mapQuery": "25.2093123,55.2786716"
+      }
+    ]
+  },
+  "languageAvailability": "Languages are available on About, Contact and the three service pages."
+}

@@ -1,57 +1,7 @@
-import { execution } from "@/content/execution";
-import { ResearchToTrade } from "@/components/sections/execution/research-to-trade";
-import { ExecutionReveal } from "@/components/sections/execution/reveal";
-import { ExecutionHeroTitle } from "@/components/sections/execution/hero-title";
-// import { DirectExecutionWorkflow } from "@/components/sections/execution/direct-workflow";
-import { ResearchSection } from "@/components/sections/execution/research-section";
-import { WorkstationSection } from "@/components/sections/execution/workstation-section";
-import { ResearchDisclosures } from "@/components/sections/execution/research-disclosures";
-// import { ArchiveCta } from "@/components/sections/archive/cta";
-import theme from "@/components/sections/archive/theme.module.css";
-// import { FileSearch, ArrowRightLeft } from "lucide-react";
-// import landing from "@/components/sections/landing/landing.module.css";
-import styles from "@/components/sections/execution/page.module.css";
+import { LocalizedServicePageSection } from '@/containers/Sections/LocalizedServicePageSection';
+import { serviceDictionaries } from '@/lib/i18n/service-dictionaries';
 
-export const metadata = { title: execution.title, description: execution.description };
-
-export default function ResearchExecutionPage() {
-  return <div className={theme.page}>
-    <section className={styles.hero}>
-      <div className={styles.container}><div className={styles.heroGrid}>
-        <ExecutionReveal className={styles.heroCopy}><ExecutionHeroTitle /></ExecutionReveal>
-        <ExecutionReveal delay={0.12} className={styles.heroMedia}><ResearchToTrade /></ExecutionReveal>
-      </div></div>
-    </section>
-    <ResearchSection />
-    <WorkstationSection maskVariant="initial-stars" />
-    <ResearchDisclosures />
-    {/*
-    <section id="research-execution-capabilities" className={styles.section} aria-label="Research and execution capabilities">
-      <div className={styles.container}><ExecutionReveal>
-        <div className={`${landing.principles} ${styles.capabilities}`}>
-          {execution.capabilities.map((item, i) => {
-            const Icon = i === 0 ? FileSearch : ArrowRightLeft;
-            return <article key={item.id} className={styles.capability} aria-labelledby={item.id}>
-              <div className={landing.principleTitle}><span className={landing.principleIcon}><Icon aria-hidden="true" strokeWidth={1.5} /></span><div><p className={styles.capabilityEyebrow}>{item.eyebrow}</p><h2 id={item.id}>{item.title}</h2></div></div>
-              <p>{item.body}</p>
-            </article>;
-          })}
-        </div>
-      </ExecutionReveal></div>
-    </section>
-    <section className={styles.flow} aria-labelledby="workflow-heading"><div className={styles.container}><ExecutionReveal><h2 id="workflow-heading" className={styles.title}>{execution.workflow.title}</h2><p className={styles.body}>{execution.workflow.body}</p></ExecutionReveal><DirectExecutionWorkflow /></div></section>
-    <section id="security-reference" className={`${serviceStyles.page} ${serviceStyles.securityReference}`} aria-labelledby="security-reference-heading">
-      <div className={styles.container}>
-        <div className={serviceStyles.referenceGrid}>
-          <ExecutionReveal className={serviceStyles.referenceIntro}>
-            <h2 id="security-reference-heading" className={serviceStyles.referenceTitle}>Know the security<span>before you settle.</span></h2>
-            <p className={serviceStyles.referenceDescription}>Search by ISIN, name or Common Code, then open only the reference sections you need.</p>
-          </ExecutionReveal>
-          <ExecutionReveal><SecurityReference /></ExecutionReveal>
-        </div>
-      </div>
-    </section>
-    */}
-    {/* <ArchiveCta title={execution.contact.title} body={execution.contact.body} action={execution.contact.action} /> */}
-  </div>;
-}
+const copy = serviceDictionaries.en.research;
+export const metadata = { title: copy.title, description: copy.description };
+const ServicePage = () => <LocalizedServicePageSection service="research-execution" />;
+export default ServicePage;

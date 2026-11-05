@@ -2,19 +2,18 @@
 
 import { Mail, MapPin, Minus, Phone, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { about1Locations } from "@/content/about-1-locations";
+import { dictionaries, type CommonCopy } from "@/lib/i18n";
 import styles from "./about-1-locations.module.css";
 
-const places = about1Locations.places;
 const MIN_ZOOM = 13;
 const MAX_ZOOM = 19;
 const START_ZOOM = 16;
 
-type Place = (typeof places)[number];
+type Place = CommonCopy["locations"]["places"][number];
 
 const clampZoom = (zoom: number) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom));
 
-const LocationMap = ({ place }: { place: Place }) => {
+const LocationMap = ({ place, copy }: { place: Place; copy: CommonCopy }) => {
   const frameRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(START_ZOOM);
 
@@ -42,7 +41,7 @@ const LocationMap = ({ place }: { place: Place }) => {
       <iframe
         key={zoom}
         className={styles.map}
-        title={`${place.city} map`}
+        title={`${copy.map} ${place.city}`}
         src={`https://maps.google.com/maps?ll=${encodeURIComponent(place.mapQuery)}&z=${zoom}&output=embed`}
         loading="eager"
         referrerPolicy="no-referrer-when-downgrade"
@@ -54,10 +53,10 @@ const LocationMap = ({ place }: { place: Place }) => {
         </svg>
       </span>
       <div className={styles.zoom}>
-        <button type="button" aria-label={`Zoom in on ${place.city}`} disabled={zoom >= MAX_ZOOM} onClick={() => setZoom(current => clampZoom(current + 1))}>
+        <button type="button" aria-label={`${copy.zoomIn} ${place.city}`} disabled={zoom >= MAX_ZOOM} onClick={() => setZoom(current => clampZoom(current + 1))}>
           <Plus size={16} aria-hidden="true" />
         </button>
-        <button type="button" aria-label={`Zoom out on ${place.city}`} disabled={zoom <= MIN_ZOOM} onClick={() => setZoom(current => clampZoom(current - 1))}>
+        <button type="button" aria-label={`${copy.zoomOut} ${place.city}`} disabled={zoom <= MIN_ZOOM} onClick={() => setZoom(current => clampZoom(current - 1))}>
           <Minus size={16} aria-hidden="true" />
         </button>
       </div>
@@ -65,16 +64,16 @@ const LocationMap = ({ place }: { place: Place }) => {
   );
 };
 
-export const About1Locations = () => (
+export const About1Locations = ({ copy = dictionaries.en.common }: { copy?: CommonCopy }) => (
   <section className={styles.section} aria-labelledby="locations-heading">
     <div className={styles.inner}>
       <header className={styles.heading}>
-        <h2 id="locations-heading">{about1Locations.title}</h2>
+        <h2 id="locations-heading">{copy.locations.title}</h2>
       </header>
       <div className={styles.columns}>
-        {places.map(place => (
+        {copy.locations.places.map(place => (
           <article key={place.city} className={styles.column}>
-            <LocationMap place={place} />
+            <LocationMap place={place} copy={copy} />
             <div className={styles.body}>
               <div className={styles.details}>
                 <h3>{place.city}</h3>
@@ -87,11 +86,11 @@ export const About1Locations = () => (
               <div className={styles.contacts}>
                 <a href={`mailto:${place.email}`}>
                   <span className={styles.addressIcon}><Mail size={16} aria-hidden="true" /></span>
-                  <span>{place.email}</span>
+                  <span dir="ltr">{place.email}</span>
                 </a>
-                {"phone" in place ? <a href={`tel:${place.phone.replace(/\s/g, "")}`}>
+                {"phone" in place ? <a href={`tel:${String(place.phone).replace(/\s/g, "")}`}>
                   <span className={styles.addressIcon}><Phone size={16} aria-hidden="true" /></span>
-                  <span>{place.phone}</span>
+                  <span dir="ltr">{String(place.phone)}</span>
                 </a> : null}
               </div>
             </div>

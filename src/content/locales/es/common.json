@@ -1,0 +1,68 @@
+{
+  "language": "Idioma",
+  "about": "Acerca de",
+  "contact": "Contacto",
+  "menu": "Menú",
+  "close": "Cerrar",
+  "login": "Acceso de clientes",
+  "loginHint": "Haga clic para acceder",
+  "navigation": "Navegación principal",
+  "mobileNavigation": "Navegación móvil",
+  "services": [
+    "Análisis y ejecución",
+    "Liquidación y custodia",
+    "Gestión patrimonial y de activos"
+  ],
+  "map": "Mapa de",
+  "zoomIn": "Acercar a",
+  "zoomOut": "Alejar de",
+  "locations": {
+    "title": "Caimán. Londres. Dubái.",
+    "places": [
+      {
+        "city": "Caimán",
+        "kicker": [
+          "EMFI Fund SPC"
+        ],
+        "lines": [
+          "802 West Bay Road",
+          "P.O. Box 10250",
+          "Grand Cayman KY1-1003",
+          "Islas Caimán"
+        ],
+        "email": "contact@emfi.uk",
+        "mapQuery": "19.3292414,-81.3805402"
+      },
+      {
+        "city": "Londres",
+        "kicker": [
+          "EMFI Securities Limited",
+          "EMFI Capital Limited"
+        ],
+        "lines": [
+          "25-26 Dering Street",
+          "Mayfair, London W1S 1AW",
+          "Reino Unido"
+        ],
+        "email": "contact@emfi.uk",
+        "phone": "+44 20 3983 3634",
+        "mapQuery": "51.514390,-0.145650"
+      },
+      {
+        "city": "Dubái",
+        "kicker": [
+          "EMFI Capital (DIFC) Limited"
+        ],
+        "lines": [
+          "P7A-10, Tower A",
+          "Damac Park Towers",
+          "DIFC, Dubai",
+          "Emiratos Árabes Unidos"
+        ],
+        "email": "contact@emfi.ae",
+        "mapQuery": "25.2093123,55.2786716"
+      }
+    ]
+  },
+  "languageAvailability": "Los idiomas están disponibles en Acerca de, Contacto y las tres páginas de servicios."
+}

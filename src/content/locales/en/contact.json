@@ -1,0 +1,67 @@
+{
+  "title": "Contact",
+  "description": "Tell us what you need across research, execution, settlement, custody or asset management.",
+  "cta": {
+    "title": "Say",
+    "accent": "Less.",
+    "formTitle": "A simpler setup starts here.",
+    "emailSubject": "EMFI — Infrastructure enquiry",
+    "draftNotice": "Continue in your email app to send this enquiry to EMFI.",
+    "researchLabel": "Research context",
+    "businessUnit": "Services",
+    "businessUnitPlaceholder": "Select Service",
+    "businessUnits": [
+      "Research & Execution",
+      "Settlement & Custody",
+      "Wealth & Asset Management"
+    ],
+    "attachment": "Choose File",
+    "attachmentNotice": "Attach this file in your email app when sending the enquiry.",
+    "send": "Send",
+    "fields": [
+      {
+        "name": "name",
+        "label": "Name",
+        "placeholder": "Name",
+        "type": "text",
+        "autoComplete": "name",
+        "required": true
+      },
+      {
+        "name": "organization",
+        "label": "Organization",
+        "placeholder": "Organization",
+        "type": "text",
+        "autoComplete": "organization",
+        "required": true
+      },
+      {
+        "name": "telephone",
+        "label": "Phone",
+        "placeholder": "Phone",
+        "type": "tel",
+        "autoComplete": "tel",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "placeholder": "Email",
+        "type": "email",
+        "autoComplete": "email",
+        "required": true
+      },
+      {
+        "name": "country",
+        "label": "Country",
+        "placeholder": "Country",
+        "type": "text",
+        "autoComplete": "country-name",
+        "required": true
+      }
+    ]
+  },
+  "message": "Message",
+  "submit": "Let's Talk",
+  "noFile": "No file chosen"
+}

@@ -1,10 +1,10 @@
-import { execution } from '@/content/execution';
+import { serviceDictionaries, type ResearchCopy } from '@/lib/i18n/service-dictionaries';
 import { ExecutionReveal } from './reveal';
 import { LiveResearch } from './live-research';
 import styles from './research-section.module.css';
 
-export const ResearchSection = ({ layout = 'standard' }: { layout?: 'standard' | 'split' }) => {
-  const { introduction } = execution.research;
+export const ResearchSection = ({ layout = 'standard', copy = serviceDictionaries.en.research }: { layout?: 'standard' | 'split'; copy?: ResearchCopy }) => {
+  const { introduction } = copy.research;
   const split = layout === 'split';
 
   return (

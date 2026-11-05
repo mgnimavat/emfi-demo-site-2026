@@ -8,17 +8,19 @@ type DirectRouteAnimationProps = {
   values: ReturnType<typeof dirVals>;
   stepLabel?: string;
   pinned?: boolean;
+  ariaLabel?: string;
 };
 
 export const DirectRouteAnimation = ({
   values,
   stepLabel = 'Handover',
   pinned = false,
+  ariaLabel = "An instruction moves from You to Settlement agent, Sub-custodian, Custodian and Depository. The same route then shortens to You, EMFI, Depository.",
 }: DirectRouteAnimationProps) => {
   const { dNodes, dLines, dTok, dHand, dTags, dStageH, dBandOp, dBandS } = values;
 
   return (
-    <div data-direct-route-animation data-route-title={values.dRouteTitle} role="img" aria-label="An instruction moves from You to Settlement agent, Sub-custodian, Custodian and Depository. The same route then shortens to You, EMFI, Depository." style={{ position: "relative", height: pinned ? undefined : dStageH, flex: pinned ? "1 1 auto" : undefined, minHeight: pinned ? 0 : undefined }}>
+    <div data-direct-route-animation data-route-title={values.dRouteTitle} role="img" aria-label={ariaLabel} style={{ position: "relative", height: pinned ? undefined : dStageH, flex: pinned ? "1 1 auto" : undefined, minHeight: pinned ? 0 : undefined }}>
       <span style={{ position: "absolute", zIndex: 0, borderRadius: 999, background: "linear-gradient(90deg,rgba(162,194,253,.22),rgba(128,152,204,.16),rgba(0,201,167,.22))", opacity: dBandOp, ...css(dBandS) }} />
       {dLines.map((line, index) => (
         <span key={index} style={{ position: "absolute", zIndex: 1, background: line.c, backgroundSize: line.size, backgroundRepeat: line.size ? "no-repeat" : undefined, opacity: line.op, ...css(line.s) }} />

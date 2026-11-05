@@ -12,3 +12,5 @@
 .option svg { flex: none; color: var(--research-report-text, #244f88); }
 @media (max-width: 599px) { .trigger { font-size: 16px; } }
 @media (prefers-reduced-motion: reduce) { .trigger,.trigger > svg { transition: none; } }
+.trigger:dir(rtl) { text-align: start; }
+.menu:dir(rtl) { left: auto; inset-inline-start: 0; }

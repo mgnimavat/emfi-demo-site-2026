@@ -1,22 +1,7 @@
-import { wealth } from '@/content/wealth';
-import { ServiceHero } from '@/containers/Sections/ServiceHero';
-import { WealthAssetSections } from '@/containers/Sections/WealthAssetSections';
-import styles from '@/containers/Sections/ServicePage.module.css';
-import heroStyles from '@/components/sections/execution/page.module.css';
+import { LocalizedServicePageSection } from '@/containers/Sections/LocalizedServicePageSection';
+import { serviceDictionaries } from '@/lib/i18n/service-dictionaries';
 
-export const metadata = { title: wealth.title, description: wealth.description };
-
-const WealthAssetManagementPage = () => (
-  <div className={styles.page}>
-    <ServiceHero
-      lines={wealth.heroLines}
-      phrases={wealth.heroPhrases}
-      typewriter={wealth.heroTypewriter}
-      taglineClassName={heroStyles.wealthTagline}
-      headlineClassName={heroStyles.wideHeadline}
-    />
-    <WealthAssetSections />
-  </div>
-);
-
-export default WealthAssetManagementPage;
+const copy = serviceDictionaries.en.wealth;
+export const metadata = { title: copy.title, description: copy.description };
+const ServicePage = () => <LocalizedServicePageSection service="wealth-asset-management" />;
+export default ServicePage;

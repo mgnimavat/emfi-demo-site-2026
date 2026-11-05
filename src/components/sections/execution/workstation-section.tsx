@@ -1,11 +1,11 @@
 import { ExecutionWorkstation } from '@/containers/Sections/ExecutionWorkstation';
 import type { WorkstationMaskVariant } from '@/containers/Sections/WorkstationPrivacy';
-import { execution } from '@/content/execution';
+import { serviceDictionaries, type ResearchCopy } from '@/lib/i18n/service-dictionaries';
 import { ExecutionReveal } from './reveal';
 import styles from './workstation-section.module.css';
 
-export const WorkstationSection = ({ maskVariant = 'initial-stars' }: { maskVariant?: WorkstationMaskVariant }) => {
-  const content = execution.workstation;
+export const WorkstationSection = ({ maskVariant = 'initial-stars', copy = serviceDictionaries.en.research }: { maskVariant?: WorkstationMaskVariant; copy?: ResearchCopy }) => {
+  const content = copy.workstation;
 
   return (
     <section id="execution" className={styles.section} aria-labelledby="execution-heading">

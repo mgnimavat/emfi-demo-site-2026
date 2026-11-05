@@ -144,3 +144,5 @@
   .action, .action svg { transition: none; }
   .action:hover svg { transform: none; }
 }
+.section:dir(rtl) .introduction { text-align: start; }
+.section:dir(rtl) a > svg { transform: rotate(180deg); }

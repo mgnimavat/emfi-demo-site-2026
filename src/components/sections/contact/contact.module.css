@@ -73,3 +73,15 @@
 @media (prefers-reduced-motion: reduce) {
   .section .fields .selectWrap select { transition: none; }
 }
+
+.fileLabel { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: var(--space-2) var(--space-3); border: 1px solid var(--quiz-border); border-radius: var(--radius-control); color: var(--text-primary); font-size: 12px; cursor: pointer; }
+.fileLabel input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.fileLabel:focus-within { outline: 2px solid var(--color-blue-200); outline-offset: 2px; }
+.fileName { margin-inline-start: var(--space-2); color: var(--quiz-muted); font-size: 12px; overflow-wrap: anywhere; }
+.section:dir(rtl) .headingColumn { text-align: start; }
+.section:dir(rtl) h1 { font-size: min(8rem, 34cqi); letter-spacing: normal; }
+.section:dir(rtl) .selectWrap > svg { right: auto; inset-inline-end: var(--space-3); }
+.section:dir(rtl) .submit svg { transform: rotate(180deg); }
+.section:dir(rtl) input:is([type='email'], [type='tel']) { direction: ltr; text-align: right; }
+.section:lang(es) h1 { font-size: min(8rem, 28cqi); }
+.section:is(:lang(es), :lang(ar)) h1 { padding-inline: 0; }

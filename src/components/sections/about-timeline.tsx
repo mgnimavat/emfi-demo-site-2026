@@ -2,10 +2,10 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
-import { about } from "@/content/about";
+import { dictionaries, type AboutCopy } from "@/lib/i18n";
 import styles from "./about-timeline.module.css";
 
-export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true, showMark = true }: { headingAs?: "h1" | "h2"; showCounter?: boolean; showMark?: boolean }) => {
+export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true, showMark = true, copy: about = dictionaries.en.about }: { copy?: AboutCopy; headingAs?: "h1" | "h2"; showCounter?: boolean; showMark?: boolean }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
@@ -79,7 +79,7 @@ export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true, s
                 {showCounter ? <p className={styles.counter}>{String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}</p> : null}
               </motion.div>
             </div>
-            <ol ref={listRef} className={styles.milestones} aria-label="Platform milestones">
+            <ol ref={listRef} className={styles.milestones} aria-label={about.milestonesLabel}>
               <span className={styles.rail} aria-hidden="true"><span className={styles.railFill} /></span>
               {about.milestones.map(([itemYear, itemTitle, itemDescription], index) => (
                 <li key={itemYear} data-active={index === active} data-done={index < active}>

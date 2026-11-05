@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useServiceLocale } from "@/ui/hooks/useServiceLocale";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { argentinaResearchPreview } from "@/content/execution";
 import { ProductAnimation } from "@/components/sections/services/product-animation";
@@ -30,6 +31,7 @@ function journeyFrame(elapsed: number) {
 }
 
 export function ResearchToTrade() {
+  const { t } = useServiceLocale();
   const ref = useRef<HTMLDivElement>(null);
   const visible = useInView(ref, { amount: 0.2 });
   const prefersReducedMotion = useReducedMotion();
@@ -59,7 +61,7 @@ export function ResearchToTrade() {
   }, [running]);
 
   return (
-    <div ref={ref} aria-label="Research to execution demonstration" className="relative isolate min-w-0">
+    <div ref={ref} aria-label={t("Research to execution demonstration")} className="relative isolate min-w-0">
       <div aria-hidden className="pointer-events-none absolute inset-x-6 bottom-20 top-20 -z-10 rounded-full bg-soft/60 blur-3xl" />
       <div className="relative grid grid-cols-[repeat(20,minmax(0,1fr))] grid-rows-[64px_auto_64px] items-stretch sm:grid-rows-[80px_auto_80px]" data-journey-phase={phase}>
         <motion.div
@@ -92,7 +94,7 @@ export function ResearchToTrade() {
           </div>
         </motion.div>
       </div>
-      <p className="sr-only">Demo repeating sequence: search Argentina, read {argentinaResearchPreview.title}, then find {argentinaResearchPreview.bond} in execution and book a simulated buy order.</p>
+      <p className="sr-only">{t("Demo repeating sequence: search Argentina, read")} {argentinaResearchPreview.title}{t(", then find")} {argentinaResearchPreview.bond}  {t("in execution and book a simulated buy order.")}</p>
     </div>
   );
 }

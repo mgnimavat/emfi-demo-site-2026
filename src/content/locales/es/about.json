@@ -1,0 +1,130 @@
+{
+  "title": "Acerca de EMFI",
+  "description": "Desde 2016, EMFI desarrolla una plataforma de inversión institucional que conecta a los clientes con los mercados, la ejecución y la infraestructura que respalda cada operación.",
+  "yearsEyebrow": "10 años de EMFI",
+  "milestonesLabel": "Hitos de la plataforma",
+  "milestones": [
+    [
+      "2016",
+      "Fundación",
+      "Constitución de EMFI Securities. Primeras relaciones de negociación institucional."
+    ],
+    [
+      "2017",
+      "Autorización",
+      "Autorización de la FCA. Una base regulada para el acceso directo al mercado."
+    ],
+    [
+      "2018",
+      "Liquidación y custodia",
+      "Ampliación de la ejecución a la infraestructura de custodia."
+    ],
+    [
+      "2020",
+      "Acceso a depositarios",
+      "Participación directa en la infraestructura de liquidación institucional."
+    ],
+    [
+      "2022",
+      "Tecnología",
+      "Plataforma propia diseñada en torno al flujo de trabajo del cliente."
+    ],
+    [
+      "2025",
+      "DIFC",
+      "Presencia en Dubái. Operaciones reguladas por la DFSA."
+    ],
+    [
+      "2026",
+      "Diez años",
+      "Una década construyendo acceso directo."
+    ]
+  ],
+  "peopleTitle": "Las personas que responden.",
+  "people": [
+    {
+      "name": "Atif Rashid",
+      "role": "Finanzas y cumplimiento",
+      "photo": "/people/atif-rashid-3.jpg",
+      "board": true,
+      "description": "Mantiene los controles financieros, el cumplimiento normativo y la responsabilidad en toda la empresa."
+    },
+    {
+      "name": "Shamroz Bashir",
+      "role": "Riesgo e informes",
+      "photo": "/people/shamroz-bashir-3.jpg",
+      "board": true,
+      "raised": true,
+      "description": "Supervisa los riesgos, las exposiciones y los controles para facilitar decisiones informadas."
+    },
+    {
+      "name": "Gustavo Rodrigues",
+      "role": "Incorporación y KYC",
+      "photo": "/people/gustavo-rodrigues-3.jpg",
+      "board": true,
+      "description": "Dirige la incorporación de clientes, el proceso KYC y la diligencia debida para establecer las relaciones adecuadas."
+    },
+    {
+      "name": "Robert Hagon",
+      "role": "Cobertura institucional",
+      "photo": "/people/robert-hagon-3.jpg",
+      "inset": true,
+      "description": "Desarrolla y gestiona relaciones institucionales, conectando las necesidades del cliente con las capacidades adecuadas de EMFI."
+    },
+    {
+      "name": "Mark Cleary",
+      "role": "Ejecución, liquidación y custodia",
+      "photo": "/people/mark-cleary-5.jpg",
+      "inset": true,
+      "description": "Coordina la ejecución, la liquidación y la custodia para mantener conectada la relación con el cliente de principio a fin."
+    },
+    {
+      "name": "Jose Bermudez",
+      "role": "Gestión patrimonial y de activos",
+      "photo": "/people/jose-bermudez-4.jpg",
+      "inset": true,
+      "description": "Gestiona carteras y mandatos de inversión dentro del marco de ejecución y custodia de EMFI."
+    },
+    {
+      "name": "Guillermo Guerrero",
+      "role": "Análisis",
+      "photo": "/people/guillermo-guerrero-5.jpg",
+      "description": "Proporciona análisis de mercados e inversiones que respaldan las decisiones y la ejecución institucionales."
+    },
+    {
+      "name": "Rosamnis Marcano",
+      "role": "Economía",
+      "photo": "/people/rosamnis-marcano-4.jpg",
+      "description": "Aporta contexto económico para las decisiones de asignación, duración y crédito."
+    },
+    {
+      "name": "Matias Montes",
+      "role": "Estrategia",
+      "photo": "/people/matias-montes-6.jpg",
+      "inset": true,
+      "description": "Conecta las capacidades, las personas y la tecnología de EMFI bajo una misma dirección operativa."
+    },
+    {
+      "name": "Zee Amin",
+      "role": "Operaciones",
+      "photo": "/people/zee-amin-5.jpg",
+      "inset": true,
+      "description": "Garantiza que las instrucciones avancen por los procesos de cotejo, liquidación, gestión de excepciones e informes."
+    },
+    {
+      "name": "Kishan Lashkari",
+      "role": "Tecnología de la información",
+      "photo": "/people/kishan-lashkari-12.jpg",
+      "inset": true,
+      "description": "Dirige las operaciones tecnológicas, la ciberseguridad, el cumplimiento normativo y la ejecución estratégica en EMFI."
+    },
+    {
+      "name": "Dinesh Chouhan",
+      "role": "Desarrollo de software",
+      "photo": "/people/dinesh-chouhan-5.jpg",
+      "inset": true,
+      "description": "Dirige el desarrollo de software, la arquitectura moderna y la entrega de aplicaciones seguras y escalables en EMFI."
+    }
+  ],
+  "boardLabel": "Miembro del consejo"
+}

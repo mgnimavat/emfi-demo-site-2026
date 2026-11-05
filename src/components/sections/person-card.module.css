@@ -82,3 +82,5 @@
 @media (prefers-reduced-motion: reduce) {
   .card::before, .body::before, .photo, .details, .detailsInner { transition: none; }
 }
+
+.card:dir(rtl) .name { text-align: start; letter-spacing: normal; }

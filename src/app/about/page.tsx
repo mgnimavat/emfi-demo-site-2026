@@ -1,30 +1,6 @@
-import { about } from "@/content/about";
-import { FadeIn } from "@/components/motion/fade-in";
-import { About1Locations } from "@/components/sections/about-1-locations";
-import { AboutTimeline } from "@/components/sections/about-timeline";
-import { PersonCard } from "@/components/sections/person-card";
-// import { ArchiveCta } from "@/components/sections/archive/cta";
-import styles from "@/components/sections/archive/theme.module.css";
-import "./about.css";
+import { AboutPageSection } from '@/containers/Sections/AboutPageSection';
+import { dictionaries } from '@/lib/i18n';
 
-export const metadata = { title: "About", description: about.body };
-
-const AboutPage = () => {
-  return (
-    <div className={`${styles.page} about-page`}>
-      <AboutTimeline headingAs="h1" showCounter={false} showMark={false} />
-      <section className={styles.peopleBand} aria-labelledby="people-heading">
-        <div className={styles.section}>
-          <div className={styles.container}>
-            <FadeIn className={styles.peopleIntro}><h2 id="people-heading" className={styles.sectionTitle}>{about.peopleTitle}</h2></FadeIn>
-            <div className={styles.personGrid}>{about.people.map((person, i) => <FadeIn key={person.name} delay={i * 0.04} className="h-full"><PersonCard person={person} /></FadeIn>)}</div>
-          </div>
-        </div>
-      </section>
-      <About1Locations />
-      {/* <ArchiveCta className={styles.ctaBlue} title={about.ctaTitle} body={about.ctaBody} action={about.ctaButton} /> */}
-    </div>
-  );
-};
-
+export const metadata = { title: dictionaries.en.about.title, description: dictionaries.en.about.description };
+const AboutPage = () => <AboutPageSection />;
 export default AboutPage;

@@ -82,3 +82,14 @@
   .listDescription { position: static; grid-area: desc; width: auto; height: auto; margin: 0; overflow: visible; clip-path: none; white-space: normal; color: #c9d4e5; font-size: 16px; line-height: 1.6; }
 }
 @media (prefers-reduced-motion: reduce) { .milestones button, .listTitle, .step, .railFill { transition: none; } }
+
+.timeline:dir(rtl) .milestones { transform: translateX(-10%); }
+.timeline:dir(rtl) .rail, .timeline:dir(rtl) .step { left: auto; right: 18px; transform: translateX(50%); }
+.timeline:dir(rtl) .step { transform: translate(50%, -50%); }
+.timeline:dir(rtl) button { text-align: start; }
+.timeline:dir(rtl) .listTitle { white-space: normal; letter-spacing: normal; }
+@media (max-width: 760px), (max-height: 560px), (prefers-reduced-motion: reduce) {
+  .timeline:dir(rtl) .milestones { transform: none; }
+}
+.timeline[data-static='true']:dir(rtl) .milestones { transform: none; }
+.timeline:lang(es) .listTitle { white-space: normal; }

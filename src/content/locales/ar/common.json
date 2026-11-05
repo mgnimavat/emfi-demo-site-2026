@@ -1,0 +1,68 @@
+{
+  "language": "اللغة",
+  "about": "عن EMFI",
+  "contact": "اتصل بنا",
+  "menu": "القائمة",
+  "close": "إغلاق",
+  "login": "دخول العملاء",
+  "loginHint": "اضغط هنا لتسجيل الدخول",
+  "navigation": "التنقل الرئيسي",
+  "mobileNavigation": "التنقل عبر الهاتف",
+  "services": [
+    "البحوث والتنفيذ",
+    "التسوية والحفظ",
+    "إدارة الثروات والأصول"
+  ],
+  "map": "خريطة",
+  "zoomIn": "تكبير خريطة",
+  "zoomOut": "تصغير خريطة",
+  "locations": {
+    "title": "كايمان. لندن. دبي.",
+    "places": [
+      {
+        "city": "كايمان",
+        "kicker": [
+          "EMFI Fund SPC"
+        ],
+        "lines": [
+          "802 West Bay Road",
+          "صندوق بريد 10250",
+          "غراند كايمان KY1-1003",
+          "جزر كايمان"
+        ],
+        "email": "contact@emfi.uk",
+        "mapQuery": "19.3292414,-81.3805402"
+      },
+      {
+        "city": "لندن",
+        "kicker": [
+          "EMFI Securities Limited",
+          "EMFI Capital Limited"
+        ],
+        "lines": [
+          "25-26 Dering Street",
+          "مايفير، لندن W1S 1AW",
+          "المملكة المتحدة"
+        ],
+        "email": "contact@emfi.uk",
+        "phone": "+44 20 3983 3634",
+        "mapQuery": "51.514390,-0.145650"
+      },
+      {
+        "city": "دبي",
+        "kicker": [
+          "EMFI Capital (DIFC) Limited"
+        ],
+        "lines": [
+          "P7A-10، البرج A",
+          "أبراج داماك بارك",
+          "مركز دبي المالي العالمي، دبي",
+          "الإمارات العربية المتحدة"
+        ],
+        "email": "contact@emfi.ae",
+        "mapQuery": "25.2093123,55.2786716"
+      }
+    ]
+  },
+  "languageAvailability": "اللغات متاحة في صفحتي عن EMFI واتصل بنا وصفحات الخدمات الثلاث."
+}

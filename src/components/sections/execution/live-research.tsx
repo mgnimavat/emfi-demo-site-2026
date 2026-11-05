@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useServiceLocale } from "@/ui/hooks/useServiceLocale";
 import { RotateCcw, Search, X } from "lucide-react";
 import { emptyExecutionFilters, filterExecutionResearch, invalidResearchDateRange, type ExecutionResearchFilters } from "@/lib/execution-research";
 import { alternateIntelligenceReports, intelligenceReportFeeds, intelligenceReportLabels, mergeIntelligenceReports, type IntelligenceLanguage } from "@/lib/intelligence-reports";
@@ -15,10 +16,11 @@ import { ResearchFilterSelect } from "./research-filter-select";
 import { ResearchPublications, ResearchPublicationsSkeleton } from "./research-publications";
 import styles from "./research-publications.module.css";
 
-const language: IntelligenceLanguage = "english";
 const defaultFilters = (): ExecutionResearchFilters => ({ ...emptyExecutionFilters, ...trailingResearchRange(12) });
 
 export const LiveResearch = ({ singleColumn = false }: { singleColumn?: boolean }) => {
+  const { t, locale } = useServiceLocale();
+  const language: IntelligenceLanguage = locale === "es" ? "espanol" : "english";
   const [filters, setFilters] = useState(defaultFilters);
   const search = useIntelligenceSearch(language, filters.keyword);
   const { feeds, loading, loadMore } = useIntelligenceReports(language, filters.from, filters.to, !search.active);
@@ -31,7 +33,7 @@ export const LiveResearch = ({ singleColumn = false }: { singleColumn?: boolean 
     const derivedType = reportCatalogue.types[record.id];
     const sourceUrl = record.sourceUrl ?? reportSourceUrl(record.id, reportCatalogue.slugs[record.id], language);
     return { ...record, ...(derivedType ? { topics: [...new Set([...record.topics, derivedType])] } : {}), ...(sourceUrl ? { sourceUrl } : {}) };
-  }), [sourceRecords, reportCatalogue.types, reportCatalogue.slugs]);
+  }), [sourceRecords, reportCatalogue.types, reportCatalogue.slugs, language]);
   const records = useMemo(() => alternateIntelligenceReports(filterExecutionResearch(typedRecords, filters)), [typedRecords, filters]);
   const invalidDates = invalidResearchDateRange(filters);
   const failedFeeds = selectedFeeds.filter(feed => feeds[feed].error);
@@ -42,27 +44,27 @@ export const LiveResearch = ({ singleColumn = false }: { singleColumn?: boolean 
   const updateFilter = (patch: Partial<ExecutionResearchFilters>) => setFilters(previous => ({ ...previous, ...patch }));
 
   return <div className={`${styles.publications} ${singleColumn ? styles.singleColumn : ''}`}>
-    <aside className={styles.filterBar} aria-label="Research filters">
+    {locale === "ar" ? <p>{t("Publications are available in English on this page.")}</p> : null}
+    <aside className={styles.filterBar} aria-label={t("Research filters")}>
       <div className={styles.filterFields}>
-        <label className={`${styles.filterField} ${styles.searchLabel}`}>Search research
-          <span className={styles.researchSearch}>
+        <label className={`${styles.filterField} ${styles.searchLabel}`}>{t("Search research")} <span className={styles.researchSearch}>
             <Search size={19} strokeWidth={1.7} aria-hidden="true" />
-            <input type="search" placeholder="Search reports, markets or countries…" value={filters.keyword} onChange={event => updateFilter({ keyword: event.target.value })} />
-            {filters.keyword ? <button type="button" aria-label="Clear search" onClick={() => updateFilter({ keyword: "" })}><X size={16} aria-hidden="true" /></button> : null}
+            <input type="search" placeholder={t("Search reports, markets or countries…")} value={filters.keyword} onChange={event => updateFilter({ keyword: event.target.value })} />
+            {filters.keyword ? <button type="button" aria-label={t("Clear search")} onClick={() => updateFilter({ keyword: "" })}><X size={16} aria-hidden="true" /></button> : null}
           </span>
         </label>
         <div className={styles.filterControls}>
-        <ResearchDateRange className={styles.filterField} label="Date" value={{ from: filters.from, to: filters.to }} onChange={updateFilter} />
-        <ResearchFilterSelect className={styles.filterField} label="Country" allLabel="All countries" options={countryList.countries} value={filters.country} onChange={country => updateFilter({ country })} />
-        <button type="button" className={styles.resetFilters} aria-label="Reset filters" title="Reset filters" onClick={() => setFilters(defaultFilters())}><RotateCcw size={16} aria-hidden="true" /></button>
+        <ResearchDateRange className={styles.filterField} label={t("Date")} value={{ from: filters.from, to: filters.to }} onChange={updateFilter} />
+        <ResearchFilterSelect className={styles.filterField} label={t("Country")} allLabel={t("All countries")} options={countryList.countries} value={filters.country} onChange={country => updateFilter({ country })} />
+        <button type="button" className={styles.resetFilters} aria-label={t("Reset filters")} title={t("Reset filters")} onClick={() => setFilters(defaultFilters())}><RotateCcw size={16} aria-hidden="true" /></button>
         </div>
       </div>
-      {invalidDates ? <p role="alert">Choose an end date on or after the start date.</p> : null}
-      {reportCatalogue.error ? <p role="alert">Some report details could not be loaded. <button type="button" onClick={reportCatalogue.retry}>Try again</button></p> : null}
-      {countryList.error ? <p role="alert">Could not load countries. <button type="button" onClick={countryList.retry}>Try again</button></p> : null}
+      {invalidDates ? <p role="alert">{t("Choose an end date on or after the start date.")}</p> : null}
+      {reportCatalogue.error ? <p role="alert">{t("Some report details could not be loaded.")} <button type="button" onClick={reportCatalogue.retry}>{t("Try again")}</button></p> : null}
+      {countryList.error ? <p role="alert">{t("Could not load countries.")} <button type="button" onClick={countryList.retry}>{t("Try again")}</button></p> : null}
     </aside>
     {!initialLoading && error ? <div className={styles.feedStatus}>
-      <p role="alert">{search.active ? "Could not search reports." : `Could not load ${failedFeeds.map(feed => intelligenceReportLabels[feed]).join(" and ")}.`} <button type="button" disabled={pending} onClick={() => search.active ? search.retry() : loadMore(selectedFeeds, true)}>Try again</button></p>
+      <p role="alert">{search.active ? t("Could not search reports.") : t("Could not load reports.")} <button type="button" disabled={pending} onClick={() => search.active ? search.retry() : loadMore(selectedFeeds, true)}>{t("Try again")}</button></p>
     </div> : null}
     {initialLoading ? <ResearchPublicationsSkeleton singleColumn={singleColumn} /> : <ResearchPublications
       singleColumn={singleColumn}

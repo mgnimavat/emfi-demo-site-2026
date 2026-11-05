@@ -2,12 +2,13 @@
 
 import { useState, type FormEvent } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
-import { contact } from '@/content/contact';
+import { contact as contactData } from '@/content/contact';
+import { dictionaries, type ContactCopy } from '@/lib/i18n';
 import { useResearchEnquiry } from '@/lib/use-research-enquiry';
 import ctaStyles from '@/components/sections/home-16/questionnaire.module.css';
 import styles from '@/components/sections/contact/contact.module.css';
 
-export const ContactEnquirySection = () => {
+export const ContactEnquirySection = ({ copy: contact = dictionaries.en.contact }: { copy?: ContactCopy }) => {
   const [draftReady, setDraftReady] = useState(false);
   const [attachmentName, setAttachmentName] = useState('');
   const researchEnquiry = useResearchEnquiry();
@@ -27,7 +28,7 @@ export const ContactEnquirySection = () => {
     ];
     if (attachmentName) body.push('', `${copy.attachment}: ${attachmentName}`, copy.attachmentNotice);
     if (researchEnquiry) body.push('', researchEnquiry.message);
-    window.location.href = `mailto:${contact.locations[0].email}?subject=${encodeURIComponent(copy.emailSubject)}&body=${encodeURIComponent(body.join('\n'))}`;
+    window.location.href = `mailto:${contactData.locations[0].email}?subject=${encodeURIComponent(copy.emailSubject)}&body=${encodeURIComponent(body.join('\n'))}`;
     setDraftReady(true);
   };
 
@@ -66,9 +67,13 @@ export const ContactEnquirySection = () => {
             </label>
             <div className={`${ctaStyles.actions} ${styles.actions}`}>
               <div className={styles.attachment}>
-                <input type="file" name="attachment" aria-label={copy.attachment}
+                <label className={styles.fileLabel}>
+                  <span>{copy.attachment}</span>
+                  <input type="file" name="attachment" aria-label={copy.attachment}
                   aria-describedby={attachmentName ? 'contact-attachment-notice' : undefined}
                   onChange={(event) => setAttachmentName(event.target.files?.[0]?.name ?? '')} />
+                </label>
+                <span className={styles.fileName}>{attachmentName || contact.noFile}</span>
               </div>
               <button type="submit" className={`${ctaStyles.next} ${styles.submit}`}>
                 {contact.submit}<ArrowRight aria-hidden="true" />

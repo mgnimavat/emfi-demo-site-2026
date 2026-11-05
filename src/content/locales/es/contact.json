@@ -1,0 +1,67 @@
+{
+  "title": "Contacto",
+  "description": "Cuéntenos qué necesita en análisis, ejecución, liquidación, custodia o gestión de activos.",
+  "cta": {
+    "title": "Di",
+    "accent": "Menos.",
+    "formTitle": "Una estructura más sencilla empieza aquí.",
+    "emailSubject": "EMFI — Consulta sobre infraestructura",
+    "draftNotice": "Continúe en su aplicación de correo para enviar esta consulta a EMFI.",
+    "researchLabel": "Contexto del análisis",
+    "businessUnit": "Servicios",
+    "businessUnitPlaceholder": "Seleccione un servicio",
+    "businessUnits": [
+      "Análisis y ejecución",
+      "Liquidación y custodia",
+      "Gestión patrimonial y de activos"
+    ],
+    "attachment": "Elegir archivo",
+    "attachmentNotice": "Adjunte este archivo en su aplicación de correo al enviar la consulta.",
+    "send": "Enviar",
+    "fields": [
+      {
+        "name": "name",
+        "label": "Nombre",
+        "placeholder": "Nombre",
+        "type": "text",
+        "autoComplete": "name",
+        "required": true
+      },
+      {
+        "name": "organization",
+        "label": "Organización",
+        "placeholder": "Organización",
+        "type": "text",
+        "autoComplete": "organization",
+        "required": true
+      },
+      {
+        "name": "telephone",
+        "label": "Teléfono",
+        "placeholder": "Teléfono",
+        "type": "tel",
+        "autoComplete": "tel",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Correo electrónico",
+        "placeholder": "Correo electrónico",
+        "type": "email",
+        "autoComplete": "email",
+        "required": true
+      },
+      {
+        "name": "country",
+        "label": "País",
+        "placeholder": "País",
+        "type": "text",
+        "autoComplete": "country-name",
+        "required": true
+      }
+    ]
+  },
+  "message": "Mensaje",
+  "submit": "Hablemos",
+  "noFile": "Ningún archivo seleccionado"
+}

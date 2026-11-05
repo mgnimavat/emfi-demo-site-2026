@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { about } from "@/content/about";
+import { dictionaries, type AboutCopy } from "@/lib/i18n";
 import styles from "./person-card.module.css";
 
 const placeholderPhoto = "/people/placeholder-draw-sky.jpg";
 
-export function PersonCard({ person }: { person: (typeof about.people)[number] }) {
+export const PersonCard = ({ person, boardLabel = dictionaries.en.about.boardLabel }: { person: AboutCopy["people"][number]; boardLabel?: string }) => {
   const headingId = `person-${person.name.toLowerCase().replace(/\s+/g, "-")}`;
   const isBoard = "board" in person && person.board;
   const inset = "inset" in person && person.inset;
@@ -28,7 +28,7 @@ export function PersonCard({ person }: { person: (typeof about.people)[number] }
         <p className={styles.role}>{person.role}</p>
         <div className={styles.details}>
           <div className={styles.detailsInner}>
-            {isBoard ? <p className={styles.board}>{about.boardLabel}</p> : null}
+            {isBoard ? <p className={styles.board}>{boardLabel}</p> : null}
             <p id={`${headingId}-details`} className={styles.description}>{person.description}</p>
           </div>
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
 import { DirectRouteAnimation } from '@/components/emfi-sections/direct-route-animation';
 import { cardStyle } from '@/components/emfi-sections/css';
 import { useAnimTimeline } from '@/components/emfi-sections/use-anim-timeline';
@@ -13,6 +14,7 @@ const compactRouteWidth = 500;
 const heroRouteStops = [4, 26, 54, 76, 96] as const;
 
 export const SettlementHeroAnimation = ({ showTitle = true }: { showTitle?: boolean }) => {
+  const { t } = useServiceLocale();
   const { chapRef, dRef, tD } = useAnimTimeline({
     loopDirect: true,
     directScale: directPaceScale('home12'),
@@ -38,10 +40,13 @@ export const SettlementHeroAnimation = ({ showTitle = true }: { showTitle?: bool
           <span className={values.dRouteTitle === routeTitles.direct
             ? routeStyles.routeTitleEmfi
             : routeStyles.routeTitleConventional}>
-            {values.dRouteTitle}
+            {t(values.dRouteTitle)}
           </span>
         </p> : null}
-        <DirectRouteAnimation values={values} />
+        <DirectRouteAnimation values={{ ...values,
+          dNodes: values.dNodes.map((node) => ({ ...node, name: t(node.name), sub: t(node.sub) })),
+          dTags: values.dTags.map((tag) => ({ ...tag, text: t(tag.text) })),
+        }} stepLabel={t('Handover')} ariaLabel={t('An instruction moves from You to Settlement agent, Sub-custodian, Custodian and Depository. The same route then shortens to You, EMFI, Depository.')} />
       </div>
     </div>
   );

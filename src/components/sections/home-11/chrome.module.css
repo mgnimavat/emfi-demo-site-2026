@@ -192,3 +192,63 @@
 @media (prefers-reduced-motion: reduce) {
   .clientLogin, .clientIcon, .tooltip { transition: none; }
 }
+
+.languageControl {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  color: var(--nav-fg);
+}
+.languageControl::after {
+  content: '';
+  position: absolute;
+  inset-inline-end: var(--space-3);
+  top: 50%;
+  width: var(--space-2);
+  height: var(--space-2);
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+.languageControl:has(.languageSelect:focus-visible) { color: var(--nav-bg); }
+.languageControl:has(.languageSelect:disabled)::after { opacity: .6; }
+.languageSelect {
+  appearance: none;
+  min-height: 44px;
+  padding-inline: var(--space-3);
+  padding-inline-end: var(--space-6);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: color-mix(in srgb, var(--nav-fg) 6%, transparent);
+  color: var(--nav-fg);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease;
+}
+.header .languageSelect:focus-visible { outline: none; box-shadow: none; }
+.languageSelect:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--nav-fg) 12%, transparent);
+}
+.languageSelect:focus-visible {
+  background: var(--nav-fg);
+  color: var(--nav-bg);
+}
+.languageSelect option { background: var(--nav-bg); color: var(--nav-fg); }
+@media (prefers-reduced-motion: reduce) {
+  .languageSelect { transition: none; }
+}
+.mobileNav .languageControl { align-self: flex-start; margin-top: 16px; }
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .inner { gap: 14px; padding-inline: 20px; }
+  .loginSlot { gap: 12px; }
+  .nav { gap: 14px; }
+  .home { min-width: 100px; }
+  .logo { width: 100px; }
+}
+.tooltip { left: auto; right: 0; transform: none; }
+.tooltip::before { left: auto; right: 17px; transform: none; }
+.header:lang(ar) .loginSlot > a:not(.clientLogin) { line-height: 1.6; }
+.languageSelect:disabled { opacity: .6; cursor: default; }

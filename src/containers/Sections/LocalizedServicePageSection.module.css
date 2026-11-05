@@ -1,0 +1,9 @@
+.page:lang(es) h1 { font-size: min(clamp(56px, 8vw, 110px), 12cqw); }
+.page:lang(ar) :is(h1, h2, h3, h4, p) { letter-spacing: normal; }
+.page:lang(ar) h1 { line-height: 1.3; }
+.page:not(:lang(en)) h1 { width: auto; white-space: pre-line; }
+.page:not(:lang(en)) h1 + p { width: auto; max-width: 100%; white-space: normal; font-size: clamp(20px, 4.5cqw, 44px); }
+.page:dir(rtl) :is(input[type='number'], input[type='date']) { direction: ltr; }
+@media (min-width: 600px) {
+  .page[data-service='wealth-asset-management']:not(:lang(en)) h1 { width: max-content; white-space: pre; }
+}

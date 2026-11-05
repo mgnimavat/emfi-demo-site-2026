@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { ArrowUpRight, Check, ShieldCheck } from 'lucide-react';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
-import { settlement } from '@/content/settlement';
+import { serviceDictionaries, type SettlementCopy } from '@/lib/i18n/service-dictionaries';
 import { ServiceDisclosures } from './ServiceDisclosures';
 import { SettlementDashboard } from './SettlementDashboard';
 import { SettlementMobileHoldings } from './SettlementMobileHoldings';
 import styles from './SettlementCustodySections.module.css';
 
-const SettlementOverview = () => {
+const SettlementOverview = ({ copy: settlement }: { copy: SettlementCopy }) => {
   const content = settlement.overview;
 
   return (
@@ -39,7 +39,7 @@ const SettlementOverview = () => {
   );
 };
 
-const CustodySafeguarding = () => {
+const CustodySafeguarding = ({ copy: settlement }: { copy: SettlementCopy }) => {
   const content = settlement.custody;
 
   return (
@@ -81,14 +81,14 @@ const CustodySafeguarding = () => {
           </ExecutionReveal>
         </div>
         <p className={`${styles.body} ${styles.related}`}>
-          {content.relatedBody}{' '}<Link href={content.relatedHref}>{content.relatedLabel}<ArrowUpRight size={15} aria-hidden="true" /></Link>{' '}page.
+          {content.relatedBody}{' '}<Link href={content.relatedHref}>{content.relatedLabel}<ArrowUpRight size={15} aria-hidden="true" /></Link>{' '}{content.relatedSuffix}
         </p>
       </div>
     </section>
   );
 };
 
-const ClientAssetDisclosures = () => {
+const ClientAssetDisclosures = ({ copy: settlement }: { copy: SettlementCopy }) => {
   const content = settlement.disclosures;
 
   return (
@@ -98,6 +98,7 @@ const ClientAssetDisclosures = () => {
       action={content.action}
       actionPlacement="panel"
       external
+      newTabLabel={settlement.ui['(opens in a new tab)']}
     >
       {content.entities.map((entity) => <p key={entity.name}><strong>{entity.name}</strong> {entity.body}</p>)}
       <p>{content.notice}</p>
@@ -105,10 +106,10 @@ const ClientAssetDisclosures = () => {
   );
 };
 
-export const SettlementCustodySections = () => (
+export const SettlementCustodySections = ({ copy = serviceDictionaries.en.settlement }: { copy?: SettlementCopy }) => (
   <>
-    <SettlementOverview />
-    <CustodySafeguarding />
-    <ClientAssetDisclosures />
+    <SettlementOverview copy={copy} />
+    <CustodySafeguarding copy={copy} />
+    <ClientAssetDisclosures copy={copy} />
   </>
 );

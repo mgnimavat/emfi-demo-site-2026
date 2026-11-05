@@ -1,0 +1,67 @@
+{
+  "title": "اتصل بنا",
+  "description": "أخبرنا باحتياجاتك في البحوث أو التنفيذ أو التسوية أو الحفظ أو إدارة الأصول.",
+  "cta": {
+    "title": "قل",
+    "accent": "أقل.",
+    "formTitle": "ترتيبات أبسط تبدأ هنا.",
+    "emailSubject": "EMFI — استفسار عن البنية التحتية",
+    "draftNotice": "تابع في تطبيق البريد الإلكتروني لإرسال هذا الاستفسار إلى EMFI.",
+    "researchLabel": "سياق البحث",
+    "businessUnit": "الخدمات",
+    "businessUnitPlaceholder": "اختر الخدمة",
+    "businessUnits": [
+      "البحوث والتنفيذ",
+      "التسوية والحفظ",
+      "إدارة الثروات والأصول"
+    ],
+    "attachment": "اختر ملفًا",
+    "attachmentNotice": "أرفق هذا الملف في تطبيق البريد الإلكتروني عند إرسال الاستفسار.",
+    "send": "إرسال",
+    "fields": [
+      {
+        "name": "name",
+        "label": "الاسم",
+        "placeholder": "الاسم",
+        "type": "text",
+        "autoComplete": "name",
+        "required": true
+      },
+      {
+        "name": "organization",
+        "label": "المؤسسة",
+        "placeholder": "المؤسسة",
+        "type": "text",
+        "autoComplete": "organization",
+        "required": true
+      },
+      {
+        "name": "telephone",
+        "label": "الهاتف",
+        "placeholder": "الهاتف",
+        "type": "tel",
+        "autoComplete": "tel",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "البريد الإلكتروني",
+        "placeholder": "البريد الإلكتروني",
+        "type": "email",
+        "autoComplete": "email",
+        "required": true
+      },
+      {
+        "name": "country",
+        "label": "الدولة",
+        "placeholder": "الدولة",
+        "type": "text",
+        "autoComplete": "country-name",
+        "required": true
+      }
+    ]
+  },
+  "message": "الرسالة",
+  "submit": "لنتحدث",
+  "noFile": "لم يتم اختيار ملف"
+}

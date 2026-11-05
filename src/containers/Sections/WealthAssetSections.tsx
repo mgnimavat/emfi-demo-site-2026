@@ -1,9 +1,10 @@
-import { wealth } from '@/content/wealth';
+import { serviceDictionaries, type WealthCopy } from '@/lib/i18n/service-dictionaries';
+import { localizeHref, type Locale } from '@/lib/i18n';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { ServiceDisclosures } from './ServiceDisclosures';
 import styles from './WealthAssetSections.module.css';
 
-const MandateFramework = () => {
+const MandateFramework = ({ copy: wealth }: { copy: WealthCopy }) => {
   const content = wealth.management;
 
   return (
@@ -37,7 +38,7 @@ const MandateFramework = () => {
   );
 };
 
-const WealthManagement = () => {
+const WealthManagement = ({ copy: wealth }: { copy: WealthCopy }) => {
   const content = wealth.management;
 
   return (
@@ -51,14 +52,14 @@ const WealthManagement = () => {
           </div>
         </ExecutionReveal>
         <ExecutionReveal delay={0.12} className={styles.visual}>
-          <MandateFramework />
+          <MandateFramework copy={wealth} />
         </ExecutionReveal>
       </div>
     </section>
   );
 };
 
-const FundStructure = () => {
+const FundStructure = ({ copy: wealth }: { copy: WealthCopy }) => {
   const content = wealth.fund;
 
   return (
@@ -79,7 +80,7 @@ const FundStructure = () => {
   );
 };
 
-const AssetManagement = () => {
+const AssetManagement = ({ copy: wealth }: { copy: WealthCopy }) => {
   const content = wealth.fund;
 
   return (
@@ -99,7 +100,7 @@ const AssetManagement = () => {
           </div>
         </ExecutionReveal>
         <ExecutionReveal delay={0.12} className={styles.visual}>
-          <FundStructure />
+          <FundStructure copy={wealth} />
           <ul className={styles.providers} aria-labelledby="fund-provider-heading">
             {content.providers.map((provider) => (
               <li key={provider.id}>
@@ -115,14 +116,14 @@ const AssetManagement = () => {
   );
 };
 
-const FundDisclosures = () => {
+const FundDisclosures = ({ copy: wealth, locale }: { copy: WealthCopy; locale: Locale }) => {
   const content = wealth.disclosures;
 
   return (
     <ServiceDisclosures
       headingId="fund-disclosures-heading"
       title={content.title}
-      action={content.action}
+      action={{ ...content.action, href: localizeHref(content.action.href, locale) }}
       actionPlacement="panel"
     >
       <p><strong>{content.entity}</strong> {content.introduction}</p>
@@ -131,10 +132,10 @@ const FundDisclosures = () => {
   );
 };
 
-export const WealthAssetSections = () => (
+export const WealthAssetSections = ({ copy = serviceDictionaries.en.wealth, locale = 'en' }: { copy?: WealthCopy; locale?: Locale }) => (
   <>
-    <WealthManagement />
-    <AssetManagement />
-    <FundDisclosures />
+    <WealthManagement copy={copy} />
+    <AssetManagement copy={copy} />
+    <FundDisclosures copy={copy} locale={locale} />
   </>
 );

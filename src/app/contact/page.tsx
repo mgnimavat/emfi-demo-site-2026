@@ -1,16 +1,6 @@
-import { ContactEnquirySection } from '@/containers/Sections/ContactEnquirySection';
-import { About1Locations } from '@/components/sections/about-1-locations';
-import { contact } from '@/content/contact';
+import { ContactPageSection } from '@/containers/Sections/ContactPageSection';
+import { dictionaries } from '@/lib/i18n';
 
-export const metadata = { title: 'Contact', description: contact.heroBody };
-
-const ContactPage = () => {
-  return (
-    <>
-      <ContactEnquirySection />
-      <About1Locations />
-    </>
-  );
-};
-
+export const metadata = { title: dictionaries.en.contact.title, description: dictionaries.en.contact.description };
+const ContactPage = () => <ContactPageSection />;
 export default ContactPage;

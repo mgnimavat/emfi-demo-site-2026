@@ -25,3 +25,5 @@
 .popup button:focus-visible { outline: 2px solid #8098cc; outline-offset: 2px; }
 @media (max-width: 639px) { .popup { left: 0; right: auto; } .trigger { font-size: 14px; } .fullPreset { display: none; } .shortPreset { display: inline; } }
 @media (max-width: 359px) { .inputs { grid-template-columns: minmax(0,1fr); } }
+.trigger:dir(rtl) { text-align: start; }
+.dateInput:dir(rtl) input { direction: ltr; }

@@ -10,6 +10,7 @@ type ServiceDisclosuresProps = {
   action: { label: string; href: string };
   children: ReactNode;
   external?: boolean;
+  newTabLabel?: string;
   actionPlacement?: 'column' | 'panel';
 };
 
@@ -19,6 +20,7 @@ export const ServiceDisclosures = ({
   action,
   children,
   external = false,
+  newTabLabel = '(opens in a new tab)',
   actionPlacement = 'column',
 }: ServiceDisclosuresProps) => {
   const panelAction = actionPlacement === 'panel';
@@ -32,7 +34,7 @@ export const ServiceDisclosures = ({
     >
       <span>{action.label}</span>
       <ActionIcon size={panelAction ? 14 : 17} aria-hidden="true" />
-      {external ? <span className="sr-only"> (opens in a new tab)</span> : null}
+      {external ? <span className="sr-only"> {' '}{newTabLabel}</span> : null}
     </Link>
   );
 
