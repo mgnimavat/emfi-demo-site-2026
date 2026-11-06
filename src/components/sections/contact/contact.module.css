@@ -83,8 +83,12 @@
 .section:dir(rtl) .selectWrap > svg { right: auto; inset-inline-end: var(--space-3); }
 .section:dir(rtl) .submit svg { transform: rotate(180deg); }
 .section:dir(rtl) input:is([type='email'], [type='tel']) { direction: ltr; text-align: right; }
-.section:lang(es) h1 { font-size: min(8rem, 28cqi); }
+.section:lang(es) h1 { font-size: min(10.875rem, calc(42cqi * .7)); }
 .section:is(:lang(es), :lang(ar)) h1 { padding-inline: 0; }
+
+@media (min-width: 901px) {
+  .section:lang(es) > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
 .page:lang(ar) section {
   font-family: var(--font-noto-sans-arabic), Arial, sans-serif;
