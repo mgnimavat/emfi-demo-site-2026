@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useServiceLocale } from "@/ui/hooks/useServiceLocale";
+import { ServiceLocaleProvider, useServiceLocale } from '@/ui/hooks/useServiceLocale';
 import { workstationSecurities, type ExecutionSymbol } from '@/content/execution-securities';
 import { ExecutionChart } from '@/components/sections/execution/execution-chart';
 import { InteractiveExecutionTicket } from '@/components/sections/execution/interactive-execution-ticket';
@@ -11,7 +11,9 @@ import styles from '@/components/sections/execution/page.module.css';
 import previewStyles from './execution-workstation.module.css';
 import { WorkstationPrivacyProvider, type WorkstationMaskVariant } from './WorkstationPrivacy';
 
-export const ExecutionWorkstation = ({ maskVariant = 'initial-stars' }: { maskVariant?: WorkstationMaskVariant }) => {
+type ExecutionWorkstationProps = { maskVariant?: WorkstationMaskVariant };
+
+const ExecutionWorkstationContent = ({ maskVariant = 'initial-stars' }: ExecutionWorkstationProps) => {
   const { t } = useServiceLocale();
   const [securitySymbol, setSecuritySymbol] = useState<ExecutionSymbol>(workstationSecurities[0].symbol);
   const security = workstationSecurities.find((item) => item.symbol === securitySymbol)
@@ -19,7 +21,7 @@ export const ExecutionWorkstation = ({ maskVariant = 'initial-stars' }: { maskVa
 
   return (
     <WorkstationPrivacyProvider variant={maskVariant}>
-      <fieldset className={previewStyles.preview}>
+      <fieldset lang="en" dir="ltr" data-system-preview="workstation" className={previewStyles.preview}>
         <legend className="sr-only">{t("Sample EMFI workstation preview")}</legend>
         <div className={styles.executionLayout}>
           <ExecutionChart security={security} staticPreview controlsEnabled />
@@ -42,3 +44,9 @@ export const ExecutionWorkstation = ({ maskVariant = 'initial-stars' }: { maskVa
     </WorkstationPrivacyProvider>
   );
 };
+
+export const ExecutionWorkstation = (props: ExecutionWorkstationProps) => (
+  <ServiceLocaleProvider locale="en" messages={{}}>
+    <ExecutionWorkstationContent {...props} />
+  </ServiceLocaleProvider>
+);

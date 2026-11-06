@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useServiceLocale } from "@/ui/hooks/useServiceLocale";
+import { ServiceLocaleProvider, useServiceLocale } from '@/ui/hooks/useServiceLocale';
 import {
   BatteryFull, Bell, ChevronDown, DollarSign, LayoutGrid,
   List, Menu, Plus, Search, Signal, TrendingUp, Wifi,
@@ -10,13 +10,13 @@ import { settlementMobileHoldings as content } from '@/content/settlement-mobile
 import { MaskedWorkstationValue, WorkstationPrivacyProvider } from './WorkstationPrivacy';
 import styles from './SettlementMobileHoldings.module.css';
 
-export const SettlementMobileHoldings = () => {
+const SettlementMobileHoldingsContent = () => {
   const { t } = useServiceLocale();
   const [view, setView] = useState<'overview' | 'list'>('overview');
 
   return (
     <WorkstationPrivacyProvider variant="initial-stars">
-      <div className={styles.device} role="region" aria-label={t("Illustrative mobile holdings preview")}>
+      <div lang="en" dir="ltr" data-system-preview="mobile-holdings" className={styles.device} role="region" aria-label={t("Illustrative mobile holdings preview")}>
         <div className={styles.screen}>
           <div className={styles.statusBar} aria-hidden="true">
             <span>{content.time}</span>
@@ -78,3 +78,9 @@ export const SettlementMobileHoldings = () => {
     </WorkstationPrivacyProvider>
   );
 };
+
+export const SettlementMobileHoldings = () => (
+  <ServiceLocaleProvider locale="en" messages={{}}>
+    <SettlementMobileHoldingsContent />
+  </ServiceLocaleProvider>
+);

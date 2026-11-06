@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type CSSProperties, type FormEvent, type KeyboardEvent } from "react";
 import { useServiceLocale } from "@/ui/hooks/useServiceLocale";
+import type { Locale } from '@/lib/i18n/routing';
 import { ArrowDown, ArrowUp, Check, ChevronDown, Eye } from "lucide-react";
 import { executionSecurities, demoExecutionSecurities, type ExecutionSecurity, type ExecutionSymbol } from "@/content/execution-securities";
 import { MaskedWorkstationValue } from '@/containers/Sections/WorkstationPrivacy';
@@ -14,8 +15,9 @@ type OrderType = "Market" | "Limit" | "Stop";
 type Draft = { symbol: ExecutionSymbol; orderType: OrderType; timeInForce: "Day" | "GTC"; venue: "Interactive" | "Voice"; quantity: string; price: string };
 const initialDraft: Draft = { symbol: "NVDA", orderType: "Market", timeInForce: "Day", venue: "Interactive", quantity: "100", price: "" };
 type Preview = { stage?: "searching" | "submitting" | "booked"; running: boolean; submissionDuration: number };
+type TicketHeader = { title: string; locale: Locale };
 
-export function InteractiveExecutionTicket({ preview, fillHeight = false, staticPreview = false, controlsEnabled = !staticPreview, hideIsin = false, maskPrices = false, orderPreview, securities: availableSecurities, onSecurityChange }: { preview?: Preview; fillHeight?: boolean; staticPreview?: boolean; controlsEnabled?: boolean; hideIsin?: boolean; maskPrices?: boolean; orderPreview?: Pick<Draft, "orderType" | "timeInForce">; securities?: readonly ExecutionSecurity[]; onSecurityChange?: (symbol: ExecutionSymbol) => void }) {
+export function InteractiveExecutionTicket({ header, preview, fillHeight = false, staticPreview = false, controlsEnabled = !staticPreview, hideIsin = false, maskPrices = false, orderPreview, securities: availableSecurities, onSecurityChange }: { header?: TicketHeader; preview?: Preview; fillHeight?: boolean; staticPreview?: boolean; controlsEnabled?: boolean; hideIsin?: boolean; maskPrices?: boolean; orderPreview?: Pick<Draft, "orderType" | "timeInForce">; securities?: readonly ExecutionSecurity[]; onSecurityChange?: (symbol: ExecutionSymbol) => void }) {
   const { t } = useServiceLocale();
   const securities = availableSecurities?.length ? availableSecurities : preview || staticPreview ? executionSecurities : demoExecutionSecurities;
   const [draft, setDraft] = useState<Draft>(() => ({ ...initialDraft, ...orderPreview, symbol: securities[0].symbol }));
@@ -96,7 +98,7 @@ export function InteractiveExecutionTicket({ preview, fillHeight = false, static
       event.currentTarget.requestSubmit(buyRef.current ?? undefined);
     }
   }}>
-    <div className={styles.header}><span className={styles.windowTitle}><strong>{t("Execution")}</strong></span></div>
+    <div className={styles.header} lang={header?.locale} dir={header ? (header.locale === 'ar' ? 'rtl' : 'ltr') : undefined}><span className={styles.windowTitle}><strong>{header?.title ?? t("Execution")}</strong></span></div>
     <div className={styles.body}>
       <fieldset disabled={!controlsEnabled || animated || pending} className={styles.fields}>
         <legend className="sr-only">{t("Order details")}</legend>

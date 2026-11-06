@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { useServiceLocale } from "@/ui/hooks/useServiceLocale";
+import { ServiceLocaleProvider, useServiceLocale } from '@/ui/hooks/useServiceLocale';
 import { settlementDashboard, type DashboardSeries } from '@/content/settlement-dashboard';
 import { maskWorkstationValue } from '@/content/workstation-preview';
 import { MaskedWorkstationValue, WorkstationPrivacyProvider } from './WorkstationPrivacy';
@@ -179,10 +179,13 @@ const BalanceChart = () => {
   );
 };
 
-export const SettlementDashboard = () => {
+const SettlementDashboardContent = () => {
   const { t } = useServiceLocale();
   return (
   <div
+    lang="en"
+    dir="ltr"
+    data-system-preview="dashboard"
     className={styles.viewport}
     role="region"
     aria-label={t("Illustrative portfolio dashboard")}
@@ -213,3 +216,9 @@ export const SettlementDashboard = () => {
   </div>
 );
 };
+
+export const SettlementDashboard = () => (
+  <ServiceLocaleProvider locale="en" messages={{}}>
+    <SettlementDashboardContent />
+  </ServiceLocaleProvider>
+);

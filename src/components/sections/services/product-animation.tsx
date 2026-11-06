@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useSyncExternalStore } from "react";
-import { useServiceLocale } from "@/ui/hooks/useServiceLocale";
+import { ServiceLocaleProvider, useServiceLocale } from '@/ui/hooks/useServiceLocale';
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowRight, FileText, Search } from "lucide-react";
 import { argentinaResearchPreview } from "@/content/execution";
@@ -43,7 +43,7 @@ function Chart({ kind, running, index }: { kind: number; running: boolean; index
 }
 
 export function ProductAnimation({ view, paused = false, orderStage, fillHeight = false, compact = false, submissionDuration = 2.8, researchQuery, researchStage, argentinaPreview = false }: { argentinaPreview?: boolean; researchQuery?: string; researchStage?: "typing" | "loading" | "report" | "selected"; view: string; paused?: boolean; orderStage?: "searching" | "submitting" | "booked"; fillHeight?: boolean; compact?: boolean; submissionDuration?: number }) {
-  const { t } = useServiceLocale();
+  const { t, locale } = useServiceLocale();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.2 });
   const visible = inView;
@@ -55,9 +55,11 @@ export function ProductAnimation({ view, paused = false, orderStage, fillHeight 
   const researchTitle = researchStage ? argentinaResearchPreview.title : "The AI boom: beyond the headlines";
   const reportVisible = researchStage ? (researchStage === "report" || researchStage === "selected") : visible || reduced;
   if (view !== "research" && view !== "backoffice") return (
-    <div ref={ref} role="img" aria-label={`Demo animated ${argentinaPreview ? argentinaResearchPreview.bond : "NVIDIA"} execution ticket and simulated buy order`} className={fillHeight ? "h-full" : "w-full"}>
-      <InteractiveExecutionTicket securities={argentinaPreview ? argentinaPreviewSecurities : undefined} hideIsin={argentinaPreview} maskPrices={argentinaPreview} orderPreview={argentinaPreview ? argentinaResearchPreview.order : undefined} fillHeight={fillHeight} preview={{ stage: orderStage, running, submissionDuration }} />
+    <ServiceLocaleProvider locale="en" messages={{}}>
+    <div ref={ref} lang="en" dir="ltr" data-system-preview="execution-ticket" role="img" aria-label={`Demo animated ${argentinaPreview ? argentinaResearchPreview.bond : "NVIDIA"} execution ticket and simulated buy order`} className={fillHeight ? "h-full" : "w-full"}>
+      <InteractiveExecutionTicket header={{ title: t('Execution'), locale }} securities={argentinaPreview ? argentinaPreviewSecurities : undefined} hideIsin={argentinaPreview} maskPrices={argentinaPreview} orderPreview={argentinaPreview ? argentinaResearchPreview.order : undefined} fillHeight={fillHeight} preview={{ stage: orderStage, running, submissionDuration }} />
     </div>
+    </ServiceLocaleProvider>
   );
 
   return (
