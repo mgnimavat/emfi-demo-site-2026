@@ -211,7 +211,6 @@
   transform: translateY(-70%) rotate(45deg);
   pointer-events: none;
 }
-.languageControl:has(.languageSelect:focus-visible) { color: var(--nav-bg); }
 .languageControl:has(.languageSelect:disabled)::after { opacity: .6; }
 .languageSelect {
   appearance: none;
@@ -220,7 +219,7 @@
   padding-inline-end: var(--space-6);
   border: 0;
   border-radius: var(--radius-control);
-  background: color-mix(in srgb, var(--nav-fg) 6%, transparent);
+  background: transparent;
   color: var(--nav-fg);
   font: inherit;
   font-size: 13px;
@@ -228,13 +227,10 @@
   cursor: pointer;
   transition: background-color .2s ease, color .2s ease;
 }
-.header .languageSelect:focus-visible { outline: none; box-shadow: none; }
-.languageSelect:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--nav-fg) 12%, transparent);
-}
+.languageSelect:hover:not(:disabled),
 .languageSelect:focus-visible {
-  background: var(--nav-fg);
-  color: var(--nav-bg);
+  background: transparent;
+  color: var(--nav-fg);
 }
 .languageSelect option { background: var(--nav-bg); color: var(--nav-fg); }
 @media (prefers-reduced-motion: reduce) {
@@ -248,7 +244,7 @@
   .home { min-width: 100px; }
   .logo { width: 100px; }
 }
-.tooltip { left: auto; right: 0; transform: none; }
-.tooltip::before { left: auto; right: 17px; transform: none; }
+.tooltip { left: auto; right: auto; inset-inline-end: 0; transform: none; }
+.tooltip::before { left: auto; right: auto; inset-inline-end: 17px; transform: none; }
 .header:lang(ar) .loginSlot > a:not(.clientLogin) { line-height: 1.6; }
 .languageSelect:disabled { opacity: .6; cursor: default; }

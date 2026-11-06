@@ -1,3 +1,10 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
+import { getPageLocale, localizeHref } from '@/lib/i18n/routing';
+import enMessages from '@/content/locales/en/marketing-ui.json';
+import esMessages from '@/content/locales/es/marketing-ui.json';
+import arMessages from '@/content/locales/ar/marketing-ui.json';
 import Link from "next/link";
 import { trust } from "@/content/trust";
 import footer from "@/content/site-footer.json";
@@ -39,28 +46,35 @@ const BrandIcon = ({ d, viewBox, evenodd }: { d: string; viewBox: string; evenod
   );
 };
 
-const FooterLinkItems = ({ links }: { links: readonly { label: string; href: string }[] }) => {
+const FooterLinkItems = ({ links, locale, t }: {
+  links: readonly { label: string; href: string }[];
+  locale: ReturnType<typeof getPageLocale>;
+  t: (value: string) => string;
+}) => {
   return links.map((link) => (
     <li key={link.href}>
-      {link.href.startsWith("http") ? <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a> : <Link href={link.href}>{link.label}</Link>}
+      {link.href.startsWith("http") ? <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a> : <Link href={localizeHref(link.href, locale)}>{t(link.label)}</Link>}
     </li>
   ));
 };
 
 export const Home11Footer = () => {
+  const locale = getPageLocale(usePathname());
+  const messages: Readonly<Record<string, string>> = { en: enMessages, es: esMessages, ar: arMessages }[locale];
+  const t = (value: string) => messages[value] ?? value;
   return (
-    <footer className={styles.footer}>
+    <footer lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} className={styles.footer}>
       <div className={styles.footerInner}>
         <div className={styles.footerTop}>
           {linkGroups.map((group) => (
             <nav key={group.heading} className={styles.footerLinks} aria-label={`Footer ${group.heading.toLowerCase()}`}>
-              <h2>{group.heading}</h2>
-              <ul><FooterLinkItems links={group.links} /></ul>
+              <h2>{t(group.heading)}</h2>
+              <ul><FooterLinkItems links={group.links} locale={locale} t={t} /></ul>
             </nav>
           ))}
         </div>
         <div className={styles.footerLegal}>
-          <ul className={styles.social} aria-label="Social media">
+          <ul className={styles.social} aria-label={t("Social media")}>
             {socialLinks.map((item) => (
               <li key={item.title}>
                 <a href={item.href} title={item.title} aria-label={item.title} {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
@@ -69,9 +83,9 @@ export const Home11Footer = () => {
               </li>
             ))}
           </ul>
-          <p>Intended for Professional Clients Only.</p>
-          <p>Not Suitable for Retail Clients or US Persons.</p>
-          {copyright.map((line) => <p key={line}>{line}</p>)}
+          <p>{t("Intended for Professional Clients Only.")}</p>
+          <p>{t("Not Suitable for Retail Clients or US Persons.")}</p>
+          {copyright.map((line) => <p key={line}>{t(line)}</p>)}
         </div>
       </div>
     </footer>

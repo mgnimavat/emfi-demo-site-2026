@@ -1,0 +1,160 @@
+{
+  "title": "EMFI | Inicio",
+  "description": "Infraestructura institucional. Sin capas institucionales. Análisis, ejecución, liquidación, custodia y gestión de activos para clientes profesionales.",
+  "principles": {
+    "title": "Confórmese con",
+    "accent": "Menos.",
+    "prefix": "Menos",
+    "items": [
+      {
+        "id": "cost",
+        "label": "Coste",
+        "summary": "Sepa cuánto paga.",
+        "heading": "Mire más allá de la tarifa anunciada.",
+        "body": "Menos intermediarios cobrando su margen. Más de su dinero se queda donde corresponde.",
+        "detail": "Compare en igualdad de condiciones los cargos de custodia, las comisiones de operación, los mínimos anuales y los costes de procesamiento. Una estructura más directa puede eliminar algunos cargos, pero el ahorro depende de los servicios, mercados y activos implicados.",
+        "points": [
+          "Comisiones de custodia y operación",
+          "Mínimos anuales y por mercado",
+          "Cargos adicionales de procesamiento",
+          "Alcance de servicios comparable"
+        ],
+        "note": "Las comisiones deben compararse sobre los mismos activos, mercados, alcance de servicios y niveles de actividad."
+      },
+      {
+        "id": "complexity",
+        "label": "Complejidad",
+        "summary": "Menos participantes. Funciones más claras.",
+        "heading": "Menos participantes. Responsabilidades más claras.",
+        "body": "Más control operativo. Respuestas más rápidas, menos demoras y una ejecución más fluida.",
+        "detail": "Cada participante adicional puede suponer otro acuerdo, vía de instrucciones, conciliación y escalado. Menos relaciones pueden simplificar la coordinación y facilitar la identificación de responsabilidades, cuando el modelo operativo lo permite.",
+        "points": [
+          "¿Cuántas entidades participan?",
+          "¿Cuántos acuerdos rigen la cadena?",
+          "¿Quién responde por cada traspaso?",
+          "¿Quién resuelve las excepciones?"
+        ],
+        "note": "El modelo operativo real varía según el mercado, el instrumento y el servicio."
+      },
+      {
+        "id": "exposure",
+        "label": "Exposición",
+        "summary": "Sepa quién mantiene sus activos.",
+        "heading": "Sepa quién mantiene sus activos.",
+        "body": "Menos puntos de fallo. Seguimiento y recuperación de activos más sencillos si un intermediario incumple.",
+        "detail": "Cada intermediario que mantiene activos puede añadir dependencia de otra contraparte. Si uno falla, el acceso, la conciliación o la recuperación de los activos pueden retrasarse o ser objeto de disputa. Una cadena más corta puede reducir la dependencia de terceros, pero no hace automáticamente más segura la custodia.",
+        "points": [
+          "¿Quién mantiene legalmente los activos?",
+          "¿Cómo se segregan los activos de clientes?",
+          "¿Qué ocurre si un intermediario falla?",
+          "¿Qué derechos de propiedad y recuperación se aplican?"
+        ],
+        "note": "El riesgo depende de la titularidad legal, la segregación, la estructura de la cuenta, las protecciones frente a insolvencia y los derechos contractuales."
+      }
+    ]
+  },
+  "questionnaire": {
+    "title": "¿Su infraestructura actual es un poco",
+    "accent": "excesiva?",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "unanswered": "Sin respuesta",
+    "finish": "Hablemos menos",
+    "resultTitle": "Diga",
+    "resultAccent": "Menos.",
+    "submit": "Hablemos",
+    "backToQuestions": "Atrás",
+    "emailSubject": "Consulta sobre infraestructura de custodia",
+    "draftNotice": "Continúe en su aplicación de correo para enviar esta consulta a EMFI.",
+    "questions": [
+      {
+        "id": "custody-fee",
+        "title": "¿Cuál es su coste anual de custodia?",
+        "options": [
+          "5 puntos básicos",
+          "3 puntos básicos",
+          "1 punto básico"
+        ]
+      },
+      {
+        "id": "minimum-fee",
+        "title": "¿Cuál es su comisión mínima mensual?",
+        "options": [
+          "$10,000",
+          "$5,000",
+          "$1,000"
+        ]
+      },
+      {
+        "id": "minimum-term",
+        "title": "¿Cuál es su plazo mínimo de contrato?",
+        "options": [
+          "5 años",
+          "3 años",
+          "1 año"
+        ]
+      },
+      {
+        "id": "settlement-status",
+        "title": "¿Con qué frecuencia se actualiza su estado de liquidación?",
+        "options": [
+          "Siguiente día hábil",
+          "Durante el día",
+          "En tiempo real"
+        ]
+      },
+      {
+        "id": "middlemen",
+        "title": "¿Cuántos intermediarios hay entre usted y sus activos?",
+        "options": [
+          "3",
+          "2",
+          "1"
+        ]
+      },
+      {
+        "id": "segregated-account",
+        "title": "¿Tiene una cuenta directa y segregada en el depositario?",
+        "options": [
+          "No",
+          "No estoy seguro",
+          "Sí"
+        ]
+      }
+    ],
+    "fields": [
+      {
+        "name": "name",
+        "label": "Nombre",
+        "placeholder": "Su nombre",
+        "type": "text",
+        "autoComplete": "name",
+        "required": true
+      },
+      {
+        "name": "firm",
+        "label": "Empresa",
+        "placeholder": "Nombre de la empresa",
+        "type": "text",
+        "autoComplete": "organization",
+        "required": true
+      },
+      {
+        "name": "telephone",
+        "label": "Teléfono",
+        "placeholder": "Teléfono",
+        "type": "tel",
+        "autoComplete": "tel",
+        "required": false
+      },
+      {
+        "name": "email",
+        "label": "Correo profesional",
+        "placeholder": "you@company.com",
+        "type": "email",
+        "autoComplete": "email",
+        "required": true
+      }
+    ]
+  }
+}

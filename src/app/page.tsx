@@ -1,29 +1,10 @@
-import { EmfiSections } from "@/components/emfi-sections/emfi-sections";
-// Navbar and footer now come from SiteShell; uncomment these imports and JSX
-// after restoring the previous shared chrome in site-shell.tsx.
-// import { Home16Footer } from "@/components/sections/home-16/footer";
-// import { Home16Header } from "@/components/sections/home-16/header";
-import { PrinciplesSection } from "@/components/home/principles/principles";
-import { QuestionnaireSection } from "@/components/home/questionnaire/questionnaire";
-import styles from "@/components/sections/home-12/landing.module.css";
-import "./home-16/home-16.css";
-import "./home.css";
+import { HomePageSection } from '@/containers/Sections/HomePageSection';
+import { marketingDictionaries } from '@/lib/i18n/marketing-dictionaries';
 
+const copy = marketingDictionaries.en.home;
 export const metadata = {
-  title: { absolute: "EMFI | Home" },
-  description: "Institutional infrastructure. Without the institutional layers. Research, execution, settlement, custody and asset management for professional clients.",
+  title: { absolute: copy.title },
+  description: copy.description,
 };
-
-export default function HomePage() {
-  return (
-    <div className="home-16-shell home-page">
-      {/* <Home16Header /> */}
-      <div className={`${styles.page} ${styles.fullHero} ${styles.spinMark}`}>
-        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Handover" highlightSlides standardsEyebrow lightBands markFill={false} homeSlides omitSecondSlide perspectivePhones floatingPhones brandLogos whyTimeline blendHeader directPace="home12" responsiveBody="Technology that works. People who respond." dependableBody="Institutional safeguards. Clear accountability." routeTitles={{ conventional: "Conventional Route", direct: "EMFI Route" }} directEyebrow="EMFI IS" directBody="Fewer intermediaries. Fewer handovers." whySticky heroCue trimChrome home15Trade shortWhy brandInk settlementDash />
-      </div>
-      <PrinciplesSection stacked />
-      <QuestionnaireSection />
-      {/* <Home16Footer /> */}
-    </div>
-  );
-}
+const HomePage = () => <HomePageSection />;
+export default HomePage;

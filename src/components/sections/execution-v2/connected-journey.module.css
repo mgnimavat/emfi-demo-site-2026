@@ -50,7 +50,7 @@
   transform-origin: left center;
   transform: scaleX(var(--segment-fill, 0));
   opacity: 0;
-  background: linear-gradient(90deg, rgb(162 194 253 / 45%), #fff 78%);
+  background: linear-gradient(var(--journey-beam-direction, 90deg), rgb(162 194 253 / 45%), #fff 78%);
   box-shadow: 0 0 10px #fff, 0 0 22px rgb(162 194 253 / 75%);
   will-change: transform, opacity;
 }
@@ -391,5 +391,34 @@
   .step:focus-visible .disc,
   .step[data-active="true"] .disc {
     transform: none;
+  }
+}
+.journey:dir(rtl)[data-orientation="vertical"] .step { text-align: right; }
+.journey:dir(rtl)[data-orientation="vertical"] .connector {
+  left: auto;
+  right: calc(8px + var(--disc-size) / 2 - 1.5px);
+}
+
+@media (min-width: 900px) {
+  .journey:dir(rtl):not([data-orientation="vertical"]) .connector {
+    left: calc(-50% + var(--disc-size) / 2 - 4px);
+    right: calc(50% + var(--disc-size) / 2 - 4px);
+  }
+  .journey:dir(rtl):not([data-orientation="vertical"]) .beam {
+    --journey-beam-direction: 270deg;
+    transform-origin: right center;
+  }
+  .journey:dir(rtl):not([data-orientation="vertical"]) .pulse {
+    left: auto;
+    right: calc(var(--segment-fill, 0) * 100% - 6px);
+  }
+  .journey:dir(rtl)[data-orientation="vertical"] .step { padding: 0 8px 0 0; }
+}
+
+@media (max-width: 899px) {
+  .journey:dir(rtl) .step { text-align: right; }
+  .journey:dir(rtl) .connector {
+    left: auto;
+    right: calc(8px + var(--disc-size) / 2 - 1.5px);
   }
 }

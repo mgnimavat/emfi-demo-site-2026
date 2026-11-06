@@ -67,9 +67,9 @@ export const Home11Header = () => {
   }, [open]);
 
   return (
-    <header ref={headerRef} className={styles.header}>
+    <header ref={headerRef} lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={styles.header}>
       <div className={styles.inner}>
-        <Link href="/" aria-label="EMFI home" className={styles.home} onClick={() => setOpen(false)}>
+        <Link href={linkHref("/")} aria-label="EMFI home" className={styles.home} onClick={() => setOpen(false)}>
           <BrandWordmark className={styles.logo} priority />
         </Link>
         <nav aria-label={copy.navigation} className={styles.navShell}>

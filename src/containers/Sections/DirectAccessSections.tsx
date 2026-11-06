@@ -1,12 +1,12 @@
 import { Check } from 'lucide-react';
-import { directAccess as copy } from '@/content/direct-access';
+import type { DirectCopy } from '@/lib/i18n/marketing-dictionaries';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { ConnectedJourney } from '@/components/sections/execution-v2/connected-journey';
 import band from '@/components/sections/responsive/page.module.css';
 import { ServiceDisclosures } from './ServiceDisclosures';
 import styles from './DirectAccessSections.module.css';
 
-export const DirectAccessSections = () => (
+export const DirectAccessSections = ({ copy }: { copy: DirectCopy }) => (
   <>
     <section className={`${band.band} ${band.navy} ${styles.infrastructure}`} aria-labelledby="infrastructure-heading">
       <div className={styles.infrastructureContainer}>

@@ -1,5 +1,7 @@
 "use client";
 
+import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
+
 import { useEffect, useLayoutEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -36,6 +38,7 @@ const slides = [
 ];
 
 export function OversightCycle() {
+  const { t } = useServiceLocale();
   const [index, setIndex] = useState(0);
   const reduce = useReducedMotion();
   const slide = slides[index];
@@ -55,14 +58,14 @@ export function OversightCycle() {
     <div className={styles.cycle} aria-live="polite">
       <AnimatePresence mode="wait">
         <motion.div
-          key={slide.title}
+          key={t(slide.title)}
           className={styles.cycleFrame}
           initial={reduce ? false : { opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           exit={reduce ? undefined : { opacity: 0, y: -18 }}
           transition={{ duration: reduce ? 0 : 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className={styles.groupLabel}>{slide.title}</p>
+          <p className={styles.groupLabel}>{t(slide.title)}</p>
           <div className={styles.cycleRow}>
             {"logos" in slide && slide.logos
               ? slide.logos.map((item) => (

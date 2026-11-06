@@ -12,6 +12,15 @@ const inter = localFont({
   display: "swap",
 });
 
+const notoSansArabic = localFont({
+  src: "../assets/fonts/noto-sans-arabic-variable.ttf",
+  weight: "100 900",
+  style: "normal",
+  variable: "--font-noto-sans-arabic",
+  display: "swap",
+  preload: false,
+});
+
 const ibmPlexMono = localFont({
   src: [
     { path: "../assets/fonts/ibm-plex-mono-latin-400.woff2", weight: "400", style: "normal" },
@@ -60,7 +69,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${ibmPlexMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${notoSansArabic.variable} ${ibmPlexMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full font-sans" suppressHydrationWarning>

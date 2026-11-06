@@ -68,7 +68,7 @@
   position: absolute;
   z-index: 0;
   /* Right edge stays --settle-clearance left of the text block, which shares the navbar mark's right edge. */
-  left: calc(
+  inset-inline-start: calc(
     max(0px, (100% - 1440px) / 2) + min(1440px, 100%) - var(--nav-pad) - min(var(--settle-copy), min(1440px, 100%) - 2 * var(--nav-pad) - max(160px, 26vw) - clamp(28px, 5vw, 88px)) - var(--settle-clearance) - var(--settle-mark)
   );
   bottom: -8.5vh;
@@ -141,6 +141,18 @@
 
 .stackedIntro .stackedTitleBreak > span:first-child {
   white-space: nowrap;
+}
+
+:global(.home-page:lang(es)) .stackedIntro .title {
+  flex-direction: column;
+  align-items: flex-start;
+  white-space: normal;
+  font-size: 12cqi;
+  row-gap: 0.04em;
+}
+
+:global(.home-page:lang(ar)) .stackedIntro .title {
+  text-align: start;
 }
 
 .stackedIntro .introCopy {
@@ -464,7 +476,7 @@
   }
 
   .stackedSection .mark {
-    left: calc(
+    inset-inline-start: calc(
       max(0px, (100% - 1440px) / 2) + min(1440px, 100%) - var(--nav-pad) - min(var(--settle-copy), min(1440px, 100%) - 2 * var(--nav-pad)) - var(--settle-clearance) - var(--settle-mark)
     );
   }

@@ -55,7 +55,7 @@
 .section .actions { justify-content: space-between; flex-wrap: wrap; margin-top: var(--space-5); gap: var(--space-3); }
 .attachment { flex: 1; min-width: 0; }
 .attachment input { display: block; width: 100%; min-width: 0; color: var(--quiz-muted); font: inherit; font-size: 12px; }
-.attachment input::file-selector-button { min-height: 44px; margin-right: var(--space-2); padding: var(--space-2) var(--space-3); border: 1px solid var(--quiz-border); border-radius: var(--radius-control); background: var(--quiz-input-background); color: var(--text-primary); font: inherit; cursor: pointer; }
+.attachment input::file-selector-button { min-height: 44px; margin-inline-end: var(--space-2); padding: var(--space-2) var(--space-3); border: 1px solid var(--quiz-border); border-radius: var(--radius-control); background: var(--quiz-input-background); color: var(--text-primary); font: inherit; cursor: pointer; }
 .section .submit { background: var(--text-primary); color: var(--color-white); border-color: var(--text-primary); }
 .researchContext { margin-bottom: var(--space-4); padding: var(--space-3); border: 1px solid var(--quiz-border); border-radius: var(--radius-control); background: var(--quiz-input-background); color: var(--text-primary); font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
 .researchContext p { margin: 0 0 var(--space-2); color: var(--quiz-muted); }
@@ -68,7 +68,7 @@
 @media (max-width: 540px) {
   .section form .fields { grid-template-columns: minmax(0, 1fr); }
   .attachment { flex-basis: 100%; }
-  .actions > button { margin-left: auto; }
+  .actions > button { margin-inline-start: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .section .fields .selectWrap select { transition: none; }
@@ -85,3 +85,28 @@
 .section:dir(rtl) input:is([type='email'], [type='tel']) { direction: ltr; text-align: right; }
 .section:lang(es) h1 { font-size: min(8rem, 28cqi); }
 .section:is(:lang(es), :lang(ar)) h1 { padding-inline: 0; }
+
+.page:lang(ar) section {
+  font-family: var(--font-noto-sans-arabic), Arial, sans-serif;
+  font-synthesis: none;
+}
+.page:lang(ar) :is(h1, h2, h3, p, address, input, select, textarea, button) {
+  font-family: var(--font-noto-sans-arabic), Arial, sans-serif;
+  letter-spacing: normal;
+}
+.page:lang(ar) h1 {
+  line-height: 1.25;
+}
+.page:lang(ar) h1 > span {
+  letter-spacing: normal;
+  padding-right: 0;
+  margin-right: 0;
+  padding-block: .15em;
+  margin-block: -.15em;
+}
+@media (max-width: 900px) {
+  .page .section:is(:lang(es), :lang(ar)) h1 {
+    font-size: clamp(4.5rem, 20cqi, 7rem);
+    text-align: center;
+  }
+}

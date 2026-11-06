@@ -1,0 +1,94 @@
+{
+  "title": "Acceso directo",
+  "description": "El acceso institucional no debería exigir un laberinto institucional. Conectamos a inversores profesionales con infraestructuras de mercado consolidadas, plataformas de fondos y acuerdos de ejecución mediante un modelo operativo especializado.",
+  "headline": "Acceso\ndirecto.",
+  "heroTitle": {
+    "prefix": "Más cerca de",
+    "words": [
+      "los mercados.",
+      "la infraestructura.",
+      "las contrapartes."
+    ]
+  },
+  "infrastructure": {
+    "title": "Más cerca del origen.",
+    "titleLines": [
+      "Más cerca de",
+      "el origen."
+    ],
+    "lead": "El acceso a la infraestructura de mercado es fundamental para el funcionamiento de los servicios financieros.",
+    "body": "Nuestros acuerdos consolidados permiten conectarse con infraestructuras internacionales de liquidación y custodia de valores, además de plataformas especializadas de negociación y distribución de fondos.",
+    "note": "Son capacidades complementarias, no depositarios intercambiables.",
+    "providers": [
+      {
+        "name": "Euroclear",
+        "category": "Liquidación y custodia de valores",
+        "role": "Infraestructura de mercado",
+        "description": "Infraestructura internacional de liquidación, custodia y administración de valores, incluido el procesamiento de eventos corporativos."
+      },
+      {
+        "name": "FundSettle",
+        "category": "Liquidación de fondos",
+        "role": "Plataforma de fondos",
+        "description": "La solución especializada de Euroclear para fondos, que facilita el enrutamiento de órdenes, las suscripciones, los reembolsos, los traspasos y la liquidación."
+      },
+      {
+        "name": "Allfunds",
+        "category": "Distribución de fondos y tecnología",
+        "role": "Distribución de fondos y tecnología",
+        "description": "Negociación y distribución de fondos y tecnología de inversión que conecta a instituciones financieras y gestores de activos."
+      }
+    ]
+  },
+  "execution": {
+    "title": "Acceso directo al mercado.",
+    "titleLines": [
+      "Acceso directo",
+      "al mercado."
+    ],
+    "lead": "Para clientes elegibles e instrumentos admitidos, ofrecemos acuerdos de acceso directo al mercado (DMA) a centros de negociación seleccionados.",
+    "paragraphs": [
+      "El DMA permite a clientes aprobados enviar órdenes electrónicamente mediante acuerdos de ejecución designados, sujetos a los controles previos a la negociación, los límites de riesgo y la supervisión continua aplicables.",
+      "El acceso no es automático ni ilimitado. La elegibilidad y disponibilidad dependen de la clasificación como cliente profesional, el tamaño y la actividad de la cuenta, los instrumentos y centros disponibles, la idoneidad operativa, los límites de crédito y los controles de riesgo.",
+      "El acceso se evalúa individualmente y queda sujeto a la aprobación de EMFI y a los requisitos del centro de negociación correspondiente."
+    ],
+    "modelLabel": "Flujo de acceso directo al mercado",
+    "steps": [
+      {
+        "label": "Cliente",
+        "detail": "El cliente profesional aprobado envía la orden."
+      },
+      {
+        "label": "EMFI",
+        "detail": "Controles previos a la negociación y umbrales de riesgo."
+      },
+      {
+        "label": "Centro de negociación",
+        "detail": "Orden enviada mediante el acceso aprobado."
+      },
+      {
+        "label": "Posnegociación",
+        "detail": "Ejecución, confirmación y liquidación."
+      }
+    ],
+    "conditionsTitle": "Condiciones de acceso",
+    "conditions": [
+      "Clasificación e incorporación como cliente profesional",
+      "Criterios de tamaño de cuenta y actividad de negociación",
+      "Instrumentos y centros de negociación admitidos",
+      "Controles operativos, de crédito y de riesgo"
+    ]
+  },
+  "disclosures": {
+    "title": "Información sobre acceso y ejecución",
+    "paragraphs": [
+      "El acceso a Euroclear, FundSettle y Allfunds está sujeto a los acuerdos de cuenta, conectividad y servicio correspondientes.",
+      "El DMA solo está disponible para clientes aprobados, instrumentos y centros admitidos, sujeto a diligencia debida, criterios de cuenta, controles de riesgo y requisitos normativos aplicables.",
+      "Los nombres de los proveedores de infraestructura identifican plataformas y servicios pertinentes; su inclusión no implica un respaldo a EMFI."
+    ],
+    "action": {
+      "label": "Política de ejecución y divulgaciones regulatorias",
+      "href": "https://emfi.uk/english/policydocuments"
+    }
+  }
+}

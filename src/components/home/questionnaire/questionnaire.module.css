@@ -57,6 +57,21 @@
   line-height: 0.9;
 }
 .headlineLine { display: block; white-space: nowrap; }
+:global(.home-page:lang(es)) .promptIntro:not(.contactIntro) {
+  font-size: clamp(28px, 11cqw, 80px);
+  line-height: 1.04;
+}
+:global(.home-page:lang(es)) .sidebarHeadings {
+  grid-template-columns: minmax(0, 1fr);
+}
+:global(.home-page:lang(es)) .promptIntro.contactIntro {
+  font-size: clamp(40px, 26cqw, 140px);
+}
+:global(.home-page:lang(es)) .promptIntro:not(.contactIntro) .headlineLine {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
 .promptIntro.contactIntro {
   padding-left: 60px;
   font-size: 174px;

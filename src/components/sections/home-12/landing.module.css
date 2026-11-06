@@ -63,8 +63,8 @@
   to { transform: translateX(calc(10% + 40px)) rotate(360deg); }
 }
 @keyframes hero-mark-spin-full {
-  from { transform: translateX(56px) rotate(0deg); }
-  to { transform: translateX(56px) rotate(360deg); }
+  from { transform: translateX(calc(var(--hero-mark-direction, 1) * 56px)) rotate(0deg); }
+  to { transform: translateX(calc(var(--hero-mark-direction, 1) * 56px)) rotate(360deg); }
 }
 .page :focus-visible { outline: 3px solid #8098cc; outline-offset: 5px; }
 .page [data-motion-region] { transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1); }

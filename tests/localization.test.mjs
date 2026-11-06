@@ -20,7 +20,7 @@ const validateShape = (reference, translation, path = '') => {
 };
 
 test('every supported language has complete page and shared dictionaries', () => {
-  for (const page of ['about', 'contact', 'common', 'research', 'settlement', 'wealth']) {
+  for (const page of ['about', 'contact', 'common', 'research', 'settlement', 'wealth', 'home', 'direct', 'responsive', 'dependable', 'marketing-ui']) {
     const english = readCopy('en', page);
     for (const locale of ['es', 'ar']) validateShape(english, readCopy(locale, page), `${locale}/${page}`);
   }
@@ -58,5 +58,32 @@ test('service translations preserve regulatory entities, identifiers and disclos
   };
   for (const page of ['research', 'settlement', 'wealth']) {
     for (const locale of ['es', 'ar']) inspect(readCopy('en', page), readCopy(locale, page));
+  }
+});
+
+test('marketing translations preserve form wiring, animation assets and regulated entities', () => {
+  const englishHome = readCopy('en', 'home');
+  const englishDirect = readCopy('en', 'direct');
+  const englishResponsive = readCopy('en', 'responsive');
+  const englishDependable = readCopy('en', 'dependable');
+  for (const locale of ['es', 'ar']) {
+    const home = readCopy(locale, 'home');
+    assert.deepEqual(home.questionnaire.questions.map(({ id }) => id), englishHome.questionnaire.questions.map(({ id }) => id));
+    home.questionnaire.fields.forEach((field, index) => {
+      for (const key of ['name', 'type', 'autoComplete', 'required']) assert.equal(field[key], englishHome.questionnaire.fields[index][key]);
+    });
+    assert.deepEqual(readCopy(locale, 'direct').infrastructure.providers.map(({ name }) => name), englishDirect.infrastructure.providers.map(({ name }) => name));
+    readCopy(locale, 'responsive').showcase.screens.forEach((screen, index) => {
+      for (const key of ['src', 'width', 'height']) assert.equal(screen[key], englishResponsive.showcase.screens[index][key]);
+    });
+    readCopy(locale, 'dependable').regulation.entities.forEach((entity, index) => {
+      const english = englishDependable.regulation.entities[index];
+      assert.equal(entity.name, english.name);
+      assert.equal(entity.href, english.href);
+      assert.deepEqual(entity.detail.match(/(?:F)?[0-9]{6}/g), english.detail.match(/(?:F)?[0-9]{6}/g));
+    });
+    assert.equal(readCopy(locale, 'direct').disclosures.action.href, englishDirect.disclosures.action.href);
+    assert.equal(readCopy(locale, 'responsive').disclosure.action.href, englishResponsive.disclosure.action.href);
+    assert.equal(readCopy(locale, 'dependable').disclosure.action.href, englishDependable.disclosure.action.href);
   }
 });

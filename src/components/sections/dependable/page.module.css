@@ -30,7 +30,7 @@
   text-align: center;
 }
 
-.mark + .mark { border-left: 1px solid #c5d0e4; }
+.mark + .mark { border-inline-start: 1px solid #c5d0e4; }
 
 .mark img {
   width: auto;
@@ -129,7 +129,7 @@
   padding-inline: 16px;
 }
 
-.cycleCell + .cycleCell { border-left: 1px solid #c5d0e4; }
+.cycleCell + .cycleCell { border-inline-start: 1px solid #c5d0e4; }
 
 .cycleCell span {
   color: #071932;
@@ -147,5 +147,5 @@
 
 @media (max-width: 699px) {
   .marks { grid-template-columns: 1fr; gap: 22px; }
-  .mark + .mark { border-left: 0; padding-top: 22px; border-top: 1px solid #c5d0e4; }
+  .mark + .mark { border-inline-start: 0; padding-top: 22px; border-top: 1px solid #c5d0e4; }
 }

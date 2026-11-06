@@ -1,0 +1,160 @@
+{
+  "title": "EMFI | Home",
+  "description": "Institutional infrastructure. Without the institutional layers. Research, execution, settlement, custody and asset management for professional clients.",
+  "principles": {
+    "title": "Settle for",
+    "accent": "Less.",
+    "prefix": "Less",
+    "items": [
+      {
+        "id": "cost",
+        "label": "Cost",
+        "summary": "Know what you're paying.",
+        "heading": "Look beyond the headline rate.",
+        "body": "Fewer intermediaries taking their markup. More of your money stays where it belongs.",
+        "detail": "Compare custody charges, transaction fees, annual minimums and processing costs on a like-for-like basis. A more direct structure may remove some charges, but savings depend on the services, markets and assets involved.",
+        "points": [
+          "Custody and transaction fees",
+          "Annual and per-market minimums",
+          "Extra processing charges",
+          "Comparable service scope"
+        ],
+        "note": "Fees should be compared on the same assets, markets, service scope and activity levels."
+      },
+      {
+        "id": "complexity",
+        "label": "Complexity",
+        "summary": "Fewer parties. Clearer roles.",
+        "heading": "Fewer parties. Clearer responsibilities.",
+        "body": "More operational control. Faster answers, fewer delays and smoother execution.",
+        "detail": "Each additional party can bring another agreement, instruction path, reconciliation and escalation. Fewer relationships can simplify coordination and make responsibility easier to trace, where the operating model permits.",
+        "points": [
+          "How many entities are involved?",
+          "How many agreements govern the chain?",
+          "Who owns each handover?",
+          "Who resolves exceptions?"
+        ],
+        "note": "The actual operating model varies by market, instrument and service."
+      },
+      {
+        "id": "exposure",
+        "label": "Exposure",
+        "summary": "Know who holds your assets.",
+        "heading": "Know who holds your assets.",
+        "body": "Fewer points of failure. Simpler asset tracing and recovery if an intermediary defaults.",
+        "detail": "Every asset-holding intermediary can introduce another counterparty dependency. If one fails, access to, reconciliation of or recovery of assets may be delayed or disputed. A shorter chain can reduce third-party dependencies, but it does not automatically make custody safer.",
+        "points": [
+          "Who legally holds the assets?",
+          "How are client assets segregated?",
+          "What happens if an intermediary fails?",
+          "What ownership and recovery rights apply?"
+        ],
+        "note": "Risk depends on legal ownership, segregation, account structure, insolvency protections and contractual rights."
+      }
+    ]
+  },
+  "questionnaire": {
+    "title": "Is your current infrastructure a bit",
+    "accent": "extra?",
+    "back": "Back",
+    "next": "Next",
+    "unanswered": "Not answered",
+    "finish": "Say Less",
+    "resultTitle": "Say",
+    "resultAccent": "Less.",
+    "submit": "Let's Talk",
+    "backToQuestions": "Back",
+    "emailSubject": "Home-13 — Custody infrastructure enquiry",
+    "draftNotice": "Continue in your email app to send this enquiry to EMFI.",
+    "questions": [
+      {
+        "id": "custody-fee",
+        "title": "What is your annual custody cost?",
+        "options": [
+          "5 basis points",
+          "3 basis points",
+          "1 basis point"
+        ]
+      },
+      {
+        "id": "minimum-fee",
+        "title": "What is your monthly minimum fees?",
+        "options": [
+          "$10,000",
+          "$5,000",
+          "$1,000"
+        ]
+      },
+      {
+        "id": "minimum-term",
+        "title": "What is your minimum contract term?",
+        "options": [
+          "5 years",
+          "3 years",
+          "1 year"
+        ]
+      },
+      {
+        "id": "settlement-status",
+        "title": "How often does your settlement status update?",
+        "options": [
+          "Next business day",
+          "Intraday",
+          "Real-time"
+        ]
+      },
+      {
+        "id": "middlemen",
+        "title": "How many middlemen sit between you and your assets?",
+        "options": [
+          "3",
+          "2",
+          "1"
+        ]
+      },
+      {
+        "id": "segregated-account",
+        "title": "Do you have a direct, segregated account at the depository?",
+        "options": [
+          "No",
+          "Not sure",
+          "Yes"
+        ]
+      }
+    ],
+    "fields": [
+      {
+        "name": "name",
+        "label": "Name",
+        "placeholder": "Your Name",
+        "type": "text",
+        "autoComplete": "name",
+        "required": true
+      },
+      {
+        "name": "firm",
+        "label": "Firm",
+        "placeholder": "Company Name",
+        "type": "text",
+        "autoComplete": "organization",
+        "required": true
+      },
+      {
+        "name": "telephone",
+        "label": "Telephone",
+        "placeholder": "Telephone",
+        "type": "tel",
+        "autoComplete": "tel",
+        "required": false
+      },
+      {
+        "name": "email",
+        "label": "Work email",
+        "placeholder": "you@company.com",
+        "type": "email",
+        "autoComplete": "email",
+        "required": true
+      }
+    ]
+  }
+}

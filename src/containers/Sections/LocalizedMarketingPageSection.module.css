@@ -1,0 +1,53 @@
+.page {
+  overflow-x: clip;
+}
+.page:lang(ar) {
+  font-family: Arial, sans-serif;
+  letter-spacing: normal;
+}
+.page:lang(ar) :is(h1, h2, h3, p, button, input) {
+  letter-spacing: normal;
+}
+.page:lang(ar) :is(h1, h2, h3) {
+  line-height: 1.3;
+}
+.page:lang(ar) input:is([type='email'], [type='tel']) {
+  direction: ltr;
+  text-align: right;
+}
+.page :global(.section-bottom-action) p {
+  white-space: normal !important;
+}
+
+@media (max-width: 759px) {
+  .page:global(.home-page) :is(:global(#direct), :global(#responsive), :global(#accountable)) > div {
+    left: 0;
+    padding-inline: var(--space-5) !important;
+  }
+}
+.page:lang(ar) :global(#expect) > div {
+  padding-inline: clamp(var(--space-5), 4vw, var(--space-8)) !important;
+  text-align: right;
+}
+
+.page:global(.home-page):lang(ar) :global(#expect)::after {
+  --hero-mark-direction: -1;
+  left: 0;
+  right: auto;
+}
+
+.page[data-why-page]:lang(ar),
+.page[data-why-page]:lang(ar) :is(h1, h2, h3, h4, p, button, input) {
+  font-family: var(--font-noto-sans-arabic), Arial, sans-serif;
+  font-synthesis: none;
+}
+
+.page[data-why-page]:lang(ar) h1 {
+  -webkit-text-stroke: 0;
+}
+
+@media (min-width: 901px) {
+  .page[data-why-page='dependable-operations']:lang(es) :global(section[aria-labelledby='regulation-heading']) > div > div:first-child {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}

@@ -1,5 +1,7 @@
 "use client";
 
+import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
+
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
@@ -51,17 +53,18 @@ const grayMarkSrc: Record<string, string> = {
 };
 
 function StandardsEyebrow({ centered = false }: { centered?: boolean }) {
+  const { t } = useServiceLocale();
   const classes = [styles.standardsTitle, centered ? styles.standardsCenter : ""].filter(Boolean).join(" ");
   return (
     <p className={classes}>
       <span aria-hidden="true" className={chapterStyles.eyebrowMark} />
-      The standard behind the service
-      {centered ? <span aria-hidden="true" className={chapterStyles.eyebrowMark} /> : null}
+      {t("The standard behind the service")}{centered ? <span aria-hidden="true" className={chapterStyles.eyebrowMark} /> : null}
     </p>
   );
 }
 
 function StandardsPanel({ centered = false }: { centered?: boolean }) {
+  const { t } = useServiceLocale();
   const listRef = useRef<HTMLOListElement>(null);
   const reduceMotion = useReducedMotion();
   const inView = useInView(listRef, { once: true, amount: 0.4 });
@@ -84,7 +87,7 @@ function StandardsPanel({ centered = false }: { centered?: boolean }) {
       >
         {standards.map((line, index) => (
           <li
-            key={line}
+            key={t(line)}
             className={styles.standardsLine}
             style={{ animationDelay: `${index * 0.18}s` }}
             onAnimationEnd={(event) => {
@@ -94,7 +97,7 @@ function StandardsPanel({ centered = false }: { centered?: boolean }) {
           >
             <span className={styles.standardsPull}>
               <span className={styles.standardsNum} aria-hidden="true">{index + 1}.</span>
-              <span className={styles.standardsWord}>{line}</span>
+              <span className={styles.standardsWord}>{t(line)}</span>
             </span>
           </li>
         ))}
@@ -198,15 +201,17 @@ function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: (type
 }
 
 function PlainEvidenceContent({ slide, ink = false, gray = false }: { slide: (typeof slides)[number]; ink?: boolean; gray?: boolean }) {
+  const { t } = useServiceLocale();
   return (
     <>
-      <h3 className={styles.plainTitle}>{plainTitle(slide)}</h3>
+      <h3 className={styles.plainTitle}>{t(plainTitle(slide))}</h3>
       <PlainEvidenceLogos slide={slide} ink={ink} gray={gray} />
     </>
   );
 }
 
 function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = false, open = false, ink = false, gray = false }: { slide: (typeof slides)[number]; plain?: boolean; centered?: boolean; brandLogos?: boolean; open?: boolean; ink?: boolean; gray?: boolean }) {
+  const { t } = useServiceLocale();
   const title = plain || open ? slide.title.replace(/\.$/, "") : slide.title;
   if (open) {
     return (
@@ -218,7 +223,7 @@ function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = fa
   return (
     <>
       <div className={centered ? `${styles.head} ${styles.headCenter}` : styles.head}>
-        <h3 className={styles.title}>{title}</h3>
+        <h3 className={styles.title}>{t(title)}</h3>
         {plain ? null : <span className={styles.rule} />}
       </div>
       {slide.kind === "logos" ? (
@@ -275,6 +280,7 @@ export function AccountableSection({
   grayLogos?: boolean;
   pairedCue?: boolean;
 }) {
+  const { t } = useServiceLocale();
   const [index, setIndex] = useState(0);
   const [run, setRun] = useState(0);
   const marked = step != null;
@@ -337,7 +343,7 @@ export function AccountableSection({
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                       >
-                        {plainTitle(slide)}
+                        {t(plainTitle(slide))}
                       </motion.h3>
                     </AnimatePresence>
                   </div>
@@ -357,8 +363,7 @@ export function AccountableSection({
                     </AnimatePresence>
                   </div>
                   <p className={styles.slideDisclaimer}>
-                    Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.
-                  </p>
+                    {t("Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.")}</p>
                 </div>
               </div>
             ) : (

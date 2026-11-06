@@ -1,8 +1,10 @@
 "use client";
 
+import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
+
 import { useId, useState } from "react";
 import { ArrowDown, ChevronDown, ChevronUp } from "lucide-react";
-import { principles as copy } from "@/content/home-16-principles";
+import { principles as defaultCopy } from "@/content/home-16-principles";
 import navigation from "@/content/site-navigation.json";
 import cueStyles from "@/components/emfi-sections/sections.module.css";
 import styles from "./principles.module.css";
@@ -24,9 +26,15 @@ function GradientMark() {
   );
 }
 
-type PrincipleId = (typeof copy.items)[number]["id"];
+type PrinciplesCopy = typeof defaultCopy;
+type TranslatedPrinciples = {
+  title: string; accent: string; prefix: string;
+  items: readonly { id: string; label: string; summary: string; heading: string; body: string;
+    detail: string; points: readonly string[]; note: string }[];
+};
+type PrincipleId = PrinciplesCopy['items'][number]['id'] | string;
 
-function OpenPrinciples() {
+const OpenPrinciples = ({ copy }: { copy: TranslatedPrinciples }) => {
   return (
     <section id="settle" className={styles.openSection} aria-labelledby="home-16-principles-heading">
       <div className={styles.container}>
@@ -58,7 +66,7 @@ function OpenPrinciples() {
   );
 }
 
-function InteractivePrinciples() {
+const InteractivePrinciples = ({ copy }: { copy: TranslatedPrinciples }) => {
   const [activeId, setActiveId] = useState<PrincipleId | null>(null);
 
   return (
@@ -136,7 +144,8 @@ function InteractivePrinciples() {
   );
 }
 
-function StackedPrinciples({ whiteCards = false, breakTitle = false }: { whiteCards?: boolean; breakTitle?: boolean }) {
+const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false }: { copy: TranslatedPrinciples; whiteCards?: boolean; breakTitle?: boolean }) => {
+  const { t } = useServiceLocale();
   return (
     <section id="settle" className={`${styles.section} ${styles.stackedSection}`} aria-labelledby="home-16-principles-heading">
       <div className={styles.mark} aria-hidden="true">
@@ -167,15 +176,15 @@ function StackedPrinciples({ whiteCards = false, breakTitle = false }: { whiteCa
         </div>
       </div>
       <a className={`${cueStyles.heroCue} ${cueStyles.heroCueOnLight} section-bottom-cue`} href="#say-less">
-        <span className="section-bottom-cue-label"><span>Let&apos;s Talk</span></span>
+        <span className="section-bottom-cue-label"><span>{t("Let's Talk")}</span></span>
         <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
       </a>
     </section>
   );
 }
 
-export const PrinciplesSection = ({ open = false, stacked = false, whiteCards = false, breakTitle = false }: { open?: boolean; stacked?: boolean; whiteCards?: boolean; breakTitle?: boolean }) => {
-  if (open) return <OpenPrinciples />;
-  if (stacked) return <StackedPrinciples whiteCards={whiteCards} breakTitle={breakTitle} />;
-  return <InteractivePrinciples />;
+export const PrinciplesSection = ({ copy = defaultCopy, open = false, stacked = false, whiteCards = false, breakTitle = false }: { copy?: TranslatedPrinciples; open?: boolean; stacked?: boolean; whiteCards?: boolean; breakTitle?: boolean }) => {
+  if (open) return <OpenPrinciples copy={copy} />;
+  if (stacked) return <StackedPrinciples copy={copy} whiteCards={whiteCards} breakTitle={breakTitle} />;
+  return <InteractivePrinciples copy={copy} />;
 };

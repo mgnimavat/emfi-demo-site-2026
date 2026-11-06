@@ -1,0 +1,103 @@
+{
+  "title": "Tecnología que responde",
+  "description": "La tecnología debería simplificar los servicios financieros. Las personas deberían hacerlos funcionar. Combinamos acceso directo a especialistas con tecnología diseñada para ofrecer mayor visibilidad, flexibilidad y control durante todo el ciclo de inversión.",
+  "headline": "Tecnología\nque responde.",
+  "phrases": [
+    "las personas.",
+    "el detalle.",
+    "una solución."
+  ],
+  "fixed": "Directo a",
+  "specialist": {
+    "title": "No todo cabe en un menú.",
+    "titleLines": [
+      "No todo",
+      "cabe en un menú."
+    ],
+    "lead": "Los mercados financieros no siempre siguen procesos estándar. Las necesidades de los clientes tampoco.",
+    "paragraphs": [
+      "Algunas operaciones implican instrumentos poco habituales, acuerdos de liquidación complejos, liquidez limitada o requisitos operativos que no encajan en un proceso estándar.",
+      "Adoptamos un enfoque práctico, caso por caso. Nuestros especialistas evalúan la necesidad, identifican las restricciones operativas y regulatorias y, cuando es viable, colaboran con clientes y contrapartes para encontrar una solución adecuada."
+    ],
+    "callout": "La buena tecnología resuelve lo habitual. Las personas con experiencia resuelven las excepciones.",
+    "closing": "Cuando los acuerdos estándar no bastan, buscamos una alternativa viable dentro de nuestras autorizaciones, nuestro marco de riesgo y la infraestructura disponible.",
+    "steps": [
+      {
+        "title": "Comprender",
+        "body": "Aclarar la necesidad del cliente y el contexto de la operación."
+      },
+      {
+        "title": "Evaluar",
+        "body": "Revisar autorizaciones, contrapartes, controles y restricciones."
+      },
+      {
+        "title": "Coordinar",
+        "body": "Cuando sea viable, identificar e implementar una vía adecuada."
+      }
+    ]
+  },
+  "technology": {
+    "title": "Tecnología respaldada por personas.",
+    "titleLines": [
+      "Tecnología",
+      "respaldada",
+      "por personas."
+    ],
+    "lead": "Nuestra tecnología está diseñada para integrar la ejecución, la información de las cuentas y la visibilidad de las carteras.",
+    "paragraphs": [
+      "Las herramientas aportan información y procesos. Nuestro equipo aporta la experiencia, la comunicación y el criterio necesarios cuando algo se sale de lo habitual.",
+      "Un entorno tecnológico conectado facilita lo habitual, mientras que el acceso directo a especialistas ayuda a resolver las excepciones."
+    ]
+  },
+  "showcase": {
+    "slideDurationMs": 6500,
+    "heroSequenceStepMs": 3200,
+    "label": "Explore la tecnología de EMFI",
+    "views": [
+      {
+        "id": "workstation",
+        "label": "Estación de trabajo"
+      },
+      {
+        "id": "dashboard",
+        "label": "Panel de control"
+      },
+      {
+        "id": "mobile",
+        "label": "Móvil"
+      }
+    ],
+    "screens": [
+      {
+        "src": "/images/services/phone-balances.png",
+        "alt": "Pantalla de saldos de EMFI para móvil",
+        "width": 481,
+        "height": 1024
+      },
+      {
+        "src": "/images/services/phone-order-entry.png",
+        "alt": "Pantalla de órdenes de EMFI para móvil",
+        "width": 483,
+        "height": 1024
+      },
+      {
+        "src": "/images/services/phone-securities.png",
+        "alt": "Pantalla de valores de EMFI para móvil",
+        "width": 483,
+        "height": 1024
+      }
+    ]
+  },
+  "disclosure": {
+    "title": "Información sobre servicios digitales",
+    "paragraphs": [
+      "Nuestros servicios digitales se prestan a clientes elegibles y usuarios autorizados conforme a los acuerdos de cuenta correspondientes.",
+      "Las funciones disponibles varían según el servicio, la cuenta y el instrumento. Los extractos oficiales, las confirmaciones y los registros contractuales siguen siendo la referencia válida."
+    ],
+    "action": {
+      "label": "Divulgaciones de servicios digitales",
+      "href": "https://emfi.uk/english/policydocuments"
+    }
+  },
+  "workflowLabel": "De la necesidad a una vía viable"
+}

@@ -1,0 +1,68 @@
+{
+  "title": "Operaciones fiables",
+  "description": "La regulación, el gobierno corporativo, la auditoría y las relaciones profesionales consolidadas constituyen el marco en el que opera EMFI.",
+  "headline": "Operaciones\nfiables.",
+  "phrases": [
+    "el control.",
+    "la precisión.",
+    "la responsabilidad."
+  ],
+  "fixed": "Basado en",
+  "regulation": {
+    "title": "Regulación. Estructura. Responsabilidad.",
+    "titleLines": [
+      "Regulación.",
+      "Estructura.",
+      "Responsabilidad."
+    ],
+    "lead": "EMFI opera a través de entidades jurídicas especializadas, cada una autorizada o habilitada para sus respectivas actividades.",
+    "paragraphs": [
+      "La situación regulatoria de cada entidad, y no solo el nombre del grupo, define los servicios que puede prestar.",
+      "Las entidades siguientes enlazan con sus registros públicos para permitir una verificación independiente."
+    ],
+    "entities": [
+      {
+        "region": "Reino Unido / FCA",
+        "name": "EMFI Securities Limited",
+        "detail": "Referencia 763979. Autorizada y regulada por la Financial Conduct Authority.",
+        "href": "https://register.fca.org.uk/s/firm?id=001b000003YCzJGAA1"
+      },
+      {
+        "region": "Reino Unido / FCA",
+        "name": "EMFI Capital Limited",
+        "detail": "Referencia 822389. Autorizada y regulada por la Financial Conduct Authority.",
+        "href": "https://register.fca.org.uk/s/firm?id=0010X00004H6h4dQAB"
+      },
+      {
+        "region": "DIFC / DFSA",
+        "name": "EMFI Capital (DIFC) Limited",
+        "detail": "Referencia F011663. Habilitada para mantener o controlar activos de clientes.",
+        "href": "https://www.dfsa.ae/public-register/firms/emfi-capital-difc-limited"
+      }
+    ]
+  },
+  "oversight": {
+    "title": "Rigurosos por diseño",
+    "titleLines": [
+      "Rigurosos",
+      "por diseño"
+    ],
+    "lead": "Controles. Conciliaciones. Registros de auditoría. Responsabilidades definidas.",
+    "paragraphs": [
+      "Lo más importante rara vez es lo que mejor vende.",
+      "Las entidades y actividades pertinentes están sujetas a auditoría externa independiente."
+    ]
+  },
+  "disclosure": {
+    "title": "Información regulatoria",
+    "paragraphs": [
+      "Las autorizaciones descritas se aplican a las entidades jurídicas indicadas y a las actividades que cada una está autorizada a realizar.",
+      "Los nombres de terceros identifican relaciones concretas. Su inclusión no implica un respaldo a EMFI ni garantiza el rendimiento de sus servicios.",
+      "Los nombramientos de fondos y los acuerdos de auditoría se aplican a la entidad jurídica o cartera correspondiente."
+    ],
+    "action": {
+      "label": "Divulgaciones regulatorias",
+      "href": "https://emfi.uk/english/policydocuments"
+    }
+  }
+}

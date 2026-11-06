@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, type ReactNode } from 'react';
-import type { Locale } from '@/lib/i18n';
+import { localizeHref, type Locale } from '@/lib/i18n/routing';
 import type { ServiceMessages } from '@/lib/i18n/service-dictionaries';
 
 type ServiceLocale = { locale: Locale; messages: ServiceMessages };
@@ -16,5 +16,5 @@ export const ServiceLocaleProvider = ({ locale, messages, children }: ServiceLoc
 export const useServiceLocale = () => {
   const { locale, messages } = useContext(ServiceLocaleContext);
   const t = (value: string): string => messages[value] ?? value;
-  return { locale, t };
+  return { locale, t, localize: (href: string) => localizeHref(href, locale) };
 };

@@ -1,5 +1,7 @@
 "use client";
 
+import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
+
 import { Children, createContext, useContext, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import styles from "./sections.module.css";
@@ -103,6 +105,7 @@ function Rail({
 }
 
 export function WhyFlow({ children, stickyLabel = false, formProgress = false, shortWhy = false, pairedCue = false }: { children: ReactNode; stickyLabel?: boolean; formProgress?: boolean; shortWhy?: boolean; pairedCue?: boolean }) {
+  const { t, localize } = useServiceLocale();
   const ref = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const slotRef = useRef<HTMLDivElement>(null);
@@ -372,7 +375,7 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
           <div ref={ref} className={styles.whyPin}>
             <div ref={stageRef} className={`${styles.whyPinStage} ${styles.whyFlow} ${styles.whyFlowSticky}`}>
               <div ref={slotRef} className={styles.whyStickySlot} aria-hidden="true">
-                <p className={shortWhy ? `${styles.whyStickyWord} ${styles.whyWordLarge}` : styles.whyStickyWord}><span>{shortWhy ? "Why" : "Why EMFI"}</span></p>
+                <p className={shortWhy ? `${styles.whyStickyWord} ${styles.whyWordLarge}` : styles.whyStickyWord}><span>{t(shortWhy ? "Why" : "Why EMFI")}</span></p>
               </div>
               <div className={[styles.whyPinMarkers, formProgress ? styles.whyFormProgress : "", shortWhy ? styles.whyPinMarkersOut : ""].filter(Boolean).join(" ")} data-why-pin-markers data-why-form-progress={formProgress ? "" : undefined} aria-hidden={formProgress ? "true" : undefined}>
                 {formProgress ? (
@@ -388,7 +391,7 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
                         type="button"
                         data-why-pin-marker
                         className={n === active ? `${styles.whyPinStep} ${styles.whyPinStepActive}` : styles.whyPinStep}
-                        aria-label={`Go to step ${n}`}
+                        aria-label={`${t("Go to step")} ${n}`}
                         aria-current={n === active ? "step" : undefined}
                         onClick={() => goToStep(n)}
                       >
@@ -402,9 +405,9 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
               {shortWhy && !pairedCue ? (
                 <a
                   className={`${styles.heroCue} ${styles.heroCueOnLight} ${styles.heroCueBottomRight} section-bottom-cue`}
-                  href={WHY_LEARN_MORE_HREFS[Math.max(1, Math.min(WHY_LEARN_MORE_HREFS.length, active)) - 1]}
+                  href={localize(WHY_LEARN_MORE_HREFS[Math.max(1, Math.min(WHY_LEARN_MORE_HREFS.length, active)) - 1])}
                 >
-                  <span className="section-bottom-cue-label"><span>Learn More</span></span>
+                  <span className="section-bottom-cue-label"><span>{t("Learn More")}</span></span>
                   <ArrowRight size={16} strokeWidth={1.75} className={styles.heroCueLearnArrow} aria-hidden="true" />
                 </a>
               ) : null}
@@ -418,7 +421,7 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
                   className={`${styles.heroCue} ${styles.heroCueOnLight} section-bottom-cue`}
                   href="#settle"
                 >
-                  <span className="section-bottom-cue-label"><span>What less means for you</span></span>
+                  <span className="section-bottom-cue-label"><span>{t("What less means for you")}</span></span>
                   <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
                 </a>
               ) : null}

@@ -4,6 +4,10 @@ export const isLocale = (value: string): value is Locale =>
   locales.some((locale) => locale === value);
 
 export const localizedPaths = [
+  '/',
+  '/why-emfi/direct-access',
+  '/why-emfi/responsive-technology',
+  '/why-emfi/dependable-operations',
   '/about',
   '/contact',
   '/services/research-execution',
@@ -22,5 +26,11 @@ export const getPageLocale = (pathname: string): Locale => {
   const locale = pathname.split('/')[1];
   return isLocale(locale) && isLocalizedPath(getBasePath(pathname)) ? locale : 'en';
 };
-export const localizeHref = (href: string, locale: Locale) =>
-  isLocalizedPath(href) ? `/${locale}${href}` : href;
+export const localizeHref = (href: string, locale: Locale) => {
+  const boundary = href.search(/[?#]/);
+  const pathname = boundary < 0 ? href : href.slice(0, boundary);
+  const suffix = boundary < 0 ? '' : href.slice(boundary);
+  return isLocalizedPath(pathname)
+    ? `/${locale}${pathname === '/' ? '' : pathname}${suffix}`
+    : href;
+};

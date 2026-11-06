@@ -2,9 +2,11 @@
 
 import { useRef, useState, type FormEvent } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { questionnaire as copy } from '@/content/home-16-questionnaire';
+import { questionnaire as defaultCopy } from '@/content/home-16-questionnaire';
 import { contact } from '@/content/contact';
 import styles from './questionnaire.module.css';
+import type { HomeCopy } from '@/lib/i18n/marketing-dictionaries';
+import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
 
 const questionTitles = [
   'Your annual custody cost',
@@ -14,21 +16,22 @@ const questionTitles = [
   'Middleman between you and your assets',
   'Segregated depository account',
 ] as const;
-const questions = copy.questions.map((question, index) => ({
-  ...question,
-  title: questionTitles[index] ?? question.title,
-}));
 const placeholders: Record<string, string> = { name: 'Name', firm: 'Organization', email: 'Email', telephone: 'Phone' };
-const fields = copy.fields.map((field) => ({
-  ...field,
-  label: field.name === 'telephone' ? 'Phone' : field.label,
-  placeholder: placeholders[field.name] ?? field.placeholder,
-}));
-const questionCount = questions.length;
-const resultWord = copy.resultAccent.endsWith('.') ? copy.resultAccent.slice(0, -1) : copy.resultAccent;
-const resultMark = copy.resultAccent.endsWith('.') ? '.' : '';
 
-export const QuestionnaireSection = () => {
+export const QuestionnaireSection = ({ copy = defaultCopy }: { copy?: HomeCopy['questionnaire'] | typeof defaultCopy }) => {
+  const { t, locale } = useServiceLocale();
+  const questions = copy.questions.map((question, index) => ({
+    ...question,
+    title: t(questionTitles[index] ?? question.title),
+  }));
+  const fields = copy.fields.map((field) => ({
+    ...field,
+    label: field.name === 'telephone' ? t('Phone') : field.label,
+    placeholder: t(placeholders[field.name] ?? field.placeholder),
+  }));
+  const questionCount = questions.length;
+  const resultWord = copy.resultAccent.endsWith('.') ? copy.resultAccent.slice(0, -1) : copy.resultAccent;
+  const resultMark = copy.resultAccent.endsWith('.') ? '.' : '';
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [draftReady, setDraftReady] = useState(false);
@@ -60,20 +63,20 @@ export const QuestionnaireSection = () => {
       `${item.title} ${answers[item.id] ?? copy.unanswered}`
     );
     const body = [...details, '', ...responses].join('\n');
-    window.location.href = `mailto:${contact.locations[0].email}?subject=${encodeURIComponent(copy.emailSubject)}&body=${encodeURIComponent(body)}`;
+    window.location.assign(`mailto:${contact.locations[0].email}?subject=${encodeURIComponent(copy.emailSubject)}&body=${encodeURIComponent(body)}`);
     setDraftReady(true);
   };
 
   return (
-    <section id="say-less" className={styles.section} aria-label="Review your current infrastructure">
+    <section id="say-less" className={styles.section} aria-label={t("Review your current infrastructure")}>
       <div className={styles.card}>
         <aside className={styles.sidebar}>
           <div className={styles.sidebarHeadings}>
           <h2 className={`${styles.intro} ${styles.promptIntro} ${isContact ? styles.inactive : ''}`} aria-hidden={isContact}>
-            <span className={styles.headlineLine}>Is your</span>
-            <span className={styles.headlineLine}>current</span>
-            <span className={styles.headlineLine}>infrastructure</span>
-            <span className={styles.headlineLine}>a bit <span className={styles.accent}>extra</span><span className={styles.accentMark}>?</span></span>
+            <span className={styles.headlineLine}>{t("Is your")}</span>
+            <span className={styles.headlineLine}>{t("current")}</span>
+            <span className={styles.headlineLine}>{t("infrastructure")}</span>
+            <span className={styles.headlineLine}>{t(" a bit ")}<span className={locale === 'es' ? styles.headingEnding : undefined}><span className={styles.accent}>{t("extra")}</span><span className={styles.accentMark}>{t('?')}</span></span></span>
           </h2>
           <h2 id="home-16-contact-heading" ref={contactHeading} tabIndex={-1} className={`${styles.intro} ${styles.promptIntro} ${styles.contactIntro} ${!isContact ? styles.inactive : ''}`} aria-hidden={!isContact}>
             <span className={styles.headlineLine}>{copy.resultTitle}</span>
@@ -83,7 +86,7 @@ export const QuestionnaireSection = () => {
         </aside>
         <div className={styles.questionCard}>
         <div className={styles.progressCorner}>
-          <progress className={styles.progress} value={progress} max={questionCount} aria-label="Questionnaire progress" />
+          <progress className={styles.progress} value={progress} max={questionCount} aria-label={t("Questionnaire progress")} />
           <span className={styles.stepNumber} aria-live="polite">{progress} / {questionCount}</span>
         </div>
         {/* Overlapping panels reserve the tallest step's space at every screen size. */}
@@ -113,7 +116,7 @@ export const QuestionnaireSection = () => {
             </div>
           ))}
           <div className={`${styles.panel} ${styles.contact} ${!isContact ? styles.inactive : ''}`} inert={!isContact} aria-hidden={!isContact}>
-            <form aria-label="Let's Talk" onSubmit={submitEnquiry}>
+            <form aria-label={copy.submit} onSubmit={submitEnquiry}>
               <div className={styles.fields}>
                 {fields.map((field) => (
                   <input key={field.name} aria-label={field.label} name={field.name} type={field.type} placeholder={field.placeholder} autoComplete={field.autoComplete} required={field.required} />

@@ -3,6 +3,18 @@
 .page:lang(ar) h1 { line-height: 1.3; }
 .page:not(:lang(en)) h1 { width: auto; white-space: pre-line; }
 .page:not(:lang(en)) h1 + p { width: auto; max-width: 100%; white-space: normal; font-size: clamp(20px, 4.5cqw, 44px); }
+.page[data-service='research-execution'] h1,
+.page[data-service='settlement-custody'] h1 { font-size: var(--hero-heading-size); }
+.page[data-service='research-execution'] h1 + p,
+.page[data-service='settlement-custody'] h1 + p { font-size: var(--hero-tagline-size); }
+.page[data-service='research-execution']:lang(ar) h1,
+.page[data-service='research-execution']:lang(ar) h1 + p,
+.page[data-service='settlement-custody']:lang(ar) h1,
+.page[data-service='settlement-custody']:lang(ar) h1 + p {
+  font-family: var(--font-noto-sans-arabic), Arial, sans-serif;
+  font-synthesis: none;
+  -webkit-text-stroke: 0;
+}
 .page:dir(rtl) :is(input[type='number'], input[type='date']) { direction: ltr; }
 @media (min-width: 600px) {
   .page[data-service='wealth-asset-management']:not(:lang(en)) h1 { width: max-content; white-space: pre; }

@@ -1,5 +1,6 @@
 .stage { position: relative; width: 100%; aspect-ratio: 1160 / 800; container-type: inline-size; margin-left: auto; overflow: hidden; }
 .dashboard, .execution { position: absolute; top: 50%; left: 0; width: 100%; aspect-ratio: 1160 / 800; container-type: inline-size; }
+.stage:dir(rtl) { margin-left: 0; margin-right: auto; }
 .dashboard { z-index: 1; }
 .execution { z-index: 2; }
 .clip { height: 100%; overflow: hidden; background: transparent; }

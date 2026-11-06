@@ -844,6 +844,25 @@
   transform: translate(-50%, -50%) rotate(-90deg);
 }
 
+:global(.home-page:lang(es)) .chapter .eyebrow.eyebrowPlain {
+  margin-bottom: calc(-1 * var(--space-1));
+}
+
+:global(.home-page:lang(es)) .chapter :global(#direct) .eyebrow.eyebrowPlain {
+  margin-bottom: calc(-1 * var(--space-3));
+}
+
+:global(.home-page:lang(es)) .pinStack .sectionTitle,
+:global(.home-page:lang(es)) .responsiveStack .sectionTitle {
+  line-height: 1;
+}
+
+:global(.home-page:lang(es)) .chapter .whyPinStage .whyStickyWord.whyWordLarge {
+  --why-size: calc((100dvh - var(--home-12-header-h, 77.36px) - 2 * var(--space-4)) / 4.075);
+  top: 50%;
+  left: calc(var(--space-4) + var(--why-size) / 2);
+}
+
 @media (max-width: 759px) {
   .pinStack,
   .responsiveStack {
@@ -872,6 +891,11 @@
 
   .whyPinMarkers.whyPinMarkersOut {
     right: 87px;
+  }
+
+  :global(.home-page:lang(es)) .chapter .whyPinStage .whyStickyWord.whyWordLarge {
+    --why-size: clamp(36px, 9vw, 64px);
+    left: var(--space-5);
   }
 }
 
@@ -970,3 +994,7 @@
     transition: none;
   }
 }
+.routeRtl { scale: -1 1; }
+.routeRtl [data-route-label] > *,
+.routeRtl [data-route-mark] { scale: -1 1; }
+.routeRtl [data-route-label] > span { display: inline-block; }
