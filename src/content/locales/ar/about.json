@@ -45,14 +45,14 @@
     {
       "name": "Atif Rashid",
       "role": "المالية والامتثال",
-      "photo": "/people/atif-rashid-3.jpg",
+      "photo": "/people/atif-rashid-4.jpg",
       "board": true,
       "description": "يحافظ على الضوابط المالية والامتثال التنظيمي والمساءلة في جميع أعمال الشركة."
     },
     {
       "name": "Shamroz Bashir",
       "role": "المخاطر والتقارير",
-      "photo": "/people/shamroz-bashir-3.jpg",
+      "photo": "/people/shamroz-bashir-4.jpg",
       "board": true,
       "raised": true,
       "description": "يشرف على المخاطر والتعرضات والضوابط لدعم اتخاذ قرارات مستنيرة."
@@ -60,68 +60,68 @@
     {
       "name": "Gustavo Rodrigues",
       "role": "انضمام العملاء وإجراءات اعرف عميلك",
-      "photo": "/people/gustavo-rodrigues-3.jpg",
+      "photo": "/people/gustavo-rodrigues-4.jpg",
       "board": true,
       "description": "يقود انضمام العملاء وإجراءات اعرف عميلك والعناية الواجبة لإرساء العلاقات المناسبة."
     },
     {
       "name": "Robert Hagon",
       "role": "العلاقات المؤسسية",
-      "photo": "/people/robert-hagon-3.jpg",
+      "photo": "/people/robert-hagon-4.jpg",
       "inset": true,
       "description": "يبني العلاقات المؤسسية ويديرها، ويربط متطلبات العملاء بقدرات EMFI المناسبة."
     },
     {
       "name": "Mark Cleary",
       "role": "التنفيذ والتسوية والحفظ",
-      "photo": "/people/mark-cleary-5.jpg",
+      "photo": "/people/mark-cleary-7.jpg",
       "inset": true,
       "description": "ينسق التنفيذ والتسوية والحفظ لضمان ترابط العلاقة مع العميل من البداية إلى النهاية."
     },
     {
       "name": "Jose Bermudez",
       "role": "إدارة الثروات والأصول",
-      "photo": "/people/jose-bermudez-4.jpg",
+      "photo": "/people/jose-bermudez-5.jpg",
       "inset": true,
       "description": "يدير المحافظ والتفويضات الاستثمارية ضمن إطار التنفيذ والحفظ الأوسع لدى EMFI."
     },
     {
       "name": "Guillermo Guerrero",
       "role": "البحوث",
-      "photo": "/people/guillermo-guerrero-5.jpg",
+      "photo": "/people/guillermo-guerrero-6.jpg",
       "description": "يقدم بحوث الأسواق والاستثمار التي تدعم القرارات المؤسسية والتنفيذ."
     },
     {
       "name": "Rosamnis Marcano",
       "role": "الاقتصاد",
-      "photo": "/people/rosamnis-marcano-4.jpg",
+      "photo": "/people/rosamnis-marcano-5.jpg",
       "description": "يوفر السياق الاقتصادي لقرارات توزيع الأصول والمدة والائتمان."
     },
     {
       "name": "Matias Montes",
       "role": "الاستراتيجية",
-      "photo": "/people/matias-montes-6.jpg",
+      "photo": "/people/matias-montes-10.jpg",
       "inset": true,
       "description": "يربط قدرات EMFI وفريقها وتقنياتها ضمن توجه تشغيلي موحد."
     },
     {
       "name": "Zee Amin",
       "role": "العمليات",
-      "photo": "/people/zee-amin-5.jpg",
+      "photo": "/people/zee-amin-7.jpg",
       "inset": true,
       "description": "يضمن مرور التعليمات بمراحل المطابقة والتسوية ومعالجة الاستثناءات وإعداد التقارير."
     },
     {
       "name": "Kishan Lashkari",
       "role": "تكنولوجيا المعلومات",
-      "photo": "/people/kishan-lashkari-12.jpg",
+      "photo": "/people/kishan-lashkari-13.jpg",
       "inset": true,
       "description": "يقود العمليات التقنية والأمن السيبراني والامتثال التنظيمي والتنفيذ الاستراتيجي لدى EMFI."
     },
     {
       "name": "Dinesh Chouhan",
       "role": "تطوير البرمجيات",
-      "photo": "/people/dinesh-chouhan-5.jpg",
+      "photo": "/people/dinesh-chouhan-6.jpg",
       "inset": true,
       "description": "يقود تطوير البرمجيات والبنية الحديثة وتقديم تطبيقات آمنة وقابلة للتوسع لدى EMFI."
     }
