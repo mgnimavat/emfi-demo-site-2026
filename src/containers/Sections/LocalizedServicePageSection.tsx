@@ -9,7 +9,7 @@ import { SettlementCustodySections } from './SettlementCustodySections';
 import { SettlementHeroAnimation } from './SettlementHeroAnimation';
 import { PrinciplesSection } from '@/components/home/principles/principles';
 import { getMarketingMessages, marketingDictionaries } from '@/lib/i18n/marketing-dictionaries';
-import { dictionaries, localizeHref } from '@/lib/i18n';
+import { dictionaries } from '@/lib/i18n';
 import { ResearchOfficeSection } from './ResearchOfficeSection';
 import { WealthAssetSections } from './WealthAssetSections';
 import { ServiceLocaleProvider } from '@/ui/hooks/useServiceLocale';
@@ -71,7 +71,7 @@ export const LocalizedServicePageSection = ({
           <>
             {service === 'settlement-custody' && settlementVariant === 'current' ? (
               <PrinciplesSection stacked hero copy={marketingDictionaries[locale].home.principles}
-                cueHref={localizeHref('/contact', locale)}
+                cueHref="#settlement"
                 cueLabel={getMarketingMessages(locale)["Let's Talk"]} />
             ) : <ServiceHero key={locale} lines={copy.heroLines} phrases={copy.heroPhrases}
               typewriter={copy.heroTypewriter}
