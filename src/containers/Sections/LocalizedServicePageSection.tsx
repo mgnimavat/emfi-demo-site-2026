@@ -81,7 +81,8 @@ export const LocalizedServicePageSection = ({
             {service === 'settlement-custody' ? (
               <SettlementCustodySections copy={dictionary.settlement}
                 officeCopy={settlementVariant === 'current' ? dictionaries[locale].common : undefined} />
-            ) : <WealthAssetSections copy={dictionary.wealth} locale={locale} />}
+            ) : <WealthAssetSections copy={dictionary.wealth} locale={locale}
+              officeCopy={dictionaries[locale].common} />}
           </>
         )}
       </div>

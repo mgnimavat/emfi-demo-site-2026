@@ -35,8 +35,6 @@ export const wealth = {
     networkTitle: 'A network of professional service providers',
     networkBody: "The fund ecosystem combines EMFI's investment and operational capabilities with specialist administration, audit and legal services. The roles shown below reflect appointments disclosed for relevant portfolio arrangements; appointments and responsibilities may differ between portfolios.",
     providers: [
-      { id: 'investment', name: 'EMFI Capital', role: 'Investment Manager & AIFM' },
-      { id: 'custody', name: 'EMFI Capital', role: 'Custodian & Prime Broker' },
       { id: 'administration', name: 'APEX', role: 'Fund administration' },
       { id: 'audit', name: 'Baker Tilly', role: 'Audit' },
       { id: 'walkers', name: 'WALKERS', role: 'Legal counsel' },

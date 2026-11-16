@@ -1,7 +1,11 @@
 import { serviceDictionaries, type WealthCopy } from '@/lib/i18n/service-dictionaries';
+import Image from 'next/image';
+import { fundProviderLogos } from '@/content/fund-provider-logos';
 import { localizeHref, type Locale } from '@/lib/i18n';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { ServiceDisclosures } from './ServiceDisclosures';
+import { OfficeContactSection } from './OfficeContactSection';
+import type { CommonCopy } from '@/lib/i18n';
 import styles from './WealthAssetSections.module.css';
 
 const MandateFramework = ({ copy: wealth }: { copy: WealthCopy }) => {
@@ -42,7 +46,7 @@ const WealthManagement = ({ copy: wealth }: { copy: WealthCopy }) => {
   const content = wealth.management;
 
   return (
-    <section id="wealth-management" className={`${styles.section} ${styles.navy}`} aria-labelledby="wealth-management-heading">
+    <section id="wealth-management" className={`${styles.section} ${styles.navy} ${styles.management}`} aria-labelledby="wealth-management-heading">
       <div className={`${styles.container} ${styles.sectionGrid}`}>
         <ExecutionReveal className={styles.copy}>
           <h2 id="wealth-management-heading" className={styles.title}>{content.title}</h2>
@@ -102,12 +106,18 @@ const AssetManagement = ({ copy: wealth }: { copy: WealthCopy }) => {
         <ExecutionReveal delay={0.12} className={styles.visual}>
           <FundStructure copy={wealth} />
           <ul className={styles.providers} aria-labelledby="fund-provider-heading">
-            {content.providers.map((provider) => (
+            {content.providers.map((provider) => {
+              const logo = fundProviderLogos[provider.id];
+              return (
               <li key={provider.id}>
-                <strong>{provider.name}</strong>
+                <div className={styles.providerBrand}>
+                  {logo ? <Image src={logo.src} alt={provider.name} width={logo.width}
+                    height={logo.height} className={styles.providerLogo} /> : <strong>{provider.name}</strong>}
+                </div>
                 <span>{provider.role}</span>
               </li>
-            ))}
+              );
+            })}
           </ul>
           <p className={styles.providerNotice}>{content.providerNotice}</p>
         </ExecutionReveal>
@@ -132,10 +142,19 @@ const FundDisclosures = ({ copy: wealth, locale }: { copy: WealthCopy; locale: L
   );
 };
 
-export const WealthAssetSections = ({ copy = serviceDictionaries.en.wealth, locale = 'en' }: { copy?: WealthCopy; locale?: Locale }) => (
+export const WealthAssetSections = ({
+  copy = serviceDictionaries.en.wealth,
+  locale = 'en',
+  officeCopy,
+}: { copy?: WealthCopy; locale?: Locale; officeCopy?: CommonCopy }) => (
   <>
     <WealthManagement copy={copy} />
     <AssetManagement copy={copy} />
-    <FundDisclosures copy={copy} locale={locale} />
+    {officeCopy ? (
+      <OfficeContactSection copy={officeCopy} officeCity="Cayman" sectionId="wealth-office">
+        <p><strong>{copy.disclosures.entity}</strong> {copy.disclosures.introduction}</p>
+        {copy.disclosures.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+      </OfficeContactSection>
+    ) : <FundDisclosures copy={copy} locale={locale} />}
   </>
 );

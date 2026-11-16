@@ -9,7 +9,7 @@ export const OfficeContactSection = ({
   officeCity,
   sectionId,
   children,
-}: { copy?: CommonCopy; officeCity: 'London' | 'Dubai'; sectionId: string; children: ReactNode }) => {
+}: { copy?: CommonCopy; officeCity: 'London' | 'Dubai' | 'Cayman'; sectionId: string; children: ReactNode }) => {
   const originalOffice = dictionaries.en.common.locations.places.find((place) => place.city === officeCity);
   const office = copy.locations.places.find((place) => place.mapQuery === originalOffice?.mapQuery);
   if (!office) return null;
