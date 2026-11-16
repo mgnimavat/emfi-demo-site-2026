@@ -3,8 +3,8 @@
 import type { ReactNode } from 'react';
 import { ServiceLocaleProvider, useServiceLocale } from '@/ui/hooks/useServiceLocale';
 import { settlementDashboard, type DashboardSeries } from '@/content/settlement-dashboard';
-import { maskWorkstationValue } from '@/content/workstation-preview';
 import { MaskedWorkstationValue, WorkstationPrivacyProvider } from './WorkstationPrivacy';
+import privacyStyles from './WorkstationPrivacy.module.css';
 import windowStyles from '@/components/sections/execution/execution-chart.module.css';
 import styles from './SettlementDashboard.module.css';
 
@@ -28,16 +28,14 @@ const MaskedChartText = ({
   x,
   y,
   anchor = 'end',
-  starCount,
 }: {
   value: string;
   x: number;
   y: number;
   anchor?: 'start' | 'middle' | 'end';
-  starCount?: number;
 }) => (
-  <text x={x} y={y} textAnchor={anchor} data-workstation-mask="initial-stars">
-    {maskWorkstationValue(value, starCount)}
+  <text x={x} y={y} textAnchor={anchor} className={privacyStyles.blurredText} data-workstation-mask="blur">
+    {value}
   </text>
 );
 
@@ -73,7 +71,7 @@ const VerticalChart = ({ series }: { series: DashboardSeries }) => {
         return (
           <g key={tick}>
             <line x1={chart.verticalLeft} y1={y} x2={chart.right} y2={y} className={styles.gridLine} />
-            <MaskedChartText value={String(tick)} starCount={series.maskLength} x={chart.verticalLeft - chart.labelOffset} y={y + 3} />
+            <MaskedChartText value={String(tick)} x={chart.verticalLeft - chart.labelOffset} y={y + 3} />
           </g>
         );
       })}
@@ -91,7 +89,7 @@ const VerticalChart = ({ series }: { series: DashboardSeries }) => {
               data-tone={bar.tone}
             />
             {series.maskLabels ? (
-              <MaskedChartText value={bar.label} starCount={series.maskLength} x={center} y={chart.bottom + chart.labelOffset + 6} anchor="middle" />
+              <MaskedChartText value={bar.label} x={center} y={chart.bottom + chart.labelOffset + 6} anchor="middle" />
             ) : <text x={center} y={chart.bottom + chart.labelOffset + 6} textAnchor="middle">
               {t(bar.label).split(' ').map((word, wordIndex) => (
                 <tspan key={`${bar.label}-${word}`} x={center} dy={wordIndex === 0 ? 0 : chart.labelOffset}>
@@ -118,7 +116,7 @@ const HorizontalChart = ({ series }: { series: DashboardSeries }) => {
         return (
           <g key={tick}>
             <line x1={x} y1={chart.top} x2={x} y2={chart.bottom} className={styles.gridLine} />
-            <MaskedChartText value={String(tick)} starCount={series.maskLength} x={x} y={chart.bottom + chart.labelOffset + 6} anchor={index === series.ticks.length - 1 ? 'end' : 'middle'} />
+            <MaskedChartText value={String(tick)} x={x} y={chart.bottom + chart.labelOffset + 6} anchor={index === series.ticks.length - 1 ? 'end' : 'middle'} />
           </g>
         );
       })}
@@ -126,7 +124,7 @@ const HorizontalChart = ({ series }: { series: DashboardSeries }) => {
         const center = chart.top + slot * (index + 0.5);
         return (
           <g key={bar.label}>
-            <MaskedChartText value={bar.label} starCount={series.maskLength} x={chart.horizontalLeft - chart.labelOffset} y={center + 3} />
+            <MaskedChartText value={bar.label} x={chart.horizontalLeft - chart.labelOffset} y={center + 3} />
             <rect
               x={chart.horizontalLeft}
               y={center - barHeight / 2}
@@ -191,7 +189,7 @@ const SettlementDashboardContent = () => {
     aria-label={t("Illustrative portfolio dashboard")}
     tabIndex={0}
   >
-    <WorkstationPrivacyProvider variant="initial-stars">
+    <WorkstationPrivacyProvider variant="blur">
       <div className={styles.preview}>
         <DashboardCard title={t(settlementDashboard.balances.title)} total={settlementDashboard.balances.total} starCount={settlementDashboard.balances.maskLength}>
           <BalanceChart />

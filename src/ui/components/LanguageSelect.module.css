@@ -1,0 +1,66 @@
+.control { position: relative; display: inline-flex; flex: none; color: var(--text-inverse); }
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .15s, border-color .15s;
+}
+.trigger:hover:not(:disabled), .trigger[aria-expanded='true'] {
+  border-color: color-mix(in srgb, var(--text-inverse) 18%, transparent);
+  background: color-mix(in srgb, var(--text-inverse) 7%, transparent);
+}
+.trigger svg { transition: transform .15s; }
+.trigger[aria-expanded='true'] svg { transform: rotate(180deg); }
+.trigger:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 2px; }
+.trigger:disabled { opacity: .6; cursor: default; }
+.menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + var(--space-2));
+  inset-inline-end: 0;
+  min-width: 184px;
+  padding: var(--space-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-control);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  box-shadow: var(--elevation-card-hover);
+}
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 40px;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--space-2);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  text-align: start;
+  cursor: pointer;
+}
+.option:hover, .option:focus-visible { outline: none; background: var(--bg-subtle); }
+.option[aria-selected='true'] { background: var(--action-soft); }
+.code { color: var(--text-muted); font-size: 11px; font-weight: 600; }
+.name { flex: 1; white-space: nowrap; }
+@media (max-width: 999px) {
+  .control { margin-top: var(--space-4); }
+  .menu { inset-inline-start: 0; inset-inline-end: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trigger, .trigger svg { transition: none; }
+}

@@ -18,13 +18,17 @@ import styles from "./research-publications.module.css";
 
 const defaultFilters = (): ExecutionResearchFilters => ({ ...emptyExecutionFilters, ...trailingResearchRange(12) });
 
-export const LiveResearch = ({ singleColumn = false }: { singleColumn?: boolean }) => {
+export const LiveResearch = ({ singleColumn = false, compact = false, heading }: {
+  singleColumn?: boolean;
+  compact?: boolean;
+  heading?: string;
+}) => {
   const { t, locale } = useServiceLocale();
   const language: IntelligenceLanguage = locale === "es" ? "espanol" : "english";
-  const [filters, setFilters] = useState(defaultFilters);
+  const [filters, setFilters] = useState(() => compact ? { ...emptyExecutionFilters } : defaultFilters());
   const search = useIntelligenceSearch(language, filters.keyword);
   const { feeds, loading, loadMore } = useIntelligenceReports(language, filters.from, filters.to, !search.active);
-  const countryList = useIntelligenceCountries();
+  const countryList = useIntelligenceCountries(!compact);
   const reportCatalogue = useIntelligenceReportTypes();
   const selectedFeeds = intelligenceReportFeeds.filter(feed => !filters.reportType || intelligenceReportLabels[feed] === filters.reportType);
   const allRecords = useMemo(() => mergeIntelligenceReports(...intelligenceReportFeeds.map(feed => feeds[feed].records)), [feeds]);
@@ -43,16 +47,24 @@ export const LiveResearch = ({ singleColumn = false }: { singleColumn?: boolean 
   const initialLoading = (pending && !sourceRecords.length) || (Boolean(filters.derivedType) && reportCatalogue.loading);
   const updateFilter = (patch: Partial<ExecutionResearchFilters>) => setFilters(previous => ({ ...previous, ...patch }));
 
-  return <div className={`${styles.publications} ${singleColumn ? styles.singleColumn : ''}`}>
-    {locale === "ar" ? <p>{t("Publications are available in English on this page.")}</p> : null}
-    <aside className={styles.filterBar} aria-label={t("Research filters")}>
-      <div className={styles.filterFields}>
-        <label className={`${styles.filterField} ${styles.searchLabel}`}>{t("Search research")} <span className={styles.researchSearch}>
+  const searchField = <label className={`${styles.filterField} ${styles.searchLabel}`}><span className={compact ? 'sr-only' : undefined}>{t("Search research")}</span><span className={styles.researchSearch}>
             <Search size={19} strokeWidth={1.7} aria-hidden="true" />
             <input type="search" placeholder={t("Search reports, markets or countries…")} value={filters.keyword} onChange={event => updateFilter({ keyword: event.target.value })} />
             {filters.keyword ? <button type="button" aria-label={t("Clear search")} onClick={() => updateFilter({ keyword: "" })}><X size={16} aria-hidden="true" /></button> : null}
           </span>
-        </label>
+        </label>;
+
+  return <div className={`${styles.publications} ${singleColumn ? styles.singleColumn : ''} ${compact ? styles.compact : ''}`}>
+    {compact ? <header className={styles.intelligenceHeader}>
+      <div>
+        <h1 id="research-heading" className={styles.intelligenceTitle}>{heading}</h1>
+      </div>
+      <div className={styles.intelligenceSearch}>{searchField}</div>
+    </header> : null}
+    {locale === "ar" ? <p>{t("Publications are available in English on this page.")}</p> : null}
+    {!compact ? <aside className={styles.filterBar} aria-label={t("Research filters")}>
+      <div className={styles.filterFields}>
+        {searchField}
         <div className={styles.filterControls}>
         <ResearchDateRange className={styles.filterField} label={t("Date")} value={{ from: filters.from, to: filters.to }} onChange={updateFilter} />
         <ResearchFilterSelect className={styles.filterField} label={t("Country")} allLabel={t("All countries")} options={countryList.countries} value={filters.country} onChange={country => updateFilter({ country })} />
@@ -62,12 +74,13 @@ export const LiveResearch = ({ singleColumn = false }: { singleColumn?: boolean 
       {invalidDates ? <p role="alert">{t("Choose an end date on or after the start date.")}</p> : null}
       {reportCatalogue.error ? <p role="alert">{t("Some report details could not be loaded.")} <button type="button" onClick={reportCatalogue.retry}>{t("Try again")}</button></p> : null}
       {countryList.error ? <p role="alert">{t("Could not load countries.")} <button type="button" onClick={countryList.retry}>{t("Try again")}</button></p> : null}
-    </aside>
+    </aside> : null}
     {!initialLoading && error ? <div className={styles.feedStatus}>
       <p role="alert">{search.active ? t("Could not search reports.") : t("Could not load reports.")} <button type="button" disabled={pending} onClick={() => search.active ? search.retry() : loadMore(selectedFeeds, true)}>{t("Try again")}</button></p>
     </div> : null}
     {initialLoading ? <ResearchPublicationsSkeleton singleColumn={singleColumn} /> : <ResearchPublications
       singleColumn={singleColumn}
+      compact={compact}
       key={JSON.stringify(filters)}
       records={records}
       language={language}

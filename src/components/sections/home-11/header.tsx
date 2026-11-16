@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { BrandWordmark } from "@/components/brand/wordmark";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { dictionaries, getBasePath, getPageLocale, localizeHref, isLocalizedPath, locales, type Locale } from "@/lib/i18n";
+import { dictionaries, getBasePath, getPageLocale, localizeHref, isLocalizedPath, type Locale } from "@/lib/i18n";
 import { home11 } from "@/content/home-11";
 import navigation from "@/content/site-navigation.json";
 import styles from "./chrome.module.css";
+import { LanguageSelect } from '@/ui/components/LanguageSelect';
 
 const LoginMark = () => {
   return <svg viewBox="0 0 145 145" className={styles.clientIcon} aria-hidden="true" focusable="false"><path d={navigation.markPath} fill="currentColor" /></svg>;
@@ -82,11 +83,8 @@ export const Home11Header = () => {
             {home11.utilityLinks.map((link) => (
               <Link key={link.href} href={linkHref(link.href)} aria-current={activeLink(basePath, link.href) ? "page" : undefined}>{linkLabel(link.href, link.label)}</Link>
             ))}
-            <span className={styles.languageControl}>
-            <select className={styles.languageSelect} aria-label={copy.language} disabled={!supportsLanguages} title={!supportsLanguages ? copy.languageAvailability : undefined} value={locale} onChange={(event) => switchLanguage(event.target.value as Locale)}>
-              {locales.map((language) => <option key={language} value={language} lang={language}>{language.toUpperCase()}</option>)}
-            </select>
-            </span>
+            <LanguageSelect locale={locale} label={copy.language} disabled={!supportsLanguages}
+              title={!supportsLanguages ? copy.languageAvailability : undefined} onChange={switchLanguage} />
             <a href={navigation.loginHref} className={styles.clientLogin} aria-label={copy.login} aria-describedby="home-11-login-tooltip">
               <LoginMark />
               <span id="home-11-login-tooltip" className={styles.tooltip} role="tooltip">{copy.loginHint}</span>
@@ -99,11 +97,8 @@ export const Home11Header = () => {
         {[...home11.navLinks, ...home11.utilityLinks].map((link) => (
           <Link key={link.href} href={linkHref(link.href)} onClick={() => setOpen(false)} aria-current={activeLink(basePath, link.href) ? "page" : undefined}>{linkLabel(link.href, link.label)}</Link>
         ))}
-        <span className={styles.languageControl}>
-        <select className={styles.languageSelect} aria-label={copy.language} disabled={!supportsLanguages} title={!supportsLanguages ? copy.languageAvailability : undefined} value={locale} onChange={(event) => switchLanguage(event.target.value as Locale)}>
-              {locales.map((language) => <option key={language} value={language} lang={language}>{language.toUpperCase()}</option>)}
-            </select>
-        </span>
+        <LanguageSelect locale={locale} label={copy.language} disabled={!supportsLanguages}
+          title={!supportsLanguages ? copy.languageAvailability : undefined} onChange={switchLanguage} />
         <a href={navigation.loginHref} className={styles.clientMobile} aria-label={copy.login}><LoginMark /><span>{copy.login}</span></a>
       </nav>
     </header>

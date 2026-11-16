@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 
-export function useIntelligenceCountries() {
+export const useIntelligenceCountries = (enabled = true) => {
   const [countries, setCountries] = useState<string[]>([]);
   const [error, setError] = useState(false);
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
+    if (!enabled) return;
     const controller = new AbortController();
     async function load() {
       setError(false);
@@ -22,6 +23,6 @@ export function useIntelligenceCountries() {
     }
     void load();
     return () => controller.abort();
-  }, [attempt]);
+  }, [attempt, enabled]);
   return { countries, error, retry: () => setAttempt(previous => previous + 1) };
-}
+};

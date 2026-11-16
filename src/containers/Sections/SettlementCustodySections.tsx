@@ -5,6 +5,8 @@ import { serviceDictionaries, type SettlementCopy } from '@/lib/i18n/service-dic
 import { ServiceDisclosures } from './ServiceDisclosures';
 import { SettlementDashboard } from './SettlementDashboard';
 import { SettlementMobileHoldings } from './SettlementMobileHoldings';
+import { OfficeContactSection } from './OfficeContactSection';
+import type { CommonCopy } from '@/lib/i18n';
 import styles from './SettlementCustodySections.module.css';
 
 const SettlementOverview = ({ copy: settlement }: { copy: SettlementCopy }) => {
@@ -106,10 +108,20 @@ const ClientAssetDisclosures = ({ copy: settlement }: { copy: SettlementCopy }) 
   );
 };
 
-export const SettlementCustodySections = ({ copy = serviceDictionaries.en.settlement }: { copy?: SettlementCopy }) => (
+export const SettlementCustodySections = ({
+  copy = serviceDictionaries.en.settlement,
+  officeCopy,
+}: { copy?: SettlementCopy; officeCopy?: CommonCopy }) => (
   <>
     <SettlementOverview copy={copy} />
     <CustodySafeguarding copy={copy} />
-    <ClientAssetDisclosures copy={copy} />
+    {officeCopy ? (
+      <OfficeContactSection copy={officeCopy} officeCity="Dubai" sectionId="settlement-office">
+        {copy.disclosures.entities.map((entity) => (
+          <p key={entity.name}><strong>{entity.name}</strong> {entity.body}</p>
+        ))}
+        <p>{copy.disclosures.notice}</p>
+      </OfficeContactSection>
+    ) : <ClientAssetDisclosures copy={copy} />}
   </>
 );
