@@ -86,7 +86,7 @@ export function SettlementDashboardFit() {
 export function ExecutionWorkstationFit() {
   return (
     <ScaledMockup width={1160} panels="fieldset > div > figure, fieldset > div > div > form, fieldset > div > section">
-      <ExecutionWorkstation maskVariant="initial-stars" />
+      <ExecutionWorkstation maskVariant="blur" />
     </ScaledMockup>
   );
 }

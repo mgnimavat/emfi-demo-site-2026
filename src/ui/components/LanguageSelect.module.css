@@ -5,8 +5,8 @@
   justify-content: center;
   gap: var(--space-2);
   min-height: 40px;
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid transparent;
+  padding: var(--space-2) 0;
+  border: 0;
   border-radius: var(--radius-control);
   background: transparent;
   color: inherit;
@@ -14,11 +14,6 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color .15s, border-color .15s;
-}
-.trigger:hover:not(:disabled), .trigger[aria-expanded='true'] {
-  border-color: color-mix(in srgb, var(--text-inverse) 18%, transparent);
-  background: color-mix(in srgb, var(--text-inverse) 7%, transparent);
 }
 .trigger svg { transition: transform .15s; }
 .trigger[aria-expanded='true'] svg { transform: rotate(180deg); }

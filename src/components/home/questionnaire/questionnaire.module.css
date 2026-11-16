@@ -15,7 +15,7 @@
   --quiz-gradient: linear-gradient(100deg, var(--color-blue-100), var(--quiz-accent));
   --quiz-input-background: color-mix(in srgb, var(--color-white) 4%, transparent);
   padding: clamp(20px, 3vh, 36px) var(--space-5);
-  background: var(--bg-page);
+  background: var(--bg-soft);
   color: var(--text-inverse);
   font-family: var(--font-sans);
 }
