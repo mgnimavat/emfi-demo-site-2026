@@ -1,8 +1,1 @@
-import ArchivedPage, { metadata as originalMetadata } from '@/containers/Sections/ArchivedServices/a3d0954/app/services/wealth-asset-management/page';
-
-export const metadata = {
-  ...originalMetadata,
-  robots: { index: false, follow: true },
-};
-
-export default ArchivedPage;
+export { default, metadata } from '@/app/services/wealth-asset-management-old/page';

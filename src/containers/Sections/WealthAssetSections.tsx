@@ -151,7 +151,8 @@ export const WealthAssetSections = ({
     <WealthManagement copy={copy} />
     <AssetManagement copy={copy} />
     {officeCopy ? (
-      <OfficeContactSection copy={officeCopy} officeCity="Cayman" sectionId="wealth-office">
+      <OfficeContactSection copy={officeCopy} officeCity="Cayman" sectionId="wealth-office"
+        layout="columns" officeCities={['Dubai', 'Cayman']}>
         <p><strong>{copy.disclosures.entity}</strong> {copy.disclosures.introduction}</p>
         {copy.disclosures.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       </OfficeContactSection>

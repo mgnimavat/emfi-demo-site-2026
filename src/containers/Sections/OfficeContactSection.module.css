@@ -42,6 +42,18 @@
 .regulatory { display: grid; gap: var(--space-4); margin-top: var(--space-5); padding-top: var(--space-5); border-top: 1px solid var(--border-default); color: var(--text-secondary); font-size: 13px; line-height: 1.7; }
 .regulatory p { margin: 0; }
 
+.columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); align-items: stretch; }
+.columns:dir(rtl) { direction: ltr; }
+.columns:dir(rtl) > * { direction: rtl; }
+.locationCard, .regulatoryCard { min-width: 0; overflow: hidden; border: 1px solid var(--border-default); border-radius: var(--radius-card); background: var(--bg-page); box-shadow: var(--elevation-card-hover); }
+.locationCard { display: flex; flex-direction: column; }
+.locationMap { position: relative; display: flex; flex: 1; min-height: 280px; }
+.locationMap::after { content: ''; position: absolute; inset-inline: 0; bottom: 0; z-index: 3; height: 56px; background: linear-gradient(transparent, var(--bg-page)); pointer-events: none; }
+.locationCard .information { padding: var(--space-6); }
+.regulatoryCard { grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: center; gap: var(--space-5); padding: var(--space-6); color: var(--text-secondary); font-size: 15px; line-height: 1.75; }
+.regulatoryCard p { margin: 0; }
+.regulatoryCard p + p { border-top: 1px solid var(--border-default); padding-top: var(--space-5); }
+
 @container (min-width: 390px) {
   .officeDetails { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; }
 }
@@ -49,6 +61,8 @@
 @media (max-width: 767px) {
   .card { grid-template-columns: minmax(0, 1fr); }
   .information { padding: var(--space-5); }
+  .columns { grid-template-columns: minmax(0, 1fr); }
+  .locationCard .information, .regulatoryCard { padding: var(--space-5); }
 }
 
 @media (max-width: 599px) {
