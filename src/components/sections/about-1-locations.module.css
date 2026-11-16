@@ -211,8 +211,9 @@
 @container (min-width: 380px) {
   .contacts {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     min-height: 0;
+    gap: 24px;
   }
 }
 
