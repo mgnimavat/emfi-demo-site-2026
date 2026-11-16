@@ -16,7 +16,7 @@ export const about1Locations = {
     {
       city: "London",
       kicker: ["EMFI Securities Limited", "EMFI Capital Limited"],
-      lines: ["25-26 Dering Street", "Mayfair, London W1S 1AW", "United Kingdom"],
+      lines: ["25-26 Dering Street", "Third Floor, Mayfair", "London W1S 1AW", "United Kingdom"],
       email: "contact@emfi.uk",
       phone: "+44 20 3983 3634",
       mapQuery: "51.514390,-0.145650",
