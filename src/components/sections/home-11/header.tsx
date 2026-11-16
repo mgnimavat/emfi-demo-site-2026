@@ -165,7 +165,8 @@ export const Home11Header = () => {
             {home11.utilityLinks.map((link) => (
               <Link key={link.href} href={linkHref(link.href)} aria-current={activeLink(basePath, link.href) ? "page" : undefined}>{linkLabel(link.href, link.label)}</Link>
             ))}
-            <LanguageDropdown {...languageProps} />
+            <LanguageSelect locale={locale} label={copy.language} disabled={!supportsLanguages}
+              title={!supportsLanguages ? copy.languageAvailability : undefined} onChange={switchLanguage} />
             <a href={navigation.loginHref} className={styles.clientLogin} aria-label={copy.login} aria-describedby="home-11-login-tooltip">
               <LoginMark />
               <span id="home-11-login-tooltip" className={styles.tooltip} role="tooltip">{copy.loginHint}</span>
@@ -178,7 +179,8 @@ export const Home11Header = () => {
         {[...home11.navLinks, ...home11.utilityLinks].map((link) => (
           <Link key={link.href} href={linkHref(link.href)} onClick={() => setOpen(false)} aria-current={activeLink(basePath, link.href) ? "page" : undefined}>{linkLabel(link.href, link.label)}</Link>
         ))}
-        <LanguageDropdown {...languageProps} />
+        <LanguageSelect locale={locale} label={copy.language} disabled={!supportsLanguages}
+          title={!supportsLanguages ? copy.languageAvailability : undefined} onChange={switchLanguage} />
         <a href={navigation.loginHref} className={styles.clientMobile} aria-label={copy.login}><LoginMark /><span>{copy.login}</span></a>
       </nav>
     </header>
