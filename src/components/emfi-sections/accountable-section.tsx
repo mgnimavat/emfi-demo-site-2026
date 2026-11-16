@@ -11,7 +11,7 @@ import { SectionAction, SectionCopy, SectionFooterBody } from "./outcomes";
 import { ReplayButton } from "./replay-button";
 import chapterStyles from "./sections.module.css";
 import styles from "./accountable.module.css";
-import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhyStep, WhyMarker } from "./why-flow";
+import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhySplit, useWhyStep, WhyMarker } from "./why-flow";
 
 const HOLD_MS = 3800;
 const standards = ["Authorised", "Regulated", "Auditable"] as const;
@@ -286,10 +286,12 @@ export function AccountableSection({
   const marked = step != null;
   const active = useWhyActive(step ?? 0);
   const pinned = useWhyPinned();
+  const split = useWhySplit();
   const stepNow = useWhyStep();
   const engaged = useWhyEngaged();
   const showing = pinned && engaged && marked && stepNow === step;
   const reduceMotion = useReducedMotion();
+  const solidLight = light && (!pinned || split || Boolean(reduceMotion));
   const slide = slides[index] ?? slides[0];
 
   useLayoutEffect(() => {
@@ -312,8 +314,8 @@ export function AccountableSection({
   }
 
   return (
-    <section id="accountable" data-screen-label="05 Dependable" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: pinned && light && !reduceMotion ? "transparent" : light ? "#ffffff" : "radial-gradient(55% 60% at 0% 100%,rgba(128,152,204,.14),transparent 70%)", zIndex: light || raiseContent ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
-      {marked && step ? <WhyMarker n={step} active={active} /> : null}
+    <section id="accountable" data-screen-label="05 Dependable" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: solidLight ? "#ffffff" : light ? "transparent" : "radial-gradient(55% 60% at 0% 100%,rgba(128,152,204,.14),transparent 70%)", zIndex: light || raiseContent ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
+      {marked && step && !split ? <WhyMarker n={step} active={active} /> : null}
       <div className={[light ? chapterStyles.lightCopy : "", pinned ? chapterStyles.pinStack : ""].filter(Boolean).join(" ") || undefined} style={{ position: "relative", zIndex: light || raiseContent ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked, !light, pinned), borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", ...sectionFrame(pinned, centered, cols) }}>
         <div style={{ position: "relative", width: pinned ? "min(100%, 560px)" : undefined }}>
           <SectionCopy
@@ -388,7 +390,7 @@ export function AccountableSection({
             </div>
           ) : null}
         </div>
-        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/why-emfi" : undefined} /> : <SectionAction href="/why-emfi" label="Learn More" />) : null}
+        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue || split ? "/why-emfi" : undefined} /> : <SectionAction href="/why-emfi" label="Learn More" />) : null}
       </div>
     </section>
   );

@@ -1,9 +1,8 @@
 // To restore the previous shared chrome, uncomment these imports and JSX below,
-// remove Home11Header/Home11Footer here, and restore the home page chrome.
+// remove Home11Header/SiteFooter here, and restore the home page chrome.
 // import { Header } from "@/components/layout/header";
-// import { Footer } from "@/components/layout/footer";
 import { Home11Header } from "@/components/sections/home-11/header";
-import { Home11Footer } from "@/components/sections/home-11/footer";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { HashScroll } from "@/components/layout/hash-scroll";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -13,8 +12,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       {/* <Header /> */}
       <Home11Header />
       <main className="flex-1">{children}</main>
-      {/* <Footer /> */}
-      <Home11Footer />
+      <SiteFooter />
     </div>
   );
 }

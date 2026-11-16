@@ -38,7 +38,7 @@
 
 /* Full portrait at rest; on hover a soft white wash rises behind the details. */
 @media (hover: hover) and (pointer: fine) {
-  .card { position: relative; isolation: isolate; display: block; width: 100%; height: auto; aspect-ratio: 1; padding: 0; overflow: hidden; }
+  .card { position: relative; isolation: isolate; display: block; width: 100%; height: auto; aspect-ratio: 1 / 1.15; padding: 0; overflow: hidden; }
   .card::before {
     content: "";
     position: absolute;

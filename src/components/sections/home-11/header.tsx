@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { BrandWordmark } from "@/components/brand/wordmark";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -16,6 +16,80 @@ const LoginMark = () => {
 const activeLink = (pathname: string, href: string) => {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
+
+const LanguageDropdown = ({
+  locale,
+  label,
+  disabled,
+  disabledTitle,
+  onSelect,
+}: {
+  locale: Locale;
+  label: string;
+  disabled: boolean;
+  disabledTitle?: string;
+  onSelect: (next: Locale) => void;
+}) => {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const listId = useId();
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  return (
+    <div className={styles.languageControl} ref={rootRef}>
+      <button
+        type="button"
+        className={styles.languageTrigger}
+        aria-label={label}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listId}
+        disabled={disabled}
+        title={disabled ? disabledTitle : undefined}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <span>{locale.toUpperCase()}</span>
+        <svg className={styles.languageChevron} viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+          <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      {open ? (
+        <ul id={listId} className={styles.languageMenu} role="listbox" aria-label={label}>
+          {locales.map((language) => (
+            <li key={language} role="option" aria-selected={language === locale} lang={language}>
+              <button
+                type="button"
+                className={styles.languageOption}
+                disabled={language === locale}
+                onClick={() => {
+                  setOpen(false);
+                  if (language !== locale) onSelect(language);
+                }}
+              >
+                {language.toUpperCase()}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
+  );
+};
 
 export const Home11Header = () => {
   const pathname = usePathname();
@@ -66,6 +140,14 @@ export const Home11Header = () => {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
+  const languageProps = {
+    locale,
+    label: copy.language,
+    disabled: !supportsLanguages,
+    disabledTitle: copy.languageAvailability,
+    onSelect: switchLanguage,
+  };
+
   return (
     <header ref={headerRef} lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={styles.header}>
       <div className={styles.inner}>
@@ -82,11 +164,7 @@ export const Home11Header = () => {
             {home11.utilityLinks.map((link) => (
               <Link key={link.href} href={linkHref(link.href)} aria-current={activeLink(basePath, link.href) ? "page" : undefined}>{linkLabel(link.href, link.label)}</Link>
             ))}
-            <span className={styles.languageControl}>
-            <select className={styles.languageSelect} aria-label={copy.language} disabled={!supportsLanguages} title={!supportsLanguages ? copy.languageAvailability : undefined} value={locale} onChange={(event) => switchLanguage(event.target.value as Locale)}>
-              {locales.map((language) => <option key={language} value={language} lang={language}>{language.toUpperCase()}</option>)}
-            </select>
-            </span>
+            <LanguageDropdown {...languageProps} />
             <a href={navigation.loginHref} className={styles.clientLogin} aria-label={copy.login} aria-describedby="home-11-login-tooltip">
               <LoginMark />
               <span id="home-11-login-tooltip" className={styles.tooltip} role="tooltip">{copy.loginHint}</span>
@@ -99,11 +177,7 @@ export const Home11Header = () => {
         {[...home11.navLinks, ...home11.utilityLinks].map((link) => (
           <Link key={link.href} href={linkHref(link.href)} onClick={() => setOpen(false)} aria-current={activeLink(basePath, link.href) ? "page" : undefined}>{linkLabel(link.href, link.label)}</Link>
         ))}
-        <span className={styles.languageControl}>
-        <select className={styles.languageSelect} aria-label={copy.language} disabled={!supportsLanguages} title={!supportsLanguages ? copy.languageAvailability : undefined} value={locale} onChange={(event) => switchLanguage(event.target.value as Locale)}>
-              {locales.map((language) => <option key={language} value={language} lang={language}>{language.toUpperCase()}</option>)}
-            </select>
-        </span>
+        <LanguageDropdown {...languageProps} />
         <a href={navigation.loginHref} className={styles.clientMobile} aria-label={copy.login}><LoginMark /><span>{copy.login}</span></a>
       </nav>
     </header>

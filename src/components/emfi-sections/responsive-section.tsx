@@ -4,7 +4,7 @@ import { useReducedMotion } from "framer-motion";
 import { ResearchExecutionHeroMockup, home10ResponsiveSlides, home12ResponsiveSlides, home16ResponsiveSlides, homeDeskResponsiveSlides, homeSettlementResponsiveSlides, homeV5ResponsiveSlides, responsiveHighlightSlides } from "@/components/home-17/research-execution-hero";
 import { SectionAction, SectionCopy, SectionFooterBody } from "./outcomes";
 import styles from "./sections.module.css";
-import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhyStep, WhyMarker } from "./why-flow";
+import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhySplit, useWhyStep, WhyMarker } from "./why-flow";
 
 export function ResponsiveSection({
   cols,
@@ -48,14 +48,16 @@ export function ResponsiveSection({
   const marked = step != null;
   const active = useWhyActive(step ?? 0);
   const pinned = useWhyPinned();
+  const split = useWhySplit();
   const stepNow = useWhyStep();
   const engaged = useWhyEngaged();
   const showing = pinned && engaged && marked && stepNow === step;
   const reduceMotion = useReducedMotion();
   const home17Mockup = trimChrome || appBar || home15Trade;
+  const solidLight = light && (!pinned || split || Boolean(reduceMotion));
   return (
-    <section id="responsive" data-screen-label="04 Responsive" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: pinned && light && !reduceMotion ? "transparent" : light ? "#e6effb" : "radial-gradient(50% 60% at 100% 50%,rgba(0,201,167,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
-      {marked && step ? <WhyMarker n={step} active={active} /> : null}
+    <section id="responsive" data-screen-label="04 Responsive" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: solidLight ? "#e6effb" : light ? "transparent" : "radial-gradient(50% 60% at 100% 50%,rgba(0,201,167,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
+      {marked && step && !split ? <WhyMarker n={step} active={active} /> : null}
       <div className={[light ? styles.lightCopy : "", pinned ? (home17Mockup ? styles.responsivePin : styles.pinStack) : "", pinned && home17Mockup ? styles.responsiveStack : ""].filter(Boolean).join(" ") || undefined} style={{ position: "relative", zIndex: light ? 2 : undefined, maxWidth: 1320, margin: "0 auto", padding: sectionPad(marked, !light, pinned), borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)", ...sectionFrame(pinned, centered, cols) }}>
         <div style={{ position: "relative", minWidth: home17Mockup && pinned ? "auto" : 0, width: pinned ? (home17Mockup ? "100%" : "min(100%, 560px)") : undefined, flexShrink: home17Mockup && pinned ? 0 : undefined, order: pinned || centered ? undefined : textOrder }}>
           <SectionCopy
@@ -73,7 +75,7 @@ export function ResponsiveSection({
             <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} views={homeSlides ? (home15Trade ? (settlementDash ? homeSettlementResponsiveSlides : homeDeskResponsiveSlides) : floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
           ) : null}
         </div>
-        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/services/settlement-custody#workstation-demo" : undefined} /> : <SectionAction href="/services/settlement-custody#workstation-demo" label="Learn More" />) : null}
+        {pinned ? (shortWhy ? <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue || split ? "/services/settlement-custody#workstation-demo" : undefined} /> : <SectionAction href="/services/settlement-custody#workstation-demo" label="Learn More" />) : null}
       </div>
     </section>
   );

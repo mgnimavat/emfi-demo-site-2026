@@ -7,39 +7,128 @@
   --pin-bottom: calc(clamp(100px, 13vh, 132px) - 10px);
 }
 
+.home-page #expect > div:first-child {
+  transform: translateY(-6vh);
+}
+
 .home-page #direct {
   scroll-margin-top: var(--home-12-header-h, 77.36px);
 }
 
-.home-page [class*="whyPinSlide"] .section-bottom-action {
+.home-page [class*="whyPinSlide"] .section-bottom-action,
+.home-page [class*="whySplitSection"] .section-bottom-action {
   margin-top: 10px;
+}
+
+.home-page .section-bottom-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 912px);
+  gap: 48px;
+  margin-top: 6px;
+  position: relative;
+}
+
+.home-page .section-bottom-action-row > p {
+  text-align: center;
+}
+
+.home-page .section-bottom-action-row > a.section-bottom-cue {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  z-index: 1;
+  flex: none;
+  transform: none;
 }
 
 .home-page [class*="whyPinSlide"] #accountable {
   background: transparent !important;
 }
 
+.home-page #accountable [class*="plainSlide"]:not([class*="Viewport"]):not([class*="Content"]) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding-inline: 0;
+}
+
+/* Title stays above logo boxes, centered across the slide. */
+.home-page #accountable [class*="plainWide"] [class*="plainTitleSlot"] {
+  z-index: 2;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
+.home-page #accountable [class*="plainWide"] [class*="plainTitleSlot"] [class*="plainTitle"],
+.home-page #accountable [class*="plainTitle"] {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  text-align: center !important;
+  transform: none !important;
+  align-self: stretch !important;
+}
+
+.home-page #accountable [class*="plainWide"] [class*="plainSlideContent"] {
+  top: 56px;
+  bottom: 0;
+  justify-content: center;
+}
+
 .home-page #accountable [class*="plainRow"] {
   display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  flex: 0 0 auto !important;
+  align-items: stretch !important;
+  justify-content: stretch;
+  width: 100%;
+  height: auto !important;
+  min-height: 0 !important;
+  gap: 16px;
   box-sizing: border-box;
 }
 
-.home-page #accountable [class*="plainItem"] {
-  display: contents;
+.home-page #accountable [class*="plainItem"],
+.home-page #accountable [class*="plainItem"]:has(img),
+.home-page #accountable [class*="plainItem"]:has([class*="plainLabel"]),
+.home-page #accountable [class*="plainItem"]:has([class*="plainLogo"]),
+.home-page #accountable [class*="plainItemLarge"]:has(img),
+.home-page #accountable [class*="plainItemLarge"]:has([class*="plainLogo"]),
+.home-page #accountable [class*="plainItemWithEntities"] {
+  display: flex !important;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  gap: 10px;
+  width: auto;
+  height: auto !important;
+  min-width: 0;
+  min-height: 120px !important;
+  padding: 20px 16px;
+  border: 1px solid #a2c2fd;
+  border-radius: 20px;
+  background: #fff;
+  box-sizing: border-box;
 }
 
-.home-page #accountable [class*="plainItem"] > * {
-  flex: none;
+.home-page #accountable [class*="plainItem"] + [class*="plainItem"] {
+  border-left: 1px solid #a2c2fd;
 }
 
 .home-page #accountable [class*="plainItem"] + [class*="plainItem"]::before {
-  content: "";
-  flex: none;
-  width: 1px;
-  height: 88px;
-  background: #d0d8e6;
+  content: none;
 }
 
 .home-page #accountable [class*="plainLogo"] {
@@ -72,8 +161,14 @@
 }
 
 @media (max-width: 759px) {
-  .home-page #accountable [class*="plainItem"] + [class*="plainItem"]::before {
-    height: 64px;
+  .home-page #accountable [class*="plainRow"] {
+    gap: 10px;
+  }
+
+  .home-page #accountable [class*="plainItem"] {
+    padding: 14px 10px;
+    border-radius: 16px;
+    min-height: 88px !important;
   }
 
   .home-page #accountable [class*="plainItem"] [class*="plainLogo"] img {

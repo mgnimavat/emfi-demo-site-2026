@@ -22,7 +22,7 @@
     radial-gradient(60% 120% at 50% 0%, rgb(162 194 253 / 16%), transparent 70%),
     #071832 !important;
 }
-.fullHero :global(#expect) > div {
+.fullHero :global(#expect) > div:first-child {
   width: 100%;
   padding-top: 0;
   padding-bottom: 0;
@@ -31,7 +31,7 @@
   background: #ffffff !important;
   color: #071832;
 }
-.page :global(#expect) p:first-of-type { display: none; }
+.page :global(#expect) > div:first-child > p:first-of-type { display: none; }
 .page :global(#expect)::after {
   content: "";
   position: absolute;

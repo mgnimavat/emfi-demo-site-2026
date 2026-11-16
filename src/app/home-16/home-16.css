@@ -25,7 +25,7 @@ body.home-12-header-solid:has(.home-16-shell) header {
 }
 
 .home-page [class*="plainSlide"]:not([class*="Viewport"]):not([class*="Content"]) {
-  background: #fff;
+  background: transparent;
 }
 
 .home-16-shell #expect {

@@ -16,6 +16,7 @@ const WHY_LEARN_MORE_HREFS = [
 const WhyFrameContext = createContext(0);
 const WhyPinContext = createContext(false);
 const WhyEngagedContext = createContext(false);
+const WhySplitContext = createContext(false);
 
 export function useWhyPinned() {
   return useContext(WhyPinContext);
@@ -23,6 +24,10 @@ export function useWhyPinned() {
 
 export function useWhyEngaged() {
   return useContext(WhyEngagedContext);
+}
+
+export function useWhySplit() {
+  return useContext(WhySplitContext);
 }
 
 export function sectionPad(rail: boolean, horizontal = true, pinned = false) {
@@ -104,7 +109,7 @@ function Rail({
   );
 }
 
-export function WhyFlow({ children, stickyLabel = false, formProgress = false, shortWhy = false, pairedCue = false }: { children: ReactNode; stickyLabel?: boolean; formProgress?: boolean; shortWhy?: boolean; pairedCue?: boolean }) {
+export function WhyFlow({ children, stickyLabel = false, formProgress = false, shortWhy = false, pairedCue = false, split = false }: { children: ReactNode; stickyLabel?: boolean; formProgress?: boolean; shortWhy?: boolean; pairedCue?: boolean; split?: boolean }) {
   const { t, localize } = useServiceLocale();
   const ref = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -115,10 +120,50 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
   const elbowFillRef = useRef<HTMLSpanElement>(null);
   const pulseRef = useRef<HTMLSpanElement>(null);
   const wheelLockRef = useRef({ coolUntil: 0, blocked: false, timer: 0 });
-  const [active, setActive] = useState(stickyLabel ? 1 : 0);
+  const [active, setActive] = useState(stickyLabel && !split ? 1 : 0);
   const [engaged, setEngaged] = useState(false);
 
   useLayoutEffect(() => {
+    if (!split) return;
+    let raf = 0;
+
+    const update = () => {
+      const root = ref.current ?? document.querySelector<HTMLElement>("[data-why-split]");
+      if (!root) return;
+      const header = Number.parseFloat(getComputedStyle(document.body).getPropertyValue("--home-12-header-h")) || 77.36;
+      const stickyTop = header + 12;
+      const logo = document.querySelector<HTMLElement>("header a[aria-label]");
+      const logoLeft = logo?.getBoundingClientRect().left ?? 20;
+      root.querySelectorAll<HTMLElement>("[data-why-slide]").forEach((section) => {
+        const index = section.querySelector<HTMLElement>("[class*='whySplitIndex']:not([class*='Digit'])");
+        if (!index) return;
+        const rect = section.getBoundingClientRect();
+        const numberH = index.offsetHeight || 208;
+        const maxY = Math.max(0, rect.height - numberH);
+        const y = Math.max(0, Math.min(maxY, stickyTop - rect.top));
+        const x = Math.max(0, logoLeft - rect.left);
+        index.style.setProperty("--why-split-x", `${x}px`);
+        index.style.setProperty("--why-split-y", `${y}px`);
+      });
+    };
+
+    const schedule = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    };
+
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, [split]);
+
+  useLayoutEffect(() => {
+    if (split) return;
     const flow = ref.current;
     const rail = railRef.current;
     const fill = fillRef.current;
@@ -353,7 +398,7 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
       window.removeEventListener("resize", schedule);
       window.removeEventListener("wheel", onWheel);
     };
-  }, [active, stickyLabel]);
+  }, [active, stickyLabel, split]);
 
   const goToStep = (n: number) => {
     const flow = ref.current;
@@ -366,6 +411,29 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
   };
 
   const rail = <Rail railRef={railRef} fillRef={fillRef} elbowRef={elbowRef} elbowFillRef={elbowFillRef} pulseRef={pulseRef} />;
+
+  if (split) {
+    return (
+      <WhySplitContext.Provider value={true}>
+        <div ref={ref} className={styles.whySplit} data-why-split>
+          {Children.map(children, (child, index) => (
+            <WhyPinContext.Provider key={index} value={true}>
+              <WhyEngagedContext.Provider value={true}>
+                <WhyFrameContext.Provider value={index + 1}>
+                  <div className={styles.whySplitSection} data-why-slide>
+                    <span className={styles.whySplitIndex} aria-hidden="true">
+                      <span className={styles.whySplitIndexDigit}>{index + 1}</span>
+                    </span>
+                    {child}
+                  </div>
+                </WhyFrameContext.Provider>
+              </WhyEngagedContext.Provider>
+            </WhyPinContext.Provider>
+          ))}
+        </div>
+      </WhySplitContext.Provider>
+    );
+  }
 
   if (stickyLabel) {
     return (
