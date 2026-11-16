@@ -77,16 +77,6 @@
     "networkBody": "El ecosistema del fondo combina las capacidades de inversión y operativas de EMFI con servicios especializados de administración, auditoría y asesoría jurídica. Las funciones que se muestran reflejan los nombramientos comunicados para los acuerdos de cartera pertinentes; los nombramientos y responsabilidades pueden variar entre carteras.",
     "providers": [
       {
-        "id": "investment",
-        "name": "EMFI Capital",
-        "role": "Gestor de inversiones y AIFM"
-      },
-      {
-        "id": "custody",
-        "name": "EMFI Capital",
-        "role": "Custodio y bróker principal"
-      },
-      {
         "id": "administration",
         "name": "APEX",
         "role": "Administración de fondos"

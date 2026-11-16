@@ -51,6 +51,22 @@
 @media (prefers-reduced-motion: reduce) { .skeletonBlock { animation: none; } }
 
 .publications { margin-top: var(--space-6); color: var(--text-primary); }
+.compact { margin-top: 0; }
+.intelligenceHeader { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: var(--space-6); margin-bottom: var(--space-8); }
+.publications .intelligenceHeader .intelligenceTitle { margin: 0; font-size: clamp(42px, 7.2cqi, 96px); font-weight: 800; line-height: 1; letter-spacing: -.05em; }
+.intelligenceSearch { min-width: 0; }
+.intelligenceSearch .filterField { gap: 0; }
+.intelligenceSearch .researchSearch { height: 52px; background: var(--bg-page); }
+.compact .accordionCard { box-shadow: var(--elevation-card-hover); }
+.compact .accordionSummary { background: var(--bg-page); }
+.compact .accordionHeading { gap: var(--space-2); }
+.compact .accordionToggle { border: 0; background: transparent; }
+.compact .accordionCard[open] .accordionToggle { background: transparent; }
+.compact .accordionContent { margin-inline: var(--space-5); padding-inline: 0; }
+.compact .accordionChart .chart { padding: 0; border: 0; border-radius: 0; }
+@media (max-width: 639px) {
+  .intelligenceHeader { grid-template-columns: minmax(0, 1fr); }
+}
 .singleColumn { min-width: 0; margin-top: 0; }
 .singleColumn .filterFields, .singleColumn .accordionGrid { grid-template-columns: minmax(0, 1fr); }
 .filterBar { position: relative; z-index: 5; display: grid; gap: var(--space-3); margin-bottom: var(--space-6); padding: var(--space-5); border: 1px solid var(--research-report-border, color-mix(in srgb, var(--color-blue-100) 50%, var(--bg-page))); border-radius: var(--radius-card); background: var(--research-report-header, linear-gradient(120deg, var(--bg-page) 40%, color-mix(in srgb, var(--bg-soft) 35%, var(--bg-page)))); color-scheme: var(--research-color-scheme, normal); box-shadow: 0 8px 24px color-mix(in srgb, var(--text-primary) 3%, transparent); }
@@ -101,6 +117,10 @@
 .loadMoreRow { display: flex; align-items: center; justify-content: center; gap: var(--space-4); margin-top: var(--space-6); }
 .loadMoreRow button { position: relative; left: auto; bottom: auto; transform: none; font-family: inherit; cursor: pointer; }
 .loadMoreRow button:disabled { opacity: .5; cursor: default; }
+.compact .loadMoreRow button { border-color: var(--action-primary); background: var(--action-primary); color: var(--text-inverse); }
+.compact .loadMoreRow button::before { display: none; }
+.compact .loadMoreRow button:hover:not(:disabled) { border-color: var(--action-hover); background: var(--action-hover); }
+.compact .loadMoreRow button:focus-visible { outline-offset: 3px; }
 .emptyState { display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-8) var(--space-5); border: 1px dashed var(--border-strong); border-radius: var(--radius-card); background: var(--bg-page); text-align: center; }
 .emptyState h4, .emptyState p { margin: 0; }
 .emptyState p { color: var(--text-secondary); font-size: 14px; }
@@ -118,3 +138,7 @@
   .accordionTitle { font-size: 18px; }
 }
 @media (prefers-reduced-motion: reduce) { .accordionCard, .accordionToggle svg { transition: none; } }
+
+@media (max-width: 900px) {
+  .publications .intelligenceHeader .intelligenceTitle { font-size: clamp(42px, 10cqi, 80px); }
+}

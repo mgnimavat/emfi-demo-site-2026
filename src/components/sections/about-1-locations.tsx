@@ -13,7 +13,7 @@ type Place = CommonCopy["locations"]["places"][number];
 
 const clampZoom = (zoom: number) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom));
 
-const LocationMap = ({ place, copy }: { place: Place; copy: CommonCopy }) => {
+export const LocationMap = ({ place, copy }: { place: Place; copy: CommonCopy }) => {
   const frameRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(START_ZOOM);
 

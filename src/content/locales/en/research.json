@@ -11,6 +11,7 @@
     ]
   },
   "research": {
+    "intelligenceTitle": "Intelligence",
     "eyebrow": "Direct evidence",
     "title": "Find the Insight.",
     "body": "Search EMFI Intelligence reports and filter by date and country. Open a report to see its chart and analysis.",
@@ -133,6 +134,7 @@
     "Limit": "Limit",
     "Limit price (USD)": "Limit price (USD)",
     "List": "List",
+    "Load More": "Load More",
     "Load more reports": "Load more reports",
     "Loading reports": "Loading reports",
     "Loading reports…": "Loading reports…",

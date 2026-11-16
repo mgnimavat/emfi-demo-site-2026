@@ -13,6 +13,7 @@ import styles from "./research-publications.module.css";
 const dateLabel = (date: string, locale: string) => new Intl.DateTimeFormat(locale, { day: "2-digit", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${date}T12:00:00Z`));
 const reportsPerColumn = 7;
 const reportsPerPage = reportsPerColumn * 2;
+const initiallyOpenReports = 2;
 const mobileLayoutQuery = "(max-width: 639px)";
 const subscribeToLayout = (onChange: () => void) => {
   const query = window.matchMedia(mobileLayoutQuery);
@@ -50,13 +51,13 @@ const ReportDetails = ({ report, language }: { report: ExecutionResearchRecord; 
   </>;
 };
 
-const ReportAccordion = ({ report, language, open, onToggle }: { report: ExecutionResearchRecord; language: IntelligenceLanguage; open: boolean; onToggle: (id: string, open: boolean) => void }) => {
+const ReportAccordion = ({ report, language, open, compact, onToggle }: { report: ExecutionResearchRecord; language: IntelligenceLanguage; open: boolean; compact: boolean; onToggle: (id: string, open: boolean) => void }) => {
   const { locale, t } = useServiceLocale();
   const id = useId();
   return <details className={styles.accordionCard} open={open} onToggle={event => onToggle(report.id, event.currentTarget.open)}>
     <summary className={styles.accordionSummary} id={`${id}-heading`}>
       <span className={styles.accordionHeading}>
-        <span className={styles.accordionMeta}>{report.country}<span aria-hidden="true">·</span>{t(report.reportType)}</span>
+        {!compact ? <span className={styles.accordionMeta}>{report.country}<span aria-hidden="true">·</span>{t(report.reportType)}</span> : null}
         <span className={styles.accordionTitle}>{report.title}</span>
         <time dateTime={report.publishedAt}>{dateLabel(report.publishedAt, locale)}</time>
       </span>
@@ -68,13 +69,14 @@ const ReportAccordion = ({ report, language, open, onToggle }: { report: Executi
   </details>;
 };
 
-export const ResearchPublications = ({ records, language = "english", hasMore = false, loadingMore = false, loadMoreDisabled = false, singleColumn = false, onLoadMore }: {
+export const ResearchPublications = ({ records, language = "english", hasMore = false, loadingMore = false, loadMoreDisabled = false, singleColumn = false, compact = false, onLoadMore }: {
   records: readonly ExecutionResearchRecord[];
   language?: IntelligenceLanguage;
   hasMore?: boolean;
   loadingMore?: boolean;
   loadMoreDisabled?: boolean;
   singleColumn?: boolean;
+  compact?: boolean;
   onLoadMore?: () => void;
 }) => {
   const { t } = useServiceLocale();
@@ -89,6 +91,7 @@ export const ResearchPublications = ({ records, language = "english", hasMore = 
     setVisibleCount((count) => Math.min(count, records.length) + pageSize);
   };
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const initiallyExpanded = new Set(compact ? visibleRecords.slice(0, initiallyOpenReports).map(report => report.id) : []);
   const toggleReport = (id: string, open: boolean) => setExpanded(previous => previous[id] === open ? previous : { ...previous, [id]: open });
   const columns = mobile || singleColumn ? [{ id: "single", reports: visibleRecords }] : [
     { id: "left", reports: visibleRecords.filter((_, index) => index % 2 === 0) },
@@ -98,12 +101,12 @@ export const ResearchPublications = ({ records, language = "english", hasMore = 
   return <section className={styles.accordionResults} aria-label={t("Research reports")} aria-busy={loadingMore}>
   {records.length ? <div className={styles.accordionGrid}>
     {columns.map(column => <div key={column.id} className={styles.accordionColumn}>
-      {column.reports.map(report => <ReportAccordion key={report.id} report={report} language={language} open={expanded[report.id] ?? false} onToggle={toggleReport} />)}
+      {column.reports.map(report => <ReportAccordion key={report.id} report={report} language={language} compact={compact} open={expanded[report.id] ?? initiallyExpanded.has(report.id)} onToggle={toggleReport} />)}
     </div>)}
   </div> : <div className={styles.emptyState}><FileText size={28} strokeWidth={1.5} aria-hidden="true" /><h4>{t("No matching reports")}</h4><p>{t("Try another search, date or country, or reset your filters.")}</p></div>}
   <span className="sr-only" role="status" aria-live="polite">{visibleRecords.length}  {t("reports shown")}</span>
   {canLoadMore ? <div className={styles.loadMoreRow}>
-    <button className={cueStyles.heroCue} type="button" disabled={loadingMore || (!hasLocalMore && loadMoreDisabled)} onClick={showMore}>{loadingMore ? t("Loading reports…") : t("Load more reports")}<ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" /></button>
+    <button className={`${cueStyles.heroCue} ${cueStyles.heroCueOnLight}`} type="button" disabled={loadingMore || (!hasLocalMore && loadMoreDisabled)} onClick={showMore}>{loadingMore ? t("Loading reports…") : t(compact ? "Load More" : "Load more reports")}<ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" /></button>
   </div> : null}
 </section>;
 };

@@ -1,0 +1,70 @@
+.section {
+  padding-block: clamp(48px, 5.5vw, 80px);
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  scroll-margin-top: var(--site-header-height, 78px);
+}
+
+.container { width: calc(100% - 64px); max-width: 1320px; margin-inline: auto; }
+
+.card {
+  display: grid;
+  grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+  background: var(--bg-page);
+  box-shadow: var(--elevation-card-hover);
+}
+
+.information { position: relative; z-index: 4; min-width: 0; padding: var(--space-6); padding-inline-end: var(--space-4); container-type: inline-size; }
+.information h2 { margin: 0; font-size: clamp(26px, 2.3vw, 34px); font-weight: 800; line-height: 1.12; letter-spacing: -.035em; }
+.entities { display: grid; gap: var(--space-1); margin: var(--space-4) 0; font-size: 15px; font-weight: 700; line-height: 1.5; }
+.address { display: grid; margin: 0; color: var(--text-secondary); font-size: 15px; font-style: normal; line-height: 1.7; }
+.officeDetails { display: grid; gap: var(--space-4); }
+.contacts { display: grid; align-content: start; gap: var(--space-3); }
+.contacts a { display: inline-flex; align-items: center; gap: var(--space-3); width: fit-content; color: var(--text-primary); font-size: 14px; font-weight: 600; line-height: 1.5; text-decoration: none; overflow-wrap: anywhere; }
+.contacts svg { flex: none; color: var(--text-muted); }
+.contacts a:hover { text-decoration: underline; text-underline-offset: var(--space-1); }
+.contacts a:focus-visible { outline: 2px solid var(--action-focus); outline-offset: var(--space-1); }
+.map { position: relative; display: flex; min-width: 0; min-height: 360px; overflow: hidden; }
+.map::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 3;
+  width: clamp(24px, 3vw, 48px);
+  background: linear-gradient(90deg, var(--bg-page), transparent);
+  pointer-events: none;
+}
+.map:dir(rtl)::after { background: linear-gradient(270deg, var(--bg-page), transparent); }
+.regulatory { display: grid; gap: var(--space-4); margin-top: var(--space-5); padding-top: var(--space-5); border-top: 1px solid var(--border-default); color: var(--text-secondary); font-size: 13px; line-height: 1.7; }
+.regulatory p { margin: 0; }
+
+.columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); align-items: stretch; }
+.columns:dir(rtl) { direction: ltr; }
+.columns:dir(rtl) > * { direction: rtl; }
+.locationCard, .regulatoryCard { min-width: 0; overflow: hidden; border: 1px solid var(--border-default); border-radius: var(--radius-card); background: var(--bg-page); box-shadow: var(--elevation-card-hover); }
+.locationCard { display: flex; flex-direction: column; }
+.locationMap { position: relative; display: flex; flex: 1; min-height: 280px; }
+.locationMap::after { content: ''; position: absolute; inset-inline: 0; bottom: 0; z-index: 3; height: 56px; background: linear-gradient(transparent, var(--bg-page)); pointer-events: none; }
+.locationCard .information { padding: var(--space-6); }
+.regulatoryCard { grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: center; gap: var(--space-5); padding: var(--space-6); color: var(--text-secondary); font-size: 15px; line-height: 1.75; }
+.regulatoryCard p { margin: 0; }
+.regulatoryCard p + p { border-top: 1px solid var(--border-default); padding-top: var(--space-5); }
+
+@container (min-width: 390px) {
+  .officeDetails { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; }
+}
+
+@media (max-width: 767px) {
+  .card { grid-template-columns: minmax(0, 1fr); }
+  .information { padding: var(--space-5); }
+  .columns { grid-template-columns: minmax(0, 1fr); }
+  .locationCard .information, .regulatoryCard { padding: var(--space-5); }
+}
+
+@media (max-width: 599px) {
+  .container { width: calc(100% - 40px); }
+}

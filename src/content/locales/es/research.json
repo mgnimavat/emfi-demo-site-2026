@@ -11,6 +11,7 @@
     ]
   },
   "research": {
+    "intelligenceTitle": "Inteligencia",
     "eyebrow": "Evidencia directa",
     "title": "Encuentre la perspectiva.",
     "body": "Busque informes de EMFI Intelligence y filtre por fecha y país. Abra un informe para ver su gráfico y análisis.",
@@ -133,6 +134,7 @@
     "Limit": "Límite",
     "Limit price (USD)": "Precio límite (USD)",
     "List": "Lista",
+    "Load More": "Cargar más",
     "Load more reports": "Cargar más informes",
     "Loading reports": "Cargando informes",
     "Loading reports…": "Cargando informes…",

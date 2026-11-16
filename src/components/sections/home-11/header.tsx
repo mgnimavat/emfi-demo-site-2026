@@ -4,10 +4,11 @@ import { useEffect, useId, useRef, useState } from "react";
 import { BrandWordmark } from "@/components/brand/wordmark";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { dictionaries, getBasePath, getPageLocale, localizeHref, isLocalizedPath, locales, type Locale } from "@/lib/i18n";
+import { dictionaries, getBasePath, getPageLocale, localizeHref, isLocalizedPath, type Locale } from "@/lib/i18n";
 import { home11 } from "@/content/home-11";
 import navigation from "@/content/site-navigation.json";
 import styles from "./chrome.module.css";
+import { LanguageSelect } from '@/ui/components/LanguageSelect';
 
 const LoginMark = () => {
   return <svg viewBox="0 0 145 145" className={styles.clientIcon} aria-hidden="true" focusable="false"><path d={navigation.markPath} fill="currentColor" /></svg>;
