@@ -106,7 +106,7 @@ export const ResearchPublications = ({ records, language = "english", hasMore = 
   </div> : <div className={styles.emptyState}><FileText size={28} strokeWidth={1.5} aria-hidden="true" /><h4>{t("No matching reports")}</h4><p>{t("Try another search, date or country, or reset your filters.")}</p></div>}
   <span className="sr-only" role="status" aria-live="polite">{visibleRecords.length}  {t("reports shown")}</span>
   {canLoadMore ? <div className={styles.loadMoreRow}>
-    <button className={`${cueStyles.heroCue} ${cueStyles.heroCueOnLight}`} type="button" disabled={loadingMore || (!hasLocalMore && loadMoreDisabled)} onClick={showMore}>{loadingMore ? t("Loading reports…") : t("Load more reports")}<ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" /></button>
+    <button className={`${cueStyles.heroCue} ${cueStyles.heroCueOnLight}`} type="button" disabled={loadingMore || (!hasLocalMore && loadMoreDisabled)} onClick={showMore}>{loadingMore ? t("Loading reports…") : t(compact ? "Load More" : "Load more reports")}<ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" /></button>
   </div> : null}
 </section>;
 };

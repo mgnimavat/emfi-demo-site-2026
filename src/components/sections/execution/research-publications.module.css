@@ -117,6 +117,10 @@
 .loadMoreRow { display: flex; align-items: center; justify-content: center; gap: var(--space-4); margin-top: var(--space-6); }
 .loadMoreRow button { position: relative; left: auto; bottom: auto; transform: none; font-family: inherit; cursor: pointer; }
 .loadMoreRow button:disabled { opacity: .5; cursor: default; }
+.compact .loadMoreRow button { border-color: var(--action-primary); background: var(--action-primary); color: var(--text-inverse); }
+.compact .loadMoreRow button::before { display: none; }
+.compact .loadMoreRow button:hover:not(:disabled) { border-color: var(--action-hover); background: var(--action-hover); }
+.compact .loadMoreRow button:focus-visible { outline-offset: 3px; }
 .emptyState { display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-8) var(--space-5); border: 1px dashed var(--border-strong); border-radius: var(--radius-card); background: var(--bg-page); text-align: center; }
 .emptyState h4, .emptyState p { margin: 0; }
 .emptyState p { color: var(--text-secondary); font-size: 14px; }
