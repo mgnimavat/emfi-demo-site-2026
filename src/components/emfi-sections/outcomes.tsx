@@ -49,10 +49,17 @@ function bodyLines(body: string) {
   return match ? [...match] : body.split("\n");
 }
 
-function BodyText({ body, color, centered = false, className }: { body: string; color: string; centered?: boolean; className?: string }) {
+function BodyText({ body, color, centered = false, className, split = false }: { body: string; color: string; centered?: boolean; className?: string; split?: boolean }) {
   const { t } = useServiceLocale();
   return (
-    <p className={className} style={{ marginTop: 0, maxWidth: 440, marginInline: centered ? "auto" : undefined, fontSize: 17, lineHeight: 1.6, color, textWrap: "pretty", textAlign: centered ? "center" : undefined }}>
+    <p
+      className={[split ? styles.sectionBody : "", className].filter(Boolean).join(" ") || undefined}
+      style={
+        split
+          ? { marginInline: centered ? "auto" : undefined, color, textAlign: centered ? "center" : undefined }
+          : { marginTop: 0, maxWidth: 440, marginInline: centered ? "auto" : undefined, fontSize: 17, lineHeight: 1.6, color, textWrap: "pretty", textAlign: centered ? "center" : undefined }
+      }
+    >
       {bodyLines(t(body)).flatMap((line, index) => (index === 0 ? [t(line)] : [<br key={index} />, t(line)]))}
     </p>
   );
@@ -94,8 +101,20 @@ export function SectionCopy({
         </p>
       ) : null}
       <h2 className={styles.sectionTitle} style={{ color: titleColor }}>{t(title)}</h2>
-      {lead ? <p style={{ marginTop: 18, fontSize: "clamp(20px,1.7vw,24px)", fontWeight: 800, letterSpacing: "-.02em", lineHeight: 1.25, color: titleColor }}>{t(lead)}</p> : null}
-      {body ? <div style={{ marginTop: lead ? 12 : 18 }}><BodyText body={body} color={bodyColor} centered={centered} /></div> : null}
+      {lead ? (
+        <p className={styles.sectionLead} style={{ color: titleColor }}>
+          {t(lead).split("\n").flatMap((line, index) => (index === 0 ? [line] : [<br key={index} />, line]))}
+        </p>
+      ) : null}
+      {body ? (
+        lead ? (
+          <BodyText body={body} color={bodyColor} centered={centered} split />
+        ) : (
+          <div style={{ marginTop: 18 }}>
+            <BodyText body={body} color={bodyColor} centered={centered} />
+          </div>
+        )
+      ) : null}
       {action ? (
         <div className="section-bottom-action" style={{ marginTop: 28, display: centered ? "flex" : undefined, justifyContent: centered ? "center" : undefined }}>
           <Button href={localize(action.href)} variant="circle">{t(action.label)}</Button>
@@ -105,10 +124,10 @@ export function SectionCopy({
   );
 }
 
-export function SectionAction({ href, label }: { href: string; label: string }) {
+export function SectionAction({ href, label, align = "center" }: { href: string; label: string; align?: "start" | "center" }) {
   const { t, localize } = useServiceLocale();
   return (
-    <div className="section-bottom-action" style={{ display: "flex", justifyContent: "center" }}>
+    <div className="section-bottom-action" style={{ display: "flex", justifyContent: align === "start" ? "flex-start" : "center", width: align === "start" ? "100%" : undefined }}>
       <Button href={localize(href)} variant="circle">{t(label)}</Button>
     </div>
   );

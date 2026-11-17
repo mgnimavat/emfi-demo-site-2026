@@ -88,10 +88,10 @@ export function lab(pos: string, sz: number, wrap?: boolean) {
 }
 
 function dot(kind: string, on?: boolean, dark = true, fillOverride?: string) {
-  const bd = dark ? "#B1C0E2" : "#071832";
+  const bd = dark ? "#B1C0E2" : "#8098CC";
   const fill = fillOverride ?? (dark ? "#A2C2FD" : "#071832");
   const edge = on && fillOverride ? fill : bd;
-  const bg = dark ? "#0E2242" : "#FFFFFF";
+  const bg = dark ? "#0E2242" : "#E6EFFB";
   if (kind === "c") return `width:18px;height:18px;border-radius:50%;background:${dark ? "#FFFFFF" : "#071832"}`;
   if (kind === "i") return `width:18px;height:18px;border-radius:4px;border:2px solid ${edge};background:${on ? fill : bg}`;
   if (kind === "r") return `width:16px;height:16px;border-radius:50%;border:2px solid #8098CC;background:${on ? "#8098CC" : bg}`;
@@ -167,14 +167,15 @@ function home12Route(t: number) {
   return HOME12_EMFI_END;
 }
 
-export function dirVals(t: number, V: boolean, routeTitles?: { conventional: string; direct: string }, pace?: DirectPace, stops?: readonly [number, number, number, number, number]) {
+export function dirVals(t: number, V: boolean, routeTitles?: { conventional: string; direct: string }, pace?: DirectPace, stops?: readonly [number, number, number, number, number], light = false) {
   const home12 = pace === "home12";
+  const dark = !light;
   t = home12 ? home12Route(t) : slowConventionalRoute(t);
   const { sg, ez, lp } = H();
-  const P0 = stops ?? [6, 28, 50, 72, 94];
-  // EMFI route spans nearly as wide as the conventional track (6–94).
-  const emfiL = 10;
-  const emfiR = 90;
+  const P0 = stops ?? (light ? [0, 25, 50, 75, 100] : [6, 28, 50, 72, 94]);
+  // EMFI route spans nearly as wide as the conventional track.
+  const emfiL = light ? 0 : 10;
+  const emfiR = light ? 100 : 90;
   const ws = (i: number) => 0.06 + (i - 1) * 0.11;
   const k = ez(sg(t, 0.56, 0.72));
   // Lift 10px so bottom labels don't make the chart look low in the card.
@@ -182,6 +183,8 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   const pos = V ? "r" : "b";
   const ap = (i: number) => sg(t, ws(i), ws(i) + 0.02);
   const arr = (i: number) => t >= ws(i) + 0.065;
+  const labelNc = light ? "#071832" : "#FFFFFF";
+  const labelSub = light ? "#52647c" : "#B1C0E2";
   let tokA = P0[0];
   let trav = -1;
   let trackEnd = P0[0];
@@ -215,15 +218,15 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     const k = Math.max(0, Math.min(1, (along - P0[0]) / (P0[4] - P0[0])));
     return k <= 0.5 ? mixHex("#ef8ccd", "#ec6782", k / 0.5) : mixHex("#ec6782", "#eb483e", (k - 0.5) / 0.5);
   };
-  const nodes = [node(S(cpos), { op: sg(t, 0, 0.03), dot: dot("c"), name: "You", lp: pos, sz: 18, fs })];
+  const nodes = [node(S(cpos), { op: sg(t, 0, 0.03), dot: dot("c", undefined, dark), name: "You", lp: light && !V ? "bl" : pos, sz: 18, fs, nc: labelNc, subC: labelSub })];
   ["Settlement agent", "Sub-custodian", "Custodian"].forEach((name, j) => {
     const i = j + 1;
     const processingUntil = home12 ? ws(i + 1) + 0.02 : ws(i) + 0.11;
     const processingLabel = home12 ? "Processing" : name === "Custodian" ? "Received" : "Processing";
-    nodes.push(node(S(lp(P0[i], 50, k)), { op: ap(i) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i), true, home12 ? convColor(P0[i]) : undefined), name, sub: arr(i) && t < processingUntil ? processingLabel : "", lp: pos, sz: 16, fs }));
+    nodes.push(node(S(lp(P0[i], 50, k)), { op: ap(i) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i), dark, home12 ? convColor(P0[i]) : undefined), name, sub: arr(i) && t < processingUntil ? processingLabel : "", lp: pos, sz: 16, fs, nc: labelNc, subC: labelSub }));
   });
   const depositorySub = !depOn ? "" : home12 && t < CONVENTIONAL_END ? "Received" : home12 && emfiHold ? "" : "Done";
-  nodes.push(node(S(dpos), { op: ap(4), dot: dot("i", depOn, true, home12 ? convColor(P0[4]) : undefined), name: "Depository", sub: depositorySub, lp: pos, sz: 18, fs }));
+  nodes.push(node(S(dpos), { op: ap(4), dot: dot("i", depOn, dark, home12 ? convColor(P0[4]) : undefined), name: "Depository", sub: depositorySub, lp: pos, sz: 18, fs, nc: labelNc, subC: labelSub }));
   const es = V ? 52 : 64;
   const sk = ez(sg(t, 0.64, 0.71));
   nodes.push(node(S(50), {
@@ -238,6 +241,8 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     sub: t >= 0.79 && t < 0.825 ? (home12 ? "Processed" : "Received") : "",
     lp: pos,
     sz: es,
+    nc: labelNc,
+    subC: labelSub,
   }));
   const routeBlue = "#A2C2FD";
   const routeGradient = `linear-gradient(${V ? "180deg" : "90deg"},#A2C2FD,#8098CC,#00C9A7)`;
@@ -248,7 +253,7 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   const convTrack = P0[4] - P0[0];
   const convSize = home12 && !replay && progressSpan > 0.4 ? (V ? `100% ${(convTrack / progressSpan) * 100}%` : `${(convTrack / progressSpan) * 100}% 100%`) : undefined;
   const lines = [
-    { s: rect(S(t >= 0.56 ? cpos : P0[0]), S(t >= 0.56 ? dpos : trackEnd), 2), c: "#3A4A66", op: 1, size: undefined },
+    { s: rect(S(t >= 0.56 ? cpos : P0[0]), S(t >= 0.56 ? dpos : trackEnd), 2), c: light ? "#8098CC" : "#3A4A66", op: 1, size: undefined },
     { s: rect(S(progressFrom), S(progressTo), replay ? 3 : 2), c: replay ? routeGradient : home12 ? convGradient : routeBlue, op: replay ? 1 : 1 - sg(t, 0.56, 0.6), size: convSize },
   ];
   const hm = !replay && trav > 0 ? (P0[trav - 1] + P0[trav]) / 2 : null;
@@ -265,6 +270,8 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     dNodes: nodes,
     dLines: lines,
     dTok: tok(S(replay ? tokB : tokA), replay ? (t < 0.8 ? sg(t, 0.72, 0.74) * (1 - sg(t, 0.775, 0.79)) : sg(t, 0.825, 0.835)) : sg(t, 0.03, 0.05) * (1 - sg(t, 0.56, 0.6)), replay ? "linear-gradient(135deg,#A2C2FD,#00C9A7)" : home12 ? convColor(tokA) : routeBlue),
+    dTokRing: light ? "#A2C2FD" : "#0E2242",
+    dCue: light ? "#52647c" : "#B1C0E2",
     dHand: { left: `${hp[0]}%`, top: pct(hp[1]), tf: V ? "translate(14px,-50%)" : "translate(-50%,-32px)", op: hm == null ? 0 : 1 },
     dTags: home12 && travB === 1 ? [orderTag((emfiL + 50) / 2, "Order")] : home12 && travB === 2 ? [orderTag((50 + emfiR) / 2, "Handover")] : [],
     dCount: count,

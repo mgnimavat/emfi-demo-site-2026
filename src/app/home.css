@@ -8,11 +8,124 @@
 }
 
 .home-page #expect > div:first-child {
-  transform: translateY(-6vh);
+  transform: translateY(-3vh);
 }
 
 .home-page #direct {
   scroll-margin-top: var(--home-12-header-h, 77.36px);
+}
+
+.home-page [data-why-split] #direct > div,
+.home-page [data-why-split] #responsive > div,
+.home-page [data-why-split] #accountable > div {
+  align-items: flex-start !important;
+  justify-content: center !important;
+}
+
+.home-page [data-why-split] #direct .section-bottom-action,
+.home-page [data-why-split] #responsive .section-bottom-action,
+.home-page [data-why-split] #accountable .section-bottom-action {
+  justify-content: flex-start;
+  width: auto;
+  margin-top: 4px;
+}
+
+.home-page [data-why-split] #direct [data-route-label] strong {
+  color: #071832 !important;
+}
+
+.home-page [data-why-split] #direct [data-route-label] span,
+.home-page [data-why-split] #direct [data-route-label] {
+  color: #52647c !important;
+}
+
+.home-page [data-why-split] #direct [class*="routeTitle"] {
+  color: #071832;
+  left: 0 !important;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.home-page [data-why-split] #direct [class*="splitDirectVisual"] {
+  padding-left: 0;
+  margin-left: 0;
+  overflow: visible;
+}
+
+/* Nodes are centered on % stops (You at 0%), so inset by half the start/end dot
+   so the diagram’s left edge matches the title/body, not the gutter. */
+.home-page [data-why-split] #direct [data-direct-route-animation] {
+  margin-left: 10px;
+  width: calc(100% - 20px);
+  overflow: visible;
+}
+
+.home-page [data-why-split] #direct [class*="sectionCopy"],
+.home-page [data-why-split] #responsive [class*="sectionCopy"],
+.home-page [data-why-split] #accountable [class*="sectionCopy"] {
+  max-width: min(100%, 60rem);
+}
+
+.home-page [data-why-split] #direct [class*="sectionCopy"] [class*="sectionLead"],
+.home-page [data-why-split] #responsive [class*="sectionCopy"] [class*="sectionLead"],
+.home-page [data-why-split] #accountable [class*="sectionCopy"] [class*="sectionLead"] {
+  margin-top: 22px;
+  font-size: clamp(38px, 4.6vw, 56px);
+  font-weight: 300;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+}
+
+.home-page [data-why-split] #direct [class*="sectionCopy"] [class*="sectionBody"],
+.home-page [data-why-split] #responsive [class*="sectionCopy"] [class*="sectionBody"],
+.home-page [data-why-split] #accountable [class*="sectionCopy"] [class*="sectionBody"] {
+  margin-top: 22px;
+  max-width: min(100%, 78ch);
+  font-size: 21px;
+  line-height: 1.6;
+  color: #24344b;
+}
+
+.home-page [data-why-split] #direct [class*="sectionTitle"],
+.home-page [data-why-split] #responsive [class*="sectionTitle"],
+.home-page [data-why-split] #accountable [class*="sectionTitle"] {
+  font-size: clamp(56px, 8vw, 96px);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+}
+
+.home-page [data-why-split] #responsive {
+  background: #e6effb !important;
+}
+
+.home-page [data-why-split] #accountable {
+  background: #ffffff !important;
+}
+
+.home-page [data-why-split] [class*="whySplitSection"]:nth-child(3) {
+  background: #ffffff;
+}
+
+.home-page [data-why-split] #direct [class*="splitDirectVisual"],
+.home-page [data-why-split] #responsive [class*="splitResponsiveMedia"],
+.home-page [data-why-split] #accountable [class*="splitLedger"] {
+  width: 100%;
+  max-width: none;
+  align-self: stretch;
+  margin-left: 0;
+}
+
+.home-page [data-why-split] #responsive [class*="splitResponsiveMedia"] {
+  height: auto;
+  max-height: none;
+}
+
+.home-page [data-why-split] #responsive [class*="splitResponsiveMedia"] [class*="h-[438px]"],
+.home-page [data-why-split] #responsive [class*="splitResponsiveMedia"] [class*="h-[478px]"] {
+  width: 100% !important;
+  height: clamp(360px, 42vw, 560px) !important;
 }
 
 .home-page [class*="whyPinSlide"] .section-bottom-action,

@@ -256,6 +256,7 @@
   "Settled": "Settled",
   "Entities": "Entities",
   "Legal": "Legal",
+  "Legal & Regulatory": "Legal & Regulatory",
   "Intended for Professional Clients Only.": "Intended for Professional Clients Only.",
   "Not Suitable for Retail Clients or US Persons.": "Not Suitable for Retail Clients or US Persons.",
   "©2026 EMFI Group Limited. All Rights Reserved.": "©2026 EMFI Group Limited. All Rights Reserved.",
@@ -263,6 +264,9 @@
   "Terms of Use": "Terms of Use",
   "Privacy Policy": "Privacy Policy",
   "Cookies Policy": "Cookies Policy",
+  "Policy Documents": "Policy Documents",
+  "Standardised Costs": "Standardised Costs",
+  "MIFIDPRU 8 Disclosure": "MIFIDPRU 8 Disclosure",
   "Scam Alert": "Scam Alert",
   "Done": "Done",
   "?": "?"

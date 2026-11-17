@@ -13,10 +13,106 @@
   letter-spacing: -0.05em;
 }
 
+.sectionCopy .sectionLead {
+  margin: 26px 0 0;
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+}
+
+.sectionCopy .sectionBody {
+  margin: 26px 0 0;
+  max-width: 45ch;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
 @media (min-width: 1000px) {
   .sectionTitle {
     font-size: min(88px, 17cqi);
   }
+}
+
+.whySplitSection .sectionTitle {
+  margin: 0;
+  font-size: clamp(48px, 7vw, 72px);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+}
+
+.whySplitSection .pinStack .sectionTitle {
+  margin-bottom: 0;
+  line-height: 0.94;
+}
+
+.splitDirect {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  gap: clamp(28px, 3.5vh, 40px) !important;
+  width: 100%;
+}
+
+.splitDirectCopy {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.splitDirectCopy > :first-child {
+  width: 100%;
+}
+
+.pinStack.splitDirect .splitDirectVisual,
+.splitDirectVisual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 240px;
+  max-height: 240px;
+  min-height: 200px;
+  margin: 0;
+  padding: 8px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  align-self: stretch;
+}
+
+.splitDirectVisual [data-direct-route-animation] {
+  flex: 1 1 auto;
+  min-height: 160px;
+  width: 100%;
+}
+
+.pinStack.splitDirect .splitResponsiveMedia,
+.splitResponsiveMedia {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  margin: 0;
+  align-self: stretch;
+}
+
+.splitResponsiveMedia > * {
+  width: 100%;
+  height: auto;
+}
+
+/* Split WHY: stage height tracks available width so settlement/workstation slides fill the row. */
+.splitDirect .splitResponsiveMedia :global([class*="h-[438px]"]),
+.splitDirect .splitResponsiveMedia :global([class*="h-[478px]"]) {
+  width: 100% !important;
+  height: clamp(360px, 42vw, 560px) !important;
 }
 
 .whyPinSlide .sectionTitle {
@@ -132,8 +228,9 @@
 
 .chapter .points {
   margin: 0.42em 0 0;
+  padding: 15px 0 0 6px;
   color: #ffffff;
-  font-size: clamp(14px, 1.7cqi, 18px);
+  font-size: 24px;
   font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 1.3;
