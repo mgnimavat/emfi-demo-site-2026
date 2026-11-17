@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",the
+    "start": "next start",
     "lint": "eslint",
     "test:research": "node tests/intelligence-reports.test.mjs"
   },
