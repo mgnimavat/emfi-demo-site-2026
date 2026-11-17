@@ -10,6 +10,7 @@ export const PersonCard = ({ person, boardLabel = dictionaries.en.about.boardLab
   const inset = "inset" in person && person.inset;
   const raised = "raised" in person && person.raised;
   const photo = "photo" in person && person.photo ? person.photo : placeholderPhoto;
+  const label = "label" in person && person.label ? person.label : isBoard ? boardLabel : null;
 
   return (
     <article className={[styles.card, isBoard && styles.boardCard, inset && styles.inset, raised && styles.raised].filter(Boolean).join(" ")} aria-labelledby={headingId} aria-describedby={`${headingId}-details`} tabIndex={0}>
@@ -28,7 +29,7 @@ export const PersonCard = ({ person, boardLabel = dictionaries.en.about.boardLab
         <p className={styles.role}>{person.role}</p>
         <div className={styles.details}>
           <div className={styles.detailsInner}>
-            {isBoard ? <p className={styles.board}>{boardLabel}</p> : null}
+            {label ? <p className={styles.board}>{label}</p> : null}
             <p id={`${headingId}-details`} className={styles.description}>{person.description}</p>
           </div>
         </div>

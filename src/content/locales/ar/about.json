@@ -43,19 +43,19 @@
   "peopleTitle": "فريق يستجيب لاحتياجاتك.",
   "people": [
     {
+      "name": "Usman Sheikh",
+      "role": "المؤسس",
+      "photo": "/people/usman-sheikh-3.jpg",
+      "label": "مدير، EMFI Fund SPC",
+      "inset": true,
+      "description": "يرسم توجه EMFI والمنصة المؤسسية التي تربط العملاء بالأسواق والتنفيذ والبنية التحتية."
+    },
+    {
       "name": "Atif Rashid",
       "role": "المالية والامتثال",
       "photo": "/people/atif-rashid-4.jpg",
       "board": true,
       "description": "يحافظ على الضوابط المالية والامتثال التنظيمي والمساءلة في جميع أعمال الشركة."
-    },
-    {
-      "name": "Shamroz Bashir",
-      "role": "المخاطر والتقارير",
-      "photo": "/people/shamroz-bashir-4.jpg",
-      "board": true,
-      "raised": true,
-      "description": "يشرف على المخاطر والتعرضات والضوابط لدعم اتخاذ قرارات مستنيرة."
     },
     {
       "name": "Gustavo Rodrigues",
@@ -65,31 +65,73 @@
       "description": "يقود انضمام العملاء وإجراءات اعرف عميلك والعناية الواجبة لإرساء العلاقات المناسبة."
     },
     {
+      "name": "Shamroz Bashir",
+      "role": "المخاطر والتقارير",
+      "photo": "/people/shamroz-bashir-6.jpg",
+      "board": true,
+      "description": "يشرف على المخاطر والتعرضات والضوابط لدعم اتخاذ قرارات مستنيرة."
+    },
+    {
+      "name": "Peter Timson",
+      "role": "الامتثال، المملكة المتحدة",
+      "description": "يشرف على الامتثال التنظيمي والضوابط عبر كيانات EMFI المرخصة في المملكة المتحدة."
+    },
+    {
+      "name": "Hitesh Bilochi",
+      "role": "الامتثال، مركز دبي المالي العالمي",
+      "description": "يشرف على الامتثال التنظيمي في مركز دبي المالي العالمي ومتطلبات سلطة دبي للخدمات المالية لعمليات EMFI في دبي."
+    },
+    {
+      "name": "Alan Tooker",
+      "role": "مدير، EMFI Fund SPC",
+      "photo": "/people/alan-tooker-2.jpg",
+      "label": "A.R.C. Directors Ltd",
+      "description": "يشغل منصب مدير مستقل في EMFI Fund SPC عبر A.R.C. Directors Ltd."
+    },
+    {
+      "name": "Damian Juric",
+      "role": "مدير، EMFI Fund SPC",
+      "photo": "/people/damian-juric-10.jpg",
+      "label": "A.R.C. Directors Ltd",
+      "description": "يشغل منصب مدير مستقل في EMFI Fund SPC عبر A.R.C. Directors Ltd."
+    },
+    {
       "name": "Robert Hagon",
-      "role": "العلاقات المؤسسية",
+      "role": "التوزيع، المملكة المتحدة",
       "photo": "/people/robert-hagon-4.jpg",
       "inset": true,
-      "description": "يبني العلاقات المؤسسية ويديرها، ويربط متطلبات العملاء بقدرات EMFI المناسبة."
+      "description": "يبني علاقات التوزيع المؤسسي ويديرها في المملكة المتحدة."
     },
     {
       "name": "Mark Cleary",
-      "role": "التنفيذ والتسوية والحفظ",
+      "role": "التوزيع، المملكة المتحدة",
       "photo": "/people/mark-cleary-7.jpg",
       "inset": true,
-      "description": "ينسق التنفيذ والتسوية والحفظ لضمان ترابط العلاقة مع العميل من البداية إلى النهاية."
+      "description": "يدعم التوزيع المؤسسي وتغطية العملاء في المملكة المتحدة."
     },
     {
       "name": "Jose Bermudez",
-      "role": "إدارة الثروات والأصول",
-      "photo": "/people/jose-bermudez-5.jpg",
+      "role": "التوزيع، مركز دبي المالي العالمي",
+      "photo": "/people/jose-bermudez-8.jpg",
       "inset": true,
-      "description": "يدير المحافظ والتفويضات الاستثمارية ضمن إطار التنفيذ والحفظ الأوسع لدى EMFI."
+      "description": "يبني علاقات التوزيع المؤسسي ويديرها في مركز دبي المالي العالمي."
+    },
+    {
+      "name": "Francesco Odone",
+      "role": "التوزيع، مركز دبي المالي العالمي",
+      "description": "يدعم التوزيع المؤسسي وتغطية العملاء في مركز دبي المالي العالمي."
     },
     {
       "name": "Guillermo Guerrero",
       "role": "البحوث",
       "photo": "/people/guillermo-guerrero-6.jpg",
       "description": "يقدم بحوث الأسواق والاستثمار التي تدعم القرارات المؤسسية والتنفيذ."
+    },
+    {
+      "name": "Albani Granado",
+      "role": "محلل كمي أول",
+      "photo": "/people/albani-granado-4.jpg",
+      "description": "يقدم التحليل الكمي الذي يدعم قرارات البحوث وتوزيع الأصول والتنفيذ."
     },
     {
       "name": "Rosamnis Marcano",
@@ -110,6 +152,12 @@
       "photo": "/people/zee-amin-7.jpg",
       "inset": true,
       "description": "يضمن مرور التعليمات بمراحل المطابقة والتسوية ومعالجة الاستثناءات وإعداد التقارير."
+    },
+    {
+      "name": "Asmita Sojitra",
+      "role": "محللة أعمال",
+      "photo": "/people/asmita-sojitra-1.jpg",
+      "description": "تحول متطلبات الأعمال إلى مسارات تشغيلية وتقنية واضحة."
     },
     {
       "name": "Kishan Lashkari",
