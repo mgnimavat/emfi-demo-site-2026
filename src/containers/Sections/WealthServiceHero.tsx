@@ -1,7 +1,6 @@
 'use client';
 
 import { useId, useState } from 'react';
-import { Info } from 'lucide-react';
 import { fundChart, fundIllustrationPoints } from '@/content/fund-illustration';
 import type { WealthCopy } from '@/lib/i18n/service-dictionaries';
 import styles from './WealthServiceHero.module.css';
@@ -47,7 +46,6 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
           </header>
           <div className={styles.meta}>
             <span className={styles.series}><span className={styles.swatch} aria-hidden="true" />{copy.chartSeries}</span>
-            <span className={styles.badge}><Info size={13} aria-hidden="true" />{copy.chartBadge}</span>
           </div>
           <div className={styles.plot}>
             <svg viewBox={`0 0 ${fundChart.width} ${fundChart.height}`} preserveAspectRatio="none"

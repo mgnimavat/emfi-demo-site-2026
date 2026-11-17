@@ -15,10 +15,15 @@ export const SettlementServiceSections = ({ copy }: { copy: SettlementCopy }) =>
       <section key={section.id} id={section.id} className={styles.section}
         aria-labelledby={`${section.id}-heading`}>
         <div className={styles.container}>
-          <div className={styles.introduction}>
+          <div className={`${styles.introduction} ${
+            section.id === 'trade-upload' ? styles.uploadIntroduction : ''
+          }`}>
             <ExecutionReveal>
-              <h2 id={`${section.id}-heading`} className={styles.title}>
-                {section.titleLines.map((line) => <span key={line}>{line}</span>)}
+              <h2 id={`${section.id}-heading`}
+                className={section.id === 'trade-upload' ? styles.uploadTitle : styles.title}>
+                {section.id === 'trade-upload'
+                  ? section.titleLines.join(' ')
+                  : section.titleLines.map((line) => <span key={line}>{line}</span>)}
               </h2>
             </ExecutionReveal>
             <ExecutionReveal delay={0.12} className={styles.copy}>

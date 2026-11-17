@@ -79,15 +79,16 @@
         "restricted": "This information is not available to US persons.",
         "ineligible": "This information is for professional clients and eligible counterparties only, so it is not available to you."
       },
-      "chartSeries": "Illustrative fund trend",
+      "chartSeries": "Fund trend",
       "chartBadge": "Illustrative",
       "axisStart": "Period start",
       "axisEnd": "Period end"
     },
     "fund": {
       "titleLines": [
-        "A Fund Is More",
-        "Than a Portfolio."
+        "A Fund Is",
+        "More Than a",
+        "Portfolio."
       ],
       "lead": "Investment strategy is one part of a fund. The legal structure, portfolio arrangements, administration, audit and legal oversight are part of the operating framework too.",
       "body": "EMFI Fund SPC is a Cayman Islands segregated portfolio company designed to accommodate distinct investment portfolios. Each portfolio operates under its applicable investment mandate and governing documents, with the relevant service-provider appointments and arrangements set out in the fund documentation.",
@@ -122,8 +123,7 @@
           "name": "Baker Tilly",
           "role": "Fund audit"
         }
-      ],
-      "notice": "The provider names above are a shortlist, not a representation that every firm holds an appointment to every portfolio."
+      ]
     },
     "mandate": {
       "titleLines": [
@@ -144,16 +144,14 @@
           "title": "Monitor and review",
           "body": "Review the portfolio against its agreed parameters, risk framework and reporting requirements."
         }
-      ],
-      "notice": "The nature of investment management services, decision-making responsibility and client eligibility depend on the relevant agreement, legal entity and regulatory permissions."
+      ]
     },
     "visibility": {
       "titleLines": [
         "Portfolio Decisions.",
         "Operational Visibility."
       ],
-      "body": "Investment decisions do not end when an order is placed. Portfolio management also requires visibility over positions, cash, transactions and the activity that follows execution.",
-      "notice": "Illustrative interface. Synthetic data only."
+      "body": "Investment decisions do not end when an order is placed. Portfolio management also requires visibility over positions, cash, transactions and the activity that follows execution."
     },
     "team": {
       "title": "The People Behind the Portfolios.",
@@ -167,13 +165,13 @@
         {
           "name": "Alan Tooker",
           "role": "Director, EMFI Fund SPC",
-          "photo": "/people/alan-tooker.jpg",
+          "photo": "/people/placeholder-draw-sky.jpg",
           "description": "A.R.C. Directors Ltd"
         },
         {
           "name": "Damian Juric",
           "role": "Director, EMFI Fund SPC",
-          "photo": "/people/damian-juric.jpg",
+          "photo": "/people/placeholder-draw-sky.jpg",
           "description": "A.R.C. Directors Ltd"
         }
       ]

@@ -38,13 +38,24 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
           </figure>
         </ExecutionReveal>
         <div className={styles.providers}>
+          <ArrowDown size={28} className={styles.providerConnector} aria-hidden="true" />
+          <svg className={styles.logoFilter} aria-hidden="true" focusable="false">
+            <defs>
+              <filter id="wealth-provider-navy" colorInterpolationFilters="sRGB">
+                <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.2126 -.7152 -.0722 0 1" />
+                <feComposite in2="SourceAlpha" operator="in" result="ink" />
+                <feFlood floodColor="var(--text-primary)" />
+                <feComposite in2="ink" operator="in" />
+              </filter>
+            </defs>
+          </svg>
           <h3>{copy.fund.providersTitle}</h3>
           <ul className={styles.providerGrid}>
             {copy.fund.providers.map((provider) => {
               const asset = wealthProviderAssets[provider.id];
               return (
                 <li key={provider.id} className={styles.provider}>
-                  <div className={styles.providerBrand}>
+                  <div className={styles.providerBrand} data-provider={provider.id}>
                     {asset ? <Image src={asset.src} alt={provider.name} width={asset.width}
                       height={asset.height} className={styles.providerLogo} /> : <strong>{provider.name}</strong>}
                   </div>
@@ -53,7 +64,6 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
               );
             })}
           </ul>
-          <p className={styles.notice}>{copy.fund.notice}</p>
         </div>
       </div>
     </section>
@@ -78,21 +88,17 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
             </li>
           ))}
         </ol>
-        <p className={styles.notice}>{copy.mandate.notice}</p>
       </div>
     </section>
     <section id="portfolio-visibility" className={`${styles.section} ${styles.navy}`} aria-labelledby="portfolio-visibility-heading">
       <div className={styles.container}>
-        <div className={styles.introduction}>
-          <ExecutionReveal>
-            <h2 id="portfolio-visibility-heading" className={styles.title}>
-              {copy.visibility.titleLines.map((line) => <span key={line}>{line}</span>)}
-            </h2>
-          </ExecutionReveal>
-          <ExecutionReveal delay={0.12}><p className={styles.lead}>{copy.visibility.body}</p></ExecutionReveal>
-        </div>
+        <ExecutionReveal className={styles.visibilityIntro}>
+          <h2 id="portfolio-visibility-heading" className={`${theme.sectionTitle} ${styles.visibilityTitle}`}>
+            {copy.visibility.titleLines.join(' ')}
+          </h2>
+          <p className={styles.visibilityDescription}>{copy.visibility.body}</p>
+        </ExecutionReveal>
         <ExecutionReveal><SettlementDashboard /></ExecutionReveal>
-        <p className={styles.notice}>{copy.visibility.notice}</p>
       </div>
     </section>
     <section id="portfolio-team" className={styles.section} aria-labelledby="portfolio-team-heading">

@@ -29,3 +29,8 @@
 @media (max-width: 699px) {
   .panels, .panels[data-workflow='true'], .detail, .methodGrid { grid-template-columns: minmax(0, 1fr); }
 }
+
+.uploadIntroduction { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: var(--space-5); text-align: center; }
+.uploadTitle { composes: sectionTitle from '../../components/sections/archive/theme.module.css'; max-width: none; margin: 0; }
+.uploadIntroduction .copy { max-width: 85ch; }
+.uploadIntroduction .lead { font-size: clamp(16px, 1.5cqi, 20px); font-weight: 500; line-height: 1.65; text-wrap: pretty; }

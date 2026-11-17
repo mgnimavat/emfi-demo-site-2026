@@ -8,6 +8,7 @@
 .container { width: calc(100% - 64px); max-width: 1320px; margin-inline: auto; }
 
 .card {
+  min-height: 560px;
   display: grid;
   grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
   overflow: hidden;
@@ -59,7 +60,7 @@
 }
 
 @media (max-width: 767px) {
-  .card { grid-template-columns: minmax(0, 1fr); }
+  .card { min-height: 0; grid-template-columns: minmax(0, 1fr); }
   .information { padding: var(--space-5); }
   .columns { grid-template-columns: minmax(0, 1fr); }
   .locationCard .information, .regulatoryCard { padding: var(--space-5); }

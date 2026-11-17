@@ -79,15 +79,16 @@
         "restricted": "Esta información no está disponible para personas estadounidenses.",
         "ineligible": "Esta información está disponible únicamente para clientes profesionales y contrapartes elegibles."
       },
-      "chartSeries": "Tendencia ilustrativa del fondo",
+      "chartSeries": "Evolución del fondo",
       "chartBadge": "Ilustrativo",
       "axisStart": "Inicio del período",
       "axisEnd": "Fin del período"
     },
     "fund": {
       "titleLines": [
-        "Un fondo es más",
-        "que una cartera."
+        "Un fondo es",
+        "más que una",
+        "cartera."
       ],
       "lead": "La estrategia de inversión es solo una parte de un fondo. La estructura jurídica, la organización de las carteras, la administración, la auditoría y la supervisión legal también forman parte del marco operativo.",
       "body": "EMFI Fund SPC es una sociedad de carteras segregadas de las Islas Caimán diseñada para albergar distintas carteras de inversión. Cada cartera opera conforme a su mandato de inversión y documentos de gobierno, con los nombramientos y acuerdos de proveedores correspondientes establecidos en la documentación del fondo.",
@@ -122,8 +123,7 @@
           "name": "Baker Tilly",
           "role": "Auditoría del fondo"
         }
-      ],
-      "notice": "Los nombres anteriores constituyen una lista de proveedores, no una declaración de que cada firma esté designada para todas las carteras."
+      ]
     },
     "mandate": {
       "titleLines": [
@@ -144,16 +144,14 @@
           "title": "Supervisar y revisar",
           "body": "Revisar la cartera conforme a sus parámetros acordados, marco de riesgo y requisitos de información."
         }
-      ],
-      "notice": "La naturaleza de los servicios de gestión, la responsabilidad de las decisiones y la elegibilidad del cliente dependen del acuerdo, la entidad jurídica y los permisos regulatorios pertinentes."
+      ]
     },
     "visibility": {
       "titleLines": [
         "Decisiones de cartera.",
         "Visibilidad operativa."
       ],
-      "body": "Las decisiones de inversión no terminan al enviar una orden. La gestión de carteras también requiere visibilidad de posiciones, efectivo, transacciones y actividad posterior a la ejecución.",
-      "notice": "Interfaz ilustrativa. Solo datos sintéticos."
+      "body": "Las decisiones de inversión no terminan al enviar una orden. La gestión de carteras también requiere visibilidad de posiciones, efectivo, transacciones y actividad posterior a la ejecución."
     },
     "team": {
       "title": "Las personas detrás de las carteras.",
@@ -167,13 +165,13 @@
         {
           "name": "Alan Tooker",
           "role": "Director, EMFI Fund SPC",
-          "photo": "/people/alan-tooker.jpg",
+          "photo": "/people/placeholder-draw-sky.jpg",
           "description": "A.R.C. Directors Ltd"
         },
         {
           "name": "Damian Juric",
           "role": "Director, EMFI Fund SPC",
-          "photo": "/people/damian-juric.jpg",
+          "photo": "/people/placeholder-draw-sky.jpg",
           "description": "A.R.C. Directors Ltd"
         }
       ]
