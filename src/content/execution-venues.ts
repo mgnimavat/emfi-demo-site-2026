@@ -10,7 +10,7 @@ export const executionVenueGroups = [
   {
     id: 'otherVenues',
     venues: [
-      { name: 'Tradegate Berlin Stock Exchange', logo: '/images/execution-venues/tradegate-navy.svg' },
+      { name: 'Börse Berlin', logo: '/images/execution-venues/boerse-berlin-navy.svg' },
       { name: 'Allfunds', logo: '/images/execution-venues/allfunds-navy.svg' },
       { name: 'Euroclear FundSettle', logo: '/images/execution-venues/euroclear-navy.svg' },
     ],
