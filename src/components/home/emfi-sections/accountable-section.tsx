@@ -347,7 +347,7 @@ export function AccountableSection({
             plainEyebrow={pinned && Boolean(eyebrow)}
             lead={split ? splitLead : undefined}
             body={split ? splitBody : shortWhy && pinned ? undefined : body}
-            action={pinned ? undefined : { href: "/why-emfi", label: "Learn More" }}
+            action={pinned ? undefined : { href: "/why-emfi/dependable-operations", label: "Learn More" }}
             tone={light ? "light" : "dark"}
             align={split ? "start" : centered || pinned ? "center" : "start"}
           />
@@ -427,11 +427,11 @@ export function AccountableSection({
         )}
         {pinned ? (
           split ? (
-            <SectionAction href="/why-emfi" label="Controls, fees and disclosures" align="start" />
+            <SectionAction href="/why-emfi/dependable-operations" label="Learn More" align="start" />
           ) : shortWhy ? (
-            <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/why-emfi" : undefined} />
+            <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/why-emfi/dependable-operations" : undefined} />
           ) : (
-            <SectionAction href="/why-emfi" label="Learn More" />
+            <SectionAction href="/why-emfi/dependable-operations" label="Learn More" />
           )
         ) : null}
       </div>

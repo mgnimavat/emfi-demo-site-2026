@@ -96,7 +96,7 @@ export function DirectSection({
             origin={marked && Boolean(eyebrow)}
             lead={split ? splitLead : undefined}
             body={split ? splitBody : shortWhy && pinned ? undefined : body}
-            action={pinned ? undefined : { href: "/services/settlement-custody", label: "Learn More" }}
+            action={pinned ? undefined : { href: "/why-emfi/direct-access", label: "Learn More" }}
             tone={light ? "light" : "dark"}
             align={split ? "start" : centered || pinned ? "center" : "start"}
           />
@@ -134,11 +134,11 @@ export function DirectSection({
         </div>
         {pinned ? (
           split ? (
-            <SectionAction href="/services/settlement-custody" label="Learn More" align="start" />
+            <SectionAction href="/why-emfi/direct-access" label="Learn More" align="start" />
           ) : shortWhy ? (
-            <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/services/settlement-custody" : undefined} />
+            <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/why-emfi/direct-access" : undefined} />
           ) : (
-            <SectionAction href="/services/settlement-custody" label="Learn More" />
+            <SectionAction href="/why-emfi/direct-access" label="Learn More" />
           )
         ) : null}
       </div>

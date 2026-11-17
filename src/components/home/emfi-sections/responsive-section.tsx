@@ -87,7 +87,7 @@ export function ResponsiveSection({
             plainEyebrow={pinned && Boolean(eyebrow)}
             lead={split ? splitLead : undefined}
             body={split ? splitBody : shortWhy && pinned ? undefined : body}
-            action={pinned ? undefined : { href: "/services/settlement-custody#workstation-demo", label: "Learn More" }}
+            action={pinned ? undefined : { href: "/why-emfi/responsive-technology", label: "Learn More" }}
             tone={light ? "light" : "dark"}
             align={split ? "start" : centered || pinned ? "center" : "start"}
           />
@@ -110,11 +110,11 @@ export function ResponsiveSection({
         </div>
         {pinned ? (
           split ? (
-            <SectionAction href="/services/settlement-custody#workstation-demo" label="Learn More" align="start" />
+            <SectionAction href="/why-emfi/responsive-technology" label="Learn More" align="start" />
           ) : shortWhy ? (
-            <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/services/settlement-custody#workstation-demo" : undefined} />
+            <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/why-emfi/responsive-technology" : undefined} />
           ) : (
-            <SectionAction href="/services/settlement-custody#workstation-demo" label="Learn More" />
+            <SectionAction href="/why-emfi/responsive-technology" label="Learn More" />
           )
         ) : null}
       </div>
