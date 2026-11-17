@@ -1,0 +1,35 @@
+.section {
+  padding: clamp(60px, 7vw, 112px) var(--space-6);
+  background: var(--bg-soft);
+  font-family: var(--font-inter), Inter, Arial, sans-serif;
+  scroll-margin-top: var(--site-header-height, 78px);
+}
+
+.card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  max-width: 1320px;
+  margin-inline: auto;
+  padding: clamp(32px, 5vw, 80px);
+  border: 1px solid color-mix(in srgb, var(--color-blue-100) 22%, transparent);
+  border-radius: var(--radius-surface);
+  background: radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--color-blue-200) 16%, transparent), transparent 65%), var(--bg-inverse);
+  box-shadow: 0 20px 60px color-mix(in srgb, var(--text-primary) 10%, transparent);
+  color: var(--text-inverse);
+}
+
+.copy { min-width: 0; container-type: inline-size; }
+.title { margin: 0; font-size: clamp(38px, 12cqi, 72px); font-weight: 800; line-height: 1.02; letter-spacing: -.055em; }
+.title span { display: block; }
+.benefits { display: grid; gap: var(--space-4); margin: var(--space-6) 0 0; padding: 0; list-style: none; }
+.benefits li { display: flex; align-items: flex-start; gap: var(--space-3); color: var(--text-inverse-muted); font-size: 15px; line-height: 1.7; }
+.benefits svg { flex: none; margin-top: var(--space-1); color: var(--color-blue-100); }
+.note { max-width: 60ch; margin: var(--space-6) 0 0; color: var(--text-inverse-muted); font-size: 12px; line-height: 1.7; }
+@media (max-width: 1023px) { .card { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 599px) {
+  .section { padding-inline: var(--space-4); }
+  .card { padding: var(--space-5); }
+  .title { font-size: clamp(34px, 11cqi, 48px); }
+}

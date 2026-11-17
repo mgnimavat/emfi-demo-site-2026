@@ -28,6 +28,150 @@
     "label": "Informes de EMFI Intelligence",
     "notice": "Publicación y gráfico de EMFI Intelligence, importados el 21 de octubre de 2026."
   },
+  "signup": {
+    "titleLines": [
+      "Suscríbase a",
+      "EMFI Intelligence."
+    ],
+    "benefits": [
+      "Nuevos análisis la mayoría de los días laborables",
+      "Informes de países, EMFI Monthly Review e informes especiales",
+      "Elaborados por los economistas y estrategas de EMFI"
+    ],
+    "note": "Para clientes profesionales y contrapartes elegibles. El acceso completo a las publicaciones está sujeto a los acuerdos pertinentes de cliente y publicación.",
+    "form": {
+      "heading": "Reciba EMFI Intelligence",
+      "fields": [
+        {
+          "name": "name",
+          "label": "Nombre",
+          "type": "text",
+          "autoComplete": "name"
+        },
+        {
+          "name": "firm",
+          "label": "Empresa",
+          "type": "text",
+          "autoComplete": "organization"
+        },
+        {
+          "name": "email",
+          "label": "Correo electrónico profesional",
+          "type": "email",
+          "autoComplete": "email"
+        },
+        {
+          "name": "jurisdiction",
+          "label": "País o jurisdicción",
+          "type": "text",
+          "autoComplete": "country-name"
+        }
+      ],
+      "interestLabel": "Me interesan",
+      "interests": [
+        {
+          "value": "all",
+          "label": "Todos los análisis"
+        },
+        {
+          "value": "country",
+          "label": "Informes de países"
+        },
+        {
+          "value": "monthly",
+          "label": "Revisión mensual"
+        },
+        {
+          "value": "special",
+          "label": "Informes especiales"
+        }
+      ],
+      "professional": "Confirmo que soy un cliente profesional o una contraparte elegible, o actúo en su nombre, y que realizo esta solicitud en calidad profesional.",
+      "consent": "Deseo recibir EMFI Intelligence por correo electrónico. Puedo darme de baja en cualquier momento. Consulte el",
+      "privacyLabel": "aviso de privacidad",
+      "submit": "Suscribirse a Intelligence",
+      "preparedNotice": "El registro aún no está conectado, por lo que no se ha enviado ningún dato."
+    }
+  },
+  "team": {
+    "body": "La inteligencia de EMFI es producida por un equipo que trabaja en economía, estrategia y análisis de mercados soberanos.",
+    "people": [
+      {
+        "name": "Guillermo Guerrero",
+        "role": "Director de Investigación",
+        "photo": "/people/guillermo-guerrero-6.jpg",
+        "description": "Proporciona análisis de mercados e inversiones que respaldan las decisiones y la ejecución institucionales."
+      },
+      {
+        "name": "Rosamnis Marcano",
+        "role": "Economista sénior",
+        "photo": "/people/rosamnis-marcano-5.jpg",
+        "description": "Aporta contexto económico para las decisiones de asignación, duración y crédito."
+      },
+      {
+        "name": "Albani Granado",
+        "role": "Analista cuantitativa sénior",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Análisis cuantitativo para apoyar la investigación de mercados y las decisiones de inversión."
+      },
+      {
+        "name": "Matias Montes",
+        "role": "Estratega sénior",
+        "photo": "/people/matias-montes-10.jpg",
+        "description": "Conecta las capacidades, las personas y la tecnología de EMFI bajo una misma dirección operativa."
+      },
+      {
+        "name": "Melissa Evaristo",
+        "role": "Economista",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Análisis económico que aporta contexto a los mercados soberanos."
+      },
+      {
+        "name": "Valeria Garcés",
+        "role": "Economista",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Análisis económico que aporta contexto a los mercados soberanos."
+      },
+      {
+        "name": "Andrea Martínez",
+        "role": "Economista",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Análisis económico que aporta contexto a los mercados soberanos."
+      },
+      {
+        "name": "Mohammad Ezzeddine",
+        "role": "Estratega",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Estrategia de mercados que conecta el análisis económico con oportunidades de inversión."
+      },
+      {
+        "name": "José Ara",
+        "role": "Estratega",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Estrategia de mercados que conecta el análisis económico con oportunidades de inversión."
+      },
+      {
+        "name": "Diego Campins",
+        "role": "Estratega",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Estrategia de mercados que conecta el análisis económico con oportunidades de inversión."
+      },
+      {
+        "name": "Elena Sánchez",
+        "role": "Analista cuantitativa (en prácticas)",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Apoyo al análisis cuantitativo y la investigación de mercados."
+      }
+    ],
+    "title": "Conocimiento del mercado. Criterio humano."
+  },
+  "executionVenues": {
+    "title": "Ejecución",
+    "subtitle": "Ejecución en plataformas de renta fija y mercados seleccionados.",
+    "fixedIncome": "Mercados de renta fija",
+    "otherVenues": "Otros mercados y plataformas de fondos",
+    "body": "Ejecución en los mercados y valores pertinentes, respaldada por relaciones especializadas de negociación y la tecnología para coordinar la operación durante el proceso de poscontratación."
+  },
   "workstation": {
     "title": "De la perspectiva a",
     "accent": "la Ejecución.",

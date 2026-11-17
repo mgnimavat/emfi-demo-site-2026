@@ -28,6 +28,150 @@
     "label": "EMFI Intelligence Reports",
     "notice": "Publication and chart snapshot from EMFI Intelligence, imported 21 October 2026."
   },
+  "signup": {
+    "titleLines": [
+      "Sign up for",
+      "EMFI Intelligence."
+    ],
+    "benefits": [
+      "New Intelligence most weekdays",
+      "Country reports, the EMFI Monthly Review and special reports",
+      "Written by EMFI’s economists and strategists"
+    ],
+    "note": "For professional clients and eligible counterparties. Full publication access follows the relevant client and publication arrangements.",
+    "form": {
+      "heading": "Get EMFI Intelligence",
+      "fields": [
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "text",
+          "autoComplete": "name"
+        },
+        {
+          "name": "firm",
+          "label": "Firm",
+          "type": "text",
+          "autoComplete": "organization"
+        },
+        {
+          "name": "email",
+          "label": "Work email",
+          "type": "email",
+          "autoComplete": "email"
+        },
+        {
+          "name": "jurisdiction",
+          "label": "Country or jurisdiction",
+          "type": "text",
+          "autoComplete": "country-name"
+        }
+      ],
+      "interestLabel": "I am interested in",
+      "interests": [
+        {
+          "value": "all",
+          "label": "All Intelligence"
+        },
+        {
+          "value": "country",
+          "label": "Country reports"
+        },
+        {
+          "value": "monthly",
+          "label": "Monthly review"
+        },
+        {
+          "value": "special",
+          "label": "Special reports"
+        }
+      ],
+      "professional": "I confirm that I am a professional client or eligible counterparty, or act for one, and that I am making this request in a professional capacity.",
+      "consent": "Send me EMFI Intelligence by email. I can unsubscribe at any time. See the",
+      "privacyLabel": "privacy notice",
+      "submit": "Sign up for Intelligence",
+      "preparedNotice": "Registration is not connected yet, so nothing has been submitted."
+    }
+  },
+  "team": {
+    "body": "EMFI’s intelligence is produced by a team working across economics, strategy and sovereign-market analysis.",
+    "people": [
+      {
+        "name": "Guillermo Guerrero",
+        "role": "Head of Research",
+        "photo": "/people/guillermo-guerrero-6.jpg",
+        "description": "Provides market and investment research that supports institutional decisions and execution."
+      },
+      {
+        "name": "Rosamnis Marcano",
+        "role": "Senior Economist",
+        "photo": "/people/rosamnis-marcano-5.jpg",
+        "description": "Provides economic context for allocation, duration and credit decisions."
+      },
+      {
+        "name": "Albani Granado",
+        "role": "Senior Quantitative Analyst",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Quantitative analysis supporting market research and investment decisions."
+      },
+      {
+        "name": "Matias Montes",
+        "role": "Senior Strategist",
+        "photo": "/people/matias-montes-10.jpg",
+        "description": "Connects EMFI’s capabilities, people and technology into one operating direction."
+      },
+      {
+        "name": "Melissa Evaristo",
+        "role": "Economist",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Economic analysis providing context for sovereign markets."
+      },
+      {
+        "name": "Valeria Garcés",
+        "role": "Economist",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Economic analysis providing context for sovereign markets."
+      },
+      {
+        "name": "Andrea Martínez",
+        "role": "Economist",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Economic analysis providing context for sovereign markets."
+      },
+      {
+        "name": "Mohammad Ezzeddine",
+        "role": "Strategist",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Market strategy connecting economic analysis with investment opportunities."
+      },
+      {
+        "name": "José Ara",
+        "role": "Strategist",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Market strategy connecting economic analysis with investment opportunities."
+      },
+      {
+        "name": "Diego Campins",
+        "role": "Strategist",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Market strategy connecting economic analysis with investment opportunities."
+      },
+      {
+        "name": "Elena Sánchez",
+        "role": "Quantitative Analyst (Intern)",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Supporting quantitative analysis and market research."
+      }
+    ],
+    "title": "Market knowledge. Human judgement."
+  },
+  "executionVenues": {
+    "title": "Execution",
+    "subtitle": "Execution across fixed income platforms and selected venues.",
+    "fixedIncome": "Fixed income venues",
+    "otherVenues": "Other venues & fund platforms",
+    "body": "Execution across relevant markets and securities, supported by specialist dealing relationships and the technology to coordinate the trade through the post-trade process."
+  },
   "workstation": {
     "title": "Insight into",
     "accent": "Execution.",

@@ -3,6 +3,9 @@ import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { ExecutionHeroTitle } from '@/components/sections/execution/hero-title';
 import { ResearchSection } from '@/components/sections/execution/research-section';
 import { WorkstationSection } from '@/components/sections/execution/workstation-section';
+import { ExecutionVenuesSection } from './ExecutionVenuesSection';
+import { ResearchTeamSection } from './ResearchTeamSection';
+import { IntelligenceSignupSection } from './IntelligenceSignupSection';
 import { ResearchDisclosures } from '@/components/sections/execution/research-disclosures';
 import { ServiceHero } from './ServiceHero';
 import { SettlementCustodySections } from './SettlementCustodySections';
@@ -61,7 +64,13 @@ export const LocalizedServicePageSection = ({
             <ResearchSection key={locale} copy={dictionary.research}
               appearance={researchVariant === 'current' ? 'light' : 'dark'}
               primaryHeading={researchVariant === 'current'} />
-            <WorkstationSection copy={dictionary.research} maskVariant="blur" />
+            {researchVariant === 'current' ? (
+              <>
+                <ExecutionVenuesSection copy={dictionary.research.executionVenues} />
+                <ResearchTeamSection copy={dictionary.research.team} />
+                <IntelligenceSignupSection copy={dictionary.research.signup} />
+              </>
+            ) : <WorkstationSection copy={dictionary.research} maskVariant="blur" />}
             {researchVariant === 'current' ? (
               <ResearchOfficeSection copy={dictionaries[locale].common}
                 disclosures={dictionary.research.disclosures} />

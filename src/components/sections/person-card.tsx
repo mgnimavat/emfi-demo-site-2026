@@ -4,7 +4,7 @@ import styles from "./person-card.module.css";
 
 const placeholderPhoto = "/people/placeholder-draw-sky.jpg";
 
-export const PersonCard = ({ person, boardLabel = dictionaries.en.about.boardLabel }: { person: AboutCopy["people"][number]; boardLabel?: string }) => {
+export const PersonCard = ({ person, boardLabel = dictionaries.en.about.boardLabel }: { person: Omit<AboutCopy["people"][number], 'description'> & { description?: string }; boardLabel?: string }) => {
   const headingId = `person-${person.name.toLowerCase().replace(/\s+/g, "-")}`;
   const isBoard = "board" in person && person.board;
   const inset = "inset" in person && person.inset;
@@ -12,7 +12,7 @@ export const PersonCard = ({ person, boardLabel = dictionaries.en.about.boardLab
   const photo = "photo" in person && person.photo ? person.photo : placeholderPhoto;
 
   return (
-    <article className={[styles.card, isBoard && styles.boardCard, inset && styles.inset, raised && styles.raised].filter(Boolean).join(" ")} aria-labelledby={headingId} aria-describedby={`${headingId}-details`} tabIndex={0}>
+    <article className={[styles.card, isBoard && styles.boardCard, inset && styles.inset, raised && styles.raised].filter(Boolean).join(" ")} aria-labelledby={headingId} aria-describedby={person.description ? `${headingId}-details` : undefined} tabIndex={0}>
       <div className={styles.portrait} aria-hidden="true">
         <Image
           src={photo}
@@ -29,7 +29,7 @@ export const PersonCard = ({ person, boardLabel = dictionaries.en.about.boardLab
         <div className={styles.details}>
           <div className={styles.detailsInner}>
             {isBoard ? <p className={styles.board}>{boardLabel}</p> : null}
-            <p id={`${headingId}-details`} className={styles.description}>{person.description}</p>
+            {person.description ? <p id={`${headingId}-details`} className={styles.description}>{person.description}</p> : null}
           </div>
         </div>
       </div>

@@ -28,6 +28,150 @@
     "label": "تقارير EMFI Intelligence",
     "notice": "لقطة من المنشور والرسم البياني من EMFI Intelligence، مستوردة في 21 أكتوبر 2026."
   },
+  "signup": {
+    "titleLines": [
+      "اشترك في",
+      "EMFI Intelligence."
+    ],
+    "benefits": [
+      "أبحاث جديدة في معظم أيام العمل",
+      "تقارير الدول والمراجعة الشهرية لـ EMFI والتقارير الخاصة",
+      "يعدّها خبراء الاقتصاد والاستراتيجية في EMFI"
+    ],
+    "note": "للعملاء المحترفين والأطراف المقابلة المؤهلة. يخضع الوصول الكامل إلى المنشورات لترتيبات العملاء والمنشورات ذات الصلة.",
+    "form": {
+      "heading": "احصل على EMFI Intelligence",
+      "fields": [
+        {
+          "name": "name",
+          "label": "الاسم",
+          "type": "text",
+          "autoComplete": "name"
+        },
+        {
+          "name": "firm",
+          "label": "الشركة",
+          "type": "text",
+          "autoComplete": "organization"
+        },
+        {
+          "name": "email",
+          "label": "البريد الإلكتروني للعمل",
+          "type": "email",
+          "autoComplete": "email"
+        },
+        {
+          "name": "jurisdiction",
+          "label": "الدولة أو الولاية القضائية",
+          "type": "text",
+          "autoComplete": "country-name"
+        }
+      ],
+      "interestLabel": "أنا مهتم بـ",
+      "interests": [
+        {
+          "value": "all",
+          "label": "جميع الأبحاث"
+        },
+        {
+          "value": "country",
+          "label": "تقارير الدول"
+        },
+        {
+          "value": "monthly",
+          "label": "المراجعة الشهرية"
+        },
+        {
+          "value": "special",
+          "label": "التقارير الخاصة"
+        }
+      ],
+      "professional": "أؤكد أنني عميل محترف أو طرف مقابل مؤهل، أو أمثل أحدهما، وأنني أقدم هذا الطلب بصفتي المهنية.",
+      "consent": "أرغب في تلقي EMFI Intelligence عبر البريد الإلكتروني. يمكنني إلغاء الاشتراك في أي وقت. راجع",
+      "privacyLabel": "إشعار الخصوصية",
+      "submit": "الاشتراك في Intelligence",
+      "preparedNotice": "التسجيل غير متصل بعد، لذلك لم يتم إرسال أي بيانات."
+    }
+  },
+  "team": {
+    "body": "ينتج أبحاث EMFI فريق يعمل في مجالات الاقتصاد والاستراتيجية وتحليل أسواق الديون السيادية.",
+    "people": [
+      {
+        "name": "Guillermo Guerrero",
+        "role": "رئيس الأبحاث",
+        "photo": "/people/guillermo-guerrero-6.jpg",
+        "description": "يقدم بحوث الأسواق والاستثمار التي تدعم القرارات المؤسسية والتنفيذ."
+      },
+      {
+        "name": "Rosamnis Marcano",
+        "role": "خبيرة اقتصادية أولى",
+        "photo": "/people/rosamnis-marcano-5.jpg",
+        "description": "يوفر السياق الاقتصادي لقرارات توزيع الأصول والمدة والائتمان."
+      },
+      {
+        "name": "Albani Granado",
+        "role": "محللة كمية أولى",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "تحليل كمي يدعم أبحاث السوق وقرارات الاستثمار."
+      },
+      {
+        "name": "Matias Montes",
+        "role": "خبير استراتيجي أول",
+        "photo": "/people/matias-montes-10.jpg",
+        "description": "يربط قدرات EMFI وفريقها وتقنياتها ضمن توجه تشغيلي موحد."
+      },
+      {
+        "name": "Melissa Evaristo",
+        "role": "خبيرة اقتصادية",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "تحليل اقتصادي يوفر سياقاً لأسواق الديون السيادية."
+      },
+      {
+        "name": "Valeria Garcés",
+        "role": "خبيرة اقتصادية",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "تحليل اقتصادي يوفر سياقاً لأسواق الديون السيادية."
+      },
+      {
+        "name": "Andrea Martínez",
+        "role": "خبيرة اقتصادية",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "تحليل اقتصادي يوفر سياقاً لأسواق الديون السيادية."
+      },
+      {
+        "name": "Mohammad Ezzeddine",
+        "role": "خبير استراتيجي",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "استراتيجية أسواق تربط التحليل الاقتصادي بفرص الاستثمار."
+      },
+      {
+        "name": "José Ara",
+        "role": "خبير استراتيجي",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "استراتيجية أسواق تربط التحليل الاقتصادي بفرص الاستثمار."
+      },
+      {
+        "name": "Diego Campins",
+        "role": "خبير استراتيجي",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "استراتيجية أسواق تربط التحليل الاقتصادي بفرص الاستثمار."
+      },
+      {
+        "name": "Elena Sánchez",
+        "role": "محللة كمية (متدربة)",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "دعم التحليل الكمي وأبحاث السوق."
+      }
+    ],
+    "title": "معرفة بالسوق. حُكم بشري."
+  },
+  "executionVenues": {
+    "title": "التنفيذ",
+    "subtitle": "التنفيذ عبر منصات الدخل الثابت وأماكن التداول المختارة.",
+    "fixedIncome": "أماكن تداول الدخل الثابت",
+    "otherVenues": "أماكن التداول الأخرى ومنصات الصناديق",
+    "body": "التنفيذ عبر الأسواق والأوراق المالية ذات الصلة، بدعم من علاقات تداول متخصصة والتكنولوجيا اللازمة لتنسيق الصفقة خلال مراحل ما بعد التداول."
+  },
   "workstation": {
     "title": "من الرؤية إلى",
     "accent": "التنفيذ.",

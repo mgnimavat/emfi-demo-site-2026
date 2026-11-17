@@ -4,7 +4,7 @@ import { serviceDictionaries, type ResearchCopy } from '@/lib/i18n/service-dicti
 import { ExecutionReveal } from './reveal';
 import styles from './workstation-section.module.css';
 
-export const WorkstationSection = ({ maskVariant = 'initial-stars', copy = serviceDictionaries.en.research }: { maskVariant?: WorkstationMaskVariant; copy?: ResearchCopy }) => {
+export const WorkstationSection = ({ maskVariant = 'initial-stars', copy = serviceDictionaries.en.research, showPreview = true }: { maskVariant?: WorkstationMaskVariant; copy?: ResearchCopy; showPreview?: boolean }) => {
   const content = copy.workstation;
 
   return (
@@ -24,13 +24,13 @@ export const WorkstationSection = ({ maskVariant = 'initial-stars', copy = servi
             </div>
           </ExecutionReveal>
         </div>
-        <ExecutionReveal delay={0.12} className={styles.visual}>
+        {showPreview ? <ExecutionReveal delay={0.12} className={styles.visual}>
           <div className={styles.workstation}>
             <h3>{content.name}</h3>
             <p>{content.description}</p>
           </div>
           <ExecutionWorkstation maskVariant={maskVariant} />
-        </ExecutionReveal>
+        </ExecutionReveal> : null}
       </div>
     </section>
   );
