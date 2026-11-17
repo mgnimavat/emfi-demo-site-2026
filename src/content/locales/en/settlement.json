@@ -18,6 +18,342 @@
       "in view."
     ]
   },
+  "linkedAnimation": {
+    "label": "Illustrative settlement flow",
+    "buy": "BUY",
+    "sell": "SELL",
+    "exposure": "Potential financing exposure",
+    "held": "Buy held with the sell",
+    "pause": "Pause animation",
+    "play": "Resume animation"
+  },
+  "accountAnimation": {
+    "sharedTitle": "Shared account",
+    "dedicatedTitle": "Separate client accounts",
+    "clientA": "Client A",
+    "clientB": "Client B",
+    "pool": "Shared pool",
+    "accountA": "A’s account",
+    "accountB": "B’s account",
+    "delivery": "B’s delivery",
+    "sharedCaptions": [
+      "A’s securities arrive. B’s delivery obligation is pending.",
+      "The shared pool uses A’s securities for B’s delivery.",
+      "B’s delivery is met; A’s obligation can remain pending."
+    ],
+    "dedicatedCaptions": [
+      "Each client’s securities enter their own account.",
+      "Each delivery uses that client’s own securities.",
+      "A delivers A’s securities. B delivers B’s."
+    ],
+    "deliveryA": "A’s delivery",
+    "pending": "Obligation pending",
+    "delivered": "Delivered"
+  },
+  "questionnaire": {
+    "title": "How does your current set-up measure up.",
+    "description": "Six questions. Three areas to examine: cost, complexity and exposure.",
+    "back": "Back",
+    "next": "Next",
+    "finish": "See result",
+    "restart": "Start again",
+    "contact": "Discuss your result with EMFI",
+    "progressLabel": "Questionnaire progress",
+    "resultTitle": "Where to look first:",
+    "levels": {
+      "low": "Low indication",
+      "medium": "Medium indication",
+      "high": "High indication"
+    },
+    "notice": "This questionnaire is an informational discussion aid. It is not a quotation, assessment of suitability, commitment to provide a service or guarantee of savings. Actual fees and service availability depend on client, instrument, account structure and applicable arrangements.",
+    "groups": [
+      {
+        "id": "cost",
+        "label": "Cost",
+        "title": "Fee clarity may be worth examining",
+        "body": "Ask your provider for one schedule showing charging basis, minimums, currency and pass-through items."
+      },
+      {
+        "id": "complexity",
+        "label": "Complexity",
+        "title": "Hand-offs may be worth examining",
+        "body": "Map who touches a trade between execution and custody, and who is accountable for exceptions."
+      },
+      {
+        "id": "exposure",
+        "label": "Exposure",
+        "title": "Account structure may be worth examining",
+        "body": "Check whether your securities are identified to you, and how linked buy and sell instructions are handled."
+      }
+    ],
+    "questions": [
+      {
+        "id": "settlement-question-1",
+        "group": "cost",
+        "title": "How clear are the fees you pay today for settlement and custody?",
+        "options": [
+          {
+            "label": "Fully itemised and understood",
+            "score": 0
+          },
+          {
+            "label": "Mostly clear, a few unexplained lines",
+            "score": 1
+          },
+          {
+            "label": "Hard to reconcile to what we were told",
+            "score": 2
+          },
+          {
+            "label": "Other / not sure",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "settlement-question-2",
+        "group": "cost",
+        "title": "How are your current custody and minimum charges structured?",
+        "options": [
+          {
+            "label": "Transparent, volume-based tiers",
+            "score": 0
+          },
+          {
+            "label": "Flat or bundled charges",
+            "score": 1
+          },
+          {
+            "label": "Multiple layers of pass-through charges",
+            "score": 2
+          },
+          {
+            "label": "Other / not sure",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "settlement-question-3",
+        "group": "complexity",
+        "title": "How many parties handle a typical trade between execution and custody?",
+        "options": [
+          {
+            "label": "One or two",
+            "score": 0
+          },
+          {
+            "label": "Three",
+            "score": 1
+          },
+          {
+            "label": "Four or more",
+            "score": 2
+          },
+          {
+            "label": "Other / not sure",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "settlement-question-4",
+        "group": "complexity",
+        "title": "When a request does not fit the standard process, what happens?",
+        "options": [
+          {
+            "label": "A named person resolves it",
+            "score": 0
+          },
+          {
+            "label": "It is escalated, with delays",
+            "score": 1
+          },
+          {
+            "label": "Tickets and queues, slow answers",
+            "score": 2
+          },
+          {
+            "label": "Other / not sure",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "settlement-question-5",
+        "group": "exposure",
+        "title": "How are your securities held with your current provider?",
+        "options": [
+          {
+            "label": "In accounts identified to us",
+            "score": 0
+          },
+          {
+            "label": "In a shared omnibus account",
+            "score": 2
+          },
+          {
+            "label": "Mixed, depending on market",
+            "score": 1
+          },
+          {
+            "label": "Other / not sure",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "settlement-question-6",
+        "group": "exposure",
+        "title": "When a sell fails, what happens to the linked buy?",
+        "options": [
+          {
+            "label": "It is held back until the sell is ready",
+            "score": 0
+          },
+          {
+            "label": "It settles, and we finance the gap",
+            "score": 2
+          },
+          {
+            "label": "It depends on the case",
+            "score": 1
+          },
+          {
+            "label": "Other / not sure",
+            "score": 1
+          }
+        ]
+      }
+    ]
+  },
+  "serviceSections": [
+    {
+      "id": "cross-border",
+      "titleLines": [
+        "Cross Border.",
+        "Not Cross Settle."
+      ],
+      "lead": "International securities may need to move between different depositories. Securities belonging to different clients should not cross between unrelated settlement obligations.",
+      "body": "In a shared omnibus account, securities bought for one client can be used to meet another client’s delivery. For larger clients, we can open dedicated Euroclear accounts so your securities stay identified as yours.",
+      "panels": [
+        {
+          "id": "shared",
+          "title": "Shared omnibus account",
+          "steps": [
+            "Client A Buy: securities received",
+            "Held in shared pool",
+            "Client B Sell: delivery required",
+            "Obligation outstanding"
+          ],
+          "body": "A pooled account can create cross-client settlement and allocation risk."
+        },
+        {
+          "id": "dedicated",
+          "title": "Dedicated client accounts",
+          "steps": [
+            "Client A Dedicated Euroclear account",
+            "A’s securities",
+            "Client B Dedicated Euroclear account",
+            "B’s securities"
+          ],
+          "body": "Separate account structures keep each client’s securities separately identifiable."
+        }
+      ],
+      "detail": {
+        "title": "Cross-depository settlement",
+        "body": "For supported securities and markets, we can also settle across depositories: a seller settling through DTC, for example, can deliver to a buyer receiving through Euroclear. Route, eligibility and charges depend on the security and the counterparties."
+      }
+    },
+    {
+      "id": "linked-settlement",
+      "titleLines": [
+        "Mind the",
+        "(Settlement) Gap."
+      ],
+      "lead": "When your buy settles but your corresponding sell fails to settle, you can be left financing the position and paying interest while you wait.",
+      "body": "We link your buy to your sell. If the sell is not ready to settle, the buy is held back, so you are not left financing the position. CSDR penalties and TMPG charges can still apply. Where they do, we pass them through with the references you need to review and dispute them.",
+      "panels": [
+        {
+          "id": "unlinked",
+          "title": "Without linked trades",
+          "steps": [
+            "Buy instruction: settled",
+            "Sell instruction: failed / pending"
+          ],
+          "body": "The buy has settled while the onward sell is not ready. The position may need to be financed in the interim."
+        },
+        {
+          "id": "linked",
+          "title": "With linked trades",
+          "steps": [
+            "Buy instruction: held pending",
+            "Sell instruction: awaiting settlement"
+          ],
+          "body": "The linked buy is not released independently while the corresponding sell is unable to settle, subject to the relevant infrastructure and instruction conditions."
+        }
+      ]
+    },
+    {
+      "id": "trade-upload",
+      "titleLines": [
+        "Trade Upload, Yes.",
+        "Manual Entry, No."
+      ],
+      "lead": "A Bloomberg VCON confirmation can carry the trade details already agreed between counterparties. Re-keying those details creates avoidable work and opportunities for input errors.",
+      "body": "Upload a Bloomberg VCON confirmation and EMFI’s system reads the document and extracts the trade details into the trade-entry workflow. You can review and validate the extracted information before processing, without having to re-enter every field manually.",
+      "panels": [
+        {
+          "id": "upload",
+          "title": "Upload",
+          "steps": [
+            "01"
+          ],
+          "body": "Bloomberg VCON confirmation"
+        },
+        {
+          "id": "extract",
+          "title": "Extract",
+          "steps": [
+            "02"
+          ],
+          "body": "Trade fields read from the file"
+        },
+        {
+          "id": "validate",
+          "title": "Validate",
+          "steps": [
+            "03"
+          ],
+          "body": "Review and validation"
+        },
+        {
+          "id": "process",
+          "title": "Process",
+          "steps": [
+            "04"
+          ],
+          "body": "Normal trade workflow"
+        }
+      ],
+      "methodsTitle": "More than one way to enter a trade.",
+      "methods": [
+        {
+          "title": "Manual entry",
+          "body": "Enter individual transactions directly into the EMFI interface."
+        },
+        {
+          "title": "Bulk and file-based",
+          "body": "Upload supported spreadsheets or submit files through SFTP."
+        },
+        {
+          "title": "System integration",
+          "body": "Submit trade information through API or supported drop-copy arrangements."
+        }
+      ],
+      "notice": "Automated extraction is subject to supported VCON formats, information quality and validation controls. Review remains part of the trade-entry process."
+    }
+  ],
   "overview": {
     "title": "Nothing left in the dark.",
     "titleLines": [
@@ -270,5 +606,43 @@
     "Use Left and Right arrow keys to explore points, or Home and End to jump to the first and last point.": "Use Left and Right arrow keys to explore points, or Home and End to jump to the first and last point.",
     "Other Reports": "Other Reports",
     "Special Reports": "Special Reports"
+  },
+  "uploadAnimation": {
+    "label": "Illustrative VCON upload",
+    "prompt": "Upload a VCON screenshot",
+    "hint": "Trade confirmation · PNG",
+    "document": "Bloomberg VCON · Illustrative",
+    "file": "vcon-confirmation.png",
+    "result": "Extracted trade details",
+    "read": "Read",
+    "ready": "Ready for review",
+    "replay": "Replay",
+    "fields": [
+      {
+        "id": "security",
+        "label": "Security",
+        "value": "Security A"
+      },
+      {
+        "id": "side",
+        "label": "Side",
+        "value": "Buy"
+      },
+      {
+        "id": "quantity",
+        "label": "Quantity",
+        "value": "100"
+      },
+      {
+        "id": "price",
+        "label": "Price",
+        "value": "98.250"
+      },
+      {
+        "id": "counterparty",
+        "label": "Counterparty",
+        "value": "Counterparty X"
+      }
+    ]
   }
 }

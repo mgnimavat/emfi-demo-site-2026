@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /
+# Staging. Replace with production rules at launch.

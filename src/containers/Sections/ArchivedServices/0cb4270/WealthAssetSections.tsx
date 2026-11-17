@@ -1,9 +1,10 @@
-import type { WealthCopy } from '@/lib/i18n/service-dictionaries';
 import archivedCopy from './wealth.json';
 import { localizeHref, type Locale } from '@/lib/i18n';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { ServiceDisclosures } from '@/containers/Sections/ServiceDisclosures';
 import styles from './WealthAssetSections.module.css';
+
+type WealthCopy = typeof archivedCopy;
 
 const MandateFramework = ({ copy: wealth }: { copy: WealthCopy }) => {
   const content = wealth.management;
