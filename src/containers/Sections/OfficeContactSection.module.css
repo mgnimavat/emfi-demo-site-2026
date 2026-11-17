@@ -81,10 +81,12 @@
 .integrated .officeDetails { margin-bottom: var(--space-5); }
 
 @media (min-width: 768px) {
-  .section[data-layout='horizontal'] {
+  .section {
     display: flex;
     min-height: calc(100vh - var(--site-header-height, 78px));
     min-height: calc(100svh - var(--site-header-height, 78px));
   }
-  .section[data-layout='horizontal'] > .container { display: grid; }
+  .section > .container { display: grid; }
+  .integrated .locationMap { flex: 1 0 clamp(240px, 34svh, 400px); height: auto; }
+  .integrated .information { flex: none; }
 }
