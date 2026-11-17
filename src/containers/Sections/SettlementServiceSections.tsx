@@ -32,7 +32,7 @@ export const SettlementServiceSections = ({ copy }: { copy: SettlementCopy }) =>
             </ExecutionReveal>
           </div>
           {section.id === 'cross-border' ? <SettlementAccountAnimation copy={copy.accountAnimation} /> : section.id === 'linked-settlement' ? (
-            <SettlementLinkedAnimation panels={section.panels} />
+            <SettlementLinkedAnimation panels={section.panels} copy={copy.linkedAnimation} />
           ) : section.id === 'trade-upload' ? (
             <SettlementUploadAnimation panels={section.panels} copy={copy.uploadAnimation} />
           ) : (

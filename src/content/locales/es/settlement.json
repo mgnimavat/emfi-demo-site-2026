@@ -25,7 +25,15 @@
     "exposure": "Aumenta la exposición a financiación",
     "held": "Compra retenida junto con la venta",
     "pause": "Pausar animación",
-    "play": "Reanudar animación"
+    "play": "Reanudar animación",
+    "states": {
+      "pending": "Sin liquidar",
+      "settled": "Liquidada",
+      "attempting": "Intentando vender",
+      "failed": "Venta fallida",
+      "available": "Disponible para vender",
+      "waiting": "Esperando la compra"
+    }
   },
   "accountAnimation": {
     "sharedTitle": "Cuenta compartida",
@@ -278,19 +286,19 @@
           "id": "unlinked",
           "title": "Sin operaciones vinculadas",
           "steps": [
-            "Instrucción de compra: liquidada",
-            "Instrucción de venta: fallida o pendiente"
+            "Instrucción de compra: Sin liquidar",
+            "Instrucción de venta: Esperando la compra"
           ],
-          "body": "La compra se ha liquidado mientras la venta posterior no está lista. Puede ser necesario financiar la posición durante ese intervalo."
+          "body": "La compra no se ha liquidado. El intento posterior de venta falla porque los valores no están disponibles."
         },
         {
           "id": "linked",
           "title": "Con operaciones vinculadas",
           "steps": [
-            "Instrucción de compra: retenida",
-            "Instrucción de venta: pendiente de liquidación"
+            "Instrucción de compra: Sin liquidar",
+            "Instrucción de venta: Esperando la compra"
           ],
-          "body": "La compra vinculada no se libera de forma independiente mientras la venta correspondiente no pueda liquidarse, sujeto a las condiciones de infraestructura e instrucciones aplicables."
+          "body": "La compra vinculada se liquida primero. Los valores quedan disponibles para la venta correspondiente."
         }
       ]
     },

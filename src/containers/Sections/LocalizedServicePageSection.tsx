@@ -115,14 +115,12 @@ export const LocalizedServicePageSection = ({
                 layout="columns" officeCities={['Dubai', 'Cayman']}
                 officeDisclosures={{
                   Dubai: <>
-                    {dictionary.settlement.disclosures.entities.map((entity) => (
+                    {dictionary.settlement.disclosures.entities.slice(1, 2).map((entity) => (
                       <p key={entity.name}><strong>{entity.name}</strong> {entity.body}</p>
                     ))}
-                    <p>{dictionary.settlement.disclosures.notice}</p>
                   </>,
                   Cayman: <>
                     <p><strong>{dictionary.wealth.disclosures.entity}</strong> {dictionary.wealth.disclosures.introduction}</p>
-                    {dictionary.wealth.disclosures.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                   </>,
                 }} />
             </> : <WealthAssetSections copy={dictionary.wealth} locale={locale}

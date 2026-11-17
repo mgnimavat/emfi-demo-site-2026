@@ -103,16 +103,16 @@
         "description": "يقدم بحوث الأسواق والاستثمار التي تدعم القرارات المؤسسية والتنفيذ."
       },
       {
-        "name": "Rosamnis Marcano",
-        "role": "خبيرة اقتصادية أولى",
-        "photo": "/people/rosamnis-marcano-5.jpg",
-        "description": "يوفر السياق الاقتصادي لقرارات توزيع الأصول والمدة والائتمان."
-      },
-      {
         "name": "Albani Granado",
         "role": "محللة كمية أولى",
         "photo": "/people/albani-granado-4.jpg",
         "description": "تحليل كمي يدعم أبحاث السوق وقرارات الاستثمار."
+      },
+      {
+        "name": "Rosamnis Marcano",
+        "role": "خبيرة اقتصادية أولى",
+        "photo": "/people/rosamnis-marcano-5.jpg",
+        "description": "يوفر السياق الاقتصادي لقرارات توزيع الأصول والمدة والائتمان."
       },
       {
         "name": "Matias Montes",

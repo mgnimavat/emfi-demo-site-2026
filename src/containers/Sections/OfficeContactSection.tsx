@@ -53,7 +53,7 @@ export const OfficeContactSection = ({
   );
 
   return (
-    <section id={sectionId} className={styles.section} aria-labelledby={layout === 'columns' ? undefined : `${sectionId}-heading`}
+    <section id={sectionId} data-layout={layout} className={`${styles.section} ${officeDisclosures ? styles.integrated : ''}`} aria-labelledby={layout === 'columns' ? undefined : `${sectionId}-heading`}
       aria-label={layout === 'columns' ? columnOffices.map(({ place }) => place.city).join(' · ') : undefined}>
       <div className={`${styles.container} ${layout === 'columns' ? styles.columns : ''}`}>
         {layout === 'columns' ? (
@@ -64,13 +64,13 @@ export const OfficeContactSection = ({
                   <div className={styles.locationMap}><LocationMap place={place} copy={copy} /></div>
                   <div className={styles.information}>
                     {officeInformation(place, `${sectionId}-${index}-heading`)}
+                    {officeDisclosures?.[city] ? (
+                      <div className={styles.officeDisclosure}>
+                        {officeDisclosures[city]}
+                      </div>
+                    ) : null}
                   </div>
                 </article>
-                {officeDisclosures?.[city] ? (
-                  <div className={styles.officeDisclosure} aria-labelledby={`${sectionId}-${index}-heading`}>
-                    {officeDisclosures[city]}
-                  </div>
-                ) : null}
               </div>
             ))}
             {children ? <div className={styles.regulatoryCard}>{children}</div> : null}

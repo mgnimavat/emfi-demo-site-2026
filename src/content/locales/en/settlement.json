@@ -25,7 +25,15 @@
     "exposure": "Potential financing exposure",
     "held": "Buy held with the sell",
     "pause": "Pause animation",
-    "play": "Resume animation"
+    "play": "Resume animation",
+    "states": {
+      "pending": "Not settled",
+      "settled": "Settled",
+      "attempting": "Attempting sell",
+      "failed": "Sell failed",
+      "available": "Available to sell",
+      "waiting": "Waiting for buy"
+    }
   },
   "accountAnimation": {
     "sharedTitle": "Shared account",
@@ -278,19 +286,19 @@
           "id": "unlinked",
           "title": "Without linked trades",
           "steps": [
-            "Buy instruction: settled",
-            "Sell instruction: failed / pending"
+            "Buy instruction: Not settled",
+            "Sell instruction: Waiting for buy"
           ],
-          "body": "The buy has settled while the onward sell is not ready. The position may need to be financed in the interim."
+          "body": "The buy has not settled. The subsequent sell attempt fails because the securities are not available."
         },
         {
           "id": "linked",
           "title": "With linked trades",
           "steps": [
-            "Buy instruction: held pending",
-            "Sell instruction: awaiting settlement"
+            "Buy instruction: Not settled",
+            "Sell instruction: Waiting for buy"
           ],
-          "body": "The linked buy is not released independently while the corresponding sell is unable to settle, subject to the relevant infrastructure and instruction conditions."
+          "body": "The linked buy settles first. The securities then become available for the corresponding sell."
         }
       ]
     },

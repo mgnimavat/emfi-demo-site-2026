@@ -73,3 +73,8 @@
 @media (prefers-reduced-motion: reduce) {
   .stage *, .stage *::before, .stage *::after { animation: none !important; transition: none !important; }
 }
+
+.waitingDelivery { opacity: 0; transition: opacity .3s ease; }
+.waitingDelivery circle { fill: var(--bg-page); stroke: var(--scene-coral); stroke-width: 1.5; }
+.waitingDelivery path { fill: none; stroke: var(--scene-coral); stroke-width: 1.5; stroke-linecap: round; }
+.stage[data-phase='0'] .waitingDelivery { opacity: 1; }

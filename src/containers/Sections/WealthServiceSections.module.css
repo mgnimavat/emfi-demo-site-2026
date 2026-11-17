@@ -21,7 +21,7 @@
   .providerGrid { display: flex; flex-wrap: wrap; justify-content: center; }
   .providerGrid > li { flex: 0 1 calc((100% - 2 * var(--space-5)) / 3); }
 }
-.provider { display: grid; justify-items: center; align-content: center; gap: var(--space-3); min-width: 0; min-height: clamp(168px, 14cqi, 192px); padding: var(--space-5) clamp(16px, 2cqi, 32px); border: 1px solid var(--flow-from); border-radius: var(--radius-card); background: color-mix(in srgb, var(--color-blue-100) 18%, var(--bg-soft)); text-align: center; }
+.provider { display: grid; justify-items: center; align-content: center; gap: var(--space-3); min-width: 0; min-height: clamp(168px, 14cqi, 192px); padding: var(--space-5) clamp(16px, 2cqi, 32px); border: 1px solid var(--flow-from); border-radius: var(--radius-card); background: var(--bg-page); text-align: center; }
 .logoFilter { position: absolute; width: 0; height: 0; overflow: hidden; }
 .providerBrand { display: grid; place-items: center; width: 100%; max-width: 260px; height: 104px; overflow: hidden; }
 .providerBrand strong { font-size: 24px; letter-spacing: -.04em; }

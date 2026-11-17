@@ -1,11 +1,13 @@
 'use client';
 
 import { useId, useState } from 'react';
-import { fundChart, fundIllustrationPoints } from '@/content/fund-illustration';
+import { fundChart, fundIllustrationPeriod, fundIllustrationPoints } from '@/content/fund-illustration';
 import type { WealthCopy } from '@/lib/i18n/service-dictionaries';
 import styles from './WealthServiceHero.module.css';
 
-const rangeStarts = [0.8, 0.38, 0] as const;
+const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC',
+});
 const gridLineCount = 4;
 const gridLines = Array.from({ length: gridLineCount }, (_, index) =>
   fundChart.inset + index * (fundChart.height - fundChart.inset * 2) / (gridLineCount - 1)
@@ -16,7 +18,17 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
   const chartId = useId();
   const gradientId = `${chartId}-fill`;
   const clipId = `${chartId}-reveal`;
-  const points = fundIllustrationPoints.slice(Math.floor(fundIllustrationPoints.length * rangeStarts[range]));
+  const periodStart = new Date(fundIllustrationPeriod.start);
+  const periodEnd = new Date(fundIllustrationPeriod.end);
+  const selectedStart = new Date(periodEnd);
+  const years = fundChart.ranges[range];
+  selectedStart.setUTCFullYear(periodEnd.getUTCFullYear() - years);
+  const startDate = years ? selectedStart : periodStart;
+  const startFraction = (startDate.getTime() - periodStart.getTime())
+    / (periodEnd.getTime() - periodStart.getTime());
+  const points = fundIllustrationPoints.slice(
+    Math.floor((fundIllustrationPoints.length - 1) * startFraction)
+  );
   const minimum = Math.min(...points);
   const spread = Math.max(...points) - minimum || 1;
   const coordinates = points.map((point, index) => ({
@@ -73,7 +85,10 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
               </g>
             </svg>
           </div>
-          <div className={styles.axis} aria-hidden="true"><span>{copy.axisStart}</span><span>{copy.axisEnd}</span></div>
+          <div className={styles.axis}>
+            <time dateTime={startDate.toISOString().slice(0, 10)}>{dateFormatter.format(startDate)}</time>
+            <time dateTime={fundIllustrationPeriod.end}>{dateFormatter.format(periodEnd)}</time>
+          </div>
         </figure>
       </div>
     </section>

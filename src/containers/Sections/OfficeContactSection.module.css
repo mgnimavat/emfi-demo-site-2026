@@ -71,7 +71,20 @@
 }
 
 .officeColumn { display: flex; flex-direction: column; gap: var(--space-5); min-width: 0; }
-.officeDisclosure { flex: 1; padding: var(--space-6); border: 1px solid var(--border-default); border-radius: var(--radius-card); background: var(--bg-page); color: var(--text-secondary); font-size: 13px; line-height: 1.75; }
+.officeDisclosure { margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--border-default); color: var(--text-secondary); font-size: 13px; line-height: 1.75; }
 .officeDisclosure p { margin: 0; }
 .officeDisclosure p + p { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-default); }
-@media (max-width: 767px) { .officeDisclosure { padding: var(--space-5); } }
+.integrated { padding-block: clamp(32px, 5vh, 56px); }
+.integrated .locationCard { flex: 1; }
+.integrated .locationMap { height: clamp(180px, 30vh, 300px); min-height: 180px; flex: none; }
+.integrated .information { display: flex; flex: 1; flex-direction: column; }
+.integrated .officeDetails { margin-bottom: var(--space-5); }
+
+@media (min-width: 768px) {
+  .section[data-layout='horizontal'] {
+    display: flex;
+    min-height: calc(100vh - var(--site-header-height, 78px));
+    min-height: calc(100svh - var(--site-header-height, 78px));
+  }
+  .section[data-layout='horizontal'] > .container { display: grid; }
+}

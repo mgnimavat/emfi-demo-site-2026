@@ -31,6 +31,12 @@ const DeliveryNode = ({ owner, dedicated, settled, copy }: {
   return (
     <g className={styles.delivery} data-owner={owner} data-status={delivered ? 'delivered' : 'pending'}>
       <rect x={left} y="244" width="216" height="72" rx="12" />
+      {!dedicated && owner === 'B' ? (
+        <g className={styles.waitingDelivery}>
+          <circle cx="318" cy="265" r="9" />
+          <path d="M318 260 V265 L321 267" />
+        </g>
+      ) : null}
       {!dedicated && owner === 'A' ? (
         <g className={styles.pendingMarker}>
           <circle cx="70" cy="265" r="9" />
