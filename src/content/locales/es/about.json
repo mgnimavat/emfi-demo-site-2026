@@ -43,19 +43,19 @@
   "peopleTitle": "Las personas que responden.",
   "people": [
     {
+      "name": "Usman Sheikh",
+      "role": "Fundador",
+      "photo": "/people/usman-sheikh-3.jpg",
+      "label": "Director, EMFI Fund SPC",
+      "inset": true,
+      "description": "Define la dirección de EMFI y de la plataforma institucional que conecta a los clientes con los mercados, la ejecución y la infraestructura."
+    },
+    {
       "name": "Atif Rashid",
       "role": "Finanzas y cumplimiento",
       "photo": "/people/atif-rashid-4.jpg",
       "board": true,
       "description": "Mantiene los controles financieros, el cumplimiento normativo y la responsabilidad en toda la empresa."
-    },
-    {
-      "name": "Shamroz Bashir",
-      "role": "Riesgo e informes",
-      "photo": "/people/shamroz-bashir-4.jpg",
-      "board": true,
-      "raised": true,
-      "description": "Supervisa los riesgos, las exposiciones y los controles para facilitar decisiones informadas."
     },
     {
       "name": "Gustavo Rodrigues",
@@ -65,31 +65,73 @@
       "description": "Dirige la incorporación de clientes, el proceso KYC y la diligencia debida para establecer las relaciones adecuadas."
     },
     {
+      "name": "Shamroz Bashir",
+      "role": "Riesgo e informes",
+      "photo": "/people/shamroz-bashir-6.jpg",
+      "board": true,
+      "description": "Supervisa los riesgos, las exposiciones y los controles para facilitar decisiones informadas."
+    },
+    {
+      "name": "Peter Timson",
+      "role": "Cumplimiento, Reino Unido",
+      "description": "Supervisa el cumplimiento normativo y los controles en las entidades autorizadas de EMFI en el Reino Unido."
+    },
+    {
+      "name": "Hitesh Bilochi",
+      "role": "Cumplimiento, DIFC",
+      "description": "Supervisa el cumplimiento normativo del DIFC y los requisitos de la DFSA en las operaciones de EMFI en Dubái."
+    },
+    {
+      "name": "Alan Tooker",
+      "role": "Director, EMFI Fund SPC",
+      "photo": "/people/alan-tooker-2.jpg",
+      "label": "A.R.C. Directors Ltd",
+      "description": "Actúa como director independiente de EMFI Fund SPC a través de A.R.C. Directors Ltd."
+    },
+    {
+      "name": "Damian Juric",
+      "role": "Director, EMFI Fund SPC",
+      "photo": "/people/damian-juric-10.jpg",
+      "label": "A.R.C. Directors Ltd",
+      "description": "Actúa como director independiente de EMFI Fund SPC a través de A.R.C. Directors Ltd."
+    },
+    {
       "name": "Robert Hagon",
-      "role": "Cobertura institucional",
+      "role": "Distribución, Reino Unido",
       "photo": "/people/robert-hagon-4.jpg",
       "inset": true,
-      "description": "Desarrolla y gestiona relaciones institucionales, conectando las necesidades del cliente con las capacidades adecuadas de EMFI."
+      "description": "Desarrolla y gestiona relaciones de distribución institucional en el Reino Unido."
     },
     {
       "name": "Mark Cleary",
-      "role": "Ejecución, liquidación y custodia",
+      "role": "Distribución, Reino Unido",
       "photo": "/people/mark-cleary-7.jpg",
       "inset": true,
-      "description": "Coordina la ejecución, la liquidación y la custodia para mantener conectada la relación con el cliente de principio a fin."
+      "description": "Apoya la distribución institucional y la cobertura de clientes en el Reino Unido."
     },
     {
       "name": "Jose Bermudez",
-      "role": "Gestión patrimonial y de activos",
-      "photo": "/people/jose-bermudez-5.jpg",
+      "role": "Distribución, DIFC",
+      "photo": "/people/jose-bermudez-8.jpg",
       "inset": true,
-      "description": "Gestiona carteras y mandatos de inversión dentro del marco de ejecución y custodia de EMFI."
+      "description": "Desarrolla y gestiona relaciones de distribución institucional en el DIFC."
+    },
+    {
+      "name": "Francesco Odone",
+      "role": "Distribución, DIFC",
+      "description": "Apoya la distribución institucional y la cobertura de clientes en el DIFC."
     },
     {
       "name": "Guillermo Guerrero",
       "role": "Análisis",
       "photo": "/people/guillermo-guerrero-6.jpg",
       "description": "Proporciona análisis de mercados e inversiones que respaldan las decisiones y la ejecución institucionales."
+    },
+    {
+      "name": "Albani Granado",
+      "role": "Analista cuantitativo senior",
+      "photo": "/people/albani-granado-4.jpg",
+      "description": "Aporta análisis cuantitativo que respalda las decisiones de investigación, asignación y ejecución."
     },
     {
       "name": "Rosamnis Marcano",
@@ -110,6 +152,12 @@
       "photo": "/people/zee-amin-7.jpg",
       "inset": true,
       "description": "Garantiza que las instrucciones avancen por los procesos de cotejo, liquidación, gestión de excepciones e informes."
+    },
+    {
+      "name": "Asmita Sojitra",
+      "role": "Analista de negocio",
+      "photo": "/people/asmita-sojitra-1.jpg",
+      "description": "Traduce los requisitos de negocio en flujos operativos y tecnológicos claros."
     },
     {
       "name": "Kishan Lashkari",
