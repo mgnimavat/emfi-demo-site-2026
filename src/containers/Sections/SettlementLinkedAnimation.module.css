@@ -1,0 +1,106 @@
+.stage {
+  --cycle: 9s;
+  --settled: var(--flow-to);
+  --pending: var(--status-negative);
+  --connection-width: 60px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+.panel {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(24px, 3vw, 40px);
+  border: 1px solid var(--color-blue-100);
+  border-radius: var(--radius-card);
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+.panel h3 { margin: 0; font-size: clamp(21px, 2vw, 27px); font-weight: 700; line-height: 1.2; letter-spacing: -.03em; }
+.scene { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--connection-width); padding-block: var(--space-8) var(--space-7); }
+.instructionSlot { position: relative; min-width: 0; }
+.instruction { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-3); height: 100%; min-height: 180px; padding: var(--space-5) var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-control); background: var(--bg-subtle); text-align: center; }
+.statusIcon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--pending) 8%, var(--bg-page)); color: var(--pending); }
+.instructionLabel { font-size: 14px; font-weight: 650; line-height: 1.4; }
+.status { display: inline-flex; align-items: center; justify-content: center; min-height: 30px; max-width: 100%; padding: var(--space-1) var(--space-3); border-radius: var(--radius-pill); background: color-mix(in srgb, var(--pending) 8%, var(--bg-page)); color: var(--text-secondary); font-size: 12px; line-height: 1.4; }
+.connection { position: absolute; inset-block-start: 50%; inset-inline-end: 100%; width: var(--connection-width); height: 32px; transform: translateY(-50%); display: grid; place-items: center; color: var(--pending); }
+.connectionLine { position: absolute; inset-inline: 0; top: 50%; height: 1px; background: repeating-linear-gradient(to right, var(--color-blue-100) 0 4px, transparent 4px 8px); }
+.connectionLine::after { content: ''; position: absolute; top: -2px; inset-inline-start: 0; width: 5px; height: 5px; border-radius: var(--radius-pill); background: var(--pending); animation: interrupted var(--cycle) ease-in-out infinite; }
+.connectionIcon { position: relative; display: grid; place-items: center; width: 32px; height: 32px; border-radius: var(--radius-pill); background: var(--bg-page); }
+.panel[data-linked='true'] .connection { color: var(--color-blue-550); }
+.panel[data-linked='true'] .connectionLine { background: var(--color-blue-100); }
+.panel[data-linked='true'] .connectionLine::after { background: var(--color-blue-550); animation: connected var(--cycle) ease-in-out infinite; }
+.panel[data-linked='true'] .connectionIcon { animation: linkPulse var(--cycle) ease-in-out infinite; }
+.panel figcaption { margin: 0; padding-top: var(--space-5); border-top: 1px solid var(--border-default); color: var(--text-secondary); font-size: 14px; line-height: 1.75; }
+.stage[data-running='false'] *, .stage[data-running='false'] *::after { animation-play-state: paused !important; }
+@keyframes interrupted { 0%, 15% { inset-inline-start: 0; opacity: 0; } 25% { opacity: 1; } 45%, 70% { inset-inline-start: 35%; opacity: 1; } 82%, 100% { inset-inline-start: 35%; opacity: 0; } }
+@keyframes connected { 0%, 15% { inset-inline-start: 0; opacity: 0; } 25% { opacity: 1; } 60%, 70% { inset-inline-start: calc(100% - 5px); opacity: 1; } 82%, 100% { inset-inline-start: calc(100% - 5px); opacity: 0; } }
+@keyframes linkPulse { 0%, 10%, 100% { box-shadow: 0 0 0 0 transparent; } 35%, 75% { box-shadow: 0 0 0 6px var(--bg-soft); } }
+@media (max-width: 900px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 599px) {
+  .stage { --connection-width: 40px; }
+  .panel { padding: var(--space-5) var(--space-4); }
+  .scene { padding-block: var(--space-6); }
+  .instruction { min-height: 175px; padding: var(--space-4) var(--space-2); }
+  .instructionLabel { font-size: 13px; }
+  .status { font-size: 11px; padding-inline: var(--space-2); }
+}
+@media (prefers-reduced-motion: reduce) { .stage *, .stage *::after { animation: none !important; } }
+
+.instruction { transition: border-color .4s ease, background-color .4s ease, box-shadow .4s ease; }
+.instruction[data-state='waiting'] .statusIcon,
+.instruction[data-state='waiting'] .status { color: var(--text-muted); background: var(--border-default); }
+.instruction[data-state='attempting'] .statusIcon,
+.instruction[data-state='attempting'] .status { color: var(--color-blue-550); background: var(--bg-soft); }
+.instruction[data-state='settled'], .instruction[data-state='available'] { border-color: var(--settled); background: color-mix(in srgb, var(--settled) 4%, var(--bg-page)); }
+.instruction[data-state='settled'] .statusIcon, .instruction[data-state='available'] .statusIcon,
+.instruction[data-state='settled'] .status, .instruction[data-state='available'] .status { color: var(--text-primary); background: color-mix(in srgb, var(--settled) 18%, var(--bg-page)); }
+.instruction[data-state='failed'] { border-color: var(--pending); background: color-mix(in srgb, var(--pending) 4%, var(--bg-page)); }
+.stage[data-phase='0'] .connectionLine::after,
+.stage[data-phase='1'] .connectionLine::after { visibility: hidden; }
+
+.travelLane { position: absolute; top: var(--space-5); inset-inline: 22%; height: 2px; background: var(--border-default); }
+.travelProgress { position: absolute; inset-block: 0; inset-inline-start: 0; width: 0; background: var(--pending); animation: blockedProgress var(--cycle) linear infinite; }
+.tradeMarker { position: absolute; z-index: 2; top: 50%; inset-inline-start: 0; display: grid; place-items: center; width: 32px; height: 32px; border: 3px solid var(--bg-page); border-radius: var(--radius-pill); background: var(--pending); color: var(--text-inverse); transform: translate(-50%, -50%); box-shadow: 0 0 0 5px color-mix(in srgb, var(--pending) 12%, transparent); animation: blockedTrade var(--cycle) ease-in-out infinite; }
+.barrier { position: absolute; z-index: 3; inset-inline-start: 50%; top: 50%; display: grid; place-items: center; width: 24px; height: 24px; border-radius: var(--radius-pill); background: var(--bg-page); color: var(--pending); transform: translate(-50%, -50%); }
+.panel[data-linked='true'] .tradeMarker { background: var(--settled); color: var(--text-primary); box-shadow: 0 0 0 5px color-mix(in srgb, var(--settled) 15%, transparent); animation-name: linkedTrade; }
+.panel[data-linked='true'] .travelProgress { background: var(--settled); animation-name: linkedProgress; }
+.panel[data-linked='true'] .barrier { display: none; }
+.instruction[data-state='pending'] .statusIcon { animation: pendingPulse 1.4s ease-in-out infinite; }
+.instruction[data-state='attempting'] .statusIcon svg { animation: clockTurn 1.4s linear infinite; }
+.instruction[data-state='failed'] { animation: rejectTrade .55s ease both; }
+.instruction[data-state='settled'] .statusIcon,
+.instruction[data-state='available'] .statusIcon { animation: confirmTrade .55s cubic-bezier(.2, .8, .3, 1.3) both; }
+.instructionSlot { animation: revealInstruction var(--cycle) ease infinite; }
+.instructionSlot:last-child { animation-name: revealSell; }
+:global([dir='rtl']) .tradeMarker, :global([dir='rtl']) .barrier { transform: translate(50%, -50%); }
+:global([dir='rtl']) .tradeMarker svg { transform: rotate(180deg); }
+@keyframes blockedTrade {
+  0%, 12% { inset-inline-start: 0; opacity: 0; }
+  18%, 24% { inset-inline-start: 0; opacity: 1; }
+  43% { inset-inline-start: 44%; }
+  48% { inset-inline-start: 38%; }
+  54% { inset-inline-start: 44%; }
+  59% { inset-inline-start: 38%; }
+  66%, 85% { inset-inline-start: 44%; opacity: 1; }
+  94%, 100% { inset-inline-start: 44%; opacity: 0; }
+}
+@keyframes linkedTrade {
+  0%, 12% { inset-inline-start: 0; opacity: 0; }
+  18%, 24% { inset-inline-start: 0; opacity: 1; }
+  69%, 85% { inset-inline-start: 100%; opacity: 1; }
+  94%, 100% { inset-inline-start: 100%; opacity: 0; }
+}
+@keyframes blockedProgress { 0%, 24% { width: 0; opacity: 1; } 43%, 85% { width: 44%; opacity: 1; } 94%, 100% { width: 44%; opacity: 0; } }
+@keyframes linkedProgress { 0%, 24% { width: 0; opacity: 1; } 69%, 85% { width: 100%; opacity: 1; } 94%, 100% { width: 100%; opacity: 0; } }
+@keyframes pendingPulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pending) 18%, transparent); } 50% { box-shadow: 0 0 0 10px transparent; } }
+@keyframes clockTurn { to { transform: rotate(360deg); } }
+@keyframes rejectTrade { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+@keyframes confirmTrade { 0% { transform: scale(.6); opacity: .4; } 70% { transform: scale(1.16); } 100% { transform: scale(1); opacity: 1; } }
+@keyframes revealInstruction { 0%, 96%, 100% { opacity: .35; transform: translateY(12px); } 9%, 89% { opacity: 1; transform: none; } }
+@keyframes revealSell { 0%, 24%, 96%, 100% { opacity: .35; transform: translateY(12px); } 39%, 89% { opacity: 1; transform: none; } }
+@media (max-width: 599px) { .scene { padding-top: var(--space-8); } }
+@media (prefers-reduced-motion: reduce) {
+  .stage *, .stage *::after { animation: none !important; transition: none !important; }
+  .travelLane { display: none; }
+}

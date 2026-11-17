@@ -1,0 +1,80 @@
+.stage {
+  --scene-blue: var(--color-blue-550);
+  --scene-green: color-mix(in srgb, var(--flow-to) 45%, var(--color-blue-500));
+  --scene-coral: var(--status-negative);
+  position: relative;
+  color: var(--text-primary);
+}
+
+.stage:focus-visible { outline: 2px solid var(--color-blue-200); outline-offset: 6px; }
+
+.comparison { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+.panel { min-width: 0; margin: 0; overflow: hidden; padding: var(--space-5); border: 1px solid color-mix(in srgb, var(--scene-blue) 22%, transparent); border-radius: var(--radius-card); background: var(--bg-page); }
+.dedicated { border-color: color-mix(in srgb, var(--scene-green) 30%, transparent); }
+.panelHeader { display: flex; align-items: center; gap: var(--space-3); }
+.panelHeader > svg { flex: none; color: var(--scene-blue); }
+.dedicated .panelHeader > svg { color: var(--scene-green); }
+.panelHeader h3 { margin: 0; font-size: clamp(17px, 1.6vw, 21px); font-weight: 650; line-height: 1.3; letter-spacing: -.025em; }
+.diagram { display: block; width: 100%; height: auto; margin-block: var(--space-5) var(--space-4); overflow: visible; }
+.diagram text { fill: var(--text-primary); font-family: inherit; font-size: 17px; font-weight: 600; }
+.source rect { fill: var(--bg-soft); stroke: color-mix(in srgb, var(--scene-blue) 30%, transparent); }
+.route { fill: none; stroke: color-mix(in srgb, var(--scene-blue) 30%, transparent); stroke-width: 2; }
+.activeRoute { fill: none; stroke: var(--scene-coral); stroke-width: 2; stroke-dasharray: 6 6; opacity: 0; }
+.dedicated .activeRoute { stroke: var(--scene-green); }
+.pool rect { fill: var(--bg-soft); stroke: color-mix(in srgb, var(--scene-blue) 55%, transparent); stroke-width: 1.5; }
+.vaults > rect { fill: color-mix(in srgb, var(--scene-green) 5%, var(--bg-page)); stroke: color-mix(in srgb, var(--scene-green) 50%, transparent); stroke-width: 1.5; }
+.divider { fill: none; stroke: color-mix(in srgb, var(--scene-green) 30%, transparent); stroke-width: 1; stroke-dasharray: 3 5; }
+.delivery rect { transition: fill .6s ease, stroke .6s ease; fill: var(--bg-page); stroke: color-mix(in srgb, var(--scene-blue) 40%, transparent); stroke-width: 1.5; }
+.delivery text { font-size: 15px; }
+.delivery .deliveryStatus { transition: fill .6s ease; fill: var(--text-secondary); font-size: 12px; font-weight: 500; }
+.delivery[data-status='delivered'] .deliveryStatus { fill: var(--scene-green); }
+.pendingRoute { opacity: 0; transition: opacity .6s ease; }
+.pendingRoute path { fill: none; stroke: var(--scene-coral); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.pendingRoute > path:first-child { stroke-dasharray: 4 4; }
+.pendingMarker { opacity: 0; transition: opacity .6s ease; }
+.pendingMarker circle { fill: var(--bg-page); stroke: var(--scene-coral); stroke-width: 1.5; }
+.pendingMarker path { fill: none; stroke: var(--scene-coral); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.stage[data-settled='true'] .pendingMarker { opacity: 1; }
+.token { fill: var(--scene-blue); }
+.tokenHalo { opacity: .15; }
+.token text { fill: var(--text-inverse); font-size: 15px; font-weight: 800; }
+.tokenB { fill: var(--scene-green); }
+
+.stage[data-phase='1'] .activeRoute { opacity: 1; animation: routeFlow 1s linear infinite; }
+.stage[data-phase='2'] .activeRoute { opacity: 1; }
+.stage[data-settled='true'] .shared .delivery rect { stroke: var(--scene-coral); fill: color-mix(in srgb, var(--scene-coral) 5%, var(--bg-page)); }
+.stage[data-settled='true'] .shared .delivery[data-owner='A'] rect { stroke-dasharray: 5 4; }
+.stage[data-settled='true'] .shared .delivery[data-owner='A'] .deliveryStatus { fill: var(--scene-coral); font-weight: 600; }
+.stage[data-settled='true'] .pendingRoute { opacity: 1; }
+.stage[data-settled='true'] .dedicated .delivery rect { stroke: var(--scene-green); }
+.stage[data-running='false'] *, .stage:focus-within * { animation-play-state: paused !important; }
+
+.panel figcaption { display: flex; align-items: flex-start; gap: var(--space-3); min-height: 64px; padding-top: var(--space-4); border-top: 1px solid var(--border-default); }
+.panel figcaption > svg { flex: none; margin-top: 2px; color: var(--scene-coral); }
+.dedicated figcaption > svg { color: var(--scene-green); }
+.panel figcaption p { max-width: 48ch; margin: 0; color: var(--text-primary); font-size: 14px; line-height: 1.65; }
+
+@keyframes routeFlow { to { stroke-dashoffset: -24; } }
+
+@media (max-width: 900px) {
+  .comparison { grid-template-columns: minmax(0, 1fr); }
+  .panel { padding: var(--space-5); }
+  .diagram { max-width: 580px; margin-inline: auto; }
+  .panel figcaption { min-height: 54px; }
+}
+@media (max-width: 599px) {
+  .panel { padding: var(--space-4) var(--space-3); }
+  .diagram text { font-size: 20px; }
+  .delivery text { font-size: 17px; }
+  .delivery .deliveryStatus { font-size: 14px; }
+  .panel figcaption { padding-inline: var(--space-2); }
+  .panel figcaption p { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stage *, .stage *::before, .stage *::after { animation: none !important; transition: none !important; }
+}
+
+.waitingDelivery { opacity: 0; transition: opacity .3s ease; }
+.waitingDelivery circle { fill: var(--bg-page); stroke: var(--scene-coral); stroke-width: 1.5; }
+.waitingDelivery path { fill: none; stroke: var(--scene-coral); stroke-width: 1.5; stroke-linecap: round; }
+.stage[data-phase='0'] .waitingDelivery { opacity: 1; }

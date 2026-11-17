@@ -8,6 +8,6 @@ export const ResearchOfficeSection = ({
 }: { copy?: CommonCopy; disclosures?: ResearchCopy['disclosures'] }) => (
   <OfficeContactSection copy={copy} officeCity="London" sectionId="research-office">
     <p><strong>{disclosures.entity}</strong> {disclosures.regulation}</p>
-    {disclosures.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+    <p>{disclosures.paragraphs.join(' ')}</p>
   </OfficeContactSection>
 );

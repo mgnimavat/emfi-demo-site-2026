@@ -18,6 +18,350 @@
       "a la vista."
     ]
   },
+  "linkedAnimation": {
+    "label": "Flujo de liquidación ilustrativo",
+    "buy": "COMPRA",
+    "sell": "VENTA",
+    "exposure": "Aumenta la exposición a financiación",
+    "held": "Compra retenida junto con la venta",
+    "pause": "Pausar animación",
+    "play": "Reanudar animación",
+    "states": {
+      "pending": "Sin liquidar",
+      "settled": "Liquidada",
+      "attempting": "Intentando vender",
+      "failed": "Venta fallida",
+      "available": "Disponible para vender",
+      "waiting": "Esperando la compra"
+    }
+  },
+  "accountAnimation": {
+    "sharedTitle": "Cuenta compartida",
+    "dedicatedTitle": "Cuentas separadas",
+    "clientA": "Cliente A",
+    "clientB": "Cliente B",
+    "pool": "Fondo común",
+    "accountA": "Cuenta de A",
+    "accountB": "Cuenta de B",
+    "delivery": "Entrega de B",
+    "sharedCaptions": [
+      "Llegan los valores de A. La obligación de entrega de B está pendiente.",
+      "La cuenta compartida utiliza los valores de A para la entrega de B.",
+      "Se cumple la entrega de B; la obligación de A puede seguir pendiente."
+    ],
+    "dedicatedCaptions": [
+      "Los valores de cada cliente entran en su propia cuenta.",
+      "Cada entrega utiliza los valores del cliente correspondiente.",
+      "A entrega sus valores. B entrega los suyos."
+    ],
+    "deliveryA": "Entrega de A",
+    "pending": "Obligación pendiente",
+    "delivered": "Entregado"
+  },
+  "questionnaire": {
+    "title": "¿Cómo se compara su estructura actual?",
+    "description": "Seis preguntas. Tres áreas que examinar: coste, complejidad y exposición.",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "finish": "Ver resultado",
+    "restart": "Volver a empezar",
+    "contact": "Comente su resultado con EMFI",
+    "progressLabel": "Progreso del cuestionario",
+    "resultTitle": "Por dónde empezar:",
+    "levels": {
+      "low": "Indicación baja",
+      "medium": "Indicación media",
+      "high": "Indicación alta"
+    },
+    "notice": "Este cuestionario es una herramienta informativa para facilitar una conversación. No es una cotización, una evaluación de idoneidad, un compromiso de prestar servicios ni una garantía de ahorro. Las tarifas y la disponibilidad de servicios dependen del cliente, el instrumento, la estructura de cuentas y los acuerdos aplicables.",
+    "groups": [
+      {
+        "id": "cost",
+        "label": "Coste",
+        "title": "Conviene examinar la claridad de las comisiones",
+        "body": "Solicite a su proveedor una tabla que detalle la base de cobro, los mínimos, la divisa y los cargos repercutidos."
+      },
+      {
+        "id": "complexity",
+        "label": "Complejidad",
+        "title": "Conviene examinar los traspasos",
+        "body": "Identifique quién interviene entre la ejecución y la custodia, y quién responde por las excepciones."
+      },
+      {
+        "id": "exposure",
+        "label": "Exposición",
+        "title": "Conviene examinar la estructura de cuentas",
+        "body": "Compruebe si sus valores están identificados a su nombre y cómo se gestionan las instrucciones vinculadas de compra y venta."
+      }
+    ],
+    "questions": [
+      {
+        "id": "settlement-question-1",
+        "group": "cost",
+        "title": "¿Hasta qué punto entiende las comisiones de liquidación y custodia que paga actualmente?",
+        "options": [
+          {
+            "label": "Totalmente desglosadas y comprendidas",
+            "score": 0
+          },
+          {
+            "label": "Mayormente claras, con algunas líneas sin explicar",
+            "score": 1
+          },
+          {
+            "label": "Difíciles de conciliar con lo que nos indicaron",
+            "score": 2
+          },
+          {
+            "label": "Otra respuesta / no estoy seguro",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "settlement-question-2",
+        "group": "cost",
+        "title": "¿Cómo se estructuran sus cargos actuales de custodia y mínimos?",
+        "options": [
+          {
+            "label": "Tramos transparentes según volumen",
+            "score": 0
+          },
+          {
+            "label": "Cargos fijos o agrupados",
+            "score": 1
+          },
+          {
+            "label": "Múltiples capas de cargos repercutidos",
+            "score": 2
+          },
+          {
+            "label": "Otra respuesta / no estoy seguro",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "settlement-question-3",
+        "group": "complexity",
+        "title": "¿Cuántas partes intervienen en una operación habitual entre ejecución y custodia?",
+        "options": [
+          {
+            "label": "Una o dos",
+            "score": 0
+          },
+          {
+            "label": "Tres",
+            "score": 1
+          },
+          {
+            "label": "Cuatro o más",
+            "score": 2
+          },
+          {
+            "label": "Otra respuesta / no estoy seguro",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "settlement-question-4",
+        "group": "complexity",
+        "title": "¿Qué sucede cuando una solicitud no encaja en el proceso estándar?",
+        "options": [
+          {
+            "label": "Una persona identificada lo resuelve",
+            "score": 0
+          },
+          {
+            "label": "Se escala, con retrasos",
+            "score": 1
+          },
+          {
+            "label": "Tickets y colas, respuestas lentas",
+            "score": 2
+          },
+          {
+            "label": "Otra respuesta / no estoy seguro",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "settlement-question-5",
+        "group": "exposure",
+        "title": "¿Cómo mantiene sus valores el proveedor actual?",
+        "options": [
+          {
+            "label": "En cuentas identificadas a nuestro nombre",
+            "score": 0
+          },
+          {
+            "label": "En una cuenta ómnibus compartida",
+            "score": 2
+          },
+          {
+            "label": "Depende del mercado",
+            "score": 1
+          },
+          {
+            "label": "Otra respuesta / no estoy seguro",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "settlement-question-6",
+        "group": "exposure",
+        "title": "Cuando falla una venta, ¿qué sucede con la compra vinculada?",
+        "options": [
+          {
+            "label": "Se retiene hasta que la venta esté lista",
+            "score": 0
+          },
+          {
+            "label": "Se liquida y financiamos la diferencia",
+            "score": 2
+          },
+          {
+            "label": "Depende del caso",
+            "score": 1
+          },
+          {
+            "label": "Otra respuesta / no estoy seguro",
+            "score": 1
+          }
+        ]
+      }
+    ]
+  },
+  "serviceSections": [
+    {
+      "id": "cross-border",
+      "titleLines": [
+        "Entre fronteras.",
+        "Sin cruzar clientes."
+      ],
+      "lead": "Los valores internacionales pueden necesitar moverse entre distintos depositarios. Los valores de distintos clientes no deben cruzarse entre obligaciones de liquidación no relacionadas.",
+      "body": "En una cuenta ómnibus compartida, los valores comprados para un cliente pueden utilizarse para cumplir la entrega de otro. Para clientes de mayor tamaño, podemos abrir cuentas dedicadas en Euroclear para que sus valores sigan identificados como propios.",
+      "panels": [
+        {
+          "id": "shared",
+          "title": "Cuenta ómnibus compartida",
+          "steps": [
+            "Compra del cliente A: valores recibidos",
+            "Mantenidos en un fondo común",
+            "Venta del cliente B: entrega requerida",
+            "Obligación pendiente"
+          ],
+          "body": "Una cuenta compartida puede crear riesgos de liquidación y asignación entre clientes."
+        },
+        {
+          "id": "dedicated",
+          "title": "Cuentas dedicadas por cliente",
+          "steps": [
+            "Cuenta dedicada en Euroclear del cliente A",
+            "Valores de A",
+            "Cuenta dedicada en Euroclear del cliente B",
+            "Valores de B"
+          ],
+          "body": "Las estructuras de cuentas separadas permiten identificar los valores de cada cliente."
+        }
+      ],
+      "detail": {
+        "title": "Liquidación entre depositarios",
+        "body": "Para valores y mercados admitidos, también podemos liquidar entre depositarios: por ejemplo, un vendedor que liquida a través de DTC puede entregar a un comprador que recibe a través de Euroclear. La ruta, la elegibilidad y los cargos dependen del valor y de las contrapartes."
+      }
+    },
+    {
+      "id": "linked-settlement",
+      "titleLines": [
+        "Cuidado con la brecha",
+        "de liquidación."
+      ],
+      "lead": "Cuando su compra se liquida pero la venta correspondiente no, puede tener que financiar la posición y pagar intereses mientras espera.",
+      "body": "Vinculamos su compra con su venta. Si la venta no está lista para liquidarse, se retiene la compra para evitar que tenga que financiar la posición. Pueden seguir aplicándose penalizaciones CSDR y cargos TMPG. Cuando correspondan, los trasladamos con las referencias necesarias para revisarlos e impugnarlos.",
+      "panels": [
+        {
+          "id": "unlinked",
+          "title": "Sin operaciones vinculadas",
+          "steps": [
+            "Instrucción de compra: Sin liquidar",
+            "Instrucción de venta: Esperando la compra"
+          ],
+          "body": "La compra no se ha liquidado. El intento posterior de venta falla porque los valores no están disponibles."
+        },
+        {
+          "id": "linked",
+          "title": "Con operaciones vinculadas",
+          "steps": [
+            "Instrucción de compra: Sin liquidar",
+            "Instrucción de venta: Esperando la compra"
+          ],
+          "body": "La compra vinculada se liquida primero. Los valores quedan disponibles para la venta correspondiente."
+        }
+      ]
+    },
+    {
+      "id": "trade-upload",
+      "titleLines": [
+        "Cargar operaciones, sí.",
+        "Introducirlas a mano, no."
+      ],
+      "lead": "Una confirmación Bloomberg VCON puede contener los detalles de la operación ya acordados entre las contrapartes. Volver a introducirlos crea trabajo evitable y oportunidades de error.",
+      "body": "Cargue una confirmación Bloomberg VCON y el sistema de EMFI leerá el documento y extraerá los datos de la operación al flujo de entrada. Puede revisar y validar la información extraída antes de procesarla, sin volver a introducir manualmente cada campo.",
+      "panels": [
+        {
+          "id": "upload",
+          "title": "Cargar",
+          "steps": [
+            "01"
+          ],
+          "body": "Confirmación Bloomberg VCON"
+        },
+        {
+          "id": "extract",
+          "title": "Extraer",
+          "steps": [
+            "02"
+          ],
+          "body": "Datos de la operación leídos del archivo"
+        },
+        {
+          "id": "validate",
+          "title": "Validar",
+          "steps": [
+            "03"
+          ],
+          "body": "Revisión y validación"
+        },
+        {
+          "id": "process",
+          "title": "Procesar",
+          "steps": [
+            "04"
+          ],
+          "body": "Flujo habitual de operaciones"
+        }
+      ],
+      "methodsTitle": "Más de una forma de introducir una operación.",
+      "methods": [
+        {
+          "title": "Entrada manual",
+          "body": "Introduzca operaciones individuales directamente en la interfaz de EMFI."
+        },
+        {
+          "title": "Carga masiva y archivos",
+          "body": "Cargue hojas de cálculo compatibles o envíe archivos por SFTP."
+        },
+        {
+          "title": "Integración de sistemas",
+          "body": "Envíe información de operaciones mediante API o conexiones drop-copy compatibles."
+        }
+      ],
+      "notice": "La extracción automatizada está sujeta a los formatos VCON compatibles, la calidad de la información y los controles de validación. La revisión sigue siendo parte del proceso de entrada de operaciones."
+    }
+  ],
   "overview": {
     "title": "Nada queda en la oscuridad.",
     "titleLines": [
@@ -270,5 +614,43 @@
     "Use Left and Right arrow keys to explore points, or Home and End to jump to the first and last point.": "Use las flechas izquierda y derecha para explorar los puntos, o Inicio y Fin para ir al primero y al último.",
     "Other Reports": "Otros informes",
     "Special Reports": "Informes especiales"
+  },
+  "uploadAnimation": {
+    "label": "Carga VCON ilustrativa",
+    "prompt": "Cargar una captura VCON",
+    "hint": "Confirmación de operación · PNG",
+    "document": "Bloomberg VCON · Ilustrativo",
+    "file": "vcon-confirmation.png",
+    "result": "Datos extraídos de la operación",
+    "read": "Leído",
+    "ready": "Listo para revisión",
+    "replay": "Repetir",
+    "fields": [
+      {
+        "id": "security",
+        "label": "Valor",
+        "value": "Valor A"
+      },
+      {
+        "id": "side",
+        "label": "Tipo",
+        "value": "Compra"
+      },
+      {
+        "id": "quantity",
+        "label": "Cantidad",
+        "value": "100"
+      },
+      {
+        "id": "price",
+        "label": "Precio",
+        "value": "98.250"
+      },
+      {
+        "id": "counterparty",
+        "label": "Contraparte",
+        "value": "Contraparte X"
+      }
+    ]
   }
 }

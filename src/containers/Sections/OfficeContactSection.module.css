@@ -8,6 +8,7 @@
 .container { width: calc(100% - 64px); max-width: 1320px; margin-inline: auto; }
 
 .card {
+  min-height: 560px;
   display: grid;
   grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
   overflow: hidden;
@@ -47,7 +48,7 @@
 .columns:dir(rtl) > * { direction: rtl; }
 .locationCard, .regulatoryCard { min-width: 0; overflow: hidden; border: 1px solid var(--border-default); border-radius: var(--radius-card); background: var(--bg-page); box-shadow: var(--elevation-card-hover); }
 .locationCard { display: flex; flex-direction: column; }
-.locationMap { position: relative; display: flex; flex: 1; min-height: 280px; }
+.locationMap { position: relative; display: flex; height: clamp(320px, 26vw, 380px); min-height: 320px; }
 .locationMap::after { content: ''; position: absolute; inset-inline: 0; bottom: 0; z-index: 3; height: 56px; background: linear-gradient(transparent, var(--bg-page)); pointer-events: none; }
 .locationCard .information { padding: var(--space-6); }
 .regulatoryCard { grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: center; gap: var(--space-5); padding: var(--space-6); color: var(--text-secondary); font-size: 15px; line-height: 1.75; }
@@ -59,7 +60,7 @@
 }
 
 @media (max-width: 767px) {
-  .card { grid-template-columns: minmax(0, 1fr); }
+  .card { min-height: 0; grid-template-columns: minmax(0, 1fr); }
   .information { padding: var(--space-5); }
   .columns { grid-template-columns: minmax(0, 1fr); }
   .locationCard .information, .regulatoryCard { padding: var(--space-5); }
@@ -67,4 +68,25 @@
 
 @media (max-width: 599px) {
   .container { width: calc(100% - 40px); }
+}
+
+.officeColumn { display: flex; flex-direction: column; gap: var(--space-5); min-width: 0; }
+.officeDisclosure { margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--border-default); color: var(--text-secondary); font-size: 13px; line-height: 1.75; }
+.officeDisclosure p { margin: 0; }
+.officeDisclosure p + p { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-default); }
+.integrated { padding-block: clamp(32px, 5vh, 56px); }
+.integrated .locationCard { flex: 1; }
+.integrated .locationMap { height: clamp(180px, 30vh, 300px); min-height: 180px; flex: none; }
+.integrated .information { display: flex; flex: 1; flex-direction: column; }
+.integrated .officeDetails { margin-bottom: var(--space-5); }
+
+@media (min-width: 768px) {
+  .section {
+    display: flex;
+    min-height: calc(100vh - var(--site-header-height, 78px));
+    min-height: calc(100svh - var(--site-header-height, 78px));
+  }
+  .section > .container { display: grid; }
+  .integrated .locationMap { flex: 1 0 clamp(240px, 34svh, 400px); height: auto; }
+  .integrated .information { flex: none; }
 }
