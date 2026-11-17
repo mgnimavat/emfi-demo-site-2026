@@ -112,10 +112,19 @@ export const LocalizedServicePageSection = ({
             ) : wealthVariant === 'current' ? <>
               <WealthServiceSections copy={dictionary.wealth.redesign} />
               <OfficeContactSection copy={dictionaries[locale].common} officeCity="Cayman" sectionId="wealth-office"
-                layout="columns" officeCities={['Dubai', 'Cayman']}>
-                <p><strong>{dictionary.wealth.disclosures.entity}</strong> {dictionary.wealth.disclosures.introduction}</p>
-                {dictionary.wealth.disclosures.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-              </OfficeContactSection>
+                layout="columns" officeCities={['Dubai', 'Cayman']}
+                officeDisclosures={{
+                  Dubai: <>
+                    {dictionary.settlement.disclosures.entities.map((entity) => (
+                      <p key={entity.name}><strong>{entity.name}</strong> {entity.body}</p>
+                    ))}
+                    <p>{dictionary.settlement.disclosures.notice}</p>
+                  </>,
+                  Cayman: <>
+                    <p><strong>{dictionary.wealth.disclosures.entity}</strong> {dictionary.wealth.disclosures.introduction}</p>
+                    {dictionary.wealth.disclosures.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  </>,
+                }} />
             </> : <WealthAssetSections copy={dictionary.wealth} locale={locale}
               officeCopy={dictionaries[locale].common} />}
           </>

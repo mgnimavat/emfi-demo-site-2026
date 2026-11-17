@@ -34,3 +34,4 @@
 .uploadTitle { composes: sectionTitle from '../../components/sections/archive/theme.module.css'; max-width: none; margin: 0; }
 .uploadIntroduction .copy { max-width: 85ch; }
 .uploadIntroduction .lead { font-size: clamp(16px, 1.5cqi, 20px); font-weight: 500; line-height: 1.65; text-wrap: pretty; }
+.uploadDescription { max-width: 110ch; margin-top: var(--space-6); }

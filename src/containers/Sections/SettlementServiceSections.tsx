@@ -28,7 +28,7 @@ export const SettlementServiceSections = ({ copy }: { copy: SettlementCopy }) =>
             </ExecutionReveal>
             <ExecutionReveal delay={0.12} className={styles.copy}>
               <p className={styles.lead}>{section.lead}</p>
-              <p className={styles.body}>{section.body}</p>
+              {section.id !== 'trade-upload' ? <p className={styles.body}>{section.body}</p> : null}
             </ExecutionReveal>
           </div>
           {section.id === 'cross-border' ? <SettlementAccountAnimation copy={copy.accountAnimation} /> : section.id === 'linked-settlement' ? (
@@ -61,6 +61,11 @@ export const SettlementServiceSections = ({ copy }: { copy: SettlementCopy }) =>
             })}
           </div>
           )}
+          {section.id === 'trade-upload' ? (
+            <ExecutionReveal className={styles.uploadDescription}>
+              <p className={styles.body}>{section.body}</p>
+            </ExecutionReveal>
+          ) : null}
           {section.detail ? (
             <ExecutionReveal className={styles.detail}>
               <h3>{section.detail.title}</h3>

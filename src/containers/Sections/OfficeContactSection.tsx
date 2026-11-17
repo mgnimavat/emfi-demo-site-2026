@@ -13,7 +13,8 @@ export const OfficeContactSection = ({
   children,
   layout = 'horizontal',
   officeCities,
-}: { copy?: CommonCopy; officeCity: OfficeCity; sectionId: string; children?: ReactNode; layout?: 'horizontal' | 'columns'; officeCities?: readonly OfficeCity[] }) => {
+  officeDisclosures,
+}: { copy?: CommonCopy; officeCity: OfficeCity; sectionId: string; children?: ReactNode; layout?: 'horizontal' | 'columns'; officeCities?: readonly OfficeCity[]; officeDisclosures?: Partial<Record<OfficeCity, ReactNode>> }) => {
   const findOffice = (city: OfficeCity) => {
     const originalOffice = dictionaries.en.common.locations.places.find((place) => place.city === city);
     return copy.locations.places.find((place) => place.mapQuery === originalOffice?.mapQuery);
@@ -21,7 +22,7 @@ export const OfficeContactSection = ({
   const office = findOffice(officeCity);
   const columnOffices = (officeCities ?? [officeCity]).flatMap((city) => {
     const place = findOffice(city);
-    return place ? [place] : [];
+    return place ? [{ city, place }] : [];
   });
   if (!office) return null;
 
@@ -53,17 +54,24 @@ export const OfficeContactSection = ({
 
   return (
     <section id={sectionId} className={styles.section} aria-labelledby={layout === 'columns' ? undefined : `${sectionId}-heading`}
-      aria-label={layout === 'columns' ? columnOffices.map((place) => place.city).join(' · ') : undefined}>
+      aria-label={layout === 'columns' ? columnOffices.map(({ place }) => place.city).join(' · ') : undefined}>
       <div className={`${styles.container} ${layout === 'columns' ? styles.columns : ''}`}>
         {layout === 'columns' ? (
           <>
-            {columnOffices.map((place, index) => (
-              <article key={place.mapQuery} className={styles.locationCard}>
-                <div className={styles.locationMap}><LocationMap place={place} copy={copy} /></div>
-                <div className={styles.information}>
-                  {officeInformation(place, `${sectionId}-${index}-heading`)}
-                </div>
-              </article>
+            {columnOffices.map(({ city, place }, index) => (
+              <div key={place.mapQuery} className={styles.officeColumn}>
+                <article className={styles.locationCard}>
+                  <div className={styles.locationMap}><LocationMap place={place} copy={copy} /></div>
+                  <div className={styles.information}>
+                    {officeInformation(place, `${sectionId}-${index}-heading`)}
+                  </div>
+                </article>
+                {officeDisclosures?.[city] ? (
+                  <div className={styles.officeDisclosure} aria-labelledby={`${sectionId}-${index}-heading`}>
+                    {officeDisclosures[city]}
+                  </div>
+                ) : null}
+              </div>
             ))}
             {children ? <div className={styles.regulatoryCard}>{children}</div> : null}
           </>

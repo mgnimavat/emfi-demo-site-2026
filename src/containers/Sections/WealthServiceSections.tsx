@@ -42,7 +42,7 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
           <svg className={styles.logoFilter} aria-hidden="true" focusable="false">
             <defs>
               <filter id="wealth-provider-navy" colorInterpolationFilters="sRGB">
-                <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.2126 -.7152 -.0722 0 1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.6378 -2.1456 -.2166 0 3" />
                 <feComposite in2="SourceAlpha" operator="in" result="ink" />
                 <feFlood floodColor="var(--text-primary)" />
                 <feComposite in2="ink" operator="in" />

@@ -48,7 +48,7 @@
 .columns:dir(rtl) > * { direction: rtl; }
 .locationCard, .regulatoryCard { min-width: 0; overflow: hidden; border: 1px solid var(--border-default); border-radius: var(--radius-card); background: var(--bg-page); box-shadow: var(--elevation-card-hover); }
 .locationCard { display: flex; flex-direction: column; }
-.locationMap { position: relative; display: flex; flex: 1; min-height: 280px; }
+.locationMap { position: relative; display: flex; height: clamp(320px, 26vw, 380px); min-height: 320px; }
 .locationMap::after { content: ''; position: absolute; inset-inline: 0; bottom: 0; z-index: 3; height: 56px; background: linear-gradient(transparent, var(--bg-page)); pointer-events: none; }
 .locationCard .information { padding: var(--space-6); }
 .regulatoryCard { grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: center; gap: var(--space-5); padding: var(--space-6); color: var(--text-secondary); font-size: 15px; line-height: 1.75; }
@@ -69,3 +69,9 @@
 @media (max-width: 599px) {
   .container { width: calc(100% - 40px); }
 }
+
+.officeColumn { display: flex; flex-direction: column; gap: var(--space-5); min-width: 0; }
+.officeDisclosure { flex: 1; padding: var(--space-6); border: 1px solid var(--border-default); border-radius: var(--radius-card); background: var(--bg-page); color: var(--text-secondary); font-size: 13px; line-height: 1.75; }
+.officeDisclosure p { margin: 0; }
+.officeDisclosure p + p { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-default); }
+@media (max-width: 767px) { .officeDisclosure { padding: var(--space-5); } }

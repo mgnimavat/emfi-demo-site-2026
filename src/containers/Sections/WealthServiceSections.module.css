@@ -17,6 +17,10 @@
 .providers { margin-top: 0; }
 .providerConnector { display: block; margin: var(--space-3) auto; color: var(--color-blue-200); }
 .providerGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); margin: var(--space-5) 0 0; padding: 0; list-style: none; }
+@media (min-width: 768px) {
+  .providerGrid { display: flex; flex-wrap: wrap; justify-content: center; }
+  .providerGrid > li { flex: 0 1 calc((100% - 2 * var(--space-5)) / 3); }
+}
 .provider { display: grid; justify-items: center; align-content: center; gap: var(--space-3); min-width: 0; min-height: clamp(168px, 14cqi, 192px); padding: var(--space-5) clamp(16px, 2cqi, 32px); border: 1px solid var(--flow-from); border-radius: var(--radius-card); background: color-mix(in srgb, var(--color-blue-100) 18%, var(--bg-soft)); text-align: center; }
 .logoFilter { position: absolute; width: 0; height: 0; overflow: hidden; }
 .providerBrand { display: grid; place-items: center; width: 100%; max-width: 260px; height: 104px; overflow: hidden; }
