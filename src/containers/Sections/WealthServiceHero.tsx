@@ -41,24 +41,28 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
   const endpoint = coordinates[coordinates.length - 1];
 
   return (
-    <section className={styles.section} aria-labelledby="wealth-fund-heading">
+    <section className={styles.section} aria-labelledby="wealth-heading">
       <div className={styles.container}>
-        <figure className={styles.fund}>
-          <header className={styles.header}>
-            <div className={styles.heading}>
-              <p className={styles.eyebrow}>{copy.titleLines.join(' ')}</p>
-              <h1 id="wealth-fund-heading" className={styles.fundTitle}>{copy.fundName}</h1>
-            </div>
-            <div className={styles.ranges} role="group" aria-label={copy.fundName}>
+        <header className={styles.header}>
+          <h1 id="wealth-heading" className={styles.title}>
+            {copy.titleLines.map((line, index) => (
+              <span key={line}>{index > 0 ? ' ' : ''}{line}</span>
+            ))}
+          </h1>
+          <div className={styles.fundControls}>
+            <h2 id="wealth-fund-heading" className={styles.fundTitle}>{copy.fundName}</h2>
+            <div className={styles.ranges} role="group" aria-labelledby="wealth-fund-heading">
               {copy.ranges.map((label, index) => (
                 <button key={label} type="button" aria-pressed={range === index}
                   onClick={() => setRange(index)}>{label}</button>
               ))}
             </div>
-          </header>
-          <div className={styles.meta}>
-            <span className={styles.series}><span className={styles.swatch} aria-hidden="true" />{copy.chartSeries}</span>
           </div>
+        </header>
+        <figure className={styles.fund}>
+          <figcaption className={styles.meta}>
+            <span className={styles.series}><span className={styles.swatch} aria-hidden="true" />{copy.chartSeries}</span>
+          </figcaption>
           <div className={styles.plot}>
             <svg viewBox={`0 0 ${fundChart.width} ${fundChart.height}`} preserveAspectRatio="none"
               role="img" aria-labelledby={`${chartId}-title`}>
