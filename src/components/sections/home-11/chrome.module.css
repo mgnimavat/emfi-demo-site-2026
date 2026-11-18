@@ -263,8 +263,10 @@
   padding: 0;
   list-style: none;
 }
-.social a { display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 32px; height: 32px; border: 1px solid #fff; border-radius: 50%; background: #fff; color: #072139; }
+.social a { display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 32px; height: 32px; border: 1px solid #fff; border-radius: 50%; background: #fff; color: #072139; transition: background .2s ease, color .2s ease; }
 .social a:hover { background: transparent; color: #fff; }
+.socialOutline a { background: transparent; color: #fff; }
+.socialOutline a:hover { background: #fff; color: #072139; }
 .social svg { display: block; width: auto; height: 16px; fill: currentColor; }
 .footer a:focus-visible { outline: 3px solid #8098cc; outline-offset: 5px; }
 

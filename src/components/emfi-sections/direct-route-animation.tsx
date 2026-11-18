@@ -34,7 +34,7 @@ export const DirectRouteAnimation = ({
           <span style={{ position: "absolute", left: 0, top: 0, display: "grid", placeItems: "center", transform: n.tf, transition: "background .25s ease", ...css(n.dot) }}>
             {n.sw && n.e ? locale === 'ar' ? <span data-route-mark><MarkSwitch draw={n.e} size={n.ms} /></span> : <MarkSwitch draw={n.e} size={n.ms} /> : null}
           </span>
-          <span data-route-label dir={locale === 'ar' ? 'rtl' : undefined} style={{ position: "absolute", display: "flex", flexDirection: "column", gap: 3, ...css(n.ls) }}>
+          <span data-route-label dir={locale === 'ar' ? 'rtl' : undefined} style={{ position: "absolute", display: "flex", flexDirection: "column", gap: 3, opacity: n.labelOp ?? 1, ...css(n.ls) }}>
             <strong style={{ fontSize: n.fs, fontWeight: 800, lineHeight: 1.2, color: n.nc }}>{t(n.name)}</strong>
             <span style={{ fontSize: 12, fontWeight: 700, lineHeight: 1.25, color: n.subC, opacity: n.subOp }}>{t(n.sub)}</span>
           </span>

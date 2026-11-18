@@ -70,7 +70,7 @@ const FooterLinkItems = ({ links, locale, t }: {
   ));
 };
 
-export const Home11Footer = () => {
+export const Home11Footer = ({ socialVariant = "filled" }: { socialVariant?: "filled" | "outline" } = {}) => {
   const locale = getPageLocale(usePathname());
   const messages: Readonly<Record<string, string>> = { en: enMessages, es: esMessages, ar: arMessages }[locale];
   const t = (value: string) => messages[value] ?? value;
@@ -82,7 +82,7 @@ export const Home11Footer = () => {
             <Link href={localizeHref("/", locale)} className={styles.footerBrandLink} aria-label="EMFI home">
               <BrandSign className={styles.footerBrandMark} />
             </Link>
-            <ul className={styles.social} aria-label={t("Social media")}>
+            <ul className={socialVariant === "outline" ? `${styles.social} ${styles.socialOutline}` : styles.social} aria-label={t("Social media")}>
               {socialLinks.map((item) => (
                 <li key={item.title}>
                   <a href={item.href} title={item.title} aria-label={item.title} {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
