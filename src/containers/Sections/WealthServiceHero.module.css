@@ -3,7 +3,7 @@
   min-height: calc(100vh - var(--site-header-height, 78px));
   min-height: calc(100svh - var(--site-header-height, 78px));
   padding-block: clamp(40px, 4.5vw, 72px);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-soft) 55%, var(--bg-page)), var(--bg-page));
+  background: var(--bg-page);
   color: var(--text-primary);
   font-family: var(--font-inter), Inter, Arial, sans-serif;
 }
@@ -11,9 +11,11 @@
 .container {
   display: flex;
   flex-direction: column;
+  gap: clamp(var(--space-6), 4vw, var(--space-8));
   width: calc(100% - 64px);
   max-width: 1320px;
   margin-inline: auto;
+  container-type: inline-size;
 }
 
 .fund {
@@ -22,45 +24,55 @@
   flex-direction: column;
   min-width: 0;
   margin: 0;
-  padding: clamp(24px, 3vw, 40px);
-  border: 1px solid color-mix(in srgb, var(--color-blue-100) 50%, var(--bg-page));
-  border-radius: var(--radius-surface);
-  background: var(--bg-page);
-  box-shadow: 0 12px 48px color-mix(in srgb, var(--text-primary) 6%, transparent);
 }
 
-.header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-5); }
-.heading { min-width: 0; }
-.eyebrow { margin: 0 0 var(--space-3); color: var(--text-muted); font-size: 11px; font-weight: 600; line-height: 1.5; letter-spacing: .1em; text-transform: uppercase; }
-.fundTitle { margin: 0; font-weight: 750; letter-spacing: -.045em; line-height: 1.15; }
-.section .header .fundTitle { font-size: clamp(25px, 2.8vw, 36px); }
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) fit-content(40%);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+.section .title {
+  margin: 0;
+  font-size: clamp(38px, 6.2cqi, 88px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.055em;
+  overflow-wrap: anywhere;
+}
+.section:lang(es) .title { font-size: clamp(32px, 4.75cqi, 70px); }
+.title span { display: block; }
+.fundControls { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-4); min-width: 0; text-align: end; }
+.fundTitle { margin: 0; font-size: clamp(21px, 2.5cqi, 32px); font-weight: 750; letter-spacing: -.035em; line-height: 1.2; }
 .ranges { display: inline-flex; flex: none; gap: var(--space-1); padding: var(--space-1); border: 1px solid var(--border-default); border-radius: var(--radius-pill); background: var(--bg-soft); }
 .ranges button { min-height: 40px; min-width: 56px; padding: var(--space-2) var(--space-4); border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-secondary); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; transition: background-color .2s ease, color .2s ease; }
 .ranges button[aria-pressed='true'] { background: var(--action-primary); color: var(--text-inverse); }
 .ranges button:hover:not([aria-pressed='true']) { background: var(--bg-page); color: var(--text-primary); }
 .ranges button:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 3px; }
-.meta { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-block: var(--space-6) var(--space-4); }
+.meta { display: flex; margin-block-end: var(--space-2); }
 .series { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
 .swatch { width: 18px; height: 3px; border-radius: var(--radius-pill); background: var(--color-blue-550); }
 .plot { position: relative; flex: 1; min-height: 260px; }
 .plot svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; }
-.gridLine { stroke: var(--border-default); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .65; }
+.gridLine { stroke: var(--color-blue-100); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .55; }
 .line { fill: none; stroke: var(--color-blue-550); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 .revealMask { transform-box: fill-box; transform-origin: left center; animation: revealChart 1.1s cubic-bezier(.22, 1, .36, 1) both; }
 .endpointHalo, .endpoint { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .endpointHalo { stroke: var(--bg-page); stroke-width: 12; }
 .endpoint { stroke: var(--color-blue-550); stroke-width: 7; }
-.axis { display: flex; justify-content: space-between; gap: var(--space-4); margin: var(--space-2) var(--space-5) 0; color: var(--text-muted); font-size: 11px; line-height: 1.5; }
+.axis { direction: ltr; display: flex; justify-content: space-between; gap: var(--space-4); margin-inline: 2%; color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
 @keyframes revealChart { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (max-width: 767px) {
+  .header { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
+  .fundControls { align-items: flex-start; text-align: start; }
+  .section .title { font-size: clamp(32px, 10cqi, 60px); }
+  .section:lang(es) .title { font-size: clamp(29px, 8cqi, 56px); }
+}
 @media (max-width: 599px) {
   .container { width: calc(100% - 40px); }
-  .fund { padding: var(--space-5) var(--space-4); border-radius: var(--radius-card); }
-  .header { gap: var(--space-5); }
-  .ranges { width: 100%; }
+  .ranges { max-width: 100%; }
   .ranges button { flex: 1; padding-inline: var(--space-3); }
-  .meta { margin-top: var(--space-5); gap: var(--space-2); }
-  .series { font-size: 11px; }
-  .axis { margin-inline: var(--space-2); font-size: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .revealMask { animation: none; }

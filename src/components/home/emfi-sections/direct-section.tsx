@@ -81,7 +81,7 @@ export function DirectSection({
           zIndex: light ? 2 : undefined,
           maxWidth: split ? 1480 : 1320,
           margin: "0 auto",
-          padding: split ? "clamp(56px, 7vh, 88px) clamp(110px, calc(8vw + 70px), 190px)" : sectionPad(marked, !light, pinned),
+          padding: split ? "0 clamp(110px, calc(8vw + 70px), 190px)" : sectionPad(marked, !light, pinned),
           borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)",
           ...sectionFrame(pinned, centered, routeCols),
           ...(split ? { alignItems: "flex-start", justifyContent: "flex-start", gap: 0 } : null),
@@ -90,7 +90,8 @@ export function DirectSection({
         {marked && !eyebrow && !split ? <p className={styles.whyKicker} data-why-origin style={centered || pinned ? { width: "100%", justifyContent: "center", marginBottom: 0 } : undefined}>{t("Why EMFI")}</p> : null}
         <div className={split ? styles.splitDirectCopy : undefined} style={{ position: "relative", width: pinned && !split ? "min(100%, 560px)" : undefined }}>
           <SectionCopy
-            title={split ? "1. Direct." : "Direct."}
+            title="Direct."
+            index={split ? "01" : undefined}
             eyebrow={eyebrow}
             plainEyebrow={pinned && Boolean(eyebrow)}
             origin={marked && Boolean(eyebrow)}

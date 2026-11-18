@@ -9,7 +9,7 @@
 .body { margin: 0; color: var(--text-secondary); font-size: 15px; line-height: 1.75; }
 .structure { display: grid; justify-items: center; max-width: 880px; margin: 0 auto; text-align: center; }
 .fundRoot { display: grid; justify-items: center; gap: var(--space-3); width: 100%; padding: var(--space-6); border-radius: var(--radius-card); background: var(--bg-inverse); color: var(--text-inverse); }
-.fundRoot h3, .portfolios h4, .providers h3, .mandateCard h3 { margin: 0; font-size: clamp(22px, 2vw, 27px); font-weight: 700; line-height: 1.2; letter-spacing: -.03em; }
+.fundRoot h3, .portfolios h4, .providers h3, .mandateStep h3 { margin: 0; font-size: clamp(22px, 2vw, 27px); font-weight: 700; line-height: 1.2; letter-spacing: -.03em; }
 .fundRoot p { margin: 0; color: var(--text-inverse-muted); font-size: 14px; }
 .connector { margin-block: var(--space-3); color: var(--color-blue-200); }
 .portfolios { width: 100%; padding: var(--space-6); border: 1px solid var(--color-blue-100); border-radius: var(--radius-card); background: var(--bg-page); }
@@ -33,15 +33,75 @@
 .provider > span { color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
 .providers > h3 { text-align: center; }
 .notice { margin: var(--space-6) 0 0; color: var(--text-muted); font-size: 12px; line-height: 1.7; }
-.mandateGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); margin: 0; padding: 0; list-style: none; }
-.mandateCard { height: 100%; padding: clamp(24px, 3vw, 40px); border: 1px solid var(--color-blue-100); border-radius: var(--radius-card); }
-.number { display: block; margin-bottom: var(--space-5); color: var(--color-blue-200); font-size: 32px; font-weight: 700; }
-.mandateCard p { margin-top: var(--space-4); }
+.mandateSection {
+  box-sizing: border-box;
+  display: grid;
+  align-items: center;
+  min-height: calc(100vh - var(--site-header-height, 78px));
+  min-height: calc(100svh - var(--site-header-height, 78px));
+}
+.mandateLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(var(--space-6), 7cqi, var(--space-9));
+}
+.mandateIntro { display: grid; gap: var(--space-5); }
+.mandateTitle {
+  margin: 0;
+  font-size: clamp(40px, 5.5cqi, 76px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -.05em;
+  text-wrap: balance;
+}
+.mandateLead {
+  margin: 0;
+  max-width: 48ch;
+  color: var(--text-secondary);
+  font-size: clamp(16px, 1.55cqi, 21px);
+  line-height: 1.65;
+}
+.mandateSteps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+  background: var(--bg-soft);
+}
+.mandateStep {
+  display: grid;
+  grid-template-columns: minmax(3ch, auto) minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: clamp(var(--space-5), 2.7cqi, var(--space-7));
+}
+.mandateStep + .mandateStep { border-block-start: 1px solid var(--border-default); }
+.mandateNumber {
+  color: var(--text-primary);
+  font-size: clamp(22px, 2.8cqi, 38px);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+.mandateStepCopy {
+  padding-inline-start: var(--space-4);
+  border-inline-start: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+}
+.mandateStep p { margin-block-start: var(--space-2); }
 .navy { background: var(--bg-inverse); color: var(--text-inverse); }
 .navy .lead, .navy .notice { color: var(--text-inverse-muted); }
 .teamGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); margin-top: var(--space-7); }
 @media (max-width: 1023px) { .providerGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 767px) { .teamGrid, .mandateGrid { grid-template-columns: minmax(0, 1fr); } .providerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 767px) {
+  .teamGrid, .mandateLayout { grid-template-columns: minmax(0, 1fr); }
+  .providerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mandateTitle { text-wrap: pretty; }
+  .mandateStep { gap: var(--space-3); padding: var(--space-4); }
+  .mandateStepCopy { padding-inline-start: var(--space-3); }
+}
 
 @media (max-width: 599px) { .providerGrid { grid-template-columns: minmax(0, 1fr); } }
 

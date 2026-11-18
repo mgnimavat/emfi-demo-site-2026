@@ -67,27 +67,32 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
         </div>
       </div>
     </section>
-    <section id="investment-mandate" className={styles.section} aria-labelledby="mandate-heading">
+    <section id="investment-mandate" className={`${styles.section} ${styles.mandateSection}`}
+      aria-labelledby="mandate-heading">
       <div className={styles.container}>
-        <div className={styles.introduction}>
-          <ExecutionReveal>
-            <h2 id="mandate-heading" className={styles.title}>
-              {copy.mandate.titleLines.map((line) => <span key={line}>{line}</span>)}
+        <div className={styles.mandateLayout}>
+          <ExecutionReveal className={styles.mandateIntro}>
+            <h2 id="mandate-heading" className={styles.mandateTitle}>
+              {copy.mandate.titleLines.join(' ')}
             </h2>
+            <p className={styles.mandateLead}>{copy.mandate.body}</p>
           </ExecutionReveal>
-          <ExecutionReveal delay={0.12}><p className={styles.lead}>{copy.mandate.body}</p></ExecutionReveal>
+          <ExecutionReveal delay={0.12}>
+            <ol className={styles.mandateSteps} role="list">
+              {copy.mandate.steps.map((step, index) => (
+                <li key={step.title} className={styles.mandateStep}>
+                  <span className={styles.mandateNumber} aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <div className={styles.mandateStepCopy}>
+                    <h3>{step.title}</h3>
+                    <p className={styles.body}>{step.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </ExecutionReveal>
         </div>
-        <ol className={styles.mandateGrid}>
-          {copy.mandate.steps.map((step, index) => (
-            <li key={step.title}>
-              <ExecutionReveal className={styles.mandateCard}>
-                <span className={styles.number}>{String(index + 1).padStart(2, '0')}</span>
-                <h3>{step.title}</h3>
-                <p className={styles.body}>{step.body}</p>
-              </ExecutionReveal>
-            </li>
-          ))}
-        </ol>
       </div>
     </section>
     <section id="portfolio-visibility" className={`${styles.section} ${styles.navy}`} aria-labelledby="portfolio-visibility-heading">

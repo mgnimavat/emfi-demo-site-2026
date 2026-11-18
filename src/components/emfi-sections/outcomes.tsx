@@ -67,6 +67,7 @@ function BodyText({ body, color, centered = false, className, split = false }: {
 
 export function SectionCopy({
   title,
+  index,
   lead,
   body,
   action,
@@ -77,6 +78,7 @@ export function SectionCopy({
   origin = false,
 }: {
   title: string;
+  index?: string;
   lead?: string;
   body?: string;
   action?: { href: string; label: string };
@@ -100,7 +102,17 @@ export function SectionCopy({
           <span>{t(eyebrow)}</span>
         </p>
       ) : null}
-      <h2 className={styles.sectionTitle} style={{ color: titleColor }}>{t(title)}</h2>
+      <h2 className={index ? `${styles.sectionTitle} ${styles.sectionTitleIndexed}` : styles.sectionTitle} style={{ color: titleColor }}>
+        {index ? (
+          <>
+            <span className={styles.sectionIndex}>{index}</span>
+            <span className={styles.sectionIndexRule} aria-hidden="true" />
+            <span className={styles.sectionIndexLabel}>{t(title)}</span>
+          </>
+        ) : (
+          t(title)
+        )}
+      </h2>
       {lead ? (
         <p className={styles.sectionLead} style={{ color: titleColor }}>
           {t(lead).split("\n").flatMap((line, index) => (index === 0 ? [line] : [<br key={index} />, line]))}

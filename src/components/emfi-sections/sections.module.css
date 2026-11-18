@@ -13,6 +13,36 @@
   letter-spacing: -0.05em;
 }
 
+.sectionTitleIndexed {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.6vw, 22px);
+  width: max-content;
+  max-width: 100%;
+}
+
+.sectionIndex {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.sectionIndexRule {
+  flex: none;
+  align-self: stretch;
+  width: 1px;
+  min-height: 0.82em;
+  margin-block: 0.08em;
+  background: #a2c2fd;
+}
+
+.sectionIndexLabel {
+  min-width: 0;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+
 .sectionCopy .sectionLead {
   margin: 26px 0 0;
   font-size: clamp(28px, 3.2vw, 40px);

@@ -57,7 +57,7 @@
 .compact {
   --research-report-header: var(--bg-page);
   padding-block: var(--space-8);
-  background: var(--bg-subtle);
+  background: var(--color-blue-25);
 }
 .section.light .title { font-size: clamp(42px, 7.2cqi, 96px); }
 
