@@ -1,5 +1,50 @@
-.hero { padding-block: clamp(40px,6vw,72px); background: var(--bg-page, #fff); color: var(--text-primary, #071832); }
-.layout { box-sizing: border-box; width: calc(100% - 64px); max-width: 1320px; margin-inline: auto; }
-.copy { container-type: inline-size; }
-.copy .heading { margin: 0; font-size: clamp(36px,8.1cqi,104px); font-weight: 800; line-height: 1; letter-spacing: -.05em; }
-@media (max-width: 599px) { .layout { width: calc(100% - 40px); } }
+/* Match home #expect fullHero + spinMark treatment exactly. */
+.hero {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-bottom: var(--home-12-header-h, 77.36px);
+  color: #fff;
+  background:
+    radial-gradient(60% 120% at 50% 0%, rgb(162 194 253 / 16%), transparent 70%),
+    #071832;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--home-12-header-h, 77.36px) + 20px);
+  right: 0;
+  z-index: 0;
+  width: auto;
+  height: calc(100% - var(--home-12-header-h, 77.36px) + 36px);
+  aspect-ratio: 1;
+  pointer-events: none;
+  transform: translateX(56px);
+  transform-origin: center;
+  background: rgb(232 240 250 / 4%);
+  -webkit-mask: url("/emfi/emfi-mark.svg") center / contain no-repeat;
+  mask: url("/emfi/emfi-mark.svg") center / contain no-repeat;
+  animation: about-hero-mark-spin 40s linear infinite;
+}
+
+.hero :global([class*="lockup"]) {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+@keyframes about-hero-mark-spin {
+  from { transform: translateX(56px) rotate(0deg); }
+  to { transform: translateX(56px) rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::after { animation: none; }
+}

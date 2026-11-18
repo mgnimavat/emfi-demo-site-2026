@@ -7,37 +7,57 @@
     [
       "2016",
       "Fundación",
-      "Constitución de EMFI Securities. Primeras relaciones de negociación institucional."
+      "EMFI Securities Limited se constituyó el 26 de octubre de 2016, inicialmente bajo el nombre SNB Securities Limited."
     ],
     [
       "2017",
-      "Autorización",
-      "Autorización de la FCA. Una base regulada para el acceso directo al mercado."
+      "EMFI Securities",
+      "La compañía adoptó el nombre EMFI Securities y comenzó a construir sus primeras relaciones institucionales."
     ],
     [
       "2018",
-      "Liquidación y custodia",
-      "Ampliación de la ejecución a la infraestructura de custodia."
+      "Estructura del grupo",
+      "EMFI Capital Limited y EMFI Group Limited se constituyeron en mayo de 2018, aportando una holding y una segunda entidad operativa."
+    ],
+    [
+      "2019",
+      "Inversión y custodia en el Reino Unido",
+      "EMFI Capital Limited recibió autorización de la FCA el 1 de febrero de 2019 y se registró como AIFM autorizado pequeño del Reino Unido el 29 de octubre de 2019."
     ],
     [
       "2020",
       "Acceso a depositarios",
-      "Participación directa en la infraestructura de liquidación institucional."
+      "EMFI obtuvo acceso directo a la infraestructura de liquidación institucional, eliminando capas entre los clientes y el depositario."
+    ],
+    [
+      "2021",
+      "Consolidación del modelo",
+      "La ejecución, la liquidación y la custodia siguieron desarrollándose como una operación conectada, antes del paso a la tecnología propia."
     ],
     [
       "2022",
-      "Tecnología",
-      "Plataforma propia diseñada en torno al flujo de trabajo del cliente."
+      "Tecnología propia",
+      "EMFI lanzó su propia plataforma de flujo de trabajo para clientes: Workstation para ejecución, Dashboard para la visión de la cuenta y acceso móvil."
+    ],
+    [
+      "2023",
+      "Ampliación de Intelligence",
+      "Los economistas y estrategas de EMFI siguieron ampliando la cobertura de mercados emergentes y de frontera."
+    ],
+    [
+      "2024",
+      "Estructura de fondos",
+      "EMFI Fund SPC, una compañía de carteras segregadas de las Islas Caimán, ofrece una estructura común para carteras de inversión distintas."
     ],
     [
       "2025",
-      "DIFC",
-      "Presencia en Dubái. Operaciones reguladas por la DFSA."
+      "Presencia en Dubái y membresía sectorial",
+      "EMFI Capital (DIFC) Limited obtuvo licencia de la DFSA el 30 de julio de 2025, y EMFI Group Limited figura en EMTA como Buy-Side Member desde el cuarto trimestre de 2025."
     ],
     [
       "2026",
       "Diez años",
-      "Una década construyendo acceso directo."
+      "Diez años desde la constitución de la compañía operativa original. Direct. Responsive. Dependable."
     ]
   ],
   "peopleTitle": "Las personas que responden.",
@@ -174,5 +194,62 @@
       "description": "Dirige el desarrollo de software, la arquitectura moderna y la entrega de aplicaciones seguras y escalables en EMFI."
     }
   ],
-  "boardLabel": "Miembro del consejo"
+  "boardLabel": "Miembro del consejo",
+  "hero": {
+    "lead": "Diez años.",
+    "accent": "Una cadena conectada."
+  },
+  "market": {
+    "title": [
+      "Construida para un",
+      "mercado distinto"
+    ],
+    "body": "EMFI nació en valores especializados y servicios financieros de mercados emergentes. A medida que evolucionaron las necesidades de los clientes, también lo hizo la firma. Hoy la cadena va de la inteligencia a la ejecución, y de la liquidación a la custodia, con fondos y tecnología construidos encima. Operamos a través de entidades legales especializadas en el Reino Unido y el Centro Financiero Internacional de Dubái, con estructuras de fondos en las Islas Caimán, para clientes profesionales y contrapartes elegibles. Cada servicio lo presta la entidad correspondiente, dentro de sus permisos."
+  },
+  "entities": {
+    "title": [
+      "Un grupo.",
+      "Entidades especializadas"
+    ],
+    "body": "Las actividades de EMFI se desarrollan a través de entidades legales distintas. La entidad que presta un servicio depende de la actividad, la jurisdicción, la clasificación del cliente y los permisos aplicables.",
+    "holding": {
+      "badge": "Holding",
+      "jurisdiction": "Reino Unido",
+      "name": "EMFI Group Limited",
+      "role": "Sociedad holding del grupo",
+      "meta": "Company no. 11391808"
+    },
+    "children": [
+      {
+        "badge": "FCA",
+        "jurisdiction": "Reino Unido",
+        "name": "EMFI Securities Limited",
+        "role": "Intelligence y ejecución",
+        "meta": "FCA FRN 763979"
+      },
+      {
+        "badge": "FCA",
+        "jurisdiction": "Reino Unido",
+        "name": "EMFI Capital Limited",
+        "role": "Inversión, custodia y servicios relacionados, sujetos a permisos",
+        "meta": "FCA FRN 822389"
+      },
+      {
+        "badge": "DFSA",
+        "jurisdiction": "Centro Financiero Internacional de Dubái",
+        "name": "EMFI Capital (DIFC) Limited",
+        "role": "Presencia regulada en Dubái",
+        "meta": "DFSA ref. F011663"
+      },
+      {
+        "badge": "Fondo",
+        "jurisdiction": "Islas Caimán",
+        "name": "EMFI Fund SPC",
+        "role": "Compañía de carteras segregadas, estructura de fondos",
+        "meta": "Solo oficina registrada",
+        "dashed": true
+      }
+    ],
+    "note": "Resumen funcional, no un organigrama de propiedad legal."
+  }
 }

@@ -58,7 +58,14 @@ export const AboutTimeline = ({ headingAs: Heading = "h2", showCounter = true, s
   };
 
   return (
-    <section id="about-journey" ref={sectionRef} className={styles.timeline} data-static={Boolean(reduceMotion)} aria-labelledby="timeline-heading">
+    <section
+      id="about-journey"
+      ref={sectionRef}
+      className={styles.timeline}
+      data-static={Boolean(reduceMotion)}
+      aria-labelledby="timeline-heading"
+      style={{ height: `${Math.max(320, count * 48)}svh` }}
+    >
       <div className={styles.stage}>
         {showMark ? (
           <div className={styles.mark} aria-hidden="true">
