@@ -81,6 +81,7 @@
 .integrated .officeDetails { margin-bottom: var(--space-5); }
 
 @media (min-width: 768px) {
+  .card > .information { align-self: center; }
   .section {
     display: flex;
     min-height: calc(100vh - var(--site-header-height, 78px));

@@ -1,0 +1,236 @@
+{
+  "direct": {
+    "title": "Acceso directo a Euroclear, FundSettle y Allfunds",
+    "description": "Cómo conecta EMFI a clientes profesionales con infraestructuras de liquidación, custodia y fondos con menos intermediarios y traspasos.",
+    "infrastructure": {
+      "titleLines": [
+        "Directo a la",
+        "infraestructura."
+      ],
+      "lead": "El modelo operativo de EMFI conecta la actividad de los clientes con infraestructuras consolidadas de liquidación de valores e inversión en fondos. Cada relación cumple una función específica en el ciclo de la operación.",
+      "steps": [
+        {
+          "label": "Instrucción del cliente",
+          "detail": ""
+        },
+        {
+          "label": "EMFI",
+          "detail": "Coordinación de ejecución, liquidación y custodia"
+        },
+        {
+          "label": "Infraestructura de mercado",
+          "detail": "Depositarios, liquidación y plataformas de fondos"
+        }
+      ],
+      "providersTitle": "Depositarios y plataformas de fondos",
+      "providers": [
+        {
+          "title": "Euroclear",
+          "body": "Infraestructura de liquidación de valores."
+        },
+        {
+          "title": "FundSettle",
+          "body": "Solución para fondos."
+        },
+        {
+          "title": "Allfunds",
+          "body": "Servicios de distribución, negociación y tecnología para fondos."
+        }
+      ]
+    },
+    "benefits": {
+      "titleLines": [
+        "Ser directos",
+        "significa menos."
+      ],
+      "lead": "Las relaciones directas reducen las capas innecesarias, aclaran las responsabilidades y ofrecen al cliente una visión más transparente de la cadena operativa.",
+      "items": [
+        {
+          "title": "Menos duplicación.",
+          "body": "Una estructura más directa puede reducir intermediarios y tareas repetidas. El precio depende del servicio, el activo, la cuenta y los costes de terceros."
+        },
+        {
+          "title": "Menos complejidad.",
+          "body": "Con menos traspasos es más fácil coordinar instrucciones e identificar excepciones. Siguen aplicándose los proveedores y las normas de mercado pertinentes."
+        },
+        {
+          "title": "Menos exposición.",
+          "body": "Para los clientes elegibles, las cuentas individuales segregadas en el depositario permiten identificar sus valores por separado, en lugar de agruparlos con los de otros clientes en una cuenta ómnibus."
+        }
+      ],
+      "action": "Cómo funcionan la liquidación y la custodia de EMFI"
+    },
+    "execution": {
+      "titleLines": [
+        "Acceso directo",
+        "al mercado."
+      ],
+      "lead": "Para clientes elegibles e instrumentos compatibles, EMFI puede organizar el acceso directo a determinados centros de negociación mediante acuerdos de ejecución aprobados.",
+      "body": "El acceso directo al mercado (DMA) permite a los clientes autorizados enviar órdenes electrónicas mediante mecanismos de acceso designados. Está sujeto a la clasificación e incorporación del cliente, el tamaño de la cuenta, los criterios de actividad, la disponibilidad de mercados e instrumentos, los controles previos a la negociación, los límites de crédito y la supervisión continua. El acceso es limitado y se evalúa individualmente."
+    }
+  },
+  "responsive": {
+    "title": "Tecnología de negociación y servicio ágil",
+    "description": "EMFI Workstation, Dashboard, la aplicación móvil y los especialistas que atienden necesidades fuera del proceso habitual.",
+    "workstation": {
+      "titleLines": [
+        "Ejecución.",
+        "Conectada."
+      ],
+      "lead": "EMFI Workstation es la interfaz de ejecución. Integra la búsqueda de instrumentos, la información de mercado, la introducción de órdenes y el seguimiento de transacciones en un solo flujo.",
+      "body": "La carga de VCON es una vía de entrada de operaciones junto con la introducción manual, las hojas de cálculo, SFTP, API y los mecanismos drop-copy compatibles."
+    },
+    "dashboard": {
+      "titleLines": [
+        "Todo",
+        "a la vista."
+      ],
+      "lead": "Dashboard permite a los clientes y usuarios autorizados consultar saldos, posiciones, operaciones pendientes, actividad y cargos."
+    },
+    "mobile": {
+      "titleLines": [
+        "Su cartera.",
+        "A su alcance."
+      ],
+      "lead": "El acceso móvil permite consultar información relevante sobre cuentas y carteras fuera de la oficina.",
+      "body": "Una visión operativa conectada. Workstation, Dashboard y Mobile cubren distintas partes de la operación y de la experiencia del cliente."
+    },
+    "specialist": {
+      "titleLines": [
+        "No todo cabe",
+        "en un menú."
+      ],
+      "lead": "Los mercados y las necesidades de los clientes no siempre siguen un proceso estándar.",
+      "body": "Un valor concreto, una ruta de liquidación entre depositarios, una estructura de cuenta específica o una instrucción urgente pueden requerir más que un flujo estándar. EMFI comienza por entender la necesidad y luego evalúa la infraestructura disponible, los permisos, las contrapartes y las restricciones operativas. Si existe una vía viable, nuestro equipo coordina los detalles con usted y los proveedores correspondientes.",
+      "callout": "La tecnología se ocupa de las tareas repetibles. Los especialistas aportan criterio, gestionan las excepciones y hacen el seguimiento.",
+      "note": "Cada solución está sujeta a los permisos regulatorios aplicables, la elegibilidad, la diligencia debida, la revisión de sanciones, los controles de riesgo, las normas de mercado y las capacidades de terceros. EMFI no emprende actividades que no cumplan estos requisitos."
+    }
+  },
+  "dependable": {
+    "title": "Regulación, auditoría y responsabilidad en EMFI",
+    "description": "Entidades reguladas, protección de activos de clientes, auditoría independiente y principios claros de comisiones.",
+    "relationships": {
+      "titleLines": [
+        "Regulados. Auditados.",
+        "Conectados."
+      ],
+      "lead": "EMFI opera a través de entidades jurídicas especializadas y trabaja con firmas profesionales e infraestructuras de mercado consolidadas. Cada organización cumple una función precisa.",
+      "items": [
+        {
+          "title": "FCA",
+          "body": "Regulación en el Reino Unido de EMFI Securities Limited y EMFI Capital Limited."
+        },
+        {
+          "title": "DFSA",
+          "body": "Regulación en el DIFC de EMFI Capital (DIFC) Limited."
+        },
+        {
+          "title": "Euroclear",
+          "body": "Infraestructura de liquidación y custodia de valores."
+        },
+        {
+          "title": "Allfunds",
+          "body": "Plataforma de negociación, distribución y tecnología para fondos."
+        },
+        {
+          "title": "Auditoría",
+          "body": "Auditoría independiente de las entidades y estructuras de fondos pertinentes. Los auditores se identifican en los informes y documentos de los fondos."
+        },
+        {
+          "title": "Administración",
+          "body": "Administración independiente de las estructuras de fondos pertinentes, según su documentación."
+        },
+        {
+          "title": "Asesoría jurídica",
+          "body": "Asesoría jurídica independiente para los asuntos aplicables."
+        },
+        {
+          "title": "Banca",
+          "body": "El dinero de clientes se mantiene en bancos conforme a CASS, cuando corresponda."
+        }
+      ]
+    },
+    "assets": {
+      "titleLines": [
+        "Activos de clientes.",
+        "Debidamente registrados."
+      ],
+      "lead": "Salvaguardar los activos de clientes es una responsabilidad operativa continua. En el Reino Unido, el manual de activos de clientes de la FCA establece requisitos para el dinero de clientes y los activos en custodia.",
+      "items": [
+        {
+          "code": "CASS 7",
+          "title": "Dinero de clientes",
+          "body": "Las medidas aplicables incluyen segregación, registros, conciliaciones y acuerdos de reconocimiento con los bancos que mantienen el dinero de clientes. El marco fiduciario legal busca proteger ese dinero si una firma quiebra."
+        },
+        {
+          "code": "CASS 6",
+          "title": "Activos en custodia",
+          "body": "Los requisitos aplicables abarcan custodia, derechos de propiedad, registros y conciliaciones, y ayudan a distinguir los activos de clientes de los de la firma y de otros clientes."
+        },
+        {
+          "code": "DIFC",
+          "title": "Marco separado para activos de clientes",
+          "body": "EMFI Capital (DIFC) Limited está sujeta a los requisitos aplicables de la DFSA sobre activos de clientes, separados de las normas CASS de la FCA."
+        }
+      ]
+    },
+    "fees": {
+      "titleLines": [
+        "Sepa cuánto",
+        "paga."
+      ],
+      "lead": "El cuadro de comisiones debe permitirle entender el coste de la relación antes de operar.",
+      "body": "Los acuerdos comerciales de EMFI pueden incluir comisiones de custodia, mínimos mensuales, cargos de ejecución y por operación, cargos por cuenta o servicio y costes de infraestructura de terceros. El cuadro aplicable debe identificar la base de cálculo, los umbrales, la moneda, los mínimos y los costes repercutidos.",
+      "items": [
+        {
+          "title": "Custodia",
+          "body": "Tipo en puntos básicos, base de activos, tramo y mínimo mensual, si corresponde."
+        },
+        {
+          "title": "Ejecución",
+          "body": "Cargos por operación y por mercado o centro de negociación, y mínimos aplicables."
+        },
+        {
+          "title": "Liquidación e infraestructura",
+          "body": "Cargos de depositario, infraestructura de mercado y terceros que se repercuten cuando corresponde."
+        },
+        {
+          "title": "Efectivo y otros servicios",
+          "body": "Intereses y cargos de cuenta y servicio aplicables, incluida su base de cálculo."
+        }
+      ]
+    },
+    "entities": {
+      "titleLines": [
+        "Entidades claras.",
+        "Responsabilidades definidas."
+      ],
+      "items": [
+        {
+          "title": "EMFI Securities Limited",
+          "body": "Reino Unido · FCA FRN 763979 · N.º de sociedad 10447140",
+          "link": "Registro de la FCA",
+          "href": "https://register.fca.org.uk/s/search?q=763979&type=Companies"
+        },
+        {
+          "title": "EMFI Capital Limited",
+          "body": "Reino Unido · FCA FRN 822389 · N.º de sociedad 11380609",
+          "link": "Registro de la FCA",
+          "href": "https://register.fca.org.uk/s/search?q=822389&type=Companies"
+        },
+        {
+          "title": "EMFI Capital (DIFC) Limited",
+          "body": "DIFC · Referencia DFSA F011663",
+          "link": "Registro de la DFSA",
+          "href": "https://www.dfsa.ae/public-register"
+        },
+        {
+          "title": "EMFI Group Limited",
+          "body": "Sociedad de cartera del Reino Unido · N.º de sociedad 11391808 · 25-26 Dering Street, Third Floor, Mayfair, London W1S 1AW",
+          "link": "",
+          "href": ""
+        }
+      ]
+    }
+  }
+}

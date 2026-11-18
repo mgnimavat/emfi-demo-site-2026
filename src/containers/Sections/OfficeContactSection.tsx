@@ -65,9 +65,7 @@ export const OfficeContactSection = ({
                   <div className={styles.information}>
                     {officeInformation(place, `${sectionId}-${index}-heading`)}
                     {officeDisclosures?.[city] ? (
-                      <div className={styles.officeDisclosure}>
-                        {officeDisclosures[city]}
-                      </div>
+                      <div className={styles.officeDisclosure}>{officeDisclosures[city]}</div>
                     ) : null}
                   </div>
                 </article>

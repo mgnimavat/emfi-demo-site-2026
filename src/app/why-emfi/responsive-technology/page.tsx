@@ -1,7 +1,5 @@
-import { LocalizedWhyPageSection } from '@/containers/Sections/LocalizedWhyPageSection';
-import { marketingDictionaries } from '@/lib/i18n/marketing-dictionaries';
+import { getWhyPageMetadata, LocalizedWhyPageSection } from '@/containers/Sections/LocalizedWhyPageSection';
 
-const copy = marketingDictionaries.en.responsive;
-export const metadata = { title: copy.title, description: copy.description };
+export const metadata = getWhyPageMetadata('responsive-technology');
 const Page = () => <LocalizedWhyPageSection page="responsive-technology" />;
 export default Page;
