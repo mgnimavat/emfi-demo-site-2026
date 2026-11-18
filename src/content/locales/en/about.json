@@ -1,43 +1,63 @@
 {
   "title": "About",
-  "description": "Since 2016, EMFI has developed an institutional investment platform connecting clients with markets, execution and the infrastructure behind the transaction.",
+  "description": "EMFI's story since 2016, its group of specialist regulated entities, and the people behind it, in Cayman, London and Dubai.",
   "yearsEyebrow": "10 years of EMFI",
   "milestonesLabel": "Platform milestones",
   "milestones": [
     [
       "2016",
       "Establishment",
-      "EMFI Securities incorporated. First institutional trading relationships."
+      "EMFI Securities Limited was incorporated on 26 October 2016, initially under the name SNB Securities Limited."
     ],
     [
       "2017",
-      "Authorised",
-      "FCA authorisation. A regulated foundation for direct market access."
+      "EMFI Securities",
+      "The company adopted the EMFI Securities name and began building its first institutional relationships."
     ],
     [
       "2018",
-      "Settlement & custody",
-      "Expansion from execution into custody infrastructure."
+      "Group structure",
+      "EMFI Capital Limited and EMFI Group Limited were incorporated in May 2018, giving the firm a holding company and a second operating entity."
+    ],
+    [
+      "2019",
+      "UK investment and custody business",
+      "EMFI Capital Limited received FCA authorisation on 1 February 2019, and was registered as a small authorised UK AIFM on 29 October 2019."
     ],
     [
       "2020",
       "Depository access",
-      "Direct participation in institutional settlement infrastructure."
+      "EMFI gained direct access to institutional settlement infrastructure, removing layers between clients and the depository."
+    ],
+    [
+      "2021",
+      "Consolidating the model",
+      "Execution, settlement and custody continued to be built out as one connected operation, ahead of the move to proprietary technology."
     ],
     [
       "2022",
-      "Technology",
-      "Proprietary platform built around the client workflow."
+      "Proprietary technology",
+      "EMFI launched its own client workflow platform: a Workstation for execution, a Dashboard for the account picture, and mobile access."
+    ],
+    [
+      "2023",
+      "Growing the Intelligence offering",
+      "EMFI’s economists and strategists continued to widen coverage of emerging and frontier markets."
+    ],
+    [
+      "2024",
+      "Fund structure",
+      "EMFI Fund SPC, a Cayman Islands segregated portfolio company, provides a common structure for distinct investment portfolios."
     ],
     [
       "2025",
-      "DIFC",
-      "Dubai presence. DFSA-regulated operations."
+      "Dubai presence and industry membership",
+      "EMFI Capital (DIFC) Limited was licensed by the DFSA on 30 July 2025, and EMFI Group Limited is listed by EMTA as a Buy-Side Member from Q4 2025."
     ],
     [
       "2026",
       "Ten years",
-      "A decade of building direct access."
+      "Ten years since the original operating company was incorporated. Direct. Responsive. Dependable."
     ]
   ],
   "peopleTitle": "The people who respond.",
@@ -174,5 +194,62 @@
       "description": "Leading software development, modern architecture, and secure, scalable application delivery at EMFI."
     }
   ],
-  "boardLabel": "Board Member"
+  "boardLabel": "Board Member",
+  "hero": {
+    "lead": "Ten years.",
+    "accent": "One connected chain."
+  },
+  "market": {
+    "title": [
+      "Built for a different",
+      "kind of market"
+    ],
+    "body": "EMFI began in specialist securities and emerging-market financial services. As client requirements evolved, so did the firm. Today the chain runs from intelligence to execution to settlement and custody, with funds and technology built on top. We work through specialist legal entities in the United Kingdom and the Dubai International Financial Centre, with fund structures in the Cayman Islands, for professional clients and eligible counterparties. Each service is provided by the relevant entity, within its permissions."
+  },
+  "entities": {
+    "title": [
+      "One group.",
+      "Specialist entities"
+    ],
+    "body": "EMFI’s activities are carried out through distinct legal entities. The entity providing a service depends on the activity, jurisdiction, client classification and applicable permissions.",
+    "holding": {
+      "badge": "Holding",
+      "jurisdiction": "United Kingdom",
+      "name": "EMFI Group Limited",
+      "role": "Group holding company",
+      "meta": "Company no. 11391808"
+    },
+    "children": [
+      {
+        "badge": "FCA",
+        "jurisdiction": "United Kingdom",
+        "name": "EMFI Securities Limited",
+        "role": "Intelligence and execution",
+        "meta": "FCA FRN 763979"
+      },
+      {
+        "badge": "FCA",
+        "jurisdiction": "United Kingdom",
+        "name": "EMFI Capital Limited",
+        "role": "Investment, custody and related services, subject to permissions",
+        "meta": "FCA FRN 822389"
+      },
+      {
+        "badge": "DFSA",
+        "jurisdiction": "Dubai International Financial Centre",
+        "name": "EMFI Capital (DIFC) Limited",
+        "role": "Regulated presence in Dubai",
+        "meta": "DFSA ref. F011663"
+      },
+      {
+        "badge": "Fund",
+        "jurisdiction": "Cayman Islands",
+        "name": "EMFI Fund SPC",
+        "role": "Segregated portfolio company, fund structure",
+        "meta": "Registered office only",
+        "dashed": true
+      }
+    ],
+    "note": "Functional overview, not a legal ownership chart."
+  }
 }
