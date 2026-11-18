@@ -94,17 +94,21 @@
     {
       "name": "Peter Timson",
       "role": "Cumplimiento, Reino Unido",
+      "photo": "/people/peter-timson-5.jpg",
+      "inset": true,
       "description": "Supervisa el cumplimiento normativo y los controles en las entidades autorizadas de EMFI en el Reino Unido."
     },
     {
       "name": "Hitesh Bilochi",
       "role": "Cumplimiento, DIFC",
+      "photo": "/people/hitesh-bilochi-5.jpg",
+      "inset": true,
       "description": "Supervisa el cumplimiento normativo del DIFC y los requisitos de la DFSA en las operaciones de EMFI en Dubái."
     },
     {
       "name": "Alan Tooker",
       "role": "Director, EMFI Fund SPC",
-      "photo": "/people/alan-tooker-2.jpg",
+      "photo": "/people/alan-tooker-3.jpg",
       "label": "A.R.C. Directors Ltd",
       "description": "Actúa como director independiente de EMFI Fund SPC a través de A.R.C. Directors Ltd."
     },
@@ -197,7 +201,7 @@
   "boardLabel": "Miembro del consejo",
   "hero": {
     "lead": "Diez años.",
-    "accent": "Una cadena conectada."
+    "accent": "Una cadena\nconectada."
   },
   "market": {
     "title": [
