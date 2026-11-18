@@ -183,6 +183,10 @@
   transform-origin: center;
   animation: footerBrandSpin 36s linear infinite;
 }
+.footerBrandMarkLarge {
+  width: 120px;
+  height: 120px;
+}
 @keyframes footerBrandSpin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -254,6 +258,39 @@
   filter: brightness(0) invert(1);
 }
 .footerLegal h2 { font-size: 14px; letter-spacing: -.02em; }
+.footerLegalEnd {
+  text-align: end;
+}
+.footerLegalEnd ul {
+  justify-items: end;
+}
+.footerLegalEnd .footerLegalSocial {
+  display: flex;
+  justify-content: flex-end;
+}
+.footerLegalSocial {
+  margin-top: 22px;
+}
+.footerLegalSocial .social {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: max-content;
+  max-width: none;
+}
+.footerLegalSocial .social li {
+  flex: none;
+}
+.footerLegalSocial .social a {
+  width: 28px;
+  height: 28px;
+}
+.footerLegalSocial .social svg {
+  height: 14px;
+}
 .social {
   display: flex;
   justify-content: flex-start;

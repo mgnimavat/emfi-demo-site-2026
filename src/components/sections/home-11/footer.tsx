@@ -74,23 +74,28 @@ export const Home11Footer = ({ socialVariant = "filled" }: { socialVariant?: "fi
   const locale = getPageLocale(usePathname());
   const messages: Readonly<Record<string, string>> = { en: enMessages, es: esMessages, ar: arMessages }[locale];
   const t = (value: string) => messages[value] ?? value;
+  const outlineSocial = socialVariant === "outline";
+  const socialClass = outlineSocial ? `${styles.social} ${styles.socialOutline}` : styles.social;
+  const socialList = (
+    <ul className={socialClass} aria-label={t("Social media")}>
+      {socialLinks.map((item) => (
+        <li key={item.title}>
+          <a href={item.href} title={item.title} aria-label={item.title} {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+            <BrandIcon d={item.d} viewBox={item.viewBox} evenodd={"evenodd" in item} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
   return (
     <footer lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} className={styles.footer}>
       <div className={styles.footerInner}>
         <div className={styles.footerTop}>
           <div className={styles.footerBrand}>
             <Link href={localizeHref("/", locale)} className={styles.footerBrandLink} aria-label="EMFI home">
-              <BrandSign className={styles.footerBrandMark} />
+              <BrandSign className={outlineSocial ? `${styles.footerBrandMark} ${styles.footerBrandMarkLarge}` : styles.footerBrandMark} />
             </Link>
-            <ul className={socialVariant === "outline" ? `${styles.social} ${styles.socialOutline}` : styles.social} aria-label={t("Social media")}>
-              {socialLinks.map((item) => (
-                <li key={item.title}>
-                  <a href={item.href} title={item.title} aria-label={item.title} {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-                    <BrandIcon d={item.d} viewBox={item.viewBox} evenodd={"evenodd" in item} />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            {outlineSocial ? null : socialList}
             <div className={styles.footerBrandCopy}>
               <p>{t("Intended for Professional Clients Only.")}</p>
               <p>{t("Not Suitable for Retail Clients or US Persons.")}</p>
@@ -121,9 +126,10 @@ export const Home11Footer = ({ socialVariant = "filled" }: { socialVariant?: "fi
             </Link>
           ))}
           {legalRegulatoryLinks.length ? (
-            <nav className={`${styles.footerLinks} ${styles.footerLegal}`} aria-label={t(legalRegulatoryHeading)}>
+            <nav className={`${styles.footerLinks} ${styles.footerLegal}${outlineSocial ? ` ${styles.footerLegalEnd}` : ""}`} aria-label={t(legalRegulatoryHeading)}>
               <h2>{t(legalRegulatoryHeading)}</h2>
               <ul><FooterLinkItems links={legalRegulatoryLinks} locale={locale} t={t} /></ul>
+              {outlineSocial ? <div className={styles.footerLegalSocial}>{socialList}</div> : null}
             </nav>
           ) : null}
         </div>
