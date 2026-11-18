@@ -1,0 +1,123 @@
+"use client";
+
+import { useReducedMotion } from "framer-motion";
+import { ResearchExecutionHeroMockup, home10ResponsiveSlides, home12ResponsiveSlides, home16ResponsiveSlides, homeDeskResponsiveSlides, homeSettlementResponsiveSlides, homeV5ResponsiveSlides, responsiveHighlightSlides } from "@/components/home-17/research-execution-hero";
+import { SectionAction, SectionCopy, SectionFooterBody } from "@/components/emfi-sections/outcomes";
+import styles from "@/components/emfi-sections/sections.module.css";
+import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhySplit, useWhyStep, WhyMarker } from "@/components/emfi-sections/why-flow";
+
+export function ResponsiveSection({
+  cols,
+  textOrder,
+  highlightSlides = false,
+  light = false,
+  homeSlides = false,
+  omitSecondSlide = false,
+  perspectivePhones = false,
+  floatingPhones = false,
+  trimChrome = false,
+  appBar = false,
+  home15Trade = false,
+  settlementDash = false,
+  step,
+  body = "Technology that works. People who respond. Clearer workflows with support from people who can help resolve issues.",
+  centered = false,
+  eyebrow,
+  shortWhy = false,
+  pairedCue = false,
+}: {
+  cols: string;
+  textOrder: number;
+  highlightSlides?: boolean;
+  light?: boolean;
+  homeSlides?: boolean;
+  omitSecondSlide?: boolean;
+  perspectivePhones?: boolean;
+  floatingPhones?: boolean;
+  trimChrome?: boolean;
+  appBar?: boolean;
+  home15Trade?: boolean;
+  settlementDash?: boolean;
+  step?: number;
+  body?: string;
+  centered?: boolean;
+  eyebrow?: string;
+  shortWhy?: boolean;
+  pairedCue?: boolean;
+}) {
+  const marked = step != null;
+  const active = useWhyActive(step ?? 0);
+  const pinned = useWhyPinned();
+  const split = useWhySplit();
+  const stepNow = useWhyStep();
+  const engaged = useWhyEngaged();
+  const showing = pinned && engaged && marked && stepNow === step;
+  const reduceMotion = useReducedMotion();
+  const home17Mockup = trimChrome || appBar || home15Trade;
+  const solidLight = light && (!pinned || split || Boolean(reduceMotion));
+  const splitLead = "Technology that works.\nPeople who respond.";
+  const splitBody =
+    "Technology should make the routine easier. Experienced people should be available when the requirement does not fit the standard process. EMFI combines both, within defined regulatory, operational and risk controls.";
+
+  return (
+    <section id="responsive" data-screen-label="04 Responsive" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: solidLight ? "#e6effb" : light ? "transparent" : "radial-gradient(50% 60% at 100% 50%,rgba(0,201,167,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
+      {marked && step && !split ? <WhyMarker n={step} active={active} /> : null}
+      <div
+        className={[
+          light ? styles.lightCopy : "",
+          pinned ? (split ? styles.pinStack : home17Mockup ? styles.responsivePin : styles.pinStack) : "",
+          pinned && home17Mockup && !split ? styles.responsiveStack : "",
+          split ? styles.splitDirect : "",
+        ].filter(Boolean).join(" ") || undefined}
+        style={{
+          position: "relative",
+          zIndex: light ? 2 : undefined,
+          maxWidth: split ? 1480 : 1320,
+          margin: "0 auto",
+          padding: split ? "clamp(56px, 7vh, 88px) clamp(110px, calc(8vw + 70px), 190px)" : sectionPad(marked, !light, pinned),
+          borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)",
+          ...sectionFrame(pinned, centered, cols),
+          ...(split ? { alignItems: "flex-start", justifyContent: "flex-start", gap: 0 } : null),
+        }}
+      >
+        <div className={split ? styles.splitDirectCopy : undefined} style={{ position: "relative", minWidth: home17Mockup && pinned && !split ? "auto" : 0, width: pinned && !split ? (home17Mockup ? "100%" : "min(100%, 560px)") : undefined, flexShrink: home17Mockup && pinned && !split ? 0 : undefined, order: pinned || centered || split ? undefined : textOrder }}>
+          <SectionCopy
+            title={split ? "2. Responsive." : "Responsive."}
+            eyebrow={eyebrow}
+            plainEyebrow={pinned && Boolean(eyebrow)}
+            lead={split ? splitLead : undefined}
+            body={split ? splitBody : shortWhy && pinned ? undefined : body}
+            action={pinned ? undefined : { href: "/why-emfi/responsive-technology", label: "Learn More" }}
+            tone={light ? "light" : "dark"}
+            align={split ? "start" : centered || pinned ? "center" : "start"}
+          />
+        </div>
+        <div
+          className={[
+            split
+              ? styles.splitResponsiveMedia
+              : pinned
+                ? home17Mockup
+                  ? styles.responsivePinMedia
+                  : styles.pinStackMedia
+                : "",
+          ].filter(Boolean).join(" ") || undefined}
+          style={{ minWidth: 0, width: split ? "100%" : centered && !pinned ? "100%" : undefined, color: "#071832", fontFamily: "var(--font-inter), Inter, Arial, sans-serif", alignSelf: split ? "stretch" : undefined }}
+        >
+          {!pinned || showing || split ? (
+            <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} views={homeSlides ? (home15Trade ? (settlementDash ? homeSettlementResponsiveSlides : homeDeskResponsiveSlides) : floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
+          ) : null}
+        </div>
+        {pinned ? (
+          split ? (
+            <SectionAction href="/why-emfi/responsive-technology" label="Learn More" align="start" />
+          ) : shortWhy ? (
+            <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/why-emfi/responsive-technology" : undefined} />
+          ) : (
+            <SectionAction href="/why-emfi/responsive-technology" label="Learn More" />
+          )
+        ) : null}
+      </div>
+    </section>
+  );
+}

@@ -21,7 +21,7 @@ export const DirectRouteAnimation = ({
   ariaLabel = "An instruction moves from You to Settlement agent, Sub-custodian, Custodian and Depository. The same route then shortens to You, EMFI, Depository.",
 }: DirectRouteAnimationProps) => {
   const { locale, t } = useServiceLocale();
-  const { dNodes, dLines, dTok, dHand, dTags, dStageH, dBandOp, dBandS } = values;
+  const { dNodes, dLines, dTok, dTokRing = "#0E2242", dCue = "#B1C0E2", dHand, dTags, dStageH, dBandOp, dBandS } = values;
 
   return (
     <div dir="ltr" className={locale === 'ar' ? styles.routeRtl : undefined} data-direct-route-animation data-route-title={values.dRouteTitle} role="img" aria-label={t(ariaLabel)} style={{ position: "relative", height: pinned ? undefined : dStageH, flex: pinned ? "1 1 auto" : undefined, minHeight: pinned ? 0 : undefined }}>
@@ -40,11 +40,11 @@ export const DirectRouteAnimation = ({
           </span>
         </div>
       ))}
-      <span data-route-label dir={locale === 'ar' ? 'rtl' : undefined} style={{ position: "absolute", zIndex: 3, left: dHand.left, top: dHand.top, transform: dHand.tf, fontSize: 12, fontWeight: 700, color: "#B1C0E2", whiteSpace: "nowrap", opacity: dHand.op }}>{locale === 'ar' ? <span>{t(stepLabel)}</span> : t(stepLabel)}</span>
+      <span data-route-label dir={locale === 'ar' ? 'rtl' : undefined} style={{ position: "absolute", zIndex: 3, left: dHand.left, top: dHand.top, transform: dHand.tf, fontSize: 12, fontWeight: 700, color: dCue, whiteSpace: "nowrap", opacity: dHand.op }}>{locale === 'ar' ? <span>{t(stepLabel)}</span> : t(stepLabel)}</span>
       {dTags.map((tag, index) => (
-        <span key={index} data-route-label dir={locale === 'ar' ? 'rtl' : undefined} style={{ position: "absolute", zIndex: 3, left: tag.left, top: tag.top, transform: tag.tf, fontSize: 12, fontWeight: 700, color: "#B1C0E2", whiteSpace: "nowrap", opacity: tag.op }}>{locale === 'ar' ? <span>{t(tag.text)}</span> : t(tag.text)}</span>
+        <span key={index} data-route-label dir={locale === 'ar' ? 'rtl' : undefined} style={{ position: "absolute", zIndex: 3, left: tag.left, top: tag.top, transform: tag.tf, fontSize: 12, fontWeight: 700, color: dCue, whiteSpace: "nowrap", opacity: tag.op }}>{locale === 'ar' ? <span>{t(tag.text)}</span> : t(tag.text)}</span>
       ))}
-      <span style={{ position: "absolute", zIndex: 4, left: dTok.left, top: dTok.top, width: 14, height: 14, margin: "-7px 0 0 -7px", borderRadius: "50%", background: dTok.bg, boxShadow: "0 0 0 4px #0E2242", opacity: dTok.op }} />
+      <span style={{ position: "absolute", zIndex: 4, left: dTok.left, top: dTok.top, width: 14, height: 14, margin: "-7px 0 0 -7px", borderRadius: "50%", background: dTok.bg, boxShadow: `0 0 0 4px ${dTokRing}`, opacity: dTok.op }} />
     </div>
   );
 };

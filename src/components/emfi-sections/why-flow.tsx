@@ -124,45 +124,6 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
   const [engaged, setEngaged] = useState(false);
 
   useLayoutEffect(() => {
-    if (!split) return;
-    let raf = 0;
-
-    const update = () => {
-      const root = ref.current ?? document.querySelector<HTMLElement>("[data-why-split]");
-      if (!root) return;
-      const header = Number.parseFloat(getComputedStyle(document.body).getPropertyValue("--home-12-header-h")) || 77.36;
-      const stickyTop = header + 12;
-      const logo = document.querySelector<HTMLElement>("header a[aria-label]");
-      const logoLeft = logo?.getBoundingClientRect().left ?? 20;
-      root.querySelectorAll<HTMLElement>("[data-why-slide]").forEach((section) => {
-        const index = section.querySelector<HTMLElement>("[class*='whySplitIndex']:not([class*='Digit'])");
-        if (!index) return;
-        const rect = section.getBoundingClientRect();
-        const numberH = index.offsetHeight || 208;
-        const maxY = Math.max(0, rect.height - numberH);
-        const y = Math.max(0, Math.min(maxY, stickyTop - rect.top));
-        const x = Math.max(0, logoLeft - rect.left);
-        index.style.setProperty("--why-split-x", `${x}px`);
-        index.style.setProperty("--why-split-y", `${y}px`);
-      });
-    };
-
-    const schedule = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(update);
-    };
-
-    schedule();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-    };
-  }, [split]);
-
-  useLayoutEffect(() => {
     if (split) return;
     const flow = ref.current;
     const rail = railRef.current;
@@ -421,9 +382,6 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
               <WhyEngagedContext.Provider value={true}>
                 <WhyFrameContext.Provider value={index + 1}>
                   <div className={styles.whySplitSection} data-why-slide>
-                    <span className={styles.whySplitIndex} aria-hidden="true">
-                      <span className={styles.whySplitIndexDigit}>{index + 1}</span>
-                    </span>
                     {child}
                   </div>
                 </WhyFrameContext.Provider>

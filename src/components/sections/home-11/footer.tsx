@@ -7,6 +7,7 @@ import enMessages from '@/content/locales/en/marketing-ui.json';
 import esMessages from '@/content/locales/es/marketing-ui.json';
 import arMessages from '@/content/locales/ar/marketing-ui.json';
 import Link from "next/link";
+import { BrandSign } from "@/components/brand/logo";
 import footer from "@/content/site-footer.json";
 import styles from "./chrome.module.css";
 
@@ -34,6 +35,12 @@ const featureColumns = [
   },
 ] as const;
 const legalGroup = footer.linkGroups.find((group) => group.heading === "Legal");
+const regulatoryGroup = footer.linkGroups.find((group) => group.heading === "Regulatory");
+const legalRegulatoryHeading = "Legal & Regulatory";
+const legalRegulatoryLinks = [
+  ...(legalGroup?.links ?? []),
+  ...(regulatoryGroup?.links ?? []),
+];
 const socialLinks = [
   { title: "Twitter", href: "https://twitter.com/EmfiSecurities", viewBox: "0 0 512 512", d: "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8l164.9-188.5L26.8 48h145.6l100.5 132.9zm-24.8 373.8h39.1L151.1 88h-42z" },
   { title: "LinkedIn", href: "https://www.linkedin.com/company/emfisecurities", viewBox: "0 0 448 512", d: "M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3M447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z" },
@@ -58,7 +65,7 @@ const FooterLinkItems = ({ links, locale, t }: {
 }) => {
   return links.map((link) => (
     <li key={link.href}>
-      {link.href.startsWith("http") ? <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a> : <Link href={localizeHref(link.href, locale)}>{t(link.label)}</Link>}
+      {link.href.startsWith("http") ? <a href={link.href} target="_blank" rel="noopener noreferrer">{t(link.label)}</a> : <Link href={localizeHref(link.href, locale)}>{t(link.label)}</Link>}
     </li>
   ));
 };
@@ -71,11 +78,33 @@ export const Home11Footer = () => {
     <footer lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} className={styles.footer}>
       <div className={styles.footerInner}>
         <div className={styles.footerTop}>
+          <div className={styles.footerBrand}>
+            <Link href={localizeHref("/", locale)} className={styles.footerBrandLink} aria-label="EMFI home">
+              <BrandSign className={styles.footerBrandMark} />
+            </Link>
+            <ul className={styles.social} aria-label={t("Social media")}>
+              {socialLinks.map((item) => (
+                <li key={item.title}>
+                  <a href={item.href} title={item.title} aria-label={item.title} {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+                    <BrandIcon d={item.d} viewBox={item.viewBox} evenodd={"evenodd" in item} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className={styles.footerBrandCopy}>
+              <p>{t("Intended for Professional Clients Only.")}</p>
+              <p>{t("Not Suitable for Retail Clients or US Persons.")}</p>
+              {copyright.map((line) => <p key={line}>{t(line)}</p>)}
+            </div>
+          </div>
           {featureColumns.map((column) => (
-            <nav key={column.title} className={`${styles.footerLinks} ${styles.footerFeature}`} aria-label={t(column.title)}>
-              <h2>
-                <Link href={localizeHref(column.href, locale)}>{t(column.title)}</Link>
-              </h2>
+            <Link
+              key={column.title}
+              href={localizeHref(column.href, locale)}
+              className={`${styles.footerLinks} ${styles.footerFeature}`}
+              aria-label={t(column.title)}
+            >
+              <h2>{t(column.title)}</h2>
               <p className={styles.footerFeatureCopy}>
                 {column.lines.map((line) => <span key={line}>{t(line)}</span>)}
               </p>
@@ -89,28 +118,14 @@ export const Home11Footer = () => {
                   unoptimized
                 />
               </div>
-            </nav>
+            </Link>
           ))}
-        </div>
-        <div className={styles.footerLegal}>
-          {legalGroup ? (
-            <nav className={styles.footerLegalNav} aria-label={`Footer ${legalGroup.heading.toLowerCase()}`}>
-              <h2>{t(legalGroup.heading)}</h2>
-              <ul><FooterLinkItems links={legalGroup.links} locale={locale} t={t} /></ul>
+          {legalRegulatoryLinks.length ? (
+            <nav className={`${styles.footerLinks} ${styles.footerLegal}`} aria-label={t(legalRegulatoryHeading)}>
+              <h2>{t(legalRegulatoryHeading)}</h2>
+              <ul><FooterLinkItems links={legalRegulatoryLinks} locale={locale} t={t} /></ul>
             </nav>
           ) : null}
-          <ul className={styles.social} aria-label={t("Social media")}>
-            {socialLinks.map((item) => (
-              <li key={item.title}>
-                <a href={item.href} title={item.title} aria-label={item.title} {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-                  <BrandIcon d={item.d} viewBox={item.viewBox} evenodd={"evenodd" in item} />
-                </a>
-              </li>
-            ))}
-          </ul>
-          <p>{t("Intended for Professional Clients Only.")}</p>
-          <p>{t("Not Suitable for Retail Clients or US Persons.")}</p>
-          {copyright.map((line) => <p key={line}>{t(line)}</p>)}
         </div>
       </div>
     </footer>
