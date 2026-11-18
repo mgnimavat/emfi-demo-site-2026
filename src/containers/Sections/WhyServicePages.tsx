@@ -169,17 +169,17 @@ export const ResponsiveContentPage = ({ copy, heroCopy, workflowSteps }: {
     <WhyHero headline={heroCopy.headline} prefix={heroCopy.fixed} words={heroCopy.phrases} spacedLines>
       <ResponsiveShowcase />
     </WhyHero>
-    <ContentBand id="workstation" copy={copy.workstation} layout="product">
+    <ContentBand id="workstation" copy={copy.workstation} tone="navy" layout="product">
       <ExecutionReveal className={styles.preview}>
         <ExecutionWorkstation maskVariant="blur" />
       </ExecutionReveal>
     </ContentBand>
-    <ContentBand id="dashboard" copy={copy.dashboard} tone="navy" layout="product">
+    <ContentBand id="dashboard" copy={copy.dashboard} layout="product">
       <ExecutionReveal className={styles.preview}>
-        <SettlementDashboard />
+        <SettlementDashboard borderless />
       </ExecutionReveal>
     </ContentBand>
-    <ContentBand id="mobile" copy={copy.mobile} layout="product">
+    <ContentBand id="mobile" copy={copy.mobile} tone="soft" layout="product">
       <ExecutionReveal className={styles.phones}>
         {responsiveTechnology.showcase.screens.map((screen, index) => (
           <Image key={screen.src} src={screen.src} alt={screen.alt}
@@ -188,7 +188,7 @@ export const ResponsiveContentPage = ({ copy, heroCopy, workflowSteps }: {
         ))}
       </ExecutionReveal>
     </ContentBand>
-    <ContentBand id="specialist" tone="soft" layout="centered" copy={{
+    <ContentBand id="specialist" layout="centered" copy={{
       titleLines: copy.specialist.titleLines,
       lead: copy.specialist.lead,
       note: copy.specialist.note,

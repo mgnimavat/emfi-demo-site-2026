@@ -11,6 +11,8 @@
   outline-offset: var(--space-1);
 }
 
+.viewport[data-borderless='true'] { border: 0; }
+
 .preview {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

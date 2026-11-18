@@ -136,6 +136,7 @@
 .action {
   justify-self: center;
   width: fit-content;
+  margin-block-start: var(--space-4);
   padding: var(--space-3) var(--space-5);
   border-radius: var(--radius-pill);
   background: var(--bg-page);
@@ -147,7 +148,7 @@
 .detailLink svg, .action svg { flex: none; }
 .journey { padding: clamp(var(--space-4), 4cqi, var(--space-7)); border-radius: var(--radius-card); background: var(--bg-inverse); color: var(--text-inverse); }
 .journey > * { margin: 0; }
-.preview { min-width: 0; overflow-x: auto; border-radius: var(--radius-card); }
+.preview { min-width: 0; overflow-x: auto; border-radius: var(--radius-card); color: var(--text-primary); }
 .phones {
   display: flex;
   justify-content: center;
@@ -179,6 +180,9 @@
 }
 
 @media (min-width: 901px) {
+  .contentBand[id='infrastructure'] .bandIntro {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  }
   .contentBand[data-layout='product'] .bandTitle,
   .page[data-pillar='direct'] .contentBand .bandTitle { font-size: clamp(42px, 7.2cqi, 96px); }
   .contentBand[data-layout='product'] .lead {
