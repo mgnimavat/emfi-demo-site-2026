@@ -1,7 +1,7 @@
 export const about = {
   title: "About — EMFI",
   eyebrow: "About",
-  headline: "Ten years.\nOne connected chain.",
+  headline: "Ten years.\nOne connected\nchain.",
   body: "EMFI began in specialist securities and emerging-market financial services. As client requirements evolved, so did the firm. Today the chain runs from intelligence to execution to settlement and custody, with funds and technology built on top.",
   heroVisual: {
     from: "2016",
@@ -119,17 +119,21 @@ export const about = {
     {
       name: "Peter Timson",
       role: "Compliance, UK",
+      photo: "/people/peter-timson-5.jpg",
+      inset: true,
       description: "Oversees UK regulatory compliance and controls across EMFI’s authorised entities.",
     },
     {
       name: "Hitesh Bilochi",
       role: "Compliance, DIFC",
+      photo: "/people/hitesh-bilochi-5.jpg",
+      inset: true,
       description: "Oversees DIFC regulatory compliance and DFSA requirements for EMFI’s Dubai operations.",
     },
     {
       name: "Alan Tooker",
       role: "Director, EMFI Fund SPC",
-      photo: "/people/alan-tooker-2.jpg",
+      photo: "/people/alan-tooker-3.jpg",
       label: "A.R.C. Directors Ltd",
       description: "Serves as an independent director of EMFI Fund SPC through A.R.C. Directors Ltd.",
     },

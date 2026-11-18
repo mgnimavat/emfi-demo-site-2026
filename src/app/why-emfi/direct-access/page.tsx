@@ -1,7 +1,5 @@
-import { LocalizedWhyPageSection } from '@/containers/Sections/LocalizedWhyPageSection';
-import { marketingDictionaries } from '@/lib/i18n/marketing-dictionaries';
+import { getWhyPageMetadata, LocalizedWhyPageSection } from '@/containers/Sections/LocalizedWhyPageSection';
 
-const copy = marketingDictionaries.en.direct;
-export const metadata = { title: copy.title, description: copy.description };
+export const metadata = getWhyPageMetadata('direct-access');
 const Page = () => <LocalizedWhyPageSection page="direct-access" />;
 export default Page;

@@ -5,8 +5,13 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  /* Fill the first screen like home fullHero #expect (svh avoids mobile URL-bar shortfall). */
   min-height: 100vh;
+  min-height: 100svh;
   min-height: 100dvh;
+  /* Same under-header pull as home-16-shell #expect */
+  margin-top: calc(-1 * var(--home-12-header-h, 77.36px));
+  padding-top: var(--home-12-header-h, 77.36px);
   padding-bottom: var(--home-12-header-h, 77.36px);
   color: #fff;
   background:
@@ -24,7 +29,7 @@
   height: calc(100% - var(--home-12-header-h, 77.36px) + 36px);
   aspect-ratio: 1;
   pointer-events: none;
-  transform: translateX(56px);
+  transform: translateX(calc(var(--hero-mark-direction, 1) * 56px));
   transform-origin: center;
   background: rgb(232 240 250 / 4%);
   -webkit-mask: url("/emfi/emfi-mark.svg") center / contain no-repeat;
@@ -41,8 +46,8 @@
 }
 
 @keyframes about-hero-mark-spin {
-  from { transform: translateX(56px) rotate(0deg); }
-  to { transform: translateX(56px) rotate(360deg); }
+  from { transform: translateX(calc(var(--hero-mark-direction, 1) * 56px)) rotate(0deg); }
+  to { transform: translateX(calc(var(--hero-mark-direction, 1) * 56px)) rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {

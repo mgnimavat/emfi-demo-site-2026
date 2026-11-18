@@ -94,17 +94,21 @@
     {
       "name": "Peter Timson",
       "role": "Compliance, UK",
+      "photo": "/people/peter-timson-5.jpg",
+      "inset": true,
       "description": "Oversees UK regulatory compliance and controls across EMFI’s authorised entities."
     },
     {
       "name": "Hitesh Bilochi",
       "role": "Compliance, DIFC",
+      "photo": "/people/hitesh-bilochi-5.jpg",
+      "inset": true,
       "description": "Oversees DIFC regulatory compliance and DFSA requirements for EMFI’s Dubai operations."
     },
     {
       "name": "Alan Tooker",
       "role": "Director, EMFI Fund SPC",
-      "photo": "/people/alan-tooker-2.jpg",
+      "photo": "/people/alan-tooker-3.jpg",
       "label": "A.R.C. Directors Ltd",
       "description": "Serves as an independent director of EMFI Fund SPC through A.R.C. Directors Ltd."
     },
@@ -197,7 +201,7 @@
   "boardLabel": "Board Member",
   "hero": {
     "lead": "Ten years.",
-    "accent": "One connected chain."
+    "accent": "One connected\nchain."
   },
   "market": {
     "title": [

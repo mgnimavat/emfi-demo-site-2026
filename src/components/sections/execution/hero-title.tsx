@@ -20,6 +20,7 @@ type Frame = {
 };
 
 type ExecutionHeroTitleProps = {
+  headlineId?: string;
   headline?: string;
   prefix?: string;
   words?: readonly string[];
@@ -28,6 +29,7 @@ type ExecutionHeroTitleProps = {
 };
 
 export const ExecutionHeroTitle = ({
+  headlineId,
   headline = execution.headline,
   prefix = execution.heroTitle.prefix,
   words = execution.heroTitle.words,
@@ -73,7 +75,7 @@ export const ExecutionHeroTitle = ({
 
   return (
     <>
-      <h1 className={`${styles.headline} ${headlineClassName ?? ''}`}>{headline}</h1>
+      <h1 id={headlineId} className={`${styles.headline} ${headlineClassName ?? ''}`}>{headline}</h1>
       <p className={`${styles.strapline} ${taglineClassName ?? ''}`}>
         <span className="sr-only">{words.map((text) => `${prefix} ${text}${text.endsWith('.') ? '' : '.'}`).join(' ')}</span>
         {words.map((text) => (

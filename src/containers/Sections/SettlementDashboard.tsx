@@ -177,13 +177,16 @@ const BalanceChart = () => {
   );
 };
 
-const SettlementDashboardContent = () => {
+type SettlementDashboardProps = { borderless?: boolean };
+
+const SettlementDashboardContent = ({ borderless }: SettlementDashboardProps) => {
   const { t } = useServiceLocale();
   return (
   <div
     lang="en"
     dir="ltr"
     data-system-preview="dashboard"
+    data-borderless={borderless || undefined}
     className={styles.viewport}
     role="region"
     aria-label={t("Illustrative portfolio dashboard")}
@@ -215,8 +218,8 @@ const SettlementDashboardContent = () => {
 );
 };
 
-export const SettlementDashboard = () => (
+export const SettlementDashboard = ({ borderless }: SettlementDashboardProps) => (
   <ServiceLocaleProvider locale="en" messages={{}}>
-    <SettlementDashboardContent />
+    <SettlementDashboardContent borderless={borderless} />
   </ServiceLocaleProvider>
 );

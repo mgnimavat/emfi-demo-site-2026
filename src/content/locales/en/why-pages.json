@@ -1,0 +1,235 @@
+{
+  "direct": {
+    "title": "Direct Access to Euroclear, FundSettle and Allfunds",
+    "description": "How EMFI connects professional clients to settlement, custody and fund infrastructure with fewer intermediaries and fewer handovers.",
+    "infrastructure": {
+      "titleLines": [
+        "Direct to the",
+        "Infrastructure."
+      ],
+      "lead": "EMFI’s operating model connects client activity with established securities settlement and fund investment infrastructure. Each relationship has a distinct role in the transaction lifecycle.",
+      "steps": [
+        {
+          "label": "Client Instruction",
+          "detail": ""
+        },
+        {
+          "label": "EMFI",
+          "detail": "Execution, settlement and custody coordination"
+        },
+        {
+          "label": "Market infrastructure",
+          "detail": "Depository, settlement and fund platforms"
+        }
+      ],
+      "providersTitle": "Depositories and fund platforms",
+      "providers": [
+        {
+          "title": "Euroclear",
+          "body": "Euroclear is securities settlement infrastructure."
+        },
+        {
+          "title": "FundSettle",
+          "body": "FundSettle is a fund solution."
+        },
+        {
+          "title": "Allfunds",
+          "body": "Allfunds provides fund distribution, dealing and technology services."
+        }
+      ]
+    },
+    "benefits": {
+      "titleLines": [
+        "Direct Means Less."
+      ],
+      "lead": "Direct relationships are not about removing every intermediary. They are about reducing unnecessary layers, keeping responsibilities clear and giving clients a more transparent view of the operating chain.",
+      "items": [
+        {
+          "title": "Less Overlap.",
+          "body": "A more direct operating structure can remove avoidable intermediary layers and repeated handling. Pricing depends on the service, asset, account and third-party costs."
+        },
+        {
+          "title": "Less Complexity.",
+          "body": "Fewer handovers can make instructions easier to coordinate and exceptions easier to identify. The relevant service providers and market rules still apply."
+        },
+        {
+          "title": "Less Exposure.",
+          "body": "For eligible clients, individually segregated depository accounts can keep securities separately identifiable rather than pooled with unrelated client holdings in an omnibus account."
+        }
+      ],
+      "action": "How EMFI’s settlement and custody arrangements work"
+    },
+    "execution": {
+      "titleLines": [
+        "Direct Market",
+        "Access."
+      ],
+      "lead": "For eligible clients and supported instruments, EMFI can arrange Direct Market Access to selected trading venues through approved execution arrangements.",
+      "body": "DMA allows approved clients to submit orders electronically through designated market access arrangements. Access is subject to client classification, onboarding, account size and trading activity criteria, venue and instrument availability, pre-trade controls, credit limits and ongoing monitoring. It is not unrestricted access and is assessed individually."
+    }
+  },
+  "responsive": {
+    "title": "Trading Technology and Responsive Service",
+    "description": "The EMFI Workstation, Dashboard and Mobile app, and the specialists who handle requirements that do not fit the standard process.",
+    "workstation": {
+      "titleLines": [
+        "Execution.",
+        "Connected."
+      ],
+      "lead": "EMFI Workstation is the execution interface. It brings instrument search, market information, order entry and transaction monitoring into the same workflow.",
+      "body": "VCON upload is one trade-entry route alongside manual entry, spreadsheet upload, SFTP, API and supported drop-copy arrangements."
+    },
+    "dashboard": {
+      "titleLines": [
+        "Everything",
+        "in View."
+      ],
+      "lead": "The Dashboard gives clients and authorised users visibility over the operational picture: balances, positions, outstanding trades, activity and charges."
+    },
+    "mobile": {
+      "titleLines": [
+        "Your Portfolio.",
+        "Within Reach."
+      ],
+      "lead": "Mobile access puts relevant account and portfolio information within reach when users are away from their desks.",
+      "body": "One connected operating picture. Workstation, Dashboard and Mobile serve different parts of the client and operating experience."
+    },
+    "specialist": {
+      "titleLines": [
+        "Not Everything",
+        "Fits a Dropdown."
+      ],
+      "lead": "Markets are not always standard. Client requirements are not always standard either.",
+      "body": "A particular security, a cross-depository settlement route, a specific account structure or a time-sensitive instruction can require more than a standard workflow. EMFI starts by understanding the requirement, then assesses the available infrastructure, permissions, counterparties and operational constraints. Where a workable route exists, our people coordinate the details with you and the relevant providers.",
+      "callout": "Technology handles repeatable steps. Experienced people deal with exceptions, judgement and follow-through.",
+      "note": "Every solution remains subject to applicable regulatory permissions, client eligibility, due diligence, sanctions screening, risk controls, market rules and third-party capabilities. EMFI does not undertake activity where those requirements cannot be met."
+    }
+  },
+  "dependable": {
+    "title": "Regulated, Audited, Accountable: EMFI's Safeguards and Fees",
+    "description": "Regulated entities, client asset arrangements, independent audit and clear fee principles. How EMFI keeps client assets accounted for.",
+    "relationships": {
+      "titleLines": [
+        "Regulated. Audited.",
+        "Connected."
+      ],
+      "lead": "EMFI operates through specialist legal entities and works with established professional firms and market infrastructure. The relationship matters, but so does the precise role each organisation performs.",
+      "items": [
+        {
+          "title": "FCA",
+          "body": "Regulated by. United Kingdom: EMFI Securities Limited and EMFI Capital Limited."
+        },
+        {
+          "title": "DFSA",
+          "body": "Regulated by. DIFC: EMFI Capital (DIFC) Limited."
+        },
+        {
+          "title": "Euroclear",
+          "body": "Infrastructure. Securities settlement and custody infrastructure."
+        },
+        {
+          "title": "Allfunds",
+          "body": "Fund platform. Fund dealing, distribution and technology services."
+        },
+        {
+          "title": "Audit",
+          "body": "Independent audit. Relevant entities and fund structures. Auditors are named in the relevant reports and fund documents."
+        },
+        {
+          "title": "Administration",
+          "body": "Fund administration. Relevant fund structures, by independent administrators named in the fund documentation."
+        },
+        {
+          "title": "Legal",
+          "body": "Legal counsel. Independent legal counsel for applicable matters."
+        },
+        {
+          "title": "Banking",
+          "body": "Banking. Client money held with banks under CASS arrangements, where applicable."
+        }
+      ]
+    },
+    "assets": {
+      "titleLines": [
+        "Client Assets.",
+        "Accounted For."
+      ],
+      "lead": "Safeguarding client assets is a continuing operational responsibility. In the UK, the FCA’s Client Assets Sourcebook sets requirements for client money and safe custody assets.",
+      "items": [
+        {
+          "code": "CASS 7",
+          "title": "Client Money",
+          "body": "Applicable arrangements include segregation, records, reconciliations and acknowledgement arrangements with the banks holding client money. The statutory trust framework is designed to protect client money if a firm fails."
+        },
+        {
+          "code": "CASS 6",
+          "title": "Safe Custody Assets",
+          "body": "Applicable requirements cover safekeeping, ownership rights, records and reconciliations, helping distinguish client assets from the firm’s own assets and those of other clients."
+        },
+        {
+          "code": "DIFC",
+          "title": "Separate client asset framework",
+          "body": "EMFI Capital (DIFC) Limited is subject to the DFSA’s applicable client asset requirements. These are separate from the FCA’s CASS rules."
+        }
+      ]
+    },
+    "fees": {
+      "titleLines": [
+        "Know What",
+        "You Pay."
+      ],
+      "lead": "A fee schedule should make the economics of the relationship understandable before you transact.",
+      "body": "EMFI’s commercial arrangements can include custody fees, monthly minimums, execution and ticket charges, account or service fees and third-party infrastructure costs. The applicable schedule should identify the charging basis, relevant thresholds, currency, minimums and any pass-through items so you can understand what you are paying and why.",
+      "items": [
+        {
+          "title": "Custody",
+          "body": "Basis-point rate, asset basis, tier and any monthly minimum."
+        },
+        {
+          "title": "Execution",
+          "body": "Ticket charges, market or venue charges and applicable minimums."
+        },
+        {
+          "title": "Settlement & infrastructure",
+          "body": "Depository, market infrastructure and third-party charges passed through where applicable."
+        },
+        {
+          "title": "Cash and other services",
+          "body": "Applicable interest, account and service charges, including the calculation basis."
+        }
+      ]
+    },
+    "entities": {
+      "titleLines": [
+        "Clear Entities.",
+        "Defined Responsibilities."
+      ],
+      "items": [
+        {
+          "title": "EMFI Securities Limited",
+          "body": "UK · FCA FRN 763979 · Company No. 10447140",
+          "link": "FCA Register",
+          "href": "https://register.fca.org.uk/s/search?q=763979&type=Companies"
+        },
+        {
+          "title": "EMFI Capital Limited",
+          "body": "UK · FCA FRN 822389 · Company No. 11380609",
+          "link": "FCA Register",
+          "href": "https://register.fca.org.uk/s/search?q=822389&type=Companies"
+        },
+        {
+          "title": "EMFI Capital (DIFC) Limited",
+          "body": "DIFC · DFSA Reference F011663",
+          "link": "DFSA Register",
+          "href": "https://www.dfsa.ae/public-register"
+        },
+        {
+          "title": "EMFI Group Limited",
+          "body": "UK holding company · Company No. 11391808 · 25-26 Dering Street, Third Floor, Mayfair, London W1S 1AW",
+          "link": "",
+          "href": ""
+        }
+      ]
+    }
+  }
+}
