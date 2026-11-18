@@ -1,5 +1,11 @@
 body:has(.about-page) {
-  --home-12-header-h: 77.36px;
+  /* Prefer the measured sticky header height (same as home shell treatment). */
+  --home-12-header-h: var(--site-header-height, 77.36px);
+}
+
+/* Match home-16-shell: navy behind the hero so the first viewport never flashes the next band. */
+body:has(.about-page) > div {
+  background-color: #071832;
 }
 
 body:has(.about-page) header:has(nav) {

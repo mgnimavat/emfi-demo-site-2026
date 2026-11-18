@@ -94,17 +94,21 @@
     {
       "name": "Peter Timson",
       "role": "الامتثال، المملكة المتحدة",
+      "photo": "/people/peter-timson-5.jpg",
+      "inset": true,
       "description": "يشرف على الامتثال التنظيمي والضوابط عبر كيانات EMFI المرخصة في المملكة المتحدة."
     },
     {
       "name": "Hitesh Bilochi",
       "role": "الامتثال، مركز دبي المالي العالمي",
+      "photo": "/people/hitesh-bilochi-5.jpg",
+      "inset": true,
       "description": "يشرف على الامتثال التنظيمي في مركز دبي المالي العالمي ومتطلبات سلطة دبي للخدمات المالية لعمليات EMFI في دبي."
     },
     {
       "name": "Alan Tooker",
       "role": "مدير، EMFI Fund SPC",
-      "photo": "/people/alan-tooker-2.jpg",
+      "photo": "/people/alan-tooker-3.jpg",
       "label": "A.R.C. Directors Ltd",
       "description": "يشغل منصب مدير مستقل في EMFI Fund SPC عبر A.R.C. Directors Ltd."
     },
@@ -197,7 +201,7 @@
   "boardLabel": "عضو مجلس الإدارة",
   "hero": {
     "lead": "عشر سنوات.",
-    "accent": "سلسلة واحدة متصلة."
+    "accent": "سلسلة واحدة\nمتصلة."
   },
   "market": {
     "title": [

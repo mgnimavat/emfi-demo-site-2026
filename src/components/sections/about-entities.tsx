@@ -19,14 +19,7 @@ function badgeTone(badge: string) {
   return "default";
 }
 
-function curve(from: Point, to: Point) {
-  const dy = Math.max(to.y - from.y, 48);
-  const midY = from.y + dy * 0.52;
-  return `M ${from.x} ${from.y} C ${from.x} ${midY}, ${to.x} ${midY}, ${to.x} ${to.y}`;
-}
-
-function elbow(from: Point, to: Point) {
-  const midY = from.y + Math.max(28, (to.y - from.y) * 0.5);
+function flatBranch(from: Point, to: Point, midY: number) {
   return `M ${from.x} ${from.y} L ${from.x} ${midY} L ${to.x} ${midY} L ${to.x} ${to.y}`;
 }
 
@@ -38,9 +31,7 @@ export const AboutEntities = ({ copy }: { copy: AboutCopy }) => {
   const childRefs = useRef<(HTMLElement | null)[]>([]);
   const inView = useInView(diagramRef, { once: true, amount: 0.25 });
   const [paths, setPaths] = useState<ConnectorPath[]>([]);
-  const [origin, setOrigin] = useState<Point | null>(null);
   const [vertical, setVertical] = useState(false);
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 900px)");
@@ -58,9 +49,10 @@ export const AboutEntities = ({ copy }: { copy: AboutCopy }) => {
     const measure = () => {
       const root = diagram.getBoundingClientRect();
       const parent = holding.getBoundingClientRect();
+      // Tuck under the card edge so the stroke stays visually joined (card sits above the SVG).
       const start: Point = {
         x: parent.left + parent.width / 2 - root.left,
-        y: parent.bottom - root.top,
+        y: parent.bottom - root.top - 2,
       };
 
       const ends: Point[] = [];
@@ -69,21 +61,21 @@ export const AboutEntities = ({ copy }: { copy: AboutCopy }) => {
         const child = node.getBoundingClientRect();
         ends.push({
           x: vertical ? child.left - root.left + 18 : child.left + child.width / 2 - root.left,
-          y: child.top - root.top,
+          y: child.top - root.top + 2,
         });
       });
 
       if (!ends.length) {
-        setOrigin(start);
         setPaths([]);
         return;
       }
 
-      setOrigin(start);
+      const midY = start.y + Math.max(vertical ? 28 : 36, (Math.min(...ends.map((end) => end.y)) - start.y) * 0.5);
+
       setPaths(
         ends.map((end) => ({
           end,
-          d: vertical ? elbow(start, end) : curve(start, end),
+          d: flatBranch(start, end, midY),
         })),
       );
     };
@@ -137,7 +129,6 @@ export const AboutEntities = ({ copy }: { copy: AboutCopy }) => {
           ref={diagramRef}
           className={styles.diagram}
           data-vertical={vertical || undefined}
-          data-active={activeIndex ?? undefined}
         >
           <svg className={styles.connectors} aria-hidden="true">
             <defs>
@@ -146,85 +137,35 @@ export const AboutEntities = ({ copy }: { copy: AboutCopy }) => {
                 <stop offset="55%" stopColor="#5db1b5" />
                 <stop offset="100%" stopColor="#3dceb6" />
               </linearGradient>
-              <linearGradient id="about-entity-curve-active" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#9bb6d4" />
-                <stop offset="100%" stopColor="#59beac" />
-              </linearGradient>
-              <filter id="about-entity-dot-glow" x="-80%" y="-80%" width="260%" height="260%">
-                <feGaussianBlur stdDeviation="1.6" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
             </defs>
 
-            {paths.map((path, index) => {
-              const active = activeIndex === index;
-              const dimmed = activeIndex !== null && !active;
-              return (
-                <motion.path
-                  key={`${index}-${path.d}`}
-                  d={path.d}
-                  className={styles.connector}
-                  fill="none"
-                  stroke={active ? "url(#about-entity-curve-active)" : "url(#about-entity-curve)"}
-                  strokeWidth={active ? 2.2 : 1.4}
-                  initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-                  animate={
-                    showMotion || reduceMotion
-                      ? { pathLength: 1, opacity: dimmed ? 0.22 : 1 }
-                      : { pathLength: 0, opacity: 0 }
-                  }
-                  transition={{
-                    pathLength: { duration: 0.42, delay: reduceMotion ? 0 : 0.1 + index * 0.045, ease },
-                    opacity: { duration: 0.28, ease },
-                  }}
-                />
-              );
-            })}
-
-            {origin ? (
-              <motion.g
-                initial={reduceMotion ? false : { opacity: 0, scale: 0.7 }}
-                animate={showMotion || reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 }}
-                transition={{ duration: 0.3, delay: reduceMotion ? 0 : 0.08, ease }}
-                style={{ transformOrigin: `${origin.x}px ${origin.y}px` }}
-              >
-                <circle className={styles.dotHalo} cx={origin.x} cy={origin.y} r="6" />
-                <circle className={styles.dotCore} cx={origin.x} cy={origin.y} r="2.8" />
-              </motion.g>
-            ) : null}
-
-            {paths.map((path, index) => {
-              const active = activeIndex === index;
-              const dimmed = activeIndex !== null && !active;
-              return (
-                <motion.g
-                  key={`end-${index}`}
-                  className={styles.endDot}
-                  data-active={active || undefined}
-                  initial={reduceMotion ? false : { opacity: 0, scale: 0.7 }}
-                  animate={
-                    showMotion || reduceMotion
-                      ? { opacity: dimmed ? 0.25 : 1, scale: 1 }
-                      : { opacity: 0, scale: 0.7 }
-                  }
-                  transition={{ duration: 0.3, delay: reduceMotion ? 0 : 0.22 + index * 0.04, ease }}
-                  style={{ transformOrigin: `${path.end.x}px ${path.end.y}px` }}
-                >
-                  <circle className={styles.dotHalo} cx={path.end.x} cy={path.end.y} r="5.5" />
-                  <circle className={styles.dotCore} cx={path.end.x} cy={path.end.y} r="2.4" />
-                </motion.g>
-              );
-            })}
+            {paths.map((path, index) => (
+              <motion.path
+                key={`${index}-${path.d}`}
+                d={path.d}
+                className={styles.connector}
+                fill="none"
+                stroke="url(#about-entity-curve)"
+                strokeWidth={1.4}
+                initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
+                animate={
+                  showMotion || reduceMotion
+                    ? { pathLength: 1, opacity: 1 }
+                    : { pathLength: 0, opacity: 0 }
+                }
+                transition={{
+                  pathLength: { duration: 0.42, delay: reduceMotion ? 0 : 0.1 + index * 0.045, ease },
+                  opacity: { duration: 0.28, ease },
+                }}
+              />
+            ))}
           </svg>
 
           <motion.article
             ref={holdingRef}
             className={styles.holding}
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-            animate={showMotion || reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={showMotion || reduceMotion ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.34, delay: reduceMotion ? 0 : 0.02, ease }}
           >
             <div className={styles.holdingGlow} aria-hidden="true" />
@@ -247,14 +188,9 @@ export const AboutEntities = ({ copy }: { copy: AboutCopy }) => {
                   }}
                   className={styles.child}
                   data-tone={tone}
-                  data-active={activeIndex === index || undefined}
-                  onMouseEnter={() => setActiveIndex(index)}
-                  onMouseLeave={() => setActiveIndex(null)}
-                  onFocus={() => setActiveIndex(index)}
-                  onBlur={() => setActiveIndex(null)}
                   tabIndex={0}
-                  initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-                  animate={showMotion || reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={showMotion || reduceMotion ? { opacity: 1 } : { opacity: 0 }}
                   transition={{ duration: 0.34, delay: reduceMotion ? 0 : 0.24 + index * 0.06, ease }}
                 >
                   <div className={styles.childTop}>
