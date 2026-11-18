@@ -334,7 +334,7 @@ export function AccountableSection({
           zIndex: light || raiseContent ? 2 : undefined,
           maxWidth: split ? 1480 : 1320,
           margin: "0 auto",
-          padding: split ? "clamp(56px, 7vh, 88px) clamp(110px, calc(8vw + 70px), 190px)" : sectionPad(marked, !light, pinned),
+          padding: split ? "0 clamp(110px, calc(8vw + 70px), 190px)" : sectionPad(marked, !light, pinned),
           borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)",
           ...sectionFrame(pinned, centered, cols),
           ...(split ? { alignItems: "flex-start", justifyContent: "flex-start", gap: 0 } : null),
@@ -342,7 +342,8 @@ export function AccountableSection({
       >
         <div className={split ? chapterStyles.splitDirectCopy : undefined} style={{ position: "relative", width: pinned ? (split ? undefined : "min(100%, 560px)") : undefined }}>
           <SectionCopy
-            title={split ? "3. Dependable." : "Dependable."}
+            title="Dependable."
+            index={split ? "03" : undefined}
             eyebrow={eyebrow}
             plainEyebrow={pinned && Boolean(eyebrow)}
             lead={split ? splitLead : undefined}

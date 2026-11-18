@@ -1,11 +1,15 @@
+import emfiStyles from "@/components/emfi-sections/sections.module.css";
+import { dictionaries, type AboutCopy } from "@/lib/i18n";
 import styles from "./about-hero.module.css";
 
-export const AboutHero = () => {
-  return <section className={styles.hero} aria-labelledby="about-hero-heading">
-    <div className={styles.layout}>
-      <div className={styles.copy}>
-        <h1 id="about-hero-heading" className={styles.heading}>10 Years of EMFI.</h1>
+export const AboutHero = ({ copy = dictionaries.en.about }: { copy?: AboutCopy }) => {
+  const hero = copy.hero;
+  return (
+    <section className={`${styles.hero} ${emfiStyles.chapter}`} aria-labelledby="about-hero-heading">
+      <div className={emfiStyles.lockup}>
+        <h1 id="about-hero-heading" className={emfiStyles.headline}>{hero.lead}</h1>
+        <p className={emfiStyles.subheadline}>{hero.accent}</p>
       </div>
-    </div>
-  </section>;
+    </section>
+  );
 };
