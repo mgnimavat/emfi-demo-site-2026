@@ -55,7 +55,7 @@ export function ResponsiveSection({
   const reduceMotion = useReducedMotion();
   const home17Mockup = trimChrome || appBar || home15Trade;
   const solidLight = light && (!pinned || split || Boolean(reduceMotion));
-  const splitLead = "Technology that works.\nPeople who respond.";
+  const splitLead = "Technology\nthat works.\nPeople who respond.";
   const splitBody =
     "Technology should make the routine easier. Experienced people should be available when the requirement does not fit the standard process. EMFI combines both, within defined regulatory, operational and risk controls.";
 
@@ -74,15 +74,16 @@ export function ResponsiveSection({
           zIndex: light ? 2 : undefined,
           maxWidth: split ? 1480 : 1320,
           margin: "0 auto",
-          padding: split ? "clamp(56px, 7vh, 88px) clamp(110px, calc(8vw + 70px), 190px)" : sectionPad(marked, !light, pinned),
+          padding: split ? "0 clamp(110px, calc(8vw + 70px), 190px)" : sectionPad(marked, !light, pinned),
           borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)",
           ...sectionFrame(pinned, centered, cols),
           ...(split ? { alignItems: "flex-start", justifyContent: "flex-start", gap: 0 } : null),
         }}
       >
-        <div className={split ? styles.splitDirectCopy : undefined} style={{ position: "relative", minWidth: home17Mockup && pinned && !split ? "auto" : 0, width: pinned && !split ? (home17Mockup ? "100%" : "min(100%, 560px)") : undefined, flexShrink: home17Mockup && pinned && !split ? 0 : undefined, order: pinned || centered || split ? undefined : textOrder }}>
+        <div className={split ? styles.splitDirectCopy : undefined} style={{ position: "relative", minWidth: home17Mockup && pinned && !split ? "auto" : 0, width: split ? "100%" : pinned && !split ? (home17Mockup ? "100%" : "min(100%, 560px)") : undefined, maxWidth: split ? "none" : undefined, flexShrink: home17Mockup && pinned && !split ? 0 : undefined, order: pinned || centered || split ? undefined : textOrder }}>
           <SectionCopy
-            title={split ? "2. Responsive." : "Responsive."}
+            title="Responsive."
+            index={split ? "02" : undefined}
             eyebrow={eyebrow}
             plainEyebrow={pinned && Boolean(eyebrow)}
             lead={split ? splitLead : undefined}

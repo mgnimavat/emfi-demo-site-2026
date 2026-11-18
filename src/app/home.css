@@ -20,6 +20,8 @@
 .home-page [data-why-split] #accountable > div {
   align-items: flex-start !important;
   justify-content: center !important;
+  padding-top: clamp(72px, 9vh, 112px) !important;
+  padding-bottom: clamp(72px, 9vh, 112px) !important;
 }
 
 .home-page [data-why-split] #direct .section-bottom-action,
@@ -61,9 +63,22 @@
 }
 
 .home-page [data-why-split] #direct [class*="sectionCopy"],
-.home-page [data-why-split] #responsive [class*="sectionCopy"],
 .home-page [data-why-split] #accountable [class*="sectionCopy"] {
   max-width: min(100%, 60rem);
+}
+
+.home-page [data-why-split] #responsive [class*="sectionCopy"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  column-gap: clamp(32px, 4.5vw, 72px);
+  row-gap: 0;
+  align-items: center;
+  width: 100%;
+  max-width: none;
+}
+
+.home-page [data-why-split] #responsive [class*="sectionTitle"] {
+  grid-column: 1 / -1;
 }
 
 .home-page [data-why-split] #direct [class*="sectionCopy"] [class*="sectionLead"],
@@ -76,14 +91,32 @@
   letter-spacing: -0.03em;
 }
 
+.home-page [data-why-split] #responsive [class*="sectionCopy"] [class*="sectionLead"] {
+  max-width: 20ch;
+}
+
 .home-page [data-why-split] #direct [class*="sectionCopy"] [class*="sectionBody"],
-.home-page [data-why-split] #responsive [class*="sectionCopy"] [class*="sectionBody"],
 .home-page [data-why-split] #accountable [class*="sectionCopy"] [class*="sectionBody"] {
   margin-top: 22px;
   max-width: min(100%, 78ch);
   font-size: 21px;
   line-height: 1.6;
   color: #24344b;
+}
+
+.home-page [data-why-split] #responsive [class*="sectionCopy"] [class*="sectionBody"] {
+  margin-top: 22px;
+  max-width: none;
+  font-size: 21px;
+  line-height: 1.6;
+  color: #24344b;
+  align-self: center;
+}
+
+@media (max-width: 900px) {
+  .home-page [data-why-split] #responsive [class*="sectionCopy"] {
+    grid-template-columns: 1fr;
+  }
 }
 
 .home-page [data-why-split] #direct [class*="sectionTitle"],
@@ -94,6 +127,12 @@
   line-height: 0.92;
   letter-spacing: -0.05em;
   white-space: nowrap;
+}
+
+.home-page [data-why-split] #direct [class*="sectionIndexRule"],
+.home-page [data-why-split] #responsive [class*="sectionIndexRule"],
+.home-page [data-why-split] #accountable [class*="sectionIndexRule"] {
+  background: #a2c2fd;
 }
 
 .home-page [data-why-split] #responsive {

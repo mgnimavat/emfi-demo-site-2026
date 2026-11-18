@@ -214,27 +214,29 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   const depOn = (arr(4) && t < 0.56) || t >= 0.87;
   const fs = V ? "14px" : "14px";
   const emfiHold = home12 && t >= HOME12_EMFI_END;
+  // Home split: both route diagrams show every step up front; only flow + tooltips animate.
+  const preload = light;
   const convColor = (along: number) => {
     const k = Math.max(0, Math.min(1, (along - P0[0]) / (P0[4] - P0[0])));
     return k <= 0.5 ? mixHex("#ef8ccd", "#ec6782", k / 0.5) : mixHex("#ec6782", "#eb483e", (k - 0.5) / 0.5);
   };
-  const nodes = [node(S(cpos), { op: sg(t, 0, 0.03), dot: dot("c", undefined, dark), name: "You", lp: light && !V ? "bl" : pos, sz: 18, fs, nc: labelNc, subC: labelSub })];
+  const nodes = [node(S(cpos), { op: preload ? 1 : sg(t, 0, 0.03), dot: dot("c", undefined, dark), name: "You", lp: light && !V ? "bl" : pos, sz: 18, fs, nc: labelNc, subC: labelSub })];
   ["Settlement agent", "Sub-custodian", "Custodian"].forEach((name, j) => {
     const i = j + 1;
     const processingUntil = home12 ? ws(i + 1) + 0.02 : ws(i) + 0.11;
     const processingLabel = home12 ? "Processing" : name === "Custodian" ? "Received" : "Processing";
-    nodes.push(node(S(lp(P0[i], 50, k)), { op: ap(i) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i), dark, home12 ? convColor(P0[i]) : undefined), name, sub: arr(i) && t < processingUntil ? processingLabel : "", lp: pos, sz: 16, fs, nc: labelNc, subC: labelSub }));
+    nodes.push(node(S(lp(P0[i], 50, k)), { op: (preload ? 1 : ap(i)) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i), dark, home12 ? convColor(P0[i]) : undefined), name, sub: arr(i) && t < processingUntil ? processingLabel : "", lp: pos, sz: 16, fs, nc: labelNc, subC: labelSub }));
   });
   const depositorySub = !depOn ? "" : home12 && t < CONVENTIONAL_END ? "Received" : home12 && emfiHold ? "" : "Done";
-  nodes.push(node(S(dpos), { op: ap(4), dot: dot("i", depOn, dark, home12 ? convColor(P0[4]) : undefined), name: "Depository", sub: depositorySub, lp: pos, sz: 18, fs, nc: labelNc, subC: labelSub }));
+  nodes.push(node(S(dpos), { op: preload ? 1 : ap(4), dot: dot("i", depOn, dark, home12 ? convColor(P0[4]) : undefined), name: "Depository", sub: depositorySub, lp: pos, sz: 18, fs, nc: labelNc, subC: labelSub }));
   const es = V ? 52 : 64;
   const sk = ez(sg(t, 0.64, 0.71));
   nodes.push(node(S(50), {
-    op: sg(t, 0.6, 0.66),
-    sc: lp(0.6, 1, ez(sg(t, 0.6, 0.7))),
-    dot: swDot(es, sk, "#0E2242", Math.max(Math.sin(Math.PI * sg(t, 0.67, 0.76)), Math.sin(Math.PI * sg(t, 0.785, 0.83)))),
+    op: preload ? (t >= 0.56 ? 1 : 0) : sg(t, 0.6, 0.66),
+    sc: preload ? (t >= 0.56 ? 1 : 0.6) : lp(0.6, 1, ez(sg(t, 0.6, 0.7))),
+    dot: swDot(es, preload && t >= 0.56 ? 1 : sk, "#0E2242", Math.max(Math.sin(Math.PI * sg(t, 0.67, 0.76)), Math.sin(Math.PI * sg(t, 0.785, 0.83)))),
     sw: true,
-    swOff: 100 * (1 - sk),
+    swOff: preload && t >= 0.56 ? 0 : 100 * (1 - sk),
     ms: `${V ? 28 : 35}px`,
     name: "EMFI",
     fs: "16px",
@@ -252,8 +254,9 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   const progressSpan = Math.abs(progressTo - progressFrom);
   const convTrack = P0[4] - P0[0];
   const convSize = home12 && !replay && progressSpan > 0.4 ? (V ? `100% ${(convTrack / progressSpan) * 100}%` : `${(convTrack / progressSpan) * 100}% 100%`) : undefined;
+  const baseTo = t >= 0.56 ? dpos : preload ? P0[4] : trackEnd;
   const lines = [
-    { s: rect(S(t >= 0.56 ? cpos : P0[0]), S(t >= 0.56 ? dpos : trackEnd), 2), c: light ? "#8098CC" : "#3A4A66", op: 1, size: undefined },
+    { s: rect(S(t >= 0.56 ? cpos : P0[0]), S(baseTo), 2), c: light ? "#8098CC" : "#3A4A66", op: 1, size: undefined },
     { s: rect(S(progressFrom), S(progressTo), replay ? 3 : 2), c: replay ? routeGradient : home12 ? convGradient : routeBlue, op: replay ? 1 : 1 - sg(t, 0.56, 0.6), size: convSize },
   ];
   const hm = !replay && trav > 0 ? (P0[trav - 1] + P0[trav]) / 2 : null;
