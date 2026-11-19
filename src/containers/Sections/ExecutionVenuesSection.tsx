@@ -3,6 +3,7 @@ import { executionVenueGroups } from '@/content/execution-venues';
 import type { ResearchCopy } from '@/lib/i18n/service-dictionaries';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import styles from './ExecutionVenuesSection.module.css';
+import reveal from './ProviderCardReveal.module.css';
 
 export const ExecutionVenuesSection = ({ copy }: { copy: ResearchCopy['executionVenues'] }) => (
   <section id="execution" className={styles.section} aria-labelledby="execution-heading">
@@ -18,15 +19,17 @@ export const ExecutionVenuesSection = ({ copy }: { copy: ResearchCopy['execution
       </div>
       <div className={styles.groups}>
         {executionVenueGroups.map((group) => (
-          <ExecutionReveal key={group.id} className={styles.group}>
-            <h3 className={styles.groupTitle}>{copy[group.id]}</h3>
+          <ExecutionReveal key={group.id}>
             <ul className={styles.venues}>
               {group.venues.map((venue) => (
-                <li key={venue.name} className={styles.card}>
-                  <span className={styles.logoFrame}>
-                    <Image src={venue.logo} alt={venue.name} width={200} height={64}
-                      className={venue.name === 'Euroclear FundSettle' ? styles.squareLogo : styles.logo} />
-                  </span>
+                <li key={venue.name}>
+                  <a href={venue.href} target="_blank" rel="noreferrer" className={`${styles.card} ${reveal.card}`}>
+                    <span className={`${styles.logoFrame} ${reveal.brand}`}>
+                      <Image src={venue.logo} alt="" width={200} height={64}
+                        className={venue.name === 'Euroclear FundSettle' ? styles.squareLogo : styles.logo} />
+                    </span>
+                    <span className={`${styles.venueName} ${reveal.details}`}>{venue.name}</span>
+                  </a>
                 </li>
               ))}
             </ul>

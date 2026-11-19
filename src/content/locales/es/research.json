@@ -139,10 +139,17 @@
         "description": "Análisis económico que aporta contexto a los mercados soberanos."
       },
       {
+        "name": "Elena Sánchez",
+        "role": "Analista cuantitativa",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Apoyo al análisis cuantitativo y la investigación de mercados."
+      },
+      {
         "name": "Mohammad Ezzeddine",
         "role": "Estratega",
         "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "Estrategia de mercados que conecta el análisis económico con oportunidades de inversión."
+        "description": "Estrategia de mercados que conecta el análisis económico con oportunidades de inversión.",
+        "startDesktopRow": true
       },
       {
         "name": "José Ara",
@@ -155,12 +162,6 @@
         "role": "Estratega",
         "photo": "/people/placeholder-draw-sky.jpg",
         "description": "Estrategia de mercados que conecta el análisis económico con oportunidades de inversión."
-      },
-      {
-        "name": "Elena Sánchez",
-        "role": "Analista cuantitativa (en prácticas)",
-        "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "Apoyo al análisis cuantitativo y la investigación de mercados."
       }
     ],
     "title": "Conocimiento del mercado. Criterio humano."
@@ -168,8 +169,6 @@
   "executionVenues": {
     "title": "Ejecución",
     "subtitle": "Ejecución en plataformas de renta fija y mercados seleccionados.",
-    "fixedIncome": "Mercados de renta fija",
-    "otherVenues": "Otros mercados y plataformas de fondos",
     "body": "Ejecución en los mercados y valores pertinentes, respaldada por relaciones especializadas de negociación y la tecnología para coordinar la operación durante el proceso de poscontratación."
   },
   "workstation": {

@@ -75,6 +75,15 @@
 .details:is([data-layout='cards'], [data-layout='benefits']) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .detail { display: grid; align-content: start; gap: var(--space-3); min-width: 0; }
 .detail h3 { margin: 0; font-size: clamp(19px, 1.8cqi, 25px); font-weight: 700; line-height: 1.25; }
+.detailLogo {
+  display: block;
+  width: auto;
+  height: 56px;
+  max-width: min(144px, 100%);
+  object-fit: contain;
+  object-position: left center;
+}
+.detailLogo:dir(rtl) { object-position: right center; }
 .details:is([data-layout='cards'], [data-layout='benefits'], [data-layout='entities']) .detail {
   padding: clamp(var(--space-5), 2.7cqi, var(--space-7));
   border: 1px solid color-mix(in srgb, var(--why-line, var(--color-blue-100)) 55%, transparent);
@@ -102,8 +111,9 @@
   list-style: none;
 }
 .provider {
+  --provider-mark-height: 104px;
   display: grid;
-  grid-template-rows: 104px 1fr;
+  grid-template-rows: var(--provider-mark-height) 1fr;
   min-width: 0;
   padding: var(--space-4) clamp(var(--space-4), 2.2cqi, var(--space-6)) var(--space-5);
   border: 1px solid var(--flow-from);
@@ -124,6 +134,21 @@
 .providerMark img { display: block; width: min(100%, 168px); height: 76px; object-fit: contain; }
 .providerMark[data-fund-settle='true'] img { max-width: 52px; }
 .provider .providerDescription { padding-block-start: var(--space-4); border-block-start: 1px solid var(--border-default); }
+@media (hover: hover) and (pointer: fine) {
+  .provider[tabindex] { position: relative; }
+  .provider[tabindex] .providerMark {
+    position: absolute;
+    inset: 0 var(--space-4);
+    transition: inset-block-end .35s ease;
+  }
+  .provider[tabindex]:is(:hover, :focus-within) .providerMark {
+    inset-block-end: calc(100% - var(--provider-mark-height) - 2 * var(--space-4));
+  }
+  .provider[tabindex] .providerDescription { grid-row: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .provider[tabindex] .providerMark { transition: none; }
+}
 .details[data-layout='ledger'] {
   --ledger-divider: color-mix(in srgb, var(--why-line, var(--color-blue-200)) 35%, transparent);
   grid-template-columns: repeat(2, minmax(0, 1fr));

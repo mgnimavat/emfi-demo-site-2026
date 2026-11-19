@@ -13,6 +13,7 @@ import type { WhyPageCopy } from '@/lib/i18n/why-page-dictionaries';
 import type { DependableCopy, DirectCopy, ResponsiveCopy } from '@/lib/i18n/marketing-dictionaries';
 import type { Locale } from '@/lib/i18n';
 import { localizeHref } from '@/lib/i18n';
+import reveal from './ProviderCardReveal.module.css';
 import { responsiveTechnology } from '@/content/responsive-technology';
 import { ExecutionWorkstation } from './ExecutionWorkstation';
 import { SettlementDashboard } from './SettlementDashboard';
@@ -21,12 +22,20 @@ import styles from './WhyServicePages.module.css';
 
 type Intro = { titleLines: string[]; lead?: string; body?: string; note?: string };
 type Detail = { title: string; body: string; code?: string; href?: string; link?: string };
+type DetailLogo = { src: string; width: number; height: number };
 
 const euroclearLogo = '/images/execution-venues/euroclear-navy.svg';
+const allfundsLogo = '/images/execution-venues/allfunds-navy.svg';
 const providerLogos: Readonly<Partial<Record<string, string>>> = {
   Euroclear: euroclearLogo,
   FundSettle: euroclearLogo,
-  Allfunds: '/images/execution-venues/allfunds-navy.svg',
+  Allfunds: allfundsLogo,
+};
+const relationshipLogos: Readonly<Partial<Record<string, DetailLogo>>> = {
+  FCA: { src: '/brand/regulators/fca-brand.svg', width: 156, height: 89 },
+  DFSA: { src: '/brand/regulators/dfsa-brand.png', width: 160, height: 100 },
+  Euroclear: { src: euroclearLogo, width: 96, height: 96 },
+  Allfunds: { src: allfundsLogo, width: 144, height: 39 },
 };
 const benefitIcons = [Layers, GitMerge, ShieldCheck];
 
@@ -83,21 +92,25 @@ const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', children }
   </section>
 );
 
-const Details = ({ items, layout = 'cards' }: {
+const Details = ({ items, layout = 'cards', logos }: {
   items: readonly Detail[];
   layout?: 'cards' | 'benefits' | 'ledger' | 'entities';
+  logos?: Readonly<Partial<Record<string, DetailLogo>>>;
 }) => (
   <ExecutionReveal>
     <ul className={styles.details} data-layout={layout} role="list">
       {items.map((item, index) => {
         const Icon = layout === 'benefits' ? benefitIcons[index] : undefined;
+        const logo = logos?.[item.title];
 
         return (
           <li key={item.title} className={styles.detail}>
             <div>
               {Icon ? <span className={styles.detailIcon}><Icon size={22} aria-hidden="true" /></span> : null}
               {item.code ? <span className={styles.code}>{item.code}</span> : null}
-              <h3>{item.title}</h3>
+              <h3>
+                {logo ? <Image {...logo} alt={item.title} className={styles.detailLogo} /> : item.title}
+              </h3>
             </div>
             <div>
               <p className={styles.body}>{item.body}</p>
@@ -125,13 +138,13 @@ const InfrastructureProviders = ({ items }: { items: readonly Detail[] }) => (
         const square = logo === euroclearLogo;
 
         return (
-          <li key={title} className={styles.provider}>
+          <li key={title} className={`${styles.provider} ${reveal.card}`} tabIndex={body ? 0 : undefined}>
             <h4 className={styles.providerMark} data-fund-settle={fundSettle}>
               {logo ? <Image src={logo} alt={showName ? '' : title}
                 width={square ? 76 : 168} height={square ? 76 : 46} /> : null}
               {showName ? <span>{title}</span> : null}
             </h4>
-            <p className={`${styles.body} ${styles.providerDescription}`}>{body}</p>
+            {body ? <p className={`${styles.body} ${styles.providerDescription} ${reveal.details}`}>{body}</p> : null}
           </li>
         );
       })}
@@ -214,7 +227,7 @@ export const DependableContentPage = ({ copy, heroCopy }: {
       <OversightCycle />
     </WhyHero>
     <ContentBand id="regulation" copy={copy.relationships} tone="soft">
-      <Details items={copy.relationships.items} layout="ledger" />
+      <Details items={copy.relationships.items} layout="ledger" logos={relationshipLogos} />
     </ContentBand>
     <ContentBand id="client-assets" copy={copy.assets}>
       <Details items={copy.assets.items} />

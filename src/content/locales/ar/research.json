@@ -139,10 +139,17 @@
         "description": "تحليل اقتصادي يوفر سياقاً لأسواق الديون السيادية."
       },
       {
+        "name": "Elena Sánchez",
+        "role": "محللة كمية",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "دعم التحليل الكمي وأبحاث السوق."
+      },
+      {
         "name": "Mohammad Ezzeddine",
         "role": "خبير استراتيجي",
         "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "استراتيجية أسواق تربط التحليل الاقتصادي بفرص الاستثمار."
+        "description": "استراتيجية أسواق تربط التحليل الاقتصادي بفرص الاستثمار.",
+        "startDesktopRow": true
       },
       {
         "name": "José Ara",
@@ -155,12 +162,6 @@
         "role": "خبير استراتيجي",
         "photo": "/people/placeholder-draw-sky.jpg",
         "description": "استراتيجية أسواق تربط التحليل الاقتصادي بفرص الاستثمار."
-      },
-      {
-        "name": "Elena Sánchez",
-        "role": "محللة كمية (متدربة)",
-        "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "دعم التحليل الكمي وأبحاث السوق."
       }
     ],
     "title": "معرفة بالسوق. حُكم بشري."
@@ -168,8 +169,6 @@
   "executionVenues": {
     "title": "التنفيذ",
     "subtitle": "التنفيذ عبر منصات الدخل الثابت وأماكن التداول المختارة.",
-    "fixedIncome": "أماكن تداول الدخل الثابت",
-    "otherVenues": "أماكن التداول الأخرى ومنصات الصناديق",
     "body": "التنفيذ عبر الأسواق والأوراق المالية ذات الصلة، بدعم من علاقات تداول متخصصة والتكنولوجيا اللازمة لتنسيق الصفقة خلال مراحل ما بعد التداول."
   },
   "workstation": {

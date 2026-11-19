@@ -15,7 +15,7 @@ export const ResearchTeamSection = ({ copy }: { copy: ResearchCopy['team'] }) =>
       </ExecutionReveal>
       <div className={theme.personGrid}>
         {copy.people.map((person) => (
-          <ExecutionReveal key={person.name}>
+          <ExecutionReveal key={person.name} className={person.startDesktopRow ? styles.rowStart : undefined}>
             <PersonCard person={person} />
           </ExecutionReveal>
         ))}

@@ -9,11 +9,45 @@ import styles from './SettlementServiceSections.module.css';
 const workflowIcons = { upload: FileUp, extract: ScanText, validate: ShieldCheck, process: Workflow };
 const isWorkflowStep = (id: string): id is keyof typeof workflowIcons => id in workflowIcons;
 
-export const SettlementServiceSections = ({ copy }: { copy: SettlementCopy }) => (
+const ArchiveCrossBorder = ({ lead, copy }: { lead: string; copy: SettlementCopy }) => {
+  const { titleLines, body, detail } = copy.crossBorderArchive;
+
+  return (
+    <section id="cross-border" className={`${styles.section} ${styles.archiveSection}`}
+      aria-labelledby="cross-border-heading">
+      <div className={`${styles.container} ${styles.archiveLayout}`}>
+        <ExecutionReveal className={styles.archiveCopy}>
+          <h2 id="cross-border-heading" className={styles.title}>
+            {titleLines.map((line) => <span key={line}>{line}</span>)}
+          </h2>
+          <p className={styles.archiveLead}>{lead}</p>
+          <p className={styles.body}>{body}</p>
+          <div className={styles.archiveDetail}>
+            <h3>{detail.title}</h3>
+            <p className={styles.body}>{detail.body}</p>
+          </div>
+        </ExecutionReveal>
+        <div className={styles.archiveAnimation}>
+          <SettlementAccountAnimation copy={copy.accountAnimation} orientation="vertical" />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export const SettlementServiceSections = ({ copy, archiveCrossBorder = false }: {
+  copy: SettlementCopy; archiveCrossBorder?: boolean;
+}) => (
   <div id="settlement" className={styles.sections}>
-    {copy.serviceSections.map((section) => (
-      <section key={section.id} id={section.id} className={styles.section}
-        aria-labelledby={`${section.id}-heading`}>
+    {copy.serviceSections.map((section) => archiveCrossBorder && section.id === 'cross-border' ? (
+      <ArchiveCrossBorder key={section.id} lead={section.lead} copy={copy} />
+    ) : (
+      <section
+        key={section.id}
+        id={section.id}
+        className={styles.section}
+        aria-labelledby={`${section.id}-heading`}
+      >
         <div className={styles.container}>
           <div className={`${styles.introduction} ${
             section.id === 'trade-upload' ? styles.uploadIntroduction : ''
@@ -21,17 +55,16 @@ export const SettlementServiceSections = ({ copy }: { copy: SettlementCopy }) =>
             <ExecutionReveal>
               <h2 id={`${section.id}-heading`}
                 className={section.id === 'trade-upload' ? styles.uploadTitle : styles.title}>
-                {section.id === 'trade-upload'
-                  ? section.titleLines.join(' ')
-                  : section.titleLines.map((line) => <span key={line}>{line}</span>)}
+                {section.titleLines.map((line) => <span key={line}>{line}</span>)}
               </h2>
             </ExecutionReveal>
             <ExecutionReveal delay={0.12} className={styles.copy}>
               <p className={styles.lead}>{section.lead}</p>
-              {section.id !== 'trade-upload' ? <p className={styles.body}>{section.body}</p> : null}
             </ExecutionReveal>
           </div>
-          {section.id === 'cross-border' ? <SettlementAccountAnimation copy={copy.accountAnimation} /> : section.id === 'linked-settlement' ? (
+          {section.id === 'cross-border' ? (
+            <SettlementAccountAnimation copy={copy.accountAnimation} />
+          ) : section.id === 'linked-settlement' ? (
             <SettlementLinkedAnimation panels={section.panels} copy={copy.linkedAnimation} />
           ) : section.id === 'trade-upload' ? (
             <SettlementUploadAnimation panels={section.panels} copy={copy.uploadAnimation} />
@@ -61,17 +94,6 @@ export const SettlementServiceSections = ({ copy }: { copy: SettlementCopy }) =>
             })}
           </div>
           )}
-          {section.id === 'trade-upload' ? (
-            <ExecutionReveal className={styles.uploadDescription}>
-              <p className={styles.body}>{section.body}</p>
-            </ExecutionReveal>
-          ) : null}
-          {section.detail ? (
-            <ExecutionReveal className={styles.detail}>
-              <h3>{section.detail.title}</h3>
-              <p className={styles.body}>{section.detail.body}</p>
-            </ExecutionReveal>
-          ) : null}
           {section.methods ? (
             <div className={styles.methods}>
               <h3>{section.methodsTitle}</h3>
@@ -85,7 +107,6 @@ export const SettlementServiceSections = ({ copy }: { copy: SettlementCopy }) =>
               </div>
             </div>
           ) : null}
-          {section.notice ? <p className={styles.notice}>{section.notice}</p> : null}
         </div>
       </section>
     ))}

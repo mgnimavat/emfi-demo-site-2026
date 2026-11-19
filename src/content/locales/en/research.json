@@ -139,10 +139,17 @@
         "description": "Economic analysis providing context for sovereign markets."
       },
       {
+        "name": "Elena Sánchez",
+        "role": "Quantitative Analyst",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Supporting quantitative analysis and market research."
+      },
+      {
         "name": "Mohammad Ezzeddine",
         "role": "Strategist",
         "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "Market strategy connecting economic analysis with investment opportunities."
+        "description": "Market strategy connecting economic analysis with investment opportunities.",
+        "startDesktopRow": true
       },
       {
         "name": "José Ara",
@@ -155,12 +162,6 @@
         "role": "Strategist",
         "photo": "/people/placeholder-draw-sky.jpg",
         "description": "Market strategy connecting economic analysis with investment opportunities."
-      },
-      {
-        "name": "Elena Sánchez",
-        "role": "Quantitative Analyst (Intern)",
-        "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "Supporting quantitative analysis and market research."
       }
     ],
     "title": "Market knowledge. Human judgement."
@@ -168,8 +169,6 @@
   "executionVenues": {
     "title": "Execution",
     "subtitle": "Execution across fixed income platforms and selected venues.",
-    "fixedIncome": "Fixed income venues",
-    "otherVenues": "Other venues & fund platforms",
     "body": "Execution across relevant markets and securities, supported by specialist dealing relationships and the technology to coordinate the trade through the post-trade process."
   },
   "workstation": {

@@ -5,3 +5,7 @@
   font-size: 15px;
   line-height: 1.7;
 }
+
+@media (min-width: 1024px) {
+  .rowStart { grid-column-start: 1; }
+}

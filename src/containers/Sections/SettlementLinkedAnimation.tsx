@@ -1,89 +1,104 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import { useAnimationFrame, useInView, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Check, Clock3, Link2, Unlink, X } from 'lucide-react';
+import { ArrowRight, Check, CircleCheck, Clock3, Link2, Pause, TriangleAlert, Unlink, X } from 'lucide-react';
 import type { SettlementCopy } from '@/lib/i18n/service-dictionaries';
+import {
+  getLinkedSettlementComparisonFrame,
+  linkedSettlementOutcome,
+} from '@/lib/settlement-linked-animation';
 import styles from './SettlementLinkedAnimation.module.css';
 
 type SettlementPanel = SettlementCopy['serviceSections'][number]['panels'][number];
 type LinkedCopy = SettlementCopy['linkedAnimation'];
 type InstructionState = keyof LinkedCopy['states'];
-const timing = { cycle: 9000, settle: 2000, attempt: 3200, outcome: 6200 } as const;
 
-const Instruction = ({ instruction, buy, state, copy }: {
-  instruction: string; buy: boolean; state: InstructionState; copy: LinkedCopy;
+const Instruction = ({ label, side, state, copy, exposure = false }: {
+  label: string; side: 'buy' | 'sell'; state: InstructionState; copy: LinkedCopy; exposure?: boolean;
 }) => {
-  const separator = instruction.indexOf(':');
-  const label = separator < 0 ? instruction : instruction.slice(0, separator);
-  const StatusIcon = state === 'settled' || state === 'available' ? Check : state === 'failed' ? X : Clock3;
+  const StatusIcon = state === 'settled' ? Check : state === 'failed' ? X : state === 'held' ? Pause : Clock3;
 
   return (
-    <div className={styles.instruction} data-instruction={buy ? 'buy' : 'sell'} data-state={state}>
-      <span className={styles.statusIcon}><StatusIcon size={24} aria-hidden="true" /></span>
-      <span className={styles.instructionLabel}>{label}</span>
-      <span className={styles.status}>{copy.states[state]}</span>
+    <div className={styles.instruction} data-instruction={side} data-state={state}>
+      <span className={styles.statusIcon}><StatusIcon key={state} size={22} aria-hidden="true" /></span>
+      <div className={styles.instructionCopy}>
+        <span className={styles.instructionLabel}>{label}</span>
+        <span className={styles.status}>{copy.states[state]}</span>
+        {exposure ? (
+          <span className={styles.exposure}>
+            <TriangleAlert size={14} aria-hidden="true" />
+            {copy.exposure}
+          </span>
+        ) : null}
+      </div>
     </div>
   );
 };
 
+const initialFrame = getLinkedSettlementComparisonFrame(0);
+
 export const SettlementLinkedAnimation = ({ panels, copy }: {
   panels: SettlementPanel[]; copy: LinkedCopy;
 }) => {
-  const stage = useRef<HTMLDivElement>(null);
+  const headingId = useId();
+  const stage = useRef<HTMLElement>(null);
+  const connection = useRef<HTMLDivElement>(null);
   const elapsed = useRef(0);
-  const lastPhase = useRef(0);
-  const [phase, setPhase] = useState(0);
-  const visible = useInView(stage, { amount: 0.2 });
+  const [frame, setFrame] = useState(initialFrame);
+  const visible = useInView(stage, { amount: 0.25 });
   const reducedMotion = useReducedMotion();
-  const activePhase = reducedMotion ? 3 : phase;
+  const linked = Boolean(reducedMotion) || frame.linked;
+  const { buy, sell } = reducedMotion ? linkedSettlementOutcome.linked : frame;
+  const financingExposure = !linked && buy === 'settled' && sell !== 'settled';
+  const unlinkedPanel = panels.find((panel) => panel.id === 'unlinked');
+  const linkedPanel = panels.find((panel) => panel.id === 'linked');
+  const panel = linked ? linkedPanel : unlinkedPanel;
+  const ConnectionIcon = linked ? Link2 : Unlink;
+  const TravelIcon = sell === 'failed' ? X : sell === 'settled' ? Check : ArrowRight;
 
   useAnimationFrame((_time, delta) => {
     if (!visible || reducedMotion || document.hidden) return;
-    elapsed.current = (elapsed.current + Math.min(delta, 64)) % timing.cycle;
-    const nextPhase = elapsed.current >= timing.outcome ? 3 : elapsed.current >= timing.attempt ? 2
-      : elapsed.current >= timing.settle ? 1 : 0;
-    if (lastPhase.current !== nextPhase) {
-      lastPhase.current = nextPhase;
-      setPhase(nextPhase);
+    elapsed.current += Math.min(delta, 64);
+    const next = getLinkedSettlementComparisonFrame(elapsed.current);
+    connection.current?.style.setProperty('--travel-position', `${next.progress * 100}%`);
+    if (next.linked !== frame.linked || next.buy !== frame.buy || next.sell !== frame.sell) {
+      setFrame(next);
     }
   });
 
-  return (
-    <div ref={stage} className={styles.stage} data-running={visible && !reducedMotion} data-phase={activePhase}>
-      {panels.map((panel) => {
-        const linked = panel.id === 'linked';
-        const ConnectionIcon = linked ? Link2 : Unlink;
-        const buyState: InstructionState = linked && activePhase >= 1 ? 'settled' : 'pending';
-        const sellState: InstructionState = activePhase >= 3 ? (linked ? 'available' : 'failed')
-          : activePhase >= 2 ? 'attempting' : 'waiting';
+  if (!panel) return null;
 
-        return (
-          <figure key={panel.id} className={styles.panel} data-linked={linked}>
-            <h3>{panel.title}</h3>
-            <div className={styles.scene}>
-              <div className={styles.travelLane} aria-hidden="true">
-                <span className={styles.travelProgress} />
-                <span className={styles.tradeMarker}><ArrowRight size={18} /></span>
-                <span className={styles.barrier}><X size={16} /></span>
+  return (
+    <figure ref={stage} className={styles.stage} aria-labelledby={headingId}
+      data-linked={linked} data-sell-state={sell}>
+      <h3 id={headingId} className={styles.title}>{panel.title}</h3>
+      <div className={styles.scene}>
+        <Instruction label={panel.steps[0] ?? copy.buy} side="buy" state={buy} copy={copy}
+          exposure={financingExposure} />
+        <div ref={connection} className={styles.connection} aria-hidden="true">
+          <span className={styles.connectionLine} />
+          <span className={styles.connectionProgress} />
+          <span className={styles.connectionIcon}><ConnectionIcon size={18} /></span>
+          <span className={styles.tradeMarker}><TravelIcon size={16} /></span>
+        </div>
+        <Instruction label={panel.steps[1] ?? copy.sell} side="sell" state={sell} copy={copy} />
+      </div>
+      <figcaption className={styles.caption}>
+        {panels.map((scenario) => {
+          const CaptionIcon = scenario.id === 'linked' ? CircleCheck : TriangleAlert;
+          return (
+            <div key={scenario.id} className={styles.outcome} data-scenario={scenario.id}
+              aria-current={!reducedMotion && scenario.id === panel.id ? 'true' : undefined}>
+              <CaptionIcon size={20} aria-hidden="true" />
+              <div>
+                <strong>{scenario.title}</strong>
+                <p>{scenario.body}</p>
               </div>
-              {panel.steps.map((step, index) => (
-                <div key={step} className={styles.instructionSlot}>
-                  {index > 0 ? (
-                    <span className={styles.connection} aria-hidden="true">
-                      <span className={styles.connectionLine} />
-                      <span className={styles.connectionIcon}><ConnectionIcon size={20} /></span>
-                    </span>
-                  ) : null}
-                  <Instruction instruction={step} buy={index === 0} copy={copy}
-                    state={index === 0 ? buyState : sellState} />
-                </div>
-              ))}
             </div>
-            <figcaption>{panel.body}</figcaption>
-          </figure>
-        );
-      })}
-    </div>
+          );
+        })}
+      </figcaption>
+    </figure>
   );
 };

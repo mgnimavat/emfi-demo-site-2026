@@ -1,44 +1,44 @@
 import Image from 'next/image';
-import { ArrowDown, Layers } from 'lucide-react';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { PersonCard } from '@/components/sections/person-card';
 import { wealthProviderAssets } from '@/content/wealth-provider-assets';
-import type { WealthCopy } from '@/lib/i18n/service-dictionaries';
+import type { AboutCopy } from '@/lib/i18n';
+import type { ResearchCopy, WealthCopy } from '@/lib/i18n/service-dictionaries';
 import { SettlementDashboard } from './SettlementDashboard';
 import theme from '@/components/sections/archive/theme.module.css';
 import styles from './WealthServiceSections.module.css';
+import reveal from './ProviderCardReveal.module.css';
 
-export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }) => (
+const portfolioResearchNames = new Set([
+  'Guillermo Guerrero',
+  'Albani Granado',
+  'Rosamnis Marcano',
+  'Matias Montes',
+]);
+
+export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archiveFund = false }: {
+  copy: WealthCopy['redesign'];
+  researchTeam: ResearchCopy['team'];
+  aboutPeople: readonly AboutCopy['people'][number][];
+  archiveFund?: boolean;
+}) => (
   <>
-    <section id="fund-structure" className={`${styles.section} ${styles.soft}`} aria-labelledby="fund-structure-heading">
-      <div className={styles.container}>
-        <div className={styles.introduction}>
+    <section id="fund-structure" className={`${styles.section} ${styles.soft} ${styles.fundStructure}`}
+      aria-labelledby="fund-structure-heading">
+      <div className={archiveFund ? `${styles.container} ${styles.fundArchiveLayout}` : styles.container}>
+        <div className={styles.fundIntroduction}>
           <ExecutionReveal>
             <h2 id="fund-structure-heading" className={styles.title}>
-              {copy.fund.titleLines.map((line) => <span key={line}>{line}</span>)}
+              {(archiveFund ? copy.fund.archive.titleLines : copy.fund.titleLines)
+                .map((line) => <span key={line}>{line}</span>)}
             </h2>
           </ExecutionReveal>
-          <ExecutionReveal className={styles.copy} delay={0.12}>
+          <ExecutionReveal delay={0.12} className={archiveFund ? styles.fundArchiveCopy : undefined}>
             <p className={styles.lead}>{copy.fund.lead}</p>
-            <p className={styles.body}>{copy.fund.body}</p>
+            {archiveFund && <p className={styles.body}>{copy.fund.archive.body}</p>}
           </ExecutionReveal>
         </div>
-        <ExecutionReveal>
-          <figure className={styles.structure}>
-            <figcaption className={styles.fundRoot}>
-              <Layers size={28} aria-hidden="true" />
-              <h3>{copy.fund.name}</h3>
-              <p>{copy.fund.jurisdiction}</p>
-            </figcaption>
-            <ArrowDown size={28} className={styles.connector} aria-hidden="true" />
-            <div className={styles.portfolios}>
-              <h4>{copy.fund.portfolioTitle}</h4>
-              <p className={styles.body}>{copy.fund.portfolioBody}</p>
-            </div>
-          </figure>
-        </ExecutionReveal>
-        <div className={styles.providers}>
-          <ArrowDown size={28} className={styles.providerConnector} aria-hidden="true" />
+        <ExecutionReveal className={styles.providers}>
           <svg className={styles.logoFilter} aria-hidden="true" focusable="false">
             <defs>
               <filter id="wealth-provider-navy" colorInterpolationFilters="sRGB">
@@ -49,22 +49,23 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
               </filter>
             </defs>
           </svg>
-          <h3>{copy.fund.providersTitle}</h3>
-          <ul className={styles.providerGrid}>
+          <h3 id="fund-providers-heading">{copy.fund.providersTitle}</h3>
+          <ul className={styles.providerGrid} aria-labelledby="fund-providers-heading">
             {copy.fund.providers.map((provider) => {
               const asset = wealthProviderAssets[provider.id];
               return (
-                <li key={provider.id} className={styles.provider}>
-                  <div className={styles.providerBrand} data-provider={provider.id}>
+                <li key={provider.id} className={`${styles.provider} ${reveal.card}`}
+                  tabIndex={provider.role ? 0 : undefined}>
+                  <div className={`${styles.providerBrand} ${reveal.brand}`} data-provider={provider.id}>
                     {asset ? <Image src={asset.src} alt={provider.name} width={asset.width}
                       height={asset.height} className={styles.providerLogo} /> : <strong>{provider.name}</strong>}
                   </div>
-                  <span>{provider.role}</span>
+                  {provider.role && <span className={reveal.details}>{provider.role}</span>}
                 </li>
               );
             })}
           </ul>
-        </div>
+        </ExecutionReveal>
       </div>
     </section>
     <section id="investment-mandate" className={`${styles.section} ${styles.mandateSection}`}
@@ -112,7 +113,13 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
           <h2 id="portfolio-team-heading" className={theme.sectionTitle}>{copy.team.title}</h2>
         </ExecutionReveal>
         <div className={styles.teamGrid}>
-          {copy.team.people.map((person) => (
+          {[
+            ...copy.team.people.map((person) => ({
+              ...person,
+              description: aboutPeople.find(({ name }) => name === person.name)?.description,
+            })),
+            ...researchTeam.people.filter((person) => portfolioResearchNames.has(person.name)),
+          ].map((person) => (
             <ExecutionReveal key={person.name}><PersonCard person={person} /></ExecutionReveal>
           ))}
         </div>

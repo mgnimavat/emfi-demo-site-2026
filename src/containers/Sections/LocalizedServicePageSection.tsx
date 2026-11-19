@@ -43,11 +43,12 @@ export const LocalizedServicePageSection = ({
   researchVariant = 'current',
   settlementVariant = 'current',
   wealthVariant = 'current',
-}: { service: ServicePage; locale?: Locale; researchVariant?: 'current' | 'archived'; settlementVariant?: 'current' | 'v1' | 'archived'; wealthVariant?: 'current' | 'v1' }) => {
+}: { service: ServicePage; locale?: Locale; researchVariant?: 'current' | 'archived'; settlementVariant?: 'current' | 'archive' | 'v1' | 'archived'; wealthVariant?: 'current' | 'archive' | 'v1' }) => {
   const dictionary = serviceDictionaries[locale];
   const messages = dictionary[servicePages[service]].ui;
   const research = service === 'research-execution';
   const copy = service === 'settlement-custody' ? dictionary.settlement : dictionary.wealth;
+  const [londonEntity, dubaiEntity] = dictionary.settlement.disclosures.entities;
   return (
     <ServiceLocaleProvider locale={locale} messages={messages}>
       <div data-service={service} data-research-variant={research ? researchVariant : undefined}
@@ -85,7 +86,7 @@ export const LocalizedServicePageSection = ({
           </>
         ) : (
           <>
-            {service === 'wealth-asset-management' && wealthVariant === 'current' ? (
+            {service === 'wealth-asset-management' && wealthVariant !== 'v1' ? (
               <WealthServiceHero copy={dictionary.wealth.redesign.hero} />
             ) : service === 'settlement-custody' && settlementVariant !== 'archived' ? (
               <PrinciplesSection stacked hero copy={marketingDictionaries[locale].home.principles}
@@ -97,20 +98,24 @@ export const LocalizedServicePageSection = ({
               taglineClassName={service === 'wealth-asset-management' ? heroStyles.wealthTagline : undefined}
               headlineClassName={service === 'wealth-asset-management' ? heroStyles.wideHeadline : undefined} />}
             {service === 'settlement-custody' ? (
-              settlementVariant === 'current' ? <>
-                <SettlementServiceSections copy={dictionary.settlement} />
+              settlementVariant === 'current' || settlementVariant === 'archive' ? <>
+                <SettlementServiceSections copy={dictionary.settlement}
+                  archiveCrossBorder={settlementVariant === 'archive'} />
                 <SettlementQuestionnaireSection copy={dictionary.settlement.questionnaire} />
-                <OfficeContactSection copy={dictionaries[locale].common} officeCity="Dubai" sectionId="settlement-office">
-                  {dictionary.settlement.disclosures.entities.map((entity) => (
-                    <p key={entity.name}><strong>{entity.name}</strong> {entity.body}</p>
-                  ))}
-                  <p>{dictionary.settlement.disclosures.notice}</p>
-                </OfficeContactSection>
+                <OfficeContactSection copy={dictionaries[locale].common} officeCity="London"
+                  sectionId="settlement-office" layout="columns" officeCities={['London', 'Dubai']}
+                  officeEntityNames={{ London: [londonEntity.name] }}
+                  officeDisclosures={{
+                    London: <p><strong>{londonEntity.name}</strong> {londonEntity.body}</p>,
+                    Dubai: <p><strong>{dubaiEntity.name}</strong> {dubaiEntity.body}</p>,
+                  }} />
               </> :
               <SettlementCustodySections copy={dictionary.settlement}
                 officeCopy={settlementVariant === 'v1' ? dictionaries[locale].common : undefined} />
-            ) : wealthVariant === 'current' ? <>
-              <WealthServiceSections copy={dictionary.wealth.redesign} />
+            ) : wealthVariant !== 'v1' ? <>
+              <WealthServiceSections copy={dictionary.wealth.redesign} researchTeam={dictionary.research.team}
+                aboutPeople={dictionaries[locale].about.people}
+                archiveFund={wealthVariant === 'archive'} />
               <OfficeContactSection copy={dictionaries[locale].common} officeCity="Cayman" sectionId="wealth-office"
                 layout="columns" officeCities={['Dubai', 'Cayman']}
                 officeDisclosures={{

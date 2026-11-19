@@ -15,7 +15,7 @@ function badgeTone(badge: string) {
   if (key.includes("hold")) return "holding";
   if (key.includes("fca")) return "fca";
   if (key.includes("dfsa")) return "dfsa";
-  if (key.includes("fund")) return "fund";
+  if (key.includes("cima") || key.includes("eima") || key.includes("fund")) return "fund";
   return "default";
 }
 
@@ -107,12 +107,11 @@ export const AboutEntities = ({ copy }: { copy: AboutCopy }) => {
             transition={{ duration: 0.34, ease }}
           >
             {section.title.map((line, index) => (
-              <span key={line}>
+              <span key={line} className={styles.titleLine}>
                 {line}
-                {index < section.title.length - 1 ? <br /> : null}
+                {index === section.title.length - 1 ? "." : null}
               </span>
             ))}
-            <span className={styles.dot} aria-hidden="true">.</span>
           </motion.h2>
           <motion.p
             className={styles.lead}
