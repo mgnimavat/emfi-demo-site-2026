@@ -21,7 +21,17 @@ export const AboutPageSection = ({ locale = 'en' }: { locale?: Locale }) => {
         <div className={styles.section}>
           <div className={styles.container}>
             <FadeIn className={styles.peopleIntro}><h2 id="people-heading" className={styles.sectionTitle}>{about.peopleTitle}</h2></FadeIn>
-            <div className={styles.personGrid}>{about.people.map((person, index) => <FadeIn key={person.name} delay={index * 0.04} className="h-full"><PersonCard person={person} boardLabel={about.boardLabel} /></FadeIn>)}</div>
+            <div className={styles.personGrid}>
+              {about.people.map((person, index) =>
+                "spacer" in person && person.spacer ? (
+                  <div key={`spacer-${index}`} className={styles.personSpacer} aria-hidden="true" />
+                ) : (
+                  <FadeIn key={person.name} delay={index * 0.04} className="h-full">
+                    <PersonCard person={person} boardLabel={about.boardLabel} />
+                  </FadeIn>
+                ),
+              )}
+            </div>
           </div>
         </div>
       </section>

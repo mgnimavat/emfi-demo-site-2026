@@ -65,7 +65,7 @@
     {
       "name": "Usman Sheikh",
       "role": "Fundador",
-      "photo": "/people/usman-sheikh-3.jpg",
+      "photo": "/people/usman-sheikh-5.jpg",
       "label": "Director, EMFI Fund SPC",
       "inset": true,
       "description": "Define la dirección de EMFI y de la plataforma institucional que conecta a los clientes con los mercados, la ejecución y la infraestructura."
@@ -101,7 +101,7 @@
     {
       "name": "Hitesh Bilochi",
       "role": "Cumplimiento, DIFC",
-      "photo": "/people/hitesh-bilochi-5.jpg",
+      "photo": "/people/hitesh-bilochi-11.jpg",
       "inset": true,
       "description": "Supervisa el cumplimiento normativo del DIFC y los requisitos de la DFSA en las operaciones de EMFI en Dubái."
     },
@@ -141,9 +141,9 @@
       "description": "Desarrolla y gestiona relaciones de distribución institucional en el DIFC."
     },
     {
-      "name": "Francesco Odone",
-      "role": "Distribución, DIFC",
-      "description": "Apoya la distribución institucional y la cobertura de clientes en el DIFC."
+      "name": "",
+      "role": "",
+      "spacer": true
     },
     {
       "name": "Guillermo Guerrero",
@@ -225,6 +225,13 @@
     },
     "children": [
       {
+        "badge": "EIMA",
+        "jurisdiction": "Islas Caimán",
+        "name": "EMFI Fund SPC",
+        "role": "Compañía de carteras segregadas, estructura de fondos",
+        "meta": "CIMA LMFN 1664891"
+      },
+      {
         "badge": "FCA",
         "jurisdiction": "Reino Unido",
         "name": "EMFI Securities Limited",
@@ -244,14 +251,6 @@
         "name": "EMFI Capital (DIFC) Limited",
         "role": "Presencia regulada en Dubái",
         "meta": "DFSA ref. F011663"
-      },
-      {
-        "badge": "Fondo",
-        "jurisdiction": "Islas Caimán",
-        "name": "EMFI Fund SPC",
-        "role": "Compañía de carteras segregadas, estructura de fondos",
-        "meta": "Solo oficina registrada",
-        "dashed": true
       }
     ],
     "note": "Resumen funcional, no un organigrama de propiedad legal."
