@@ -136,8 +136,11 @@ const moveToken = (token: TokenRef, position: Point, opacity: number) => {
   token.current?.setAttribute('opacity', opacity.toFixed(3));
 };
 
-export const SettlementAccountAnimation = ({ copy }: { copy: AnimationCopy }) => {
-  const orientation = useSyncExternalStore(subscribeToLayout, getOrientation, getServerOrientation);
+export const SettlementAccountAnimation = ({ copy, orientation: fixedOrientation }: {
+  copy: AnimationCopy; orientation?: SettlementOrientation;
+}) => {
+  const responsiveOrientation = useSyncExternalStore(subscribeToLayout, getOrientation, getServerOrientation);
+  const orientation = fixedOrientation ?? responsiveOrientation;
   const stage = useRef<HTMLDivElement>(null);
   const tokenA = useRef<SVGGElement>(null);
   const tokenB = useRef<SVGGElement>(null);

@@ -43,7 +43,7 @@ export const LocalizedServicePageSection = ({
   researchVariant = 'current',
   settlementVariant = 'current',
   wealthVariant = 'current',
-}: { service: ServicePage; locale?: Locale; researchVariant?: 'current' | 'archived'; settlementVariant?: 'current' | 'v1' | 'archived'; wealthVariant?: 'current' | 'v1' }) => {
+}: { service: ServicePage; locale?: Locale; researchVariant?: 'current' | 'archived'; settlementVariant?: 'current' | 'archive' | 'v1' | 'archived'; wealthVariant?: 'current' | 'v1' }) => {
   const dictionary = serviceDictionaries[locale];
   const messages = dictionary[servicePages[service]].ui;
   const research = service === 'research-execution';
@@ -81,7 +81,7 @@ export const LocalizedServicePageSection = ({
             ) : <WorkstationSection copy={dictionary.research} maskVariant="blur" />}
             {researchVariant === 'current' ? (
               <ResearchOfficeSection copy={dictionaries[locale].common}
-                disclosures={dictionary.research.disclosures} capitalEntityName={londonEntity.name} />
+                disclosures={dictionary.research.disclosures} />
             ) : <ResearchDisclosures copy={dictionary.research} />}
           </>
         ) : (
@@ -98,8 +98,9 @@ export const LocalizedServicePageSection = ({
               taglineClassName={service === 'wealth-asset-management' ? heroStyles.wealthTagline : undefined}
               headlineClassName={service === 'wealth-asset-management' ? heroStyles.wideHeadline : undefined} />}
             {service === 'settlement-custody' ? (
-              settlementVariant === 'current' ? <>
-                <SettlementServiceSections copy={dictionary.settlement} />
+              settlementVariant === 'current' || settlementVariant === 'archive' ? <>
+                <SettlementServiceSections copy={dictionary.settlement}
+                  archiveCrossBorder={settlementVariant === 'archive'} />
                 <SettlementQuestionnaireSection copy={dictionary.settlement.questionnaire} />
                 <OfficeContactSection copy={dictionaries[locale].common} officeCity="London"
                   sectionId="settlement-office" layout="columns" officeCities={['London', 'Dubai']}

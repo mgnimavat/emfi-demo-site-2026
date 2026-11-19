@@ -139,6 +139,12 @@
         "description": "تحليل اقتصادي يوفر سياقاً لأسواق الديون السيادية."
       },
       {
+        "name": "Elena Sánchez",
+        "role": "محللة كمية (متدربة)",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "دعم التحليل الكمي وأبحاث السوق."
+      },
+      {
         "name": "Mohammad Ezzeddine",
         "role": "خبير استراتيجي",
         "photo": "/people/placeholder-draw-sky.jpg",
@@ -156,12 +162,6 @@
         "role": "خبير استراتيجي",
         "photo": "/people/placeholder-draw-sky.jpg",
         "description": "استراتيجية أسواق تربط التحليل الاقتصادي بفرص الاستثمار."
-      },
-      {
-        "name": "Elena Sánchez",
-        "role": "محللة كمية (متدربة)",
-        "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "دعم التحليل الكمي وأبحاث السوق."
       }
     ],
     "title": "معرفة بالسوق. حُكم بشري."

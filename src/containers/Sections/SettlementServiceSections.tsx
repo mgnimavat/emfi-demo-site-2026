@@ -9,9 +9,39 @@ import styles from './SettlementServiceSections.module.css';
 const workflowIcons = { upload: FileUp, extract: ScanText, validate: ShieldCheck, process: Workflow };
 const isWorkflowStep = (id: string): id is keyof typeof workflowIcons => id in workflowIcons;
 
-export const SettlementServiceSections = ({ copy }: { copy: SettlementCopy }) => (
+const ArchiveCrossBorder = ({ lead, copy }: { lead: string; copy: SettlementCopy }) => {
+  const { titleLines, body, detail } = copy.crossBorderArchive;
+
+  return (
+    <section id="cross-border" className={`${styles.section} ${styles.archiveSection}`}
+      aria-labelledby="cross-border-heading">
+      <div className={`${styles.container} ${styles.archiveLayout}`}>
+        <ExecutionReveal className={styles.archiveCopy}>
+          <h2 id="cross-border-heading" className={styles.title}>
+            {titleLines.map((line) => <span key={line}>{line}</span>)}
+          </h2>
+          <p className={styles.archiveLead}>{lead}</p>
+          <p className={styles.body}>{body}</p>
+          <div className={styles.archiveDetail}>
+            <h3>{detail.title}</h3>
+            <p className={styles.body}>{detail.body}</p>
+          </div>
+        </ExecutionReveal>
+        <div className={styles.archiveAnimation}>
+          <SettlementAccountAnimation copy={copy.accountAnimation} orientation="vertical" />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export const SettlementServiceSections = ({ copy, archiveCrossBorder = false }: {
+  copy: SettlementCopy; archiveCrossBorder?: boolean;
+}) => (
   <div id="settlement" className={styles.sections}>
-    {copy.serviceSections.map((section) => (
+    {copy.serviceSections.map((section) => archiveCrossBorder && section.id === 'cross-border' ? (
+      <ArchiveCrossBorder key={section.id} lead={section.lead} copy={copy} />
+    ) : (
       <section
         key={section.id}
         id={section.id}

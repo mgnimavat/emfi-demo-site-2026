@@ -234,6 +234,18 @@
       }
     ]
   },
+  "crossBorderArchive": {
+    "titleLines": [
+      "Entre fronteras.",
+      "Sin cruzar",
+      "clientes."
+    ],
+    "body": "En una cuenta ómnibus compartida, los valores comprados para un cliente pueden utilizarse para cumplir la entrega de otro. Para clientes de mayor tamaño, podemos abrir cuentas dedicadas en Euroclear para que sus valores sigan identificados como propios.",
+    "detail": {
+      "title": "Liquidación entre depositarios",
+      "body": "Para valores y mercados admitidos, también podemos liquidar entre depositarios: por ejemplo, un vendedor que liquida a través de DTC puede entregar a un comprador que recibe a través de Euroclear. La ruta, la elegibilidad y los cargos dependen del valor y de las contrapartes."
+    }
+  },
   "serviceSections": [
     {
       "id": "cross-border",

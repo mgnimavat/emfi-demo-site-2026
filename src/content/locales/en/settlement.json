@@ -234,6 +234,18 @@
       }
     ]
   },
+  "crossBorderArchive": {
+    "titleLines": [
+      "Cross Border.",
+      "Not",
+      "Cross Settle."
+    ],
+    "body": "In a shared omnibus account, securities bought for one client can be used to meet another client’s delivery. For larger clients, we can open dedicated Euroclear accounts so your securities stay identified as yours.",
+    "detail": {
+      "title": "Cross-depository settlement",
+      "body": "For supported securities and markets, we can also settle across depositories: a seller settling through DTC, for example, can deliver to a buyer receiving through Euroclear. Route, eligibility and charges depend on the security and the counterparties."
+    }
+  },
   "serviceSections": [
     {
       "id": "cross-border",

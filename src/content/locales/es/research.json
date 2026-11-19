@@ -139,6 +139,12 @@
         "description": "Análisis económico que aporta contexto a los mercados soberanos."
       },
       {
+        "name": "Elena Sánchez",
+        "role": "Analista cuantitativa (en prácticas)",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Apoyo al análisis cuantitativo y la investigación de mercados."
+      },
+      {
         "name": "Mohammad Ezzeddine",
         "role": "Estratega",
         "photo": "/people/placeholder-draw-sky.jpg",
@@ -156,12 +162,6 @@
         "role": "Estratega",
         "photo": "/people/placeholder-draw-sky.jpg",
         "description": "Estrategia de mercados que conecta el análisis económico con oportunidades de inversión."
-      },
-      {
-        "name": "Elena Sánchez",
-        "role": "Analista cuantitativa (en prácticas)",
-        "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "Apoyo al análisis cuantitativo y la investigación de mercados."
       }
     ],
     "title": "Conocimiento del mercado. Criterio humano."
