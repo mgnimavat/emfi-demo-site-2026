@@ -79,9 +79,9 @@ export function DirectSection({
         style={{
           position: "relative",
           zIndex: light ? 2 : undefined,
-          maxWidth: split ? 1480 : 1320,
+          maxWidth: split ? 1440 : 1320,
           margin: "0 auto",
-          padding: split ? "0 clamp(110px, calc(8vw + 70px), 190px)" : sectionPad(marked, !light, pinned),
+          padding: split ? "0 clamp(20px, 4vw, 56px)" : sectionPad(marked, !light, pinned),
           borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)",
           ...sectionFrame(pinned, centered, routeCols),
           ...(split ? { alignItems: "flex-start", justifyContent: "flex-start", gap: 0 } : null),

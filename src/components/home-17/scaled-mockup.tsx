@@ -6,7 +6,7 @@ import { SettlementDashboard } from "@/containers/Sections/SettlementDashboard";
 import styles from "./scaled-mockup.module.css";
 
 /** Scales a mockup so the union of its `panels` (not its own padding) exactly fills the box. */
-function ScaledMockup({ width, panels, stretch = false, children }: { width: number; panels: string; stretch?: boolean; children: ReactNode }) {
+function ScaledMockup({ width, panels, stretch = false, fill = "contain", children }: { width: number; panels: string; stretch?: boolean; fill?: "contain" | "width"; children: ReactNode }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
 
@@ -49,12 +49,13 @@ function ScaledMockup({ width, panels, stretch = false, children }: { width: num
       inner.style.width = `${w}px`;
       inner.style.removeProperty("--mockup-fill-h");
       b = bounds();
-      let scale = Math.min(boxW / b.width, boxH / b.height);
+      let scale = fill === "width" ? boxW / b.width : Math.min(boxW / b.width, boxH / b.height);
       if (stretch && b.height * scale < boxH - 1) {
         // Panels can't reshape by width alone; grow them to the box height instead.
         inner.style.setProperty("--mockup-fill-h", `${boxH / scale + inner.offsetHeight - b.height}px`);
         b = bounds();
-        scale = Math.min(boxW / b.width, boxH / b.height);
+        // Prefer width fill after stretch so the dashboard doesn't letterbox on the sides.
+        scale = fill === "width" ? boxW / b.width : Math.min(boxW / b.width, boxH / b.height);
       }
       const x = (boxW - b.width * scale) / 2 - b.left * scale;
       const y = (boxH - b.height * scale) / 2 - b.top * scale;
@@ -64,10 +65,10 @@ function ScaledMockup({ width, panels, stretch = false, children }: { width: num
     const observer = new ResizeObserver(measure);
     observer.observe(box);
     return () => observer.disconnect();
-  }, [width, panels, stretch]);
+  }, [width, panels, stretch, fill]);
 
   return (
-    <div ref={boxRef} className={styles.box}>
+    <div ref={boxRef} className={fill === "width" ? `${styles.box} ${styles.boxClip}` : styles.box}>
       <div ref={innerRef} className={styles.inner} style={{ width }}>
         {children}
       </div>
@@ -77,8 +78,8 @@ function ScaledMockup({ width, panels, stretch = false, children }: { width: num
 
 export function SettlementDashboardFit() {
   return (
-    <ScaledMockup width={960} panels="article" stretch>
-      <SettlementDashboard />
+    <ScaledMockup width={1160} panels="article" stretch fill="width">
+      <SettlementDashboard borderless />
     </ScaledMockup>
   );
 }

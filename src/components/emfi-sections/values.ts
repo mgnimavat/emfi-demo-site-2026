@@ -85,6 +85,7 @@ export function lab(pos: string, sz: number, wrap?: boolean) {
   if (pos === "b") return `left:0;top:${o}px;transform:translateX(-50%);align-items:center;text-align:center;${ws}`;
   if (pos === "a") return `left:0;bottom:${o}px;transform:translateX(-50%);align-items:center;text-align:center;${ws}`;
   if (pos === "bl") return `left:-9px;top:${o}px;align-items:flex-start;text-align:left;${ws}`;
+  if (pos === "br") return `left:9px;top:${o}px;transform:translateX(-100%);align-items:flex-end;text-align:right;${ws}`;
   if (pos === "al") return `left:-9px;bottom:${o}px;align-items:flex-start;text-align:left;${ws}`;
   return `left:${o}px;top:0;transform:translateY(-50%);align-items:flex-start;text-align:left;${ws}`;
 }

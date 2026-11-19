@@ -152,28 +152,58 @@
   line-height: 1.6;
   letter-spacing: normal;
 }
-.footerInner { width: calc(100% - 64px); max-width: 1320px; margin: 0 auto; padding: clamp(48px, 5vw, 72px) 0 calc(clamp(48px, 5vw, 72px) - 10px); box-sizing: border-box; }
+/* Match header .inner shell so the middle feature columns line up with the services nav. */
+.footerInner {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: clamp(48px, 5vw, 72px) clamp(20px, 4vw, 56px) calc(clamp(48px, 5vw, 72px) - 10px);
+  box-sizing: border-box;
+}
+/* Five columns: brand | Direct | Responsive | Dependable | legal — mid trio centered between ends. */
 .footerTop {
   display: grid;
   width: 100%;
-  grid-template-columns: minmax(240px, 1.4fr) repeat(3, minmax(0, 1fr)) minmax(0, 1.15fr);
-  align-items: stretch;
-  column-gap: clamp(32px, 3.6vw, 64px);
+  grid-template-columns: minmax(0, 1fr) repeat(3, minmax(11.25rem, 13.75rem)) minmax(0, 1fr);
+  align-items: start;
+  column-gap: clamp(14px, 1.6vw, 24px);
   row-gap: 24px;
 }
 .footerBrand {
+  grid-column: 1;
+  grid-row: 1;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
+  max-width: min(100%, 280px);
   min-width: 0;
   box-sizing: border-box;
 }
+.footerLegal {
+  grid-column: 5;
+  grid-row: 1;
+  z-index: 1;
+  justify-self: end;
+  max-width: min(100%, 280px);
+}
+.footerFeatures {
+  display: contents;
+}
+.footerFeatures > :nth-child(1) { grid-column: 2; grid-row: 1; transform: translateX(45px); }
+.footerFeatures > :nth-child(2) { grid-column: 3; grid-row: 1; transform: translateX(25px); }
+.footerFeatures > :nth-child(3) { grid-column: 4; grid-row: 1; transform: translateX(25px); }
 .footerBrandLink {
   display: inline-flex;
+  align-self: flex-start;
   margin-bottom: 10px;
+  margin-left: 27px;
   color: #fff;
   text-decoration: none;
+}
+.footerContact .footerBrandLink {
+  margin-left: 0;
 }
 .footerBrandMark {
   display: block;
@@ -184,8 +214,8 @@
   animation: footerBrandSpin 36s linear infinite;
 }
 .footerBrandMarkLarge {
-  width: 120px;
-  height: 120px;
+  width: 144px;
+  height: 144px;
 }
 @keyframes footerBrandSpin {
   from { transform: rotate(0deg); }
@@ -201,6 +231,7 @@
   font-size: 11px !important;
   font-weight: 500;
   line-height: 1.45;
+  white-space: nowrap;
 }
 .footerLinks { min-width: 0; }
 .footerLinks h2 { margin: 0; color: #fff; font-family: inherit; font-size: 14px; font-weight: 800; line-height: 1.2; letter-spacing: -.02em; }
@@ -238,10 +269,9 @@
 .footerFeatureCopy span { display: block; }
 .footerFeatureLogo {
   display: flex;
-  flex: 1 1 auto;
   align-items: center;
-  margin-top: 18px;
-  min-height: 112px;
+  margin-top: 15px;
+  min-height: 87px;
 }
 .footerEuroclear,
 .footerEmta,
@@ -250,10 +280,10 @@
   height: auto;
   margin: 0;
 }
-.footerEuroclear { width: 112px; }
+.footerEuroclear { width: 90px; }
 .footerEmta { width: 168px; }
 .footerCisi {
-  width: 155px;
+  width: 124px;
   /* Force solid white from the navy brand mark (avoids grey ISI wash). */
   filter: brightness(0) invert(1);
 }
@@ -269,7 +299,7 @@
   justify-content: flex-end;
 }
 .footerLegalSocial {
-  margin-top: 22px;
+  margin-top: 12px;
 }
 .footerLegalSocial .social {
   display: flex;
@@ -318,21 +348,36 @@
 }
 @media (max-width: 1199px) {
   .footerTop {
-    grid-template-columns: minmax(220px, 1.3fr) repeat(2, minmax(0, 1fr));
-    column-gap: clamp(24px, 2.8vw, 40px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 14px;
   }
-  .footerLegal { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid rgb(255 255 255 / 12%); }
-}
-@media (max-width: 899px) {
-  .footerTop { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
-  .footerBrand { grid-column: 1 / -1; }
+  .footerBrand {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    max-width: none;
+  }
+  .footerFeatures > :nth-child(n) {
+    grid-column: auto;
+    grid-row: auto;
+    transform: none;
+  }
+  .footerLegal {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    justify-self: stretch;
+    max-width: none;
+    padding-top: 20px;
+    border-top: 1px solid rgb(255 255 255 / 12%);
+  }
 }
 @media (max-width: 639px) {
-  .footerTop { grid-template-columns: minmax(0, 1fr); }
+  .footerTop {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 @media (max-width: 599px) {
   .mobileNav { padding-inline: 20px; }
-  .footerInner { width: calc(100% - 40px); }
+  .footerInner { padding-inline: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .clientLogin, .clientIcon, .tooltip { transition: none; }

@@ -50,10 +50,10 @@ export const metadata: Metadata = {
     "institutional investors",
     "regulated investment services",
   ],
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots:
+    process.env.BASIC_AUTH_USER && process.env.BASIC_AUTH_PASSWORD
+      ? { index: false, follow: false, nocache: true }
+      : { index: true, follow: true },
   icons: {
     icon: [{ url: "/brand/favicon.ico", type: "image/x-icon" }],
     shortcut: "/brand/favicon.ico",
