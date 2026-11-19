@@ -1,8 +1,9 @@
 'use client';
 
 import { useId, useState, type FormEvent } from 'react';
-import { ChevronDown, ShieldCheck } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ResearchFilterSelect } from '@/components/sections/execution/research-filter-select';
 import type { WealthCopy } from '@/lib/i18n/service-dictionaries';
 import styles from './WealthFundConsent.module.css';
 
@@ -12,24 +13,32 @@ export const WealthFundConsent = ({ copy, onConfirm }: { copy: ConsentCopy; onCo
   const headingId = useId();
   const descriptionId = useId();
   const [error, setError] = useState('');
+  const [selection, setSelection] = useState({ investor: '', country: '' });
+  const [submitted, setSubmitted] = useState(false);
   const selects = [
     { name: 'investor', label: copy.investorLabel, options: copy.investors },
     { name: 'country', label: copy.countryLabel, options: copy.countries },
-  ];
+  ] as const;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const values = new FormData(event.currentTarget);
-    const country = values.get('country');
+    setSubmitted(true);
+    const { country, investor } = selection;
+    const missing = selects.findIndex(({ name }) => !selection[name]);
+    if (missing >= 0) {
+      setError(copy.required);
+      event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="combobox"]')[missing]?.focus();
+      return;
+    }
 
     if (country === 'us') {
       setError(copy.restricted);
       return;
     }
 
-    if (!copy.investors.some(({ value }) => value === values.get('investor')) ||
+    if (!copy.investors.some(({ value }) => value === investor) ||
       !copy.countries.some(({ value }) => value === country) ||
-      values.get('risk') !== 'on') return;
+      new FormData(event.currentTarget).get('risk') !== 'on') return;
 
     onConfirm();
   };
@@ -45,16 +54,12 @@ export const WealthFundConsent = ({ copy, onConfirm }: { copy: ConsentCopy; onCo
       <div className={styles.fields}>
         <div className={styles.selects}>
           {selects.map(({ name, label, options }) => (
-            <label key={name}>
-              <span>{label}</span>
-              <span className={styles.selectControl}>
-                <select name={name} defaultValue="" required>
-                  <option value="" disabled>{copy.select}</option>
-                  {options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-                </select>
-                <ChevronDown size={16} aria-hidden="true" />
-              </span>
-            </label>
+            <ResearchFilterSelect key={name} className={styles.selectField} label={label}
+              placeholder={copy.select} options={options} value={selection[name]} required
+              invalid={submitted && !selection[name]} onChange={(value) => {
+                setSelection((current) => ({ ...current, [name]: value }));
+                setError('');
+              }} />
           ))}
         </div>
         <label className={styles.acknowledgment}>

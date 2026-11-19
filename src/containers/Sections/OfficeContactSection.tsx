@@ -13,8 +13,18 @@ export const OfficeContactSection = ({
   children,
   layout = 'horizontal',
   officeCities,
+  officeEntityNames,
   officeDisclosures,
-}: { copy?: CommonCopy; officeCity: OfficeCity; sectionId: string; children?: ReactNode; layout?: 'horizontal' | 'columns'; officeCities?: readonly OfficeCity[]; officeDisclosures?: Partial<Record<OfficeCity, ReactNode>> }) => {
+}: {
+  copy?: CommonCopy;
+  officeCity: OfficeCity;
+  sectionId: string;
+  children?: ReactNode;
+  layout?: 'horizontal' | 'columns';
+  officeCities?: readonly OfficeCity[];
+  officeEntityNames?: Partial<Record<OfficeCity, readonly string[]>>;
+  officeDisclosures?: Partial<Record<OfficeCity, ReactNode>>;
+}) => {
   const findOffice = (city: OfficeCity) => {
     const originalOffice = dictionaries.en.common.locations.places.find((place) => place.city === city);
     return copy.locations.places.find((place) => place.mapQuery === originalOffice?.mapQuery);
@@ -26,11 +36,15 @@ export const OfficeContactSection = ({
   });
   if (!office) return null;
 
-  const officeInformation = (place: CommonCopy['locations']['places'][number], headingId: string) => (
+  const officeInformation = (
+    place: CommonCopy['locations']['places'][number],
+    headingId: string,
+    entityNames: readonly string[] = place.kicker,
+  ) => (
     <>
       <h2 id={headingId}>{place.city}</h2>
       <p className={styles.entities}>
-        {place.kicker.map((entity) => <span key={entity}>{entity}</span>)}
+        {entityNames.map((entity) => <span key={entity}>{entity}</span>)}
       </p>
       <div className={styles.officeDetails}>
         <address className={styles.address}>
@@ -63,7 +77,7 @@ export const OfficeContactSection = ({
                 <article className={styles.locationCard}>
                   <div className={styles.locationMap}><LocationMap place={place} copy={copy} /></div>
                   <div className={styles.information}>
-                    {officeInformation(place, `${sectionId}-${index}-heading`)}
+                    {officeInformation(place, `${sectionId}-${index}-heading`, officeEntityNames?.[city])}
                     {officeDisclosures?.[city] ? (
                       <div className={styles.officeDisclosure}>{officeDisclosures[city]}</div>
                     ) : null}
@@ -75,7 +89,7 @@ export const OfficeContactSection = ({
           </>
         ) : <div className={styles.card}>
           <div className={styles.information}>
-            {officeInformation(office, `${sectionId}-heading`)}
+            {officeInformation(office, `${sectionId}-heading`, officeEntityNames?.[officeCity])}
             <div className={styles.regulatory}>
               {children}
             </div>

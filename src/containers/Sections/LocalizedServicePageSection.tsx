@@ -103,6 +103,7 @@ export const LocalizedServicePageSection = ({
                 <SettlementQuestionnaireSection copy={dictionary.settlement.questionnaire} />
                 <OfficeContactSection copy={dictionaries[locale].common} officeCity="London"
                   sectionId="settlement-office" layout="columns" officeCities={['London', 'Dubai']}
+                  officeEntityNames={{ London: [londonEntity.name] }}
                   officeDisclosures={{
                     London: <p><strong>{londonEntity.name}</strong> {londonEntity.body}</p>,
                     Dubai: <p><strong>{dubaiEntity.name}</strong> {dubaiEntity.body}</p>,

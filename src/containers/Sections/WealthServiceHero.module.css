@@ -1,4 +1,5 @@
 .section {
+  position: relative;
   display: flex;
   min-height: calc(100vh - var(--site-header-height, 78px));
   min-height: calc(100svh - var(--site-header-height, 78px));
@@ -8,14 +9,40 @@
   font-family: var(--font-inter), Inter, Arial, sans-serif;
 }
 
+.section[data-chart='false'] {
+  overflow: clip;
+  background:
+    radial-gradient(ellipse at 76% 45%, var(--bg-soft), transparent 68%),
+    var(--bg-page);
+}
+
+.chartBackdrop {
+  position: absolute;
+  inset-block: 18% 10%;
+  inset-inline: 0;
+  width: 100%;
+  height: 72%;
+  opacity: .58;
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  pointer-events: none;
+}
+
+.backdropLine {
+  fill: none;
+  stroke: var(--color-blue-200);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
 .section[data-chart='true'] {
   background:
-    radial-gradient(ellipse at 85% 10%, color-mix(in srgb, var(--bg-inverse), var(--flow-mid) 20%), transparent 68%),
-    var(--bg-inverse);
-  color: var(--text-inverse);
+    radial-gradient(ellipse at 85% 10%, var(--bg-soft), transparent 68%),
+    var(--bg-page);
 }
 
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: calc(100% - 64px);
@@ -32,7 +59,7 @@
   min-width: 0;
   margin: 0;
 }
-.fund:focus-visible { outline: 2px solid var(--flow-from); outline-offset: var(--space-3); }
+.fund:focus-visible { outline: 2px solid var(--action-focus); outline-offset: var(--space-3); }
 
 .header {
   display: grid;
@@ -49,46 +76,59 @@
   letter-spacing: -.045em;
   overflow-wrap: anywhere;
 }
-.ranges { display: inline-flex; flex-wrap: wrap; justify-self: end; gap: var(--space-1); padding: var(--space-1); border: 1px solid color-mix(in srgb, var(--flow-from) 28%, transparent); border-radius: var(--radius-pill); background: color-mix(in srgb, var(--text-inverse) 8%, transparent); }
-.ranges button { min-height: 40px; min-width: 56px; padding: var(--space-2) var(--space-4); border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-inverse-muted); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; transition: background-color .2s ease, color .2s ease; }
-.ranges button[aria-pressed='true'] { background: var(--flow-from); color: var(--text-primary); }
-.ranges button:hover:not([aria-pressed='true']) { background: color-mix(in srgb, var(--text-inverse) 14%, transparent); color: var(--text-inverse); }
-.ranges button:focus-visible, .plot svg:focus-visible { outline: 2px solid var(--flow-from); outline-offset: 3px; }
-.plot { position: relative; flex: 1; min-height: clamp(340px, 55svh, 640px); }
+.ranges { display: inline-flex; flex-wrap: wrap; justify-self: end; gap: var(--space-1); padding: var(--space-1); border: 1px solid var(--color-blue-100); border-radius: var(--radius-pill); background: color-mix(in srgb, var(--bg-page) 72%, var(--bg-soft)); }
+.ranges button { min-height: 40px; min-width: 56px; padding: var(--space-2) var(--space-4); border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-secondary); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; transition: background-color .2s ease, color .2s ease; }
+.ranges button[aria-pressed='true'] { background: var(--action-primary); color: var(--text-inverse); }
+.ranges button:hover:not([aria-pressed='true']) { background: var(--action-soft); color: var(--text-primary); }
+.ranges button:focus-visible, .plot svg:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 3px; }
+.plot {
+  position: relative;
+  flex: 1;
+  min-height: clamp(340px, 55svh, 640px);
+}
 .plot svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; cursor: crosshair; touch-action: pan-y; }
-.gridLine { stroke: var(--flow-from); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .23; }
-.line { fill: none; stroke: var(--flow-from); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.gridLine { stroke: var(--color-blue-200); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .38; }
+.line { fill: none; stroke: var(--color-blue-550); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 .series { animation: revealChart 280ms ease-out; }
-.endpointHalo, .endpoint, .crosshair, .activeMarker { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-.endpointHalo { stroke: var(--bg-inverse); stroke-width: 12; }
-.endpoint { stroke: var(--flow-from); stroke-width: 7; }
-.crosshair { stroke: var(--flow-from); stroke-dasharray: 4 5; opacity: .75; }
-.activeMarker { stroke: var(--text-inverse); stroke-width: 9; }
+.endpointHalo, .endpoint, .crosshair, .markerHalo, .activeMarker { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.endpointHalo { stroke: var(--bg-page); stroke-width: 12; }
+.endpoint { stroke: var(--color-blue-550); stroke-width: 7; }
+.crosshair { stroke: var(--color-blue-300); stroke-dasharray: 3 5; opacity: .6; }
+.markerHalo { stroke: var(--bg-page); stroke-width: 12; }
+.activeMarker { stroke: var(--color-blue-550); stroke-width: 8; }
 .tooltip {
-  --tooltip-width: 144px;
+  --tooltip-width: 136px;
   position: absolute;
-  inset-block-start: var(--space-3);
-  left: clamp(0px, calc(var(--tooltip-x) - var(--tooltip-width) / 2), calc(100% - var(--tooltip-width)));
-  display: grid;
-  gap: var(--space-1);
-  width: var(--tooltip-width);
-  padding: var(--space-3);
-  border-radius: var(--radius-control);
+  top: calc(var(--tooltip-y) - var(--space-3));
+  left: clamp(calc(var(--tooltip-width) / 2 + var(--space-2)), var(--tooltip-x), calc(100% - var(--tooltip-width) / 2 - var(--space-2)));
+  width: max-content;
+  max-width: var(--tooltip-width);
+  padding: var(--space-2) var(--space-3);
+  transform: translate(-50%, -100%);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
   background: var(--bg-page);
   color: var(--text-primary);
   box-shadow: var(--elevation-card-hover);
   font-size: 13px;
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
   pointer-events: none;
 }
-.tooltip span { color: var(--text-secondary); font-size: 11px; font-weight: 500; }
-.axis { direction: ltr; display: flex; justify-content: space-between; gap: var(--space-4); margin-inline: 2%; color: var(--text-inverse-muted); font-size: 12px; line-height: 1.5; }
+.tooltip[data-below='true'] {
+  top: calc(var(--tooltip-y) + var(--space-3));
+  transform: translateX(-50%);
+}
+.axis { direction: ltr; display: flex; justify-content: space-between; gap: var(--space-4); margin-inline: 2%; color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
 @keyframes revealChart { from { opacity: .6; } to { opacity: 1; } }
 @media (max-width: 767px) {
   .header { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
   .ranges { justify-self: start; }
 }
 @media (max-width: 599px) {
+  .axis time:nth-child(even) { display: none; }
+  .chartBackdrop { width: 150%; inset-inline: -25%; opacity: .36; }
   .container { width: calc(100% - 40px); }
   .ranges { max-width: 100%; }
   .ranges button { flex: 1; padding-inline: var(--space-3); }

@@ -41,6 +41,7 @@
         "investorLabel": "Soy",
         "countryLabel": "Estoy en",
         "select": "Seleccione",
+        "required": "Selecciona tu tipo de inversor y tu ubicación.",
         "investors": [
           {
             "value": "professional",
@@ -173,7 +174,7 @@
         },
         {
           "name": "Gustavo Rodrigues",
-          "role": "Secretario",
+          "role": "Secretario, EMFI Fund SPC",
           "photo": "/people/gustavo-rodrigues-4.jpg"
         }
       ]

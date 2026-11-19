@@ -41,6 +41,7 @@
         "investorLabel": "صفتي",
         "countryLabel": "موقعي",
         "select": "اختر",
+        "required": "اختر نوع المستثمر وموقعك.",
         "investors": [
           {
             "value": "professional",
@@ -173,7 +174,7 @@
         },
         {
           "name": "Gustavo Rodrigues",
-          "role": "أمين السر",
+          "role": "أمين السر، EMFI Fund SPC",
           "photo": "/people/gustavo-rodrigues-4.jpg"
         }
       ]
