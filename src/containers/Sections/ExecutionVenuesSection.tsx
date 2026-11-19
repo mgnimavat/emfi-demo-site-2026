@@ -18,8 +18,7 @@ export const ExecutionVenuesSection = ({ copy }: { copy: ResearchCopy['execution
       </div>
       <div className={styles.groups}>
         {executionVenueGroups.map((group) => (
-          <ExecutionReveal key={group.id} className={styles.group}>
-            <h3 className={styles.groupTitle}>{copy[group.id]}</h3>
+          <ExecutionReveal key={group.id}>
             <ul className={styles.venues}>
               {group.venues.map((venue) => (
                 <li key={venue.name} className={styles.card}>

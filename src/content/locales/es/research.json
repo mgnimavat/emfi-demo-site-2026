@@ -168,8 +168,6 @@
   "executionVenues": {
     "title": "Ejecución",
     "subtitle": "Ejecución en plataformas de renta fija y mercados seleccionados.",
-    "fixedIncome": "Mercados de renta fija",
-    "otherVenues": "Otros mercados y plataformas de fondos",
     "body": "Ejecución en los mercados y valores pertinentes, respaldada por relaciones especializadas de negociación y la tecnología para coordinar la operación durante el proceso de poscontratación."
   },
   "workstation": {

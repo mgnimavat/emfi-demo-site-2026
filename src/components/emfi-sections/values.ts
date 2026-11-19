@@ -85,6 +85,7 @@ export function lab(pos: string, sz: number, wrap?: boolean) {
   if (pos === "b") return `left:0;top:${o}px;transform:translateX(-50%);align-items:center;text-align:center;${ws}`;
   if (pos === "a") return `left:0;bottom:${o}px;transform:translateX(-50%);align-items:center;text-align:center;${ws}`;
   if (pos === "bl") return `left:-9px;top:${o}px;align-items:flex-start;text-align:left;${ws}`;
+  if (pos === "br") return `left:9px;top:${o}px;transform:translateX(-100%);align-items:flex-end;text-align:right;${ws}`;
   if (pos === "al") return `left:-9px;bottom:${o}px;align-items:flex-start;text-align:left;${ws}`;
   return `left:${o}px;top:0;transform:translateY(-50%);align-items:flex-start;text-align:left;${ws}`;
 }
@@ -147,12 +148,15 @@ const HOME12_CONV_DONE = 0.47;
 const HOME12_CONV_PLAY_MS = (HOME12_CONV_DONE / CONVENTIONAL_END) * HOME12_CONV_MS;
 const HOME12_TOTAL_MS = HOME12_CONV_PLAY_MS + HOME12_EMFI_MS + HOME12_HOLD_MS;
 const HOME12_EMFI_END = 0.92;
+const BASE_DIRECT_MS = 13000;
 
 export type DirectPace = "home12";
 
 export function directPaceScale(pace?: DirectPace) {
-  return pace === "home12" ? HOME12_TOTAL_MS / 13000 : directTimelineScale;
+  return pace === "home12" ? HOME12_TOTAL_MS / BASE_DIRECT_MS : directTimelineScale;
 }
+
+export const getDirectRouteDuration = (scale: number) => Math.round(BASE_DIRECT_MS * scale);
 
 function slowConventionalRoute(t: number) {
   const scaled = t * directTimelineScale;

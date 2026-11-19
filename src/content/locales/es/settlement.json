@@ -22,17 +22,16 @@
     "label": "Flujo de liquidación ilustrativo",
     "buy": "COMPRA",
     "sell": "VENTA",
-    "exposure": "Aumenta la exposición a financiación",
+    "exposure": "Pueden acumularse intereses de financiación",
     "held": "Compra retenida junto con la venta",
     "pause": "Pausar animación",
     "play": "Reanudar animación",
     "states": {
       "pending": "Sin liquidar",
+      "held": "Retenida hasta que la venta esté lista",
       "settled": "Liquidada",
-      "attempting": "Intentando vender",
-      "failed": "Venta fallida",
-      "available": "Disponible para vender",
-      "waiting": "Esperando la compra"
+      "settling": "En liquidación",
+      "failed": "Liquidación fallida"
     }
   },
   "accountAnimation": {
@@ -240,7 +239,8 @@
       "id": "cross-border",
       "titleLines": [
         "Entre fronteras.",
-        "Sin cruzar clientes."
+        "Sin",
+        "cruzar clientes."
       ],
       "lead": "Los valores internacionales pueden necesitar moverse entre distintos depositarios. Los valores de distintos clientes no deben cruzarse entre obligaciones de liquidación no relacionadas.",
       "body": "En una cuenta ómnibus compartida, los valores comprados para un cliente pueden utilizarse para cumplir la entrega de otro. Para clientes de mayor tamaño, podemos abrir cuentas dedicadas en Euroclear para que sus valores sigan identificados como propios.",
@@ -267,11 +267,7 @@
           ],
           "body": "Las estructuras de cuentas separadas permiten identificar los valores de cada cliente."
         }
-      ],
-      "detail": {
-        "title": "Liquidación entre depositarios",
-        "body": "Para valores y mercados admitidos, también podemos liquidar entre depositarios: por ejemplo, un vendedor que liquida a través de DTC puede entregar a un comprador que recibe a través de Euroclear. La ruta, la elegibilidad y los cargos dependen del valor y de las contrapartes."
-      }
+      ]
     },
     {
       "id": "linked-settlement",
@@ -286,30 +282,29 @@
           "id": "unlinked",
           "title": "Sin operaciones vinculadas",
           "steps": [
-            "Instrucción de compra: Sin liquidar",
-            "Instrucción de venta: Esperando la compra"
+            "Instrucción de compra",
+            "Instrucción de venta"
           ],
-          "body": "La compra no se ha liquidado. El intento posterior de venta falla porque los valores no están disponibles."
+          "body": "La compra se liquida, pero la venta no. Es posible que tenga que financiar la posición y pagar intereses mientras espera."
         },
         {
           "id": "linked",
           "title": "Con operaciones vinculadas",
           "steps": [
-            "Instrucción de compra: Sin liquidar",
-            "Instrucción de venta: Esperando la compra"
+            "Instrucción de compra",
+            "Instrucción de venta"
           ],
-          "body": "La compra vinculada se liquida primero. Los valores quedan disponibles para la venta correspondiente."
+          "body": "La compra se retiene hasta que la venta esté lista. Ambas operaciones se liquidan juntas, evitando la necesidad de financiar la posición mientras espera la venta."
         }
       ]
     },
     {
       "id": "trade-upload",
       "titleLines": [
-        "Cargar operaciones, sí.",
-        "Introducirlas a mano, no."
+        "Cargar operaciones - sí.",
+        "Introducirlas a mano - no."
       ],
       "lead": "Una confirmación Bloomberg VCON puede contener los detalles de la operación ya acordados entre las contrapartes. Volver a introducirlos crea trabajo evitable y oportunidades de error.",
-      "body": "Cargue una confirmación Bloomberg VCON y el sistema de EMFI leerá el documento y extraerá los datos de la operación al flujo de entrada. Puede revisar y validar la información extraída antes de procesarla, sin volver a introducir manualmente cada campo.",
       "panels": [
         {
           "id": "upload",
@@ -358,8 +353,7 @@
           "title": "Integración de sistemas",
           "body": "Envíe información de operaciones mediante API o conexiones drop-copy compatibles."
         }
-      ],
-      "notice": "La extracción automatizada está sujeta a los formatos VCON compatibles, la calidad de la información y los controles de validación. La revisión sigue siendo parte del proceso de entrada de operaciones."
+      ]
     }
   ],
   "overview": {
@@ -616,20 +610,16 @@
     "Special Reports": "Informes especiales"
   },
   "uploadAnimation": {
-    "label": "Carga VCON ilustrativa",
-    "prompt": "Cargar una captura VCON",
-    "hint": "Confirmación de operación · PNG",
-    "document": "Bloomberg VCON · Ilustrativo",
+    "label": "Carga de imagen VCON",
+    "prompt": "Arrastra la imagen para cargarla",
     "file": "vcon-confirmation.png",
     "result": "Datos extraídos de la operación",
-    "read": "Leído",
     "ready": "Listo para revisión",
-    "replay": "Repetir",
     "fields": [
       {
         "id": "security",
         "label": "Valor",
-        "value": "Valor A"
+        "value": "CORPORATE BOND A"
       },
       {
         "id": "side",
@@ -639,17 +629,17 @@
       {
         "id": "quantity",
         "label": "Cantidad",
-        "value": "100"
+        "value": "250"
       },
       {
         "id": "price",
         "label": "Precio",
-        "value": "98.250"
+        "value": "97.625"
       },
       {
         "id": "counterparty",
         "label": "Contraparte",
-        "value": "Contraparte X"
+        "value": "BROKER A"
       }
     ]
   }

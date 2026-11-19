@@ -8,10 +8,16 @@
   font-family: var(--font-inter), Inter, Arial, sans-serif;
 }
 
+.section[data-chart='true'] {
+  background:
+    radial-gradient(ellipse at 85% 10%, color-mix(in srgb, var(--bg-inverse), var(--flow-mid) 20%), transparent 68%),
+    var(--bg-inverse);
+  color: var(--text-inverse);
+}
+
 .container {
   display: flex;
   flex-direction: column;
-  gap: clamp(var(--space-6), 4vw, var(--space-8));
   width: calc(100% - 64px);
   max-width: 1320px;
   margin-inline: auto;
@@ -22,9 +28,11 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  gap: var(--space-4);
   min-width: 0;
   margin: 0;
 }
+.fund:focus-visible { outline: 2px solid var(--flow-from); outline-offset: var(--space-3); }
 
 .header {
   display: grid;
@@ -33,41 +41,52 @@
   justify-content: space-between;
   gap: var(--space-6);
 }
-.section .title {
+.fundTitle {
   margin: 0;
-  font-size: clamp(38px, 6.2cqi, 88px);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -.055em;
+  font-size: clamp(26px, 3.5cqi, 46px);
+  font-weight: 750;
+  line-height: 1.1;
+  letter-spacing: -.045em;
   overflow-wrap: anywhere;
 }
-.section:lang(es) .title { font-size: clamp(32px, 4.75cqi, 70px); }
-.title span { display: block; }
-.fundControls { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-4); min-width: 0; text-align: end; }
-.fundTitle { margin: 0; font-size: clamp(21px, 2.5cqi, 32px); font-weight: 750; letter-spacing: -.035em; line-height: 1.2; }
-.ranges { display: inline-flex; flex: none; gap: var(--space-1); padding: var(--space-1); border: 1px solid var(--border-default); border-radius: var(--radius-pill); background: var(--bg-soft); }
-.ranges button { min-height: 40px; min-width: 56px; padding: var(--space-2) var(--space-4); border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-secondary); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; transition: background-color .2s ease, color .2s ease; }
-.ranges button[aria-pressed='true'] { background: var(--action-primary); color: var(--text-inverse); }
-.ranges button:hover:not([aria-pressed='true']) { background: var(--bg-page); color: var(--text-primary); }
-.ranges button:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 3px; }
-.meta { display: flex; margin-block-end: var(--space-2); }
-.series { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
-.swatch { width: 18px; height: 3px; border-radius: var(--radius-pill); background: var(--color-blue-550); }
-.plot { position: relative; flex: 1; min-height: 260px; }
-.plot svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; }
-.gridLine { stroke: var(--color-blue-100); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .55; }
-.line { fill: none; stroke: var(--color-blue-550); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.revealMask { transform-box: fill-box; transform-origin: left center; animation: revealChart 1.1s cubic-bezier(.22, 1, .36, 1) both; }
-.endpointHalo, .endpoint { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-.endpointHalo { stroke: var(--bg-page); stroke-width: 12; }
-.endpoint { stroke: var(--color-blue-550); stroke-width: 7; }
-.axis { direction: ltr; display: flex; justify-content: space-between; gap: var(--space-4); margin-inline: 2%; color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
-@keyframes revealChart { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.ranges { display: inline-flex; flex-wrap: wrap; justify-self: end; gap: var(--space-1); padding: var(--space-1); border: 1px solid color-mix(in srgb, var(--flow-from) 28%, transparent); border-radius: var(--radius-pill); background: color-mix(in srgb, var(--text-inverse) 8%, transparent); }
+.ranges button { min-height: 40px; min-width: 56px; padding: var(--space-2) var(--space-4); border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-inverse-muted); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; transition: background-color .2s ease, color .2s ease; }
+.ranges button[aria-pressed='true'] { background: var(--flow-from); color: var(--text-primary); }
+.ranges button:hover:not([aria-pressed='true']) { background: color-mix(in srgb, var(--text-inverse) 14%, transparent); color: var(--text-inverse); }
+.ranges button:focus-visible, .plot svg:focus-visible { outline: 2px solid var(--flow-from); outline-offset: 3px; }
+.plot { position: relative; flex: 1; min-height: clamp(340px, 55svh, 640px); }
+.plot svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; cursor: crosshair; touch-action: pan-y; }
+.gridLine { stroke: var(--flow-from); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .23; }
+.line { fill: none; stroke: var(--flow-from); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.series { animation: revealChart 280ms ease-out; }
+.endpointHalo, .endpoint, .crosshair, .activeMarker { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.endpointHalo { stroke: var(--bg-inverse); stroke-width: 12; }
+.endpoint { stroke: var(--flow-from); stroke-width: 7; }
+.crosshair { stroke: var(--flow-from); stroke-dasharray: 4 5; opacity: .75; }
+.activeMarker { stroke: var(--text-inverse); stroke-width: 9; }
+.tooltip {
+  --tooltip-width: 144px;
+  position: absolute;
+  inset-block-start: var(--space-3);
+  left: clamp(0px, calc(var(--tooltip-x) - var(--tooltip-width) / 2), calc(100% - var(--tooltip-width)));
+  display: grid;
+  gap: var(--space-1);
+  width: var(--tooltip-width);
+  padding: var(--space-3);
+  border-radius: var(--radius-control);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  box-shadow: var(--elevation-card-hover);
+  font-size: 13px;
+  font-weight: 700;
+  pointer-events: none;
+}
+.tooltip span { color: var(--text-secondary); font-size: 11px; font-weight: 500; }
+.axis { direction: ltr; display: flex; justify-content: space-between; gap: var(--space-4); margin-inline: 2%; color: var(--text-inverse-muted); font-size: 12px; line-height: 1.5; }
+@keyframes revealChart { from { opacity: .6; } to { opacity: 1; } }
 @media (max-width: 767px) {
   .header { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
-  .fundControls { align-items: flex-start; text-align: start; }
-  .section .title { font-size: clamp(32px, 10cqi, 60px); }
-  .section:lang(es) .title { font-size: clamp(29px, 8cqi, 56px); }
+  .ranges { justify-self: start; }
 }
 @media (max-width: 599px) {
   .container { width: calc(100% - 40px); }
@@ -75,6 +94,6 @@
   .ranges button { flex: 1; padding-inline: var(--space-3); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .revealMask { animation: none; }
+  .series { animation: none; }
   .ranges button { transition: none; }
 }

@@ -1,10 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { directTimelineScale } from "./values";
+import { directTimelineScale, getDirectRouteDuration } from "./values";
 
-const BASE_DIRECT_MS = 13000;
-const DUR = { tD: Math.round(BASE_DIRECT_MS * directTimelineScale), tR: 13000, tA: 12000 } as const;
+const DUR = { tD: getDirectRouteDuration(directTimelineScale), tR: 13000, tA: 12000 } as const;
 type TimelineKey = keyof typeof DUR;
 
 function headerHeight() {
@@ -73,7 +72,7 @@ export function useAnimTimeline({ loopDirect = false, directScale = directTimeli
       (Object.keys(DUR) as TimelineKey[]).forEach((key) => {
         const start = startRef.current[key];
         if (start == null) return;
-        const duration = key === "tD" ? Math.round(BASE_DIRECT_MS * directScaleRef.current) : DUR[key];
+        const duration = key === "tD" ? getDirectRouteDuration(directScaleRef.current) : DUR[key];
         const looping = loopDirectRef.current && key === "tD" && visibleRef.current[key] !== false;
         const elapsed = now - start;
         const value = looping ? (elapsed % duration) / duration : Math.min(1, elapsed / duration);

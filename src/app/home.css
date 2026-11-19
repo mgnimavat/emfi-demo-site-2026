@@ -54,11 +54,11 @@
   overflow: visible;
 }
 
-/* Nodes are centered on % stops (You at 0%), so inset by half the start/end dot
-   so the diagram’s left edge matches the title/body, not the gutter. */
+/* Nodes are centered on % stops (You at 0% / Depository at 100%). Inset the
+   stage so half-dots and end labels stay inside the container on both sides. */
 .home-page [data-why-split] #direct [data-direct-route-animation] {
   margin-left: 10px;
-  width: calc(100% - 20px);
+  width: calc(100% - 52px);
   overflow: visible;
 }
 
@@ -81,18 +81,43 @@
   grid-column: 1 / -1;
 }
 
+/* Indexed title (Direct. / Responsive. / Dependable.) → eyebrow */
+.home-page [data-why-split] #direct [class*="sectionTitle"],
+.home-page [data-why-split] #responsive [class*="sectionTitle"],
+.home-page [data-why-split] #accountable [class*="sectionTitle"] {
+  margin: 0 0 18px;
+  gap: 10px;
+  color: #2a578f !important;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.home-page [data-why-split] #direct [class*="sectionIndexRule"],
+.home-page [data-why-split] #responsive [class*="sectionIndexRule"],
+.home-page [data-why-split] #accountable [class*="sectionIndexRule"] {
+  min-height: 0.9em;
+  margin-block: 0;
+  background: currentColor;
+}
+
+/* Former sub-headline → main headline */
 .home-page [data-why-split] #direct [class*="sectionCopy"] [class*="sectionLead"],
 .home-page [data-why-split] #responsive [class*="sectionCopy"] [class*="sectionLead"],
 .home-page [data-why-split] #accountable [class*="sectionCopy"] [class*="sectionLead"] {
-  margin-top: 22px;
-  font-size: clamp(38px, 4.6vw, 56px);
-  font-weight: 300;
-  line-height: 1.18;
-  letter-spacing: -0.03em;
+  margin-top: 0;
+  font-size: clamp(40px, 5.5vw, 72px);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.045em;
 }
 
 .home-page [data-why-split] #responsive [class*="sectionCopy"] [class*="sectionLead"] {
-  max-width: 20ch;
+  max-width: max-content;
+  white-space: nowrap;
 }
 
 .home-page [data-why-split] #direct [class*="sectionCopy"] [class*="sectionBody"],
@@ -106,7 +131,8 @@
 
 .home-page [data-why-split] #responsive [class*="sectionCopy"] [class*="sectionBody"] {
   margin-top: 22px;
-  max-width: none;
+  max-width: 36ch;
+  justify-self: end;
   font-size: 21px;
   line-height: 1.6;
   color: #24344b;
@@ -119,21 +145,6 @@
   }
 }
 
-.home-page [data-why-split] #direct [class*="sectionTitle"],
-.home-page [data-why-split] #responsive [class*="sectionTitle"],
-.home-page [data-why-split] #accountable [class*="sectionTitle"] {
-  font-size: clamp(56px, 8vw, 96px);
-  font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: -0.05em;
-  white-space: nowrap;
-}
-
-.home-page [data-why-split] #direct [class*="sectionIndexRule"],
-.home-page [data-why-split] #responsive [class*="sectionIndexRule"],
-.home-page [data-why-split] #accountable [class*="sectionIndexRule"] {
-  background: #a2c2fd;
-}
 
 .home-page [data-why-split] #responsive {
   background: #e6effb !important;
@@ -164,7 +175,7 @@
 .home-page [data-why-split] #responsive [class*="splitResponsiveMedia"] [class*="h-[438px]"],
 .home-page [data-why-split] #responsive [class*="splitResponsiveMedia"] [class*="h-[478px]"] {
   width: 100% !important;
-  height: clamp(360px, 42vw, 560px) !important;
+  height: clamp(400px, 48vw, 640px) !important;
 }
 
 .home-page [class*="whyPinSlide"] .section-bottom-action,
