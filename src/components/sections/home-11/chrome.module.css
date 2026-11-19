@@ -205,6 +205,9 @@
 .footerContact .footerBrandLink {
   margin-left: 0;
 }
+.footerContact .footerFeatures > :nth-child(1) { transform: translateX(60px); }
+.footerContact .footerFeatures > :nth-child(2) { transform: translateX(40px); }
+.footerContact .footerFeatures > :nth-child(3) { transform: translateX(40px); }
 .footerBrandMark {
   display: block;
   width: 88px;
