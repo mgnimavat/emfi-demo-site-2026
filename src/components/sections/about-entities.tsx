@@ -107,12 +107,11 @@ export const AboutEntities = ({ copy }: { copy: AboutCopy }) => {
             transition={{ duration: 0.34, ease }}
           >
             {section.title.map((line, index) => (
-              <span key={line}>
+              <span key={line} className={styles.titleLine}>
                 {line}
-                {index < section.title.length - 1 ? <br /> : null}
+                {index === section.title.length - 1 ? "." : null}
               </span>
             ))}
-            <span className={styles.dot} aria-hidden="true">.</span>
           </motion.h2>
           <motion.p
             className={styles.lead}
