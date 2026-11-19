@@ -204,17 +204,23 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
                     ))}
                   </div>
               </>
-            ) : (
+            ) : result === 'unavailable' ? (
               <div className={styles.chartState}>
-                {result === 'unavailable' ? (
-                  <>
-                    <p role="alert">{copy.chartUnavailable}</p>
-                    <button type="button" onClick={() => { setResult(null); setRetry((value) => value + 1); }}>
-                      {copy.chartRetry}
-                    </button>
-                  </>
-                ) : <p role="status">{copy.chartLoading}</p>}
+                <p role="alert">{copy.chartUnavailable}</p>
+                <button type="button" onClick={() => { setResult(null); setRetry((value) => value + 1); }}>
+                  {copy.chartRetry}
+                </button>
               </div>
+            ) : (
+              <>
+                <p className="sr-only" role="status">{copy.chartLoading}</p>
+                <div className={`${styles.plot} ${styles.skeletonPlot}`} aria-hidden="true" />
+                <div className={styles.axis} aria-hidden="true">
+                  {Array.from({ length: axisLabelCount }, (_, slot) => (
+                    <span key={slot} className={styles.skeletonTick} />
+                  ))}
+                </div>
+              </>
             )}
           </figure>
         ) : <WealthFundConsent copy={copy.gate} onConfirm={() => setShowChart(true)} />}

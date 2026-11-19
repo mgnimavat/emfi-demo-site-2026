@@ -6,6 +6,7 @@ import type { ResearchCopy, WealthCopy } from '@/lib/i18n/service-dictionaries';
 import { SettlementDashboard } from './SettlementDashboard';
 import theme from '@/components/sections/archive/theme.module.css';
 import styles from './WealthServiceSections.module.css';
+import reveal from './ProviderCardReveal.module.css';
 
 const portfolioResearchNames = new Set([
   'Guillermo Guerrero',
@@ -48,12 +49,13 @@ export const WealthServiceSections = ({ copy, researchTeam }: {
             {copy.fund.providers.map((provider) => {
               const asset = wealthProviderAssets[provider.id];
               return (
-                <li key={provider.id} className={styles.provider}>
-                  <div className={styles.providerBrand} data-provider={provider.id}>
+                <li key={provider.id} className={`${styles.provider} ${reveal.card}`}
+                  tabIndex={provider.role ? 0 : undefined}>
+                  <div className={`${styles.providerBrand} ${reveal.brand}`} data-provider={provider.id}>
                     {asset ? <Image src={asset.src} alt={provider.name} width={asset.width}
                       height={asset.height} className={styles.providerLogo} /> : <strong>{provider.name}</strong>}
                   </div>
-                  {provider.role && <span>{provider.role}</span>}
+                  {provider.role && <span className={reveal.details}>{provider.role}</span>}
                 </li>
               );
             })}

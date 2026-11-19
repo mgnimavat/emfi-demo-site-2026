@@ -13,6 +13,7 @@ import type { WhyPageCopy } from '@/lib/i18n/why-page-dictionaries';
 import type { DependableCopy, DirectCopy, ResponsiveCopy } from '@/lib/i18n/marketing-dictionaries';
 import type { Locale } from '@/lib/i18n';
 import { localizeHref } from '@/lib/i18n';
+import reveal from './ProviderCardReveal.module.css';
 import { responsiveTechnology } from '@/content/responsive-technology';
 import { ExecutionWorkstation } from './ExecutionWorkstation';
 import { SettlementDashboard } from './SettlementDashboard';
@@ -137,13 +138,13 @@ const InfrastructureProviders = ({ items }: { items: readonly Detail[] }) => (
         const square = logo === euroclearLogo;
 
         return (
-          <li key={title} className={styles.provider}>
-            <h4 className={styles.providerMark} data-fund-settle={fundSettle}>
+          <li key={title} className={`${styles.provider} ${reveal.card}`} tabIndex={body ? 0 : undefined}>
+            <h4 className={`${styles.providerMark} ${reveal.brand}`} data-fund-settle={fundSettle}>
               {logo ? <Image src={logo} alt={showName ? '' : title}
                 width={square ? 76 : 168} height={square ? 76 : 46} /> : null}
               {showName ? <span>{title}</span> : null}
             </h4>
-            <p className={`${styles.body} ${styles.providerDescription}`}>{body}</p>
+            {body ? <p className={`${styles.body} ${styles.providerDescription} ${reveal.details}`}>{body}</p> : null}
           </li>
         );
       })}

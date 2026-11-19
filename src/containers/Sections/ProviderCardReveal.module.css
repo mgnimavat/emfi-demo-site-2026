@@ -1,0 +1,28 @@
+.card:focus-visible {
+  outline: 2px solid var(--action-focus);
+  outline-offset: var(--space-1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card[tabindex] .brand {
+    transform: translateY(var(--space-3));
+    transition: transform .35s ease;
+  }
+
+  .details {
+    opacity: 0;
+    transform: translateY(var(--space-2));
+    transition: opacity .25s ease, transform .35s ease;
+  }
+
+  .card:is(:hover, :focus-within) .details {
+    opacity: 1;
+    transform: none;
+  }
+
+  .card[tabindex]:is(:hover, :focus-within) .brand { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card[tabindex] .brand, .details { transition: none; }
+}

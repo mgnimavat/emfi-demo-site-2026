@@ -99,6 +99,14 @@
   min-height: clamp(340px, 55svh, 640px);
 }
 .plot svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; cursor: crosshair; touch-action: pan-y; }
+.skeletonPlot, .skeletonTick {
+  background: linear-gradient(105deg, var(--bg-soft) 30%, var(--bg-page) 49%, var(--bg-soft) 68%);
+  background-size: 220% 100%;
+  animation: chartShimmer 1.6s ease-in-out infinite;
+}
+.skeletonPlot { border-radius: var(--radius-card); }
+.skeletonTick { width: var(--space-6); height: 1.5em; border-radius: var(--radius-pill); }
+@keyframes chartShimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
 .chartState {
   display: grid;
   flex: 1;
@@ -164,13 +172,13 @@
   .section:lang(es) .title { font-size: clamp(29px, 8cqi, 56px); }
 }
 @media (max-width: 599px) {
-  .axis time:nth-child(even) { display: none; }
+  .axis > :nth-child(even) { display: none; }
   .chartBackdrop { width: 150%; inset-inline: -25%; opacity: .36; }
   .container { width: calc(100% - 40px); }
   .ranges { max-width: 100%; }
   .ranges button { flex: 1; padding-inline: var(--space-3); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .series { animation: none; }
+  .series, .skeletonPlot, .skeletonTick { animation: none; }
   .ranges button { transition: none; }
 }
