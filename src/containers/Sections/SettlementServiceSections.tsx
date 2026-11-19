@@ -30,7 +30,6 @@ export const SettlementServiceSections = ({ copy }: { copy: SettlementCopy }) =>
             </ExecutionReveal>
             <ExecutionReveal delay={0.12} className={styles.copy}>
               <p className={styles.lead}>{section.lead}</p>
-              {section.body ? <p className={styles.body}>{section.body}</p> : null}
             </ExecutionReveal>
           </div>
           {section.id === 'cross-border' ? (

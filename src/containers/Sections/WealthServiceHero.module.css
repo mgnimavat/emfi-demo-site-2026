@@ -51,6 +51,18 @@
   container-type: inline-size;
 }
 
+.title {
+  margin: 0 0 clamp(var(--space-5), 4cqi, var(--space-7));
+  font-size: clamp(38px, 6.2cqi, 88px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.055em;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.title span { display: block; }
+.section:lang(es) .title { font-size: clamp(32px, 4.75cqi, 70px); }
+
 .fund {
   display: flex;
   flex: 1;
@@ -87,6 +99,29 @@
   min-height: clamp(340px, 55svh, 640px);
 }
 .plot svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; cursor: crosshair; touch-action: pan-y; }
+.chartState {
+  display: grid;
+  flex: 1;
+  min-height: 260px;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  color: var(--text-secondary);
+  text-align: center;
+}
+.chartState p { margin: 0; }
+.chartState button {
+  min-height: 44px;
+  padding-inline: var(--space-4);
+  border: 1px solid var(--color-blue-100);
+  border-radius: var(--radius-pill);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font: inherit;
+  cursor: pointer;
+}
+.chartState button:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 3px; }
 .gridLine { stroke: var(--color-blue-200); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .38; }
 .line { fill: none; stroke: var(--color-blue-550); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 .series { animation: revealChart 280ms ease-out; }
@@ -125,6 +160,8 @@
 @media (max-width: 767px) {
   .header { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
   .ranges { justify-self: start; }
+  .title { font-size: clamp(32px, 10cqi, 60px); }
+  .section:lang(es) .title { font-size: clamp(29px, 8cqi, 56px); }
 }
 @media (max-width: 599px) {
   .axis time:nth-child(even) { display: none; }

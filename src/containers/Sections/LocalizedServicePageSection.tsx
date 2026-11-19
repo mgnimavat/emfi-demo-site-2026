@@ -112,7 +112,7 @@ export const LocalizedServicePageSection = ({
               <SettlementCustodySections copy={dictionary.settlement}
                 officeCopy={settlementVariant === 'v1' ? dictionaries[locale].common : undefined} />
             ) : wealthVariant === 'current' ? <>
-              <WealthServiceSections copy={dictionary.wealth.redesign} />
+              <WealthServiceSections copy={dictionary.wealth.redesign} researchTeam={dictionary.research.team} />
               <OfficeContactSection copy={dictionaries[locale].common} officeCity="Cayman" sectionId="wealth-office"
                 layout="columns" officeCities={['Dubai', 'Cayman']}
                 officeDisclosures={{

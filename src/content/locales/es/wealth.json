@@ -32,7 +32,6 @@
         "Desde el lanzamiento"
       ],
       "illustration": "Gráfico ilustrativo: no representa la rentabilidad real del fondo.",
-      "chartNote": "Tendencia indexada, sin valores. La rentabilidad neta o bruta de comisiones, la clase de participación, la divisa, el período y la fecha de referencia se establecen en la documentación del fondo.",
       "risk": "La rentabilidad pasada no es un indicador fiable de resultados futuros. El valor de una inversión puede bajar o subir, y puede perder parte o la totalidad de su capital.",
       "marketing": "Comunicación comercial. Esta página está dirigida a clientes profesionales y contrapartes elegibles. No es una oferta ni una solicitud y no se dirige a clientes minoristas, personas estadounidenses ni a jurisdicciones donde resulte ilícita. Lea los documentos de oferta del fondo antes de tomar decisiones de inversión.",
       "gate": {
@@ -80,7 +79,10 @@
         "restricted": "Esta información no está disponible para personas estadounidenses.",
         "ineligible": "Esta información está disponible únicamente para clientes profesionales y contrapartes elegibles."
       },
-      "chartSeries": "Evolución del fondo",
+      "chartSeries": "Valor de posiciones liquidadas",
+      "chartLoading": "Cargando datos del fondo…",
+      "chartUnavailable": "Los datos del fondo no están disponibles en este momento.",
+      "chartRetry": "Volver a intentar",
       "chartBadge": "Ilustrativo",
       "axisStart": "Inicio del período",
       "axisEnd": "Fin del período"
@@ -154,7 +156,7 @@
       "body": "Las decisiones de inversión no terminan al enviar una orden. La gestión de carteras también requiere visibilidad de posiciones, efectivo, transacciones y actividad posterior a la ejecución."
     },
     "team": {
-      "title": "Consejo de Administración",
+      "title": "Consejo de Administración y Equipo de Investigación",
       "people": [
         {
           "name": "Usman Sheikh",

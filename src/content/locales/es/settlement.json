@@ -239,11 +239,9 @@
       "id": "cross-border",
       "titleLines": [
         "Entre fronteras.",
-        "Sin",
-        "cruzar clientes."
+        "Sin cruzar clientes."
       ],
       "lead": "Los valores internacionales pueden necesitar moverse entre distintos depositarios. Los valores de distintos clientes no deben cruzarse entre obligaciones de liquidación no relacionadas.",
-      "body": "En una cuenta ómnibus compartida, los valores comprados para un cliente pueden utilizarse para cumplir la entrega de otro. Para clientes de mayor tamaño, podemos abrir cuentas dedicadas en Euroclear para que sus valores sigan identificados como propios.",
       "panels": [
         {
           "id": "shared",
@@ -276,7 +274,6 @@
         "de liquidación."
       ],
       "lead": "Cuando su compra se liquida pero la venta correspondiente no, puede tener que financiar la posición y pagar intereses mientras espera.",
-      "body": "Vinculamos su compra con su venta. Si la venta no está lista para liquidarse, se retiene la compra para evitar que tenga que financiar la posición. Pueden seguir aplicándose penalizaciones CSDR y cargos TMPG. Cuando correspondan, los trasladamos con las referencias necesarias para revisarlos e impugnarlos.",
       "panels": [
         {
           "id": "unlinked",

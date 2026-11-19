@@ -21,11 +21,13 @@ export const ExecutionVenuesSection = ({ copy }: { copy: ResearchCopy['execution
           <ExecutionReveal key={group.id}>
             <ul className={styles.venues}>
               {group.venues.map((venue) => (
-                <li key={venue.name} className={styles.card}>
-                  <span className={styles.logoFrame}>
-                    <Image src={venue.logo} alt={venue.name} width={200} height={64}
-                      className={venue.name === 'Euroclear FundSettle' ? styles.squareLogo : styles.logo} />
-                  </span>
+                <li key={venue.name}>
+                  <a href={venue.href} target="_blank" rel="noreferrer" className={styles.card}>
+                    <span className={styles.logoFrame}>
+                      <Image src={venue.logo} alt={venue.name} width={200} height={64}
+                        className={venue.name === 'Euroclear FundSettle' ? styles.squareLogo : styles.logo} />
+                    </span>
+                  </a>
                 </li>
               ))}
             </ul>

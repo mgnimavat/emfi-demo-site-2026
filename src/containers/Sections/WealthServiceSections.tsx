@@ -2,12 +2,22 @@ import Image from 'next/image';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { PersonCard } from '@/components/sections/person-card';
 import { wealthProviderAssets } from '@/content/wealth-provider-assets';
-import type { WealthCopy } from '@/lib/i18n/service-dictionaries';
+import type { ResearchCopy, WealthCopy } from '@/lib/i18n/service-dictionaries';
 import { SettlementDashboard } from './SettlementDashboard';
 import theme from '@/components/sections/archive/theme.module.css';
 import styles from './WealthServiceSections.module.css';
 
-export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }) => (
+const portfolioResearchNames = new Set([
+  'Guillermo Guerrero',
+  'Albani Granado',
+  'Rosamnis Marcano',
+  'Matias Montes',
+]);
+
+export const WealthServiceSections = ({ copy, researchTeam }: {
+  copy: WealthCopy['redesign'];
+  researchTeam: ResearchCopy['team'];
+}) => (
   <>
     <section id="fund-structure" className={`${styles.section} ${styles.soft}`} aria-labelledby="fund-structure-heading">
       <div className={styles.container}>
@@ -96,7 +106,10 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
           <h2 id="portfolio-team-heading" className={theme.sectionTitle}>{copy.team.title}</h2>
         </ExecutionReveal>
         <div className={styles.teamGrid}>
-          {copy.team.people.map((person) => (
+          {[
+            ...copy.team.people,
+            ...researchTeam.people.filter((person) => portfolioResearchNames.has(person.name)),
+          ].map((person) => (
             <ExecutionReveal key={person.name}><PersonCard person={person} /></ExecutionReveal>
           ))}
         </div>

@@ -239,11 +239,9 @@
       "id": "cross-border",
       "titleLines": [
         "Cross Border.",
-        "Not",
-        "Cross Settle."
+        "Not Cross Settle."
       ],
       "lead": "International securities may need to move between different depositories. Securities belonging to different clients should not cross between unrelated settlement obligations.",
-      "body": "In a shared omnibus account, securities bought for one client can be used to meet another client’s delivery. For larger clients, we can open dedicated Euroclear accounts so your securities stay identified as yours.",
       "panels": [
         {
           "id": "shared",
@@ -276,7 +274,6 @@
         "(Settlement) Gap."
       ],
       "lead": "When your buy settles but your corresponding sell fails to settle, you can be left financing the position and paying interest while you wait.",
-      "body": "We link your buy to your sell. If the sell is not ready to settle, the buy is held back, so you are not left financing the position. CSDR penalties and TMPG charges can still apply. Where they do, we pass them through with the references you need to review and dispute them.",
       "panels": [
         {
           "id": "unlinked",

@@ -115,10 +115,10 @@
         "description": "Provides economic context for allocation, duration and credit decisions."
       },
       {
-        "name": "Matias Montes",
-        "role": "Senior Strategist",
-        "photo": "/people/matias-montes-10.jpg",
-        "description": "Connects EMFI’s capabilities, people and technology into one operating direction."
+        "name": "Elena Sánchez",
+        "role": "Quantitative Analyst (Intern)",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Supporting quantitative analysis and market research."
       },
       {
         "name": "Melissa Evaristo",
@@ -139,6 +139,13 @@
         "description": "Economic analysis providing context for sovereign markets."
       },
       {
+        "name": "Matias Montes",
+        "role": "Senior Strategist",
+        "photo": "/people/matias-montes-10.jpg",
+        "description": "Connects EMFI’s capabilities, people and technology into one operating direction.",
+        "startDesktopRow": true
+      },
+      {
         "name": "Mohammad Ezzeddine",
         "role": "Strategist",
         "photo": "/people/placeholder-draw-sky.jpg",
@@ -155,12 +162,6 @@
         "role": "Strategist",
         "photo": "/people/placeholder-draw-sky.jpg",
         "description": "Market strategy connecting economic analysis with investment opportunities."
-      },
-      {
-        "name": "Elena Sánchez",
-        "role": "Quantitative Analyst (Intern)",
-        "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "Supporting quantitative analysis and market research."
       }
     ],
     "title": "Market knowledge. Human judgement."

@@ -51,6 +51,9 @@
   background: var(--bg-soft);
 }
 
+.card:hover { background: var(--action-soft); border-color: var(--action-focus); }
+.card:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 3px; }
+
 .logoFrame {
   display: flex;
   align-items: center;

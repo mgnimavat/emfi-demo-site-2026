@@ -32,7 +32,6 @@
         "Since launch"
       ],
       "illustration": "Illustrative chart only — not real fund performance.",
-      "chartNote": "Indexed trend, no values shown. Whether returns are net or gross of fees, and the share class, currency, period and as-at date, are set out in the fund documentation.",
       "risk": "Past performance is not a reliable indicator of future results. The value of an investment can fall as well as rise, and you may lose some or all of your capital.",
       "marketing": "Marketing communication. This page is for professional clients and eligible counterparties. It is not an offer or solicitation, and is not directed at retail clients, US persons or anyone in a jurisdiction where it would be unlawful. Read the fund’s offering documents before any investment decision.",
       "gate": {
@@ -80,7 +79,10 @@
         "restricted": "This information is not available to US persons.",
         "ineligible": "This information is for professional clients and eligible counterparties only, so it is not available to you."
       },
-      "chartSeries": "Fund trend",
+      "chartSeries": "Settled position value",
+      "chartLoading": "Loading fund data…",
+      "chartUnavailable": "Fund data is temporarily unavailable.",
+      "chartRetry": "Try again",
       "chartBadge": "Illustrative",
       "axisStart": "Period start",
       "axisEnd": "Period end"
@@ -154,7 +156,7 @@
       "body": "Investment decisions do not end when an order is placed. Portfolio management also requires visibility over positions, cash, transactions and the activity that follows execution."
     },
     "team": {
-      "title": "Board Directors",
+      "title": "Board & Research Team",
       "people": [
         {
           "name": "Usman Sheikh",

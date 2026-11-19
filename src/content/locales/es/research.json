@@ -115,10 +115,10 @@
         "description": "Aporta contexto económico para las decisiones de asignación, duración y crédito."
       },
       {
-        "name": "Matias Montes",
-        "role": "Estratega sénior",
-        "photo": "/people/matias-montes-10.jpg",
-        "description": "Conecta las capacidades, las personas y la tecnología de EMFI bajo una misma dirección operativa."
+        "name": "Elena Sánchez",
+        "role": "Analista cuantitativa (en prácticas)",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "Apoyo al análisis cuantitativo y la investigación de mercados."
       },
       {
         "name": "Melissa Evaristo",
@@ -139,6 +139,13 @@
         "description": "Análisis económico que aporta contexto a los mercados soberanos."
       },
       {
+        "name": "Matias Montes",
+        "role": "Estratega sénior",
+        "photo": "/people/matias-montes-10.jpg",
+        "description": "Conecta las capacidades, las personas y la tecnología de EMFI bajo una misma dirección operativa.",
+        "startDesktopRow": true
+      },
+      {
         "name": "Mohammad Ezzeddine",
         "role": "Estratega",
         "photo": "/people/placeholder-draw-sky.jpg",
@@ -155,12 +162,6 @@
         "role": "Estratega",
         "photo": "/people/placeholder-draw-sky.jpg",
         "description": "Estrategia de mercados que conecta el análisis económico con oportunidades de inversión."
-      },
-      {
-        "name": "Elena Sánchez",
-        "role": "Analista cuantitativa (en prácticas)",
-        "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "Apoyo al análisis cuantitativo y la investigación de mercados."
       }
     ],
     "title": "Conocimiento del mercado. Criterio humano."
