@@ -65,8 +65,8 @@ const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', children }
       <div className={`${styles.bandIntro} ${copy.lead ? band.introduction : ''}`}>
         <ExecutionReveal>
           <h2 id={`${id}-heading`} className={`${band.title} ${styles.bandTitle}`}>
-            {copy.titleLines.map((line, index) => (
-              <span key={line}>{index > 0 ? ' ' : ''}{line}</span>
+            {copy.titleLines.map((line) => (
+              <span key={line}>{line}</span>
             ))}
           </h2>
         </ExecutionReveal>
@@ -209,7 +209,7 @@ export const ResponsiveContentPage = ({ copy, heroCopy, workflowSteps }: {
 export const DependableContentPage = ({ copy, heroCopy }: {
   copy: WhyPageCopy['dependable']; heroCopy: Pick<DependableCopy, 'headline' | 'fixed' | 'phrases'>;
 }) => (
-  <div className={styles.page}>
+  <div className={styles.page} data-pillar="dependable">
     <WhyHero headline={heroCopy.headline} prefix={heroCopy.fixed} words={heroCopy.phrases} spacedLines>
       <OversightCycle />
     </WhyHero>
@@ -222,7 +222,7 @@ export const DependableContentPage = ({ copy, heroCopy }: {
     <ContentBand id="fees" copy={copy.fees} tone="navy">
       <Details items={copy.fees.items} layout="ledger" />
     </ContentBand>
-    <ContentBand id="entities" copy={copy.entities} tone="soft" layout="centered">
+    <ContentBand id="entities" copy={copy.entities} tone="soft">
       <Details items={copy.entities.items} layout="entities" />
     </ContentBand>
   </div>

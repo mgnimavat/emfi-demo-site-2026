@@ -9,6 +9,9 @@
 .page .hero {
   background: radial-gradient(ellipse at 80% 35%, var(--bg-soft), transparent 62%), var(--bg-page);
 }
+.page[data-pillar='dependable'] .hero {
+  background: var(--bg-page);
+}
 .heroVisual { min-width: 0; }
 .contentBand {
   box-sizing: border-box;
@@ -48,8 +51,14 @@
   gap: var(--space-4);
   text-align: center;
 }
-.contentBand[data-layout='centered'] .bandTitle > span { display: inline; }
-.contentBand[data-layout='centered'] .bandTitle { text-wrap: balance; }
+.contentBand[data-layout='centered'] .bandTitle > span { display: block; }
+.contentBand[data-layout='centered'] .bandTitle { text-wrap: pretty; }
+#entities .bandTitle {
+  text-align: left;
+}
+#entities .bandTitle > span {
+  display: block;
+}
 .contentBand[data-layout='centered'] .introCopy { max-width: 76ch; text-wrap: pretty; }
 .contentBand[data-layout='centered'] .note { justify-self: center; text-align: center; }
 .groupTitle {
