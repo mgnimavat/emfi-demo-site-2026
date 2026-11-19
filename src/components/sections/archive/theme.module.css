@@ -115,6 +115,10 @@
 .peopleIntro h2, .peopleIntro p { margin-inline: auto; }
 .peopleIntro h2 { max-width: 28ch; }
 .peopleIntro p { max-width: 68ch; }
+.personSpacer { min-width: 0; visibility: hidden; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  .personSpacer { aspect-ratio: 1 / 1.15; }
+}
 @media (min-width: 768px) { .personGrid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media (min-width: 1024px) { .personGrid { grid-template-columns: repeat(4,minmax(0,1fr)); } }
 
