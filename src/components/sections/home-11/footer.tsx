@@ -70,60 +70,68 @@ const FooterLinkItems = ({ links, locale, t }: {
   ));
 };
 
-export const Home11Footer = () => {
+export const Home11Footer = ({ socialVariant = "filled" }: { socialVariant?: "filled" | "outline" } = {}) => {
   const locale = getPageLocale(usePathname());
   const messages: Readonly<Record<string, string>> = { en: enMessages, es: esMessages, ar: arMessages }[locale];
   const t = (value: string) => messages[value] ?? value;
+  const outlineSocial = socialVariant === "outline";
+  const socialClass = outlineSocial ? `${styles.social} ${styles.socialOutline}` : styles.social;
+  const socialList = (
+    <ul className={socialClass} aria-label={t("Social media")}>
+      {socialLinks.map((item) => (
+        <li key={item.title}>
+          <a href={item.href} title={item.title} aria-label={item.title} {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+            <BrandIcon d={item.d} viewBox={item.viewBox} evenodd={"evenodd" in item} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
-    <footer lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} className={styles.footer}>
-      <div className={styles.footerInner}>
+    <footer lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} className={outlineSocial ? `${styles.footer} ${styles.footerContact}` : styles.footer}>
+      <div className={styles.footerInner} data-site-chrome-inner>
         <div className={styles.footerTop}>
           <div className={styles.footerBrand}>
             <Link href={localizeHref("/", locale)} className={styles.footerBrandLink} aria-label="EMFI home">
-              <BrandSign className={styles.footerBrandMark} />
+              <BrandSign className={`${styles.footerBrandMark} ${styles.footerBrandMarkLarge}`} />
             </Link>
-            <ul className={styles.social} aria-label={t("Social media")}>
-              {socialLinks.map((item) => (
-                <li key={item.title}>
-                  <a href={item.href} title={item.title} aria-label={item.title} {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-                    <BrandIcon d={item.d} viewBox={item.viewBox} evenodd={"evenodd" in item} />
-                  </a>
-                </li>
-              ))}
-            </ul>
             <div className={styles.footerBrandCopy}>
               <p>{t("Intended for Professional Clients Only.")}</p>
               <p>{t("Not Suitable for Retail Clients or US Persons.")}</p>
               {copyright.map((line) => <p key={line}>{t(line)}</p>)}
             </div>
           </div>
-          {featureColumns.map((column) => (
-            <Link
-              key={column.title}
-              href={localizeHref(column.href, locale)}
-              className={`${styles.footerLinks} ${styles.footerFeature}`}
-              aria-label={t(column.title)}
-            >
-              <h2>{t(column.title)}</h2>
-              <p className={styles.footerFeatureCopy}>
-                {column.lines.map((line) => <span key={line}>{t(line)}</span>)}
-              </p>
-              <div className={styles.footerFeatureLogo}>
-                <Image
-                  className={styles[column.logo.className]}
-                  src={column.logo.src}
-                  alt={column.logo.alt}
-                  width={column.logo.width}
-                  height={column.logo.height}
-                  unoptimized
-                />
-              </div>
-            </Link>
-          ))}
+          <div className={styles.footerFeatures}>
+            {featureColumns.map((column) => (
+              <Link
+                key={column.title}
+                href={localizeHref(column.href, locale)}
+                className={`${styles.footerLinks} ${styles.footerFeature}`}
+                aria-label={t(column.title)}
+              >
+                <h2>{t(column.title)}</h2>
+                <p className={styles.footerFeatureCopy}>
+                  {column.lines.map((line) => <span key={line}>{t(line)}</span>)}
+                </p>
+                <div className={styles.footerFeatureLogo}>
+                  <Image
+                    className={styles[column.logo.className]}
+                    src={column.logo.src}
+                    alt={column.logo.alt}
+                    width={column.logo.width}
+                    height={column.logo.height}
+                    unoptimized
+                  />
+                </div>
+              </Link>
+            ))}
+          </div>
           {legalRegulatoryLinks.length ? (
-            <nav className={`${styles.footerLinks} ${styles.footerLegal}`} aria-label={t(legalRegulatoryHeading)}>
+            <nav className={`${styles.footerLinks} ${styles.footerLegal} ${styles.footerLegalEnd}`} aria-label={t(legalRegulatoryHeading)}>
               <h2>{t(legalRegulatoryHeading)}</h2>
               <ul><FooterLinkItems links={legalRegulatoryLinks} locale={locale} t={t} /></ul>
+              <div className={styles.footerLegalSocial}>{socialList}</div>
             </nav>
           ) : null}
         </div>

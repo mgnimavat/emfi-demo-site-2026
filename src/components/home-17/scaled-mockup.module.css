@@ -4,8 +4,12 @@
   height: 100%;
 }
 
+.boxClip {
+  overflow: hidden;
+}
+
 /* Let card shadows fade out instead of being clipped at the slide edge. */
-:global(.overflow-hidden):has(.box) {
+:global(.overflow-hidden):has(.box:not(.boxClip)) {
   overflow: visible;
 }
 
@@ -45,6 +49,9 @@
   box-sizing: border-box;
   height: 100%;
   grid-auto-rows: 1fr;
+  /* Drop shell padding so the card grid can flush to the stage edges. */
+  padding: 0;
+  gap: 10px;
 }
 
 .inner > [role="region"] article {

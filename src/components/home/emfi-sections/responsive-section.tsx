@@ -55,7 +55,7 @@ export function ResponsiveSection({
   const reduceMotion = useReducedMotion();
   const home17Mockup = trimChrome || appBar || home15Trade;
   const solidLight = light && (!pinned || split || Boolean(reduceMotion));
-  const splitLead = "Technology\nthat works.\nPeople who respond.";
+  const splitLead = "Technology that works.\nPeople who respond.";
   const splitBody =
     "Technology should make the routine easier. Experienced people should be available when the requirement does not fit the standard process. EMFI combines both, within defined regulatory, operational and risk controls.";
 
@@ -72,9 +72,9 @@ export function ResponsiveSection({
         style={{
           position: "relative",
           zIndex: light ? 2 : undefined,
-          maxWidth: split ? 1480 : 1320,
+          maxWidth: split ? 1440 : 1320,
           margin: "0 auto",
-          padding: split ? "0 clamp(110px, calc(8vw + 70px), 190px)" : sectionPad(marked, !light, pinned),
+          padding: split ? "0 clamp(20px, 4vw, 56px)" : sectionPad(marked, !light, pinned),
           borderTop: pinned ? "none" : light ? "1px solid rgba(7,24,50,.08)" : "1px solid rgba(162,194,253,.16)",
           ...sectionFrame(pinned, centered, cols),
           ...(split ? { alignItems: "flex-start", justifyContent: "flex-start", gap: 0 } : null),

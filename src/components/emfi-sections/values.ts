@@ -14,6 +14,7 @@ export type RouteNode = {
   name: string;
   sub: string;
   subOp: number;
+  labelOp: number;
   ls: string;
   fs: string;
   nc: string;
@@ -26,6 +27,7 @@ type NodeOpts = {
   dot: string;
   name: string;
   sub?: string;
+  labelOp?: number;
   lp: string;
   sz: number;
   fs?: string;
@@ -83,6 +85,7 @@ export function lab(pos: string, sz: number, wrap?: boolean) {
   if (pos === "b") return `left:0;top:${o}px;transform:translateX(-50%);align-items:center;text-align:center;${ws}`;
   if (pos === "a") return `left:0;bottom:${o}px;transform:translateX(-50%);align-items:center;text-align:center;${ws}`;
   if (pos === "bl") return `left:-9px;top:${o}px;align-items:flex-start;text-align:left;${ws}`;
+  if (pos === "br") return `left:9px;top:${o}px;transform:translateX(-100%);align-items:flex-end;text-align:right;${ws}`;
   if (pos === "al") return `left:-9px;bottom:${o}px;align-items:flex-start;text-align:left;${ws}`;
   return `left:${o}px;top:0;transform:translateY(-50%);align-items:flex-start;text-align:left;${ws}`;
 }
@@ -122,6 +125,7 @@ function node(pt: RoutePt, o: NodeOpts): RouteNode {
     name: o.name,
     sub: o.sub || "",
     subOp: o.sub ? 1 : 0,
+    labelOp: o.labelOp ?? 1,
     ls: lab(o.lp, o.sz, o.wrap),
     fs: o.fs || "15px",
     nc: o.nc || "#FFFFFF",
@@ -136,9 +140,9 @@ function tok(p: RoutePt, op: number, bg: string) {
 const CONVENTIONAL_END = 0.56;
 const CONVENTIONAL_STRETCH = 1.75;
 export const directTimelineScale = CONVENTIONAL_END * CONVENTIONAL_STRETCH + (1 - CONVENTIONAL_END);
-const HOME12_CONV_MS = 17000;
-const HOME12_EMFI_MS = 6500;
-const HOME12_HOLD_MS = 5000;
+const HOME12_CONV_MS = 12500;
+const HOME12_EMFI_MS = 8000;
+const HOME12_HOLD_MS = 2500;
 /** Just after Depository shows Received, then the EMFI route starts. */
 const HOME12_CONV_DONE = 0.47;
 const HOME12_CONV_PLAY_MS = (HOME12_CONV_DONE / CONVENTIONAL_END) * HOME12_CONV_MS;
@@ -234,14 +238,20 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   nodes.push(node(S(dpos), { op: preload ? 1 : ap(4), dot: dot("i", depOn, dark, home12 ? convColor(P0[4]) : undefined), name: "Depository", sub: depositorySub, lp: pos, sz: 18, fs, nc: labelNc, subC: labelSub }));
   const es = V ? 52 : 64;
   const sk = ez(sg(t, 0.64, 0.71));
+  // During conventional → EMFI merge: mark starts small, grows to full size, then label appears.
+  const mergeGrow = ez(sg(t, 0.58, 0.71));
+  const emfiMark = preload ? mergeGrow : sk;
+  const emfiScale = preload ? lp(0.32, 1, mergeGrow) : lp(0.6, 1, ez(sg(t, 0.6, 0.7)));
+  const emfiLabel = preload ? sg(t, 0.72, 0.78) : 1;
   nodes.push(node(S(50), {
-    op: preload ? (t >= 0.56 ? 1 : 0) : sg(t, 0.6, 0.66),
-    sc: preload ? (t >= 0.56 ? 1 : 0.6) : lp(0.6, 1, ez(sg(t, 0.6, 0.7))),
-    dot: swDot(es, preload && t >= 0.56 ? 1 : sk, "#0E2242", Math.max(Math.sin(Math.PI * sg(t, 0.67, 0.76)), Math.sin(Math.PI * sg(t, 0.785, 0.83)))),
+    op: preload ? sg(t, 0.56, 0.6) : sg(t, 0.6, 0.66),
+    sc: emfiScale,
+    dot: swDot(es, emfiMark, "#0E2242", Math.max(Math.sin(Math.PI * sg(t, 0.67, 0.76)), Math.sin(Math.PI * sg(t, 0.785, 0.83)))),
     sw: true,
-    swOff: preload && t >= 0.56 ? 0 : 100 * (1 - sk),
+    swOff: 100 * (1 - emfiMark),
     ms: `${V ? 28 : 35}px`,
     name: "EMFI",
+    labelOp: emfiLabel,
     fs: "16px",
     sub: t >= 0.79 && t < 0.825 ? (home12 ? "Processed" : "Received") : "",
     lp: pos,

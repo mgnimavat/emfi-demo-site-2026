@@ -142,7 +142,7 @@
 .splitDirect .splitResponsiveMedia :global([class*="h-[438px]"]),
 .splitDirect .splitResponsiveMedia :global([class*="h-[478px]"]) {
   width: 100% !important;
-  height: clamp(360px, 42vw, 560px) !important;
+  height: clamp(400px, 48vw, 640px) !important;
 }
 
 .whyPinSlide .sectionTitle {
