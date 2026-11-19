@@ -57,7 +57,7 @@
   font-weight: 800;
   line-height: 1;
   letter-spacing: -.055em;
-  text-align: center;
+  text-align: start;
   overflow-wrap: anywhere;
 }
 .title span { display: block; }

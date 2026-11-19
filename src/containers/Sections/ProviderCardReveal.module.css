@@ -4,7 +4,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .card[tabindex] .brand {
+  .card:is([tabindex], a[href]) .brand {
     transform: translateY(var(--space-3));
     transition: transform .35s ease;
   }
@@ -20,9 +20,9 @@
     transform: none;
   }
 
-  .card[tabindex]:is(:hover, :focus-within) .brand { transform: none; }
+  .card:is([tabindex], a[href]):is(:hover, :focus-within) .brand { transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card[tabindex] .brand, .details { transition: none; }
+  .card:is([tabindex], a[href]) .brand, .details { transition: none; }
 }

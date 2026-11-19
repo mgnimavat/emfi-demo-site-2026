@@ -17,6 +17,7 @@ export const localizedPaths = [
   '/services/settlement-custody',
   '/services/settlement-custody-archive',
   '/services/wealth-asset-management',
+  '/services/wealth-asset-management-archive',
 ] as const;
 export const isLocalizedPath = (pathname: string) =>
   localizedPaths.some((path) => path === pathname);

@@ -7,6 +7,7 @@
   composes: introduction from '../../components/sections/execution/workstation-section.module.css';
 }
 .fundIntroduction .title { font-size: clamp(30px, 10cqi, 80px); }
+.fundArchiveCopy { display: grid; gap: var(--space-5); }
 @media (min-width: 901px) {
   .fundStructure {
     box-sizing: border-box;
@@ -17,6 +18,19 @@
   }
   .fundIntroduction { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
   .fundIntroduction .title { font-size: clamp(36px, 6.6cqi, 88px); }
+  .fundArchiveLayout {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: clamp(32px, 5vw, 80px);
+  }
+  .fundArchiveLayout .fundIntroduction {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+    margin-block-end: 0;
+  }
+  .fundArchiveLayout .title { font-size: clamp(36px, 7.2cqi, 96px); }
+  .fundArchiveLayout .providerGrid { gap: var(--space-3); }
 }
 .lead { margin: 0; font-size: clamp(20px, 2cqi, 27px); font-weight: 600; line-height: 1.4; letter-spacing: -.025em; }
 .body { margin: 0; color: var(--text-secondary); font-size: 15px; line-height: 1.75; }

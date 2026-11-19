@@ -93,6 +93,14 @@
         "que una cartera."
       ],
       "lead": "La estrategia de inversión es solo una parte de un fondo. La estructura jurídica, la organización de las carteras, la administración, la auditoría y la supervisión legal también forman parte del marco operativo.",
+      "archive": {
+        "titleLines": [
+          "Un fondo es",
+          "más que una",
+          "cartera."
+        ],
+        "body": "EMFI Fund SPC es una sociedad de carteras segregadas de las Islas Caimán diseñada para albergar distintas carteras de inversión. Cada cartera opera conforme a su mandato de inversión y documentos de gobierno, con los nombramientos y acuerdos de proveedores correspondientes establecidos en la documentación del fondo."
+      },
       "providersTitle": "Proveedores de servicios",
       "providers": [
         {

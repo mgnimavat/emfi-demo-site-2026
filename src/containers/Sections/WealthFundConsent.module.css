@@ -1,8 +1,8 @@
 .form {
   display: grid;
   grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
-  width: min(100%, 1120px);
-  margin: auto;
+  width: 100%;
+  margin-block: auto;
   border: 1px solid var(--border-default);
   border-radius: var(--radius-card);
   background: var(--bg-page);

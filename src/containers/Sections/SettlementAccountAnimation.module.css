@@ -2,11 +2,9 @@
   --scene-blue: var(--color-blue-550);
   --scene-green: color-mix(in srgb, var(--flow-to) 45%, var(--color-blue-500));
   --scene-coral: var(--status-negative);
-  width: min(100%, 1120px);
-  margin-inline: auto;
+  width: 100%;
   color: var(--text-primary);
 }
-.stage[data-orientation='vertical'] { max-width: 520px; }
 
 .routeTitle {
   margin: 0;

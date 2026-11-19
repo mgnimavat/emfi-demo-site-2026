@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { PersonCard } from '@/components/sections/person-card';
 import { wealthProviderAssets } from '@/content/wealth-provider-assets';
+import type { AboutCopy } from '@/lib/i18n';
 import type { ResearchCopy, WealthCopy } from '@/lib/i18n/service-dictionaries';
 import { SettlementDashboard } from './SettlementDashboard';
 import theme from '@/components/sections/archive/theme.module.css';
@@ -15,22 +16,26 @@ const portfolioResearchNames = new Set([
   'Matias Montes',
 ]);
 
-export const WealthServiceSections = ({ copy, researchTeam }: {
+export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archiveFund = false }: {
   copy: WealthCopy['redesign'];
   researchTeam: ResearchCopy['team'];
+  aboutPeople: readonly AboutCopy['people'][number][];
+  archiveFund?: boolean;
 }) => (
   <>
     <section id="fund-structure" className={`${styles.section} ${styles.soft} ${styles.fundStructure}`}
       aria-labelledby="fund-structure-heading">
-      <div className={styles.container}>
+      <div className={archiveFund ? `${styles.container} ${styles.fundArchiveLayout}` : styles.container}>
         <div className={styles.fundIntroduction}>
           <ExecutionReveal>
             <h2 id="fund-structure-heading" className={styles.title}>
-              {copy.fund.titleLines.map((line) => <span key={line}>{line}</span>)}
+              {(archiveFund ? copy.fund.archive.titleLines : copy.fund.titleLines)
+                .map((line) => <span key={line}>{line}</span>)}
             </h2>
           </ExecutionReveal>
-          <ExecutionReveal delay={0.12}>
+          <ExecutionReveal delay={0.12} className={archiveFund ? styles.fundArchiveCopy : undefined}>
             <p className={styles.lead}>{copy.fund.lead}</p>
+            {archiveFund && <p className={styles.body}>{copy.fund.archive.body}</p>}
           </ExecutionReveal>
         </div>
         <ExecutionReveal className={styles.providers}>
@@ -109,7 +114,10 @@ export const WealthServiceSections = ({ copy, researchTeam }: {
         </ExecutionReveal>
         <div className={styles.teamGrid}>
           {[
-            ...copy.team.people,
+            ...copy.team.people.map((person) => ({
+              ...person,
+              description: aboutPeople.find(({ name }) => name === person.name)?.description,
+            })),
             ...researchTeam.people.filter((person) => portfolioResearchNames.has(person.name)),
           ].map((person) => (
             <ExecutionReveal key={person.name}><PersonCard person={person} /></ExecutionReveal>

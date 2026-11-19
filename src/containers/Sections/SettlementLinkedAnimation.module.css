@@ -5,9 +5,9 @@
   --chart-border: var(--color-blue-100);
   --chart-status: var(--bg-soft);
   box-sizing: border-box;
-  width: min(100%, 1120px);
+  width: 100%;
   min-width: 0;
-  margin: 0 auto;
+  margin: 0;
   border: 1px solid var(--chart-border);
   border-radius: var(--radius-card);
   background: var(--chart-surface);
@@ -215,7 +215,6 @@
 }
 
 @media (max-width: 699px) {
-  .stage { max-width: 520px; }
   .scene { grid-template-columns: minmax(0, 1fr); }
   .instruction { min-height: 108px; padding: var(--space-4); }
   .connection { min-height: 64px; }
