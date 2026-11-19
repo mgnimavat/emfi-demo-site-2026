@@ -48,6 +48,7 @@ export const LocalizedServicePageSection = ({
   const messages = dictionary[servicePages[service]].ui;
   const research = service === 'research-execution';
   const copy = service === 'settlement-custody' ? dictionary.settlement : dictionary.wealth;
+  const [londonEntity, dubaiEntity] = dictionary.settlement.disclosures.entities;
   return (
     <ServiceLocaleProvider locale={locale} messages={messages}>
       <div data-service={service} data-research-variant={research ? researchVariant : undefined}
@@ -100,12 +101,12 @@ export const LocalizedServicePageSection = ({
               settlementVariant === 'current' ? <>
                 <SettlementServiceSections copy={dictionary.settlement} />
                 <SettlementQuestionnaireSection copy={dictionary.settlement.questionnaire} />
-                <OfficeContactSection copy={dictionaries[locale].common} officeCity="Dubai" sectionId="settlement-office">
-                  {dictionary.settlement.disclosures.entities.map((entity) => (
-                    <p key={entity.name}><strong>{entity.name}</strong> {entity.body}</p>
-                  ))}
-                  <p>{dictionary.settlement.disclosures.notice}</p>
-                </OfficeContactSection>
+                <OfficeContactSection copy={dictionaries[locale].common} officeCity="London"
+                  sectionId="settlement-office" layout="columns" officeCities={['London', 'Dubai']}
+                  officeDisclosures={{
+                    London: <p><strong>{londonEntity.name}</strong> {londonEntity.body}</p>,
+                    Dubai: <p><strong>{dubaiEntity.name}</strong> {dubaiEntity.body}</p>,
+                  }} />
               </> :
               <SettlementCustodySections copy={dictionary.settlement}
                 officeCopy={settlementVariant === 'v1' ? dictionaries[locale].common : undefined} />

@@ -1,35 +1,45 @@
 .section { composes: section from '../../components/sections/execution/workstation-section.module.css'; }
 .container { composes: container from '../../components/sections/execution/workstation-section.module.css'; }
-.introduction { composes: introduction from '../../components/sections/execution/workstation-section.module.css'; }
 .title { composes: title from '../../components/sections/execution/workstation-section.module.css'; }
 .title span { display: block; }
 .soft { background: var(--bg-soft); }
+.fundIntroduction {
+  composes: introduction from '../../components/sections/execution/workstation-section.module.css';
+}
 .copy { display: grid; gap: var(--space-5); min-width: 0; }
 .lead { margin: 0; font-size: clamp(20px, 2cqi, 27px); font-weight: 600; line-height: 1.4; letter-spacing: -.025em; }
 .body { margin: 0; color: var(--text-secondary); font-size: 15px; line-height: 1.75; }
-.structure { display: grid; justify-items: center; max-width: 880px; margin: 0 auto; text-align: center; }
-.fundRoot { display: grid; justify-items: center; gap: var(--space-3); width: 100%; padding: var(--space-6); border-radius: var(--radius-card); background: var(--bg-inverse); color: var(--text-inverse); }
-.fundRoot h3, .portfolios h4, .providers h3, .mandateStep h3 { margin: 0; font-size: clamp(22px, 2vw, 27px); font-weight: 700; line-height: 1.2; letter-spacing: -.03em; }
-.fundRoot p { margin: 0; color: var(--text-inverse-muted); font-size: 14px; }
-.connector { margin-block: var(--space-3); color: var(--color-blue-200); }
-.portfolios { width: 100%; padding: var(--space-6); border: 1px solid var(--color-blue-100); border-radius: var(--radius-card); background: var(--bg-page); }
-.portfolios p { margin-top: var(--space-3); }
-.providers { margin-top: 0; }
-.providerConnector { display: block; margin: var(--space-3) auto; color: var(--color-blue-200); }
-.providerGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); margin: var(--space-5) 0 0; padding: 0; list-style: none; }
-@media (min-width: 768px) {
-  .providerGrid { display: flex; flex-wrap: wrap; justify-content: center; }
-  .providerGrid > li { flex: 0 1 calc((100% - 2 * var(--space-5)) / 3); }
+.providers { width: min(100%, 1120px); margin-inline: auto; }
+.providers h3, .mandateStep h3 { margin: 0; font-size: clamp(22px, 2vw, 27px); font-weight: 700; line-height: 1.2; letter-spacing: -.03em; }
+.providerGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
 }
-.provider { display: grid; justify-items: center; align-content: center; gap: var(--space-3); min-width: 0; min-height: clamp(168px, 14cqi, 192px); padding: var(--space-5) clamp(16px, 2cqi, 32px); border: 1px solid var(--flow-from); border-radius: var(--radius-card); background: var(--bg-page); text-align: center; }
+.provider {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: var(--space-2);
+  min-width: 0;
+  min-height: 136px;
+  padding: var(--space-3);
+  border: 1px solid var(--flow-from);
+  border-radius: var(--radius-card);
+  background: var(--bg-page);
+  text-align: center;
+}
 .logoFilter { position: absolute; width: 0; height: 0; overflow: hidden; }
-.providerBrand { display: grid; place-items: center; width: 100%; max-width: 260px; height: 104px; overflow: hidden; }
+.providerBrand { display: grid; place-items: center; width: 100%; max-width: 260px; height: 80px; }
 .providerBrand strong { font-size: 24px; letter-spacing: -.04em; }
 .providerLogo { display: block; width: 100%; height: 64px; object-fit: contain; filter: url('#wealth-provider-navy'); }
-.providerBrand[data-provider='northern-trust'] .providerLogo,
-.providerBrand[data-provider='walkers'] .providerLogo { height: 104px; object-fit: cover; }
+.providerBrand[data-provider='northern-trust'] .providerLogo { height: 80px; object-fit: cover; }
 .providerBrand[data-provider='dechert'] .providerLogo,
-.providerBrand[data-provider='apex'] .providerLogo { height: 96px; }
+.providerBrand[data-provider='apex'] .providerLogo { height: 76px; }
+.providerBrand[data-provider='emfi'] .providerLogo { filter: brightness(0) url('#wealth-provider-navy'); }
 .provider > span { color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
 .providers > h3 { text-align: center; }
 .notice { margin: var(--space-6) 0 0; color: var(--text-muted); font-size: 12px; line-height: 1.7; }
@@ -93,17 +103,18 @@
 .mandateStep p { margin-block-start: var(--space-2); }
 .navy { background: var(--bg-inverse); color: var(--text-inverse); }
 .navy .lead, .navy .notice { color: var(--text-inverse-muted); }
-.teamGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); margin-top: var(--space-7); }
-@media (max-width: 1023px) { .providerGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.teamGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-5); margin-top: var(--space-7); }
+@media (max-width: 1023px) { .teamGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 767px) {
   .teamGrid, .mandateLayout { grid-template-columns: minmax(0, 1fr); }
-  .providerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mandateTitle { text-wrap: pretty; }
   .mandateStep { gap: var(--space-3); padding: var(--space-4); }
   .mandateStepCopy { padding-inline-start: var(--space-3); }
 }
 
-@media (max-width: 599px) { .providerGrid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 599px) {
+  .providerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+}
 
 .visibilityIntro { display: grid; justify-items: center; gap: var(--space-5); margin-bottom: var(--space-7); text-align: center; }
 .visibilityTitle { max-width: none; margin: 0; color: var(--text-inverse); }

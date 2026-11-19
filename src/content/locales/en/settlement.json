@@ -22,17 +22,16 @@
     "label": "Illustrative settlement flow",
     "buy": "BUY",
     "sell": "SELL",
-    "exposure": "Potential financing exposure",
+    "exposure": "Financing interest may accrue",
     "held": "Buy held with the sell",
     "pause": "Pause animation",
     "play": "Resume animation",
     "states": {
       "pending": "Not settled",
+      "held": "Held until sell is ready",
       "settled": "Settled",
-      "attempting": "Attempting sell",
-      "failed": "Sell failed",
-      "available": "Available to sell",
-      "waiting": "Waiting for buy"
+      "settling": "Settling",
+      "failed": "Settlement failed"
     }
   },
   "accountAnimation": {
@@ -240,7 +239,8 @@
       "id": "cross-border",
       "titleLines": [
         "Cross Border.",
-        "Not Cross Settle."
+        "Not",
+        "Cross Settle."
       ],
       "lead": "International securities may need to move between different depositories. Securities belonging to different clients should not cross between unrelated settlement obligations.",
       "body": "In a shared omnibus account, securities bought for one client can be used to meet another client’s delivery. For larger clients, we can open dedicated Euroclear accounts so your securities stay identified as yours.",
@@ -267,11 +267,7 @@
           ],
           "body": "Separate account structures keep each client’s securities separately identifiable."
         }
-      ],
-      "detail": {
-        "title": "Cross-depository settlement",
-        "body": "For supported securities and markets, we can also settle across depositories: a seller settling through DTC, for example, can deliver to a buyer receiving through Euroclear. Route, eligibility and charges depend on the security and the counterparties."
-      }
+      ]
     },
     {
       "id": "linked-settlement",
@@ -286,30 +282,29 @@
           "id": "unlinked",
           "title": "Without linked trades",
           "steps": [
-            "Buy instruction: Not settled",
-            "Sell instruction: Waiting for buy"
+            "Buy instruction",
+            "Sell instruction"
           ],
-          "body": "The buy has not settled. The subsequent sell attempt fails because the securities are not available."
+          "body": "The buy settles, but the sell fails to settle. You may have to finance the position and pay interest while you wait."
         },
         {
           "id": "linked",
           "title": "With linked trades",
           "steps": [
-            "Buy instruction: Not settled",
-            "Sell instruction: Waiting for buy"
+            "Buy instruction",
+            "Sell instruction"
           ],
-          "body": "The linked buy settles first. The securities then become available for the corresponding sell."
+          "body": "The buy is held until the sell is ready. Both trades then settle together, avoiding the need to finance a position while waiting for the sell."
         }
       ]
     },
     {
       "id": "trade-upload",
       "titleLines": [
-        "Trade Upload, Yes.",
-        "Manual Entry, No."
+        "Trade Upload - Yes.",
+        "Manual Entry - No."
       ],
       "lead": "A Bloomberg VCON confirmation can carry the trade details already agreed between counterparties. Re-keying those details creates avoidable work and opportunities for input errors.",
-      "body": "Upload a Bloomberg VCON confirmation and EMFI’s system reads the document and extracts the trade details into the trade-entry workflow. You can review and validate the extracted information before processing, without having to re-enter every field manually.",
       "panels": [
         {
           "id": "upload",
@@ -358,8 +353,7 @@
           "title": "System integration",
           "body": "Submit trade information through API or supported drop-copy arrangements."
         }
-      ],
-      "notice": "Automated extraction is subject to supported VCON formats, information quality and validation controls. Review remains part of the trade-entry process."
+      ]
     }
   ],
   "overview": {
@@ -616,20 +610,16 @@
     "Special Reports": "Special Reports"
   },
   "uploadAnimation": {
-    "label": "Illustrative VCON upload",
-    "prompt": "Upload a VCON screenshot",
-    "hint": "Trade confirmation · PNG",
-    "document": "Bloomberg VCON · Illustrative",
+    "label": "VCON image upload",
+    "prompt": "Drag to upload image",
     "file": "vcon-confirmation.png",
     "result": "Extracted trade details",
-    "read": "Read",
     "ready": "Ready for review",
-    "replay": "Replay",
     "fields": [
       {
         "id": "security",
         "label": "Security",
-        "value": "Security A"
+        "value": "CORPORATE BOND A"
       },
       {
         "id": "side",
@@ -639,17 +629,17 @@
       {
         "id": "quantity",
         "label": "Quantity",
-        "value": "100"
+        "value": "250"
       },
       {
         "id": "price",
         "label": "Price",
-        "value": "98.250"
+        "value": "97.625"
       },
       {
         "id": "counterparty",
         "label": "Counterparty",
-        "value": "Counterparty X"
+        "value": "BROKER A"
       }
     ]
   }

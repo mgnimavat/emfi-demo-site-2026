@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { ArrowDown, Layers } from 'lucide-react';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { PersonCard } from '@/components/sections/person-card';
 import { wealthProviderAssets } from '@/content/wealth-provider-assets';
@@ -12,7 +11,7 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
   <>
     <section id="fund-structure" className={`${styles.section} ${styles.soft}`} aria-labelledby="fund-structure-heading">
       <div className={styles.container}>
-        <div className={styles.introduction}>
+        <div className={styles.fundIntroduction}>
           <ExecutionReveal>
             <h2 id="fund-structure-heading" className={styles.title}>
               {copy.fund.titleLines.map((line) => <span key={line}>{line}</span>)}
@@ -23,22 +22,7 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
             <p className={styles.body}>{copy.fund.body}</p>
           </ExecutionReveal>
         </div>
-        <ExecutionReveal>
-          <figure className={styles.structure}>
-            <figcaption className={styles.fundRoot}>
-              <Layers size={28} aria-hidden="true" />
-              <h3>{copy.fund.name}</h3>
-              <p>{copy.fund.jurisdiction}</p>
-            </figcaption>
-            <ArrowDown size={28} className={styles.connector} aria-hidden="true" />
-            <div className={styles.portfolios}>
-              <h4>{copy.fund.portfolioTitle}</h4>
-              <p className={styles.body}>{copy.fund.portfolioBody}</p>
-            </div>
-          </figure>
-        </ExecutionReveal>
-        <div className={styles.providers}>
-          <ArrowDown size={28} className={styles.providerConnector} aria-hidden="true" />
+        <ExecutionReveal className={styles.providers}>
           <svg className={styles.logoFilter} aria-hidden="true" focusable="false">
             <defs>
               <filter id="wealth-provider-navy" colorInterpolationFilters="sRGB">
@@ -49,8 +33,8 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
               </filter>
             </defs>
           </svg>
-          <h3>{copy.fund.providersTitle}</h3>
-          <ul className={styles.providerGrid}>
+          <h3 id="fund-providers-heading">{copy.fund.providersTitle}</h3>
+          <ul className={styles.providerGrid} aria-labelledby="fund-providers-heading">
             {copy.fund.providers.map((provider) => {
               const asset = wealthProviderAssets[provider.id];
               return (
@@ -59,12 +43,12 @@ export const WealthServiceSections = ({ copy }: { copy: WealthCopy['redesign'] }
                     {asset ? <Image src={asset.src} alt={provider.name} width={asset.width}
                       height={asset.height} className={styles.providerLogo} /> : <strong>{provider.name}</strong>}
                   </div>
-                  <span>{provider.role}</span>
+                  {provider.role && <span>{provider.role}</span>}
                 </li>
               );
             })}
           </ul>
-        </div>
+        </ExecutionReveal>
       </div>
     </section>
     <section id="investment-mandate" className={`${styles.section} ${styles.mandateSection}`}

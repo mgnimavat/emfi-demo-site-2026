@@ -1,100 +1,135 @@
 'use client';
 
-import { useRef, useState, type RefObject } from 'react';
-import { useAnimationFrame, useInView, useReducedMotion } from 'framer-motion';
-import { CircleCheck, Layers3, ShieldCheck, TriangleAlert } from 'lucide-react';
+import { useRef, useState, useSyncExternalStore, type RefObject } from 'react';
+import { motion, useAnimationFrame, useInView, useReducedMotion } from 'framer-motion';
+import { CircleCheck, TriangleAlert } from 'lucide-react';
+import { directPaceScale, getDirectRouteDuration } from '@/components/emfi-sections/values';
 import type { SettlementCopy } from '@/lib/i18n/service-dictionaries';
-import { getSettlementAnimationFrame, settlementRoutes } from '@/lib/settlement-account-animation';
+import {
+  getSettlementAnimationFrame,
+  getSettlementComparisonFrame,
+  settlementAnimationTiming,
+  settlementLayouts,
+  type SettlementOrientation,
+} from '@/lib/settlement-account-animation';
 import styles from './SettlementAccountAnimation.module.css';
 
 type AnimationCopy = SettlementCopy['accountAnimation'];
 type TokenRef = RefObject<SVGGElement | null>;
 type Point = readonly [number, number];
 
-const SecurityToken = ({ owner, tokenRef, position, reducedMotion }: {
-  owner: 'A' | 'B'; tokenRef?: TokenRef; position: Point; reducedMotion: boolean;
+const morphDuration = 0.65;
+const loopDuration = getDirectRouteDuration(directPaceScale('home12'));
+const compactQuery = '(max-width: 699px)';
+const subscribeToLayout = (onChange: () => void) => {
+  const query = window.matchMedia(compactQuery);
+  query.addEventListener('change', onChange);
+  return () => query.removeEventListener('change', onChange);
+};
+const getOrientation = (): SettlementOrientation => window.matchMedia(compactQuery).matches
+  ? 'vertical'
+  : 'horizontal';
+const getServerOrientation = (): SettlementOrientation => 'horizontal';
+const initialScene = getSettlementComparisonFrame(0, loopDuration, 'horizontal');
+const completedElapsed = settlementAnimationTiming.scene * 2;
+
+type DiagramLayout = (typeof settlementLayouts)[SettlementOrientation];
+type DiagramNode = DiagramLayout['clients'][number];
+
+const boxAttributes = ({ x, y, width, height }: DiagramNode) => ({ x, y, width, height });
+
+const SecurityToken = ({ owner, tokenRef, position, visible }: {
+  owner: 'A' | 'B'; tokenRef: TokenRef; position: Point; visible: boolean;
 }) => (
   <g ref={tokenRef} className={`${styles.token} ${owner === 'B' ? styles.tokenB : ''}`} data-token={owner}
-    transform={`translate(${position.join(' ')})`} opacity={reducedMotion ? 1 : 0}>
+    transform={`translate(${position.join(' ')})`} opacity={visible ? 1 : 0}>
     <circle r="23" className={styles.tokenHalo} />
     <circle r="16" />
     <text textAnchor="middle" dominantBaseline="central">{owner}</text>
   </g>
 );
 
-const DeliveryNode = ({ owner, dedicated, settled, copy }: {
-  owner: 'A' | 'B'; dedicated: boolean; settled: boolean; copy: AnimationCopy;
+const DeliveryNode = ({ owner, node, dedicated, settled, copy }: {
+  node: DiagramLayout['deliveries'][number]; owner: 'A' | 'B'; dedicated: boolean; settled: boolean; copy: AnimationCopy;
 }) => {
   const delivered = settled && (dedicated || owner === 'B');
-  const left = owner === 'A' ? 24 : 280;
 
   return (
     <g className={styles.delivery} data-owner={owner} data-status={delivered ? 'delivered' : 'pending'}>
-      <rect x={left} y="244" width="216" height="72" rx="12" />
-      {!dedicated && owner === 'B' ? (
-        <g className={styles.waitingDelivery}>
-          <circle cx="318" cy="265" r="9" />
-          <path d="M318 260 V265 L321 267" />
+      <rect {...boxAttributes(node)} rx="12" />
+      {!dedicated ? (
+        <g className={owner === 'A' ? styles.pendingMarker : styles.waitingDelivery}
+          transform={`translate(${node.marker.join(' ')})`}>
+          <circle r="9" />
+          <path d="M0 -5 V0 L3 2" />
         </g>
       ) : null}
-      {!dedicated && owner === 'A' ? (
-        <g className={styles.pendingMarker}>
-          <circle cx="70" cy="265" r="9" />
-          <path d="M70 260.5 V265 L73 267" />
-        </g>
-      ) : null}
-      <text x={left + 132} y="270" textAnchor="middle">
+      <text x={node.label[0]} y={node.label[1]} textAnchor="middle">
         {owner === 'A' ? copy.deliveryA : copy.delivery}
       </text>
-      <text x={left + 108} y="300" textAnchor="middle" className={styles.deliveryStatus}>
+      <text x={node.status[0]} y={node.status[1]} textAnchor="middle" className={styles.deliveryStatus}>
         {delivered ? copy.delivered : copy.pending}
       </text>
     </g>
   );
 };
 
-const AccountDiagram = ({ dedicated, settled, copy, tokenARef, tokenBRef, reducedMotion }: {
+const AccountDiagram = ({ orientation, dedicated, settled, copy, tokenARef, tokenBRef, reducedMotion }: {
+  orientation: SettlementOrientation;
   dedicated: boolean; settled: boolean; copy: AnimationCopy; tokenARef: TokenRef;
-  tokenBRef?: TokenRef; reducedMotion: boolean;
-}) => (
-  <svg className={styles.diagram} viewBox="0 0 520 340" aria-hidden="true" focusable="false">
-    <path className={styles.route} d={dedicated
-      ? `${settlementRoutes.arrivalA.path} ${settlementRoutes.arrivalB.path} ${settlementRoutes.deliveryA.path} ${settlementRoutes.deliveryB.path}`
-      : `${settlementRoutes.sharedArrival.path} M388 84 C388 112 290 98 290 124 M240 202 C240 228 132 218 132 244 ${settlementRoutes.sharedDelivery.path}`} />
-    <path className={styles.activeRoute} d={dedicated ? settlementRoutes.deliveryB.path : settlementRoutes.sharedDelivery.path} />
-    {dedicated ? <path className={styles.activeRoute} d={settlementRoutes.deliveryA.path} /> : (
-      <g className={styles.pendingRoute}>
-        <path d="M240 202 C240 228 132 218 132 244" />
+  tokenBRef: TokenRef; reducedMotion: boolean;
+}) => {
+  const { viewBox, routes, clients, accounts, pool, deliveries } = settlementLayouts[orientation];
+  const { sharedArrival, sharedArrivalB, sharedPending, sharedDelivery, arrivalA, arrivalB,
+    deliveryA, deliveryB } = routes;
+  const accountA = dedicated ? accounts[0] : pool;
+  const accountB = dedicated ? accounts[1] : pool;
+  const leftDelivery = dedicated ? deliveryA.path : sharedPending.path;
+  const rightDelivery = dedicated ? deliveryB.path : sharedDelivery.path;
+  const transition = { duration: reducedMotion ? 0 : morphDuration, ease: 'easeInOut' } as const;
+  const tokenScene = getSettlementAnimationFrame(reducedMotion ? completedElapsed : 0, orientation);
+
+  return (
+    <svg className={styles.diagram} viewBox={viewBox} aria-hidden="true" focusable="false">
+      <motion.path className={styles.route} initial={false} transition={transition}
+        animate={{ d: dedicated ? arrivalA.path : sharedArrival.path }} />
+      <motion.path className={styles.route} initial={false} transition={transition}
+        animate={{ d: dedicated ? arrivalB.path : sharedArrivalB.path }} />
+      <motion.path className={styles.route} initial={false} transition={transition}
+        animate={{ d: leftDelivery }} />
+      <motion.path className={styles.route} initial={false} transition={transition}
+        animate={{ d: rightDelivery }} />
+      <motion.path className={dedicated ? styles.activeRoute : styles.pendingRoute}
+        initial={false} transition={transition} animate={{ d: leftDelivery }} />
+      <motion.path className={styles.activeRoute} initial={false} transition={transition}
+        animate={{ d: rightDelivery }} />
+      <g className={styles.source}>
+        <rect {...boxAttributes(clients[0])} rx="14" />
+        <rect {...boxAttributes(clients[1])} rx="14" />
+        <text x={clients[0].label[0]} y={clients[0].label[1]} textAnchor="middle">{copy.clientA}</text>
+        <text x={clients[1].label[0]} y={clients[1].label[1]} textAnchor="middle">{copy.clientB}</text>
       </g>
-    )}
-    <g className={styles.source}>
-      <rect x="24" y="22" width="216" height="62" rx="14" />
-      <rect x="280" y="22" width="216" height="62" rx="14" />
-      <text x="132" y="60" textAnchor="middle">{copy.clientA}</text>
-      <text x="388" y="60" textAnchor="middle">{copy.clientB}</text>
-    </g>
-    {dedicated ? (
-      <g className={styles.vaults}>
-        <rect x="24" y="124" width="216" height="78" rx="14" />
-        <rect x="280" y="124" width="216" height="78" rx="14" />
-        <text x="132" y="150" textAnchor="middle">{copy.accountA}</text>
-        <text x="388" y="150" textAnchor="middle">{copy.accountB}</text>
-        <path className={styles.divider} d="M260 112 V220" />
+      <g className={styles.accounts}>
+        <motion.rect rx="14" initial={false} transition={transition}
+          animate={boxAttributes(accountA)} />
+        <motion.rect rx="14" initial={false} transition={transition}
+          animate={{ ...boxAttributes(accountB), opacity: dedicated ? 1 : 0 }} />
+        <text x={accountA.label[0]} y={accountA.label[1]} textAnchor="middle">
+          {dedicated ? copy.accountA : copy.pool}
+        </text>
+        {dedicated ? (
+          <text x={accountB.label[0]} y={accountB.label[1]} textAnchor="middle">{copy.accountB}</text>
+        ) : null}
       </g>
-    ) : (
-      <g className={styles.pool}>
-        <rect x="108" y="124" width="304" height="78" rx="14" />
-        <text x="260" y="150" textAnchor="middle">{copy.pool}</text>
-      </g>
-    )}
-    <DeliveryNode owner="A" dedicated={dedicated} settled={settled} copy={copy} />
-    <DeliveryNode owner="B" dedicated={dedicated} settled={settled} copy={copy} />
-    <SecurityToken owner="A" tokenRef={tokenARef} reducedMotion={reducedMotion}
-      position={reducedMotion ? (dedicated ? [62, 270] : [318, 270]) : [132, 70]} />
-    {dedicated ? <SecurityToken owner="B" tokenRef={tokenBRef}
-      reducedMotion={reducedMotion} position={reducedMotion ? [318, 270] : [388, 70]} /> : null}
-  </svg>
-);
+      <DeliveryNode owner="A" node={deliveries[0]} dedicated={dedicated} settled={settled} copy={copy} />
+      <DeliveryNode owner="B" node={deliveries[1]} dedicated={dedicated} settled={settled} copy={copy} />
+      <SecurityToken owner="A" tokenRef={tokenARef} visible={reducedMotion}
+        position={dedicated ? tokenScene.dedicatedA : tokenScene.sharedA} />
+      <SecurityToken owner="B" tokenRef={tokenBRef} visible={reducedMotion}
+        position={tokenScene.dedicatedB} />
+    </svg>
+  );
+};
 
 const moveToken = (token: TokenRef, position: Point, opacity: number) => {
   token.current?.setAttribute('transform', `translate(${position[0].toFixed(2)} ${position[1].toFixed(2)})`);
@@ -102,56 +137,44 @@ const moveToken = (token: TokenRef, position: Point, opacity: number) => {
 };
 
 export const SettlementAccountAnimation = ({ copy }: { copy: AnimationCopy }) => {
+  const orientation = useSyncExternalStore(subscribeToLayout, getOrientation, getServerOrientation);
   const stage = useRef<HTMLDivElement>(null);
-  const sharedA = useRef<SVGGElement>(null);
-  const dedicatedA = useRef<SVGGElement>(null);
-  const dedicatedB = useRef<SVGGElement>(null);
+  const tokenA = useRef<SVGGElement>(null);
+  const tokenB = useRef<SVGGElement>(null);
   const elapsed = useRef(0);
-  const lastScene = useRef({ phase: 0, delivered: false });
-  const [scene, setScene] = useState({ phase: 0, delivered: false });
-  const [focused, setFocused] = useState(false);
+  const [scene, setScene] = useState(initialScene);
   const visible = useInView(stage, { amount: 0.25 });
   const reducedMotion = Boolean(useReducedMotion());
-  const activePhase = reducedMotion ? copy.sharedCaptions.length - 1 : scene.phase;
-  const settled = reducedMotion || scene.delivered;
-  const running = visible && !reducedMotion && !focused;
+  const { phase, delivered, dedicated } = reducedMotion
+    ? { phase: 2, delivered: true, dedicated: true }
+    : scene;
+  const running = visible && !reducedMotion;
+  const CaptionIcon = dedicated ? CircleCheck : TriangleAlert;
+  const captions = dedicated ? copy.dedicatedCaptions : copy.sharedCaptions;
 
   useAnimationFrame((_time, delta) => {
     if (!running || document.hidden) return;
     elapsed.current += Math.min(delta, 64);
-    const frame = getSettlementAnimationFrame(elapsed.current);
-    moveToken(sharedA, frame.sharedA, frame.opacity);
-    moveToken(dedicatedA, frame.dedicatedA, frame.opacity);
-    moveToken(dedicatedB, frame.dedicatedB, frame.opacity);
-    if (lastScene.current.phase !== frame.phase || lastScene.current.delivered !== frame.delivered) {
-      const nextScene = { phase: frame.phase, delivered: frame.delivered };
-      lastScene.current = nextScene;
-      setScene(nextScene);
+    const frame = getSettlementComparisonFrame(elapsed.current, loopDuration, orientation);
+    moveToken(tokenA, frame.dedicated ? frame.dedicatedA : frame.sharedA, frame.opacity);
+    moveToken(tokenB, frame.dedicatedB, frame.dedicated ? frame.opacity : 0);
+    if (scene.phase !== frame.phase || scene.delivered !== frame.delivered ||
+      scene.dedicated !== frame.dedicated) {
+      setScene(frame);
     }
   });
 
   return (
-    <div ref={stage} className={styles.stage} data-phase={activePhase} data-running={running}
-      data-settled={settled} role="group" aria-label={`${copy.sharedTitle} — ${copy.dedicatedTitle}`}
-      tabIndex={0} onFocusCapture={() => setFocused(true)} onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
-      }}>
-      <div className={styles.comparison}>
-        <figure className={`${styles.panel} ${styles.shared}`}>
-          <div className={styles.panelHeader}><Layers3 size={20} aria-hidden="true" /><h3>{copy.sharedTitle}</h3></div>
-          <AccountDiagram dedicated={false} settled={settled} copy={copy} tokenARef={sharedA} reducedMotion={reducedMotion} />
-          <figcaption>
-            <TriangleAlert size={18} aria-hidden="true" /><p>{copy.sharedCaptions[activePhase]}</p>
-          </figcaption>
-        </figure>
-        <figure className={`${styles.panel} ${styles.dedicated}`}>
-          <div className={styles.panelHeader}><ShieldCheck size={20} aria-hidden="true" /><h3>{copy.dedicatedTitle}</h3></div>
-          <AccountDiagram dedicated settled={settled} copy={copy} tokenARef={dedicatedA} tokenBRef={dedicatedB} reducedMotion={reducedMotion} />
-          <figcaption>
-            <CircleCheck size={18} aria-hidden="true" /><p>{copy.dedicatedCaptions[activePhase]}</p>
-          </figcaption>
-        </figure>
-      </div>
+    <div ref={stage} className={styles.stage} data-phase={phase} data-running={running}
+      data-settled={delivered} data-dedicated={dedicated} data-orientation={orientation}>
+      <h3 className={styles.routeTitle}>{dedicated ? copy.dedicatedTitle : copy.sharedTitle}</h3>
+      <figure className={styles.figure}>
+        <AccountDiagram key={orientation} orientation={orientation} dedicated={dedicated} settled={delivered} copy={copy}
+          tokenARef={tokenA} tokenBRef={tokenB} reducedMotion={reducedMotion} />
+        <figcaption>
+          <CaptionIcon size={18} aria-hidden="true" /><p>{captions[phase]}</p>
+        </figcaption>
+      </figure>
     </div>
   );
 };

@@ -37,10 +37,10 @@ export const OfficeContactSection = ({
           {place.lines.map((line) => <span key={line}>{line}</span>)}
         </address>
         <div className={styles.contacts}>
-          {'phone' in office ? (
-            <a href={`tel:${String(place.phone).replace(/\s/g, '')}`}>
+          {place.phone ? (
+            <a href={`tel:${place.phone.replace(/\s/g, '')}`}>
               <Phone size={16} aria-hidden="true" />
-              <span dir="ltr">{String(place.phone)}</span>
+              <span dir="ltr">{place.phone}</span>
             </a>
           ) : null}
           <a href={`mailto:${place.email}`}>

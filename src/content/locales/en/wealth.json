@@ -92,11 +92,7 @@
       ],
       "lead": "Investment strategy is one part of a fund. The legal structure, portfolio arrangements, administration, audit and legal oversight are part of the operating framework too.",
       "body": "EMFI Fund SPC is a Cayman Islands segregated portfolio company designed to accommodate distinct investment portfolios. Each portfolio operates under its applicable investment mandate and governing documents, with the relevant service-provider appointments and arrangements set out in the fund documentation.",
-      "name": "EMFI Fund SPC",
-      "jurisdiction": "Cayman Islands · Segregated portfolio company",
-      "portfolioTitle": "Segregated portfolios",
-      "portfolioBody": "Each with its own mandate and assets, set out in the fund documentation",
-      "providersTitle": "Professional service providers",
+      "providersTitle": "Services Provider",
       "providers": [
         {
           "id": "dechert",
@@ -115,13 +111,16 @@
         },
         {
           "id": "northern-trust",
-          "name": "Northern Trust",
-          "role": "Professional service provider"
+          "name": "Northern Trust"
         },
         {
           "id": "audit",
           "name": "Baker Tilly",
           "role": "Fund audit"
+        },
+        {
+          "id": "emfi",
+          "name": "EMFI"
         }
       ]
     },
@@ -154,26 +153,28 @@
       "body": "Investment decisions do not end when an order is placed. Portfolio management also requires visibility over positions, cash, transactions and the activity that follows execution."
     },
     "team": {
-      "title": "The people behind the portfolios.",
+      "title": "Board Directors",
       "people": [
         {
           "name": "Usman Sheikh",
-          "role": "Founder",
+          "role": "Director, EMFI Fund SPC",
           "photo": "/people/usman-sheikh-3.jpg",
-          "description": "Director, EMFI Fund SPC",
           "inset": true
         },
         {
           "name": "Alan Tooker",
           "role": "Director, EMFI Fund SPC",
-          "photo": "/people/alan-tooker-3.jpg",
-          "description": "A.R.C. Directors Ltd"
+          "photo": "/people/alan-tooker-3.jpg"
         },
         {
           "name": "Damian Juric",
           "role": "Director, EMFI Fund SPC",
-          "photo": "/people/damian-juric-10.jpg",
-          "description": "A.R.C. Directors Ltd"
+          "photo": "/people/damian-juric-10.jpg"
+        },
+        {
+          "name": "Gustavo Rodrigues",
+          "role": "Secretary",
+          "photo": "/people/gustavo-rodrigues-4.jpg"
         }
       ]
     }
