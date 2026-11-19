@@ -610,6 +610,7 @@
     "label": "Carga de imagen VCON",
     "prompt": "Arrastra la imagen para cargarla",
     "file": "vcon-confirmation.png",
+    "ticketTitle": "Confirmación de operación VCON",
     "result": "Datos extraídos de la operación",
     "ready": "Listo para revisión",
     "fields": [

@@ -610,6 +610,7 @@
     "label": "رفع صورة VCON",
     "prompt": "اسحب الصورة لرفعها",
     "file": "vcon-confirmation.png",
+    "ticketTitle": "تأكيد صفقة VCON",
     "result": "تفاصيل الصفقة المستخرجة",
     "ready": "جاهز للمراجعة",
     "fields": [

@@ -12,7 +12,7 @@
   background: var(--bg-inverse);
   color: var(--text-inverse);
 }
-.section[id='linked-settlement'] .introduction { margin-block-end: clamp(32px, 5svh, 56px); }
+.section[id='linked-settlement'] .introduction { margin-block-end: clamp(44px, 8svh, 80px); }
 .section[id='linked-settlement'] .body { color: var(--text-inverse-muted); }
 .container { composes: container from '../../components/sections/execution/workstation-section.module.css'; }
 .introduction { composes: introduction from '../../components/sections/execution/workstation-section.module.css'; }
@@ -23,7 +23,7 @@
   font-size: clamp(36px, 5.75cqi, 76px);
 }
 @media (min-width: 901px) {
-  .section:is([id='cross-border'], [id='linked-settlement']) .introduction {
+  .section:is([id='cross-border'], [id='linked-settlement'], [id='trade-upload']) .introduction {
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   }
   .section[id='linked-settlement'] .title:lang(es) { font-size: clamp(36px, 5.4cqi, 72px); }
@@ -61,7 +61,6 @@
 }
 
 .uploadIntroduction {
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
   gap: clamp(24px, 4cqi, 56px);
   margin-block-end: clamp(24px, 3.5cqi, 44px);
 }
@@ -77,12 +76,11 @@
 .uploadIntroduction .lead {
   color: var(--text-secondary);
   font-size: clamp(16px, 1.45cqi, 20px);
-  font-weight: 450;
+  font-weight: 600;
   line-height: 1.65;
   letter-spacing: -.015em;
   text-wrap: pretty;
 }
 @media (max-width: 900px) {
-  .uploadIntroduction { grid-template-columns: minmax(0, 1fr); }
   .uploadTitle { font-size: clamp(38px, 8.5cqi, 70px); }
 }

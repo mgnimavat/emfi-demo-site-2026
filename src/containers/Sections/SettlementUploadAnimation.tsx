@@ -55,10 +55,11 @@ export const SettlementUploadAnimation = ({ copy, panels }: UploadProps) => {
           </div>
           <div className={styles.document}>
             <div className={styles.documentHeader}>
-              <span className={styles.headerIcon}><FileImage size={19} /></span>
+              <FileImage size={15} />
               <bdi>{copy.file}</bdi>
               <bdi className={styles.fileType}>PNG</bdi>
             </div>
+            <div className={styles.ticketTitle}>{copy.ticketTitle}</div>
             <dl className={styles.ticketFields}>
               {copy.fields.map((field) => (
                 <div key={field.id} className={styles.ticketField}>

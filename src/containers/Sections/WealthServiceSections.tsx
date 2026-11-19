@@ -20,7 +20,8 @@ export const WealthServiceSections = ({ copy, researchTeam }: {
   researchTeam: ResearchCopy['team'];
 }) => (
   <>
-    <section id="fund-structure" className={`${styles.section} ${styles.soft}`} aria-labelledby="fund-structure-heading">
+    <section id="fund-structure" className={`${styles.section} ${styles.soft} ${styles.fundStructure}`}
+      aria-labelledby="fund-structure-heading">
       <div className={styles.container}>
         <div className={styles.fundIntroduction}>
           <ExecutionReveal>
@@ -28,9 +29,8 @@ export const WealthServiceSections = ({ copy, researchTeam }: {
               {copy.fund.titleLines.map((line) => <span key={line}>{line}</span>)}
             </h2>
           </ExecutionReveal>
-          <ExecutionReveal className={styles.copy} delay={0.12}>
+          <ExecutionReveal delay={0.12}>
             <p className={styles.lead}>{copy.fund.lead}</p>
-            <p className={styles.body}>{copy.fund.body}</p>
           </ExecutionReveal>
         </div>
         <ExecutionReveal className={styles.providers}>

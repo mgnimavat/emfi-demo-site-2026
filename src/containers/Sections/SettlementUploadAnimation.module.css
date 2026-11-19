@@ -16,6 +16,7 @@
   --drag-offset: 58px;
   display: grid;
   min-width: 0;
+  container-type: inline-size;
 }
 
 .source > * { grid-area: 1 / 1; }
@@ -39,17 +40,41 @@
 .dropzone strong { font-size: clamp(16px, 1.6cqi, 21px); }
 
 .document {
+  --ticket-surface: #101114;
   position: relative;
   min-width: 0;
+  min-block-size: clamp(240px, 55cqi, 344px);
   overflow: hidden;
-  padding: clamp(20px, 3cqi, 40px);
-  border: 1px solid var(--ticket-rule);
-  border-radius: var(--radius-card);
-  background: linear-gradient(145deg, color-mix(in srgb, var(--bg-inverse) 83%, var(--flow-mid)), var(--bg-inverse) 72%);
-  color: var(--text-inverse);
+  border: 1px solid color-mix(in srgb, var(--ticket-surface) 75%, var(--border-default));
+  border-radius: var(--radius-control);
+  background: var(--ticket-surface);
+  color: var(--ticket-amber);
+  font-family: var(--font-mono), monospace;
 }
 
-.documentHeader, .outputHeader {
+.documentHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: color-mix(in srgb, var(--ticket-surface) 91%, var(--text-inverse));
+  color: var(--text-inverse);
+  font-size: 12px;
+}
+
+.documentHeader > svg { flex: none; color: var(--ticket-amber); }
+
+.ticketTitle {
+  padding: var(--space-1) var(--space-4);
+  background: var(--ticket-amber);
+  color: var(--ticket-surface);
+  font-size: clamp(13px, 2.15cqi, 17px);
+  font-weight: 700;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+.outputHeader {
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -66,11 +91,6 @@
   border-radius: var(--radius-control);
   background: var(--bg-soft);
   color: var(--accent);
-}
-
-.documentHeader .headerIcon {
-  background: color-mix(in srgb, var(--flow-from) 16%, transparent);
-  color: var(--flow-from);
 }
 
 .documentHeader bdi { overflow-wrap: anywhere; }
@@ -125,38 +145,44 @@
 .ticketFields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 var(--space-5);
-  margin: var(--space-5) 0 0;
+  gap: var(--space-3) var(--space-5);
+  margin: 0;
+  padding: var(--space-5) var(--space-4);
 }
 
 .ticketField {
+  display: grid;
+  grid-template-columns: minmax(0, 45%) minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--space-2);
   min-width: 0;
-  padding-block: var(--space-3);
-  border-block-start: 1px solid var(--ticket-rule);
+  font-size: clamp(12px, 2.5cqi, 16px);
+  line-height: 1.45;
 }
 
-.ticketField:first-child { grid-column: 1 / -1; padding-block: var(--space-4); }
+.ticketField:first-child {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 22%) minmax(0, 1fr);
+  margin-block-end: var(--space-1);
+  padding-block-end: var(--space-3);
+  border-block-end: 1px solid color-mix(in srgb, var(--ticket-amber) 24%, transparent);
+}
 
 .ticketField dt {
-  margin-block-end: var(--space-1);
-  color: var(--text-inverse-muted);
-  font-size: 12px;
-  font-weight: 600;
+  color: color-mix(in srgb, var(--ticket-amber) 76%, var(--text-inverse));
+  overflow-wrap: anywhere;
 }
+.ticketField dt::after { content: ':'; margin-inline-start: var(--space-1); }
 
 .ticketField dd {
   margin: 0;
-  font-family: var(--font-mono), monospace;
-  font-size: clamp(14px, 1.4cqi, 18px);
   font-weight: 700;
-  line-height: 1.25;
   overflow-wrap: anywhere;
 }
 
-.ticketField:first-child dd {
-  color: var(--ticket-amber);
-  font-size: clamp(19px, 3.1cqi, 42px);
-  letter-spacing: -.04em;
+@container (max-width: 419px) {
+  .ticketFields { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
+  .ticketField:first-child { grid-template-columns: minmax(0, 45%) minmax(0, 1fr); }
 }
 
 .scan {

@@ -115,10 +115,10 @@
         "description": "يوفر السياق الاقتصادي لقرارات توزيع الأصول والمدة والائتمان."
       },
       {
-        "name": "Elena Sánchez",
-        "role": "محللة كمية (متدربة)",
-        "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "دعم التحليل الكمي وأبحاث السوق."
+        "name": "Matias Montes",
+        "role": "خبير استراتيجي أول",
+        "photo": "/people/matias-montes-10.jpg",
+        "description": "يربط قدرات EMFI وفريقها وتقنياتها ضمن توجه تشغيلي موحد."
       },
       {
         "name": "Melissa Evaristo",
@@ -139,17 +139,11 @@
         "description": "تحليل اقتصادي يوفر سياقاً لأسواق الديون السيادية."
       },
       {
-        "name": "Matias Montes",
-        "role": "خبير استراتيجي أول",
-        "photo": "/people/matias-montes-10.jpg",
-        "description": "يربط قدرات EMFI وفريقها وتقنياتها ضمن توجه تشغيلي موحد.",
-        "startDesktopRow": true
-      },
-      {
         "name": "Mohammad Ezzeddine",
         "role": "خبير استراتيجي",
         "photo": "/people/placeholder-draw-sky.jpg",
-        "description": "استراتيجية أسواق تربط التحليل الاقتصادي بفرص الاستثمار."
+        "description": "استراتيجية أسواق تربط التحليل الاقتصادي بفرص الاستثمار.",
+        "startDesktopRow": true
       },
       {
         "name": "José Ara",
@@ -162,6 +156,12 @@
         "role": "خبير استراتيجي",
         "photo": "/people/placeholder-draw-sky.jpg",
         "description": "استراتيجية أسواق تربط التحليل الاقتصادي بفرص الاستثمار."
+      },
+      {
+        "name": "Elena Sánchez",
+        "role": "محللة كمية (متدربة)",
+        "photo": "/people/placeholder-draw-sky.jpg",
+        "description": "دعم التحليل الكمي وأبحاث السوق."
       }
     ],
     "title": "معرفة بالسوق. حُكم بشري."

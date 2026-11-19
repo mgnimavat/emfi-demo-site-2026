@@ -610,6 +610,7 @@
     "label": "VCON image upload",
     "prompt": "Drag to upload image",
     "file": "vcon-confirmation.png",
+    "ticketTitle": "VCON Trade Confirmation",
     "result": "Extracted trade details",
     "ready": "Ready for review",
     "fields": [

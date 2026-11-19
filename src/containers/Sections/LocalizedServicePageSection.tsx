@@ -81,7 +81,7 @@ export const LocalizedServicePageSection = ({
             ) : <WorkstationSection copy={dictionary.research} maskVariant="blur" />}
             {researchVariant === 'current' ? (
               <ResearchOfficeSection copy={dictionaries[locale].common}
-                disclosures={dictionary.research.disclosures} />
+                disclosures={dictionary.research.disclosures} capitalEntityName={londonEntity.name} />
             ) : <ResearchDisclosures copy={dictionary.research} />}
           </>
         ) : (

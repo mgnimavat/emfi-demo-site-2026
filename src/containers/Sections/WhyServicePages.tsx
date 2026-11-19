@@ -139,7 +139,7 @@ const InfrastructureProviders = ({ items }: { items: readonly Detail[] }) => (
 
         return (
           <li key={title} className={`${styles.provider} ${reveal.card}`} tabIndex={body ? 0 : undefined}>
-            <h4 className={`${styles.providerMark} ${reveal.brand}`} data-fund-settle={fundSettle}>
+            <h4 className={styles.providerMark} data-fund-settle={fundSettle}>
               {logo ? <Image src={logo} alt={showName ? '' : title}
                 width={square ? 76 : 168} height={square ? 76 : 46} /> : null}
               {showName ? <span>{title}</span> : null}

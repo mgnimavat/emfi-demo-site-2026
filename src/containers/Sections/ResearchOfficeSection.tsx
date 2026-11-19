@@ -5,8 +5,10 @@ import { OfficeContactSection } from './OfficeContactSection';
 export const ResearchOfficeSection = ({
   copy = dictionaries.en.common,
   disclosures = serviceDictionaries.en.research.disclosures,
-}: { copy?: CommonCopy; disclosures?: ResearchCopy['disclosures'] }) => (
-  <OfficeContactSection copy={copy} officeCity="London" sectionId="research-office">
+  capitalEntityName,
+}: { copy?: CommonCopy; disclosures?: ResearchCopy['disclosures']; capitalEntityName: string }) => (
+  <OfficeContactSection copy={copy} officeCity="London" sectionId="research-office"
+    officeEntityNames={{ London: [capitalEntityName] }}>
     <p><strong>{disclosures.entity}</strong> {disclosures.regulation}</p>
     <p>{disclosures.paragraphs.join(' ')}</p>
   </OfficeContactSection>
