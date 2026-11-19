@@ -119,9 +119,7 @@ export const LocalizedServicePageSection = ({
                       <p key={entity.name}><strong>{entity.name}</strong> {entity.body}</p>
                     ))}
                   </>,
-                  Cayman: <>
-                    <p><strong>{dictionary.wealth.disclosures.entity}</strong> {dictionary.wealth.disclosures.introduction}</p>
-                  </>,
+                  Cayman: <p><strong>{dictionary.wealth.disclosures.entity}</strong> {dictionary.wealth.disclosures.introduction}</p>,
                 }} />
             </> : <WealthAssetSections copy={dictionary.wealth} locale={locale}
               officeCopy={dictionaries[locale].common} />}
