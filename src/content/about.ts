@@ -90,7 +90,7 @@ export const about = {
     {
       name: "Usman Sheikh",
       role: "Founder",
-      photo: "/people/usman-sheikh-3.jpg",
+      photo: "/people/usman-sheikh-5.jpg",
       label: "Director, EMFI Fund SPC",
       inset: true,
       description: "Sets the direction of EMFI and the institutional platform that connects clients with markets, execution and infrastructure.",
@@ -126,7 +126,7 @@ export const about = {
     {
       name: "Hitesh Bilochi",
       role: "Compliance, DIFC",
-      photo: "/people/hitesh-bilochi-5.jpg",
+      photo: "/people/hitesh-bilochi-11.jpg",
       inset: true,
       description: "Oversees DIFC regulatory compliance and DFSA requirements for EMFI’s Dubai operations.",
     },
@@ -166,9 +166,9 @@ export const about = {
       description: "Builds and manages institutional distribution relationships across the DIFC.",
     },
     {
-      name: "Francesco Odone",
-      role: "Distribution, DIFC",
-      description: "Supports institutional distribution and client coverage across the DIFC.",
+      name: "",
+      role: "",
+      spacer: true,
     },
     {
       name: "Guillermo Guerrero",

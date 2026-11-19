@@ -15,7 +15,7 @@ function badgeTone(badge: string) {
   if (key.includes("hold")) return "holding";
   if (key.includes("fca")) return "fca";
   if (key.includes("dfsa")) return "dfsa";
-  if (key.includes("fund")) return "fund";
+  if (key.includes("eima") || key.includes("fund")) return "fund";
   return "default";
 }
 

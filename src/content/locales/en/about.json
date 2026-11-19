@@ -65,7 +65,7 @@
     {
       "name": "Usman Sheikh",
       "role": "Founder",
-      "photo": "/people/usman-sheikh-3.jpg",
+      "photo": "/people/usman-sheikh-5.jpg",
       "label": "Director, EMFI Fund SPC",
       "inset": true,
       "description": "Sets the direction of EMFI and the institutional platform that connects clients with markets, execution and infrastructure."
@@ -101,7 +101,7 @@
     {
       "name": "Hitesh Bilochi",
       "role": "Compliance, DIFC",
-      "photo": "/people/hitesh-bilochi-5.jpg",
+      "photo": "/people/hitesh-bilochi-11.jpg",
       "inset": true,
       "description": "Oversees DIFC regulatory compliance and DFSA requirements for EMFI’s Dubai operations."
     },
@@ -141,9 +141,9 @@
       "description": "Builds and manages institutional distribution relationships across the DIFC."
     },
     {
-      "name": "Francesco Odone",
-      "role": "Distribution, DIFC",
-      "description": "Supports institutional distribution and client coverage across the DIFC."
+      "name": "",
+      "role": "",
+      "spacer": true
     },
     {
       "name": "Guillermo Guerrero",
@@ -225,6 +225,13 @@
     },
     "children": [
       {
+        "badge": "EIMA",
+        "jurisdiction": "Cayman Islands",
+        "name": "EMFI Fund SPC",
+        "role": "Segregated portfolio company, fund structure",
+        "meta": "CIMA LMFN 1664891"
+      },
+      {
         "badge": "FCA",
         "jurisdiction": "United Kingdom",
         "name": "EMFI Securities Limited",
@@ -244,14 +251,6 @@
         "name": "EMFI Capital (DIFC) Limited",
         "role": "Regulated presence in Dubai",
         "meta": "DFSA ref. F011663"
-      },
-      {
-        "badge": "Fund",
-        "jurisdiction": "Cayman Islands",
-        "name": "EMFI Fund SPC",
-        "role": "Segregated portfolio company, fund structure",
-        "meta": "Registered office only",
-        "dashed": true
       }
     ],
     "note": "Functional overview, not a legal ownership chart."
