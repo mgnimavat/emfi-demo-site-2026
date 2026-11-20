@@ -232,10 +232,10 @@ export const DependableContentPage = ({ copy, heroCopy }: {
     <ContentBand id="client-assets" copy={copy.assets}>
       <Details items={copy.assets.items} />
     </ContentBand>
-    <ContentBand id="fees" copy={copy.fees} tone="navy">
+    <ContentBand id="fees" copy={copy.fees} tone="soft">
       <Details items={copy.fees.items} layout="ledger" />
     </ContentBand>
-    <ContentBand id="entities" copy={copy.entities} tone="soft">
+    <ContentBand id="entities" copy={copy.entities} tone="white">
       <Details items={copy.entities.items} layout="entities" />
     </ContentBand>
   </div>

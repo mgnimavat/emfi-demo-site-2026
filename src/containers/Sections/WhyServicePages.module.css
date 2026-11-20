@@ -162,7 +162,7 @@
   background: color-mix(in srgb, var(--bg-inverse) 94%, var(--text-inverse));
 }
 .details[data-layout='entities'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.details[data-layout='entities'] .detail { background: var(--bg-page); box-shadow: var(--elevation-card-hover); }
+.details[data-layout='entities'] .detail { background: var(--bg-soft); box-shadow: var(--elevation-card-hover); }
 .code { display: block; margin-bottom: var(--space-2); color: var(--color-blue-550); font-size: 13px; font-weight: 700; }
 .detailLink, .action { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: 600; }
 .detailLink { margin-top: var(--space-3); color: var(--color-blue-550); text-underline-offset: .2em; }
