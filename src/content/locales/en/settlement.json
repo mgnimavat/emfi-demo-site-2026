@@ -23,7 +23,46 @@
     "buy": "BUY",
     "sell": "SELL",
     "exposure": "Financing interest may accrue",
-    "held": "Buy held with the sell",
+    "story": {
+      "unlinked": [
+        {
+          "id": "buy",
+          "title": "The buy settles first",
+          "body": "Cash leaves your account to pay for the securities."
+        },
+        {
+          "id": "sell",
+          "title": "The sell fails to settle",
+          "body": "The sale proceeds are delayed, leaving your cash tied up."
+        },
+        {
+          "id": "outcome",
+          "title": "You fund the gap",
+          "body": "You may need financing and pay interest until the sell settles."
+        }
+      ],
+      "linked": [
+        {
+          "id": "buy",
+          "title": "The buy is held",
+          "body": "Payment for the buy waits while the sell is pending."
+        },
+        {
+          "id": "sell",
+          "title": "The sell is ready",
+          "body": "Both instructions are ready to settle together."
+        },
+        {
+          "id": "outcome",
+          "title": "Both trades settle together",
+          "body": "The sale proceeds arrive when payment for the buy is due."
+        }
+      ]
+    },
+    "storySummary": {
+      "unlinked": "You pay for the buy before the sale proceeds arrive.",
+      "linked": "The sale proceeds are available when the buy settles."
+    },
     "pause": "Pause animation",
     "play": "Resume animation",
     "states": {
@@ -236,15 +275,10 @@
   },
   "crossBorderArchive": {
     "titleLines": [
-      "Cross Border.",
-      "Not",
-      "Cross Settle."
+      "Cross Border",
+      "Not Cross Settle"
     ],
-    "body": "In a shared omnibus account, securities bought for one client can be used to meet another client’s delivery. For larger clients, we can open dedicated Euroclear accounts so your securities stay identified as yours.",
-    "detail": {
-      "title": "Cross-depository settlement",
-      "body": "For supported securities and markets, we can also settle across depositories: a seller settling through DTC, for example, can deliver to a buyer receiving through Euroclear. Route, eligibility and charges depend on the security and the counterparties."
-    }
+    "body": "In a shared omnibus account, securities bought for one client can be used to meet another client’s delivery. For larger clients, we can open dedicated Euroclear accounts so your securities stay identified as yours."
   },
   "serviceSections": [
     {
@@ -351,14 +385,17 @@
       "methodsTitle": "More than one way to enter a trade.",
       "methods": [
         {
+          "id": "manual",
           "title": "Manual entry",
           "body": "Enter individual transactions directly into the EMFI interface."
         },
         {
+          "id": "bulk",
           "title": "Bulk and file-based",
           "body": "Upload supported spreadsheets or submit files through SFTP."
         },
         {
+          "id": "integration",
           "title": "System integration",
           "body": "Submit trade information through API or supported drop-copy arrangements."
         }

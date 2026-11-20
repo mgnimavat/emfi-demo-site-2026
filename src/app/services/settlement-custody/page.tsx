@@ -3,5 +3,5 @@ import { serviceDictionaries } from '@/lib/i18n/service-dictionaries';
 
 const copy = serviceDictionaries.en.settlement;
 export const metadata = { title: copy.title, description: copy.description };
-const ServicePage = () => <LocalizedServicePageSection service="settlement-custody" />;
+const ServicePage = () => <LocalizedServicePageSection service="settlement-custody" settlementVariant="archive" />;
 export default ServicePage;

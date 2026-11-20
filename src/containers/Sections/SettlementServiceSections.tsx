@@ -10,7 +10,7 @@ const workflowIcons = { upload: FileUp, extract: ScanText, validate: ShieldCheck
 const isWorkflowStep = (id: string): id is keyof typeof workflowIcons => id in workflowIcons;
 
 const ArchiveCrossBorder = ({ lead, copy }: { lead: string; copy: SettlementCopy }) => {
-  const { titleLines, body, detail } = copy.crossBorderArchive;
+  const { titleLines, body } = copy.crossBorderArchive;
 
   return (
     <section id="cross-border" className={`${styles.section} ${styles.archiveSection}`}
@@ -22,25 +22,66 @@ const ArchiveCrossBorder = ({ lead, copy }: { lead: string; copy: SettlementCopy
           </h2>
           <p className={styles.archiveLead}>{lead}</p>
           <p className={styles.body}>{body}</p>
-          <div className={styles.archiveDetail}>
-            <h3>{detail.title}</h3>
-            <p className={styles.body}>{detail.body}</p>
-          </div>
         </ExecutionReveal>
         <div className={styles.archiveAnimation}>
-          <SettlementAccountAnimation copy={copy.accountAnimation} orientation="vertical" />
+          <SettlementAccountAnimation copy={copy.accountAnimation} orientation="track" />
         </div>
       </div>
     </section>
   );
 };
 
-export const SettlementServiceSections = ({ copy, archiveCrossBorder = false }: {
-  copy: SettlementCopy; archiveCrossBorder?: boolean;
+type ServiceSection = SettlementCopy['serviceSections'][number];
+
+const TradeEntryMethods = ({ section, archive = false }: { section: ServiceSection; archive?: boolean }) => (
+  section.methods ? (
+    <div className={archive ? `${styles.methods} ${styles.archiveMethods}` : styles.methods}>
+      <h3>{section.methodsTitle}</h3>
+      <div className={styles.methodGrid}>
+        {section.methods.map((method) => (
+          <ExecutionReveal key={method.id} className={styles.method}>
+            {archive && <span className={styles.methodDot} aria-hidden="true" />}
+            <div>
+              <h4>{method.title}</h4>
+              <p className={styles.body}>{method.body}</p>
+            </div>
+          </ExecutionReveal>
+        ))}
+      </div>
+    </div>
+  ) : null
+);
+
+const ArchiveWorkflow = ({ section, copy }: { section: ServiceSection; copy: SettlementCopy }) => (
+  <section id={section.id} className={`${styles.section} ${styles.archiveSection} ${styles.archiveWorkflow}`}
+    aria-labelledby={`${section.id}-heading`}>
+    <div className={`${styles.container} ${styles.archiveLayout}`}>
+      <ExecutionReveal className={styles.archiveCopy}>
+        <h2 id={`${section.id}-heading`} className={styles.title}>
+          {section.titleLines.map((line) => <span key={line}>{line}</span>)}
+        </h2>
+        <p className={styles.archiveLead}>{section.lead}</p>
+        <TradeEntryMethods section={section} archive />
+      </ExecutionReveal>
+      <div className={styles.archiveAnimation}>
+        {section.id === 'linked-settlement' ? (
+          <SettlementLinkedAnimation panels={section.panels} copy={copy.linkedAnimation} layout="vertical" />
+        ) : (
+          <SettlementUploadAnimation panels={section.panels} copy={copy.uploadAnimation} stacked />
+        )}
+      </div>
+    </div>
+  </section>
+);
+
+export const SettlementServiceSections = ({ copy, archive = false }: {
+  copy: SettlementCopy; archive?: boolean;
 }) => (
   <div id="settlement" className={styles.sections}>
-    {copy.serviceSections.map((section) => archiveCrossBorder && section.id === 'cross-border' ? (
+    {copy.serviceSections.map((section) => archive && section.id === 'cross-border' ? (
       <ArchiveCrossBorder key={section.id} lead={section.lead} copy={copy} />
+    ) : archive && (section.id === 'linked-settlement' || section.id === 'trade-upload') ? (
+      <ArchiveWorkflow key={section.id} section={section} copy={copy} />
     ) : (
       <section
         key={section.id}
@@ -94,19 +135,7 @@ export const SettlementServiceSections = ({ copy, archiveCrossBorder = false }: 
             })}
           </div>
           )}
-          {section.methods ? (
-            <div className={styles.methods}>
-              <h3>{section.methodsTitle}</h3>
-              <div className={styles.methodGrid}>
-                {section.methods.map((method) => (
-                  <ExecutionReveal key={method.title} className={styles.method}>
-                    <h4>{method.title}</h4>
-                    <p className={styles.body}>{method.body}</p>
-                  </ExecutionReveal>
-                ))}
-              </div>
-            </div>
-          ) : null}
+          <TradeEntryMethods section={section} />
         </div>
       </section>
     ))}

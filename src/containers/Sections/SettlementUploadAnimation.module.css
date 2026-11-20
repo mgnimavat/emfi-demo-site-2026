@@ -253,6 +253,12 @@
 }
 
 .value { min-width: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.stage :is([data-field='security'], [data-field='price']) bdi,
+.stage[data-stacked='true'] [data-field='counterparty'] bdi {
+  display: inline-block;
+  max-inline-size: 100%;
+  filter: blur(.28em);
+}
 .read { flex: none; color: var(--accent); }
 
 .ready {
@@ -354,4 +360,48 @@
   .connector { justify-self: center; min-height: 56px; }
   .connector::before, .connector::after { display: none; }
   .connector svg, :global([dir='rtl']) .connector svg { transform: rotate(90deg); }
+}
+
+.stage[data-stacked='true'] {
+  container: vcon-workspace / inline-size;
+}
+
+.stage[data-stacked='true'] .workspace {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.stage[data-stacked='true'] .document {
+  min-block-size: 224px;
+}
+
+.stage[data-stacked='true'] .documentHeader { font-size: clamp(13px, 2.6cqi, 16px); }
+.stage[data-stacked='true'] .fileType { font-size: 13px; }
+.stage[data-stacked='true'] .ticketTitle { font-size: clamp(15px, 3.1cqi, 20px); }
+.stage[data-stacked='true'] .ticketField { font-size: clamp(15px, 2.85cqi, 18px); }
+.stage[data-stacked='true'] .ticketField:not(:first-child) {
+  grid-template-columns: minmax(0, 52%) minmax(0, 1fr);
+}
+.stage[data-stacked='true'] .draggedFile { font-size: 14px; }
+
+.stage[data-stacked='true'] .output h3 { font-size: clamp(20px, 2.1cqi, 26px); }
+.stage[data-stacked='true'] .field { min-height: 39px; }
+.stage[data-stacked='true'] .field dt { font-size: clamp(15px, 1.4cqi, 17px); }
+.stage[data-stacked='true'] .field dd { font-size: clamp(15px, 1.45cqi, 18px); }
+.stage[data-stacked='true'] .ready { font-size: 14px; }
+.stage[data-stacked='true'] .steps { font-size: 14px; }
+
+.stage[data-stacked='true'] .source { --drag-offset: 28px; }
+.stage[data-stacked='true'] .connector { justify-self: center; min-height: 44px; }
+.stage[data-stacked='true'] .connector::before,
+.stage[data-stacked='true'] .connector::after { display: none; }
+.stage[data-stacked='true'] .connector svg,
+:global([dir='rtl']) .stage[data-stacked='true'] .connector svg { transform: rotate(90deg); }
+
+@container vcon-workspace (max-width: 409px) {
+  .stage[data-stacked='true'] .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@container (max-width: 519px) {
+  .stage[data-stacked='true'] .ticketFields { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
+  .stage[data-stacked='true'] .ticketField:first-child { grid-template-columns: minmax(0, 52%) minmax(0, 1fr); }
 }

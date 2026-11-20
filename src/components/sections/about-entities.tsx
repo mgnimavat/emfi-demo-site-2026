@@ -23,6 +23,7 @@ function flatBranch(from: Point, to: Point, midY: number) {
   return `M ${from.x} ${from.y} L ${from.x} ${midY} L ${to.x} ${midY} L ${to.x} ${to.y}`;
 }
 
+// Group structure diagram: holding company → operating entities with connector paths.
 export const AboutEntities = ({ copy }: { copy: AboutCopy }) => {
   const section = copy.entities;
   const reduceMotion = useReducedMotion();

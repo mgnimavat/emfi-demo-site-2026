@@ -23,7 +23,46 @@
     "buy": "COMPRA",
     "sell": "VENTA",
     "exposure": "Pueden acumularse intereses de financiación",
-    "held": "Compra retenida junto con la venta",
+    "story": {
+      "unlinked": [
+        {
+          "id": "buy",
+          "title": "La compra se liquida primero",
+          "body": "Sale efectivo de su cuenta para pagar los valores."
+        },
+        {
+          "id": "sell",
+          "title": "La venta no se liquida",
+          "body": "El importe de la venta se retrasa y su dinero queda inmovilizado."
+        },
+        {
+          "id": "outcome",
+          "title": "Usted financia la diferencia",
+          "body": "Puede necesitar financiación y pagar intereses hasta que se liquide la venta."
+        }
+      ],
+      "linked": [
+        {
+          "id": "buy",
+          "title": "La compra queda retenida",
+          "body": "El pago de la compra espera mientras la venta sigue pendiente."
+        },
+        {
+          "id": "sell",
+          "title": "La venta está lista",
+          "body": "Ambas instrucciones están listas para liquidarse juntas."
+        },
+        {
+          "id": "outcome",
+          "title": "Ambas operaciones se liquidan juntas",
+          "body": "El importe de la venta llega cuando se debe pagar la compra."
+        }
+      ]
+    },
+    "storySummary": {
+      "unlinked": "Paga la compra antes de recibir el importe de la venta.",
+      "linked": "El pago de la compra coincide con el cobro de la venta."
+    },
     "pause": "Pausar animación",
     "play": "Reanudar animación",
     "states": {
@@ -237,14 +276,9 @@
   "crossBorderArchive": {
     "titleLines": [
       "Entre fronteras.",
-      "Sin cruzar",
-      "clientes."
+      "Sin cruzar clientes."
     ],
-    "body": "En una cuenta ómnibus compartida, los valores comprados para un cliente pueden utilizarse para cumplir la entrega de otro. Para clientes de mayor tamaño, podemos abrir cuentas dedicadas en Euroclear para que sus valores sigan identificados como propios.",
-    "detail": {
-      "title": "Liquidación entre depositarios",
-      "body": "Para valores y mercados admitidos, también podemos liquidar entre depositarios: por ejemplo, un vendedor que liquida a través de DTC puede entregar a un comprador que recibe a través de Euroclear. La ruta, la elegibilidad y los cargos dependen del valor y de las contrapartes."
-    }
+    "body": "En una cuenta ómnibus compartida, los valores comprados para un cliente pueden utilizarse para cumplir la entrega de otro. Para clientes de mayor tamaño, podemos abrir cuentas dedicadas en Euroclear para que sus valores sigan identificados como propios."
   },
   "serviceSections": [
     {
@@ -351,14 +385,17 @@
       "methodsTitle": "Más de una forma de introducir una operación.",
       "methods": [
         {
+          "id": "manual",
           "title": "Entrada manual",
           "body": "Introduzca operaciones individuales directamente en la interfaz de EMFI."
         },
         {
+          "id": "bulk",
           "title": "Carga masiva y archivos",
           "body": "Cargue hojas de cálculo compatibles o envíe archivos por SFTP."
         },
         {
+          "id": "integration",
           "title": "Integración de sistemas",
           "body": "Envíe información de operaciones mediante API o conexiones drop-copy compatibles."
         }

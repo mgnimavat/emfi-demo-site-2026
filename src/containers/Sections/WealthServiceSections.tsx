@@ -74,7 +74,7 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
         <div className={styles.mandateLayout}>
           <ExecutionReveal className={styles.mandateIntro}>
             <h2 id="mandate-heading" className={styles.mandateTitle}>
-              {copy.mandate.titleLines.join(' ')}
+              {copy.mandate.titleLines.map((line) => <span key={line}>{line}{' '}</span>)}
             </h2>
             <p className={styles.mandateLead}>{copy.mandate.body}</p>
           </ExecutionReveal>

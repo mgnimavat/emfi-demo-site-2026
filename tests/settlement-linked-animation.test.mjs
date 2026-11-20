@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   getLinkedSettlementComparisonFrame,
+  getLinkedSettlementStoryProgress,
   getLinkedSettlementScene,
   linkedSettlementOutcome,
   linkedSettlementTiming,
@@ -13,6 +14,17 @@ test('the unlinked buy stays settled when the sell fails', () => {
   assert.deepEqual(getLinkedSettlementScene(buySettlement).unlinked, { buy: 'settled', sell: 'pending' });
   assert.deepEqual(getLinkedSettlementScene(sellAttempt).unlinked, { buy: 'settled', sell: 'settling' });
   assert.deepEqual(getLinkedSettlementScene(outcome).unlinked, { buy: 'settled', sell: 'failed' });
+});
+
+test('the story connector fills toward the next step and resets for each scenario', () => {
+  const { cycle, sellAttempt, outcome } = linkedSettlementTiming;
+  for (const start of [0, cycle, cycle * 2]) {
+    assert.equal(getLinkedSettlementStoryProgress(start), 0);
+    assert.equal(getLinkedSettlementStoryProgress(start + sellAttempt / 2), 0.5);
+    assert.equal(getLinkedSettlementStoryProgress(start + sellAttempt), 0);
+    assert.equal(getLinkedSettlementStoryProgress(start + (sellAttempt + outcome) / 2), 0.5);
+    assert.equal(getLinkedSettlementStoryProgress(start + outcome), 1);
+  }
 });
 
 test('the linked buy is held until both instructions settle together', () => {

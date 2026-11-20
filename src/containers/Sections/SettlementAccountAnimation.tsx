@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef, useState, useSyncExternalStore, type RefObject } from 'react';
-import { motion, useAnimationFrame, useInView, useReducedMotion } from 'framer-motion';
+import { useId, useRef, useState, useSyncExternalStore, type CSSProperties, type RefObject } from 'react';
+import { motion, useAnimationFrame, useInView } from 'framer-motion';
 import { CircleCheck, TriangleAlert } from 'lucide-react';
 import { directPaceScale, getDirectRouteDuration } from '@/components/emfi-sections/values';
 import type { SettlementCopy } from '@/lib/i18n/service-dictionaries';
@@ -21,11 +21,16 @@ type Point = readonly [number, number];
 const morphDuration = 0.65;
 const loopDuration = getDirectRouteDuration(directPaceScale('home12'));
 const compactQuery = '(max-width: 699px)';
-const subscribeToLayout = (onChange: () => void) => {
-  const query = window.matchMedia(compactQuery);
-  query.addEventListener('change', onChange);
-  return () => query.removeEventListener('change', onChange);
+const reducedMotionQuery = '(prefers-reduced-motion: reduce)';
+const subscribeToMedia = (query: string) => (onChange: () => void) => {
+  const media = window.matchMedia(query);
+  media.addEventListener('change', onChange);
+  return () => media.removeEventListener('change', onChange);
 };
+const subscribeToLayout = subscribeToMedia(compactQuery);
+const subscribeToReducedMotion = subscribeToMedia(reducedMotionQuery);
+const getReducedMotion = () => window.matchMedia(reducedMotionQuery).matches;
+const getServerReducedMotion = () => false;
 const getOrientation = (): SettlementOrientation => window.matchMedia(compactQuery).matches
   ? 'vertical'
   : 'horizontal';
@@ -34,32 +39,30 @@ const initialScene = getSettlementComparisonFrame(0, loopDuration, 'horizontal')
 const completedElapsed = settlementAnimationTiming.scene * 2;
 
 type DiagramLayout = (typeof settlementLayouts)[SettlementOrientation];
-type DiagramNode = DiagramLayout['clients'][number];
-
-const boxAttributes = ({ x, y, width, height }: DiagramNode) => ({ x, y, width, height });
 
 const SecurityToken = ({ owner, tokenRef, position, visible }: {
   owner: 'A' | 'B'; tokenRef: TokenRef; position: Point; visible: boolean;
 }) => (
-  <g ref={tokenRef} className={`${styles.token} ${owner === 'B' ? styles.tokenB : ''}`} data-token={owner}
+  <g ref={tokenRef} className={styles.token} data-token={owner}
     transform={`translate(${position.join(' ')})`} opacity={visible ? 1 : 0}>
-    <circle r="23" className={styles.tokenHalo} />
-    <circle r="16" />
+    <circle r="18" className={styles.tokenHalo} />
+    <circle r="12" />
     <text textAnchor="middle" dominantBaseline="central">{owner}</text>
   </g>
 );
 
 const DeliveryNode = ({ owner, node, dedicated, settled, copy }: {
-  node: DiagramLayout['deliveries'][number]; owner: 'A' | 'B'; dedicated: boolean; settled: boolean; copy: AnimationCopy;
+  node: DiagramLayout['deliveries'][number]; owner: 'A' | 'B'; dedicated: boolean; settled: boolean;
+  copy: AnimationCopy;
 }) => {
   const delivered = settled && (dedicated || owner === 'B');
 
   return (
     <g className={styles.delivery} data-owner={owner} data-status={delivered ? 'delivered' : 'pending'}>
-      <rect {...boxAttributes(node)} rx="12" />
+      <circle className={styles.station} cx={node.x} cy={node.y} r="7" />
       {!dedicated ? (
         <g className={owner === 'A' ? styles.pendingMarker : styles.waitingDelivery}
-          transform={`translate(${node.marker.join(' ')})`}>
+          transform={`translate(${node.x} ${node.y})`}>
           <circle r="9" />
           <path d="M0 -5 V0 L3 2" />
         </g>
@@ -88,10 +91,43 @@ const AccountDiagram = ({ orientation, dedicated, settled, copy, tokenARef, toke
   const rightDelivery = dedicated ? deliveryB.path : sharedDelivery.path;
   const transition = { duration: reducedMotion ? 0 : morphDuration, ease: 'easeInOut' } as const;
   const tokenScene = getSettlementAnimationFrame(reducedMotion ? completedElapsed : 0, orientation);
+  const gradientId = useId();
+  const routeGradientId = `${gradientId}-route`;
+  const gradientStyles = {
+    '--track-token-gradient': `url("#${gradientId}")`,
+    '--track-route-gradient': `url("#${routeGradientId}")`,
+  } as CSSProperties;
+  const sources = [
+    { owner: 'A', node: clients[0], label: copy.clientA },
+    { owner: 'B', node: clients[1], label: copy.clientB },
+  ];
 
   return (
-    <svg className={styles.diagram} viewBox={viewBox} aria-hidden="true" focusable="false">
-      <motion.path className={styles.route} initial={false} transition={transition}
+    <svg className={styles.diagram} viewBox={viewBox} aria-hidden="true" focusable="false" style={gradientStyles}>
+      <defs>
+        <linearGradient id={gradientId} x2="100%" y2="100%">
+          <stop offset="0%" stopColor="var(--flow-from)" />
+          <stop offset="50%" stopColor="var(--flow-mid)" />
+          <stop offset="100%" stopColor="var(--flow-to)" />
+        </linearGradient>
+        <linearGradient id={routeGradientId} href={`#${gradientId}`} gradientUnits="userSpaceOnUse"
+          x1={clients[0].x} y1={clients[0].y} x2={deliveries[0].x} y2={deliveries[0].y} />
+      </defs>
+      {dedicated && (
+        <>
+          <g className={styles.routeBand}>
+            <path d={`${arrivalA.path} ${leftDelivery}`} />
+            <path d={`${arrivalB.path} ${rightDelivery}`} />
+          </g>
+          <g className={styles.routeProgress}>
+            <path className={styles.arrivalProgressA} d={arrivalA.path} pathLength="1" />
+            <path className={styles.arrivalProgressB} d={arrivalB.path} pathLength="1" />
+            <path className={styles.deliveryProgress} d={leftDelivery} pathLength="1" />
+            <path className={styles.deliveryProgress} d={rightDelivery} pathLength="1" />
+          </g>
+        </>
+      )}
+      <motion.path className={`${styles.route} ${styles.arrivalA}`} initial={false} transition={transition}
         animate={{ d: dedicated ? arrivalA.path : sharedArrival.path }} />
       <motion.path className={styles.route} initial={false} transition={transition}
         animate={{ d: dedicated ? arrivalB.path : sharedArrivalB.path }} />
@@ -104,16 +140,18 @@ const AccountDiagram = ({ orientation, dedicated, settled, copy, tokenARef, toke
       <motion.path className={styles.activeRoute} initial={false} transition={transition}
         animate={{ d: rightDelivery }} />
       <g className={styles.source}>
-        <rect {...boxAttributes(clients[0])} rx="14" />
-        <rect {...boxAttributes(clients[1])} rx="14" />
-        <text x={clients[0].label[0]} y={clients[0].label[1]} textAnchor="middle">{copy.clientA}</text>
-        <text x={clients[1].label[0]} y={clients[1].label[1]} textAnchor="middle">{copy.clientB}</text>
+        {sources.map(({ owner, node, label }) => (
+          <g key={owner}>
+            <circle className={styles.station} cx={node.x} cy={node.y} r="8" />
+            <text x={node.label[0]} y={node.label[1]} textAnchor="middle">{label}</text>
+          </g>
+        ))}
       </g>
       <g className={styles.accounts}>
-        <motion.rect rx="14" initial={false} transition={transition}
-          animate={boxAttributes(accountA)} />
-        <motion.rect rx="14" initial={false} transition={transition}
-          animate={{ ...boxAttributes(accountB), opacity: dedicated ? 1 : 0 }} />
+        <motion.circle className={styles.station} r="8" initial={false} transition={transition}
+          animate={{ cx: accountA.x, cy: accountA.y }} />
+        <motion.circle className={styles.station} r="8" initial={false} transition={transition}
+          animate={{ cx: accountB.x, cy: accountB.y, opacity: dedicated ? 1 : 0 }} />
         <text x={accountA.label[0]} y={accountA.label[1]} textAnchor="middle">
           {dedicated ? copy.accountA : copy.pool}
         </text>
@@ -125,7 +163,7 @@ const AccountDiagram = ({ orientation, dedicated, settled, copy, tokenARef, toke
       <DeliveryNode owner="B" node={deliveries[1]} dedicated={dedicated} settled={settled} copy={copy} />
       <SecurityToken owner="A" tokenRef={tokenARef} visible={reducedMotion}
         position={dedicated ? tokenScene.dedicatedA : tokenScene.sharedA} />
-      <SecurityToken owner="B" tokenRef={tokenBRef} visible={reducedMotion}
+      <SecurityToken owner="B" tokenRef={tokenBRef} visible={reducedMotion && dedicated}
         position={tokenScene.dedicatedB} />
     </svg>
   );
@@ -147,7 +185,7 @@ export const SettlementAccountAnimation = ({ copy, orientation: fixedOrientation
   const elapsed = useRef(0);
   const [scene, setScene] = useState(initialScene);
   const visible = useInView(stage, { amount: 0.25 });
-  const reducedMotion = Boolean(useReducedMotion());
+  const reducedMotion = useSyncExternalStore(subscribeToReducedMotion, getReducedMotion, getServerReducedMotion);
   const { phase, delivered, dedicated } = reducedMotion
     ? { phase: 2, delivered: true, dedicated: true }
     : scene;
@@ -159,6 +197,9 @@ export const SettlementAccountAnimation = ({ copy, orientation: fixedOrientation
     if (!running || document.hidden) return;
     elapsed.current += Math.min(delta, 64);
     const frame = getSettlementComparisonFrame(elapsed.current, loopDuration, orientation);
+    stage.current?.style.setProperty('--arrival-progress-a', frame.arrivalProgressA.toFixed(4));
+    stage.current?.style.setProperty('--arrival-progress-b', frame.arrivalProgressB.toFixed(4));
+    stage.current?.style.setProperty('--delivery-progress', frame.deliveryProgress.toFixed(4));
     moveToken(tokenA, frame.dedicated ? frame.dedicatedA : frame.sharedA, frame.opacity);
     moveToken(tokenB, frame.dedicatedB, frame.dedicated ? frame.opacity : 0);
     if (scene.phase !== frame.phase || scene.delivered !== frame.delivered ||
@@ -170,7 +211,9 @@ export const SettlementAccountAnimation = ({ copy, orientation: fixedOrientation
   return (
     <div ref={stage} className={styles.stage} data-phase={phase} data-running={running}
       data-settled={delivered} data-dedicated={dedicated} data-orientation={orientation}>
-      <h3 className={styles.routeTitle}>{dedicated ? copy.dedicatedTitle : copy.sharedTitle}</h3>
+      <h3 className={styles.routeTitle}>
+        <span>{dedicated ? copy.dedicatedTitle : copy.sharedTitle}</span>
+      </h3>
       <figure className={styles.figure}>
         <AccountDiagram key={orientation} orientation={orientation} dedicated={dedicated} settled={delivered} copy={copy}
           tokenARef={tokenA} tokenBRef={tokenB} reducedMotion={reducedMotion} />

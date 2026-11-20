@@ -9,6 +9,7 @@ import {
 } from '../src/lib/settlement-account-animation.ts';
 
 const getVerticalFrame = (elapsed) => getSettlementAnimationFrame(elapsed, 'vertical');
+const station = ({ x, y }) => [x, y];
 const tokenKeys = ['sharedA', 'dedicatedA', 'dedicatedB'];
 const distance = (from, to) => Math.hypot(to[0] - from[0], to[1] - from[1]);
 
@@ -26,9 +27,36 @@ test('deliveries remain pending until the securities have arrived', () => {
   assert.equal(getVerticalFrame(time - 1).delivered, false);
   const completed = getVerticalFrame(time);
   assert.equal(completed.delivered, true);
-  assert.deepEqual(completed.sharedA, [318, 270]);
-  assert.deepEqual(completed.dedicatedA, [62, 270]);
-  assert.deepEqual(completed.dedicatedB, [318, 270]);
+  assert.deepEqual(completed.sharedA, station(settlementLayouts.vertical.deliveries[1]));
+  assert.deepEqual(completed.dedicatedA, station(settlementLayouts.vertical.deliveries[0]));
+  assert.deepEqual(completed.dedicatedB, station(settlementLayouts.vertical.deliveries[1]));
+});
+
+test('the delivery trail follows the tokens before settlement is confirmed', () => {
+  const { scene, deliveryDelay, deliveryTravel, deliveryConfirmation } = settlementAnimationTiming;
+  assert.equal(getVerticalFrame(scene + deliveryDelay).deliveryProgress, 0);
+
+  const traveling = getVerticalFrame(scene + deliveryDelay + deliveryTravel / 2);
+  assert.equal(traveling.deliveryProgress, 0.5);
+  assert.equal(traveling.arrivalProgressA, 1);
+  assert.equal(traveling.arrivalProgressB, 1);
+  assert.equal(traveling.delivered, false);
+
+  const arrived = getVerticalFrame(scene + deliveryConfirmation);
+  assert.equal(arrived.deliveryProgress, 1);
+  assert.equal(arrived.delivered, true);
+});
+
+test('each arrival trail follows its own token from the client to the account', () => {
+  const { arrivalDelay, arrivalTravel, secondClientDelay } = settlementAnimationTiming;
+  const firstDeparture = getVerticalFrame(arrivalDelay + secondClientDelay);
+  assert.ok(firstDeparture.arrivalProgressA > 0);
+  assert.equal(firstDeparture.arrivalProgressB, 0);
+
+  const firstArrival = getVerticalFrame(arrivalDelay + arrivalTravel);
+  assert.equal(firstArrival.arrivalProgressA, 1);
+  assert.ok(firstArrival.arrivalProgressB < 1);
+  assert.equal(firstArrival.deliveryProgress, 0);
 });
 
 test('visible tokens move continuously throughout the complete loop', () => {
@@ -48,7 +76,7 @@ test('loop reset happens while the tokens are invisible', () => {
   assert.equal(restart.opacity, 0);
   assert.equal(restart.phase, 0);
   assert.equal(restart.delivered, false);
-  assert.deepEqual(restart.sharedA, [132, 70]);
+  assert.deepEqual(restart.sharedA, station(settlementLayouts.vertical.clients[0]));
 });
 
 test('the model switches and the full loop resets on the Direct timeline', () => {
@@ -70,41 +98,31 @@ test('the model switches and the full loop resets on the Direct timeline', () =>
     getSettlementComparisonFrame(0, duration, 'horizontal'));
 });
 
-test('the horizontal routes keep clients, accounts and deliveries in reading order', () => {
-  const { clients, accounts, deliveries } = settlementLayouts.horizontal;
-  const first = getSettlementAnimationFrame(0, 'horizontal');
-  const arrived = getSettlementAnimationFrame(settlementAnimationTiming.scene, 'horizontal');
-  const delivered = getSettlementAnimationFrame(settlementAnimationTiming.scene * 2, 'horizontal');
-  const inside = ([x, y], box) => x > box.x && x < box.x + box.width && y > box.y && y < box.y + box.height;
-  assert.ok(inside(first.dedicatedA, clients[0]));
-  assert.ok(inside(first.dedicatedB, clients[1]));
-  assert.ok(inside(arrived.dedicatedA, accounts[0]));
-  assert.ok(inside(arrived.dedicatedB, accounts[1]));
-  assert.ok(inside(delivered.dedicatedA, deliveries[0]));
-  assert.ok(inside(delivered.dedicatedB, deliveries[1]));
-  assert.ok(inside(delivered.sharedA, deliveries[1]));
-  assert.ok(clients[0].x < accounts[0].x && accounts[0].x < deliveries[0].x);
-});
+for (const [orientation, axis] of [['horizontal', 'x'], ['vertical', 'y'], ['track', 'y']]) {
+  test(`the ${orientation} tracks connect clients, accounts and deliveries in order`, () => {
+    const { clients, accounts, pool, deliveries, routes } = settlementLayouts[orientation];
 
-test('vertical connectors meet the account and delivery boxes at their centers', () => {
-  const { routes, accounts, pool, deliveries } = settlementLayouts.vertical;
-  const centerX = (box) => box.x + box.width / 2;
+    for (const [index, sharedArrival, sharedDelivery, arrival, delivery] of [
+      [0, routes.sharedArrival, routes.sharedPending, routes.arrivalA, routes.deliveryA],
+      [1, routes.sharedArrivalB, routes.sharedDelivery, routes.arrivalB, routes.deliveryB],
+    ]) {
+      const client = clients[index];
+      const account = accounts[index];
+      const destination = deliveries[index];
+      assert.deepEqual(sharedArrival.points[0], station(client));
+      assert.deepEqual(sharedArrival.points.at(-1), station(pool));
+      assert.deepEqual(sharedDelivery.points[0], station(pool));
+      assert.deepEqual(sharedDelivery.points.at(-1), station(destination));
+      assert.deepEqual(arrival.points[0], station(client));
+      assert.deepEqual(arrival.points.at(-1), station(account));
+      assert.deepEqual(delivery.points[0], station(account));
+      assert.deepEqual(delivery.points.at(-1), station(destination));
+      assert.ok(client[axis] < account[axis] && account[axis] < destination[axis]);
+    }
 
-  for (const [shared, dedicated, index] of [
-    [routes.sharedPending, routes.deliveryA, 0],
-    [routes.sharedDelivery, routes.deliveryB, 1],
-  ]) {
-    const delivery = deliveries[index];
-    const account = accounts[index];
-    const gapStart = account.y + account.height;
-    const gapEnd = delivery.y;
-    const sharedConnector = shared.points.filter(([, y]) => y >= gapStart && y <= gapEnd);
-    const dedicatedConnector = dedicated.points.filter(([, y]) => y >= gapStart && y <= gapEnd);
-
-    assert.deepEqual(sharedConnector[0], [centerX(pool), gapStart]);
-    assert.deepEqual(sharedConnector.at(-1), [centerX(delivery), gapEnd]);
-    assert.deepEqual(dedicatedConnector[0], [centerX(account), gapStart]);
-    assert.deepEqual(dedicatedConnector.at(-1), [centerX(delivery), gapEnd]);
-    assert.ok(dedicatedConnector.every(([x]) => Math.abs(x - centerX(account)) < 0.001));
-  }
-});
+    const completed = getSettlementAnimationFrame(settlementAnimationTiming.scene * 2, orientation);
+    assert.deepEqual(completed.sharedA, station(deliveries[1]));
+    assert.deepEqual(completed.dedicatedA, station(deliveries[0]));
+    assert.deepEqual(completed.dedicatedB, station(deliveries[1]));
+  });
+}

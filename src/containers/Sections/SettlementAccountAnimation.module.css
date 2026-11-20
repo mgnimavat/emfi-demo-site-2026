@@ -8,14 +8,13 @@
 
 .routeTitle {
   margin: 0;
-  padding-inline: 2.4%;
+  text-align: center;
   color: var(--scene-blue);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
 }
-.stage[data-orientation='vertical'] .routeTitle { padding-inline: 4.6%; }
 .stage[data-dedicated='true'] .routeTitle { color: var(--scene-green); }
 .routeTitle:lang(ar) { letter-spacing: normal; }
 
@@ -24,48 +23,91 @@
 .diagram text { fill: var(--text-primary); font-family: inherit; font-size: 17px; font-weight: 600; }
 [dir='rtl'] .diagram { scale: -1 1; }
 [dir='rtl'] .diagram text { transform-box: fill-box; transform-origin: center; scale: -1 1; }
-.source rect { fill: var(--bg-soft); stroke: color-mix(in srgb, var(--scene-blue) 30%, transparent); }
-.route { fill: none; stroke: color-mix(in srgb, var(--scene-blue) 30%, transparent); stroke-width: 2; }
 .activeRoute, .pendingRoute {
   fill: none;
-  stroke: var(--scene-coral);
   stroke-dasharray: 6 6;
   stroke-width: 2;
   opacity: 0;
 }
-.stage[data-dedicated='true'] .activeRoute { stroke: var(--scene-green); }
-.accounts rect {
-  fill: var(--bg-soft);
-  stroke: color-mix(in srgb, var(--scene-blue) 55%, transparent);
-  stroke-width: 1.5;
-  transition: fill .65s ease, stroke .65s ease;
-}
-.stage[data-dedicated='true'] .accounts rect {
-  fill: color-mix(in srgb, var(--scene-green) 5%, var(--bg-page));
-  stroke: color-mix(in srgb, var(--scene-green) 50%, transparent);
-}
-.delivery rect { transition: fill .6s ease, stroke .6s ease; fill: var(--bg-page); stroke: color-mix(in srgb, var(--scene-blue) 40%, transparent); stroke-width: 1.5; }
 .delivery text { font-size: 15px; }
-.delivery .deliveryStatus { transition: fill .6s ease; fill: var(--text-secondary); font-size: 12px; font-weight: 500; }
+.delivery .deliveryStatus { transition: fill .6s ease; fill: var(--text-secondary); font-size: 14px; font-weight: 500; }
 .delivery[data-status='delivered'] .deliveryStatus { fill: var(--scene-green); }
-.pendingRoute { stroke-width: 1.5; stroke-linecap: round; transition: opacity .6s ease; }
+.pendingRoute { stroke: var(--scene-coral); stroke-width: 1.5; stroke-linecap: round; transition: opacity .6s ease; }
 .pendingMarker, .waitingDelivery { opacity: 0; transition: opacity .6s ease; }
 .pendingMarker circle, .waitingDelivery circle { fill: var(--bg-page); stroke: var(--scene-coral); stroke-width: 1.5; }
 .pendingMarker path, .waitingDelivery path { fill: none; stroke: var(--scene-coral); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .stage[data-settled='true'] .pendingMarker, .stage[data-phase='0'] .waitingDelivery { opacity: 1; }
-.token { fill: var(--scene-blue); }
 .tokenHalo { opacity: .15; }
-.token text { fill: var(--text-inverse); font-size: 15px; font-weight: 800; }
-.tokenB { fill: var(--scene-green); }
 
 .stage[data-phase='1'] .activeRoute { opacity: 1; animation: routeFlow 1s linear infinite; }
-.stage[data-phase='2'] .activeRoute { opacity: 1; }
-.stage[data-dedicated='false'][data-settled='true'] .delivery rect { stroke: var(--scene-coral); fill: color-mix(in srgb, var(--scene-coral) 5%, var(--bg-page)); }
-.stage[data-dedicated='false'][data-settled='true'] .delivery[data-owner='A'] rect { stroke-dasharray: 5 4; }
+.stage[data-phase='2'] .activeRoute { opacity: 1; stroke-dasharray: none; }
 .stage[data-dedicated='false'][data-settled='true'] .delivery[data-owner='A'] .deliveryStatus { fill: var(--scene-coral); font-weight: 600; }
 .stage[data-settled='true'] .pendingRoute { opacity: 1; }
-.stage[data-dedicated='true'][data-settled='true'] .delivery rect { stroke: var(--scene-green); }
 .stage[data-running='false'] .activeRoute { animation-play-state: paused; }
+
+@supports (background-clip: text) {
+  .routeTitle span {
+    background-image: linear-gradient(90deg,
+      color-mix(in srgb, var(--flow-from) 48%, var(--text-primary)),
+      color-mix(in srgb, var(--flow-mid) 52%, var(--text-primary)),
+      color-mix(in srgb, var(--flow-to) 43%, var(--text-primary)));
+    background-clip: text;
+    color: transparent;
+  }
+}
+.accounts text {
+  paint-order: stroke;
+  stroke: var(--bg-page);
+  stroke-width: 7px;
+  stroke-linejoin: round;
+}
+.stage[data-orientation='track'] .diagram { margin-block-start: var(--space-5); }
+.route {
+  fill: none;
+  stroke: var(--flow-mid);
+  stroke-width: 1.5;
+  transition: stroke .45s ease;
+}
+.stage[data-phase='0'][data-dedicated='false'] .arrivalA,
+.activeRoute { stroke: var(--track-route-gradient); }
+.routeBand {
+  fill: none;
+  stroke: var(--track-route-gradient);
+  stroke-width: 20px;
+  stroke-linecap: round;
+  opacity: calc(.22 * clamp(0, var(--arrival-progress-a, 0) * 2.5, 1));
+}
+.routeProgress {
+  fill: none;
+  stroke: var(--track-route-gradient);
+  stroke-width: 2px;
+}
+.routeProgress path {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: calc(1 - var(--route-leg-progress, 0));
+}
+.arrivalProgressA { --route-leg-progress: var(--arrival-progress-a, 0); }
+.arrivalProgressB { --route-leg-progress: var(--arrival-progress-b, 0); }
+.deliveryProgress { --route-leg-progress: var(--delivery-progress, 0); }
+.stage[data-dedicated='true'] .activeRoute { display: none; }
+.station {
+  fill: var(--bg-soft);
+  stroke: var(--flow-mid);
+  stroke-width: 2;
+}
+.source .station { fill: var(--text-primary); stroke: var(--text-primary); }
+.stage[data-dedicated='true'] .accounts .station,
+.delivery[data-status='delivered'] .station { stroke: var(--scene-green); }
+.stage[data-dedicated='false'] .accounts .station,
+.stage[data-dedicated='false'] .delivery[data-status='delivered'] .station {
+  stroke: var(--track-token-gradient);
+}
+.token circle { fill: var(--track-token-gradient); }
+.stage[data-dedicated='true'] .token .tokenHalo {
+  fill: var(--flow-from);
+  opacity: 1;
+}
+.token text { font-size: 13px; font-weight: 800; fill: var(--text-primary); }
 
 .figure figcaption {
   display: flex;
@@ -85,10 +127,15 @@
 @media (max-width: 599px) {
   .diagram text { font-size: 20px; }
   .delivery text { font-size: 17px; }
-  .delivery .deliveryStatus { font-size: 14px; }
+  .delivery .deliveryStatus { font-size: 16px; }
   .figure figcaption { min-height: 80px; }
   .figure figcaption p { font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .stage *, .stage *::before, .stage *::after { animation: none !important; transition: none !important; }
+  .stage {
+    --arrival-progress-a: 1 !important;
+    --arrival-progress-b: 1 !important;
+    --delivery-progress: 1 !important;
+  }
 }
