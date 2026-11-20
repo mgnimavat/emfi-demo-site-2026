@@ -34,7 +34,7 @@ const stepIcons: Partial<Record<string, LucideIcon>> = {
 const ExtractedFields = ({ fields }: { fields: UploadCopy['fields'] }) => (
   <dl className={styles.fields}>
     {fields.map((field) => (
-      <div key={field.id} className={styles.field}>
+      <div key={field.id} className={styles.field} data-field={field.id}>
         <dt>{field.label}</dt>
         <dd>
           <bdi className={styles.value}>{field.value}</bdi>
@@ -78,7 +78,7 @@ export const SettlementUploadAnimation = ({ copy, panels, stacked = false }: Upl
             <div className={styles.ticketTitle}>{copy.ticketTitle}</div>
             <dl className={styles.ticketFields}>
               {copy.fields.map((field) => (
-                <div key={field.id} className={styles.ticketField}>
+                <div key={field.id} className={styles.ticketField} data-field={field.id}>
                   <dt>{field.label}</dt>
                   <dd><bdi>{field.value}</bdi></dd>
                 </div>

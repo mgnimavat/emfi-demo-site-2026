@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useSyncExternalStore, type RefObject } from 'react';
+import { useId, useRef, useState, useSyncExternalStore, type CSSProperties, type RefObject } from 'react';
 import { motion, useAnimationFrame, useInView } from 'framer-motion';
 import { CircleCheck, TriangleAlert } from 'lucide-react';
 import { directPaceScale, getDirectRouteDuration } from '@/components/emfi-sections/values';
@@ -99,13 +99,30 @@ const AccountDiagram = ({ orientation, dedicated, settled, copy, tokenARef, toke
   const transition = { duration: reducedMotion ? 0 : morphDuration, ease: 'easeInOut' } as const;
   const tokenScene = getSettlementAnimationFrame(reducedMotion ? completedElapsed : 0, orientation);
   const track = orientation === 'track';
+  const gradientId = useId();
+  const routeGradientId = `${gradientId}-route`;
+  const gradientStyles = track ? {
+    '--track-token-gradient': `url("#${gradientId}")`,
+    '--track-route-gradient': `url("#${routeGradientId}")`,
+  } as CSSProperties : undefined;
   const sources = [
     { owner: 'A', node: clients[0], label: copy.clientA },
     { owner: 'B', node: clients[1], label: copy.clientB },
   ];
 
   return (
-    <svg className={styles.diagram} viewBox={viewBox} aria-hidden="true" focusable="false">
+    <svg className={styles.diagram} viewBox={viewBox} aria-hidden="true" focusable="false" style={gradientStyles}>
+      {track && (
+        <defs>
+          <linearGradient id={gradientId} x2="100%" y2="100%">
+            <stop offset="0%" stopColor="var(--flow-from)" />
+            <stop offset="50%" stopColor="var(--flow-mid)" />
+            <stop offset="100%" stopColor="var(--flow-to)" />
+          </linearGradient>
+          <linearGradient id={routeGradientId} href={`#${gradientId}`} gradientUnits="userSpaceOnUse"
+            x2="0" y2="100%" />
+        </defs>
+      )}
       <motion.path className={`${styles.route} ${styles.arrivalA}`} initial={false} transition={transition}
         animate={{ d: dedicated ? arrivalA.path : sharedArrival.path }} />
       <motion.path className={`${styles.route} ${styles.arrivalB}`} initial={false} transition={transition}
@@ -202,7 +219,9 @@ export const SettlementAccountAnimation = ({ copy, orientation: fixedOrientation
   return (
     <div ref={stage} className={styles.stage} data-phase={phase} data-running={running}
       data-settled={delivered} data-dedicated={dedicated} data-orientation={orientation}>
-      <h3 className={styles.routeTitle}>{dedicated ? copy.dedicatedTitle : copy.sharedTitle}</h3>
+      <h3 className={styles.routeTitle}>
+        <span>{dedicated ? copy.dedicatedTitle : copy.sharedTitle}</span>
+      </h3>
       <figure className={styles.figure}>
         <AccountDiagram key={orientation} orientation={orientation} dedicated={dedicated} settled={delivered} copy={copy}
           tokenARef={tokenA} tokenBRef={tokenB} reducedMotion={reducedMotion} />

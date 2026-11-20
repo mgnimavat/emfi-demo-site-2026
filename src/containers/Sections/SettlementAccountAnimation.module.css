@@ -68,6 +68,16 @@
 .stage[data-running='false'] .activeRoute { animation-play-state: paused; }
 
 .stage[data-orientation='track'] .routeTitle { text-align: center; }
+@supports (background-clip: text) {
+  .stage[data-orientation='track'] .routeTitle span {
+    background-image: linear-gradient(90deg,
+      color-mix(in srgb, var(--flow-from) 48%, var(--text-primary)),
+      color-mix(in srgb, var(--flow-mid) 52%, var(--text-primary)),
+      color-mix(in srgb, var(--flow-to) 43%, var(--text-primary)));
+    background-clip: text;
+    color: transparent;
+  }
+}
 .stage[data-orientation='track'] .accounts text {
   paint-order: stroke;
   stroke: var(--bg-page);
@@ -80,8 +90,9 @@
   stroke-width: 1.5;
   transition: stroke .45s ease;
 }
-.stage[data-orientation='track'][data-phase='0'] .arrivalA { stroke: var(--scene-blue); }
-.stage[data-orientation='track'][data-phase='0'][data-dedicated='true'] .arrivalB { stroke: var(--scene-green); }
+.stage[data-orientation='track'][data-phase='0'] .arrivalA,
+.stage[data-orientation='track'][data-phase='0'][data-dedicated='true'] .arrivalB,
+.stage[data-orientation='track'] .activeRoute { stroke: var(--track-route-gradient); }
 .stage[data-orientation='track'][data-phase='2'] .activeRoute { stroke-dasharray: none; }
 .station {
   fill: var(--bg-soft);
@@ -92,9 +103,13 @@
 .stage[data-dedicated='true'] .accounts .station,
 .delivery[data-status='delivered'] .station { stroke: var(--scene-green); }
 .stage[data-dedicated='false'] .delivery[data-status='delivered'] .station { stroke: var(--scene-coral); }
-.stage[data-orientation='track'] .token circle { r: 12px; }
+.stage[data-orientation='track'][data-dedicated='false'] .accounts .station,
+.stage[data-orientation='track'][data-dedicated='false'] .delivery[data-status='delivered'] .station {
+  stroke: var(--track-token-gradient);
+}
+.stage[data-orientation='track'] .token circle { r: 12px; fill: var(--track-token-gradient); }
 .stage[data-orientation='track'] .token .tokenHalo { r: 18px; }
-.stage[data-orientation='track'] .token text { font-size: 13px; }
+.stage[data-orientation='track'] .token text { font-size: 13px; fill: var(--text-primary); }
 .stage[data-orientation='track'] .delivery .deliveryStatus { font-size: 14px; }
 
 .figure figcaption {
