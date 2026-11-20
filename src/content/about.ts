@@ -134,15 +134,13 @@ export const about = {
       name: "Alan Tooker",
       role: "Director, EMFI Fund SPC",
       photo: "/people/alan-tooker-3.jpg",
-      label: "A.R.C. Directors Ltd",
-      description: "Serves as an independent director of EMFI Fund SPC through A.R.C. Directors Ltd.",
+      description: "Serves as an independent director of EMFI Fund SPC.",
     },
     {
       name: "Damian Juric",
       role: "Director, EMFI Fund SPC",
       photo: "/people/damian-juric-10.jpg",
-      label: "A.R.C. Directors Ltd",
-      description: "Serves as an independent director of EMFI Fund SPC through A.R.C. Directors Ltd.",
+      description: "Serves as an independent director of EMFI Fund SPC.",
     },
     {
       name: "Robert Hagon",

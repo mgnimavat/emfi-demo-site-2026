@@ -78,37 +78,6 @@
   filter: saturate(0.45) brightness(1.06) contrast(0.98);
 }
 
-.zoom {
-  position: absolute;
-  z-index: 4;
-  top: 12px;
-  inset-inline-end: 12px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgb(7 25 50 / 16%);
-}
-
-.zoom button {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 0;
-  background: #fff;
-  color: var(--color-blue-500);
-  cursor: pointer;
-}
-
-.zoom button + button { border-top: 1px solid #e6ebf2; }
-
-.zoom button:disabled {
-  color: #b7c0cc;
-  cursor: default;
-}
-
 .pin {
   position: absolute;
   z-index: 3;
