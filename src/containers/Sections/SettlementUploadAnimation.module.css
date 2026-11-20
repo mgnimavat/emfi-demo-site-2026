@@ -253,6 +253,12 @@
 }
 
 .value { min-width: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.stage :is([data-field='security'], [data-field='price']) bdi,
+.stage[data-stacked='true'] [data-field='counterparty'] bdi {
+  display: inline-block;
+  max-inline-size: 100%;
+  filter: blur(.28em);
+}
 .read { flex: none; color: var(--accent); }
 
 .ready {
@@ -376,11 +382,6 @@
   grid-template-columns: minmax(0, 52%) minmax(0, 1fr);
 }
 .stage[data-stacked='true'] .draggedFile { font-size: 14px; }
-.stage[data-stacked='true'] :is([data-field='security'], [data-field='counterparty']) bdi {
-  display: inline-block;
-  max-inline-size: 100%;
-  filter: blur(.28em);
-}
 
 .stage[data-stacked='true'] .output h3 { font-size: clamp(20px, 2.1cqi, 26px); }
 .stage[data-stacked='true'] .field { min-height: 39px; }
