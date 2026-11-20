@@ -90,8 +90,7 @@
   border-radius: var(--radius-card);
   background: color-mix(in srgb, currentColor 3%, transparent);
 }
-.details[data-layout='cards'] .detail { background: var(--bg-soft); }
-.details[data-layout='benefits'] .detail { background: color-mix(in srgb, var(--text-inverse) 6%, transparent); }
+.details:is([data-layout='cards'], [data-layout='benefits']) .detail { background: var(--bg-soft); }
 .detailIcon {
   display: grid;
   place-items: center;
@@ -99,8 +98,8 @@
   aspect-ratio: 1;
   margin-block-end: var(--space-4);
   border-radius: var(--radius-control);
-  background: color-mix(in srgb, var(--text-inverse) 12%, transparent);
-  color: var(--text-inverse);
+  background: var(--bg-page);
+  color: var(--color-blue-550);
 }
 .providerGrid {
   display: grid;
@@ -173,11 +172,11 @@
   margin-block-start: var(--space-4);
   padding: var(--space-3) var(--space-5);
   border-radius: var(--radius-pill);
-  background: var(--bg-page);
-  color: var(--text-primary);
+  background: var(--action-primary);
+  color: var(--text-inverse);
   text-decoration: none;
 }
-.action:hover { background: var(--bg-soft); }
+.action:hover { background: var(--action-hover); }
 .action:dir(rtl) svg { transform: scaleX(-1); }
 .detailLink svg, .action svg { flex: none; }
 .journey { padding: clamp(var(--space-4), 4cqi, var(--space-7)); border-radius: var(--radius-card); background: var(--bg-inverse); color: var(--text-inverse); }
