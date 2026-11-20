@@ -67,6 +67,36 @@
 .stage[data-dedicated='true'][data-settled='true'] .delivery rect { stroke: var(--scene-green); }
 .stage[data-running='false'] .activeRoute { animation-play-state: paused; }
 
+.stage[data-orientation='track'] .routeTitle { text-align: center; }
+.stage[data-orientation='track'] .accounts text {
+  paint-order: stroke;
+  stroke: var(--bg-page);
+  stroke-width: 7px;
+  stroke-linejoin: round;
+}
+.stage[data-orientation='track'] .diagram { margin-block: var(--space-5) var(--space-3); }
+.stage[data-orientation='track'] .route {
+  stroke: var(--flow-mid);
+  stroke-width: 1.5;
+  transition: stroke .45s ease;
+}
+.stage[data-orientation='track'][data-phase='0'] .arrivalA { stroke: var(--scene-blue); }
+.stage[data-orientation='track'][data-phase='0'][data-dedicated='true'] .arrivalB { stroke: var(--scene-green); }
+.stage[data-orientation='track'][data-phase='2'] .activeRoute { stroke-dasharray: none; }
+.station {
+  fill: var(--bg-soft);
+  stroke: var(--flow-mid);
+  stroke-width: 2;
+}
+.source .station { fill: var(--text-primary); stroke: var(--text-primary); }
+.stage[data-dedicated='true'] .accounts .station,
+.delivery[data-status='delivered'] .station { stroke: var(--scene-green); }
+.stage[data-dedicated='false'] .delivery[data-status='delivered'] .station { stroke: var(--scene-coral); }
+.stage[data-orientation='track'] .token circle { r: 12px; }
+.stage[data-orientation='track'] .token .tokenHalo { r: 18px; }
+.stage[data-orientation='track'] .token text { font-size: 13px; }
+.stage[data-orientation='track'] .delivery .deliveryStatus { font-size: 14px; }
+
 .figure figcaption {
   display: flex;
   justify-content: center;
@@ -86,6 +116,7 @@
   .diagram text { font-size: 20px; }
   .delivery text { font-size: 17px; }
   .delivery .deliveryStatus { font-size: 14px; }
+  .stage[data-orientation='track'] .delivery .deliveryStatus { font-size: 16px; }
   .figure figcaption { min-height: 80px; }
   .figure figcaption p { font-size: 13px; }
 }

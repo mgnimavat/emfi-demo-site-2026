@@ -100,7 +100,7 @@ export const LocalizedServicePageSection = ({
             {service === 'settlement-custody' ? (
               settlementVariant === 'current' || settlementVariant === 'archive' ? <>
                 <SettlementServiceSections copy={dictionary.settlement}
-                  archiveCrossBorder={settlementVariant === 'archive'} />
+                  archive={settlementVariant === 'archive'} />
                 <SettlementQuestionnaireSection copy={dictionary.settlement.questionnaire} />
                 <OfficeContactSection copy={dictionaries[locale].common} officeCity="London"
                   sectionId="settlement-office" layout="columns" officeCities={['London', 'Dubai']}

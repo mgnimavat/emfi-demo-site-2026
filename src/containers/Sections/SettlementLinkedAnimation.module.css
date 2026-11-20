@@ -246,3 +246,102 @@
   .instruction:is([data-state='settled'], [data-state='failed']) .statusIcon svg { animation: none; }
   .connectionProgress, .tradeMarker { display: none; }
 }
+
+.stage[data-track='true'] {
+  padding: clamp(var(--space-4), 2.25cqi, var(--space-6));
+}
+
+.stage[data-track='true'] .title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  color: var(--color-blue-550);
+}
+
+.stage[data-track='true'][data-linked='true'] .title { color: var(--settled); }
+
+.story {
+  --step-accent: var(--color-blue-550);
+  --step-size: 32px;
+  display: grid;
+  margin: var(--space-5) 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+.stage[data-linked='true'] .story { --step-accent: var(--settled); }
+
+.storyStep {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--step-size) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+  min-block-size: 88px;
+  padding: var(--space-3);
+  border-radius: var(--radius-control);
+}
+
+.storyStep:not(:last-child)::before,
+.storyStep:not(:last-child)::after {
+  position: absolute;
+  inset-block: calc(var(--space-3) + var(--step-size)) calc(-1 * var(--space-3));
+  inset-inline-start: calc(var(--space-3) + var(--step-size) / 2 - 1px);
+  inline-size: 2px;
+  content: '';
+}
+
+.storyStep:not(:last-child)::before { background: var(--chart-border); }
+.storyStep:not(:last-child)::after {
+  background: var(--step-accent);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+.storyStep[data-complete='true']::after { transform: scaleY(1); }
+.storyStep[aria-current='step']::after { transform: scaleY(var(--step-progress, 0)); }
+
+.storyStep[aria-current='step'] {
+  background: color-mix(in srgb, var(--step-accent) 8%, var(--chart-surface));
+}
+
+.stage[data-linked='false'] .storyStep[data-step='outcome'] { --step-accent: var(--failed); }
+
+.stepNumber {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  inline-size: var(--step-size);
+  block-size: var(--step-size);
+  border: 1px solid var(--chart-border);
+  border-radius: var(--radius-pill);
+  background: var(--chart-surface);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.storyStep[data-complete='true'] .stepNumber {
+  border-color: var(--step-accent);
+  color: var(--step-accent);
+}
+
+.storyStep[aria-current='step'] .stepNumber {
+  border-color: var(--step-accent);
+  background: var(--step-accent);
+  color: var(--text-inverse);
+}
+
+.stepCopy { padding-block-start: var(--space-1); }
+.stepCopy strong { display: block; font-size: 17px; line-height: 1.3; }
+.stepCopy p { margin: var(--space-1) 0 0; color: var(--text-secondary); font-size: 14px; line-height: 1.5; }
+.storyStep[data-step='outcome'][aria-current='step'] .stepCopy strong { color: var(--step-accent); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .storyStep, .stepNumber { transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
+}
+
+.stage[data-track='true'] .outcome { padding: var(--space-4) var(--space-3); }
+.stage[data-track='true'] .outcome p { font-size: 14px; }

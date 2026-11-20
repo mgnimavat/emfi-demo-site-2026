@@ -108,3 +108,28 @@ test('vertical connectors meet the account and delivery boxes at their centers',
     assert.ok(dedicatedConnector.every(([x]) => Math.abs(x - centerX(account)) < 0.001));
   }
 });
+
+test('the archive track connects the shared pool and dedicated accounts to the expected deliveries', () => {
+  const { clients, accounts, pool, deliveries, routes } = settlementLayouts.track;
+  const station = ({ x, y }) => [x, y];
+
+  assert.deepEqual(routes.sharedArrival.points.at(-1), station(pool));
+  assert.deepEqual(routes.sharedArrivalB.points.at(-1), station(pool));
+
+  for (const [index, arrival, delivery] of [
+    [0, routes.arrivalA, routes.deliveryA],
+    [1, routes.arrivalB, routes.deliveryB],
+  ]) {
+    assert.deepEqual(arrival.points[0], station(clients[index]));
+    assert.deepEqual(arrival.points.at(-1), station(accounts[index]));
+    assert.deepEqual(delivery.points[0], station(accounts[index]));
+    assert.deepEqual(delivery.points.at(-1), station(deliveries[index]));
+    assert.ok(delivery.points.every(([x]) => Math.abs(x - clients[index].x) < 0.001));
+    assert.ok(clients[index].y < accounts[index].y && accounts[index].y < deliveries[index].y);
+  }
+
+  const completed = getSettlementAnimationFrame(settlementAnimationTiming.scene * 2, 'track');
+  assert.deepEqual(completed.sharedA, station(deliveries[1]));
+  assert.deepEqual(completed.dedicatedA, station(deliveries[0]));
+  assert.deepEqual(completed.dedicatedB, station(deliveries[1]));
+});

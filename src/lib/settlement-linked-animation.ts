@@ -35,3 +35,11 @@ export const getLinkedSettlementComparisonFrame = (elapsed: number) => {
     progress: travel * travel * (3 - 2 * travel),
   };
 };
+
+export const getLinkedSettlementStoryProgress = (elapsed: number) => {
+  const { cycle, sellAttempt, outcome } = linkedSettlementTiming;
+  const time = elapsed % cycle;
+  if (time < sellAttempt) return time / sellAttempt;
+  if (time < outcome) return (time - sellAttempt) / (outcome - sellAttempt);
+  return 1;
+};
