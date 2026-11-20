@@ -10,7 +10,6 @@ import styles from "./page.module.css";
 const HOLD_MS = 3400;
 
 const slides = [
-  { title: "Regulated under", items: ["CASS", "MiFID", "AIFMD"] },
   {
     title: "Audited by",
     logos: [

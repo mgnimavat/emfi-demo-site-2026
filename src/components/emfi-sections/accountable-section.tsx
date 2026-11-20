@@ -126,11 +126,6 @@ const slides = [
     })),
   },
   {
-    title: "Regulated under",
-    kind: "pills" as const,
-    items: trust.regimes.map((item) => item.code).filter((code) => code !== "MIFIDPRU"),
-  },
-  {
     title: "Audited by",
     kind: "logos" as const,
     items: trust.auditors.map((item) => ({

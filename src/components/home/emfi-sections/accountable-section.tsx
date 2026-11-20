@@ -126,11 +126,6 @@ const slides = [
     })),
   },
   {
-    title: "Regulated under",
-    kind: "pills" as const,
-    items: trust.regimes.map((item) => item.code).filter((code) => code !== "MIFIDPRU"),
-  },
-  {
     title: "Audited by",
     kind: "logos" as const,
     items: trust.auditors.map((item) => ({
@@ -163,9 +158,9 @@ const slides = [
 /** Home Dependable (split): logo slides from home-22, in display order. */
 const splitLogoSlides = [
   slides[0], // Authorised by
-  slides[2], // Audited by
-  slides[4], // Quoted in
-  slides[3], // Connected to
+  slides[1], // Audited by
+  slides[3], // Quoted in
+  slides[2], // Connected to
 ] as const;
 
 function plainTitle(slide: (typeof slides)[number]) {
