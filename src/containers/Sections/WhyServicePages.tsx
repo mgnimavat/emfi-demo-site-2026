@@ -164,13 +164,13 @@ export const DirectContentPage = ({ copy, heroCopy, locale }: {
       <h3 className={styles.groupTitle}>{copy.infrastructure.providersTitle}</h3>
       <InfrastructureProviders items={copy.infrastructure.providers} />
     </ContentBand>
-    <ContentBand id="direct-benefits" copy={copy.benefits} tone="navy">
+    <ContentBand id="direct-benefits" copy={copy.benefits}>
       <Details items={copy.benefits.items} layout="benefits" />
       <Link className={styles.action} href={localizeHref('/services/settlement-custody', locale)}>
         {copy.benefits.action}<ArrowRight size={18} aria-hidden="true" />
       </Link>
     </ContentBand>
-    <ContentBand id="dma" copy={copy.execution} />
+    <ContentBand id="dma" copy={copy.execution} tone="soft" />
   </div>
 );
 
@@ -182,7 +182,7 @@ export const ResponsiveContentPage = ({ copy, heroCopy, workflowSteps }: {
     <WhyHero headline={heroCopy.headline} prefix={heroCopy.fixed} words={heroCopy.phrases} spacedLines>
       <ResponsiveShowcase />
     </WhyHero>
-    <ContentBand id="workstation" copy={copy.workstation} tone="navy" layout="product">
+    <ContentBand id="workstation" copy={copy.workstation} tone="soft" layout="product">
       <ExecutionReveal className={styles.preview}>
         <ExecutionWorkstation maskVariant="blur" />
       </ExecutionReveal>
