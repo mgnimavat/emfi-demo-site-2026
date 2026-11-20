@@ -158,45 +158,211 @@
 .brandLogos .pill { background: transparent; border: 1px solid rgb(255 255 255 / 50%); color: #fff; font-size: clamp(20px, calc(1.35vw + 8px), 26px); font-weight: 500; }
 .pill { border: 1px solid rgb(177 192 226 / 50%); background: transparent; color: #fff; font-size: clamp(14px, 1.6vw, 22px); font-weight: 800; letter-spacing: -.02em; line-height: 1; }
 .stack { display: grid; gap: 28px; }
-.splitLedger {
+/* Split Dependable: full-width peek carousel (½ | 1 | ½). */
+.splitEvidence {
   width: 100%;
-  margin: 0;
+  max-width: none;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  align-self: stretch;
+  margin: clamp(28px, 3.5vh, 40px) 0 0;
+  container-type: inline-size;
+}
+
+.splitCarousel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.splitCarouselViewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-top: 10px;
+}
+
+.splitCarouselTrack {
+  display: flex;
+  align-items: stretch;
+  width: max-content;
+  will-change: transform;
+}
+
+.splitCarouselSlide {
+  /* 70% active center; 15% peek on left + 15% on right. */
+  flex: 0 0 calc(70cqw);
+  width: calc(70cqw);
+  min-width: calc(70cqw);
+  box-sizing: border-box;
+  padding: 0 8px;
+}
+
+.splitCarouselPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 36px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 160px;
   padding: 0;
-  list-style: none;
-  border-top: 1px solid rgba(7, 24, 50, 0.12);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.splitLedgerRow {
-  display: grid;
-  grid-template-columns: minmax(7.5rem, 10rem) minmax(0, 1fr);
-  gap: 12px 28px;
-  padding: 18px 0;
-  border-bottom: 1px solid rgba(7, 24, 50, 0.12);
-  align-items: baseline;
+.splitCarouselSlide[data-active="false"] .splitCarouselPanel {
+  opacity: 0.45;
+  transform: scale(0.965);
 }
 
-.splitLedgerLabel {
+.splitCarouselSlide[data-active="true"] .splitCarouselPanel {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.splitCarouselTitle {
   margin: 0;
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.35;
-  color: #071832;
+  color: #071932;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
 }
 
-.splitLedgerCopy {
-  margin: 0;
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 1.55;
-  color: #24344b;
+.splitCarousel .plainRow {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  align-items: stretch !important;
+  width: 100%;
+  min-height: 0;
+  gap: 12px !important;
 }
 
-@media (max-width: 640px) {
-  .splitLedgerRow {
-    grid-template-columns: 1fr;
-    gap: 6px;
-  }
+/* Individual logo boxes — light blue cards, no outer group frame. */
+.splitCarousel .plainItem,
+.splitCarousel .plainItem:has(img),
+.splitCarousel .plainItem:has(.plainLabel),
+.splitCarousel .plainItem:has(.plainLogo),
+.splitCarousel .plainItemLarge:has(img),
+.splitCarousel .plainItemLarge:has(.plainLogo) {
+  display: flex !important;
+  flex: 1 1 0 !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0 !important;
+  min-height: 118px !important;
+  height: 118px !important;
+  padding: 22px 16px !important;
+  border: 1px solid #c5d6ef !important;
+  border-radius: 16px !important;
+  background: #e6effb !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+.splitCarousel .plainItem + .plainItem {
+  border-left: 1px solid #c5d6ef !important;
+}
+
+.splitCarousel .plainLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 58px;
+  max-height: 58px;
+}
+
+.splitCarousel .plainLogo img,
+.splitCarousel .plainItemLarge .plainLogo img,
+.splitCarousel .plainItemFca .plainLogo img,
+.splitCarousel .plainItemBdo .plainLogo img {
+  /* Fixed height — SVGs collapse to 0×0 with height:auto in these flex cards. */
+  width: auto !important;
+  max-width: 100% !important;
+  height: 58px !important;
+  max-height: 58px !important;
+  object-fit: contain !important;
+  transform: none !important;
+}
+
+.splitCarousel .plainItemCima .plainLogo,
+.splitCarousel .plainItemDfsa .plainLogo,
+.splitCarousel .plainItemWsj .plainLogo,
+.splitCarousel .plainItemCisi .plainLogo {
+  height: 76px;
+  max-height: 76px;
+}
+
+.splitCarousel .plainItemCima .plainLogo img,
+.splitCarousel .plainItemDfsa .plainLogo img,
+.splitCarousel .plainItemWsj .plainLogo img,
+.splitCarousel .plainItemCisi .plainLogo img {
+  height: 76px !important;
+  max-height: 76px !important;
+}
+
+.splitCarousel .plainItemCima .plainLogo {
+  height: 86px;
+  max-height: 86px;
+}
+
+.splitCarousel .plainItemCima .plainLogo img {
+  height: 86px !important;
+  max-height: 86px !important;
+}
+
+.splitCarousel .plainItemFca .plainLogo {
+  height: 77px;
+  max-height: 77px;
+}
+
+.splitCarousel .plainItemFca .plainLogo img {
+  height: 77px !important;
+  max-height: 77px !important;
+}
+
+.splitCarousel .plainItemBdo .plainLogo {
+  height: 62px;
+  max-height: 62px;
+}
+
+.splitCarousel .plainItemBdo .plainLogo img {
+  height: 62px !important;
+  max-height: 62px !important;
+}
+
+/* Bloomberg wordmark has a deep “g” descender — keep it clear of the card edge. */
+.splitCarousel .plainItemBloomberg .plainLogo {
+  height: 50px;
+  max-height: 50px;
+  padding-bottom: 4px;
+  box-sizing: content-box;
+  overflow: visible;
+}
+
+.splitCarousel .plainItemBloomberg .plainLogo img {
+  height: 48px !important;
+  max-height: 48px !important;
+}
+
+.splitCarousel .slideDisclaimer {
+  box-sizing: border-box;
+  width: 70cqw;
+  max-width: 70cqw;
+  margin: 18px auto 0;
+  padding-inline: 8px;
 }
 
 .standards { display: flex; flex-direction: column; justify-content: center; gap: clamp(26px, 3.6cqi, 40px); min-height: 220px; }

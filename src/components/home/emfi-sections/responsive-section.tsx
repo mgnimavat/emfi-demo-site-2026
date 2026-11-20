@@ -57,7 +57,7 @@ export function ResponsiveSection({
   const solidLight = light && (!pinned || split || Boolean(reduceMotion));
   const splitLead = "Technology that works.\nPeople who respond.";
   const splitBody =
-    "Technology should make the routine easier. Experienced people should be available when the requirement does not fit the standard process. EMFI combines both, within defined regulatory, operational and risk controls.";
+    "Technology should make the routine easier. Experienced people step in when it does not. EMFI combines both within defined regulatory and risk controls.";
 
   return (
     <section id="responsive" data-screen-label="04 Responsive" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: solidLight ? "#e6effb" : light ? "transparent" : "radial-gradient(50% 60% at 100% 50%,rgba(0,201,167,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
@@ -88,31 +88,39 @@ export function ResponsiveSection({
             plainEyebrow={pinned && Boolean(eyebrow)}
             lead={split ? splitLead : undefined}
             body={split ? splitBody : shortWhy && pinned ? undefined : body}
-            action={pinned ? undefined : { href: "/why-emfi/responsive-technology", label: "Learn More" }}
+            action={!split && !pinned ? { href: "/why-emfi/responsive-technology", label: "Learn More" } : undefined}
             tone={light ? "light" : "dark"}
             align={split ? "start" : centered || pinned ? "center" : "start"}
           />
         </div>
         <div
-          className={[
-            split
-              ? styles.splitResponsiveMedia
-              : pinned
-                ? home17Mockup
-                  ? styles.responsivePinMedia
-                  : styles.pinStackMedia
-                : "",
-          ].filter(Boolean).join(" ") || undefined}
-          style={{ minWidth: 0, width: split ? "100%" : centered && !pinned ? "100%" : undefined, color: "#071832", fontFamily: "var(--font-inter), Inter, Arial, sans-serif", alignSelf: split ? "stretch" : undefined }}
+          className={split ? styles.splitResponsiveRow : undefined}
+          style={split ? { width: "100%" } : undefined}
         >
-          {!pinned || showing || split ? (
-            <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} views={homeSlides ? (home15Trade ? (settlementDash ? homeSettlementResponsiveSlides : homeDeskResponsiveSlides) : floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
+          <div
+            className={[
+              split
+                ? styles.splitResponsiveMedia
+                : pinned
+                  ? home17Mockup
+                    ? styles.responsivePinMedia
+                    : styles.pinStackMedia
+                  : "",
+            ].filter(Boolean).join(" ") || undefined}
+            style={{ minWidth: 0, width: split ? undefined : centered && !pinned ? "100%" : undefined, color: "#071832", fontFamily: "var(--font-inter), Inter, Arial, sans-serif" }}
+          >
+            {!pinned || showing || split ? (
+              <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} views={homeSlides ? (home15Trade ? (settlementDash ? homeSettlementResponsiveSlides : homeDeskResponsiveSlides) : floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
+            ) : null}
+          </div>
+          {split ? (
+            <div className={styles.splitSlideAction}>
+              <SectionAction href="/why-emfi/responsive-technology" label="Learn More" align="start" />
+            </div>
           ) : null}
         </div>
-        {pinned ? (
-          split ? (
-            <SectionAction href="/why-emfi/responsive-technology" label="Learn More" align="start" />
-          ) : shortWhy ? (
+        {pinned && !split ? (
+          shortWhy ? (
             <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/why-emfi/responsive-technology" : undefined} />
           ) : (
             <SectionAction href="/why-emfi/responsive-technology" label="Learn More" />

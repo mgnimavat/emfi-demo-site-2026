@@ -60,6 +60,28 @@
   text-wrap: pretty;
 }
 
+/* Body + Learn More share one block so the CTA is not a dedicated grid row. */
+.sectionBodyWithAction {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  min-width: 0;
+}
+
+.sectionBodyWithAction .sectionBody {
+  margin: 0;
+  max-width: none;
+}
+
+.sectionBodyAction {
+  align-self: flex-end;
+  display: flex;
+  width: auto;
+  margin: 0;
+}
+
 @media (min-width: 1000px) {
   .sectionTitle {
     font-size: min(88px, 17cqi);
@@ -138,11 +160,36 @@
   height: auto;
 }
 
-/* Split WHY: stage height tracks available width so settlement/workstation slides fill the row. */
+/* Slide + Learn More side by side; CTA sits in the column beside the slide, bottom-aligned. */
+.splitResponsiveRow {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(16px, 2vw, 28px);
+  width: 100%;
+}
+
+.splitSlideAction {
+  flex: none;
+  width: auto;
+  padding-bottom: 4px;
+}
+
+.splitSlideAction :global(.section-bottom-action) {
+  width: auto;
+  margin: 0;
+}
+
+/* Split WHY: stage sits at 80% of the container (width + height). */
+.splitDirect .splitResponsiveMedia {
+  flex: 0 1 80%;
+  width: 80%;
+  max-width: 80%;
+  align-self: stretch;
+}
 .splitDirect .splitResponsiveMedia :global([class*="h-[438px]"]),
 .splitDirect .splitResponsiveMedia :global([class*="h-[478px]"]) {
   width: 100% !important;
-  height: clamp(400px, 48vw, 640px) !important;
+  height: clamp(320px, 38.4vw, 512px) !important;
 }
 
 .whyPinSlide .sectionTitle {
@@ -989,13 +1036,16 @@
   white-space: nowrap;
 }
 
-.whyPinSlide :global(.emfi-circle-btn-arrow) {
+.whyPinSlide :global(.emfi-circle-btn-arrow),
+.whySplitSection :global(.emfi-circle-btn-arrow) {
   transform: rotate(-45deg);
   transition: transform 0.2s ease;
 }
 
 .whyPinSlide :global(.emfi-circle-btn:hover .emfi-circle-btn-arrow),
-.whyPinSlide :global(.emfi-circle-btn:focus-visible .emfi-circle-btn-arrow) {
+.whyPinSlide :global(.emfi-circle-btn:focus-visible .emfi-circle-btn-arrow),
+.whySplitSection :global(.emfi-circle-btn:hover .emfi-circle-btn-arrow),
+.whySplitSection :global(.emfi-circle-btn:focus-visible .emfi-circle-btn-arrow) {
   transform: none;
 }
 

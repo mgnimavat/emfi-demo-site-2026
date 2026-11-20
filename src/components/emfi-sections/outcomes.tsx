@@ -118,7 +118,14 @@ export function SectionCopy({
           {t(lead).split("\n").flatMap((line, index) => (index === 0 ? [line] : [<br key={index} />, line]))}
         </p>
       ) : null}
-      {body ? (
+      {body && lead && action ? (
+        <div className={styles.sectionBodyWithAction}>
+          <BodyText body={body} color={bodyColor} centered={centered} split />
+          <div className={`section-bottom-action ${styles.sectionBodyAction}`}>
+            <Button href={localize(action.href)} variant="circle">{t(action.label)}</Button>
+          </div>
+        </div>
+      ) : body ? (
         lead ? (
           <BodyText body={body} color={bodyColor} centered={centered} split />
         ) : (
@@ -127,7 +134,7 @@ export function SectionCopy({
           </div>
         )
       ) : null}
-      {action ? (
+      {action && !(body && lead) ? (
         <div className="section-bottom-action" style={{ marginTop: 28, display: centered ? "flex" : undefined, justifyContent: centered ? "center" : undefined }}>
           <Button href={localize(action.href)} variant="circle">{t(action.label)}</Button>
         </div>

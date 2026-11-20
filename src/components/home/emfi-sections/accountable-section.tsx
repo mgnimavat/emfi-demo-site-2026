@@ -2,7 +2,7 @@
 
 import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { trust } from "@/content/trust";
@@ -160,6 +160,14 @@ const slides = [
   },
 ];
 
+/** Home Dependable (split): logo slides from home-22, in display order. */
+const splitLogoSlides = [
+  slides[0], // Authorised by
+  slides[2], // Audited by
+  slides[4], // Quoted in
+  slides[3], // Connected to
+] as const;
+
 function plainTitle(slide: (typeof slides)[number]) {
   return slide.title.replace(/\.$/, "");
 }
@@ -177,7 +185,21 @@ function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: (type
             const entities = logoEntities(item);
             const large = slide.title.startsWith("Authorised");
             return (
-              <div key={item.name} className={[styles.plainItem, large && styles.plainItemLarge, item.name === "Financial Conduct Authority" && styles.plainItemFca, item.name === "BDO" && styles.plainItemBdo, entities && styles.plainItemWithEntities].filter(Boolean).join(" ")}>
+              <div
+                key={item.name}
+                className={[
+                  styles.plainItem,
+                  large && styles.plainItemLarge,
+                  item.name === "Financial Conduct Authority" && styles.plainItemFca,
+                  item.name === "BDO" && styles.plainItemBdo,
+                  item.name === "Cayman Islands Monetary Authority" && styles.plainItemCima,
+                  item.name === "Dubai Financial Services Authority" && styles.plainItemDfsa,
+                  item.name === "The Wall Street Journal" && styles.plainItemWsj,
+                  item.name === "CISI" && styles.plainItemCisi,
+                  item.name === "Bloomberg" && styles.plainItemBloomberg,
+                  entities && styles.plainItemWithEntities,
+                ].filter(Boolean).join(" ")}
+              >
                 <div className={styles.plainLogo}>
                   <Image src={marks[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
                 </div>
@@ -207,6 +229,123 @@ function PlainEvidenceContent({ slide, ink = false, gray = false }: { slide: (ty
       <h3 className={styles.plainTitle}>{t(plainTitle(slide))}</h3>
       <PlainEvidenceLogos slide={slide} ink={ink} gray={gray} />
     </>
+  );
+}
+
+type EvidenceSlideItem = (typeof slides)[number];
+
+function SplitPeekCarousel({
+  deck,
+  index,
+  ink = false,
+  gray = false,
+  reduceMotion = false,
+}: {
+  deck: readonly EvidenceSlideItem[];
+  index: number;
+  ink?: boolean;
+  gray?: boolean;
+  reduceMotion?: boolean;
+}) {
+  const { t } = useServiceLocale();
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const prevIndexRef = useRef(index);
+  const [metrics, setMetrics] = useState({ viewport: 0, slide: 0 });
+  const count = deck.length;
+  const loop = useMemo(() => [...deck, ...deck, ...deck], [deck]);
+  const active = ((index % count) + count) % count;
+  const [pos, setPos] = useState(count + active);
+  const [instant, setInstant] = useState(false);
+
+  useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    const measure = () => {
+      const width = viewport.clientWidth;
+      /* Exact fill: 15% peek | 70% active | 15% peek. */
+      setMetrics({
+        viewport: width,
+        slide: width * 0.7,
+      });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(viewport);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const prev = prevIndexRef.current;
+    prevIndexRef.current = index;
+    const prevMod = ((prev % count) + count) % count;
+    const nextMod = ((index % count) + count) % count;
+    if (prev === index) return;
+
+    /* Normal autoplay step (including wrap from last → first). */
+    if ((prevMod + 1) % count === nextMod) {
+      setPos((current) => current + 1);
+      return;
+    }
+
+    /* Replay / hard jump — snap onto the middle copy. */
+    setInstant(true);
+    setPos(count + nextMod);
+  }, [index, count]);
+
+  useEffect(() => {
+    if (pos < count * 2) return;
+    const timeout = window.setTimeout(() => {
+      setInstant(true);
+      setPos((current) => current - count);
+    }, reduceMotion ? 0 : 640);
+    return () => window.clearTimeout(timeout);
+  }, [pos, count, reduceMotion]);
+
+  useEffect(() => {
+    if (!instant) return;
+    const id = window.requestAnimationFrame(() => setInstant(false));
+    return () => window.cancelAnimationFrame(id);
+  }, [instant, pos]);
+
+  const x =
+    metrics.viewport > 0 && metrics.slide > 0
+      ? metrics.viewport * 0.15 - pos * metrics.slide
+      : 0;
+
+  return (
+    <div className={styles.splitCarousel}>
+      <div ref={viewportRef} className={styles.splitCarouselViewport}>
+        <motion.div
+          className={styles.splitCarouselTrack}
+          animate={{ x }}
+          transition={
+            instant || reduceMotion
+              ? { duration: 0 }
+              : { duration: 0.62, ease: [0.22, 1, 0.36, 1] }
+          }
+        >
+          {loop.map((item, i) => {
+            const isActive = i === pos;
+            return (
+              <div
+                key={`${item.title}-${i}`}
+                className={styles.splitCarouselSlide}
+                data-active={isActive ? "true" : "false"}
+                aria-hidden={isActive ? undefined : true}
+              >
+                <div className={styles.splitCarouselPanel}>
+                  <h3 className={styles.splitCarouselTitle}>{t(plainTitle(item))}</h3>
+                  <PlainEvidenceLogos slide={item} ink={ink} gray={gray} />
+                </div>
+              </div>
+            );
+          })}
+        </motion.div>
+      </div>
+      <p className={styles.slideDisclaimer}>
+        {t("Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.")}
+      </p>
+    </div>
   );
 }
 
@@ -292,37 +431,69 @@ export function AccountableSection({
   const showing = pinned && engaged && marked && stepNow === step;
   const reduceMotion = useReducedMotion();
   const solidLight = light && (!pinned || split || Boolean(reduceMotion));
-  const slide = slides[index] ?? slides[0];
+  const deck = split ? splitLogoSlides : slides;
+  const slide = deck[index % deck.length] ?? deck[0];
   const splitLead = "Institutional safeguards.\nClear accountability.";
   const splitBody =
     "The details matter: regulated entities, client asset arrangements, reconciliations, independent professional oversight and a clear understanding of fees. These are the foundations behind the services EMFI provides.";
-  const splitRows = [
-    { label: "Regulated", copy: "Regulated in the UK by the FCA and in Dubai by the DFSA." },
-    { label: "Euroclear", copy: "Direct participant of Euroclear." },
-    {
-      label: "Client assets",
-      copy: "Client money and safe custody assets held under the FCA's CASS rules, where they apply.",
-    },
-  ] as const;
 
   useLayoutEffect(() => {
-    if (!showing || staticStandards || !canReplay || split) return;
+    if (!showing || staticStandards || !canReplay) return;
     setIndex(0);
     setRun((current) => current + 1);
-  }, [showing, staticStandards, canReplay, split]);
+  }, [showing, staticStandards, canReplay]);
 
   useEffect(() => {
-    if (!canReplay || staticStandards || split || (pinned && !showing)) return;
+    if (!canReplay || staticStandards || (pinned && !showing)) return;
     const id = window.setInterval(() => {
-      setIndex((current) => (current + 1) % slides.length);
+      setIndex((current) => (current + 1) % deck.length);
     }, HOLD_MS);
     return () => window.clearInterval(id);
-  }, [canReplay, run, staticStandards, pinned, showing, split]);
+  }, [canReplay, run, staticStandards, pinned, showing, deck.length]);
 
   function replay() {
     setIndex(0);
     setRun((current) => current + 1);
   }
+
+  const evidenceCarousel = (
+    <div className={`${styles.stage} ${styles.pinStage} ${styles.plainStage} ${chapterStyles.pinVisualFill}`} aria-live="polite">
+      <div className={styles.plainSlide}>
+        <div className={styles.plainTitleSlot}>
+          <AnimatePresence mode="wait">
+            <motion.h3
+              key={`title-${run}-${slide.title}`}
+              className={styles.plainTitle}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.28, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {t(plainTitle(slide))}
+            </motion.h3>
+          </AnimatePresence>
+        </div>
+        <div className={styles.plainSlideViewport}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`logos-${run}-${slide.title}`}
+              className={styles.plainSlideContent}
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: "55%", rotateX: 55 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: "-55%", rotateX: -55 }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.48, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transformOrigin: "center center" }}
+            >
+              <PlainEvidenceLogos slide={slide} ink={brandInk} gray={grayLogos} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+        <p className={styles.slideDisclaimer}>
+          {t("Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.")}
+        </p>
+      </div>
+    </div>
+  );
 
   return (
     <section id="accountable" data-screen-label="05 Dependable" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: solidLight ? "#ffffff" : light ? "transparent" : "radial-gradient(55% 60% at 0% 100%,rgba(128,152,204,.14),transparent 70%)", zIndex: light || raiseContent ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
@@ -354,55 +525,22 @@ export function AccountableSection({
           />
         </div>
         {split ? (
-          <ul className={styles.splitLedger}>
-            {splitRows.map((row) => (
-              <li key={row.label} className={styles.splitLedgerRow}>
-                <strong className={styles.splitLedgerLabel}>{t(row.label)}</strong>
-                <p className={styles.splitLedgerCopy}>{t(row.copy)}</p>
-              </li>
-            ))}
-          </ul>
+          <div className={`${styles.splitEvidence}${brandInk ? ` ${styles.plainInk}` : ""}`} style={{ width: "100%" }}>
+            <SplitPeekCarousel
+              deck={splitLogoSlides}
+              index={index}
+              ink={brandInk}
+              gray={grayLogos}
+              reduceMotion={Boolean(reduceMotion)}
+            />
+          </div>
         ) : (
           <div className={pinned ? `${chapterStyles.pinVisual} ${styles.plainVisual}${shortWhy ? ` ${styles.plainWide}` : ""}${brandInk ? ` ${styles.plainInk}` : ""}` : undefined} style={pinned ? { containerType: "inline-size" } : { ...cardStyle, containerType: "inline-size", width: centered ? "100%" : undefined, paddingTop: `calc(${!staticStandards && showReplay && canReplay ? cardStyle.paddingTop : cardStyle.padding}${centered ? ` + ${centeredCardSpace}` : ""})`, paddingBottom: centered ? `calc(${cardStyle.padding} + ${centeredCardSpace})` : cardStyle.padding }}>
             {staticStandards ? <StandardsPanel centered={centered} /> : null}
             {!staticStandards && showReplay && canReplay ? <ReplayButton onClick={replay} /> : null}
             {!staticStandards && canReplay ? (
               shortWhy && pinned ? (
-                <div className={`${styles.stage} ${styles.pinStage} ${styles.plainStage} ${chapterStyles.pinVisualFill}`} aria-live="polite">
-                  <div className={styles.plainSlide}>
-                    <div className={styles.plainTitleSlot}>
-                      <AnimatePresence mode="wait">
-                        <motion.h3
-                          key={`title-${run}-${slide.title}`}
-                          className={styles.plainTitle}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                        >
-                          {t(plainTitle(slide))}
-                        </motion.h3>
-                      </AnimatePresence>
-                    </div>
-                    <div className={styles.plainSlideViewport}>
-                      <AnimatePresence mode="wait">
-                        <motion.div
-                          key={`logos-${run}-${slide.title}`}
-                          className={styles.plainSlideContent}
-                          initial={{ opacity: 0, y: "55%", rotateX: 55 }}
-                          animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                          exit={{ opacity: 0, y: "-55%", rotateX: -55 }}
-                          transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
-                          style={{ transformOrigin: "center center" }}
-                        >
-                          <PlainEvidenceLogos slide={slide} ink={brandInk} gray={grayLogos} />
-                        </motion.div>
-                      </AnimatePresence>
-                    </div>
-                    <p className={styles.slideDisclaimer}>
-                      {t("Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.")}</p>
-                  </div>
-                </div>
+                evidenceCarousel
               ) : (
                 <div className={`${styles.stage}${pinned ? ` ${styles.pinStage} ${styles.plainStage} ${chapterStyles.pinVisualFill}` : ""}`} aria-live="polite">
                   <AnimatePresence mode="wait">
