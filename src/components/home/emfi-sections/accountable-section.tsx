@@ -175,44 +175,38 @@ function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: (type
   const marks = gray ? { ...brandMarkSrc, ...grayMarkSrc } : ink ? inkMarkSrc : brandMarkSrc;
   return (
     <div className={styles.plainRow}>
-      {slide.kind === "logos"
-        ? (slide.items as LogoItem[]).map((item) => {
-            const entities = logoEntities(item);
-            const large = slide.title.startsWith("Authorised");
-            return (
-              <div
-                key={item.name}
-                className={[
-                  styles.plainItem,
-                  large && styles.plainItemLarge,
-                  item.name === "Financial Conduct Authority" && styles.plainItemFca,
-                  item.name === "BDO" && styles.plainItemBdo,
-                  item.name === "Cayman Islands Monetary Authority" && styles.plainItemCima,
-                  item.name === "Dubai Financial Services Authority" && styles.plainItemDfsa,
-                  item.name === "The Wall Street Journal" && styles.plainItemWsj,
-                  item.name === "CISI" && styles.plainItemCisi,
-                  item.name === "Bloomberg" && styles.plainItemBloomberg,
-                  entities && styles.plainItemWithEntities,
-                ].filter(Boolean).join(" ")}
-              >
-                <div className={styles.plainLogo}>
-                  <Image src={marks[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
-                </div>
-                {entities ? (
-                  <ul className={styles.plainEntities}>
-                    {entities.map((entity) => (
-                      <li key={entity}>{entity}</li>
-                    ))}
-                  </ul>
-                ) : null}
-              </div>
-            );
-          })
-        : slide.items.map((code) => (
-            <div key={code} className={styles.plainItem}>
-              <span className={styles.plainLabel}>{code}</span>
+      {(slide.items as LogoItem[]).map((item) => {
+        const entities = logoEntities(item);
+        const large = slide.title.startsWith("Authorised");
+        return (
+          <div
+            key={item.name}
+            className={[
+              styles.plainItem,
+              large && styles.plainItemLarge,
+              item.name === "Financial Conduct Authority" && styles.plainItemFca,
+              item.name === "BDO" && styles.plainItemBdo,
+              item.name === "Cayman Islands Monetary Authority" && styles.plainItemCima,
+              item.name === "Dubai Financial Services Authority" && styles.plainItemDfsa,
+              item.name === "The Wall Street Journal" && styles.plainItemWsj,
+              item.name === "CISI" && styles.plainItemCisi,
+              item.name === "Bloomberg" && styles.plainItemBloomberg,
+              entities && styles.plainItemWithEntities,
+            ].filter(Boolean).join(" ")}
+          >
+            <div className={styles.plainLogo}>
+              <Image src={marks[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
             </div>
-          ))}
+            {entities ? (
+              <ul className={styles.plainEntities}>
+                {entities.map((entity) => (
+                  <li key={entity}>{entity}</li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -360,21 +354,13 @@ function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = fa
         <h3 className={styles.title}>{t(title)}</h3>
         {plain ? null : <span className={styles.rule} />}
       </div>
-      {slide.kind === "logos" ? (
-        <div className={[styles.logos, brandLogos && styles.brandLogos, brandLogos && slide.title.startsWith("Authorised") && styles.authorityLogos].filter(Boolean).join(" ")}>
-          {slide.items.map((item) => (
-            <div key={item.name} className={[styles.logoCard, brandLogos && (item.name.startsWith("Dubai") || item.name.startsWith("Cayman")) && styles.markLogo, brandLogos && (item.name.startsWith("Cayman") || item.name.startsWith("Baker")) && styles.largeLogo].filter(Boolean).join(" ")}>
-              <Image src={brandLogos ? brandLogoSrc[item.src] ?? item.src : item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className={brandLogos ? `${styles.pills} ${styles.brandLogos}` : styles.pills}>
-          {slide.items.map((code) => (
-            <div key={code} className={styles.pill}>{code}</div>
-          ))}
-        </div>
-      )}
+      <div className={[styles.logos, brandLogos && styles.brandLogos, brandLogos && slide.title.startsWith("Authorised") && styles.authorityLogos].filter(Boolean).join(" ")}>
+        {slide.items.map((item) => (
+          <div key={item.name} className={[styles.logoCard, brandLogos && (item.name.startsWith("Dubai") || item.name.startsWith("Cayman")) && styles.markLogo, brandLogos && (item.name.startsWith("Cayman") || item.name.startsWith("Baker")) && styles.largeLogo].filter(Boolean).join(" ")}>
+            <Image src={brandLogos ? brandLogoSrc[item.src] ?? item.src : item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
+          </div>
+        ))}
+      </div>
     </>
   );
 }
