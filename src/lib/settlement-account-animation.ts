@@ -1,5 +1,5 @@
 type Point = readonly [number, number];
-export type SettlementOrientation = 'horizontal' | 'vertical';
+export type SettlementOrientation = 'horizontal' | 'vertical' | 'track';
 type Segment = { to: Point; controls?: readonly [Point, Point] };
 type Route = { path: string; points: Point[]; distances: number[]; length: number };
 
@@ -100,6 +100,30 @@ const node = (x: number, y: number, width: number, height: number, label: Point)
   x, y, width, height, label,
 });
 
+const trackLeftX = 132;
+const trackRightX = 388;
+const trackPoolX = (trackLeftX + trackRightX) / 2;
+const trackClientY = 44;
+const trackAccountY = 194;
+const trackDeliveryY = 350;
+
+const trackArrival = (clientX: number, accountX: number) => {
+  const start: Point = [clientX, trackClientY];
+  return createRoute(start, [verticalCurve(start, [accountX, trackAccountY])]);
+};
+
+const trackDelivery = (accountX: number, deliveryX: number) => {
+  const start: Point = [accountX, trackAccountY];
+  return createRoute(start, [verticalCurve(start, [deliveryX, trackDeliveryY])]);
+};
+
+const trackNode = (x: number, y: number, labelOffset = 30) => node(x, y, 0, 0, [x, y + labelOffset]);
+const trackDeliveryNode = (x: number) => ({
+  ...trackNode(x, trackDeliveryY),
+  status: [x, trackDeliveryY + 50],
+  marker: [x, trackDeliveryY],
+});
+
 export const settlementLayouts = {
   horizontal: {
     viewBox: '0 0 1000 252',
@@ -122,6 +146,23 @@ export const settlementLayouts = {
       { ...node(280, 244, 216, 72, [412, 282]), status: [388, 303], marker: [318, 267] },
     ],
     routes: verticalRoutes,
+  },
+  track: {
+    viewBox: '0 0 520 416',
+    clients: [trackNode(trackLeftX, trackClientY, -20), trackNode(trackRightX, trackClientY, -20)],
+    accounts: [trackNode(trackLeftX, trackAccountY), trackNode(trackRightX, trackAccountY)],
+    pool: trackNode(trackPoolX, trackAccountY),
+    deliveries: [trackDeliveryNode(trackLeftX), trackDeliveryNode(trackRightX)],
+    routes: {
+      sharedArrival: trackArrival(trackLeftX, trackPoolX),
+      sharedArrivalB: trackArrival(trackRightX, trackPoolX),
+      arrivalA: trackArrival(trackLeftX, trackLeftX),
+      arrivalB: trackArrival(trackRightX, trackRightX),
+      sharedPending: trackDelivery(trackPoolX, trackLeftX),
+      sharedDelivery: trackDelivery(trackPoolX, trackRightX),
+      deliveryA: trackDelivery(trackLeftX, trackLeftX),
+      deliveryB: trackDelivery(trackRightX, trackRightX),
+    },
   },
 } as const;
 

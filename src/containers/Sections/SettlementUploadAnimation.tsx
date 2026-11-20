@@ -21,6 +21,7 @@ type SettlementPanel = SettlementCopy['serviceSections'][number]['panels'][numbe
 type UploadProps = {
   copy: UploadCopy;
   panels: SettlementPanel[];
+  stacked?: boolean;
 };
 
 const stepIcons: Partial<Record<string, LucideIcon>> = {
@@ -30,7 +31,21 @@ const stepIcons: Partial<Record<string, LucideIcon>> = {
   process: Workflow,
 };
 
-export const SettlementUploadAnimation = ({ copy, panels }: UploadProps) => {
+const ExtractedFields = ({ fields }: { fields: UploadCopy['fields'] }) => (
+  <dl className={styles.fields}>
+    {fields.map((field) => (
+      <div key={field.id} className={styles.field} data-field={field.id}>
+        <dt>{field.label}</dt>
+        <dd>
+          <bdi className={styles.value}>{field.value}</bdi>
+          <Check className={styles.read} size={14} aria-hidden="true" />
+        </dd>
+      </div>
+    ))}
+  </dl>
+);
+
+export const SettlementUploadAnimation = ({ copy, panels, stacked = false }: UploadProps) => {
   const stage = useRef<HTMLDivElement>(null);
   const visible = useInView(stage, { amount: 0.2 });
 
@@ -41,6 +56,7 @@ export const SettlementUploadAnimation = ({ copy, panels }: UploadProps) => {
       role="group"
       aria-label={copy.label}
       data-playing={visible}
+      data-stacked={stacked}
     >
       <div className={styles.workspace}>
         <div className={styles.source} aria-hidden="true">
@@ -62,7 +78,7 @@ export const SettlementUploadAnimation = ({ copy, panels }: UploadProps) => {
             <div className={styles.ticketTitle}>{copy.ticketTitle}</div>
             <dl className={styles.ticketFields}>
               {copy.fields.map((field) => (
-                <div key={field.id} className={styles.ticketField}>
+                <div key={field.id} className={styles.ticketField} data-field={field.id}>
                   <dt>{field.label}</dt>
                   <dd><bdi>{field.value}</bdi></dd>
                 </div>
@@ -77,17 +93,7 @@ export const SettlementUploadAnimation = ({ copy, panels }: UploadProps) => {
             <span className={styles.headerIcon}><ScanText size={17} aria-hidden="true" /></span>
             <h3>{copy.result}</h3>
           </div>
-          <dl className={styles.fields}>
-            {copy.fields.map((field) => (
-              <div key={field.id} className={styles.field}>
-                <dt>{field.label}</dt>
-                <dd>
-                  <bdi className={styles.value}>{field.value}</bdi>
-                  <Check className={styles.read} size={14} aria-hidden="true" />
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <ExtractedFields fields={copy.fields} />
           <p className={styles.ready}><ShieldCheck size={16} aria-hidden="true" />{copy.ready}</p>
           <ol className={styles.steps}>
             {panels.map((panel) => {
