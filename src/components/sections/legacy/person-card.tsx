@@ -1,6 +1,6 @@
 import { about } from "@/content/about-old";
 
-const placeholderPhoto = "/people/placeholder.jpg";
+const placeholderPhoto = "/people/placeholder-draw-sky.jpg";
 
 export function PersonCard({
   person,
