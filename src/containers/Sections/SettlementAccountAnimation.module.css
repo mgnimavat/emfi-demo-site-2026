@@ -90,10 +90,29 @@
   stroke-width: 1.5;
   transition: stroke .45s ease;
 }
-.stage[data-orientation='track'][data-phase='0'] .arrivalA,
-.stage[data-orientation='track'][data-phase='0'][data-dedicated='true'] .arrivalB,
+.stage[data-orientation='track'][data-phase='0'][data-dedicated='false'] .arrivalA,
 .stage[data-orientation='track'] .activeRoute { stroke: var(--track-route-gradient); }
 .stage[data-orientation='track'][data-phase='2'] .activeRoute { stroke-dasharray: none; }
+.routeBand {
+  fill: none;
+  stroke: var(--track-route-gradient);
+  stroke-width: 20px;
+  stroke-linecap: round;
+  opacity: calc(.22 * clamp(0, var(--arrival-progress-a, 0) * 2.5, 1));
+}
+.routeProgress {
+  fill: none;
+  stroke: var(--track-route-gradient);
+  stroke-width: 2px;
+}
+.routeProgress path {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: calc(1 - var(--route-leg-progress, 0));
+}
+.arrivalProgressA { --route-leg-progress: var(--arrival-progress-a, 0); }
+.arrivalProgressB { --route-leg-progress: var(--arrival-progress-b, 0); }
+.deliveryProgress { --route-leg-progress: var(--delivery-progress, 0); }
+.stage[data-orientation='track'][data-dedicated='true'] .activeRoute { display: none; }
 .station {
   fill: var(--bg-soft);
   stroke: var(--flow-mid);
@@ -109,6 +128,10 @@
 }
 .stage[data-orientation='track'] .token circle { r: 12px; fill: var(--track-token-gradient); }
 .stage[data-orientation='track'] .token .tokenHalo { r: 18px; }
+.stage[data-orientation='track'][data-dedicated='true'] .token .tokenHalo {
+  fill: var(--flow-from);
+  opacity: 1;
+}
 .stage[data-orientation='track'] .token text { font-size: 13px; fill: var(--text-primary); }
 .stage[data-orientation='track'] .delivery .deliveryStatus { font-size: 14px; }
 
@@ -137,4 +160,9 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .stage *, .stage *::before, .stage *::after { animation: none !important; transition: none !important; }
+  .stage[data-orientation='track'] {
+    --arrival-progress-a: 1 !important;
+    --arrival-progress-b: 1 !important;
+    --delivery-progress: 1 !important;
+  }
 }

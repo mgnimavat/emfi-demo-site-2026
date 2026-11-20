@@ -31,6 +31,33 @@ test('deliveries remain pending until the securities have arrived', () => {
   assert.deepEqual(completed.dedicatedB, [318, 270]);
 });
 
+test('the delivery trail follows the tokens before settlement is confirmed', () => {
+  const { scene, deliveryDelay, deliveryTravel, deliveryConfirmation } = settlementAnimationTiming;
+  assert.equal(getVerticalFrame(scene + deliveryDelay).deliveryProgress, 0);
+
+  const traveling = getVerticalFrame(scene + deliveryDelay + deliveryTravel / 2);
+  assert.equal(traveling.deliveryProgress, 0.5);
+  assert.equal(traveling.arrivalProgressA, 1);
+  assert.equal(traveling.arrivalProgressB, 1);
+  assert.equal(traveling.delivered, false);
+
+  const arrived = getVerticalFrame(scene + deliveryConfirmation);
+  assert.equal(arrived.deliveryProgress, 1);
+  assert.equal(arrived.delivered, true);
+});
+
+test('each arrival trail follows its own token from the client to the account', () => {
+  const { arrivalDelay, arrivalTravel, secondClientDelay } = settlementAnimationTiming;
+  const firstDeparture = getVerticalFrame(arrivalDelay + secondClientDelay);
+  assert.ok(firstDeparture.arrivalProgressA > 0);
+  assert.equal(firstDeparture.arrivalProgressB, 0);
+
+  const firstArrival = getVerticalFrame(arrivalDelay + arrivalTravel);
+  assert.equal(firstArrival.arrivalProgressA, 1);
+  assert.ok(firstArrival.arrivalProgressB < 1);
+  assert.equal(firstArrival.deliveryProgress, 0);
+});
+
 test('visible tokens move continuously throughout the complete loop', () => {
   const cycle = settlementAnimationTiming.scene * 3;
   for (let elapsed = 16; elapsed <= cycle + 1000; elapsed += 16) {

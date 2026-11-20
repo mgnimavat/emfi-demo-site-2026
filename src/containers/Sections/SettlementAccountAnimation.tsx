@@ -120,12 +120,26 @@ const AccountDiagram = ({ orientation, dedicated, settled, copy, tokenARef, toke
             <stop offset="100%" stopColor="var(--flow-to)" />
           </linearGradient>
           <linearGradient id={routeGradientId} href={`#${gradientId}`} gradientUnits="userSpaceOnUse"
-            x2="0" y2="100%" />
+            x2="0" y1={clients[0].y} y2={deliveries[0].y} />
         </defs>
+      )}
+      {track && dedicated && (
+        <>
+          <g className={styles.routeBand}>
+            <path d={`${arrivalA.path} ${leftDelivery}`} />
+            <path d={`${arrivalB.path} ${rightDelivery}`} />
+          </g>
+          <g className={styles.routeProgress}>
+            <path className={styles.arrivalProgressA} d={arrivalA.path} pathLength="1" />
+            <path className={styles.arrivalProgressB} d={arrivalB.path} pathLength="1" />
+            <path className={styles.deliveryProgress} d={leftDelivery} pathLength="1" />
+            <path className={styles.deliveryProgress} d={rightDelivery} pathLength="1" />
+          </g>
+        </>
       )}
       <motion.path className={`${styles.route} ${styles.arrivalA}`} initial={false} transition={transition}
         animate={{ d: dedicated ? arrivalA.path : sharedArrival.path }} />
-      <motion.path className={`${styles.route} ${styles.arrivalB}`} initial={false} transition={transition}
+      <motion.path className={styles.route} initial={false} transition={transition}
         animate={{ d: dedicated ? arrivalB.path : sharedArrivalB.path }} />
       <motion.path className={styles.route} initial={false} transition={transition}
         animate={{ d: leftDelivery }} />
@@ -208,6 +222,11 @@ export const SettlementAccountAnimation = ({ copy, orientation: fixedOrientation
     if (!running || document.hidden) return;
     elapsed.current += Math.min(delta, 64);
     const frame = getSettlementComparisonFrame(elapsed.current, loopDuration, orientation);
+    if (orientation === 'track') {
+      stage.current?.style.setProperty('--arrival-progress-a', frame.arrivalProgressA.toFixed(4));
+      stage.current?.style.setProperty('--arrival-progress-b', frame.arrivalProgressB.toFixed(4));
+      stage.current?.style.setProperty('--delivery-progress', frame.deliveryProgress.toFixed(4));
+    }
     moveToken(tokenA, frame.dedicated ? frame.dedicatedA : frame.sharedA, frame.opacity);
     moveToken(tokenB, frame.dedicatedB, frame.dedicated ? frame.opacity : 0);
     if (scene.phase !== frame.phase || scene.delivered !== frame.delivered ||

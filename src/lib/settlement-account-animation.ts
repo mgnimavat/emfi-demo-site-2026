@@ -197,19 +197,22 @@ export const getSettlementAnimationFrame = (elapsed: number, orientation: Settle
   const phase = Math.floor(cycle / timing.scene);
   const sceneTime = cycle % timing.scene;
   const arrival = ease((sceneTime - timing.arrivalDelay) / timing.arrivalTravel);
+  const secondArrival = ease((sceneTime - timing.arrivalDelay - timing.secondClientDelay) / timing.arrivalTravel);
   const delivery = ease((sceneTime - timing.deliveryDelay) / timing.deliveryTravel);
   const opacity = phase === 0 ? clamp(sceneTime / timing.fade)
     : phase === 2 ? clamp((timing.scene - sceneTime) / timing.fade) : 1;
   return {
     phase,
     delivered: phase === 2 || (phase === 1 && sceneTime >= timing.deliveryConfirmation),
+    arrivalProgressA: phase === 0 ? arrival : 1,
+    arrivalProgressB: phase === 0 ? secondArrival : 1,
+    deliveryProgress: phase === 0 ? 0 : phase === 1 ? delivery : 1,
     opacity,
     sharedA: phase === 0 ? pointOnRoute(routes.sharedArrival, arrival)
       : pointOnRoute(routes.sharedDelivery, phase === 1 ? delivery : 1),
     dedicatedA: phase === 0 ? pointOnRoute(routes.arrivalA, arrival)
       : pointOnRoute(routes.deliveryA, phase === 1 ? delivery : 1),
-    dedicatedB: phase === 0 ? pointOnRoute(routes.arrivalB,
-      ease((sceneTime - timing.arrivalDelay - timing.secondClientDelay) / timing.arrivalTravel))
+    dedicatedB: phase === 0 ? pointOnRoute(routes.arrivalB, secondArrival)
       : pointOnRoute(routes.deliveryB, phase === 1 ? delivery : 1),
   };
 };
