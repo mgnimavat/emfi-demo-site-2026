@@ -49,7 +49,11 @@
   letter-spacing: normal;
   text-wrap: pretty;
 }
-.section.archiveWorkflow[id='linked-settlement'] { min-block-size: calc(100svh - var(--site-header-height, 78px)); }
+.section.archiveWorkflow[id='linked-settlement'] {
+  min-block-size: calc(100svh - var(--site-header-height, 78px));
+  background: var(--bg-soft);
+  color: var(--text-primary);
+}
 .archiveCopy .body { font-size: clamp(13px, 2.5cqi, 15px); }
 .archiveAnimation { justify-self: end; width: min(100%, 560px); }
 @media (min-width: 901px) {
