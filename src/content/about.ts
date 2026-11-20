@@ -171,7 +171,7 @@ export const about = {
     {
       name: "Guillermo Guerrero",
       role: "Research",
-      photo: "/people/guillermo-guerrero-8.jpg",
+      photo: "/people/guillermo-guerrero-9.jpg",
       description: "Provides market and investment research that supports institutional decisions and execution.",
     },
     {
