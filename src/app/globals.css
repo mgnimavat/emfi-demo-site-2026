@@ -1072,6 +1072,31 @@ h6 {
   height: 16px;
 }
 
+/* Match Let's Talk / questionnaire: arrow starts at -45°, rotates to 0° on hover. */
+.emfi-circle-btn-arrow {
+  transform: rotate(-45deg);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.emfi-circle-btn:hover .emfi-circle-btn-arrow,
+.emfi-circle-btn:focus-visible .emfi-circle-btn-arrow,
+.emfi-btn-hit:hover .emfi-circle-btn-arrow,
+.emfi-btn-hit:focus-within .emfi-circle-btn-arrow {
+  transform: rotate(0deg);
+}
+
+:is(html[lang="ar"], [lang="ar"], [dir="rtl"]) .emfi-circle-btn-arrow {
+  transform: rotate(45deg);
+}
+
+:is(html[lang="ar"], [lang="ar"], [dir="rtl"]) .emfi-circle-btn:hover .emfi-circle-btn-arrow,
+:is(html[lang="ar"], [lang="ar"], [dir="rtl"]) .emfi-circle-btn:focus-visible .emfi-circle-btn-arrow,
+:is(html[lang="ar"], [lang="ar"], [dir="rtl"]) .emfi-btn-hit:hover .emfi-circle-btn-arrow,
+:is(html[lang="ar"], [lang="ar"], [dir="rtl"]) .emfi-btn-hit:focus-within .emfi-circle-btn-arrow {
+  transform: rotate(0deg);
+}
+
 .emfi-person-card {
   perspective: 1200px;
 }
