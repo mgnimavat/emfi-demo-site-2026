@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 const SettlementCustodyArchivePage = () => (
-  <LocalizedServicePageSection service="settlement-custody" settlementVariant="archive" />
+  <LocalizedServicePageSection service="settlement-custody" />
 );
 
 export default SettlementCustodyArchivePage;

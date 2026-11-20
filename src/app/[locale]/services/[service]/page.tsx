@@ -34,7 +34,7 @@ const LocalizedServicePage = async ({ params }: PageProps) => {
   const servicePage = archiveService ?? service;
   if (!isLocale(locale) || !isServicePage(servicePage)) notFound();
   return <LocalizedServicePageSection service={servicePage} locale={locale}
-    settlementVariant={archiveService === 'settlement-custody' ? 'archive' : undefined}
+    settlementVariant={service === 'settlement-custody' ? 'archive' : undefined}
     wealthVariant={archiveService === 'wealth-asset-management' ? 'archive' : undefined} />;
 };
 export default LocalizedServicePage;

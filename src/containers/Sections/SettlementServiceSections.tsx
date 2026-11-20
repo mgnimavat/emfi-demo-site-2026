@@ -65,7 +65,7 @@ const ArchiveWorkflow = ({ section, copy }: { section: ServiceSection; copy: Set
       </ExecutionReveal>
       <div className={styles.archiveAnimation}>
         {section.id === 'linked-settlement' ? (
-          <SettlementLinkedAnimation panels={section.panels} copy={copy.linkedAnimation} track />
+          <SettlementLinkedAnimation panels={section.panels} copy={copy.linkedAnimation} layout="vertical" />
         ) : (
           <SettlementUploadAnimation panels={section.panels} copy={copy.uploadAnimation} stacked />
         )}
