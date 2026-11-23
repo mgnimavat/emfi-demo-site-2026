@@ -38,4 +38,11 @@ export const cardStyle: CSSProperties = {
   paddingTop: "calc(clamp(20px,2.6vw,36px) + 34px)",
 };
 
+/** Shared light route card — direct-access hero + infrastructure diagram. */
+export const lightRouteCardStyle: CSSProperties = {
+  ...cardStyle,
+  background: "linear-gradient(160deg, #e8f0fb, #d6e4f6)",
+  border: "1px solid rgb(162 194 253 / 45%)",
+};
+
 export const centeredCardSpace = "32px";

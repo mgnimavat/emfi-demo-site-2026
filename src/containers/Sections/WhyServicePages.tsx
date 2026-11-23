@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { ArrowUpRight, GitMerge, Layers, ShieldCheck } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { ConnectedJourney } from '@/components/sections/execution-v2/connected-journey';
 import { OversightCycle } from '@/components/sections/dependable/oversight-cycle';
 import { ExecutionHeroTitle } from '@/components/sections/execution/hero-title';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
@@ -18,6 +17,7 @@ import reveal from './ProviderCardReveal.module.css';
 import { responsiveTechnology } from '@/content/responsive-technology';
 import { ExecutionWorkstation } from './ExecutionWorkstation';
 import { SettlementDashboard } from './SettlementDashboard';
+import { InfrastructureRouteDiagram } from './InfrastructureRouteDiagram';
 import { SettlementHeroAnimation } from './SettlementHeroAnimation';
 import styles from './WhyServicePages.module.css';
 
@@ -189,10 +189,13 @@ export const DirectContentPage = ({ copy, heroCopy, locale }: {
   copy: WhyPageCopy['direct']; heroCopy: Pick<DirectCopy, 'headline' | 'heroTitle'>; locale: Locale;
 }) => (
   <div className={styles.page} data-pillar="direct">
-    <WhyHero headline={heroCopy.headline} {...heroCopy.heroTitle}><SettlementHeroAnimation /></WhyHero>
+    <WhyHero headline={heroCopy.headline} {...heroCopy.heroTitle}><SettlementHeroAnimation lightHero /></WhyHero>
     <ContentBand id="infrastructure" copy={copy.infrastructure} tone="soft">
       <ExecutionReveal className={styles.journey}>
-        <ConnectedJourney label={copy.infrastructure.titleLines.join(' ')} steps={copy.infrastructure.steps} />
+        <InfrastructureRouteDiagram
+          label={copy.infrastructure.titleLines.join(' ')}
+          steps={copy.infrastructure.steps}
+        />
       </ExecutionReveal>
       <h3 className={styles.groupTitle}>{copy.infrastructure.providersTitle}</h3>
       <InfrastructureProviders items={copy.infrastructure.providers} />
@@ -241,9 +244,10 @@ export const ResponsiveContentPage = ({ copy, heroCopy, workflowSteps }: {
       note: copy.specialist.note,
     }}>
       <ExecutionReveal className={styles.journey}>
-        <ConnectedJourney label={copy.specialist.titleLines.join(' ')}
-          steps={workflowSteps.map(({ title }) => ({ label: title }))}
-          icons={['search', 'shield', 'handshake']} />
+        <InfrastructureRouteDiagram
+          label={copy.specialist.titleLines.join(' ')}
+          steps={workflowSteps.map(({ title, body }) => ({ label: title, detail: body }))}
+        />
       </ExecutionReveal>
     </ContentBand>
   </div>

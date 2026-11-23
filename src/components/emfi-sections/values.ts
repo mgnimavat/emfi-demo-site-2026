@@ -81,7 +81,7 @@ export function rect(a: RoutePt, b: RoutePt, th: number) {
 
 export function lab(pos: string, sz: number, wrap?: boolean) {
   const o = sz / 2 + 12;
-  const ws = wrap ? "white-space:normal;width:max-content;max-width:120px" : "white-space:nowrap";
+  const ws = wrap ? "white-space:pre-line;width:max-content;max-width:176px" : "white-space:nowrap";
   if (pos === "b") return `left:0;top:${o}px;transform:translateX(-50%);align-items:center;text-align:center;${ws}`;
   if (pos === "a") return `left:0;bottom:${o}px;transform:translateX(-50%);align-items:center;text-align:center;${ws}`;
   if (pos === "bl") return `left:-9px;top:${o}px;align-items:flex-start;text-align:left;${ws}`;
@@ -180,9 +180,11 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   t = home12 ? home12Route(t) : slowConventionalRoute(t);
   const { sg, ez, lp } = H();
   const P0 = stops ?? (light ? [0, 25, 50, 75, 100] : [6, 28, 50, 72, 94]);
-  // EMFI route spans nearly as wide as the conventional track.
-  const emfiL = light ? 0 : 10;
-  const emfiR = light ? 100 : 90;
+  // Custom stops (direct-access hero): EMFI span follows the route ends.
+  // Home split / default: full-bleed light track or inset dark track with EMFI at 50.
+  const emfiL = stops ? P0[0] : light ? 0 : 10;
+  const emfiR = stops ? P0[4] : light ? 100 : 90;
+  const emfiMid = stops ? (emfiL + emfiR) / 2 : 50;
   const ws = (i: number) => 0.06 + (i - 1) * 0.11;
   const k = ez(sg(t, 0.56, 0.72));
   // Lift 10px so bottom labels don't make the chart look low in the card.
@@ -210,12 +212,12 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   let travB = -1;
   if (t >= 0.745) {
     const f1 = ez(sg(t, 0.745, 0.79));
-    tokB = lp(emfiL, 50, f1);
+    tokB = lp(emfiL, emfiMid, f1);
     if (f1 < 1) travB = 1;
   }
   if (t >= 0.825) {
     const f2 = ez(sg(t, 0.825, 0.87));
-    tokB = lp(50, emfiR, f2);
+    tokB = lp(emfiMid, emfiR, f2);
     if (f2 < 1) travB = 2;
   }
   const depOn = (arr(4) && t < 0.56) || t >= 0.87;
@@ -232,7 +234,7 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     const i = j + 1;
     const processingUntil = home12 ? ws(i + 1) + 0.02 : ws(i) + 0.11;
     const processingLabel = home12 ? "Processing" : name === "Custodian" ? "Received" : "Processing";
-    nodes.push(node(S(lp(P0[i], 50, k)), { op: (preload ? 1 : ap(i)) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i), dark, home12 ? convColor(P0[i]) : undefined), name, sub: arr(i) && t < processingUntil ? processingLabel : "", lp: pos, sz: 16, fs, nc: labelNc, subC: labelSub }));
+    nodes.push(node(S(lp(P0[i], emfiMid, k)), { op: (preload ? 1 : ap(i)) * (1 - sg(t, 0.57, 0.67)), sc: 1 - 0.4 * k, dot: dot("p", arr(i), dark, home12 ? convColor(P0[i]) : undefined), name, sub: arr(i) && t < processingUntil ? processingLabel : "", lp: pos, sz: 16, fs, nc: labelNc, subC: labelSub }));
   });
   const depositorySub = !depOn ? "" : home12 && t < CONVENTIONAL_END ? "Received" : home12 && emfiHold ? "" : "Done";
   nodes.push(node(S(dpos), { op: preload ? 1 : ap(4), dot: dot("i", depOn, dark, home12 ? convColor(P0[4]) : undefined), name: "Depository", sub: depositorySub, lp: pos, sz: 18, fs, nc: labelNc, subC: labelSub }));
@@ -243,7 +245,7 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
   const emfiMark = preload ? mergeGrow : sk;
   const emfiScale = preload ? lp(0.32, 1, mergeGrow) : lp(0.6, 1, ez(sg(t, 0.6, 0.7)));
   const emfiLabel = preload ? sg(t, 0.72, 0.78) : 1;
-  nodes.push(node(S(50), {
+  nodes.push(node(S(emfiMid), {
     op: preload ? sg(t, 0.56, 0.6) : sg(t, 0.6, 0.66),
     sc: emfiScale,
     dot: swDot(es, emfiMark, "#0E2242", Math.max(Math.sin(Math.PI * sg(t, 0.67, 0.76)), Math.sin(Math.PI * sg(t, 0.785, 0.83)))),
@@ -273,7 +275,7 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     { s: rect(S(progressFrom), S(progressTo), replay ? 3 : 2), c: replay ? routeGradient : home12 ? convGradient : routeBlue, op: replay ? 1 : 1 - sg(t, 0.56, 0.6), size: convSize },
   ];
   const hm = !replay && trav > 0 ? (P0[trav - 1] + P0[trav]) / 2 : null;
-  const hp = S(hm ?? 50);
+  const hp = S(hm ?? emfiMid);
   const orderTf = V ? "translate(14px,-50%)" : "translate(-50%,-32px)";
   const orderTag = (along: number, text: string) => {
     const p = S(along);
@@ -289,7 +291,7 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     dTokRing: light ? "#A2C2FD" : "#0E2242",
     dCue: light ? "#52647c" : "#B1C0E2",
     dHand: { left: `${hp[0]}%`, top: pct(hp[1]), tf: V ? "translate(14px,-50%)" : "translate(-50%,-32px)", op: hm == null ? 0 : 1 },
-    dTags: home12 && travB === 1 ? [orderTag((emfiL + 50) / 2, "Order")] : home12 && travB === 2 ? [orderTag((50 + emfiR) / 2, "Handover")] : [],
+    dTags: home12 && travB === 1 ? [orderTag((emfiL + emfiMid) / 2, "Order")] : home12 && travB === 2 ? [orderTag((emfiMid + emfiR) / 2, "Handover")] : [],
     dCount: count,
     dNote: t >= 0.74 ? "Previously 4" : "",
     dRouteTitle: t >= 0.56 ? (routeTitles?.direct ?? "A Direct Route with EMFI") : (routeTitles?.conventional ?? "A conventional route"),
@@ -300,6 +302,114 @@ export function dirVals(t: number, V: boolean, routeTitles?: { conventional: str
     dO0: sg(t, 0.88, 0.91),
     dO1: sg(t, 0.91, 0.94),
     dO2: sg(t, 0.94, 0.97),
+  };
+}
+
+/** Three-node light route for direct-access “Direct to the Infrastructure.” */
+export function infraRouteVals(
+  t: number,
+  V: boolean,
+  steps: readonly [{ label: string; detail?: string }, { label: string; detail?: string }, { label: string; detail?: string }],
+) {
+  const { sg, ez, lp } = H();
+  const P0 = [1, 50, 99] as const;
+  // Keep token/progress clear of the EMFI mark (~64px ≈ 5% on typical card width).
+  const clear = V ? 7 : 5.5;
+  const leftStop = P0[1] - clear;
+  const rightStart = P0[1] + clear;
+  const S = (a: number): RoutePt => (V ? [14, a] : [a, "calc(46% - 10px)"]);
+  const pos = V ? "r" : "b";
+  const labelNc = "#071832";
+  const labelSub = "#52647c";
+  const routeGradient = `linear-gradient(${V ? "180deg" : "90deg"},#A2C2FD,#8098CC,#00C9A7)`;
+  const mark = ez(sg(t, 0.08, 0.22));
+  const midReached = t >= 0.42;
+  const endReached = t >= 0.85;
+
+  let tokAlong: number;
+  let progressTo: number;
+  let tokOp: number;
+  if (t < 0.5) {
+    const k = ez(sg(t, 0.18, 0.42));
+    tokAlong = lp(P0[0], leftStop, k);
+    progressTo = tokAlong;
+    tokOp = t < 0.12 ? sg(t, 0.06, 0.12) : 1 - sg(t, 0.36, 0.44);
+  } else if (t < 0.58) {
+    // Dwell at EMFI — hide token; park progress at the mark edge.
+    tokAlong = leftStop;
+    progressTo = leftStop;
+    tokOp = 0;
+  } else {
+    const k = ez(sg(t, 0.58, 0.85));
+    tokAlong = lp(rightStart, P0[2], k);
+    // Progress resumes past the mark so the beam doesn’t cut through the E.
+    progressTo = tokAlong;
+    tokOp = t > 0.92 ? 1 - sg(t, 0.92, 0.98) : sg(t, 0.58, 0.64);
+  }
+  const progressFrom = t >= 0.58 ? rightStart : P0[0];
+  // Keep the inbound leg filled while EMFI is processing / outbound runs.
+  const inboundFill = midReached ? leftStop : progressTo;
+
+  const handAlong = t < 0.5 ? (P0[0] + tokAlong) / 2 : (rightStart + tokAlong) / 2;
+  const handOp = tokOp > 0.25 && ((t >= 0.18 && t < 0.36) || (t >= 0.64 && t < 0.85)) ? 1 : 0;
+  const hp = S(handAlong);
+  const nodes = [
+    node(S(P0[0]), { op: 1, dot: dot("c", undefined, false), name: steps[0].label, sub: steps[0].detail ?? "", lp: V ? pos : "bl", sz: 18, fs: "14px", nc: labelNc, subC: labelSub, wrap: true }),
+    node(S(P0[1]), {
+      op: 1,
+      sc: lp(0.6, 1, mark),
+      dot: swDot(V ? 52 : 64, mark, "#0E2242", Math.sin(Math.PI * sg(t, 0.42, 0.58))),
+      sw: true,
+      swOff: 100 * (1 - mark),
+      ms: `${V ? 28 : 35}px`,
+      name: steps[1].label,
+      sub: midReached && !endReached ? (steps[1].detail || "Coordinating") : "",
+      labelOp: 1,
+      lp: pos,
+      sz: V ? 52 : 64,
+      fs: "16px",
+      nc: labelNc,
+      subC: labelSub,
+      wrap: true,
+    }),
+    node(S(P0[2]), {
+      op: 1,
+      dot: dot("i", endReached, false),
+      name: steps[2].label,
+      sub: endReached ? "Connected" : "",
+      lp: pos,
+      sz: 18,
+      fs: "14px",
+      nc: labelNc,
+      subC: labelSub,
+      wrap: true,
+    }),
+  ];
+  const lines = [
+    { s: rect(S(P0[0]), S(P0[2]), 2), c: "#8098CC", op: 1, size: undefined },
+    { s: rect(S(P0[0]), S(inboundFill), 3), c: routeGradient, op: midReached || tokOp > 0.05 ? 1 : tokOp, size: undefined },
+    ...(t >= 0.58
+      ? [{ s: rect(S(progressFrom), S(progressTo), 3), c: routeGradient, op: Math.max(tokOp, 0.85), size: undefined }]
+      : []),
+  ];
+  return {
+    dNodes: nodes,
+    dLines: lines,
+    dTok: tok(S(tokAlong), tokOp, "linear-gradient(135deg,#A2C2FD,#00C9A7)"),
+    dTokRing: "#A2C2FD",
+    dCue: labelSub,
+    dHand: { left: `${hp[0]}%`, top: pct(hp[1]), tf: V ? "translate(14px,-50%)" : "translate(-50%,-32px)", op: handOp },
+    dTags: [] as { left: string; top: string; tf: string; op: number; text: string }[],
+    dCount: endReached ? 2 : midReached ? 1 : 0,
+    dNote: "",
+    dRouteTitle: "EMFI Route",
+    dCap: "",
+    dStageH: V ? "400px" : "180px",
+    dBandOp: sg(t, 0.55, 0.75),
+    dBandS: V ? "left:14%;width:22px;margin-left:-11px;top:12%;height:76%" : `left:${P0[0]}%;width:${P0[2] - P0[0]}%;top:calc(46% - 10px);height:22px;margin-top:-11px`,
+    dO0: 0,
+    dO1: 0,
+    dO2: 0,
   };
 }
 
