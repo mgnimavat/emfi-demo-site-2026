@@ -123,28 +123,36 @@
           "body": "Regulated by. DIFC: EMFI Capital (DIFC) Limited."
         },
         {
+          "title": "CIMA",
+          "body": "Fund regulatory status. EMFI Fund SPC."
+        },
+        {
+          "title": "BDO",
+          "body": "Audited by. Relevant DIFC entity."
+        },
+        {
+          "title": "Baker Tilly",
+          "body": "Audited by. Relevant fund structure or portfolio."
+        },
+        {
+          "title": "Apex",
+          "body": "Fund administration. Relevant fund structures."
+        },
+        {
+          "title": "Walkers",
+          "body": "Legal counsel. Cayman Islands legal counsel for applicable fund work."
+        },
+        {
+          "title": "Dechert",
+          "body": "Legal counsel. English and US legal counsel for applicable matters."
+        },
+        {
           "title": "Euroclear",
           "body": "Infrastructure. Securities settlement and custody infrastructure."
         },
         {
           "title": "Allfunds",
           "body": "Fund platform. Fund dealing, distribution and technology services."
-        },
-        {
-          "title": "Audit",
-          "body": "Independent audit. Relevant entities and fund structures. Auditors are named in the relevant reports and fund documents."
-        },
-        {
-          "title": "Administration",
-          "body": "Fund administration. Relevant fund structures, by independent administrators named in the fund documentation."
-        },
-        {
-          "title": "Legal",
-          "body": "Legal counsel. Independent legal counsel for applicable matters."
-        },
-        {
-          "title": "Banking",
-          "body": "Banking. Client money held with banks under CASS arrangements, where applicable."
         }
       ]
     },

@@ -35,7 +35,13 @@ const providerLogos: Readonly<Partial<Record<string, string>>> = {
 const relationshipLogos: Readonly<Partial<Record<string, DetailLogo>>> = {
   FCA: { src: '/brand/regulators/fca-brand.svg', width: 156, height: 89 },
   DFSA: { src: '/brand/regulators/dfsa-brand.png', width: 160, height: 100 },
-  Euroclear: { src: euroclearLogo, width: 96, height: 96 },
+  CIMA: { src: '/brand/regulators/cima-brand.png', width: 120, height: 120 },
+  BDO: { src: '/brand/auditors/bdo-brand.png', width: 280, height: 108 },
+  'Baker Tilly': { src: '/brand/auditors/baker-tilly-brand.png', width: 1023, height: 268 },
+  Apex: { src: '/images/fund-providers/apex.svg', width: 550, height: 514 },
+  Walkers: { src: '/images/fund-providers/walkers.jpg', width: 1797, height: 614 },
+  Dechert: { src: '/images/fund-providers/dechert.png', width: 1024, height: 1024 },
+  Euroclear: { src: '/brand/standing/euroclear-white.png', width: 140, height: 135 },
   Allfunds: { src: allfundsLogo, width: 144, height: 39 },
 };
 const benefitIcons = [Layers, GitMerge, ShieldCheck];
@@ -93,28 +99,54 @@ const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', children }
   </section>
 );
 
-const Details = ({ items, layout = 'cards', logos }: {
+const splitDetailLead = (body: string) => {
+  const match = body.match(/^(.+?\.)(\s+)([\s\S]+)$/);
+  return match ? { lead: match[1], rest: match[3] } : null;
+};
+
+const Details = ({ items, layout = 'cards', logos, emphasizeLead = false }: {
   items: readonly Detail[];
   layout?: 'cards' | 'benefits' | 'ledger' | 'entities';
   logos?: Readonly<Partial<Record<string, DetailLogo>>>;
+  emphasizeLead?: boolean;
 }) => (
   <ExecutionReveal>
+    {logos ? (
+      <svg className={styles.logoFilter} aria-hidden="true" focusable="false">
+        <defs>
+          <filter id="why-logo-navy" colorInterpolationFilters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.6378 -2.1456 -.2166 0 3" />
+            <feComposite in2="SourceAlpha" operator="in" result="ink" />
+            <feFlood floodColor="var(--text-primary, #071832)" />
+            <feComposite in2="ink" operator="in" />
+          </filter>
+        </defs>
+      </svg>
+    ) : null}
     <ul className={styles.details} data-layout={layout} role="list">
       {items.map((item, index) => {
         const Icon = layout === 'benefits' ? benefitIcons[index] : undefined;
         const logo = logos?.[item.title];
+        const lead = emphasizeLead ? splitDetailLead(item.body) : null;
 
         return (
-          <li key={item.title} className={styles.detail}>
-            <div>
-              {Icon ? <span className={styles.detailIcon}><Icon size={22} aria-hidden="true" /></span> : null}
-              {item.code ? <span className={styles.code}>{item.code}</span> : null}
-              <h3>
-                {logo ? <Image {...logo} alt={item.title} className={styles.detailLogo} /> : item.title}
-              </h3>
-            </div>
-            <div>
-              <p className={styles.body}>{item.body}</p>
+          <li key={item.title} className={styles.detail} data-has-logo={logo ? '' : undefined}>
+            {logo ? (
+              <div className={styles.detailMark}>
+                <Image {...logo} alt="" data-mark={item.title} className={styles.detailLogo} unoptimized />
+              </div>
+            ) : (
+              <div>
+                {Icon ? <span className={styles.detailIcon}><Icon size={22} aria-hidden="true" /></span> : null}
+                {item.code ? <span className={styles.code}>{item.code}</span> : null}
+                <h3>{item.title}</h3>
+              </div>
+            )}
+            <div className={logo ? styles.detailCopy : undefined}>
+              {logo ? <h3>{item.title}</h3> : null}
+              <p className={styles.body}>
+                {lead ? <><strong className={styles.detailLead}>{lead.lead}</strong> {lead.rest}</> : item.body}
+              </p>
               {item.href && item.link ? (
                 <a href={item.href} target="_blank" rel="noreferrer" className={styles.detailLink}>
                   {item.link}<span className="sr-only"> — {item.title}</span>
@@ -225,7 +257,7 @@ export const DependableContentPage = ({ copy, heroCopy }: {
       <OversightCycle />
     </WhyHero>
     <ContentBand id="regulation" copy={copy.relationships} tone="soft">
-      <Details items={copy.relationships.items} layout="ledger" logos={relationshipLogos} />
+      <Details items={copy.relationships.items} layout="ledger" logos={relationshipLogos} emphasizeLead />
     </ContentBand>
     <ContentBand id="client-assets" copy={copy.assets}>
       <Details items={copy.assets.items} />

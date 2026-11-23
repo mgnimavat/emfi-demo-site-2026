@@ -117,35 +117,43 @@
       "items": [
         {
           "title": "FCA",
-          "body": "Regulación en el Reino Unido de EMFI Securities Limited y EMFI Capital Limited."
+          "body": "Regulado por. Reino Unido: EMFI Securities Limited y EMFI Capital Limited."
         },
         {
           "title": "DFSA",
-          "body": "Regulación en el DIFC de EMFI Capital (DIFC) Limited."
+          "body": "Regulado por. DIFC: EMFI Capital (DIFC) Limited."
+        },
+        {
+          "title": "CIMA",
+          "body": "Situación regulatoria del fondo. EMFI Fund SPC."
+        },
+        {
+          "title": "BDO",
+          "body": "Auditado por. Entidad pertinente del DIFC."
+        },
+        {
+          "title": "Baker Tilly",
+          "body": "Auditado por. Estructura de fondo o cartera pertinente."
+        },
+        {
+          "title": "Apex",
+          "body": "Administración de fondos. Estructuras de fondos pertinentes."
+        },
+        {
+          "title": "Walkers",
+          "body": "Asesoría jurídica. Asesoría jurídica de las Islas Caimán para los fondos aplicables."
+        },
+        {
+          "title": "Dechert",
+          "body": "Asesoría jurídica. Asesoría jurídica inglesa y estadounidense para los asuntos aplicables."
         },
         {
           "title": "Euroclear",
-          "body": "Infraestructura de liquidación y custodia de valores."
+          "body": "Infraestructura. Infraestructura de liquidación y custodia de valores."
         },
         {
           "title": "Allfunds",
-          "body": "Plataforma de negociación, distribución y tecnología para fondos."
-        },
-        {
-          "title": "Auditoría",
-          "body": "Auditoría independiente de las entidades y estructuras de fondos pertinentes. Los auditores se identifican en los informes y documentos de los fondos."
-        },
-        {
-          "title": "Administración",
-          "body": "Administración independiente de las estructuras de fondos pertinentes, según su documentación."
-        },
-        {
-          "title": "Asesoría jurídica",
-          "body": "Asesoría jurídica independiente para los asuntos aplicables."
-        },
-        {
-          "title": "Banca",
-          "body": "El dinero de clientes se mantiene en bancos conforme a CASS, cuando corresponda."
+          "body": "Plataforma de fondos. Negociación, distribución y tecnología para fondos."
         }
       ]
     },

@@ -38,6 +38,10 @@
   font-size: 15px;
   line-height: 1.75;
 }
+.detailLead {
+  color: var(--text-primary);
+  font-weight: 700;
+}
 .note {
   max-width: 108ch;
   padding-block-start: var(--space-4);
@@ -119,15 +123,79 @@
 .details:is([data-layout='cards'], [data-layout='benefits']) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .detail { display: grid; align-content: start; gap: var(--space-3); min-width: 0; }
 .detail h3 { margin: 0; font-size: clamp(19px, 1.8cqi, 25px); font-weight: 700; line-height: 1.25; }
+.logoFilter { position: absolute; width: 0; height: 0; overflow: hidden; }
 .detailLogo {
   display: block;
   width: auto;
-  height: 56px;
-  max-width: min(144px, 100%);
+  height: 44px;
+  max-width: min(168px, 100%);
   object-fit: contain;
   object-position: left center;
+  filter: url('#why-logo-navy');
+}
+.detailLogo[data-mark='FCA'],
+.detailLogo[data-mark='Allfunds'] {
+  height: 56px;
+  max-width: min(200px, 100%);
+}
+.detailLogo[data-mark='DFSA'] {
+  height: 64px;
+  max-width: min(220px, 100%);
+}
+.detailLogo[data-mark='Apex'] {
+  height: 64px;
+  max-width: min(200px, 100%);
+}
+.detailLogo[data-mark='CIMA'],
+.detailLogo[data-mark='Walkers'],
+.detailLogo[data-mark='Dechert'] {
+  height: 76px;
+  max-width: min(220px, 100%);
+}
+.detailLogo[data-mark='Euroclear'] {
+  height: 80px;
+  max-width: min(220px, 100%);
+  filter: invert(1) url('#why-logo-navy');
 }
 .detailLogo:dir(rtl) { object-position: right center; }
+.detailMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+.detailMark .detailLogo {
+  max-width: 100%;
+  object-position: center;
+}
+.detailCopy {
+  display: grid;
+  align-content: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.details[data-layout='ledger'] .detail[data-has-logo] {
+  grid-template-columns: 25% auto minmax(0, 1fr);
+  column-gap: var(--space-4);
+  row-gap: 0;
+  align-items: center;
+  align-content: center;
+}
+.details[data-layout='ledger'] .detail[data-has-logo]::before {
+  content: '';
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--why-line, var(--color-blue-200)) 55%, transparent) 22%,
+    color-mix(in srgb, var(--why-line, var(--color-blue-200)) 85%, transparent) 50%,
+    color-mix(in srgb, var(--why-line, var(--color-blue-200)) 55%, transparent) 78%,
+    transparent 100%
+  );
+}
 .details:is([data-layout='cards'], [data-layout='benefits'], [data-layout='entities']) .detail {
   padding: clamp(var(--space-5), 2.7cqi, var(--space-7));
   border: 1px solid color-mix(in srgb, var(--why-line, var(--color-blue-100)) 55%, transparent);
@@ -201,7 +269,11 @@
   border-radius: var(--radius-card);
   background: var(--ledger-divider);
 }
-.details[data-layout='ledger'] .detail { padding: clamp(var(--space-5), 3cqi, var(--space-7)); background: var(--bg-page); }
+.details[data-layout='ledger'] .detail {
+  align-content: center;
+  padding: clamp(var(--space-5), 3cqi, var(--space-7));
+  background: var(--bg-page);
+}
 .page > [data-tone='navy'] .details[data-layout='ledger'] .detail {
   background: color-mix(in srgb, var(--bg-inverse) 94%, var(--text-inverse));
 }
