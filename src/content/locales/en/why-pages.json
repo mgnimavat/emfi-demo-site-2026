@@ -76,8 +76,7 @@
         "Execution.",
         "Connected."
       ],
-      "lead": "EMFI Workstation is the execution interface. It brings instrument search, market information, order entry and transaction monitoring into the same workflow.",
-      "body": "VCON upload is one trade-entry route alongside manual entry, spreadsheet upload, SFTP, API and supported drop-copy arrangements."
+      "lead": "EMFI Workstation is the execution interface. It brings instrument search, market information, order entry and transaction monitoring into the same workflow."
     },
     "dashboard": {
       "titleLines": [

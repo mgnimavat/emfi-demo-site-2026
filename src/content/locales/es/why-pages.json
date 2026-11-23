@@ -77,8 +77,7 @@
         "Ejecución.",
         "Conectada."
       ],
-      "lead": "EMFI Workstation es la interfaz de ejecución. Integra la búsqueda de instrumentos, la información de mercado, la introducción de órdenes y el seguimiento de transacciones en un solo flujo.",
-      "body": "La carga de VCON es una vía de entrada de operaciones junto con la introducción manual, las hojas de cálculo, SFTP, API y los mecanismos drop-copy compatibles."
+      "lead": "EMFI Workstation es la interfaz de ejecución. Integra la búsqueda de instrumentos, la información de mercado, la introducción de órdenes y el seguimiento de transacciones en un solo flujo."
     },
     "dashboard": {
       "titleLines": [

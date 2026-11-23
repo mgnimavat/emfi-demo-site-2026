@@ -1,13 +1,38 @@
 .stage { position: relative; width: 100%; aspect-ratio: 1160 / 800; container-type: inline-size; margin-left: auto; overflow: hidden; }
-.dashboard, .execution { position: absolute; top: 50%; left: 0; width: 100%; aspect-ratio: 1160 / 800; container-type: inline-size; }
+.dashboard, .execution, .mobile { position: absolute; top: 50%; left: 0; width: 100%; aspect-ratio: 1160 / 800; container-type: inline-size; }
 .stage:dir(rtl) { margin-left: 0; margin-right: auto; }
 .dashboard { z-index: 1; }
 .execution { z-index: 2; }
+.mobile { z-index: 3; display: grid; place-items: center; }
 .clip { height: 100%; overflow: hidden; background: transparent; }
-.execution .clip { background: var(--color-white); }
-.dashboardScale > div { height: 100%; border: 0; background: transparent; box-shadow: none; }
+.dashboardScale > div,
+.executionScale > :global(fieldset) { height: 100%; border: 0; background: transparent; box-shadow: none; }
 .dashboardScale > div > div { height: 100%; }
 .dashboardScale, .executionScale { box-sizing: border-box; width: 1160px; height: 800px; padding: var(--space-2); zoom: calc(100cqw / 1160px); pointer-events: none; }
+.phones {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(12px, 2.2cqw, 28px);
+  width: min(92%, 720px);
+  height: min(88%, 640px);
+  pointer-events: none;
+}
+.phones :global(figure) {
+  width: auto;
+  height: 82%;
+  max-width: min(28%, 220px);
+  aspect-ratio: 489 / 1024;
+}
+.phones :global(figure[data-featured]) {
+  height: 100%;
+  max-width: min(34%, 268px);
+}
+.phones :global(figure > div) {
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 16%),
+    0 8px 14px rgb(7 24 50 / 8%);
+}
 
 @media (min-width: 900px) {
   .stage { width: min(100%, calc((100dvh - var(--site-header-height, 78px) - 140px) * 100 / 90)); }
@@ -16,6 +41,8 @@
   .stage { width: min(calc(100% + 4px), calc((100dvh - var(--site-header-height, 78px) - 140px) * 100 / 90)); }
 }
 @media (max-width: 899px) {
-  .stage { display: grid; height: auto; gap: 0; overflow: visible; }
-  .dashboard, .execution { position: relative; top: auto; left: auto; aspect-ratio: auto; }
+  .stage { display: grid; height: auto; gap: clamp(24px, 4vw, 40px); overflow: visible; }
+  .dashboard, .execution, .mobile { position: relative; top: auto; left: auto; aspect-ratio: auto; }
+  .mobile { min-height: 420px; }
+  .phones { width: min(100%, 520px); height: 400px; }
 }

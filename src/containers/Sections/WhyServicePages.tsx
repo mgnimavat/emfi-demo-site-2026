@@ -1,12 +1,13 @@
 import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, GitMerge, Layers, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, GitMerge, Layers, ShieldCheck } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { ConnectedJourney } from '@/components/sections/execution-v2/connected-journey';
 import { OversightCycle } from '@/components/sections/dependable/oversight-cycle';
 import { ExecutionHeroTitle } from '@/components/sections/execution/hero-title';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { ResponsiveShowcase } from '@/components/sections/responsive/showcase';
+import { PhoneDevice } from '@/components/mockups/phone-device';
+import { Button } from '@/components/ui/button';
 import hero from '@/components/sections/execution/page.module.css';
 import band from '@/components/sections/execution/workstation-section.module.css';
 import type { WhyPageCopy } from '@/lib/i18n/why-page-dictionaries';
@@ -65,13 +66,13 @@ const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', children }
   id: string;
   copy: Intro;
   tone?: 'white' | 'soft' | 'navy';
-  layout?: 'standard' | 'centered' | 'product';
+  layout?: 'standard' | 'centered' | 'product' | 'split';
   children?: ReactNode;
 }) => (
   <section id={id} className={`${band.section} ${styles.contentBand}`} data-tone={tone}
     data-layout={layout} aria-labelledby={`${id}-heading`}>
     <div className={`${band.container} ${styles.bandContainer}`}>
-      <div className={`${styles.bandIntro} ${copy.lead ? band.introduction : ''}`}>
+      <div className={`${styles.bandIntro} ${copy.lead || copy.body ? band.introduction : ''}`}>
         <ExecutionReveal>
           <h2 id={`${id}-heading`} className={`${band.title} ${styles.bandTitle}`}>
             {copy.titleLines.map((line) => (
@@ -79,10 +80,10 @@ const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', children }
             ))}
           </h2>
         </ExecutionReveal>
-        {copy.lead ? (
+        {copy.lead || copy.body ? (
           <ExecutionReveal delay={0.12} className={styles.introCopy}>
-            <p className={styles.lead}>{copy.lead}</p>
-            {copy.body ? <p className={styles.body}>{copy.body}</p> : null}
+            {copy.lead ? <p className={styles.lead}>{copy.lead}</p> : null}
+            {copy.body ? <p className={layout === 'split' ? styles.callout : styles.body}>{copy.body}</p> : null}
           </ExecutionReveal>
         ) : null}
       </div>
@@ -166,9 +167,11 @@ export const DirectContentPage = ({ copy, heroCopy, locale }: {
     </ContentBand>
     <ContentBand id="direct-benefits" copy={copy.benefits}>
       <Details items={copy.benefits.items} layout="benefits" />
-      <Link className={styles.action} href={localizeHref('/services/settlement-custody', locale)}>
-        {copy.benefits.action}<ArrowRight size={18} aria-hidden="true" />
-      </Link>
+      <div className={styles.action}>
+        <Button href={localizeHref('/services/settlement-custody', locale)}>
+          {copy.benefits.action}
+        </Button>
+      </div>
     </ContentBand>
     <ContentBand id="dma" copy={copy.execution} tone="soft" />
   </div>
@@ -195,25 +198,20 @@ export const ResponsiveContentPage = ({ copy, heroCopy, workflowSteps }: {
     <ContentBand id="mobile" copy={copy.mobile} tone="soft" layout="product">
       <ExecutionReveal className={styles.phones}>
         {responsiveTechnology.showcase.screens.map((screen, index) => (
-          <Image key={screen.src} src={screen.src} alt={screen.alt}
-            width={screen.width} height={screen.height}
-            sizes={index === 1 ? '(max-width: 850px) 34vw, 264px' : '(max-width: 850px) 29vw, 228px'} />
+          <PhoneDevice key={screen.src} src={`${screen.src}?v=8`} alt={screen.alt}
+            width={screen.width} height={screen.height} featured={index === 1} />
         ))}
       </ExecutionReveal>
     </ContentBand>
-    <ContentBand id="specialist" layout="centered" copy={{
+    <ContentBand id="specialist" layout="split" copy={{
       titleLines: copy.specialist.titleLines,
-      lead: copy.specialist.lead,
+      body: copy.specialist.callout,
       note: copy.specialist.note,
     }}>
       <ExecutionReveal className={styles.journey}>
         <ConnectedJourney label={copy.specialist.titleLines.join(' ')}
           steps={workflowSteps.map(({ title }) => ({ label: title }))}
           icons={['search', 'shield', 'handshake']} />
-      </ExecutionReveal>
-      <ExecutionReveal className={styles.specialistSummary}>
-        <p className={styles.body}>{copy.specialist.body}</p>
-        <p className={styles.callout}>{copy.specialist.callout}</p>
       </ExecutionReveal>
     </ContentBand>
   </div>

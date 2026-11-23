@@ -4,9 +4,9 @@ import Image from "next/image";
 import styles from "./floating-phones.module.css";
 
 const PHONES = [
-  { src: "/images/services/phone-balances.png?v=4", alt: "Balances on the EMFI mobile app", place: "left" },
-  { src: "/images/services/phone-order-entry.png?v=3", alt: "Order entry on the EMFI mobile app", place: "center" },
-  { src: "/images/services/phone-securities.png?v=3", alt: "Securities on the EMFI mobile app", place: "right" },
+  { src: "/images/services/phone-balances.png?v=6", alt: "Balances on the EMFI mobile app", place: "left" },
+  { src: "/images/services/phone-order-entry.png?v=6", alt: "Order entry on the EMFI mobile app", place: "center" },
+  { src: "/images/services/phone-securities.png?v=6", alt: "Securities on the EMFI mobile app", place: "right" },
 ] as const;
 
 export function FloatingPhones() {
