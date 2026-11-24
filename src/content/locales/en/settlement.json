@@ -275,8 +275,8 @@
   },
   "crossBorderArchive": {
     "titleLines": [
-      "Cross Border",
-      "Not Cross Settle"
+      "Cross Border.",
+      "Not Cross Settle."
     ],
     "body": "In a shared omnibus account, securities bought for one client can be used to meet another client’s delivery. For larger clients, we can open dedicated Euroclear accounts so your securities stay identified as yours."
   },
@@ -344,8 +344,8 @@
     {
       "id": "trade-upload",
       "titleLines": [
-        "Trade Upload - Yes.",
-        "Manual Entry - No."
+        "Trade Upload, Yes.",
+        "Manual Entry, No."
       ],
       "lead": "A Bloomberg VCON confirmation can carry the trade details already agreed between counterparties. Re-keying those details creates avoidable work and opportunities for input errors.",
       "panels": [
@@ -657,36 +657,68 @@
   },
   "uploadAnimation": {
     "label": "VCON image upload",
-    "prompt": "Drag to upload image",
+    "prompt": "Drop VCON image here",
     "file": "vcon-confirmation.png",
     "ticketTitle": "VCON Trade Confirmation",
     "result": "Extracted trade details",
-    "ready": "Ready for review",
+    "submit": "Submit",
+    "submitting": "Submitting…",
+    "submitted": "Submitted",
     "fields": [
       {
         "id": "security",
         "label": "Security",
-        "value": "CORPORATE BOND A"
+        "value": "ALDER QUAY 7.95 09/10/31"
       },
       {
         "id": "side",
         "label": "Side",
-        "value": "Buy"
+        "value": "Sell"
       },
       {
         "id": "quantity",
-        "label": "Quantity",
-        "value": "250"
+        "label": "Face amount",
+        "value": "500,000"
       },
       {
         "id": "price",
         "label": "Price",
-        "value": "97.625"
+        "value": "103.31000"
+      },
+      {
+        "id": "yield",
+        "label": "Yield",
+        "value": "6.99984%"
       },
       {
         "id": "counterparty",
         "label": "Counterparty",
-        "value": "BROKER A"
+        "value": "BRACKEN REACH SECURITIES"
+      },
+      {
+        "id": "trade-date",
+        "label": "Trade date",
+        "value": "2025-08-12"
+      },
+      {
+        "id": "settlement-date",
+        "label": "Settlement date",
+        "value": "2025-08-13"
+      },
+      {
+        "id": "principal",
+        "label": "Principal",
+        "value": "USD 516,550.00"
+      },
+      {
+        "id": "accrued",
+        "label": "Accrued interest",
+        "value": "USD 16,893.75"
+      },
+      {
+        "id": "total",
+        "label": "Total",
+        "value": "USD 533,443.75"
       }
     ]
   }

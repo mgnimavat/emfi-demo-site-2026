@@ -177,9 +177,9 @@ const BalanceChart = () => {
   );
 };
 
-type SettlementDashboardProps = { borderless?: boolean };
+type SettlementDashboardProps = { borderless?: boolean; fit?: boolean };
 
-const SettlementDashboardContent = ({ borderless }: SettlementDashboardProps) => {
+const SettlementDashboardContent = ({ borderless, fit }: SettlementDashboardProps) => {
   const { t } = useServiceLocale();
   return (
   <div
@@ -187,10 +187,11 @@ const SettlementDashboardContent = ({ borderless }: SettlementDashboardProps) =>
     dir="ltr"
     data-system-preview="dashboard"
     data-borderless={borderless || undefined}
+    data-fit={fit || undefined}
     className={styles.viewport}
     role="region"
     aria-label={t("Illustrative portfolio dashboard")}
-    tabIndex={0}
+    tabIndex={fit ? undefined : 0}
   >
     <WorkstationPrivacyProvider variant="blur">
       <div className={styles.preview}>
@@ -218,8 +219,8 @@ const SettlementDashboardContent = ({ borderless }: SettlementDashboardProps) =>
 );
 };
 
-export const SettlementDashboard = ({ borderless }: SettlementDashboardProps) => (
+export const SettlementDashboard = (props: SettlementDashboardProps) => (
   <ServiceLocaleProvider locale="en" messages={{}}>
-    <SettlementDashboardContent borderless={borderless} />
+    <SettlementDashboardContent {...props} />
   </ServiceLocaleProvider>
 );

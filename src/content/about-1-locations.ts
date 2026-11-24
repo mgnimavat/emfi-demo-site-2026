@@ -6,7 +6,6 @@ export const about1Locations = {
       kicker: ["EMFI Fund SPC"],
       lines: [
         "802 West Bay Road",
-        "P.O. Box 10250",
         "Grand Cayman KY1-1003",
         "Cayman Islands",
       ],
@@ -16,7 +15,7 @@ export const about1Locations = {
     {
       city: "London",
       kicker: ["EMFI Securities Limited", "EMFI Capital Limited"],
-      lines: ["25-26 Dering Street", "Third Floor, Mayfair", "London W1S 1AW", "United Kingdom"],
+      lines: ["25-26 Dering Street", "Mayfair, London W1S 1AW", "United Kingdom"],
       email: "contact@emfi.uk",
       phone: "+44 20 3983 3634",
       mapQuery: "51.514390,-0.145650",
@@ -24,7 +23,7 @@ export const about1Locations = {
     {
       city: "Dubai",
       kicker: ["EMFI Capital (DIFC) Limited"],
-      lines: ["P7A-10, Tower A", "Damac Park Towers", "DIFC, Dubai", "United Arab Emirates"],
+      lines: ["P7A-10, Park Towers", "DIFC, Dubai", "United Arab Emirates"],
       email: "contact@emfi.ae",
       mapQuery: "25.2093123,55.2786716",
     },

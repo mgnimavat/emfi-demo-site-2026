@@ -248,6 +248,7 @@
   "Replay": "Repetir",
   "EMFI | Home": "EMFI | Inicio",
   "Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.": "Aviso: Estos nombres y logotipos identifican relaciones concretas con entidades de EMFI. Su inclusión no implica respaldo ni recomendación. Las autorizaciones y marcos regulatorios, los nombramientos de auditoría y las designaciones profesionales se aplican únicamente a la entidad o actividad correspondiente.",
+  "Disclaimer: These names and logos identify specific EMFI relationships and do not imply endorsement. Permissions apply only to the relevant entity.": "Aviso: Estos nombres y logotipos identifican relaciones concretas con EMFI y no implican respaldo. Las autorizaciones se aplican solo a la entidad correspondiente.",
   "An instruction moves from You to Settlement agent, Sub-custodian, Custodian and Depository. The same route then shortens to You, EMFI, Depository.": "Una instrucción pasa de usted al agente de liquidación, el subcustodio, el custodio y el depositario. Después, la ruta se acorta a usted, EMFI y el depositario.",
   "Go to step": "Ir al paso",
   "Instruction": "Instrucción",

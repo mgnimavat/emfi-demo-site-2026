@@ -32,6 +32,7 @@
 }
 .archiveCopy { display: grid; gap: clamp(16px, 2cqi, 28px); min-width: 0; container-type: inline-size; }
 .section.archiveSection .archiveCopy .title { font-size: min(13.5cqi, 88px); }
+.section.archiveSection[id='cross-border'] .archiveCopy .title:lang(en) { font-size: min(13cqi, 88px); }
 .section.archiveSection .archiveCopy .title:lang(es) { font-size: min(10.7cqi, 76px); }
 .section.archiveWorkflow .archiveCopy .title { font-size: min(10.1cqi, 74px); }
 .section.archiveWorkflow .archiveCopy .title:is(:lang(ar), :lang(es)) { font-size: min(9cqi, 70px); }
@@ -150,4 +151,5 @@
 }
 @media (max-width: 900px) {
   .uploadTitle { font-size: clamp(38px, 8.5cqi, 70px); }
+  .uploadTitle:lang(en) { font-size: clamp(min(38px, 11.6cqi), 8.5cqi, 70px); }
 }

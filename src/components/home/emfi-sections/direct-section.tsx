@@ -4,13 +4,13 @@ import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
 
 import { useLayoutEffect, useRef, type RefObject } from "react";
 import { useReducedMotion } from "framer-motion";
-import { cardStyle, centeredCardSpace } from "@/components/emfi-sections/css";
-import { DirectRouteAnimation } from "@/components/emfi-sections/direct-route-animation";
-import { SectionAction, SectionCopy, SectionFooterBody } from "@/components/emfi-sections/outcomes";
-import { ReplayButton } from "@/components/emfi-sections/replay-button";
-import styles from "@/components/emfi-sections/sections.module.css";
-import type { dirVals } from "@/components/emfi-sections/values";
-import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhySplit, useWhyStep, WhyMarker } from "@/components/emfi-sections/why-flow";
+import { cardStyle, centeredCardSpace, lightRouteCardStyle } from "./css";
+import { DirectRouteAnimation } from "./direct-route-animation";
+import { SectionAction, SectionCopy, SectionFooterBody } from "./outcomes";
+import { ReplayButton } from "./replay-button";
+import styles from "./sections.module.css";
+import type { dirVals } from "./values";
+import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhySplit, useWhyStep, WhyMarker } from "./why-flow";
 
 export function DirectSection({
   cols,
@@ -75,7 +75,7 @@ export function DirectSection({
     <section id="direct" data-screen-label="03 More direct" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: solidLight ? "#ffffff" : light ? "transparent" : "radial-gradient(50% 60% at 0% 20%,rgba(162,194,253,.1),transparent 70%)", zIndex: light ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
       {marked && step && !split ? <WhyMarker n={step} active={active} /> : null}
       <div
-        className={[light ? styles.lightCopy : "", pinned ? styles.pinStack : "", split ? styles.splitDirect : ""].filter(Boolean).join(" ") || undefined}
+        className={[light ? styles.lightCopy : "", pinned ? styles.pinStack : "", split ? styles.splitDirect : "", split ? styles.whyColumns : ""].filter(Boolean).join(" ") || undefined}
         style={{
           position: "relative",
           zIndex: light ? 2 : undefined,
@@ -101,13 +101,22 @@ export function DirectSection({
             tone={light ? "light" : "dark"}
             align={split ? "start" : centered || pinned ? "center" : "start"}
           />
+          {pinned && split ? <SectionAction href="/why-emfi/direct-access" label="Learn More" align="start" /> : null}
         </div>
         <div
           ref={cardRef}
           className={[pinned ? styles.pinVisual : "", split ? styles.splitDirectVisual : ""].filter(Boolean).join(" ") || undefined}
           style={
             split
-              ? undefined
+              ? {
+                  ...lightRouteCardStyle,
+                  boxSizing: "border-box",
+                  width: "100%",
+                  height: "auto",
+                  maxHeight: "none",
+                  minHeight: "clamp(300px, 34vh, 380px)",
+                  aspectRatio: "16 / 9",
+                }
               : centered && !pinned
                 ? { ...cardStyle, width: "100%", paddingTop: `calc(${cardStyle.paddingTop} + ${centeredCardSpace})`, paddingBottom: `calc(${cardStyle.padding} + ${centeredCardSpace})` }
                 : cardStyle
@@ -117,7 +126,6 @@ export function DirectSection({
           {showRouteTitle ? (
             <p
               className={centered && !pinned && !split ? `${styles.routeTitle} ${styles.routeTitleCenter}` : styles.routeTitle}
-              style={split ? { position: "relative", top: "auto", left: 0, right: "auto", margin: "0 0 8px", justifyContent: "flex-start" } : undefined}
             >
               {pinned ? null : <span aria-hidden="true" className={styles.eyebrowMark} />}
               <span className={dRouteTitle === "EMFI Route" ? styles.routeTitleEmfi : dRouteTitle === "Conventional Route" ? styles.routeTitleConventional : undefined}>{t(dRouteTitle)}</span>
@@ -133,10 +141,8 @@ export function DirectSection({
             </div>
           )}
         </div>
-        {pinned ? (
-          split ? (
-            <SectionAction href="/why-emfi/direct-access" label="Learn More" align="start" />
-          ) : shortWhy ? (
+        {pinned && !split ? (
+          shortWhy ? (
             <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/why-emfi/direct-access" : undefined} />
           ) : (
             <SectionAction href="/why-emfi/direct-access" label="Learn More" />

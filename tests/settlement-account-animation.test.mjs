@@ -102,6 +102,14 @@ for (const [orientation, axis] of [['horizontal', 'x'], ['vertical', 'y'], ['tra
   test(`the ${orientation} tracks connect clients, accounts and deliveries in order`, () => {
     const { clients, accounts, pool, deliveries, routes } = settlementLayouts[orientation];
 
+    for (const route of Object.values(routes)) {
+      assert.match(route.path, /^M[\d .]+ L[\d .]+$/);
+      for (const [index, from] of route.points.slice(0, -1).entries()) {
+        const to = route.points[index + 1];
+        assert.ok((from[0] === to[0]) !== (from[1] === to[1]), route.path);
+      }
+    }
+
     for (const [index, sharedArrival, sharedDelivery, arrival, delivery] of [
       [0, routes.sharedArrival, routes.sharedPending, routes.arrivalA, routes.deliveryA],
       [1, routes.sharedArrivalB, routes.sharedDelivery, routes.arrivalB, routes.deliveryB],

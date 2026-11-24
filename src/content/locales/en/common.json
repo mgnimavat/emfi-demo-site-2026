@@ -11,7 +11,7 @@
   "services": [
     "Intelligence & Execution",
     "Settlement & Custody",
-    "Wealth & Asset Management"
+    "Asset & Wealth Management"
   ],
   "map": "Map of",
   "zoomIn": "Zoom in on",
@@ -26,7 +26,6 @@
         ],
         "lines": [
           "802 West Bay Road",
-          "P.O. Box 10250",
           "Grand Cayman KY1-1003",
           "Cayman Islands"
         ],
@@ -41,8 +40,7 @@
         ],
         "lines": [
           "25-26 Dering Street",
-          "Third Floor, Mayfair",
-          "London W1S 1AW",
+          "Mayfair, London W1S 1AW",
           "United Kingdom"
         ],
         "email": "contact@emfi.uk",
@@ -55,8 +53,7 @@
           "EMFI Capital (DIFC) Limited"
         ],
         "lines": [
-          "P7A-10, Tower A",
-          "Damac Park Towers",
+          "P7A-10, Park Towers",
           "DIFC, Dubai",
           "United Arab Emirates"
         ],

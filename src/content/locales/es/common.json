@@ -11,7 +11,7 @@
   "services": [
     "Inteligencia y ejecución",
     "Liquidación y custodia",
-    "Gestión patrimonial y de activos"
+    "Gestión de activos y patrimonio"
   ],
   "map": "Mapa de",
   "zoomIn": "Acercar a",
@@ -26,7 +26,6 @@
         ],
         "lines": [
           "802 West Bay Road",
-          "P.O. Box 10250",
           "Grand Cayman KY1-1003",
           "Islas Caimán"
         ],
@@ -41,8 +40,7 @@
         ],
         "lines": [
           "25-26 Dering Street",
-          "Third Floor, Mayfair",
-          "London W1S 1AW",
+          "Mayfair, London W1S 1AW",
           "Reino Unido"
         ],
         "email": "contact@emfi.uk",
@@ -55,8 +53,7 @@
           "EMFI Capital (DIFC) Limited"
         ],
         "lines": [
-          "P7A-10, Tower A",
-          "Damac Park Towers",
+          "P7A-10, Park Towers",
           "DIFC, Dubai",
           "Emiratos Árabes Unidos"
         ],
