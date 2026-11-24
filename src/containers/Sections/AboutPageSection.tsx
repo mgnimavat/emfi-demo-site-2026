@@ -1,7 +1,6 @@
 import { FadeIn } from '@/components/motion/fade-in';
 import { About1Locations } from '@/components/sections/about-1-locations';
 import { AboutEntities } from '@/components/sections/about-entities';
-import { AboutHero } from '@/components/sections/about-hero';
 import { AboutMarket } from '@/components/sections/about-market';
 import { AboutTimeline } from '@/components/sections/about-timeline';
 import { PersonCard } from '@/components/sections/person-card';
@@ -13,7 +12,6 @@ export const AboutPageSection = ({ locale = 'en' }: { locale?: Locale }) => {
   const { about, common } = dictionaries[locale];
   return (
     <div lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${styles.page} about-page localized-page`}>
-      <AboutHero copy={about} />
       <AboutMarket copy={about} />
       <AboutTimeline headingAs="h2" showCounter={false} showMark={false} copy={about} />
       <AboutEntities copy={about} />
