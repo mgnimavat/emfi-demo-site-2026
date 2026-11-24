@@ -22,3 +22,17 @@ test('invalid or incomplete feeds cannot produce a chart', () => {
   assert.throws(() => parseFundPositionData({ data: [] }));
   assert.throws(() => parseFundPositionData({ data: [{ date: 1, settled: 1 }, { date: 2, traded: 1 }] }));
 });
+
+test('the five-year window trims older observations before normalizing', () => {
+  const beforeCutoff = Date.UTC(2019, 1, 27);
+  const atCutoff = Date.UTC(2019, 1, 28);
+  const latest = Date.UTC(2024, 1, 29);
+  const data = [
+    { date: latest, settled: 20 },
+    { date: beforeCutoff, settled: 100 },
+    { date: atCutoff, settled: 10 },
+  ];
+  const expected = [{ date: atCutoff, value: 0 }, { date: latest, value: 1 }];
+  assert.deepEqual(parseFundPositionData({ data }, 5), expected);
+  assert.deepEqual(parseFundPositionData({ data: data.filter(({ date }) => date >= atCutoff) }, 5), expected);
+});

@@ -90,15 +90,15 @@
   shape-rendering: geometricPrecision;
 }
 
-.stackedSection:has(.stackedCard:nth-child(1):hover) .mark {
+.stackedSection:not([data-appearance='dark']):has(.stackedCard:nth-child(1):hover) .mark {
   transform: rotate(calc(1turn / 6));
 }
 
-.stackedSection:has(.stackedCard:nth-child(2):hover) .mark {
+.stackedSection:not([data-appearance='dark']):has(.stackedCard:nth-child(2):hover) .mark {
   transform: rotate(calc(2turn / 6));
 }
 
-.stackedSection:has(.stackedCard:nth-child(3):hover) .mark {
+.stackedSection:not([data-appearance='dark']):has(.stackedCard:nth-child(3):hover) .mark {
   transform: rotate(calc(3turn / 6));
 }
 
@@ -365,6 +365,61 @@
   background: #fff;
 }
 
+.stackedSection[data-appearance='dark'] {
+  --principle-border: color-mix(in srgb, var(--flow-from) 24%, transparent);
+  --principle-from: var(--flow-from);
+  --principle-mid: var(--flow-mid);
+  --principle-to: var(--flow-to);
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in srgb, var(--color-blue-200) 16%, transparent),
+    transparent 65%
+  ), var(--bg-inverse);
+  color: var(--text-inverse);
+}
+
+.stackedSection[data-appearance='dark'] .mark {
+  opacity: 1;
+  transform-origin: center;
+  animation: settlement-mark-spin var(--hero-mark-spin-duration) linear infinite;
+}
+
+.stackedSection[data-appearance='dark'] .mark path { fill: var(--hero-mark-fill); }
+
+@keyframes settlement-mark-spin {
+  from { transform: rotate(0turn); }
+  to { transform: rotate(1turn); }
+}
+
+.stackedSection[data-appearance='dark'] .period {
+  color: var(--text-inverse);
+  -webkit-text-fill-color: var(--text-inverse);
+}
+
+.stackedSection[data-appearance='dark'] .stackedCards {
+  gap: 0;
+  border-block-start: 1px solid var(--principle-border);
+}
+
+.stackedSection[data-appearance='dark'] .stackedCard {
+  border: 0;
+  border-block-end: 1px solid var(--principle-border);
+  border-radius: 0;
+  background: transparent;
+}
+
+.stackedSection[data-appearance='dark'] .stackedCard:is(:hover, :focus-within) {
+  background: color-mix(in srgb, var(--flow-from) 6%, transparent);
+  box-shadow: none;
+}
+
+.stackedSection[data-appearance='dark'] .stackedCard:focus-visible {
+  outline: 2px solid var(--flow-from);
+  outline-offset: -2px;
+}
+
+.stackedSection[data-appearance='dark'] .detail p { color: var(--text-inverse-muted); }
+
 .cardHeading {
   margin: 0;
 }
@@ -536,6 +591,10 @@
 
   .stackedSection .mark {
     transition: none;
+  }
+
+  .stackedSection[data-appearance='dark'] .mark {
+    animation: none;
   }
 }
 

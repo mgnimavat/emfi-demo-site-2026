@@ -5,21 +5,23 @@ import { fundPositionRanges, parseFundPositionData, type FundPositionRange } fro
 const feedRoot = 'https://emfi-dev.s3.eu-west-2.amazonaws.com/data/';
 const feedRefreshSeconds = 6 * 60 * 60;
 const feedTimeoutMs = 8000;
+const fiveYearHistory = 5;
 
-const readFundPositions = unstable_cache(async (range: FundPositionRange) => {
-  const response = await fetch(`${feedRoot}funds-${range}-position-data.json`, {
+const readFundPositions = unstable_cache(async (range: FundPositionRange | 'since-launch') => {
+  const upstreamRange = range === '5-year' ? 'since-launch' : range;
+  const response = await fetch(`${feedRoot}funds-${upstreamRange}-position-data.json`, {
     headers: { Accept: 'application/json' },
     cache: 'no-store',
     signal: AbortSignal.timeout(feedTimeoutMs),
   });
   if (!response.ok) throw new Error('Fund position feed is unavailable');
   const payload: unknown = await response.json();
-  return parseFundPositionData(payload);
+  return parseFundPositionData(payload, range === '5-year' ? fiveYearHistory : undefined);
 }, ['fund-position-chart'], { revalidate: feedRefreshSeconds });
 
 export const GET = async (_request: Request, { params }: { params: Promise<{ range: string }> }) => {
   const { range } = await params;
-  const feedRange = fundPositionRanges.find((candidate) => candidate === range);
+  const feedRange = range === 'since-launch' ? range : fundPositionRanges.find((candidate) => candidate === range);
   if (!feedRange) return NextResponse.json({ error: 'Unknown chart range' }, { status: 404 });
 
   try {

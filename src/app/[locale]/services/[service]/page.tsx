@@ -20,7 +20,9 @@ export const generateMetadata = async ({ params }: PageProps) => {
   if (!isLocale(locale) || !isServicePage(servicePage)) notFound();
   const copy = serviceDictionaries[locale][servicePages[servicePage]];
   return {
-    title: copy.title,
+    title: servicePage === 'wealth-asset-management'
+      ? serviceDictionaries[locale].wealth.redesign.hero.title
+      : copy.title,
     description: copy.description,
     ...(archiveService && { robots: { index: false, follow: true } }),
     alternates: { languages: Object.fromEntries(locales.map((language) =>

@@ -24,7 +24,7 @@ const ArchiveCrossBorder = ({ lead, copy }: { lead: string; copy: SettlementCopy
           <p className={styles.body}>{body}</p>
         </ExecutionReveal>
         <div className={styles.archiveAnimation}>
-          <SettlementAccountAnimation copy={copy.accountAnimation} orientation="track" />
+          <SettlementAccountAnimation copy={copy.accountAnimation} label={copy.linkedAnimation.label} />
         </div>
       </div>
     </section>
@@ -67,7 +67,7 @@ const ArchiveWorkflow = ({ section, copy }: { section: ServiceSection; copy: Set
         {section.id === 'linked-settlement' ? (
           <SettlementLinkedAnimation panels={section.panels} copy={copy.linkedAnimation} layout="vertical" />
         ) : (
-          <SettlementUploadAnimation panels={section.panels} copy={copy.uploadAnimation} stacked />
+          <SettlementUploadAnimation copy={copy.uploadAnimation} />
         )}
       </div>
     </div>
@@ -104,11 +104,11 @@ export const SettlementServiceSections = ({ copy, archive = false }: {
             </ExecutionReveal>
           </div>
           {section.id === 'cross-border' ? (
-            <SettlementAccountAnimation copy={copy.accountAnimation} />
+            <SettlementAccountAnimation copy={copy.accountAnimation} label={copy.linkedAnimation.label} />
           ) : section.id === 'linked-settlement' ? (
             <SettlementLinkedAnimation panels={section.panels} copy={copy.linkedAnimation} />
           ) : section.id === 'trade-upload' ? (
-            <SettlementUploadAnimation panels={section.panels} copy={copy.uploadAnimation} />
+            <SettlementUploadAnimation copy={copy.uploadAnimation} />
           ) : (
           <div className={styles.panels} data-workflow={section.id === 'trade-upload'}>
             {section.panels.map((panel) => {

@@ -144,11 +144,12 @@ const InteractivePrinciples = ({ copy }: { copy: TranslatedPrinciples }) => {
   );
 }
 
-const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false, hero = false, cueHref = '#say-less', cueLabel }: { copy: TranslatedPrinciples; whiteCards?: boolean; breakTitle?: boolean; hero?: boolean; cueHref?: string; cueLabel?: string }) => {
+const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false, hero = false, appearance, cueHref = '#say-less', cueLabel }: { copy: TranslatedPrinciples; whiteCards?: boolean; breakTitle?: boolean; hero?: boolean; appearance: 'light' | 'dark'; cueHref?: string; cueLabel?: string }) => {
   const { t } = useServiceLocale();
   const Heading = hero ? 'h1' : 'h2';
   return (
-    <section id="settle" className={`${styles.section} ${styles.stackedSection}`} aria-labelledby="home-16-principles-heading">
+    <section id="settle" className={`${styles.section} ${styles.stackedSection}`} data-appearance={appearance}
+      aria-labelledby="home-16-principles-heading">
       <div className={styles.mark} aria-hidden="true">
         <GradientMark />
       </div>
@@ -161,7 +162,8 @@ const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false, hero 
             </Heading>
             <div className={styles.stackedCards}>
               {copy.items.map((item) => (
-                <article key={item.id} className={whiteCards ? `${styles.card} ${styles.stackedCard} ${styles.stackedCardPlain}` : `${styles.card} ${styles.stackedCard}`}>
+                <article key={item.id} tabIndex={appearance === 'dark' ? 0 : undefined}
+                  className={whiteCards ? `${styles.card} ${styles.stackedCard} ${styles.stackedCardPlain}` : `${styles.card} ${styles.stackedCard}`}>
                   <h3 className={styles.stackedCardTitle}>
                     <span className={styles.stackedCardTitleText}>
                       <span className={styles.emphasis}>{copy.prefix}</span> {item.label}
@@ -176,7 +178,7 @@ const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false, hero 
           </div>
         </div>
       </div>
-      <a className={`${cueStyles.heroCue} ${cueStyles.heroCueOnLight} section-bottom-cue`} href={cueHref}>
+      <a className={`${cueStyles.heroCue} ${appearance === 'light' ? cueStyles.heroCueOnLight : ''} section-bottom-cue`} href={cueHref}>
         <span className="section-bottom-cue-label"><span>{cueLabel ?? t("Let's Talk")}</span></span>
         <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
       </a>
@@ -184,8 +186,8 @@ const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false, hero 
   );
 }
 
-export const PrinciplesSection = ({ copy = defaultCopy, open = false, stacked = false, whiteCards = false, breakTitle = false, hero = false, cueHref, cueLabel }: { copy?: TranslatedPrinciples; open?: boolean; stacked?: boolean; whiteCards?: boolean; breakTitle?: boolean; hero?: boolean; cueHref?: string; cueLabel?: string }) => {
+export const PrinciplesSection = ({ copy = defaultCopy, open = false, stacked = false, whiteCards = false, breakTitle = false, hero = false, appearance = 'light', cueHref, cueLabel }: { copy?: TranslatedPrinciples; open?: boolean; stacked?: boolean; whiteCards?: boolean; breakTitle?: boolean; hero?: boolean; appearance?: 'light' | 'dark'; cueHref?: string; cueLabel?: string }) => {
   if (open) return <OpenPrinciples copy={copy} />;
-  if (stacked) return <StackedPrinciples copy={copy} whiteCards={whiteCards} breakTitle={breakTitle} hero={hero} cueHref={cueHref} cueLabel={cueLabel} />;
+  if (stacked) return <StackedPrinciples copy={copy} whiteCards={whiteCards} breakTitle={breakTitle} hero={hero} appearance={appearance} cueHref={cueHref} cueLabel={cueLabel} />;
   return <InteractivePrinciples copy={copy} />;
 };

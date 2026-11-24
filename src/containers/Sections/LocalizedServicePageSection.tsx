@@ -10,7 +10,7 @@ import { ResearchDisclosures } from '@/components/sections/execution/research-di
 import { ServiceHero } from './ServiceHero';
 import { SettlementCustodySections } from './SettlementCustodySections';
 import { SettlementServiceSections } from './SettlementServiceSections';
-import { SettlementQuestionnaireSection } from './SettlementQuestionnaireSection';
+import { QuestionnaireSection } from '@/components/home/questionnaire/questionnaire';
 import { OfficeContactSection } from './OfficeContactSection';
 import { SettlementHeroAnimation } from './SettlementHeroAnimation';
 import { PrinciplesSection } from '@/components/home/principles/principles';
@@ -48,7 +48,7 @@ export const LocalizedServicePageSection = ({
   const messages = dictionary[servicePages[service]].ui;
   const research = service === 'research-execution';
   const copy = service === 'settlement-custody' ? dictionary.settlement : dictionary.wealth;
-  const [londonEntity, dubaiEntity] = dictionary.settlement.disclosures.entities;
+  const [londonEntity] = dictionary.settlement.disclosures.entities;
   return (
     <ServiceLocaleProvider locale={locale} messages={messages}>
       <div data-service={service} data-research-variant={research ? researchVariant : undefined}
@@ -90,6 +90,7 @@ export const LocalizedServicePageSection = ({
               <WealthServiceHero copy={dictionary.wealth.redesign.hero} />
             ) : service === 'settlement-custody' && settlementVariant !== 'archived' ? (
               <PrinciplesSection stacked hero copy={marketingDictionaries[locale].home.principles}
+                appearance={settlementVariant === 'v1' ? 'light' : 'dark'}
                 cueHref="#settlement"
                 cueLabel={getMarketingMessages(locale)["Let's Talk"]} />
             ) : <ServiceHero key={locale} lines={copy.heroLines} phrases={copy.heroPhrases}
@@ -101,14 +102,12 @@ export const LocalizedServicePageSection = ({
               settlementVariant === 'current' || settlementVariant === 'archive' ? <>
                 <SettlementServiceSections copy={dictionary.settlement}
                   archive={settlementVariant === 'archive'} />
-                <SettlementQuestionnaireSection copy={dictionary.settlement.questionnaire} />
+                <ServiceLocaleProvider locale={locale} messages={getMarketingMessages(locale)}>
+                  <QuestionnaireSection copy={marketingDictionaries[locale].home.questionnaire} />
+                </ServiceLocaleProvider>
                 <OfficeContactSection copy={dictionaries[locale].common} officeCity="London"
                   sectionId="settlement-office" layout="columns" officeCities={['London', 'Dubai']}
-                  officeEntityNames={{ London: [londonEntity.name] }}
-                  officeDisclosures={{
-                    London: <p><strong>{londonEntity.name}</strong> {londonEntity.body}</p>,
-                    Dubai: <p><strong>{dubaiEntity.name}</strong> {dubaiEntity.body}</p>,
-                  }} />
+                  stretchColumns officeEntityNames={{ London: [londonEntity.name] }} />
               </> :
               <SettlementCustodySections copy={dictionary.settlement}
                 officeCopy={settlementVariant === 'v1' ? dictionaries[locale].common : undefined} />
@@ -117,15 +116,8 @@ export const LocalizedServicePageSection = ({
                 aboutPeople={dictionaries[locale].about.people}
                 archiveFund={wealthVariant === 'archive'} />
               <OfficeContactSection copy={dictionaries[locale].common} officeCity="Cayman" sectionId="wealth-office"
-                layout="columns" officeCities={['Dubai', 'Cayman']}
-                officeDisclosures={{
-                  Dubai: <>
-                    {dictionary.settlement.disclosures.entities.slice(1, 2).map((entity) => (
-                      <p key={entity.name}><strong>{entity.name}</strong> {entity.body}</p>
-                    ))}
-                  </>,
-                  Cayman: <p><strong>{dictionary.wealth.disclosures.entity}</strong> {dictionary.wealth.disclosures.introduction}</p>,
-                }} />
+                layout="columns" officeCities={['London', 'Cayman']} stretchColumns
+                officeEntityNames={{ London: [londonEntity.name] }} />
             </> : <WealthAssetSections copy={dictionary.wealth} locale={locale}
               officeCopy={dictionaries[locale].common} />}
           </>

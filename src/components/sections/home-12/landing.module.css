@@ -43,7 +43,7 @@
   aspect-ratio: 1;
   pointer-events: none;
   transform: translateX(calc(10% + 40px));
-  background: rgb(232 240 250 / 4%);
+  background: var(--hero-mark-fill);
   -webkit-mask: url("/emfi/emfi-mark.svg") center / contain no-repeat;
   mask: url("/emfi/emfi-mark.svg") center / contain no-repeat;
 }
@@ -53,7 +53,7 @@
 }
 .spinMark :global(#expect)::after {
   transform-origin: center;
-  animation: hero-mark-spin 40s linear infinite;
+  animation: hero-mark-spin var(--hero-mark-spin-duration) linear infinite;
 }
 .fullHero.spinMark :global(#expect)::after {
   animation-name: hero-mark-spin-full;

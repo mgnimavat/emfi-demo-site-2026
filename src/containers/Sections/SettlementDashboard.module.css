@@ -2,7 +2,7 @@
   overflow-x: auto;
   border: 1px solid var(--color-blue-100);
   border-radius: var(--radius-control);
-  background: var(--color-white);
+  background: var(--dashboard-frame-bg, var(--color-white));
   color: var(--color-blue-500);
 }
 
@@ -18,7 +18,7 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-3);
   min-width: 960px;
-  padding: var(--space-3);
+  padding: var(--dashboard-frame-padding, var(--space-3));
 }
 
 .card {

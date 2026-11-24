@@ -1,7 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useId, useMemo, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from 'react';
-import { fundPositionRanges, type FundPositionPoint } from '@/lib/fund-position-data';
+import {
+  useEffect, useId, useMemo, useRef, useState,
+  type CSSProperties, type KeyboardEvent, type PointerEvent,
+} from 'react';
+import { fundPositionRanges, type FundPositionPoint, type FundPositionRange } from '@/lib/fund-position-data';
 import type { WealthCopy } from '@/lib/i18n/service-dictionaries';
 import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
 import { WealthFundConsent } from './WealthFundConsent';
@@ -9,85 +12,109 @@ import styles from './WealthServiceHero.module.css';
 
 const dateOptions = { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' } as const;
 const monthOptions = { month: 'short', year: 'numeric', timeZone: 'UTC' } as const;
-const fundChart = { width: 1000, height: 360, inset: 20 } as const;
-const plotWidth = fundChart.width - fundChart.inset * 2;
-const plotHeight = fundChart.height - fundChart.inset * 2;
-const plotBottom = fundChart.height - fundChart.inset;
-const axisLabelCount = 5;
-const gridLineCount = 4;
-const gridLines = Array.from({ length: gridLineCount }, (_, index) =>
-  fundChart.inset + index * plotHeight / (gridLineCount - 1)
+const plot = { width: 1000, height: 400, top: 26, bottom: 380 } as const;
+const dateStops = [0, 0.25, 0.5, 0.75, 1] as const;
+const gridRows = 6;
+const gridLines = Array.from({ length: gridRows }, (_, index) =>
+  plot.top + index * (plot.bottom - plot.top) / (gridRows - 1)
 );
-const backdropLine = 'M0 243 L34 227 L70 234 L108 206 L140 214 L181 184 L216 198 L246 176 L279 187 L306 149 L336 162 L374 145 L412 170 L445 155 L476 167 L510 133 L544 147 L578 109 L610 126 L644 99 L680 120 L718 91 L748 100 L780 68 L815 91 L850 59 L883 74 L919 49 L952 66 L1000 42';
+const previewProfile = [
+  [0, 0.02], [0.025, 0.045], [0.045, 0.03], [0.062, 0.066], [0.08, 0.026],
+  [0.123, 0.024], [0.127, 0.48], [0.147, 0.41], [0.17, 0.47], [0.193, 0.42],
+  [0.228, 0.43], [0.243, 0.57], [0.282, 0.54], [0.298, 0.70], [0.325, 0.75],
+  [0.353, 0.62], [0.386, 0.68], [0.409, 0.83], [0.447, 0.79], [0.461, 0.95],
+  [0.49, 0.91], [0.52, 0.86], [0.551, 0.94], [0.583, 0.89], [0.607, 0.80],
+  [0.643, 0.86], [0.669, 0.82], [0.713, 0.84], [0.759, 0.83], [0.789, 0.97],
+  [0.815, 0.90], [0.841, 0.92], [0.865, 0.84], [0.891, 0.82], [0.912, 0.99],
+  [0.941, 0.92], [0.959, 0.79], [0.976, 0.66], [0.99, 0.68], [1, 0.56],
+] as const;
+const defaultRange: FundPositionRange = '1-year';
+
+const toPlotY = (value: number) => plot.bottom - value * (plot.bottom - plot.top);
+
+const toPath = (points: { x: number; y: number }[]) =>
+  points.map(({ x, y }, index) => `${index === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
+
+const previewPath = toPath(previewProfile.map(([progress, value]) => ({
+  x: progress * plot.width,
+  y: toPlotY(value),
+})));
+
+type ChartResult = { range: FundPositionRange; points: FundPositionPoint[] | 'unavailable' };
 
 export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero'] }) => {
   const { locale, t } = useServiceLocale();
   const formatLocale = locale === 'en' ? 'en-GB' : locale;
-  const dateFormatter = new Intl.DateTimeFormat(formatLocale, dateOptions);
-  const monthFormatter = new Intl.DateTimeFormat(formatLocale, monthOptions);
-  const [range, setRange] = useState(2);
-  const [showChart, setShowChart] = useState(false);
-  const [result, setResult] = useState<FundPositionPoint[] | 'unavailable' | null>(null);
+  const dateFormatter = useMemo(() => new Intl.DateTimeFormat(formatLocale, dateOptions), [formatLocale]);
+  const monthFormatter = useMemo(() => new Intl.DateTimeFormat(formatLocale, monthOptions), [formatLocale]);
+  const [range, setRange] = useState<FundPositionRange>(defaultRange);
+  const [confirmed, setConfirmed] = useState(false);
+  const [result, setResult] = useState<ChartResult | null>(null);
   const [retry, setRetry] = useState(0);
   const [cursor, setCursor] = useState<number | null>(null);
-  const focusChart = useCallback((figure: HTMLElement | null) => {
-    figure?.focus();
-  }, []);
+  const activeRangeRef = useRef<HTMLButtonElement>(null);
   const chartId = useId();
-  const gradientId = `${chartId}-fill`;
-  const backdropId = `${chartId}-backdrop`;
-  const feed = fundPositionRanges[range];
+  const areaGradientId = `${chartId}-fill`;
+  const lineGradientId = `${chartId}-line`;
+  const points = result?.range === range ? result.points : null;
 
   useEffect(() => {
-    if (!showChart) return;
+    if (confirmed) activeRangeRef.current?.focus({ preventScroll: true });
+  }, [confirmed]);
+
+  useEffect(() => {
+    if (!confirmed) return;
     const controller = new AbortController();
     const { signal } = controller;
     const load = async () => {
       try {
-        const response = await fetch(`/api/fund-positions/${feed}`, { signal, cache: 'no-store' });
+        const response = await fetch(`/api/fund-positions/${range}`, { signal, cache: 'no-store' });
         if (!response.ok) throw new Error('Chart feed unavailable');
         const data = await response.json() as FundPositionPoint[];
-        if (!signal.aborted) setResult(data);
+        if (!signal.aborted) setResult({ range, points: data });
       } catch {
-        if (!signal.aborted) setResult('unavailable');
+        if (!signal.aborted) setResult({ range, points: 'unavailable' });
       }
     };
     void load();
     return () => controller.abort();
-  }, [feed, retry, showChart]);
+  }, [confirmed, range, retry]);
 
   const chart = useMemo(() => {
-    if (!Array.isArray(result)) return null;
-    const periodStart = result[0].date;
-    const rangeSpan = result[result.length - 1].date - periodStart;
-    const coordinates = result.map(({ date, value }) => ({
+    if (!Array.isArray(points)) return null;
+    const first = points[0];
+    const last = points[points.length - 1];
+    if (!first || !last || first.date >= last.date) return null;
+    const span = last.date - first.date;
+    const coordinates = points.map(({ date, value }) => ({
       date,
-      x: fundChart.inset + (date - periodStart) / rangeSpan * plotWidth,
-      y: fundChart.inset + (1 - value) * plotHeight,
+      x: (date - first.date) / span * plot.width,
+      y: toPlotY(value),
     }));
-    const path = coordinates.map(({ x, y }, index) =>
-      `${index ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`
-    ).join(' ');
-    const axisDates = Array.from({ length: axisLabelCount }, (_, index) =>
-      new Date(periodStart + index / (axisLabelCount - 1) * rangeSpan)
-    );
-    return { axisDates, coordinates, path, endpoint: coordinates[coordinates.length - 1] };
-  }, [result]);
+    return {
+      axisDates: dateStops.map((stop) => new Date(first.date + stop * span)),
+      coordinates,
+      path: toPath(coordinates),
+      endpoint: coordinates[coordinates.length - 1],
+    };
+  }, [points]);
 
   const active = cursor === null ? null : chart?.coordinates[cursor];
   const lastIndex = (chart?.coordinates.length ?? 1) - 1;
-  const clampIndex = (index: number) => Math.max(0, Math.min(lastIndex, index));
+  const visiblePath = confirmed ? chart?.path : previewPath;
 
   const moveCursor = (event: PointerEvent<SVGSVGElement>) => {
     const { left, width } = event.currentTarget.getBoundingClientRect();
     if (!width || !chart) return;
-    const x = (event.clientX - left) / width * fundChart.width;
+
+    const x = (event.clientX - left) / width * plot.width;
     const next = chart.coordinates.findIndex((point) => point.x >= x);
+    if (next <= 0) {
+      setCursor(next === 0 ? 0 : lastIndex);
+      return;
+    }
     const previous = next - 1;
-    const nearest = previous >= 0 && x - chart.coordinates[previous].x < chart.coordinates[next].x - x
-      ? previous
-      : next;
-    setCursor(nearest < 0 ? lastIndex : nearest);
+    setCursor(x - chart.coordinates[previous].x < chart.coordinates[next].x - x ? previous : next);
   };
 
   const navigateChart = (event: KeyboardEvent<SVGSVGElement>) => {
@@ -99,131 +126,135 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
     } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       event.preventDefault();
       const step = event.key === 'ArrowLeft' ? -1 : 1;
-      setCursor((current) => clampIndex((current ?? lastIndex) + step));
+      setCursor((current) => Math.max(0, Math.min(lastIndex, (current ?? lastIndex) + step)));
     }
   };
 
   return (
-    <section className={styles.section} data-chart={showChart} aria-labelledby="wealth-heading">
-      {!showChart ? (
-        <svg className={styles.chartBackdrop} viewBox={`0 0 ${fundChart.width} ${fundChart.height}`}
-          preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <defs>
-            <linearGradient id={backdropId} x2="0" y2="1">
-              <stop stopColor="var(--color-blue-200)" stopOpacity=".32" />
-              <stop offset="100%" stopColor="var(--color-blue-100)" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          {gridLines.map((y) => (
-            <line key={y} x1="0" x2={fundChart.width} y1={y} y2={y} className={styles.gridLine} />
-          ))}
-          <path d={`${backdropLine} V${fundChart.height} H0 Z`} fill={`url(#${backdropId})`} />
-          <path d={backdropLine} className={styles.backdropLine} />
-        </svg>
-      ) : null}
+    <section className={styles.section} aria-labelledby="wealth-heading" data-confirmed={confirmed}>
       <div className={styles.container}>
-        <h1 id="wealth-heading" className={showChart ? 'sr-only' : styles.title}>
-          {copy.titleLines.map((line, index) => (
-            <span key={line}>{index > 0 ? ' ' : ''}{line}</span>
-          ))}
-        </h1>
-        {showChart ? (
-          <figure ref={focusChart} tabIndex={-1} className={styles.fund} aria-label={copy.fundName}>
-            <header className={styles.header}>
-              <h2 className={styles.fundTitle}>{copy.fundName}</h2>
-              <div className={styles.ranges} role="group" aria-label={copy.fundName}>
-                {copy.ranges.map((label, index) => (
-                  <button key={label} type="button" aria-pressed={range === index}
-                    onClick={() => {
-                      if (index === range) return;
-                      setResult(null);
-                      setRange(index);
-                      setCursor(null);
-                    }}>{label}</button>
-                ))}
-              </div>
-            </header>
-            {chart ? (
-              <>
-                  <div className={styles.plot}>
-                    <svg viewBox={`0 0 ${fundChart.width} ${fundChart.height}`} preserveAspectRatio="none"
-                      role="img" aria-label={`${copy.fundName}. ${copy.chartSeries}. ${copy.ranges[range]}.`}
-                      aria-describedby={`${chartId}-help`}
-                      tabIndex={0} onPointerDown={moveCursor} onPointerMove={moveCursor}
-                      onPointerLeave={(event) => { if (event.pointerType === 'mouse') setCursor(null); }}
-                      onKeyDown={navigateChart}
-                      onFocus={() => setCursor((current) => current ?? lastIndex)}
-                      onBlur={() => setCursor(null)}>
-                      <desc id={`${chartId}-help`}>
-                        {t('Use Left and Right arrow keys to explore points, or Home and End to jump to the first and last point.')}
-                      </desc>
-                      <defs>
-                        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="var(--color-blue-300)" stopOpacity="0.26" />
-                          <stop offset="100%" stopColor="var(--color-blue-100)" stopOpacity="0" />
-                        </linearGradient>
-                      </defs>
-                      {gridLines.map((y) => (
-                        <line key={y} x1={fundChart.inset} x2={fundChart.width - fundChart.inset}
-                          y1={y} y2={y} className={styles.gridLine} />
-                      ))}
-                      <g key={range} className={styles.series}>
-                        <path d={`${chart.path} L${fundChart.width - fundChart.inset} ${plotBottom} L${fundChart.inset} ${plotBottom} Z`}
-                          fill={`url(#${gradientId})`} />
-                        <path d={chart.path} className={styles.line} />
-                        <path d={`M${chart.endpoint.x} ${chart.endpoint.y} l0.01 0`} className={styles.endpointHalo} />
-                        <path d={`M${chart.endpoint.x} ${chart.endpoint.y} l0.01 0`} className={styles.endpoint} />
-                      </g>
-                      {active ? (
-                        <g aria-hidden="true">
-                          <line x1={active.x} x2={active.x} y1={fundChart.inset}
-                            y2={plotBottom} className={styles.crosshair} />
-                          <path d={`M${active.x} ${active.y} l0.01 0`} className={styles.markerHalo} />
-                          <path d={`M${active.x} ${active.y} l0.01 0`} className={styles.activeMarker} />
-                        </g>
-                      ) : null}
-                    </svg>
-                    {active ? (
-                      <div className={styles.tooltip} role="status"
-                        data-below={active.y < fundChart.height / 6}
-                        style={{
-                          '--tooltip-x': `${active.x / fundChart.width * 100}%`,
-                          '--tooltip-y': `${active.y / fundChart.height * 100}%`,
-                        } as CSSProperties}>
-                        <time dateTime={new Date(active.date).toISOString().slice(0, 10)}>
-                          {dateFormatter.format(active.date)}
-                        </time>
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className={styles.axis}>
-                    {chart.axisDates.map((date) => (
-                      <time key={date.getTime()} dateTime={date.toISOString().slice(0, 10)}>
-                        {monthFormatter.format(date)}
-                      </time>
-                    ))}
-                  </div>
-              </>
-            ) : result === 'unavailable' ? (
-              <div className={styles.chartState}>
-                <p role="alert">{copy.chartUnavailable}</p>
-                <button type="button" onClick={() => { setResult(null); setRetry((value) => value + 1); }}>
-                  {copy.chartRetry}
-                </button>
-              </div>
-            ) : (
-              <>
-                <p className="sr-only" role="status">{copy.chartLoading}</p>
-                <div className={`${styles.plot} ${styles.skeletonPlot}`} aria-hidden="true" />
-                <div className={styles.axis} aria-hidden="true">
-                  {Array.from({ length: axisLabelCount }, (_, slot) => (
-                    <span key={slot} className={styles.skeletonTick} />
+        <div className={styles.stage}>
+          <h1 id="wealth-heading" className={styles.title}>{copy.title}</h1>
+          <div className={styles.ranges} role="group" aria-label={copy.rangeLabel} inert={!confirmed}>
+            {fundPositionRanges.map((option, index) => (
+              <button key={option} ref={range === option ? activeRangeRef : undefined}
+                type="button" aria-pressed={range === option}
+                onClick={() => {
+                  if (option === range) return;
+                  setResult(null);
+                  setRange(option);
+                  setCursor(null);
+                }}>
+                <bdi>{copy.ranges[index]}</bdi>
+              </button>
+            ))}
+          </div>
+          <figure inert={!confirmed} className={styles.fund} aria-label={copy.chartSeries}>
+            <div className={styles.plot} data-interactive={Boolean(chart)}>
+              <svg viewBox={`0 0 ${plot.width} ${plot.height}`} preserveAspectRatio="none"
+                role={chart ? 'img' : undefined} aria-hidden={!chart}
+                aria-label={chart ? `${copy.chartSeries}. ${copy.ranges[fundPositionRanges.indexOf(range)]}.` : undefined}
+                aria-describedby={chart ? `${chartId}-help` : undefined}
+                tabIndex={chart ? 0 : undefined}
+                onPointerDown={moveCursor} onPointerMove={moveCursor}
+                onPointerLeave={(event) => { if (event.pointerType === 'mouse') setCursor(null); }}
+                onKeyDown={navigateChart} onFocus={() => setCursor((current) => current ?? lastIndex)}
+                onBlur={() => setCursor(null)}>
+                {chart && (
+                  <desc id={`${chartId}-help`}>
+                    {t('Use Left and Right arrow keys to explore points, or Home and End to jump to the first and last point.')}
+                  </desc>
+                )}
+                <defs>
+                  <linearGradient id={areaGradientId} gradientUnits="userSpaceOnUse"
+                    x1="0" y1={plot.top} x2="0" y2={plot.bottom}>
+                    <stop stopColor="var(--action-primary)" stopOpacity=".62" />
+                    <stop offset="46%" stopColor="var(--action-primary)" stopOpacity=".32" />
+                    <stop offset="78%" stopColor="var(--action-primary)" stopOpacity=".10" />
+                    <stop offset="100%" stopColor="var(--action-primary)" stopOpacity="0" />
+                  </linearGradient>
+                  <linearGradient id={lineGradientId} gradientUnits="userSpaceOnUse"
+                    x1="0" y1="0" x2={plot.width} y2="0">
+                    <stop stopColor="var(--color-blue-550)" />
+                    <stop offset="100%" stopColor="var(--action-primary)" />
+                  </linearGradient>
+                </defs>
+                <g aria-hidden="true">
+                  {gridLines.map((y) => (
+                    <line key={y} x1="0" x2={plot.width} y1={y} y2={y} className={styles.gridLine} />
+                  ))}
+                  {dateStops.map((stop) => (
+                    <line key={stop} x1={stop * plot.width} x2={stop * plot.width} y1={plot.top}
+                      y2={plot.bottom} className={`${styles.gridLine} ${styles.verticalGrid}`} />
+                  ))}
+                  {visiblePath && (
+                    <g key={confirmed ? range : 'preview'} className={styles.series}>
+                      <path d={`${visiblePath} V${plot.bottom} H0 Z`} fill={`url(#${areaGradientId})`} />
+                      <path d={visiblePath} stroke={`url(#${lineGradientId})`} className={styles.line} />
+                    </g>
+                  )}
+                  {chart && (
+                    <path d={`M${chart.endpoint.x} ${chart.endpoint.y} h.01`} className={styles.endpoint} />
+                  )}
+                  {active && (
+                    <g>
+                      <line x1={active.x} x2={active.x} y1={plot.top} y2={plot.bottom}
+                        className={styles.crosshair} />
+                      <line x1="0" x2={active.x} y1={active.y} y2={active.y}
+                        className={styles.crosshair} />
+                      <path d={`M${active.x} ${active.y} h.01`} className={styles.markerHalo} />
+                      <path d={`M${active.x} ${active.y} h.01`} className={styles.activeMarker} />
+                    </g>
+                  )}
+                </g>
+              </svg>
+              {active && (
+                <div className={styles.tooltip} role="status" data-below={active.y < plot.height / 6}
+                  style={{
+                    '--tooltip-x': `${active.x / plot.width * 100}%`,
+                    '--tooltip-y': `${active.y / plot.height * 100}%`,
+                  } as CSSProperties}>
+                  <time dateTime={new Date(active.date).toISOString().slice(0, 10)}>
+                    {dateFormatter.format(active.date)}
+                  </time>
+                </div>
+              )}
+              {confirmed && !chart && (
+                <div className={styles.chartState}>
+                  {points === null ? <p role="status">{copy.chartLoading}</p> : (
+                    <>
+                      <p role="alert">{copy.chartUnavailable}</p>
+                      <button type="button" onClick={() => {
+                        setResult(null);
+                        setRetry((value) => value + 1);
+                      }}>
+                        {copy.chartRetry}
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+            <div className={styles.chartFooter}>
+              {chart && (
+                <div className={styles.axis}>
+                  {chart.axisDates.map((date, index) => (
+                    <time key={date.getTime()} dateTime={date.toISOString().slice(0, 10)}
+                      style={{ '--tick-x': `${dateStops[index] * 100}%` } as CSSProperties}>
+                      {monthFormatter.format(date)}
+                    </time>
                   ))}
                 </div>
-              </>
-            )}
+              )}
+            </div>
           </figure>
-        ) : <WealthFundConsent copy={copy.gate} onConfirm={() => setShowChart(true)} />}
+
+          {!confirmed && (
+            <div className={styles.overlay}>
+              <WealthFundConsent copy={copy.gate} onConfirm={() => setConfirmed(true)} />
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

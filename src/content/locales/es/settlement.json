@@ -344,8 +344,8 @@
     {
       "id": "trade-upload",
       "titleLines": [
-        "Cargar operaciones - sí.",
-        "Introducirlas a mano - no."
+        "Cargar operaciones, sí.",
+        "Introducirlas a mano, no."
       ],
       "lead": "Una confirmación Bloomberg VCON puede contener los detalles de la operación ya acordados entre las contrapartes. Volver a introducirlos crea trabajo evitable y oportunidades de error.",
       "panels": [
@@ -657,36 +657,68 @@
   },
   "uploadAnimation": {
     "label": "Carga de imagen VCON",
-    "prompt": "Arrastra la imagen para cargarla",
+    "prompt": "Suelta aquí la imagen VCON",
     "file": "vcon-confirmation.png",
     "ticketTitle": "Confirmación de operación VCON",
     "result": "Datos extraídos de la operación",
-    "ready": "Listo para revisión",
+    "submit": "Enviar",
+    "submitting": "Enviando…",
+    "submitted": "Enviada",
     "fields": [
       {
         "id": "security",
         "label": "Valor",
-        "value": "CORPORATE BOND A"
+        "value": "ALDER QUAY 7.95 09/10/31"
       },
       {
         "id": "side",
         "label": "Tipo",
-        "value": "Compra"
+        "value": "Venta"
       },
       {
         "id": "quantity",
-        "label": "Cantidad",
-        "value": "250"
+        "label": "Nominal",
+        "value": "500.000"
       },
       {
         "id": "price",
         "label": "Precio",
-        "value": "97.625"
+        "value": "103,31000"
+      },
+      {
+        "id": "yield",
+        "label": "Rendimiento",
+        "value": "6,99984 %"
       },
       {
         "id": "counterparty",
         "label": "Contraparte",
-        "value": "BROKER A"
+        "value": "BRACKEN REACH SECURITIES"
+      },
+      {
+        "id": "trade-date",
+        "label": "Fecha de operación",
+        "value": "2025-08-12"
+      },
+      {
+        "id": "settlement-date",
+        "label": "Fecha de liquidación",
+        "value": "2025-08-13"
+      },
+      {
+        "id": "principal",
+        "label": "Principal",
+        "value": "USD 516.550,00"
+      },
+      {
+        "id": "accrued",
+        "label": "Interés devengado",
+        "value": "USD 16.893,75"
+      },
+      {
+        "id": "total",
+        "label": "Total",
+        "value": "USD 533.443,75"
       }
     ]
   }

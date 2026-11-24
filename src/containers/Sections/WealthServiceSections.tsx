@@ -23,9 +23,9 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
   archiveFund?: boolean;
 }) => (
   <>
-    <section id="fund-structure" className={`${styles.section} ${styles.soft} ${styles.fundStructure}`}
+    <section id="fund-structure" className={`${styles.section} ${styles.fundStructure}`}
       aria-labelledby="fund-structure-heading">
-      <div className={archiveFund ? `${styles.container} ${styles.fundArchiveLayout}` : styles.container}>
+      <div className={`${styles.container} ${styles.fundLayout}${archiveFund ? ` ${styles.fundArchiveLayout}` : ''}`}>
         <div className={styles.fundIntroduction}>
           <ExecutionReveal>
             <h2 id="fund-structure-heading" className={styles.title}>
@@ -68,6 +68,17 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
         </ExecutionReveal>
       </div>
     </section>
+    <section id="portfolio-visibility" className={`${styles.section} ${styles.visibilitySection}`} aria-labelledby="portfolio-visibility-heading">
+      <div className={styles.container}>
+        <ExecutionReveal className={styles.visibilityIntro}>
+          <h2 id="portfolio-visibility-heading" className={`${theme.sectionTitle} ${styles.visibilityTitle}`}>
+            {copy.visibility.titleLines.join(' ')}
+          </h2>
+          <p className={styles.visibilityDescription}>{copy.visibility.body}</p>
+        </ExecutionReveal>
+        <ExecutionReveal><SettlementDashboard borderless /></ExecutionReveal>
+      </div>
+    </section>
     <section id="investment-mandate" className={`${styles.section} ${styles.mandateSection}`}
       aria-labelledby="mandate-heading">
       <div className={styles.container}>
@@ -94,17 +105,6 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
             </ol>
           </ExecutionReveal>
         </div>
-      </div>
-    </section>
-    <section id="portfolio-visibility" className={`${styles.section} ${styles.navy}`} aria-labelledby="portfolio-visibility-heading">
-      <div className={styles.container}>
-        <ExecutionReveal className={styles.visibilityIntro}>
-          <h2 id="portfolio-visibility-heading" className={`${theme.sectionTitle} ${styles.visibilityTitle}`}>
-            {copy.visibility.titleLines.join(' ')}
-          </h2>
-          <p className={styles.visibilityDescription}>{copy.visibility.body}</p>
-        </ExecutionReveal>
-        <ExecutionReveal><SettlementDashboard /></ExecutionReveal>
       </div>
     </section>
     <section id="portfolio-team" className={styles.section} aria-labelledby="portfolio-team-heading">

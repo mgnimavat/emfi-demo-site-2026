@@ -51,7 +51,7 @@
   padding: var(--space-5) clamp(16px, 2cqi, 32px);
   border: 1px solid var(--flow-from);
   border-radius: var(--radius-card);
-  background: var(--bg-soft);
+  background: var(--provider-card-bg);
   text-align: center;
 }
 

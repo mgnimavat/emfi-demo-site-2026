@@ -2,9 +2,15 @@
 .container { composes: container from '../../components/sections/execution/workstation-section.module.css'; }
 .title { composes: title from '../../components/sections/execution/workstation-section.module.css'; }
 .title span { display: block; }
-.soft { background: var(--bg-soft); }
+.fundLayout {
+  display: grid;
+  align-items: center;
+  gap: clamp(32px, 5vw, 80px);
+}
 .fundIntroduction {
-  composes: introduction from '../../components/sections/execution/workstation-section.module.css';
+  display: grid;
+  gap: var(--space-6);
+  min-width: 0;
 }
 .fundIntroduction .title { font-size: clamp(30px, 10cqi, 80px); }
 .fundArchiveCopy { display: grid; gap: var(--space-5); }
@@ -16,18 +22,13 @@
     min-block-size: calc(100vh - var(--site-header-height, 78px));
     min-block-size: calc(100svh - var(--site-header-height, 78px));
   }
-  .fundIntroduction { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
-  .fundIntroduction .title { font-size: clamp(36px, 6.6cqi, 88px); }
-  .fundArchiveLayout {
-    display: grid;
+  .fundIntroduction .title { font-size: clamp(36px, 6.1cqi, 82px); }
+  .fundLayout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: center;
-    gap: clamp(32px, 5vw, 80px);
   }
-  .fundArchiveLayout .fundIntroduction {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-6);
-    margin-block-end: 0;
+  .fundLayout:not(.fundArchiveLayout) .providerGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
   }
   .fundArchiveLayout .title { font-size: clamp(36px, 7.2cqi, 96px); }
   .fundArchiveLayout .providerGrid { gap: var(--space-3); }
@@ -53,7 +54,7 @@
   padding: var(--space-3);
   border: 1px solid var(--flow-from);
   border-radius: var(--radius-card);
-  background: var(--bg-page);
+  background: var(--provider-card-bg);
   text-align: center;
 }
 .logoFilter { position: absolute; width: 0; height: 0; overflow: hidden; }
@@ -126,8 +127,6 @@
   border-inline-start: 1px solid color-mix(in srgb, currentColor 20%, transparent);
 }
 .mandateStep p { margin-block-start: var(--space-2); }
-.navy { background: var(--bg-inverse); color: var(--text-inverse); }
-.navy .lead, .navy .notice { color: var(--text-inverse-muted); }
 .teamGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-5); margin-top: var(--space-7); }
 @media (max-width: 1023px) { .teamGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 901px) { .mandateTitle { font-size: min(12cqi, 78px); } }
@@ -143,6 +142,11 @@
   .providerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
 }
 
+.visibilitySection {
+  --dashboard-frame-bg: transparent;
+  --dashboard-frame-padding: 0;
+  background: color-mix(in srgb, var(--bg-soft) 76%, var(--flow-from));
+}
 .visibilityIntro { display: grid; justify-items: center; gap: var(--space-5); margin-bottom: var(--space-7); text-align: center; }
-.visibilityTitle { max-width: none; margin: 0; color: var(--text-inverse); }
-.visibilityDescription { max-width: 72ch; margin: 0; color: var(--text-inverse-muted); font-size: clamp(16px, 1.5cqi, 20px); line-height: 1.65; text-wrap: pretty; }
+.visibilityTitle { max-width: none; margin: 0; color: var(--text-primary); }
+.visibilityDescription { max-width: 72ch; margin: 0; color: var(--text-secondary); font-size: clamp(16px, 1.5cqi, 20px); line-height: 1.65; text-wrap: pretty; }

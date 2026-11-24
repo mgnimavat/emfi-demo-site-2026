@@ -87,7 +87,7 @@ export const QuestionnaireSection = ({ copy = defaultCopy }: { copy?: HomeCopy['
         <div className={styles.questionCard}>
         <div className={styles.progressCorner}>
           <progress className={styles.progress} value={progress} max={questionCount} aria-label={t("Questionnaire progress")} />
-          <span className={styles.stepNumber} aria-live="polite">{progress} / {questionCount}</span>
+          <span className={styles.stepNumber} aria-live="polite" dir="ltr">{progress} / {questionCount}</span>
         </div>
         {/* Overlapping panels reserve the tallest step's space at every screen size. */}
         <div className={styles.panels}>

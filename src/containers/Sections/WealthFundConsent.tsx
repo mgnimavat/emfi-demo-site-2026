@@ -1,7 +1,6 @@
 'use client';
 
 import { useId, useState, type FormEvent } from 'react';
-import { ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ResearchFilterSelect } from '@/components/sections/execution/research-filter-select';
 import type { WealthCopy } from '@/lib/i18n/service-dictionaries';
@@ -47,7 +46,6 @@ export const WealthFundConsent = ({ copy, onConfirm }: { copy: ConsentCopy; onCo
     <form className={styles.form} onSubmit={handleSubmit} onChange={() => setError('')}
       aria-labelledby={headingId} aria-describedby={descriptionId}>
       <div className={styles.intro}>
-        <span className={styles.icon}><ShieldCheck size={24} aria-hidden="true" /></span>
         <h2 id={headingId}>{copy.title}</h2>
         <p id={descriptionId}>{copy.body}</p>
       </div>
@@ -68,10 +66,13 @@ export const WealthFundConsent = ({ copy, onConfirm }: { copy: ConsentCopy; onCo
         </label>
         {error ? <p className={styles.error} role="alert">{error}</p> : null}
         <div className={styles.actions}>
-          <Button type="submit" className={`${styles.submit} min-h-11 px-6 py-2 text-sm tracking-normal`}>
+          <Button type="submit" className={styles.action}>
             {copy.submit}
           </Button>
-          <button type="button" className={styles.decline} onClick={() => setError(copy.ineligible)}>{copy.decline}</button>
+          <Button showArrow={false} variant="secondary" className={styles.action}
+            onClick={() => setError(copy.ineligible)}>
+            {copy.decline}
+          </Button>
         </div>
       </div>
     </form>
