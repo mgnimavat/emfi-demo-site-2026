@@ -90,7 +90,7 @@ export const LocalizedServicePageSection = ({
               <WealthServiceHero copy={dictionary.wealth.redesign.hero} />
             ) : service === 'settlement-custody' && settlementVariant !== 'archived' ? (
               <PrinciplesSection stacked hero copy={marketingDictionaries[locale].home.principles}
-                appearance={settlementVariant === 'v1' ? 'light' : 'dark'}
+                appearance="light"
                 cueHref="#settlement"
                 cueLabel={getMarketingMessages(locale)["Let's Talk"]} />
             ) : <ServiceHero key={locale} lines={copy.heroLines} phrases={copy.heroPhrases}

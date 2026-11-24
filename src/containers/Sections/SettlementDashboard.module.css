@@ -12,13 +12,24 @@
 }
 
 .viewport[data-borderless='true'] { border: 0; }
+.viewport[data-fit='true'] { container-type: inline-size; }
 
 .preview {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-3);
+  gap: var(--dashboard-grid-gap, var(--space-3));
   min-width: 960px;
   padding: var(--dashboard-frame-padding, var(--space-3));
+}
+
+.viewport[data-fit='true'] .preview { min-width: 0; }
+
+@container (width < 540px) {
+  .viewport[data-fit='true'] .preview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@container (width < 320px) {
+  .viewport[data-fit='true'] .preview { grid-template-columns: minmax(0, 1fr); }
 }
 
 .card {
@@ -27,7 +38,7 @@
   min-width: 0;
   overflow: hidden;
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-card);
+  border-radius: var(--dashboard-card-radius, var(--radius-card));
   background: var(--color-white);
   box-shadow: var(--elevation-card-hover);
 }
@@ -43,6 +54,15 @@
   font-weight: 700;
   line-height: 1.4;
 }
+
+.viewport[data-fit='true'] .cardHeader {
+  flex-wrap: wrap;
+  min-height: 40px;
+  padding: var(--space-2);
+  gap: var(--space-1) var(--space-2);
+}
+
+.viewport[data-fit='true'] .cardHeader :is(h4, strong) { font-size: 12px; }
 
 .chartBody { display: flex; flex: 1; align-items: center; min-height: 0; }
 .chartContent { position: relative; width: 100%; }

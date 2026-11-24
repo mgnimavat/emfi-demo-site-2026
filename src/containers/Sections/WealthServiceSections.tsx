@@ -69,20 +69,22 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
       </div>
     </section>
     <section id="portfolio-visibility" className={`${styles.section} ${styles.visibilitySection}`} aria-labelledby="portfolio-visibility-heading">
-      <div className={styles.container}>
-        <ExecutionReveal className={styles.visibilityIntro}>
-          <h2 id="portfolio-visibility-heading" className={`${theme.sectionTitle} ${styles.visibilityTitle}`}>
-            {copy.visibility.titleLines.join(' ')}
-          </h2>
-          <p className={styles.visibilityDescription}>{copy.visibility.body}</p>
-        </ExecutionReveal>
-        <ExecutionReveal><SettlementDashboard borderless /></ExecutionReveal>
+      <div className={`${styles.container} ${styles.visibilityContainer}`}>
+        <div className={styles.splitLayout}>
+          <ExecutionReveal className={styles.visibilityIntro}>
+            <h2 id="portfolio-visibility-heading" className={styles.visibilityTitle}>
+              {copy.visibility.titleLines.map((line) => <span key={line}>{line}{' '}</span>)}
+            </h2>
+            <p className={styles.visibilityDescription}>{copy.visibility.body}</p>
+          </ExecutionReveal>
+          <ExecutionReveal delay={0.12}><SettlementDashboard borderless fit /></ExecutionReveal>
+        </div>
       </div>
     </section>
     <section id="investment-mandate" className={`${styles.section} ${styles.mandateSection}`}
       aria-labelledby="mandate-heading">
       <div className={styles.container}>
-        <div className={styles.mandateLayout}>
+        <div className={styles.splitLayout}>
           <ExecutionReveal className={styles.mandateIntro}>
             <h2 id="mandate-heading" className={styles.mandateTitle}>
               {copy.mandate.titleLines.map((line) => <span key={line}>{line}{' '}</span>)}

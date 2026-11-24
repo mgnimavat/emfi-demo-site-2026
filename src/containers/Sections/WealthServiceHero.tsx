@@ -170,10 +170,10 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
                 <defs>
                   <linearGradient id={areaGradientId} gradientUnits="userSpaceOnUse"
                     x1="0" y1={plot.top} x2="0" y2={plot.bottom}>
-                    <stop stopColor="var(--action-primary)" stopOpacity=".62" />
-                    <stop offset="46%" stopColor="var(--action-primary)" stopOpacity=".32" />
-                    <stop offset="78%" stopColor="var(--action-primary)" stopOpacity=".10" />
-                    <stop offset="100%" stopColor="var(--action-primary)" stopOpacity="0" />
+                    <stop stopColor="var(--color-blue-200)" stopOpacity=".42" />
+                    <stop offset="46%" stopColor="var(--color-blue-200)" stopOpacity=".21" />
+                    <stop offset="78%" stopColor="var(--color-blue-200)" stopOpacity=".06" />
+                    <stop offset="100%" stopColor="var(--color-blue-200)" stopOpacity="0" />
                   </linearGradient>
                   <linearGradient id={lineGradientId} gradientUnits="userSpaceOnUse"
                     x1="0" y1="0" x2={plot.width} y2="0">

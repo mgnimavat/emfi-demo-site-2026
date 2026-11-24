@@ -67,14 +67,15 @@
 .providerBrand[data-provider='emfi'] .providerLogo { filter: brightness(0) url('#wealth-provider-navy'); }
 .providers > h3 { text-align: center; }
 .notice { margin: var(--space-6) 0 0; color: var(--text-muted); font-size: 12px; line-height: 1.7; }
-.mandateSection {
+.mandateSection,
+.visibilitySection {
   box-sizing: border-box;
   display: grid;
   align-items: center;
   min-height: calc(100vh - var(--site-header-height, 78px));
   min-height: calc(100svh - var(--site-header-height, 78px));
 }
-.mandateLayout {
+.splitLayout {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
@@ -129,7 +130,7 @@
 .teamGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-5); margin-top: var(--space-7); }
 @media (max-width: 1023px) { .teamGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 901px) { .mandateTitle { font-size: min(12cqi, 78px); } }
-@media (max-width: 900px) { .mandateLayout { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 900px) { .splitLayout { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 767px) {
   .teamGrid { grid-template-columns: minmax(0, 1fr); }
   .mandateTitle { text-wrap: pretty; }
@@ -144,8 +145,32 @@
 .visibilitySection {
   --dashboard-frame-bg: transparent;
   --dashboard-frame-padding: 0;
-  background: color-mix(in srgb, var(--bg-soft) 76%, var(--flow-from));
+  --dashboard-grid-gap: var(--space-2);
+  --dashboard-card-radius: var(--radius-control);
+  --elevation-card-hover: 0 4px 14px color-mix(in srgb, var(--text-primary) 4%, transparent);
+  background: #e5eefb;
 }
-.visibilityIntro { display: grid; justify-items: center; gap: var(--space-5); margin-bottom: var(--space-7); text-align: center; }
-.visibilityTitle { max-width: none; margin: 0; color: var(--text-primary); }
-.visibilityDescription { max-width: 72ch; margin: 0; color: var(--text-secondary); font-size: clamp(16px, 1.5cqi, 20px); line-height: 1.65; text-wrap: pretty; }
+.visibilityContainer { width: 100%; max-width: 1440px; padding-inline: clamp(var(--space-5), 4vw, 56px); }
+.visibilityContainer .splitLayout { gap: clamp(20px, 3vh, 32px); }
+.visibilityIntro { display: grid; gap: 18px; }
+.visibilityTitle {
+  container-type: inline-size;
+  margin: 0;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.05em;
+}
+.visibilityTitle > span {
+  display: block;
+  font-size: min(74px, 9.5cqi);
+  white-space: nowrap;
+}
+.visibilityTitle:lang(es) > span { font-size: min(74px, 9cqi); }
+.visibilityDescription {
+  max-width: 36em;
+  margin: 0;
+  color: #24344b;
+  font-size: 18px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
