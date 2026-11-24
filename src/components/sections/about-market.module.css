@@ -36,18 +36,18 @@
   mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 20%, transparent 75%);
 }
 
-/* Full-bleed mark: edge-to-edge with the section height, cropped on the left (try side). */
+/* Full-bleed mark: edge-to-edge with the section height, cropped on the right. */
 .mark {
   position: absolute;
   z-index: 0;
   top: 0;
   bottom: 0;
-  inset-inline-start: 0;
+  inset-inline-end: 0;
   height: 100%;
   width: auto;
   aspect-ratio: 1;
   pointer-events: none;
-  transform: translateX(-12%);
+  transform: translateX(12%);
   background: rgb(7 24 50 / 5.5%);
   -webkit-mask: url("/emfi/emfi-mark.svg") center / contain no-repeat;
   mask: url("/emfi/emfi-mark.svg") center / contain no-repeat;
@@ -99,17 +99,17 @@
 }
 
 @keyframes about-market-mark-spin {
-  from { transform: translateX(-12%) rotate(0deg); }
-  to { transform: translateX(-12%) rotate(360deg); }
-}
-
-@keyframes about-market-mark-spin-rtl {
   from { transform: translateX(12%) rotate(0deg); }
   to { transform: translateX(12%) rotate(360deg); }
 }
 
+@keyframes about-market-mark-spin-rtl {
+  from { transform: translateX(-12%) rotate(0deg); }
+  to { transform: translateX(-12%) rotate(360deg); }
+}
+
 .section:dir(rtl) .mark {
-  transform: translateX(12%);
+  transform: translateX(-12%);
   animation-name: about-market-mark-spin-rtl;
 }
 
@@ -124,14 +124,14 @@
   }
 
   .mark {
-    transform: translateX(-22%);
+    transform: translateX(22%);
     background: rgb(7 24 50 / 3.2%);
     animation-name: about-market-mark-spin-mobile;
   }
 
   @keyframes about-market-mark-spin-mobile {
-    from { transform: translateX(-22%) rotate(0deg); }
-    to { transform: translateX(-22%) rotate(360deg); }
+    from { transform: translateX(22%) rotate(0deg); }
+    to { transform: translateX(22%) rotate(360deg); }
   }
 
   .split {
