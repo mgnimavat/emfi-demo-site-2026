@@ -8,10 +8,7 @@ export function LegalPage({ title, children }: { title: string; children: React.
       <header className={styles.masthead}>
         <div className={`${styles.inner} ${styles.mastheadGrid}`}>
           <h1>{title}</h1>
-          <div className={styles.mastheadFoot}>
-            <p className={styles.group}>EMFI Group</p>
-            <LegalDocumentSearch current={title} documents={legalDocuments} />
-          </div>
+          <LegalDocumentSearch current={title} documents={legalDocuments} />
         </div>
       </header>
       <div className={styles.inner}>
@@ -20,6 +17,11 @@ export function LegalPage({ title, children }: { title: string; children: React.
     </article>
   );
 }
+
+const flushSections = new Set([
+  "Privacy Notice: Data protection under the EU General Data Protection Regulation (EU GDPR)",
+  "Privacy Notice: Data protection for all countries other than the EEA",
+]);
 
 export function LegalHtml({ html }: { html: string }) {
   const parts = html.split(/<h4>/i);
@@ -35,8 +37,8 @@ export function LegalHtml({ html }: { html: string }) {
   return (
     <>
       {lead ? <div className={styles.lead} dangerouslySetInnerHTML={{ __html: lead }} /> : null}
-      {sections.map((section, index) => (
-        <section key={section.title} className={styles.section}>
+      {sections.map((section) => (
+        <section key={section.title} className={flushSections.has(section.title) ? `${styles.section} ${styles.sectionFlush}` : styles.section}>
           <h2>{section.title}</h2>
           <div dangerouslySetInnerHTML={{ __html: section.body }} />
         </section>

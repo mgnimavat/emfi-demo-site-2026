@@ -157,7 +157,6 @@ const slides = [
 
 /** Home Dependable (split): logo slides from home-22, in display order. */
 const splitLogoSlides = [
-  slides[0], // Authorised by
   slides[1], // Audited by
   slides[3], // Quoted in
   slides[2], // Connected to
@@ -351,6 +350,29 @@ function SplitPeekCarousel({
       <p className={styles.slideDisclaimer}>
         {t("Disclaimer: These names and logos identify specific EMFI relationships and do not imply endorsement. Permissions apply only to the relevant entity.")}
       </p>
+    </div>
+  );
+}
+
+export function DependablePeekSlide() {
+  const [index, setIndex] = useState(0);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setIndex((current) => (current + 1) % splitLogoSlides.length);
+    }, HOLD_MS);
+    return () => window.clearInterval(id);
+  }, []);
+
+  return (
+    <div className={`${styles.splitEvidence} ${styles.heroSlide}`}>
+      <SplitPeekCarousel
+        deck={splitLogoSlides}
+        index={index}
+        ink
+        reduceMotion={Boolean(reduceMotion)}
+      />
     </div>
   );
 }

@@ -1,7 +1,6 @@
 export const termsOfUse = {
   title: "Terms of Use",
   kicker: "Legal",
-  group: "EMFI Group",
   lead: [
     [
       'These Terms of Use apply to emfi.uk as well as any other affiliated sites, digital services, or applications on which a link to these Terms of Use appears (collectively, the "EMFI Website") and apply to all visitors. These Terms of Use and any other terms that appear on the page from which you were directed to these Terms of Use govern your use of the EMFI Website. By accessing the EMFI Website, you agree to be legally bound by the Terms of Use then in effect. Please also refer to the relevant additional legal information applicable to your country.',

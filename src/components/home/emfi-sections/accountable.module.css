@@ -170,6 +170,10 @@
   container-type: inline-size;
 }
 
+.heroSlide {
+  margin: 0;
+}
+
 .splitCarousel {
   display: flex;
   flex-direction: column;

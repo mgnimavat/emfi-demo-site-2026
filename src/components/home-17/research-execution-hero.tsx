@@ -1353,17 +1353,19 @@ const phoneViews = new Set<View>(["FloatingPhones", "PhoneDevices"]);
 
 function PhoneDevicesSlide() {
   return (
-    <div className="flex h-full w-full items-end justify-center gap-[clamp(10px,1.6vw,24px)] px-2 pb-1">
-      {responsiveTechnology.showcase.screens.map((screen, index) => (
-        <PhoneDevice
-          key={screen.src}
-          src={`${screen.src}?v=8`}
-          alt={screen.alt}
-          width={screen.width}
-          height={screen.height}
-          featured={index === 1}
-        />
-      ))}
+    <div className="flex h-full w-full items-center justify-center px-2">
+      <div className="flex w-full items-end justify-center gap-[clamp(10px,1.6vw,24px)]">
+        {responsiveTechnology.showcase.screens.map((screen, index) => (
+          <PhoneDevice
+            key={screen.src}
+            src={`${screen.src}?v=8`}
+            alt={screen.alt}
+            width={screen.width}
+            height={screen.height}
+            featured={index === 1}
+          />
+        ))}
+      </div>
     </div>
   );
 }
