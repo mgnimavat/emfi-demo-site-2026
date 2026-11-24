@@ -3,15 +3,7 @@ body:has(.about-page) {
   --home-12-header-h: var(--site-header-height, 77.36px);
 }
 
-/* Match home-16-shell: navy behind the hero so the first viewport never flashes the next band. */
+/* Page opens on the soft blue market band (same as entities / locations). */
 body:has(.about-page) > div {
-  background-color: #071832;
-}
-
-body:has(.about-page) header:has(nav) {
-  background-color: #071832;
-  background-image: radial-gradient(60% 120% at 50% 0%, rgb(162 194 253 / 16%), transparent 70%);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  border-bottom: none;
+  background-color: #e6effb;
 }
