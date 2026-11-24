@@ -6,10 +6,12 @@ export const AboutMarket = ({ copy }: { copy: AboutCopy }) => {
   const section = copy.market;
   return (
     <section className={styles.section} aria-labelledby="about-market-heading">
+      {/* Soft brand atmosphere on the open side of the split — opposite the headline weight. */}
+      <div className={styles.mark} aria-hidden="true" />
       <div className={styles.container}>
         <div className={styles.split}>
           <FadeIn>
-            <h2 id="about-market-heading" className={styles.title}>
+            <h1 id="about-market-heading" className={styles.title}>
               {section.title.map((line, index) => (
                 <span key={line}>
                   {line}
@@ -17,7 +19,7 @@ export const AboutMarket = ({ copy }: { copy: AboutCopy }) => {
                 </span>
               ))}
               <span className={styles.dot} aria-hidden="true">.</span>
-            </h2>
+            </h1>
           </FadeIn>
           <FadeIn delay={0.08}>
             <p className={styles.lead}>{section.body}</p>
