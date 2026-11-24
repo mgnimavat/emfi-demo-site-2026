@@ -2,9 +2,9 @@
 
 import { useReducedMotion } from "framer-motion";
 import { ResearchExecutionHeroMockup, home10ResponsiveSlides, home12ResponsiveSlides, home16ResponsiveSlides, homeDeskResponsiveSlides, homeSettlementResponsiveSlides, homeV5ResponsiveSlides, responsiveHighlightSlides } from "@/components/home-17/research-execution-hero";
-import { SectionAction, SectionCopy, SectionFooterBody } from "@/components/emfi-sections/outcomes";
-import styles from "@/components/emfi-sections/sections.module.css";
-import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhySplit, useWhyStep, WhyMarker } from "@/components/emfi-sections/why-flow";
+import { SectionAction, SectionCopy, SectionFooterBody } from "./outcomes";
+import styles from "./sections.module.css";
+import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhySplit, useWhyStep, WhyMarker } from "./why-flow";
 
 export function ResponsiveSection({
   cols,
@@ -68,6 +68,7 @@ export function ResponsiveSection({
           pinned ? (split ? styles.pinStack : home17Mockup ? styles.responsivePin : styles.pinStack) : "",
           pinned && home17Mockup && !split ? styles.responsiveStack : "",
           split ? styles.splitDirect : "",
+          split ? styles.whyColumns : "",
         ].filter(Boolean).join(" ") || undefined}
         style={{
           position: "relative",
@@ -92,6 +93,7 @@ export function ResponsiveSection({
             tone={light ? "light" : "dark"}
             align={split ? "start" : centered || pinned ? "center" : "start"}
           />
+          {split ? <SectionAction href="/why-emfi/responsive-technology" label="Learn More" align="start" /> : null}
         </div>
         <div
           className={split ? styles.splitResponsiveRow : undefined}
@@ -113,11 +115,6 @@ export function ResponsiveSection({
               <ResearchExecutionHeroMockup square={floatingPhones} quietFrame={floatingPhones} trimChrome={trimChrome} appBar={appBar} home15Trade={home15Trade} views={homeSlides ? (home15Trade ? (settlementDash ? homeSettlementResponsiveSlides : homeDeskResponsiveSlides) : floatingPhones ? homeV5ResponsiveSlides : perspectivePhones ? home16ResponsiveSlides : omitSecondSlide ? home12ResponsiveSlides : home10ResponsiveSlides) : highlightSlides ? responsiveHighlightSlides : undefined} />
             ) : null}
           </div>
-          {split ? (
-            <div className={styles.splitSlideAction}>
-              <SectionAction href="/why-emfi/responsive-technology" label="Learn More" align="start" />
-            </div>
-          ) : null}
         </div>
         {pinned && !split ? (
           shortWhy ? (

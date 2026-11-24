@@ -39,6 +39,12 @@
   margin-top: 4px;
 }
 
+.home-page [data-why-split] #direct [class*="whyColumns"] .section-bottom-action,
+.home-page [data-why-split] #responsive [class*="whyColumns"] .section-bottom-action,
+.home-page [data-why-split] #accountable [class*="whyColumns"] .section-bottom-action {
+  margin-top: 20px;
+}
+
 /* Responsive: body sits to the right of the headline with a real gap (no overflow collision). */
 .home-page [data-why-split] #responsive [class*="sectionCopy"] [class*="sectionBody"] {
   flex: 1 1 0;
@@ -65,6 +71,13 @@
   left: 0 !important;
   padding-left: 0;
   margin-left: 0;
+}
+
+/* Home only: route title sits inside the Direct hero card, inset with its padding. */
+.home-page:not(.home-24) [data-why-split] #direct [class*="routeTitle"] {
+  top: 22px;
+  left: clamp(20px, 2.6vw, 36px) !important;
+  right: clamp(20px, 2.6vw, 36px);
 }
 
 .home-page [data-why-split] #direct [class*="splitDirectVisual"] {
@@ -230,6 +243,103 @@
   height: clamp(320px, 38.4vw, 512px) !important;
 }
 
+/* Live home only: Why sections are two columns. Copy (eyebrow, headline, body, Learn More) | diagram or slides. */
+@media (min-width: 860px) {
+  .home-page [data-why-split] [class*="whyColumns"] {
+    display: grid !important;
+    grid-template-columns: minmax(320px, 1fr) minmax(0, 1fr);
+    align-items: center !important;
+    justify-content: stretch !important;
+    column-gap: clamp(36px, 4vw, 72px) !important;
+    row-gap: 0 !important;
+  }
+
+  .home-page [data-why-split] [class*="whyColumns"] > [class*="splitDirectCopy"] {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    width: 100%;
+    max-width: none;
+  }
+
+  .home-page [data-why-split] [class*="whyColumns"] > [class*="splitDirectVisual"],
+  .home-page [data-why-split] [class*="whyColumns"] > [class*="splitResponsiveRow"],
+  .home-page [data-why-split] [class*="whyColumns"] > [class*="splitEvidence"] {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .home-page [data-why-split] [class*="whyColumns"] > [class*="splitDirectVisual"] {
+    height: clamp(260px, 34vh, 380px);
+    max-height: none;
+    min-height: 240px;
+  }
+
+  .home-page [data-why-split] #direct [class*="whyColumns"] [class*="sectionCopy"],
+  .home-page [data-why-split] #responsive [class*="whyColumns"] [class*="sectionCopy"],
+  .home-page [data-why-split] #accountable [class*="whyColumns"] [class*="sectionCopy"] {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    column-gap: 0;
+    row-gap: 0;
+    width: 100%;
+    max-width: none;
+  }
+
+  .home-page [data-why-split] #direct [class*="whyColumns"] [class*="sectionLead"],
+  .home-page [data-why-split] #responsive [class*="whyColumns"] [class*="sectionLead"],
+  .home-page [data-why-split] #accountable [class*="whyColumns"] [class*="sectionLead"] {
+    max-width: 100%;
+    font-size: clamp(34px, 3.2vw, 56px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    white-space: normal;
+  }
+
+  .home-page [data-why-split] #direct [class*="whyColumns"] [class*="sectionBody"],
+  .home-page [data-why-split] #responsive [class*="whyColumns"] [class*="sectionBody"],
+  .home-page [data-why-split] #accountable [class*="whyColumns"] [class*="sectionBody"] {
+    max-width: 36em;
+    margin-top: 18px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #24344b;
+  }
+
+  .home-page [data-why-split] [class*="whyColumns"] [class*="splitDirectCopy"] > .section-bottom-action {
+    justify-content: flex-start;
+    width: auto;
+    margin-top: 28px;
+  }
+
+  .home-page [data-why-split] #responsive [class*="whyColumns"] [class*="splitResponsiveRow"] {
+    display: block;
+    width: 100%;
+  }
+
+  .home-page [data-why-split] #responsive [class*="whyColumns"] [class*="splitResponsiveMedia"] {
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .home-page [data-why-split] #responsive [class*="whyColumns"] [class*="splitResponsiveMedia"] [class*="h-[438px]"],
+  .home-page [data-why-split] #responsive [class*="whyColumns"] [class*="splitResponsiveMedia"] [class*="h-[478px]"] {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 912 / 504;
+    max-height: min(460px, 46vh) !important;
+  }
+}
+
 .home-page [class*="whyPinSlide"] .section-bottom-action,
 .home-page [class*="whySplitSection"] .section-bottom-action {
   margin-top: 10px;
@@ -302,6 +412,10 @@
 }
 
 /* Split Dependable: individual light-blue logo boxes (no outer group frame). */
+.home-page [data-why-split] #accountable [class*="splitCarouselTitle"] {
+  margin: 0 0 36px !important;
+}
+
 .home-page [data-why-split] #accountable [class*="splitCarousel"] [class*="plainRow"] {
   gap: 12px !important;
 }

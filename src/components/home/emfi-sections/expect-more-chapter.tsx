@@ -3,13 +3,13 @@
 import type { CSSProperties } from "react";
 import { AccountableSection } from "./accountable-section";
 import { DirectSection } from "./direct-section";
-import { ExpectSection } from "@/components/emfi-sections/expect-section";
+import { ExpectSection } from "./expect-section";
 import { ResponsiveSection } from "./responsive-section";
-import styles from "@/components/emfi-sections/sections.module.css";
-import { useAnimTimeline } from "@/components/emfi-sections/use-anim-timeline";
-import { useHeaderBlend } from "@/components/emfi-sections/use-header-blend";
-import { dirVals, directPaceScale, type DirectPace } from "@/components/emfi-sections/values";
-import { WhyFlow } from "@/components/emfi-sections/why-flow";
+import styles from "./sections.module.css";
+import { useAnimTimeline } from "./use-anim-timeline";
+import { useHeaderBlend } from "./use-header-blend";
+import { dirVals, directPaceScale, type DirectPace } from "./values";
+import { WhyFlow } from "./why-flow";
 
 const markMask = 'url("/emfi/emfi-mark.svg") center/contain no-repeat';
 

@@ -191,12 +191,6 @@ export const DirectContentPage = ({ copy, heroCopy, locale }: {
   <div className={styles.page} data-pillar="direct">
     <WhyHero headline={heroCopy.headline} {...heroCopy.heroTitle}><SettlementHeroAnimation lightHero /></WhyHero>
     <ContentBand id="infrastructure" copy={copy.infrastructure} tone="soft">
-      <ExecutionReveal className={styles.journey}>
-        <InfrastructureRouteDiagram
-          label={copy.infrastructure.titleLines.join(' ')}
-          steps={copy.infrastructure.steps}
-        />
-      </ExecutionReveal>
       <h3 className={styles.groupTitle}>{copy.infrastructure.providersTitle}</h3>
       <InfrastructureProviders items={copy.infrastructure.providers} />
     </ContentBand>

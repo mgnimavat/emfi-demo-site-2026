@@ -4,7 +4,7 @@ import { getMarketingMessages, marketingDictionaries } from '@/lib/i18n/marketin
 import localeStyles from './LocalizedMarketingPageSection.module.css';
 import { EmfiSections } from "@/components/home/emfi-sections/emfi-sections";
 import { QuestionnaireSection } from "@/components/home/questionnaire/questionnaire";
-import styles from "@/components/sections/home-12/landing.module.css";
+import styles from "@/components/home/landing.module.css";
 import "@/app/home-16/home-16.css";
 import "@/app/home.css";
 

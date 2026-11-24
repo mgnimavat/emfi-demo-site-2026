@@ -6,12 +6,12 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { trust } from "@/content/trust";
-import { cardStyle, centeredCardSpace } from "@/components/emfi-sections/css";
-import { SectionAction, SectionCopy, SectionFooterBody } from "@/components/emfi-sections/outcomes";
-import { ReplayButton } from "@/components/emfi-sections/replay-button";
-import chapterStyles from "@/components/emfi-sections/sections.module.css";
-import styles from "@/components/emfi-sections/accountable.module.css";
-import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhySplit, useWhyStep, WhyMarker } from "@/components/emfi-sections/why-flow";
+import { cardStyle, centeredCardSpace } from "./css";
+import { SectionAction, SectionCopy, SectionFooterBody } from "./outcomes";
+import { ReplayButton } from "./replay-button";
+import chapterStyles from "./sections.module.css";
+import styles from "./accountable.module.css";
+import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhySplit, useWhyStep, WhyMarker } from "./why-flow";
 
 const HOLD_MS = 3800;
 const standards = ["Authorised", "Regulated", "Auditable"] as const;
@@ -223,6 +223,11 @@ function PlainEvidenceContent({ slide, ink = false, gray = false }: { slide: (ty
 
 type EvidenceSlideItem = (typeof slides)[number];
 
+/** Space between stacked logo rows. The viewport grows to keep the gap below the active row visible. */
+const LOGO_ROW_GAP = 10;
+/** Portion of the next logo row kept in view. The previous row stays out of frame. */
+const LOGO_ROW_PEEK_NEXT = 0.5;
+
 function SplitPeekCarousel({
   deck,
   index,
@@ -250,12 +255,15 @@ function SplitPeekCarousel({
     const viewport = viewportRef.current;
     if (!viewport) return;
     const measure = () => {
-      const width = viewport.clientWidth;
-      /* Exact fill: 15% peek | 70% active | 15% peek. */
-      setMetrics({
-        viewport: width,
-        slide: width * 0.7,
-      });
+      const slideEl = viewport.querySelector<HTMLElement>("[data-dependable-slide]");
+      const slide = slideEl?.offsetHeight ?? 0;
+      if (slide <= 0) return;
+      /* Active logos, 10px gap, 0.5 of the next logos. The previous row stays above the frame. */
+      const next = {
+        viewport: slide * (1 + LOGO_ROW_PEEK_NEXT) + LOGO_ROW_GAP,
+        slide,
+      };
+      setMetrics((current) => (current.slide === next.slide && current.viewport === next.viewport ? current : next));
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -296,17 +304,26 @@ function SplitPeekCarousel({
     return () => window.cancelAnimationFrame(id);
   }, [instant, pos]);
 
-  const x =
-    metrics.viewport > 0 && metrics.slide > 0
-      ? metrics.viewport * 0.15 - pos * metrics.slide
+  const y =
+    metrics.slide > 0
+      ? -(pos * (metrics.slide + LOGO_ROW_GAP))
       : 0;
+  const activeItem = deck[active];
 
   return (
     <div className={styles.splitCarousel}>
-      <div ref={viewportRef} className={styles.splitCarouselViewport}>
+      <h3 className={styles.splitCarouselTitle} key={activeItem.title}>
+        {t(plainTitle(activeItem))}
+      </h3>
+      <div
+        ref={viewportRef}
+        className={styles.splitCarouselViewport}
+        style={metrics.viewport > 0 ? { height: metrics.viewport } : undefined}
+      >
         <motion.div
           className={styles.splitCarouselTrack}
-          animate={{ x }}
+          style={{ gap: LOGO_ROW_GAP }}
+          animate={{ y }}
           transition={
             instant || reduceMotion
               ? { duration: 0 }
@@ -319,11 +336,11 @@ function SplitPeekCarousel({
               <div
                 key={`${item.title}-${i}`}
                 className={styles.splitCarouselSlide}
+                data-dependable-slide=""
                 data-active={isActive ? "true" : "false"}
                 aria-hidden={isActive ? undefined : true}
               >
                 <div className={styles.splitCarouselPanel}>
-                  <h3 className={styles.splitCarouselTitle}>{t(plainTitle(item))}</h3>
                   <PlainEvidenceLogos slide={item} ink={ink} gray={gray} />
                 </div>
               </div>
@@ -332,7 +349,7 @@ function SplitPeekCarousel({
         </motion.div>
       </div>
       <p className={styles.slideDisclaimer}>
-        {t("Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.")}
+        {t("Disclaimer: These names and logos identify specific EMFI relationships and do not imply endorsement. Permissions apply only to the relevant entity.")}
       </p>
     </div>
   );
@@ -480,7 +497,7 @@ export function AccountableSection({
     <section id="accountable" data-screen-label="05 Dependable" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: solidLight ? "#ffffff" : light ? "transparent" : "radial-gradient(55% 60% at 0% 100%,rgba(128,152,204,.14),transparent 70%)", zIndex: light || raiseContent ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
       {marked && step && !split ? <WhyMarker n={step} active={active} /> : null}
       <div
-        className={[light ? chapterStyles.lightCopy : "", pinned ? chapterStyles.pinStack : "", split ? chapterStyles.splitDirect : ""].filter(Boolean).join(" ") || undefined}
+        className={[light ? chapterStyles.lightCopy : "", pinned ? chapterStyles.pinStack : "", split ? chapterStyles.splitDirect : "", split ? chapterStyles.whyColumns : ""].filter(Boolean).join(" ") || undefined}
         style={{
           position: "relative",
           zIndex: light || raiseContent ? 2 : undefined,
@@ -504,6 +521,7 @@ export function AccountableSection({
             tone={light ? "light" : "dark"}
             align={split ? "start" : centered || pinned ? "center" : "start"}
           />
+          {pinned && split ? <SectionAction href="/why-emfi/dependable-operations" label="Learn More" align="start" /> : null}
         </div>
         {split ? (
           <div className={`${styles.splitEvidence}${brandInk ? ` ${styles.plainInk}` : ""}`} style={{ width: "100%" }}>
@@ -545,10 +563,8 @@ export function AccountableSection({
             ) : null}
           </div>
         )}
-        {pinned ? (
-          split ? (
-            <SectionAction href="/why-emfi/dependable-operations" label="Learn More" align="start" />
-          ) : shortWhy ? (
+        {pinned && !split ? (
+          shortWhy ? (
             <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/why-emfi/dependable-operations" : undefined} />
           ) : (
             <SectionAction href="/why-emfi/dependable-operations" label="Learn More" />
