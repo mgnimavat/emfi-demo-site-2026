@@ -10,7 +10,6 @@ import styles from "./page.module.css";
 const HOLD_MS = 3400;
 
 const slides = [
-  { title: "Regulated under", items: ["CASS", "MiFID", "AIFMD"] },
   {
     title: "Audited by",
     logos: [
@@ -67,19 +66,11 @@ export function OversightCycle() {
         >
           <p className={styles.groupLabel}>{t(slide.title)}</p>
           <div className={styles.cycleRow}>
-            {"logos" in slide && slide.logos
-              ? slide.logos.map((item) => (
-                  <div key={item.alt} className={styles.cycleCell}>
-                    <Image src={item.src} alt={item.alt} width={item.width} height={item.height} unoptimized />
-                  </div>
-                ))
-              : "items" in slide && slide.items
-                ? slide.items.map((item) => (
-                    <div key={item} className={styles.cycleCell}>
-                      <span>{item}</span>
-                    </div>
-                  ))
-                : null}
+            {slide.logos.map((item) => (
+              <div key={item.alt} className={styles.cycleCell}>
+                <Image src={item.src} alt={item.alt} width={item.width} height={item.height} unoptimized />
+              </div>
+            ))}
           </div>
         </motion.div>
       </AnimatePresence>

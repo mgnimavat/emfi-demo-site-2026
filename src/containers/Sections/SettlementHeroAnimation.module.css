@@ -14,3 +14,17 @@
 
 .routeCard > [data-direct-route-animation] { flex-shrink: 0; }
 .compactCard { aspect-ratio: auto; }
+
+.infraRoute {
+  width: 100%;
+  min-width: 0;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.infraRoute > [data-direct-route-animation] {
+  flex: 1 1 auto;
+  min-height: 180px;
+}

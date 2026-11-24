@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
 import { DirectRouteAnimation } from '@/components/emfi-sections/direct-route-animation';
-import { cardStyle } from '@/components/emfi-sections/css';
+import { cardStyle, lightRouteCardStyle } from '@/components/emfi-sections/css';
 import { useAnimTimeline } from '@/components/emfi-sections/use-anim-timeline';
 import { directPaceScale, dirVals } from '@/components/emfi-sections/values';
 import routeStyles from '@/components/emfi-sections/sections.module.css';
@@ -11,9 +11,9 @@ import styles from './SettlementHeroAnimation.module.css';
 
 const routeTitles = { conventional: 'Conventional Route', direct: 'EMFI Route' };
 const compactRouteWidth = 500;
-const heroRouteStops = [4, 26, 54, 76, 96] as const;
+const heroRouteStops = [4, 26, 47, 68, 92] as const;
 
-export const SettlementHeroAnimation = ({ showTitle = true }: { showTitle?: boolean }) => {
+export const SettlementHeroAnimation = ({ showTitle = true, lightHero = false }: { showTitle?: boolean; lightHero?: boolean }) => {
   const { t } = useServiceLocale();
   const { chapRef, dRef, tD } = useAnimTimeline({
     loopDirect: true,
@@ -31,11 +31,19 @@ export const SettlementHeroAnimation = ({ showTitle = true }: { showTitle?: bool
     return () => observer.disconnect();
   }, [dRef]);
 
-  const values = dirVals(tD, compact, routeTitles, 'home12', compact ? undefined : heroRouteStops);
+  const values = dirVals(
+    tD,
+    compact,
+    routeTitles,
+    'home12',
+    lightHero && !compact ? heroRouteStops : undefined,
+    lightHero,
+  );
+  const heroCardStyle = lightHero ? lightRouteCardStyle : cardStyle;
 
   return (
     <div ref={chapRef} className={styles.visual}>
-      <div ref={dRef} className={`${styles.routeCard} ${compact ? styles.compactCard : ''}`} style={showTitle ? cardStyle : { ...cardStyle, paddingTop: cardStyle.padding }}>
+      <div ref={dRef} className={`${styles.routeCard} ${compact ? styles.compactCard : ''}`} style={showTitle ? heroCardStyle : { ...heroCardStyle, paddingTop: cardStyle.padding }}>
         {showTitle ? <p className={routeStyles.routeTitle}>
           <span className={values.dRouteTitle === routeTitles.direct
             ? routeStyles.routeTitleEmfi

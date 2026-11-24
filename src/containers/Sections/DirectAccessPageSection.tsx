@@ -15,7 +15,7 @@ export const DirectAccessPageSection = ({ copy }: { copy: DirectCopy }) => (
             <ExecutionHeroTitle headline={copy.headline} prefix={copy.heroTitle.prefix} words={copy.heroTitle.words} />
           </ExecutionReveal>
           <ExecutionReveal delay={0.12} className={hero.heroMedia}>
-            <SettlementHeroAnimation />
+            <SettlementHeroAnimation lightHero />
           </ExecutionReveal>
         </div>
       </div>

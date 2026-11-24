@@ -6,12 +6,12 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { trust } from "@/content/trust";
-import { cardStyle, centeredCardSpace } from "@/components/emfi-sections/css";
-import { SectionAction, SectionCopy, SectionFooterBody } from "@/components/emfi-sections/outcomes";
-import { ReplayButton } from "@/components/emfi-sections/replay-button";
-import chapterStyles from "@/components/emfi-sections/sections.module.css";
-import styles from "@/components/emfi-sections/accountable.module.css";
-import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhySplit, useWhyStep, WhyMarker } from "@/components/emfi-sections/why-flow";
+import { cardStyle, centeredCardSpace } from "./css";
+import { SectionAction, SectionCopy, SectionFooterBody } from "./outcomes";
+import { ReplayButton } from "./replay-button";
+import chapterStyles from "./sections.module.css";
+import styles from "./accountable.module.css";
+import { sectionFrame, sectionPad, useWhyActive, useWhyEngaged, useWhyPinned, useWhySplit, useWhyStep, WhyMarker } from "./why-flow";
 
 const HOLD_MS = 3800;
 const standards = ["Authorised", "Regulated", "Auditable"] as const;
@@ -126,11 +126,6 @@ const slides = [
     })),
   },
   {
-    title: "Regulated under",
-    kind: "pills" as const,
-    items: trust.regimes.map((item) => item.code).filter((code) => code !== "MIFIDPRU"),
-  },
-  {
     title: "Audited by",
     kind: "logos" as const,
     items: trust.auditors.map((item) => ({
@@ -163,9 +158,9 @@ const slides = [
 /** Home Dependable (split): logo slides from home-22, in display order. */
 const splitLogoSlides = [
   slides[0], // Authorised by
-  slides[2], // Audited by
-  slides[4], // Quoted in
-  slides[3], // Connected to
+  slides[1], // Audited by
+  slides[3], // Quoted in
+  slides[2], // Connected to
 ] as const;
 
 function plainTitle(slide: (typeof slides)[number]) {
@@ -180,44 +175,38 @@ function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: (type
   const marks = gray ? { ...brandMarkSrc, ...grayMarkSrc } : ink ? inkMarkSrc : brandMarkSrc;
   return (
     <div className={styles.plainRow}>
-      {slide.kind === "logos"
-        ? (slide.items as LogoItem[]).map((item) => {
-            const entities = logoEntities(item);
-            const large = slide.title.startsWith("Authorised");
-            return (
-              <div
-                key={item.name}
-                className={[
-                  styles.plainItem,
-                  large && styles.plainItemLarge,
-                  item.name === "Financial Conduct Authority" && styles.plainItemFca,
-                  item.name === "BDO" && styles.plainItemBdo,
-                  item.name === "Cayman Islands Monetary Authority" && styles.plainItemCima,
-                  item.name === "Dubai Financial Services Authority" && styles.plainItemDfsa,
-                  item.name === "The Wall Street Journal" && styles.plainItemWsj,
-                  item.name === "CISI" && styles.plainItemCisi,
-                  item.name === "Bloomberg" && styles.plainItemBloomberg,
-                  entities && styles.plainItemWithEntities,
-                ].filter(Boolean).join(" ")}
-              >
-                <div className={styles.plainLogo}>
-                  <Image src={marks[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
-                </div>
-                {entities ? (
-                  <ul className={styles.plainEntities}>
-                    {entities.map((entity) => (
-                      <li key={entity}>{entity}</li>
-                    ))}
-                  </ul>
-                ) : null}
-              </div>
-            );
-          })
-        : slide.items.map((code) => (
-            <div key={code} className={styles.plainItem}>
-              <span className={styles.plainLabel}>{code}</span>
+      {(slide.items as LogoItem[]).map((item) => {
+        const entities = logoEntities(item);
+        const large = slide.title.startsWith("Authorised");
+        return (
+          <div
+            key={item.name}
+            className={[
+              styles.plainItem,
+              large && styles.plainItemLarge,
+              item.name === "Financial Conduct Authority" && styles.plainItemFca,
+              item.name === "BDO" && styles.plainItemBdo,
+              item.name === "Cayman Islands Monetary Authority" && styles.plainItemCima,
+              item.name === "Dubai Financial Services Authority" && styles.plainItemDfsa,
+              item.name === "The Wall Street Journal" && styles.plainItemWsj,
+              item.name === "CISI" && styles.plainItemCisi,
+              item.name === "Bloomberg" && styles.plainItemBloomberg,
+              entities && styles.plainItemWithEntities,
+            ].filter(Boolean).join(" ")}
+          >
+            <div className={styles.plainLogo}>
+              <Image src={marks[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
             </div>
-          ))}
+            {entities ? (
+              <ul className={styles.plainEntities}>
+                {entities.map((entity) => (
+                  <li key={entity}>{entity}</li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -233,6 +222,11 @@ function PlainEvidenceContent({ slide, ink = false, gray = false }: { slide: (ty
 }
 
 type EvidenceSlideItem = (typeof slides)[number];
+
+/** Space between stacked logo rows. The viewport grows to keep the gap below the active row visible. */
+const LOGO_ROW_GAP = 10;
+/** Portion of the next logo row kept in view. The previous row stays out of frame. */
+const LOGO_ROW_PEEK_NEXT = 0.5;
 
 function SplitPeekCarousel({
   deck,
@@ -261,12 +255,15 @@ function SplitPeekCarousel({
     const viewport = viewportRef.current;
     if (!viewport) return;
     const measure = () => {
-      const width = viewport.clientWidth;
-      /* Exact fill: 15% peek | 70% active | 15% peek. */
-      setMetrics({
-        viewport: width,
-        slide: width * 0.7,
-      });
+      const slideEl = viewport.querySelector<HTMLElement>("[data-dependable-slide]");
+      const slide = slideEl?.offsetHeight ?? 0;
+      if (slide <= 0) return;
+      /* Active logos, 10px gap, 0.5 of the next logos. The previous row stays above the frame. */
+      const next = {
+        viewport: slide * (1 + LOGO_ROW_PEEK_NEXT) + LOGO_ROW_GAP,
+        slide,
+      };
+      setMetrics((current) => (current.slide === next.slide && current.viewport === next.viewport ? current : next));
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -307,17 +304,26 @@ function SplitPeekCarousel({
     return () => window.cancelAnimationFrame(id);
   }, [instant, pos]);
 
-  const x =
-    metrics.viewport > 0 && metrics.slide > 0
-      ? metrics.viewport * 0.15 - pos * metrics.slide
+  const y =
+    metrics.slide > 0
+      ? -(pos * (metrics.slide + LOGO_ROW_GAP))
       : 0;
+  const activeItem = deck[active];
 
   return (
     <div className={styles.splitCarousel}>
-      <div ref={viewportRef} className={styles.splitCarouselViewport}>
+      <h3 className={styles.splitCarouselTitle} key={activeItem.title}>
+        {t(plainTitle(activeItem))}
+      </h3>
+      <div
+        ref={viewportRef}
+        className={styles.splitCarouselViewport}
+        style={metrics.viewport > 0 ? { height: metrics.viewport } : undefined}
+      >
         <motion.div
           className={styles.splitCarouselTrack}
-          animate={{ x }}
+          style={{ gap: LOGO_ROW_GAP }}
+          animate={{ y }}
           transition={
             instant || reduceMotion
               ? { duration: 0 }
@@ -330,11 +336,11 @@ function SplitPeekCarousel({
               <div
                 key={`${item.title}-${i}`}
                 className={styles.splitCarouselSlide}
+                data-dependable-slide=""
                 data-active={isActive ? "true" : "false"}
                 aria-hidden={isActive ? undefined : true}
               >
                 <div className={styles.splitCarouselPanel}>
-                  <h3 className={styles.splitCarouselTitle}>{t(plainTitle(item))}</h3>
                   <PlainEvidenceLogos slide={item} ink={ink} gray={gray} />
                 </div>
               </div>
@@ -343,7 +349,7 @@ function SplitPeekCarousel({
         </motion.div>
       </div>
       <p className={styles.slideDisclaimer}>
-        {t("Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.")}
+        {t("Disclaimer: These names and logos identify specific EMFI relationships and do not imply endorsement. Permissions apply only to the relevant entity.")}
       </p>
     </div>
   );
@@ -365,21 +371,13 @@ function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = fa
         <h3 className={styles.title}>{t(title)}</h3>
         {plain ? null : <span className={styles.rule} />}
       </div>
-      {slide.kind === "logos" ? (
-        <div className={[styles.logos, brandLogos && styles.brandLogos, brandLogos && slide.title.startsWith("Authorised") && styles.authorityLogos].filter(Boolean).join(" ")}>
-          {slide.items.map((item) => (
-            <div key={item.name} className={[styles.logoCard, brandLogos && (item.name.startsWith("Dubai") || item.name.startsWith("Cayman")) && styles.markLogo, brandLogos && (item.name.startsWith("Cayman") || item.name.startsWith("Baker")) && styles.largeLogo].filter(Boolean).join(" ")}>
-              <Image src={brandLogos ? brandLogoSrc[item.src] ?? item.src : item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className={brandLogos ? `${styles.pills} ${styles.brandLogos}` : styles.pills}>
-          {slide.items.map((code) => (
-            <div key={code} className={styles.pill}>{code}</div>
-          ))}
-        </div>
-      )}
+      <div className={[styles.logos, brandLogos && styles.brandLogos, brandLogos && slide.title.startsWith("Authorised") && styles.authorityLogos].filter(Boolean).join(" ")}>
+        {slide.items.map((item) => (
+          <div key={item.name} className={[styles.logoCard, brandLogos && (item.name.startsWith("Dubai") || item.name.startsWith("Cayman")) && styles.markLogo, brandLogos && (item.name.startsWith("Cayman") || item.name.startsWith("Baker")) && styles.largeLogo].filter(Boolean).join(" ")}>
+            <Image src={brandLogos ? brandLogoSrc[item.src] ?? item.src : item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
+          </div>
+        ))}
+      </div>
     </>
   );
 }
@@ -499,7 +497,7 @@ export function AccountableSection({
     <section id="accountable" data-screen-label="05 Dependable" data-why-step={marked ? "" : undefined} style={{ position: "relative", height: pinned ? "100%" : undefined, background: solidLight ? "#ffffff" : light ? "transparent" : "radial-gradient(55% 60% at 0% 100%,rgba(128,152,204,.14),transparent 70%)", zIndex: light || raiseContent ? undefined : 1, color: light ? "#071832" : "#FFFFFF" }}>
       {marked && step && !split ? <WhyMarker n={step} active={active} /> : null}
       <div
-        className={[light ? chapterStyles.lightCopy : "", pinned ? chapterStyles.pinStack : "", split ? chapterStyles.splitDirect : ""].filter(Boolean).join(" ") || undefined}
+        className={[light ? chapterStyles.lightCopy : "", pinned ? chapterStyles.pinStack : "", split ? chapterStyles.splitDirect : "", split ? chapterStyles.whyColumns : ""].filter(Boolean).join(" ") || undefined}
         style={{
           position: "relative",
           zIndex: light || raiseContent ? 2 : undefined,
@@ -523,6 +521,7 @@ export function AccountableSection({
             tone={light ? "light" : "dark"}
             align={split ? "start" : centered || pinned ? "center" : "start"}
           />
+          {pinned && split ? <SectionAction href="/why-emfi/dependable-operations" label="Learn More" align="start" /> : null}
         </div>
         {split ? (
           <div className={`${styles.splitEvidence}${brandInk ? ` ${styles.plainInk}` : ""}`} style={{ width: "100%" }}>
@@ -564,10 +563,8 @@ export function AccountableSection({
             ) : null}
           </div>
         )}
-        {pinned ? (
-          split ? (
-            <SectionAction href="/why-emfi/dependable-operations" label="Learn More" align="start" />
-          ) : shortWhy ? (
+        {pinned && !split ? (
+          shortWhy ? (
             <SectionFooterBody body={body} tone={light ? "light" : "dark"} cueHref={pairedCue ? "/why-emfi/dependable-operations" : undefined} />
           ) : (
             <SectionAction href="/why-emfi/dependable-operations" label="Learn More" />

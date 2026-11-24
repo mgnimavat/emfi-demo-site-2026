@@ -18,6 +18,8 @@ import {
 import { FloatingPhones } from "@/components/home-17/floating-phones";
 import { HeroDashboardScreen } from "@/components/home-17/operating-view";
 import { ExecutionWorkstationFit, SettlementDashboardFit } from "@/components/home-17/scaled-mockup";
+import { PhoneDevice } from "@/components/mockups/phone-device";
+import { responsiveTechnology } from "@/content/responsive-technology";
 
 const HOLD_MS = 3400;
 
@@ -40,7 +42,7 @@ const VIEWS = [
   "OrderEur",
   "OrderAapl",
 ] as const;
-type View = (typeof VIEWS)[number] | "HeroDashboard" | "SettlementDashboard" | "Workstation" | "MobileBalances" | "MobileScreens" | "MobileScreensPerspective" | "FloatingPhones";
+type View = (typeof VIEWS)[number] | "HeroDashboard" | "SettlementDashboard" | "Workstation" | "MobileBalances" | "MobileScreens" | "MobileScreensPerspective" | "FloatingPhones" | "PhoneDevices";
 
 export const responsiveHighlightSlides = ["Dashboard", "Reports", "OrderAapl"] as const satisfies readonly View[];
 export const home10ResponsiveSlides = ["OrderEur", "OrderAapl", "HeroDashboard", "MobileBalances"] as const satisfies readonly View[];
@@ -48,7 +50,7 @@ export const home12ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScree
 export const home16ResponsiveSlides = ["OrderEur", "HeroDashboard", "MobileScreensPerspective"] as const satisfies readonly View[];
 export const homeV5ResponsiveSlides = ["HeroDashboard", "OrderEur", "FloatingPhones"] as const satisfies readonly View[];
 export const homeDeskResponsiveSlides = ["HeroDashboard", "OrderEur"] as const satisfies readonly View[];
-export const homeSettlementResponsiveSlides = ["SettlementDashboard", "Workstation"] as const satisfies readonly View[];
+export const homeSettlementResponsiveSlides = ["SettlementDashboard", "Workstation", "PhoneDevices"] as const satisfies readonly View[];
 
 const VIEW_META: Record<
   View,
@@ -132,6 +134,12 @@ const VIEW_META: Record<
     kind: "public",
   },
   FloatingPhones: {
+    crumbs: "",
+    date: "",
+    activeModule: "Clients",
+    kind: "public",
+  },
+  PhoneDevices: {
     crumbs: "",
     date: "",
     activeModule: "Clients",
@@ -1333,13 +1341,32 @@ function ViewPanel({ view, apple = false, square = false, trimChrome = false, ap
       );
     case "FloatingPhones":
       return <FloatingPhones slim={trimChrome} />;
+    case "PhoneDevices":
+      return <PhoneDevicesSlide />;
   }
 }
 
 const balancesGradient = "linear-gradient(165deg, #f5f9fd 0%, #d7e6f8 100%)";
 const ctaBorderGradient = "linear-gradient(90deg, #a7c4fd 0%, #a1bcf3 10%, #9ab5ea 20%, #94aee1 30%, #90a7d9 40%, #899fd0 50%, #75a5c9 60%, #5aafc3 70%, #42b7bc 80%, #2dc0b5 90%, #1ecaae 100%)";
 const quietBorder = "linear-gradient(90deg, rgb(186 214 246 / 80%), rgb(168 206 220 / 55%))";
-const phoneViews = new Set<View>(["FloatingPhones"]);
+const phoneViews = new Set<View>(["FloatingPhones", "PhoneDevices"]);
+
+function PhoneDevicesSlide() {
+  return (
+    <div className="flex h-full w-full items-end justify-center gap-[clamp(10px,1.6vw,24px)] px-2 pb-1">
+      {responsiveTechnology.showcase.screens.map((screen, index) => (
+        <PhoneDevice
+          key={screen.src}
+          src={`${screen.src}?v=8`}
+          alt={screen.alt}
+          width={screen.width}
+          height={screen.height}
+          featured={index === 1}
+        />
+      ))}
+    </div>
+  );
+}
 
 function MobileBalancesSlide() {
   return (

@@ -248,6 +248,7 @@
   "Replay": "إعادة التشغيل",
   "EMFI | Home": "EMFI | الرئيسية",
   "Disclaimer: These names and logos identify specific relationships with EMFI entities. Their inclusion does not imply endorsement or recommendation. Regulatory permissions, frameworks, audit appointments and professional designations apply only to the relevant entity or activities.": "إخلاء مسؤولية: تحدد هذه الأسماء والشعارات علاقات بعينها مع كيانات EMFI. ولا يعني إدراجها تأييداً أو توصية. وتنطبق الصلاحيات والأطر التنظيمية وتعيينات التدقيق والتسميات المهنية على الكيان أو الأنشطة المعنية فقط.",
+  "Disclaimer: These names and logos identify specific EMFI relationships and do not imply endorsement. Permissions apply only to the relevant entity.": "إخلاء مسؤولية: تحدد هذه الأسماء والشعارات علاقات بعينها مع EMFI ولا تعني تأييداً. وتنطبق الصلاحيات على الكيان المعني فقط.",
   "An instruction moves from You to Settlement agent, Sub-custodian, Custodian and Depository. The same route then shortens to You, EMFI, Depository.": "تنتقل التعليمات منك إلى وكيل التسوية وأمين الحفظ الفرعي وأمين الحفظ وجهة الإيداع. ثم يختصر المسار إلى أنت وEMFI وجهة الإيداع.",
   "Go to step": "انتقل إلى الخطوة",
   "Instruction": "تعليمات",

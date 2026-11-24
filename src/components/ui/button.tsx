@@ -15,7 +15,7 @@ type ButtonProps = {
 
 const variants = {
   primary:
-    "bg-brand text-ink-inverse hover:bg-[var(--color-blue-100)] hover:text-ink",
+    "border border-[color-mix(in_srgb,var(--color-blue-200)_55%,transparent)] bg-[var(--text-primary)] text-ink-inverse",
   outline: "border border-line bg-page text-ink hover:bg-subtle",
   secondary:
     "border border-brand bg-page text-brand hover:border-brand hover:bg-brand hover:text-ink-inverse",
@@ -29,7 +29,7 @@ function ButtonArrow() {
     <ArrowRight
       size={14}
       aria-hidden
-      className="emfi-btn-arrow shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-rotate-45"
+      className="emfi-btn-arrow shrink-0 transition-transform duration-200 ease"
     />
   );
 }
@@ -56,7 +56,7 @@ export function Button({
   const classes = cn(
     circle
       ? "emfi-circle-btn"
-      : "emfi-btn group inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[13px] font-bold tracking-wide",
+      : "emfi-btn group inline-flex min-h-11 items-center justify-center gap-3 rounded-full px-5 py-3 text-[13px] font-semibold tracking-normal",
     circle ? undefined : variants[variant],
     className,
   );

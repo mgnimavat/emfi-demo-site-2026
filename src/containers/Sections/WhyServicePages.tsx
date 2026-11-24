@@ -1,12 +1,12 @@
 import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, GitMerge, Layers, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, GitMerge, Layers, ShieldCheck } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { ConnectedJourney } from '@/components/sections/execution-v2/connected-journey';
 import { OversightCycle } from '@/components/sections/dependable/oversight-cycle';
 import { ExecutionHeroTitle } from '@/components/sections/execution/hero-title';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { ResponsiveShowcase } from '@/components/sections/responsive/showcase';
+import { PhoneDevice } from '@/components/mockups/phone-device';
+import { Button } from '@/components/ui/button';
 import hero from '@/components/sections/execution/page.module.css';
 import band from '@/components/sections/execution/workstation-section.module.css';
 import type { WhyPageCopy } from '@/lib/i18n/why-page-dictionaries';
@@ -17,6 +17,7 @@ import reveal from './ProviderCardReveal.module.css';
 import { responsiveTechnology } from '@/content/responsive-technology';
 import { ExecutionWorkstation } from './ExecutionWorkstation';
 import { SettlementDashboard } from './SettlementDashboard';
+import { InfrastructureRouteDiagram } from './InfrastructureRouteDiagram';
 import { SettlementHeroAnimation } from './SettlementHeroAnimation';
 import styles from './WhyServicePages.module.css';
 
@@ -34,7 +35,13 @@ const providerLogos: Readonly<Partial<Record<string, string>>> = {
 const relationshipLogos: Readonly<Partial<Record<string, DetailLogo>>> = {
   FCA: { src: '/brand/regulators/fca-brand.svg', width: 156, height: 89 },
   DFSA: { src: '/brand/regulators/dfsa-brand.png', width: 160, height: 100 },
-  Euroclear: { src: euroclearLogo, width: 96, height: 96 },
+  CIMA: { src: '/brand/regulators/cima-brand.png', width: 120, height: 120 },
+  BDO: { src: '/brand/auditors/bdo-brand.png', width: 280, height: 108 },
+  'Baker Tilly': { src: '/brand/auditors/baker-tilly-brand.png', width: 1023, height: 268 },
+  Apex: { src: '/images/fund-providers/apex.svg', width: 550, height: 514 },
+  Walkers: { src: '/images/fund-providers/walkers.jpg', width: 1797, height: 614 },
+  Dechert: { src: '/images/fund-providers/dechert.png', width: 1024, height: 1024 },
+  Euroclear: { src: '/brand/standing/euroclear-white.png', width: 140, height: 135 },
   Allfunds: { src: allfundsLogo, width: 144, height: 39 },
 };
 const benefitIcons = [Layers, GitMerge, ShieldCheck];
@@ -65,13 +72,13 @@ const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', children }
   id: string;
   copy: Intro;
   tone?: 'white' | 'soft' | 'navy';
-  layout?: 'standard' | 'centered' | 'product';
+  layout?: 'standard' | 'centered' | 'product' | 'split';
   children?: ReactNode;
 }) => (
   <section id={id} className={`${band.section} ${styles.contentBand}`} data-tone={tone}
     data-layout={layout} aria-labelledby={`${id}-heading`}>
     <div className={`${band.container} ${styles.bandContainer}`}>
-      <div className={`${styles.bandIntro} ${copy.lead ? band.introduction : ''}`}>
+      <div className={`${styles.bandIntro} ${copy.lead || copy.body ? band.introduction : ''}`}>
         <ExecutionReveal>
           <h2 id={`${id}-heading`} className={`${band.title} ${styles.bandTitle}`}>
             {copy.titleLines.map((line) => (
@@ -79,10 +86,10 @@ const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', children }
             ))}
           </h2>
         </ExecutionReveal>
-        {copy.lead ? (
+        {copy.lead || copy.body ? (
           <ExecutionReveal delay={0.12} className={styles.introCopy}>
-            <p className={styles.lead}>{copy.lead}</p>
-            {copy.body ? <p className={styles.body}>{copy.body}</p> : null}
+            {copy.lead ? <p className={styles.lead}>{copy.lead}</p> : null}
+            {copy.body ? <p className={layout === 'split' ? styles.callout : styles.body}>{copy.body}</p> : null}
           </ExecutionReveal>
         ) : null}
       </div>
@@ -92,28 +99,54 @@ const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', children }
   </section>
 );
 
-const Details = ({ items, layout = 'cards', logos }: {
+const splitDetailLead = (body: string) => {
+  const match = body.match(/^(.+?\.)(\s+)([\s\S]+)$/);
+  return match ? { lead: match[1], rest: match[3] } : null;
+};
+
+const Details = ({ items, layout = 'cards', logos, emphasizeLead = false }: {
   items: readonly Detail[];
   layout?: 'cards' | 'benefits' | 'ledger' | 'entities';
   logos?: Readonly<Partial<Record<string, DetailLogo>>>;
+  emphasizeLead?: boolean;
 }) => (
   <ExecutionReveal>
+    {logos ? (
+      <svg className={styles.logoFilter} aria-hidden="true" focusable="false">
+        <defs>
+          <filter id="why-logo-navy" colorInterpolationFilters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.6378 -2.1456 -.2166 0 3" />
+            <feComposite in2="SourceAlpha" operator="in" result="ink" />
+            <feFlood floodColor="var(--text-primary, #071832)" />
+            <feComposite in2="ink" operator="in" />
+          </filter>
+        </defs>
+      </svg>
+    ) : null}
     <ul className={styles.details} data-layout={layout} role="list">
       {items.map((item, index) => {
         const Icon = layout === 'benefits' ? benefitIcons[index] : undefined;
         const logo = logos?.[item.title];
+        const lead = emphasizeLead ? splitDetailLead(item.body) : null;
 
         return (
-          <li key={item.title} className={styles.detail}>
-            <div>
-              {Icon ? <span className={styles.detailIcon}><Icon size={22} aria-hidden="true" /></span> : null}
-              {item.code ? <span className={styles.code}>{item.code}</span> : null}
-              <h3>
-                {logo ? <Image {...logo} alt={item.title} className={styles.detailLogo} /> : item.title}
-              </h3>
-            </div>
-            <div>
-              <p className={styles.body}>{item.body}</p>
+          <li key={item.title} className={styles.detail} data-has-logo={logo ? '' : undefined}>
+            {logo ? (
+              <div className={styles.detailMark}>
+                <Image {...logo} alt="" data-mark={item.title} className={styles.detailLogo} unoptimized />
+              </div>
+            ) : (
+              <div>
+                {Icon ? <span className={styles.detailIcon}><Icon size={22} aria-hidden="true" /></span> : null}
+                {item.code ? <span className={styles.code}>{item.code}</span> : null}
+                <h3>{item.title}</h3>
+              </div>
+            )}
+            <div className={logo ? styles.detailCopy : undefined}>
+              {logo ? <h3>{item.title}</h3> : null}
+              <p className={styles.body}>
+                {lead ? <><strong className={styles.detailLead}>{lead.lead}</strong> {lead.rest}</> : item.body}
+              </p>
               {item.href && item.link ? (
                 <a href={item.href} target="_blank" rel="noreferrer" className={styles.detailLink}>
                   {item.link}<span className="sr-only"> — {item.title}</span>
@@ -156,19 +189,18 @@ export const DirectContentPage = ({ copy, heroCopy, locale }: {
   copy: WhyPageCopy['direct']; heroCopy: Pick<DirectCopy, 'headline' | 'heroTitle'>; locale: Locale;
 }) => (
   <div className={styles.page} data-pillar="direct">
-    <WhyHero headline={heroCopy.headline} {...heroCopy.heroTitle}><SettlementHeroAnimation /></WhyHero>
+    <WhyHero headline={heroCopy.headline} {...heroCopy.heroTitle}><SettlementHeroAnimation lightHero /></WhyHero>
     <ContentBand id="infrastructure" copy={copy.infrastructure} tone="soft">
-      <ExecutionReveal className={styles.journey}>
-        <ConnectedJourney label={copy.infrastructure.titleLines.join(' ')} steps={copy.infrastructure.steps} />
-      </ExecutionReveal>
       <h3 className={styles.groupTitle}>{copy.infrastructure.providersTitle}</h3>
       <InfrastructureProviders items={copy.infrastructure.providers} />
     </ContentBand>
     <ContentBand id="direct-benefits" copy={copy.benefits}>
       <Details items={copy.benefits.items} layout="benefits" />
-      <Link className={styles.action} href={localizeHref('/services/settlement-custody', locale)}>
-        {copy.benefits.action}<ArrowRight size={18} aria-hidden="true" />
-      </Link>
+      <div className={styles.action}>
+        <Button href={localizeHref('/services/settlement-custody', locale)}>
+          {copy.benefits.action}
+        </Button>
+      </div>
     </ContentBand>
     <ContentBand id="dma" copy={copy.execution} tone="soft" />
   </div>
@@ -195,25 +227,21 @@ export const ResponsiveContentPage = ({ copy, heroCopy, workflowSteps }: {
     <ContentBand id="mobile" copy={copy.mobile} tone="soft" layout="product">
       <ExecutionReveal className={styles.phones}>
         {responsiveTechnology.showcase.screens.map((screen, index) => (
-          <Image key={screen.src} src={screen.src} alt={screen.alt}
-            width={screen.width} height={screen.height}
-            sizes={index === 1 ? '(max-width: 850px) 34vw, 264px' : '(max-width: 850px) 29vw, 228px'} />
+          <PhoneDevice key={screen.src} src={`${screen.src}?v=8`} alt={screen.alt}
+            width={screen.width} height={screen.height} featured={index === 1} />
         ))}
       </ExecutionReveal>
     </ContentBand>
-    <ContentBand id="specialist" layout="centered" copy={{
+    <ContentBand id="specialist" layout="split" copy={{
       titleLines: copy.specialist.titleLines,
-      lead: copy.specialist.lead,
+      body: copy.specialist.callout,
       note: copy.specialist.note,
     }}>
       <ExecutionReveal className={styles.journey}>
-        <ConnectedJourney label={copy.specialist.titleLines.join(' ')}
-          steps={workflowSteps.map(({ title }) => ({ label: title }))}
-          icons={['search', 'shield', 'handshake']} />
-      </ExecutionReveal>
-      <ExecutionReveal className={styles.specialistSummary}>
-        <p className={styles.body}>{copy.specialist.body}</p>
-        <p className={styles.callout}>{copy.specialist.callout}</p>
+        <InfrastructureRouteDiagram
+          label={copy.specialist.titleLines.join(' ')}
+          steps={workflowSteps.map(({ title, body }) => ({ label: title, detail: body }))}
+        />
       </ExecutionReveal>
     </ContentBand>
   </div>
@@ -227,7 +255,7 @@ export const DependableContentPage = ({ copy, heroCopy }: {
       <OversightCycle />
     </WhyHero>
     <ContentBand id="regulation" copy={copy.relationships} tone="soft">
-      <Details items={copy.relationships.items} layout="ledger" logos={relationshipLogos} />
+      <Details items={copy.relationships.items} layout="ledger" logos={relationshipLogos} emphasizeLead />
     </ContentBand>
     <ContentBand id="client-assets" copy={copy.assets}>
       <Details items={copy.assets.items} />
