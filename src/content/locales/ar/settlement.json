@@ -344,8 +344,8 @@
     {
       "id": "trade-upload",
       "titleLines": [
-        "رفع الصفقات - نعم.",
-        "الإدخال اليدوي - لا."
+        "رفع الصفقات، نعم.",
+        "الإدخال اليدوي، لا."
       ],
       "lead": "يمكن أن يحمل تأكيد Bloomberg VCON تفاصيل الصفقة المتفق عليها بين الأطراف المقابلة. وإعادة إدخال هذه التفاصيل تسبب عملاً يمكن تجنبه وفرصاً لأخطاء الإدخال.",
       "panels": [
@@ -657,36 +657,68 @@
   },
   "uploadAnimation": {
     "label": "رفع صورة VCON",
-    "prompt": "اسحب الصورة لرفعها",
+    "prompt": "أفلت صورة VCON هنا",
     "file": "vcon-confirmation.png",
     "ticketTitle": "تأكيد صفقة VCON",
     "result": "تفاصيل الصفقة المستخرجة",
-    "ready": "جاهز للمراجعة",
+    "submit": "إرسال",
+    "submitting": "جارٍ الإرسال…",
+    "submitted": "تم الإرسال",
     "fields": [
       {
         "id": "security",
         "label": "الورقة المالية",
-        "value": "CORPORATE BOND A"
+        "value": "ALDER QUAY 7.95 09/10/31"
       },
       {
         "id": "side",
         "label": "الجانب",
-        "value": "شراء"
+        "value": "بيع"
       },
       {
         "id": "quantity",
-        "label": "الكمية",
-        "value": "250"
+        "label": "القيمة الاسمية",
+        "value": "500,000"
       },
       {
         "id": "price",
         "label": "السعر",
-        "value": "97.625"
+        "value": "103.31000"
+      },
+      {
+        "id": "yield",
+        "label": "العائد",
+        "value": "6.99984%"
       },
       {
         "id": "counterparty",
         "label": "الطرف المقابل",
-        "value": "BROKER A"
+        "value": "BRACKEN REACH SECURITIES"
+      },
+      {
+        "id": "trade-date",
+        "label": "تاريخ الصفقة",
+        "value": "2025-08-12"
+      },
+      {
+        "id": "settlement-date",
+        "label": "تاريخ التسوية",
+        "value": "2025-08-13"
+      },
+      {
+        "id": "principal",
+        "label": "المبلغ الأصلي",
+        "value": "USD 516,550.00"
+      },
+      {
+        "id": "accrued",
+        "label": "الفائدة المستحقة",
+        "value": "USD 16,893.75"
+      },
+      {
+        "id": "total",
+        "label": "الإجمالي",
+        "value": "USD 533,443.75"
       }
     ]
   }

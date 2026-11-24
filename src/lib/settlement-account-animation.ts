@@ -2,25 +2,20 @@ type Point = readonly [number, number];
 export type SettlementOrientation = 'horizontal' | 'vertical' | 'track';
 type Route = { path: string; points: Point[]; distances: number[]; length: number };
 
-const curveSamples = 40;
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
 const ease = (value: number) => {
   const progress = clamp(value);
   return progress * progress * (3 - 2 * progress);
 };
-const createRoute = (from: Point, to: Point, [first, second]: readonly [Point, Point]): Route => {
-  const path = `M${from.join(' ')} C${first.join(' ')} ${second.join(' ')} ${to.join(' ')}`;
-  const points: Point[] = [from];
+const createRoute = (points: Point[]): Route => {
+  const [start, ...stops] = points;
+  const path = `M${start.join(' ')} L${stops.map((point) => point.join(' ')).join(' ')}`;
   const distances = [0];
 
-  for (let sample = 1; sample <= curveSamples; sample += 1) {
-    const t = sample / curveSamples;
-    const u = 1 - t;
-    const x = u ** 3 * from[0] + 3 * u ** 2 * t * first[0] + 3 * u * t ** 2 * second[0] + t ** 3 * to[0];
-    const y = u ** 3 * from[1] + 3 * u ** 2 * t * first[1] + 3 * u * t ** 2 * second[1] + t ** 3 * to[1];
-    const [previousX, previousY] = points[sample - 1];
-    points.push([x, y]);
-    distances.push(distances[sample - 1] + Math.hypot(x - previousX, y - previousY));
+  for (let index = 1; index < points.length; index += 1) {
+    const [x, y] = points[index];
+    const [previousX, previousY] = points[index - 1];
+    distances.push(distances[index - 1] + Math.hypot(x - previousX, y - previousY));
   }
   return { path, points, distances, length: distances[distances.length - 1] };
 };
@@ -37,12 +32,14 @@ const trackLayout = (
   const [deliveryA, deliveryB] = deliveryPositions;
   const pool: Point = [(accountA[0] + accountB[0]) / 2, (accountA[1] + accountB[1]) / 2];
   const connect = (from: Point, to: Point) => {
+    if (from[0] === to[0] || from[1] === to[1]) return createRoute([from, to]);
+
     const middleX = (from[0] + to[0]) / 2;
     const middleY = (from[1] + to[1]) / 2;
-    const controls: readonly [Point, Point] = axis === 'x'
+    const elbows: readonly [Point, Point] = axis === 'x'
       ? [[middleX, from[1]], [middleX, to[1]]]
       : [[from[0], middleY], [to[0], middleY]];
-    return createRoute(from, to, controls);
+    return createRoute([from, ...elbows, to]);
   };
   const node = ([x, y]: Point, labelOffset = 30) => ({ x, y, label: [x, y + labelOffset] });
   const delivery = ([x, y]: Point) => ({ ...node([x, y]), status: [x, y + 50] });

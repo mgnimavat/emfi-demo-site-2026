@@ -28,7 +28,7 @@ export const home11 = {
   navLinks: [
     { label: "Research & Execution", href: "/services/research-execution" },
     { label: "Settlement & Custody", href: "/services/settlement-custody" },
-    { label: "Wealth & Asset Management", href: "/services/wealth-asset-management" },
+    { label: "Asset & Wealth Management", href: "/services/wealth-asset-management" },
   ] as const,
   utilityLinks: [
     { label: "About", href: "/about" },

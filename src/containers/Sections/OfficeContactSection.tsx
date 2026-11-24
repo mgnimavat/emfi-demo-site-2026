@@ -15,6 +15,7 @@ export const OfficeContactSection = ({
   officeCities,
   officeEntityNames,
   officeDisclosures,
+  stretchColumns = Boolean(officeDisclosures),
 }: {
   copy?: CommonCopy;
   officeCity: OfficeCity;
@@ -24,6 +25,7 @@ export const OfficeContactSection = ({
   officeCities?: readonly OfficeCity[];
   officeEntityNames?: Partial<Record<OfficeCity, readonly string[]>>;
   officeDisclosures?: Partial<Record<OfficeCity, ReactNode>>;
+  stretchColumns?: boolean;
 }) => {
   const findOffice = (city: OfficeCity) => {
     const originalOffice = dictionaries.en.common.locations.places.find((place) => place.city === city);
@@ -67,7 +69,7 @@ export const OfficeContactSection = ({
   );
 
   return (
-    <section id={sectionId} data-layout={layout} className={`${styles.section} ${officeDisclosures ? styles.integrated : ''}`} aria-labelledby={layout === 'columns' ? undefined : `${sectionId}-heading`}
+    <section id={sectionId} data-layout={layout} className={`${styles.section} ${stretchColumns ? styles.integrated : ''}`} aria-labelledby={layout === 'columns' ? undefined : `${sectionId}-heading`}
       aria-label={layout === 'columns' ? columnOffices.map(({ place }) => place.city).join(' · ') : undefined}>
       <div className={`${styles.container} ${layout === 'columns' ? styles.columns : ''}`}>
         {layout === 'columns' ? (

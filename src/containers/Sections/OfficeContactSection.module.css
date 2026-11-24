@@ -5,6 +5,8 @@
   scroll-margin-top: var(--site-header-height, 78px);
 }
 
+.section[id='wealth-office'][data-layout='columns'] { background: var(--color-blue-25); }
+
 .container { width: calc(100% - 64px); max-width: 1320px; margin-inline: auto; }
 
 .card {
@@ -78,7 +80,7 @@
 .integrated .locationCard { flex: 1; }
 .integrated .locationMap { height: clamp(180px, 30vh, 300px); min-height: 180px; flex: none; }
 .integrated .information { display: flex; flex: 1; flex-direction: column; }
-.integrated .officeDetails { margin-bottom: var(--space-5); }
+.integrated .officeDetails:has(+ .officeDisclosure) { margin-bottom: var(--space-5); }
 
 @media (min-width: 768px) {
   .card > .information { align-self: center; }

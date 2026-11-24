@@ -1,6 +1,6 @@
 .section {
   padding-block: clamp(64px, 8vw, 104px);
-  background: #e6effb;
+  background: var(--color-blue-25);
   color: var(--text-primary);
   scroll-margin-top: 80px;
 }
