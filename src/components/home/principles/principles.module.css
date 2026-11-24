@@ -54,6 +54,14 @@
   background: #e6effb;
 }
 
+.stackedSection[data-blend-header] {
+  --hero-header-height: var(--site-header-height, 77.36px);
+  margin-block-start: calc(-1 * var(--hero-header-height));
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-block-start: calc(clamp(60px, 7vw, 112px) + var(--hero-header-height));
+}
+
 .stackedSection .container {
   position: relative;
   z-index: 1;

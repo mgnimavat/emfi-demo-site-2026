@@ -54,7 +54,7 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
             {copy.fund.providers.map((provider) => {
               const asset = wealthProviderAssets[provider.id];
               return (
-                <li key={provider.id} className={`${styles.provider} ${reveal.card}`}
+                <li key={provider.id} className={`${styles.provider} ${reveal.card} ${reveal.panel}`}
                   tabIndex={provider.role ? 0 : undefined}>
                   <div className={`${styles.providerBrand} ${reveal.brand}`} data-provider={provider.id}>
                     {asset ? <Image src={asset.src} alt={provider.name} width={asset.width}

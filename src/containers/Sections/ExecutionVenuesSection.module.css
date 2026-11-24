@@ -42,10 +42,9 @@
 
 .card {
   display: grid;
-  grid-template-rows: minmax(0, 104px) auto;
+  grid-template-rows: minmax(0, 1fr);
   place-content: center stretch;
   justify-items: center;
-  gap: var(--space-1);
   min-width: 0;
   height: clamp(144px, 13cqi, 176px);
   padding: var(--space-5) clamp(16px, 2cqi, 32px);
@@ -54,8 +53,6 @@
   background: var(--provider-card-bg);
   text-align: center;
 }
-
-.venueName { color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
 
 .logoFrame {
   display: flex;

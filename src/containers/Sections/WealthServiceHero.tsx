@@ -14,6 +14,7 @@ const dateOptions = { day: 'numeric', month: 'short', year: 'numeric', timeZone:
 const monthOptions = { month: 'short', year: 'numeric', timeZone: 'UTC' } as const;
 const plot = { width: 1000, height: 400, top: 26, bottom: 380 } as const;
 const dateStops = [0, 0.25, 0.5, 0.75, 1] as const;
+const upperTooltipBand = plot.height / 4;
 const gridRows = 6;
 const gridLines = Array.from({ length: gridRows }, (_, index) =>
   plot.top + index * (plot.bottom - plot.top) / (gridRows - 1)
@@ -56,6 +57,7 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
   const chartId = useId();
   const areaGradientId = `${chartId}-fill`;
   const lineGradientId = `${chartId}-line`;
+  const guideGradientId = `${chartId}-guide`;
   const points = result?.range === range ? result.points : null;
 
   useEffect(() => {
@@ -178,6 +180,13 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
                     <stop stopColor="var(--color-blue-550)" />
                     <stop offset="100%" stopColor="var(--action-primary)" />
                   </linearGradient>
+                  <linearGradient id={guideGradientId} gradientUnits="userSpaceOnUse"
+                    x1="0" y1={plot.top} x2="0" y2={plot.bottom}>
+                    <stop stopColor="var(--accent)" stopOpacity="0" />
+                    <stop offset="24%" stopColor="var(--accent)" stopOpacity=".65" />
+                    <stop offset="76%" stopColor="var(--accent)" stopOpacity=".65" />
+                    <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+                  </linearGradient>
                 </defs>
                 <g aria-hidden="true">
                   {gridLines.map((y) => (
@@ -194,29 +203,31 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
                     </g>
                   )}
                   {chart && (
-                    <path d={`M${chart.endpoint.x} ${chart.endpoint.y} h.01`} className={styles.endpoint} />
+                    <g>
+                      <path d={`M${chart.endpoint.x} ${chart.endpoint.y} h.01`}
+                        className={styles.endpointPulse} />
+                      <path d={`M${chart.endpoint.x} ${chart.endpoint.y} h.01`}
+                        className={styles.endpoint} />
+                    </g>
                   )}
                   {active && (
-                    <g>
-                      <line x1={active.x} x2={active.x} y1={plot.top} y2={plot.bottom}
-                        className={styles.crosshair} />
-                      <line x1="0" x2={active.x} y1={active.y} y2={active.y}
-                        className={styles.crosshair} />
-                      <path d={`M${active.x} ${active.y} h.01`} className={styles.markerHalo} />
-                      <path d={`M${active.x} ${active.y} h.01`} className={styles.activeMarker} />
-                    </g>
+                    <line x1={active.x} x2={active.x} y1={plot.top} y2={plot.bottom}
+                      stroke={`url(#${guideGradientId})`} className={styles.activeGuide} />
                   )}
                 </g>
               </svg>
               {active && (
-                <div className={styles.tooltip} role="status" data-below={active.y < plot.height / 6}
+                <div className={styles.selection}
                   style={{
-                    '--tooltip-x': `${active.x / plot.width * 100}%`,
-                    '--tooltip-y': `${active.y / plot.height * 100}%`,
+                    '--active-x': `${active.x / plot.width * 100}%`,
+                    '--active-y': `${active.y / plot.height * 100}%`,
                   } as CSSProperties}>
-                  <time dateTime={new Date(active.date).toISOString().slice(0, 10)}>
-                    {dateFormatter.format(active.date)}
-                  </time>
+                  <span className={styles.activeMarker} aria-hidden="true" />
+                  <div className={styles.tooltip} role="status" data-below={active.y < upperTooltipBand}>
+                    <time dateTime={new Date(active.date).toISOString().slice(0, 10)}>
+                      {dateFormatter.format(active.date)}
+                    </time>
+                  </div>
                 </div>
               )}
               {confirmed && !chart && (

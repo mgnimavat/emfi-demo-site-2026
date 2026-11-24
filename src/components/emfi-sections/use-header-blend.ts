@@ -2,14 +2,14 @@
 
 import { useEffect } from "react";
 
-export function useHeaderBlend(enabled: boolean) {
+export function useHeaderBlend(enabled: boolean, heroSelector = "#expect") {
   useEffect(() => {
     if (!enabled) return;
 
     const sync = () => {
       const header = document.querySelector("header");
-      const expect = document.querySelector("#expect");
-      if (!header || !expect) return;
+      const hero = document.querySelector(heroSelector);
+      if (!header || !hero) return;
       const headerH = header.getBoundingClientRect().height;
       document.body.style.setProperty("--home-12-header-h", `${headerH}px`);
       document.body.classList.toggle("home-12-header-solid", window.scrollY >= window.innerHeight * 0.05);
@@ -24,5 +24,5 @@ export function useHeaderBlend(enabled: boolean) {
       document.body.classList.remove("home-12-header-solid");
       document.body.style.removeProperty("--home-12-header-h");
     };
-  }, [enabled]);
+  }, [enabled, heroSelector]);
 }

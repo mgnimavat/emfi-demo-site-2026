@@ -7,6 +7,7 @@ import { ArrowDown, ChevronDown, ChevronUp } from "lucide-react";
 import { principles as defaultCopy } from "@/content/home-16-principles";
 import navigation from "@/content/site-navigation.json";
 import cueStyles from "@/components/emfi-sections/sections.module.css";
+import { useHeaderBlend } from "@/components/emfi-sections/use-header-blend";
 import styles from "./principles.module.css";
 
 function GradientMark() {
@@ -147,9 +148,12 @@ const InteractivePrinciples = ({ copy }: { copy: TranslatedPrinciples }) => {
 const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false, hero = false, appearance, cueHref = '#say-less', cueLabel }: { copy: TranslatedPrinciples; whiteCards?: boolean; breakTitle?: boolean; hero?: boolean; appearance: 'light' | 'dark'; cueHref?: string; cueLabel?: string }) => {
   const { t } = useServiceLocale();
   const Heading = hero ? 'h1' : 'h2';
+  const blendHeader = hero && appearance === 'dark';
+  useHeaderBlend(blendHeader, '#settle');
+
   return (
     <section id="settle" className={`${styles.section} ${styles.stackedSection}`} data-appearance={appearance}
-      aria-labelledby="home-16-principles-heading">
+      data-blend-header={blendHeader || undefined} aria-labelledby="home-16-principles-heading">
       <div className={styles.mark} aria-hidden="true">
         <GradientMark />
       </div>
