@@ -21,7 +21,7 @@
   "redesign": {
     "hero": {
       "title": "Gestión de activos",
-      "body": "Gestión de inversiones para clientes profesionales, respaldada por mandatos definidos, estructuras de fondos dedicadas y proveedores de servicios profesionales especializados.",
+      "body": "EMFI OPPORTUNITY FUND",
       "rangeLabel": "Intervalo del gráfico",
       "ranges": [
         "1Y",
@@ -29,7 +29,7 @@
         "5Y"
       ],
       "risk": "La rentabilidad pasada no es un indicador fiable de resultados futuros. El valor de una inversión puede bajar o subir, y puede perder parte o la totalidad de su capital.",
-      "marketing": "Comunicación comercial. Esta página está dirigida a clientes profesionales y contrapartes elegibles. No es una oferta ni una solicitud y no se dirige a clientes minoristas, personas estadounidenses ni a jurisdicciones donde resulte ilícita. Lea los documentos de oferta del fondo antes de tomar decisiones de inversión.",
+      "marketing": "Esta página está dirigida a clientes profesionales y contrapartes elegibles. No es una oferta ni una solicitud y no se dirige a clientes minoristas, personas estadounidenses ni a jurisdicciones donde resulte ilícita. Lea los documentos de oferta del fondo antes de tomar decisiones de inversión.",
       "gate": {
         "title": "Solo para inversores profesionales",
         "body": "La información del fondo no está dirigida a clientes minoristas ni personas estadounidenses. Indique su perfil para continuar.",
@@ -84,16 +84,16 @@
     },
     "fund": {
       "titleLines": [
-        "Un fondo es más",
-        "que una cartera."
+        "Gestión patrimonial"
       ],
-      "lead": "La estrategia de inversión es solo una parte de un fondo. La estructura jurídica, la organización de las carteras, la administración, la auditoría y la supervisión legal también forman parte del marco operativo.",
+      "lead": "Un fondo es más que una cartera. La estructura jurídica, la organización de las carteras, la administración, la auditoría y la supervisión legal forman parte de su marco operativo.",
       "archive": {
         "titleLines": [
           "Un fondo es",
           "más que una",
           "cartera."
         ],
+        "lead": "La estrategia de inversión es solo una parte de un fondo. La estructura jurídica, la organización de las carteras, la administración, la auditoría y la supervisión legal también forman parte del marco operativo.",
         "body": "EMFI Fund SPC es una sociedad de carteras segregadas de las Islas Caimán diseñada para albergar distintas carteras de inversión. Cada cartera opera conforme a su mandato de inversión y documentos de gobierno, con los nombramientos y acuerdos de proveedores correspondientes establecidos en la documentación del fondo."
       },
       "providersTitle": "Proveedores de servicios",
@@ -132,9 +132,8 @@
     },
     "mandate": {
       "titleLines": [
-        "La estructura",
-        "detrás de",
-        "la estrategia."
+        "La estructura detrás",
+        "de la estrategia."
       ],
       "body": "La gestión patrimonial comienza con el mandato de inversión, no con un producto estándar. La cartera debe reflejar los objetivos, parámetros de riesgo, necesidades de liquidez y restricciones del cliente.",
       "steps": [
@@ -171,12 +170,12 @@
         {
           "name": "Alan Tooker",
           "role": "Director, EMFI Fund SPC",
-          "photo": "/people/alan-tooker-3.jpg"
+          "photo": "/people/alan-tooker-4.jpg"
         },
         {
           "name": "Damian Juric",
           "role": "Director, EMFI Fund SPC",
-          "photo": "/people/damian-juric-10.jpg"
+          "photo": "/people/damian-juric-11.jpg"
         },
         {
           "name": "Gustavo Rodrigues",

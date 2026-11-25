@@ -99,25 +99,27 @@
       {
         "name": "Guillermo Guerrero",
         "role": "رئيس الأبحاث",
-        "photo": "/people/guillermo-guerrero-9.jpg",
+        "photo": "/people/guillermo-guerrero-12.jpg",
+        "inset": true,
         "description": "يقدم بحوث الأسواق والاستثمار التي تدعم القرارات المؤسسية والتنفيذ."
       },
       {
         "name": "Albani Granado",
         "role": "محللة كمية أولى",
-        "photo": "/people/albani-granado-4.jpg",
+        "photo": "/people/albani-granado-6.jpg",
         "description": "تحليل كمي يدعم أبحاث السوق وقرارات الاستثمار."
       },
       {
         "name": "Rosamnis Marcano",
         "role": "خبيرة اقتصادية أولى",
-        "photo": "/people/rosamnis-marcano-5.jpg",
+        "photo": "/people/rosamnis-marcano-6.jpg",
         "description": "يوفر السياق الاقتصادي لقرارات توزيع الأصول والمدة والائتمان."
       },
       {
         "name": "Matias Montes",
         "role": "خبير استراتيجي أول",
-        "photo": "/people/matias-montes-10.jpg",
+        "photo": "/people/matias-montes-11.jpg",
+        "inset": true,
         "description": "يربط قدرات EMFI وفريقها وتقنياتها ضمن توجه تشغيلي موحد."
       },
       {
@@ -168,6 +170,7 @@
   },
   "executionVenues": {
     "title": "التنفيذ",
+    "venuesTitle": "أماكن التنفيذ",
     "subtitle": "التنفيذ عبر منصات الدخل الثابت وأماكن التداول المختارة.",
     "body": "التنفيذ عبر الأسواق والأوراق المالية ذات الصلة، بدعم من علاقات تداول متخصصة والتكنولوجيا اللازمة لتنسيق الصفقة خلال مراحل ما بعد التداول."
   },

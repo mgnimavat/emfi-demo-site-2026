@@ -33,8 +33,9 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
                 .map((line) => <span key={line}>{line}</span>)}
             </h2>
           </ExecutionReveal>
-          <ExecutionReveal delay={0.12} className={archiveFund ? styles.fundArchiveCopy : undefined}>
-            <p className={styles.lead}>{copy.fund.lead}</p>
+          <ExecutionReveal delay={0.12}
+            className={`${styles.fundCopy}${archiveFund ? ` ${styles.fundArchiveCopy}` : ''}`}>
+            <p className={styles.description}>{archiveFund ? copy.fund.archive.lead : copy.fund.lead}</p>
             {archiveFund && <p className={styles.body}>{copy.fund.archive.body}</p>}
           </ExecutionReveal>
         </div>
@@ -71,13 +72,13 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
     <section id="portfolio-visibility" className={`${styles.section} ${styles.visibilitySection}`} aria-labelledby="portfolio-visibility-heading">
       <div className={`${styles.container} ${styles.visibilityContainer}`}>
         <div className={styles.splitLayout}>
-          <ExecutionReveal className={styles.visibilityIntro}>
+          <ExecutionReveal><SettlementDashboard borderless fit /></ExecutionReveal>
+          <ExecutionReveal delay={0.12} className={styles.visibilityIntro}>
             <h2 id="portfolio-visibility-heading" className={styles.visibilityTitle}>
               {copy.visibility.titleLines.map((line) => <span key={line}>{line}{' '}</span>)}
             </h2>
             <p className={styles.visibilityDescription}>{copy.visibility.body}</p>
           </ExecutionReveal>
-          <ExecutionReveal delay={0.12}><SettlementDashboard borderless fit /></ExecutionReveal>
         </div>
       </div>
     </section>
@@ -89,7 +90,7 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
             <h2 id="mandate-heading" className={styles.mandateTitle}>
               {copy.mandate.titleLines.map((line) => <span key={line}>{line}{' '}</span>)}
             </h2>
-            <p className={styles.mandateLead}>{copy.mandate.body}</p>
+            <p className={styles.description}>{copy.mandate.body}</p>
           </ExecutionReveal>
           <ExecutionReveal delay={0.12}>
             <ol className={styles.mandateSteps} role="list">

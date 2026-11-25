@@ -41,14 +41,6 @@
   letter-spacing: -.058em;
 }
 .section.archiveWorkflow[id='trade-upload'] .archiveCopy .title:lang(en) { font-size: min(11.25cqi, 82px); }
-.section.archiveWorkflow[id='trade-upload'] .archiveLead {
-  max-inline-size: 50ch;
-  color: var(--text-secondary);
-  font-size: clamp(16px, 3.35cqi, 21px);
-  line-height: 1.55;
-  letter-spacing: normal;
-  text-wrap: pretty;
-}
 .section.archiveWorkflow[id='linked-settlement'] {
   min-block-size: calc(100svh - var(--site-header-height, 78px));
 }
@@ -59,11 +51,7 @@
   .archiveWorkflow[id='linked-settlement'] .archiveAnimation { grid-area: 1 / 1; justify-self: start; }
 }
 .archiveLead {
-  margin: 0;
-  font-size: clamp(20px, 4.1cqi, 26px);
-  font-weight: 450;
-  line-height: 1.32;
-  letter-spacing: -.025em;
+  composes: sectionDescription from '../../components/sections/execution/workstation-section.module.css';
 }
 .section[id='linked-settlement'] .title { font-size: clamp(34px, 6.6cqi, 88px); }
 .section:is([id='cross-border'], [id='linked-settlement']) .title:is(:lang(es), :lang(ar)) {

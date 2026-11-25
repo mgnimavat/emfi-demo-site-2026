@@ -53,7 +53,6 @@
 .publications { margin-top: var(--space-6); color: var(--text-primary); }
 .compact { margin-top: 0; }
 .intelligenceHeader { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: var(--space-6); margin-bottom: var(--space-8); }
-.publications .intelligenceHeader .intelligenceTitle { margin: 0; font-size: clamp(42px, 7.2cqi, 96px); font-weight: 800; line-height: 1; letter-spacing: -.05em; }
 .intelligenceSearch { min-width: 0; }
 .intelligenceSearch .filterField { gap: 0; }
 .intelligenceSearch .researchSearch { height: 52px; background: var(--bg-page); }
@@ -64,7 +63,7 @@
 .compact .accordionCard[open] .accordionToggle { background: transparent; }
 .compact .accordionContent { margin-inline: var(--space-5); padding-inline: 0; }
 .compact .accordionChart .chart { padding: 0; border: 0; border-radius: 0; }
-@media (max-width: 639px) {
+@media (max-width: 900px) {
   .intelligenceHeader { grid-template-columns: minmax(0, 1fr); }
 }
 .singleColumn { min-width: 0; margin-top: 0; }
@@ -138,7 +137,3 @@
   .accordionTitle { font-size: 18px; }
 }
 @media (prefers-reduced-motion: reduce) { .accordionCard, .accordionToggle svg { transition: none; } }
-
-@media (max-width: 900px) {
-  .publications .intelligenceHeader .intelligenceTitle { font-size: clamp(42px, 10cqi, 80px); }
-}

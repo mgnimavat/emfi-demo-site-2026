@@ -99,25 +99,27 @@
       {
         "name": "Guillermo Guerrero",
         "role": "Director de Investigación",
-        "photo": "/people/guillermo-guerrero-9.jpg",
+        "photo": "/people/guillermo-guerrero-12.jpg",
+        "inset": true,
         "description": "Proporciona análisis de mercados e inversiones que respaldan las decisiones y la ejecución institucionales."
       },
       {
         "name": "Albani Granado",
         "role": "Analista cuantitativa sénior",
-        "photo": "/people/albani-granado-4.jpg",
+        "photo": "/people/albani-granado-6.jpg",
         "description": "Análisis cuantitativo para apoyar la investigación de mercados y las decisiones de inversión."
       },
       {
         "name": "Rosamnis Marcano",
         "role": "Economista sénior",
-        "photo": "/people/rosamnis-marcano-5.jpg",
+        "photo": "/people/rosamnis-marcano-6.jpg",
         "description": "Aporta contexto económico para las decisiones de asignación, duración y crédito."
       },
       {
         "name": "Matias Montes",
         "role": "Estratega sénior",
-        "photo": "/people/matias-montes-10.jpg",
+        "photo": "/people/matias-montes-11.jpg",
+        "inset": true,
         "description": "Conecta las capacidades, las personas y la tecnología de EMFI bajo una misma dirección operativa."
       },
       {
@@ -168,6 +170,7 @@
   },
   "executionVenues": {
     "title": "Ejecución",
+    "venuesTitle": "Centros de ejecución",
     "subtitle": "Ejecución en plataformas de renta fija y mercados seleccionados.",
     "body": "Ejecución en los mercados y valores pertinentes, respaldada por relaciones especializadas de negociación y la tecnología para coordinar la operación durante el proceso de poscontratación."
   },

@@ -13,6 +13,7 @@ import styles from './WealthServiceHero.module.css';
 const dateOptions = { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' } as const;
 const monthOptions = { month: 'short', year: 'numeric', timeZone: 'UTC' } as const;
 const plot = { width: 1000, height: 400, top: 26, bottom: 380 } as const;
+const shineWidth = plot.width * 0.16;
 const dateStops = [0, 0.25, 0.5, 0.75, 1] as const;
 const upperTooltipBand = plot.height / 4;
 const gridRows = 6;
@@ -55,8 +56,9 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
   const [cursor, setCursor] = useState<number | null>(null);
   const activeRangeRef = useRef<HTMLButtonElement>(null);
   const chartId = useId();
-  const areaGradientId = `${chartId}-fill`;
-  const lineGradientId = `${chartId}-line`;
+  const areaGradientId = `${chartId}-area-fill`;
+  const shineGradientId = `${chartId}-shine`;
+  const shineMaskId = `${chartId}-shine-mask`;
   const guideGradientId = `${chartId}-guide`;
   const points = result?.range === range ? result.points : null;
 
@@ -137,19 +139,22 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
       <div className={styles.container}>
         <div className={styles.stage}>
           <h1 id="wealth-heading" className={styles.title}>{copy.title}</h1>
-          <div className={styles.ranges} role="group" aria-label={copy.rangeLabel} inert={!confirmed}>
-            {fundPositionRanges.map((option, index) => (
-              <button key={option} ref={range === option ? activeRangeRef : undefined}
-                type="button" aria-pressed={range === option}
-                onClick={() => {
-                  if (option === range) return;
-                  setResult(null);
-                  setRange(option);
-                  setCursor(null);
-                }}>
-                <bdi>{copy.ranges[index]}</bdi>
-              </button>
-            ))}
+          <div className={styles.summary}>
+            <p className={styles.description}>{confirmed ? copy.body : null}</p>
+            <div className={styles.ranges} role="group" aria-label={copy.rangeLabel} inert={!confirmed}>
+              {fundPositionRanges.map((option, index) => (
+                <button key={option} ref={range === option ? activeRangeRef : undefined}
+                  type="button" aria-pressed={range === option}
+                  onClick={() => {
+                    if (option === range) return;
+                    setResult(null);
+                    setRange(option);
+                    setCursor(null);
+                  }}>
+                  <bdi>{copy.ranges[index]}</bdi>
+                </button>
+              ))}
+            </div>
           </div>
           <figure inert={!confirmed} className={styles.fund} aria-label={copy.chartSeries}>
             <div className={styles.plot} data-interactive={Boolean(chart)}>
@@ -170,16 +175,25 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
                 <defs>
                   <linearGradient id={areaGradientId} gradientUnits="userSpaceOnUse"
                     x1="0" y1={plot.top} x2="0" y2={plot.bottom}>
-                    <stop stopColor="var(--color-blue-200)" stopOpacity=".42" />
-                    <stop offset="46%" stopColor="var(--color-blue-200)" stopOpacity=".21" />
-                    <stop offset="78%" stopColor="var(--color-blue-200)" stopOpacity=".06" />
-                    <stop offset="100%" stopColor="var(--color-blue-200)" stopOpacity="0" />
+                    <stop stopColor="color-mix(in srgb, var(--color-blue-100) 32%, var(--bg-page))" />
+                    <stop offset="100%" stopColor="var(--bg-page)" />
                   </linearGradient>
-                  <linearGradient id={lineGradientId} gradientUnits="userSpaceOnUse"
-                    x1="0" y1="0" x2={plot.width} y2="0">
-                    <stop stopColor="var(--color-blue-550)" />
-                    <stop offset="100%" stopColor="var(--action-primary)" />
-                  </linearGradient>
+                  {chart && (
+                    <>
+                      <linearGradient id={shineGradientId}>
+                        <stop stopColor="white" stopOpacity="0" />
+                        <stop offset="32%" stopColor="white" stopOpacity=".28" />
+                        <stop offset="50%" stopColor="white" stopOpacity=".96" />
+                        <stop offset="68%" stopColor="white" stopOpacity=".28" />
+                        <stop offset="100%" stopColor="white" stopOpacity="0" />
+                      </linearGradient>
+                      <mask id={shineMaskId} maskUnits="userSpaceOnUse"
+                        x={0} y={0} width={plot.width} height={plot.height}>
+                        <rect className={styles.shineSweep} x={-shineWidth} width={shineWidth}
+                          height={plot.height} fill={`url(#${shineGradientId})`} />
+                      </mask>
+                    </>
+                  )}
                   <linearGradient id={guideGradientId} gradientUnits="userSpaceOnUse"
                     x1="0" y1={plot.top} x2="0" y2={plot.bottom}>
                     <stop stopColor="var(--accent)" stopOpacity="0" />
@@ -189,6 +203,10 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
                   </linearGradient>
                 </defs>
                 <g aria-hidden="true">
+                  {visiblePath && (
+                    <path key={confirmed ? `${range}-area` : 'preview-area'} className={styles.series}
+                      d={`${visiblePath} V${plot.bottom} H0 Z`} fill={`url(#${areaGradientId})`} />
+                  )}
                   {gridLines.map((y) => (
                     <line key={y} x1="0" x2={plot.width} y1={y} y2={y} className={styles.gridLine} />
                   ))}
@@ -198,8 +216,10 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
                   ))}
                   {visiblePath && (
                     <g key={confirmed ? range : 'preview'} className={styles.series}>
-                      <path d={`${visiblePath} V${plot.bottom} H0 Z`} fill={`url(#${areaGradientId})`} />
-                      <path d={visiblePath} stroke={`url(#${lineGradientId})`} className={styles.line} />
+                      <path d={visiblePath} className={styles.line} />
+                      {chart && (
+                        <path d={visiblePath} className={styles.lineShine} mask={`url(#${shineMaskId})`} />
+                      )}
                     </g>
                   )}
                   {chart && (
@@ -246,7 +266,7 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
                 </div>
               )}
             </div>
-            <div className={styles.chartFooter}>
+            <figcaption className={styles.chartFooter}>
               {chart && (
                 <div className={styles.axis}>
                   {chart.axisDates.map((date, index) => (
@@ -257,7 +277,11 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
                   ))}
                 </div>
               )}
-            </div>
+              <div className={styles.disclaimers}>
+                <p>{copy.risk}</p>
+                <p>{copy.marketing}</p>
+              </div>
+            </figcaption>
           </figure>
 
           {!confirmed && (

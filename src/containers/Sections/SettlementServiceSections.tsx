@@ -20,11 +20,10 @@ const ArchiveCrossBorder = ({ lead, copy }: { lead: string; copy: SettlementCopy
           <h2 id="cross-border-heading" className={styles.title}>
             {titleLines.map((line) => <span key={line}>{line}</span>)}
           </h2>
-          <p className={styles.archiveLead}>{lead}</p>
-          <p className={styles.body}>{body}</p>
+          <p className={styles.archiveLead}>{lead} {body}</p>
         </ExecutionReveal>
         <div className={styles.archiveAnimation}>
-          <SettlementAccountAnimation copy={copy.accountAnimation} label={copy.linkedAnimation.label} />
+          <SettlementAccountAnimation copy={copy.accountAnimation} />
         </div>
       </div>
     </section>
@@ -104,7 +103,7 @@ export const SettlementServiceSections = ({ copy, archive = false }: {
             </ExecutionReveal>
           </div>
           {section.id === 'cross-border' ? (
-            <SettlementAccountAnimation copy={copy.accountAnimation} label={copy.linkedAnimation.label} />
+            <SettlementAccountAnimation copy={copy.accountAnimation} />
           ) : section.id === 'linked-settlement' ? (
             <SettlementLinkedAnimation panels={section.panels} copy={copy.linkedAnimation} />
           ) : section.id === 'trade-upload' ? (

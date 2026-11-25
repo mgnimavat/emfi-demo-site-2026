@@ -31,7 +31,7 @@ const SettlementStory = ({ steps, activeStep }: {
 );
 
 const initialFrame = getLinkedSettlementComparisonFrame(0);
-const storyPlaybackRate = 0.75;
+const storyPlaybackRate = 1.2;
 const reducedMotionQuery = '(prefers-reduced-motion: reduce)';
 const subscribeToReducedMotion = (onChange: () => void) => {
   const media = window.matchMedia(reducedMotionQuery);

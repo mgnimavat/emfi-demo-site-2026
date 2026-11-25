@@ -15,6 +15,7 @@ import { useIntelligenceCountries } from "@/lib/use-intelligence-countries";
 import { ResearchFilterSelect } from "./research-filter-select";
 import { ResearchPublications, ResearchPublicationsSkeleton } from "./research-publications";
 import styles from "./research-publications.module.css";
+import sectionStyles from "./workstation-section.module.css";
 
 const defaultFilters = (): ExecutionResearchFilters => ({ ...emptyExecutionFilters, ...trailingResearchRange(12) });
 
@@ -56,9 +57,7 @@ export const LiveResearch = ({ singleColumn = false, compact = false, heading }:
 
   return <div className={`${styles.publications} ${singleColumn ? styles.singleColumn : ''} ${compact ? styles.compact : ''}`}>
     {compact ? <header className={styles.intelligenceHeader}>
-      <div>
-        <h1 id="research-heading" className={styles.intelligenceTitle}>{heading}</h1>
-      </div>
+      <h1 id="research-heading" className={sectionStyles.featureTitle}>{heading}</h1>
       <div className={styles.intelligenceSearch}>{searchField}</div>
     </header> : null}
     {locale === "ar" ? <p>{t("Publications are available in English on this page.")}</p> : null}
