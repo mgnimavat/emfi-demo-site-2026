@@ -101,40 +101,40 @@
     {
       "name": "Hitesh Bilochi",
       "role": "Compliance, DIFC",
-      "photo": "/people/hitesh-bilochi-11.jpg",
+      "photo": "/people/hitesh-bilochi-13.jpg",
       "inset": true,
       "description": "Oversees DIFC regulatory compliance and DFSA requirements for EMFI’s Dubai operations."
     },
     {
       "name": "Alan Tooker",
       "role": "Director, EMFI Fund SPC",
-      "photo": "/people/alan-tooker-3.jpg",
+      "photo": "/people/alan-tooker-4.jpg",
       "description": "Serves as an independent director of EMFI Fund SPC."
     },
     {
       "name": "Damian Juric",
       "role": "Director, EMFI Fund SPC",
-      "photo": "/people/damian-juric-10.jpg",
+      "photo": "/people/damian-juric-11.jpg",
       "description": "Serves as an independent director of EMFI Fund SPC."
     },
     {
       "name": "Robert Hagon",
       "role": "Distribution, UK",
-      "photo": "/people/robert-hagon-4.jpg",
+      "photo": "/people/robert-hagon-5.jpg",
       "inset": true,
       "description": "Builds and manages institutional distribution relationships across the UK."
     },
     {
       "name": "Mark Cleary",
       "role": "Distribution, UK",
-      "photo": "/people/mark-cleary-7.jpg",
+      "photo": "/people/mark-cleary-10.jpg",
       "inset": true,
       "description": "Supports institutional distribution and client coverage across the UK."
     },
     {
       "name": "Jose Bermudez",
       "role": "Distribution, DIFC",
-      "photo": "/people/jose-bermudez-8.jpg",
+      "photo": "/people/jose-bermudez-9.jpg",
       "inset": true,
       "description": "Builds and manages institutional distribution relationships across the DIFC."
     },
@@ -146,25 +146,26 @@
     {
       "name": "Guillermo Guerrero",
       "role": "Research",
-      "photo": "/people/guillermo-guerrero-9.jpg",
+      "photo": "/people/guillermo-guerrero-12.jpg",
+      "inset": true,
       "description": "Provides market and investment research that supports institutional decisions and execution."
     },
     {
       "name": "Albani Granado",
       "role": "Senior Quantitative Analyst",
-      "photo": "/people/albani-granado-4.jpg",
+      "photo": "/people/albani-granado-6.jpg",
       "description": "Delivers quantitative analysis that supports research, allocation and execution decisions."
     },
     {
       "name": "Rosamnis Marcano",
       "role": "Economics",
-      "photo": "/people/rosamnis-marcano-5.jpg",
+      "photo": "/people/rosamnis-marcano-6.jpg",
       "description": "Provides economic context for allocation, duration and credit decisions."
     },
     {
       "name": "Matias Montes",
       "role": "Strategy",
-      "photo": "/people/matias-montes-10.jpg",
+      "photo": "/people/matias-montes-11.jpg",
       "inset": true,
       "description": "Connects EMFI’s capabilities, people and technology into one operating direction."
     },
@@ -178,20 +179,19 @@
     {
       "name": "Asmita Sojitra",
       "role": "Business Analyst",
-      "photo": "/people/asmita-sojitra-1.jpg",
+      "photo": "/people/asmita-sojitra-2.jpg",
       "description": "Translates business requirements into clear operating and technology workflows."
     },
     {
       "name": "Kishan Lashkari",
       "role": "Information Technology",
-      "photo": "/people/kishan-lashkari-13.jpg",
-      "inset": true,
+      "photo": "/people/kishan-lashkari-14.jpg",
       "description": "Leading technology operations, cybersecurity, regulatory compliance, and strategic delivery at EMFI."
     },
     {
       "name": "Dinesh Chouhan",
       "role": "Software Development",
-      "photo": "/people/dinesh-chouhan-6.jpg",
+      "photo": "/people/dinesh-chouhan-8.jpg",
       "inset": true,
       "description": "Leading software development, modern architecture, and secure, scalable application delivery at EMFI."
     }
