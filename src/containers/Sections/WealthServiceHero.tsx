@@ -61,6 +61,7 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
   const shineMaskId = `${chartId}-shine-mask`;
   const guideGradientId = `${chartId}-guide`;
   const points = result?.range === range ? result.points : null;
+  const loading = confirmed && points === null;
 
   useEffect(() => {
     if (confirmed) activeRangeRef.current?.focus({ preventScroll: true });
@@ -157,7 +158,7 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
             </div>
           </div>
           <figure inert={!confirmed} className={styles.fund} aria-label={copy.chartSeries}>
-            <div className={styles.plot} data-interactive={Boolean(chart)}>
+            <div className={styles.plot} data-interactive={Boolean(chart)} data-loading={loading}>
               <svg viewBox={`0 0 ${plot.width} ${plot.height}`} preserveAspectRatio="none"
                 role={chart ? 'img' : undefined} aria-hidden={!chart}
                 aria-label={chart ? `${copy.chartSeries}. ${copy.ranges[fundPositionRanges.indexOf(range)]}.` : undefined}
@@ -250,30 +251,34 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
                   </div>
                 </div>
               )}
-              {confirmed && !chart && (
+              {loading && (
+                <div className={styles.chartSkeleton} role="status">
+                  <span className="sr-only">{copy.chartLoading}</span>
+                </div>
+              )}
+              {confirmed && !loading && !chart && (
                 <div className={styles.chartState}>
-                  {points === null ? <p role="status">{copy.chartLoading}</p> : (
-                    <>
-                      <p role="alert">{copy.chartUnavailable}</p>
-                      <button type="button" onClick={() => {
-                        setResult(null);
-                        setRetry((value) => value + 1);
-                      }}>
-                        {copy.chartRetry}
-                      </button>
-                    </>
-                  )}
+                  <p role="alert">{copy.chartUnavailable}</p>
+                  <button type="button" onClick={() => {
+                    setResult(null);
+                    setRetry((value) => value + 1);
+                  }}>
+                    {copy.chartRetry}
+                  </button>
                 </div>
               )}
             </div>
             <figcaption className={styles.chartFooter}>
-              {chart && (
-                <div className={styles.axis}>
-                  {chart.axisDates.map((date, index) => (
+              {(chart || loading) && (
+                <div className={styles.axis} aria-hidden={loading || undefined}>
+                  {chart ? chart.axisDates.map((date, index) => (
                     <time key={date.getTime()} dateTime={date.toISOString().slice(0, 10)}
                       style={{ '--tick-x': `${dateStops[index] * 100}%` } as CSSProperties}>
                       {monthFormatter.format(date)}
                     </time>
+                  )) : dateStops.map((stop) => (
+                    <span key={stop} className={styles.skeletonTick}
+                      style={{ '--tick-x': `${stop * 100}%` } as CSSProperties} />
                   ))}
                 </div>
               )}

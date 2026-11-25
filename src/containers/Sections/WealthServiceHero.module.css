@@ -61,6 +61,8 @@
 
 .fund {
   --chart-grid: color-mix(in srgb, var(--accent) 18%, transparent);
+  --skeleton-fill: color-mix(in srgb, var(--accent) 10%, var(--bg-soft));
+  --skeleton-highlight: color-mix(in srgb, var(--bg-page) 65%, var(--skeleton-fill));
   display: grid;
   grid-template-rows: 1fr auto;
   min-width: 0;
@@ -122,6 +124,8 @@
   height: 100%;
   overflow: visible;
 }
+
+.plot[data-loading='true'] > svg { visibility: hidden; }
 
 .plot[data-interactive='true'] svg {
   cursor: crosshair;
@@ -228,9 +232,34 @@
 }
 
 .axis { position: relative; min-height: inherit; direction: ltr; color: inherit; }
-.axis time { position: absolute; left: var(--tick-x); transform: translateX(-50%); white-space: nowrap; }
-.axis time:first-child { transform: none; }
-.axis time:last-child { transform: translateX(-100%); }
+.axis > * { position: absolute; left: var(--tick-x); transform: translateX(-50%); white-space: nowrap; }
+.axis > :first-child { transform: none; }
+.axis > :last-child { transform: translateX(-100%); }
+
+.chartSkeleton,
+.skeletonTick {
+  background: linear-gradient(100deg, var(--skeleton-fill) 25%, var(--skeleton-highlight) 50%, var(--skeleton-fill) 75%);
+  background-size: 220% 100%;
+  animation: chartSkeletonShimmer 1.6s ease-in-out infinite;
+}
+
+.chartSkeleton {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-control);
+}
+
+.skeletonTick {
+  inset-block-start: .35em;
+  inline-size: clamp(28px, 6cqi, 64px);
+  block-size: .8em;
+  border-radius: var(--radius-pill);
+}
+
+@keyframes chartSkeletonShimmer {
+  from { background-position: 120% 0; }
+  to { background-position: -100% 0; }
+}
 
 .disclaimers {
   display: grid;
@@ -304,7 +333,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .series, .endpointPulse, .shineSweep { animation: none; }
+  .series, .endpointPulse, .shineSweep, .chartSkeleton, .skeletonTick { animation: none; }
+  .chartSkeleton, .skeletonTick { background: var(--skeleton-fill); }
   .lineShine { display: none; }
   .ranges button { transition: none; }
 }

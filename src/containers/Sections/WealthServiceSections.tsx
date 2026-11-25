@@ -82,6 +82,24 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
         </div>
       </div>
     </section>
+    <section id="portfolio-team" className={styles.section} aria-labelledby="portfolio-team-heading">
+      <div className={styles.container}>
+        <ExecutionReveal className={theme.peopleIntro}>
+          <h2 id="portfolio-team-heading" className={theme.sectionTitle}>{copy.team.title}</h2>
+        </ExecutionReveal>
+        <div className={styles.teamGrid}>
+          {[
+            ...copy.team.people.map((person) => ({
+              ...person,
+              description: aboutPeople.find(({ name }) => name === person.name)?.description,
+            })),
+            ...researchTeam.people.filter((person) => portfolioResearchNames.has(person.name)),
+          ].map((person) => (
+            <ExecutionReveal key={person.name}><PersonCard person={person} /></ExecutionReveal>
+          ))}
+        </div>
+      </div>
+    </section>
     <section id="investment-mandate" className={`${styles.section} ${styles.mandateSection}`}
       aria-labelledby="mandate-heading">
       <div className={styles.container}>
@@ -107,24 +125,6 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
               ))}
             </ol>
           </ExecutionReveal>
-        </div>
-      </div>
-    </section>
-    <section id="portfolio-team" className={styles.section} aria-labelledby="portfolio-team-heading">
-      <div className={styles.container}>
-        <ExecutionReveal className={theme.peopleIntro}>
-          <h2 id="portfolio-team-heading" className={theme.sectionTitle}>{copy.team.title}</h2>
-        </ExecutionReveal>
-        <div className={styles.teamGrid}>
-          {[
-            ...copy.team.people.map((person) => ({
-              ...person,
-              description: aboutPeople.find(({ name }) => name === person.name)?.description,
-            })),
-            ...researchTeam.people.filter((person) => portfolioResearchNames.has(person.name)),
-          ].map((person) => (
-            <ExecutionReveal key={person.name}><PersonCard person={person} /></ExecutionReveal>
-          ))}
         </div>
       </div>
     </section>
