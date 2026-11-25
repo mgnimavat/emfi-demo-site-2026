@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { ArrowUpRight, GitMerge, Layers, ShieldCheck } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { OversightCycle } from '@/components/sections/dependable/oversight-cycle';
+import { DependablePeekSlide } from '@/components/home/emfi-sections/accountable-section';
 import { ExecutionHeroTitle } from '@/components/sections/execution/hero-title';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { ResponsiveShowcase } from '@/components/sections/responsive/showcase';
@@ -252,13 +252,13 @@ export const DependableContentPage = ({ copy, heroCopy }: {
 }) => (
   <div className={styles.page} data-pillar="dependable">
     <WhyHero headline={heroCopy.headline} prefix={heroCopy.fixed} words={heroCopy.phrases} spacedLines>
-      <OversightCycle />
+      <DependablePeekSlide />
     </WhyHero>
-    <ContentBand id="regulation" copy={copy.relationships} tone="soft">
-      <Details items={copy.relationships.items} layout="ledger" logos={relationshipLogos} emphasizeLead />
-    </ContentBand>
-    <ContentBand id="client-assets" copy={copy.assets}>
+    <ContentBand id="client-assets" copy={copy.assets} tone="soft">
       <Details items={copy.assets.items} />
+    </ContentBand>
+    <ContentBand id="regulation" copy={copy.relationships}>
+      <Details items={copy.relationships.items} layout="ledger" logos={relationshipLogos} emphasizeLead />
     </ContentBand>
     <ContentBand id="fees" copy={copy.fees} tone="soft">
       <Details items={copy.fees.items} layout="ledger" />

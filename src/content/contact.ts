@@ -58,7 +58,7 @@ export const contact = {
       note: "Authorised and regulated by the FCA",
       kind: "office" as const,
       lines: [
-        "25-26 Dering Street, Third Floor",
+        "25-26 Dering Street",
         "Mayfair, London W1S 1AW",
         "United Kingdom",
       ],
