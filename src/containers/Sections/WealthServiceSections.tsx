@@ -72,17 +72,17 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
     </section>
     <section id="portfolio-visibility" className={`${styles.section} ${styles.visibilitySection}`} aria-labelledby="portfolio-visibility-heading">
       <div className={`${styles.container} ${styles.visibilityContainer}`}>
-        <div className={styles.splitLayout}>
-          <ExecutionReveal><SettlementDashboard borderless fit /></ExecutionReveal>
-          <ExecutionReveal delay={0.12} className={styles.visibilityIntro}>
-            <h2 id="portfolio-visibility-heading" className={styles.title}>
-              {copy.visibility.titleLines.map((line) => <span key={line}>{line}{' '}</span>)}
-            </h2>
-            <div className={styles.descriptionContainer}>
-              <p className={styles.description}>{copy.visibility.body}</p>
-            </div>
-          </ExecutionReveal>
-        </div>
+        <ExecutionReveal className={styles.visibilityIntro}>
+          <h2 id="portfolio-visibility-heading" className={styles.title}>
+            {copy.visibility.titleLines.map((line) => <span key={line}>{line}{' '}</span>)}
+          </h2>
+          <div className={styles.descriptionContainer}>
+            <p className={styles.description}>{copy.visibility.body}</p>
+          </div>
+        </ExecutionReveal>
+        <ExecutionReveal delay={0.12} className={styles.visibilityDashboard}>
+          <SettlementDashboard borderless fit />
+        </ExecutionReveal>
       </div>
     </section>
     <section id="portfolio-team" className={styles.section} aria-labelledby="portfolio-team-heading">

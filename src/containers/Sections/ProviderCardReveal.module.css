@@ -3,6 +3,19 @@
   outline-offset: var(--space-1);
 }
 
+.providerLogo,
+.squareProviderLogo {
+  display: block;
+  inline-size: min(100%, var(--provider-logo-width, 208px));
+  block-size: var(--provider-logo-height, 58px);
+  object-fit: contain;
+}
+
+.squareProviderLogo {
+  --provider-logo-width: 64px;
+  --provider-logo-height: 64px;
+}
+
 .panel {
   --panel-opacity: 0;
   --panel-offset: var(--space-3);
