@@ -22,19 +22,19 @@
           "detail": "Depository, settlement and fund platforms"
         }
       ],
-      "providersTitle": "Depositories and fund platforms",
+      "providersTitle": "Depositories and Fund Platforms",
       "providers": [
         {
           "title": "Euroclear",
-          "body": "Euroclear is securities settlement infrastructure."
+          "body": "Securities Settlement Infrastructure"
         },
         {
           "title": "FundSettle",
-          "body": "FundSettle is a fund solution."
+          "body": "Fund Solution"
         },
         {
           "title": "Allfunds",
-          "body": "Allfunds provides fund distribution, dealing and technology services."
+          "body": "Fund Distribution, Dealing and Technology"
         }
       ]
     },
@@ -57,7 +57,7 @@
           "body": "For eligible clients, individually segregated depository accounts can keep securities separately identifiable rather than pooled with unrelated client holdings in an omnibus account."
         }
       ],
-      "action": "How EMFI’s settlement and custody arrangements work"
+      "action": "Settlement & Custody"
     },
     "execution": {
       "titleLines": [
@@ -65,7 +65,14 @@
         "Access."
       ],
       "lead": "For eligible clients and supported instruments, EMFI can arrange Direct Market Access to selected trading venues through approved execution arrangements.",
-      "body": "DMA allows approved clients to submit orders electronically through designated market access arrangements. Access is subject to client classification, onboarding, account size and trading activity criteria, venue and instrument availability, pre-trade controls, credit limits and ongoing monitoring. It is not unrestricted access and is assessed individually."
+      "body": "DMA allows approved clients to submit orders electronically through designated market access arrangements. It is not unrestricted access and is assessed individually.",
+      "conditionsTitle": "Access Conditions",
+      "conditions": [
+        "Professional client classification and onboarding",
+        "Account size and trading activity criteria",
+        "Supported instruments and trading venues",
+        "Operational, credit and risk controls"
+      ]
     }
   },
   "responsive": {

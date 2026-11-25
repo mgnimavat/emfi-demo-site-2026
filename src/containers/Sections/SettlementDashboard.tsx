@@ -177,9 +177,9 @@ const BalanceChart = () => {
   );
 };
 
-type SettlementDashboardProps = { borderless?: boolean; fit?: boolean };
+type SettlementDashboardProps = { borderless?: boolean; fit?: boolean; compact?: boolean };
 
-const SettlementDashboardContent = ({ borderless, fit }: SettlementDashboardProps) => {
+const SettlementDashboardContent = ({ borderless, fit, compact }: SettlementDashboardProps) => {
   const { t } = useServiceLocale();
   return (
   <div
@@ -188,6 +188,7 @@ const SettlementDashboardContent = ({ borderless, fit }: SettlementDashboardProp
     data-system-preview="dashboard"
     data-borderless={borderless || undefined}
     data-fit={fit || undefined}
+    data-compact={compact || undefined}
     className={styles.viewport}
     role="region"
     aria-label={t("Illustrative portfolio dashboard")}

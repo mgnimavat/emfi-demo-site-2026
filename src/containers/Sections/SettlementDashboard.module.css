@@ -64,6 +64,46 @@
 
 .viewport[data-fit='true'] .cardHeader :is(h4, strong) { font-size: 12px; }
 
+/* Compact density: only when compact prop is set (responsive-technology dashboard band). */
+.viewport[data-compact='true'] {
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  overflow: visible;
+  display: grid;
+  align-items: center;
+}
+.viewport[data-compact='true'] .preview {
+  box-sizing: border-box;
+  height: auto;
+  max-height: 100%;
+  min-height: 0;
+  grid-template-rows: auto auto;
+  align-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  overflow: visible;
+}
+.viewport[data-compact='true'] .card {
+  min-height: 0;
+  height: auto;
+}
+.viewport[data-compact='true'] .cardHeader {
+  min-height: 0;
+  padding: 8px 10px;
+}
+.viewport[data-compact='true'] .chartBody {
+  align-items: stretch;
+  padding: 4px 8px 8px;
+}
+.viewport[data-compact='true'] .chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 158px;
+}
+
 .chartBody { display: flex; flex: 1; align-items: center; min-height: 0; }
 .chartContent { position: relative; width: 100%; }
 .chart { display: block; width: 100%; height: auto; }

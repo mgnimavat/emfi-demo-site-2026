@@ -11,9 +11,9 @@ import styles from '@/components/sections/execution/page.module.css';
 import previewStyles from './execution-workstation.module.css';
 import { WorkstationPrivacyProvider, type WorkstationMaskVariant } from './WorkstationPrivacy';
 
-type ExecutionWorkstationProps = { maskVariant?: WorkstationMaskVariant };
+type ExecutionWorkstationProps = { maskVariant?: WorkstationMaskVariant; compact?: boolean };
 
-const ExecutionWorkstationContent = ({ maskVariant = 'initial-stars' }: ExecutionWorkstationProps) => {
+const ExecutionWorkstationContent = ({ maskVariant = 'initial-stars', compact = false }: ExecutionWorkstationProps) => {
   const { t } = useServiceLocale();
   const [securitySymbol, setSecuritySymbol] = useState<ExecutionSymbol>(workstationSecurities[0].symbol);
   const security = workstationSecurities.find((item) => item.symbol === securitySymbol)
@@ -21,7 +21,13 @@ const ExecutionWorkstationContent = ({ maskVariant = 'initial-stars' }: Executio
 
   return (
     <WorkstationPrivacyProvider variant={maskVariant}>
-      <fieldset lang="en" dir="ltr" data-system-preview="workstation" className={previewStyles.preview}>
+      <fieldset
+        lang="en"
+        dir="ltr"
+        data-system-preview="workstation"
+        data-compact={compact || undefined}
+        className={previewStyles.preview}
+      >
         <legend className="sr-only">{t("Sample EMFI workstation preview")}</legend>
         <div className={styles.executionLayout}>
           <ExecutionChart security={security} staticPreview controlsEnabled />
