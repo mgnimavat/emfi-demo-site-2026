@@ -101,40 +101,40 @@
     {
       "name": "Hitesh Bilochi",
       "role": "Cumplimiento, DIFC",
-      "photo": "/people/hitesh-bilochi-11.jpg",
+      "photo": "/people/hitesh-bilochi-13.jpg",
       "inset": true,
       "description": "Supervisa el cumplimiento normativo del DIFC y los requisitos de la DFSA en las operaciones de EMFI en Dubái."
     },
     {
       "name": "Alan Tooker",
       "role": "Director, EMFI Fund SPC",
-      "photo": "/people/alan-tooker-3.jpg",
+      "photo": "/people/alan-tooker-4.jpg",
       "description": "Actúa como director independiente de EMFI Fund SPC."
     },
     {
       "name": "Damian Juric",
       "role": "Director, EMFI Fund SPC",
-      "photo": "/people/damian-juric-10.jpg",
+      "photo": "/people/damian-juric-11.jpg",
       "description": "Actúa como director independiente de EMFI Fund SPC."
     },
     {
       "name": "Robert Hagon",
       "role": "Distribución, Reino Unido",
-      "photo": "/people/robert-hagon-4.jpg",
+      "photo": "/people/robert-hagon-5.jpg",
       "inset": true,
       "description": "Desarrolla y gestiona relaciones de distribución institucional en el Reino Unido."
     },
     {
       "name": "Mark Cleary",
       "role": "Distribución, Reino Unido",
-      "photo": "/people/mark-cleary-7.jpg",
+      "photo": "/people/mark-cleary-10.jpg",
       "inset": true,
       "description": "Apoya la distribución institucional y la cobertura de clientes en el Reino Unido."
     },
     {
       "name": "Jose Bermudez",
       "role": "Distribución, DIFC",
-      "photo": "/people/jose-bermudez-8.jpg",
+      "photo": "/people/jose-bermudez-9.jpg",
       "inset": true,
       "description": "Desarrolla y gestiona relaciones de distribución institucional en el DIFC."
     },
@@ -146,25 +146,26 @@
     {
       "name": "Guillermo Guerrero",
       "role": "Análisis",
-      "photo": "/people/guillermo-guerrero-9.jpg",
+      "photo": "/people/guillermo-guerrero-12.jpg",
+      "inset": true,
       "description": "Proporciona análisis de mercados e inversiones que respaldan las decisiones y la ejecución institucionales."
     },
     {
       "name": "Albani Granado",
       "role": "Analista cuantitativo senior",
-      "photo": "/people/albani-granado-4.jpg",
+      "photo": "/people/albani-granado-6.jpg",
       "description": "Aporta análisis cuantitativo que respalda las decisiones de investigación, asignación y ejecución."
     },
     {
       "name": "Rosamnis Marcano",
       "role": "Economía",
-      "photo": "/people/rosamnis-marcano-5.jpg",
+      "photo": "/people/rosamnis-marcano-6.jpg",
       "description": "Aporta contexto económico para las decisiones de asignación, duración y crédito."
     },
     {
       "name": "Matias Montes",
       "role": "Estrategia",
-      "photo": "/people/matias-montes-10.jpg",
+      "photo": "/people/matias-montes-11.jpg",
       "inset": true,
       "description": "Conecta las capacidades, las personas y la tecnología de EMFI bajo una misma dirección operativa."
     },
@@ -178,20 +179,19 @@
     {
       "name": "Asmita Sojitra",
       "role": "Analista de negocio",
-      "photo": "/people/asmita-sojitra-1.jpg",
+      "photo": "/people/asmita-sojitra-2.jpg",
       "description": "Traduce los requisitos de negocio en flujos operativos y tecnológicos claros."
     },
     {
       "name": "Kishan Lashkari",
       "role": "Tecnología de la información",
-      "photo": "/people/kishan-lashkari-13.jpg",
-      "inset": true,
+      "photo": "/people/kishan-lashkari-14.jpg",
       "description": "Dirige las operaciones tecnológicas, la ciberseguridad, el cumplimiento normativo y la ejecución estratégica en EMFI."
     },
     {
       "name": "Dinesh Chouhan",
       "role": "Desarrollo de software",
-      "photo": "/people/dinesh-chouhan-6.jpg",
+      "photo": "/people/dinesh-chouhan-8.jpg",
       "inset": true,
       "description": "Dirige el desarrollo de software, la arquitectura moderna y la entrega de aplicaciones seguras y escalables en EMFI."
     }

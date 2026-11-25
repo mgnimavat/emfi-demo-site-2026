@@ -99,25 +99,27 @@
       {
         "name": "Guillermo Guerrero",
         "role": "Head of Research",
-        "photo": "/people/guillermo-guerrero-9.jpg",
+        "photo": "/people/guillermo-guerrero-12.jpg",
+        "inset": true,
         "description": "Provides market and investment research that supports institutional decisions and execution."
       },
       {
         "name": "Albani Granado",
         "role": "Senior Quantitative Analyst",
-        "photo": "/people/albani-granado-4.jpg",
+        "photo": "/people/albani-granado-6.jpg",
         "description": "Quantitative analysis supporting market research and investment decisions."
       },
       {
         "name": "Rosamnis Marcano",
         "role": "Senior Economist",
-        "photo": "/people/rosamnis-marcano-5.jpg",
+        "photo": "/people/rosamnis-marcano-6.jpg",
         "description": "Provides economic context for allocation, duration and credit decisions."
       },
       {
         "name": "Matias Montes",
         "role": "Senior Strategist",
-        "photo": "/people/matias-montes-10.jpg",
+        "photo": "/people/matias-montes-11.jpg",
+        "inset": true,
         "description": "Connects EMFI’s capabilities, people and technology into one operating direction."
       },
       {

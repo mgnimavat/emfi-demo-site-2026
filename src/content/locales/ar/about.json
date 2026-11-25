@@ -101,40 +101,40 @@
     {
       "name": "Hitesh Bilochi",
       "role": "الامتثال، مركز دبي المالي العالمي",
-      "photo": "/people/hitesh-bilochi-11.jpg",
+      "photo": "/people/hitesh-bilochi-13.jpg",
       "inset": true,
       "description": "يشرف على الامتثال التنظيمي في مركز دبي المالي العالمي ومتطلبات سلطة دبي للخدمات المالية لعمليات EMFI في دبي."
     },
     {
       "name": "Alan Tooker",
       "role": "مدير، EMFI Fund SPC",
-      "photo": "/people/alan-tooker-3.jpg",
+      "photo": "/people/alan-tooker-4.jpg",
       "description": "يشغل منصب مدير مستقل في EMFI Fund SPC."
     },
     {
       "name": "Damian Juric",
       "role": "مدير، EMFI Fund SPC",
-      "photo": "/people/damian-juric-10.jpg",
+      "photo": "/people/damian-juric-11.jpg",
       "description": "يشغل منصب مدير مستقل في EMFI Fund SPC."
     },
     {
       "name": "Robert Hagon",
       "role": "التوزيع، المملكة المتحدة",
-      "photo": "/people/robert-hagon-4.jpg",
+      "photo": "/people/robert-hagon-5.jpg",
       "inset": true,
       "description": "يبني علاقات التوزيع المؤسسي ويديرها في المملكة المتحدة."
     },
     {
       "name": "Mark Cleary",
       "role": "التوزيع، المملكة المتحدة",
-      "photo": "/people/mark-cleary-7.jpg",
+      "photo": "/people/mark-cleary-10.jpg",
       "inset": true,
       "description": "يدعم التوزيع المؤسسي وتغطية العملاء في المملكة المتحدة."
     },
     {
       "name": "Jose Bermudez",
       "role": "التوزيع، مركز دبي المالي العالمي",
-      "photo": "/people/jose-bermudez-8.jpg",
+      "photo": "/people/jose-bermudez-9.jpg",
       "inset": true,
       "description": "يبني علاقات التوزيع المؤسسي ويديرها في مركز دبي المالي العالمي."
     },
@@ -146,25 +146,26 @@
     {
       "name": "Guillermo Guerrero",
       "role": "البحوث",
-      "photo": "/people/guillermo-guerrero-9.jpg",
+      "photo": "/people/guillermo-guerrero-12.jpg",
+      "inset": true,
       "description": "يقدم بحوث الأسواق والاستثمار التي تدعم القرارات المؤسسية والتنفيذ."
     },
     {
       "name": "Albani Granado",
       "role": "محلل كمي أول",
-      "photo": "/people/albani-granado-4.jpg",
+      "photo": "/people/albani-granado-6.jpg",
       "description": "يقدم التحليل الكمي الذي يدعم قرارات البحوث وتوزيع الأصول والتنفيذ."
     },
     {
       "name": "Rosamnis Marcano",
       "role": "الاقتصاد",
-      "photo": "/people/rosamnis-marcano-5.jpg",
+      "photo": "/people/rosamnis-marcano-6.jpg",
       "description": "يوفر السياق الاقتصادي لقرارات توزيع الأصول والمدة والائتمان."
     },
     {
       "name": "Matias Montes",
       "role": "الاستراتيجية",
-      "photo": "/people/matias-montes-10.jpg",
+      "photo": "/people/matias-montes-11.jpg",
       "inset": true,
       "description": "يربط قدرات EMFI وفريقها وتقنياتها ضمن توجه تشغيلي موحد."
     },
@@ -178,20 +179,19 @@
     {
       "name": "Asmita Sojitra",
       "role": "محللة أعمال",
-      "photo": "/people/asmita-sojitra-1.jpg",
+      "photo": "/people/asmita-sojitra-2.jpg",
       "description": "تحول متطلبات الأعمال إلى مسارات تشغيلية وتقنية واضحة."
     },
     {
       "name": "Kishan Lashkari",
       "role": "تكنولوجيا المعلومات",
-      "photo": "/people/kishan-lashkari-13.jpg",
-      "inset": true,
+      "photo": "/people/kishan-lashkari-14.jpg",
       "description": "يقود العمليات التقنية والأمن السيبراني والامتثال التنظيمي والتنفيذ الاستراتيجي لدى EMFI."
     },
     {
       "name": "Dinesh Chouhan",
       "role": "تطوير البرمجيات",
-      "photo": "/people/dinesh-chouhan-6.jpg",
+      "photo": "/people/dinesh-chouhan-8.jpg",
       "inset": true,
       "description": "يقود تطوير البرمجيات والبنية الحديثة وتقديم تطبيقات آمنة وقابلة للتوسع لدى EMFI."
     }
