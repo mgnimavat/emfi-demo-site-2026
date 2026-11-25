@@ -25,9 +25,9 @@
 
 .intro {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-  align-items: center;
-  gap: clamp(32px, 5vw, 80px);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(20px, 2.5vh, 28px);
 }
 
 .title {
@@ -53,7 +53,16 @@
   line-height: 1.65;
   letter-spacing: -.01em;
   color: var(--text-secondary);
-  text-wrap: pretty;
+}
+
+.leadLine {
+  display: block;
+}
+
+@media (min-width: 1200px) {
+  .leadLine {
+    white-space: nowrap;
+  }
 }
 
 .diagram {

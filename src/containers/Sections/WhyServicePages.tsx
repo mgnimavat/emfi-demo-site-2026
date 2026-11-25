@@ -45,7 +45,7 @@ const relationshipLogos: Readonly<Partial<Record<string, DetailLogo>>> = {
   Apex: { src: '/images/fund-providers/apex.svg', width: 550, height: 514 },
   Walkers: { src: '/images/fund-providers/walkers.jpg', width: 1797, height: 614 },
   Dechert: { src: '/images/fund-providers/dechert.png', width: 1024, height: 1024 },
-  Euroclear: { src: '/brand/standing/euroclear-white.png', width: 140, height: 135 },
+  Euroclear: { src: euroclearLogo, width: 76, height: 76 },
   Allfunds: { src: allfundsLogo, width: 144, height: 39 },
 };
 const WhyHero = ({ headline, prefix, words, spacedLines, children }: {
@@ -70,39 +70,51 @@ const WhyHero = ({ headline, prefix, words, spacedLines, children }: {
   </section>
 );
 
-const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', action, children }: {
+const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', action, actionPlacement = 'intro', children }: {
   id: string;
   copy: Intro;
   tone?: 'white' | 'soft' | 'navy';
   layout?: 'standard' | 'centered' | 'product' | 'split';
   action?: ReactNode;
+  actionPlacement?: 'intro' | 'after';
   children?: ReactNode;
-}) => (
-  <section id={id} className={`${band.section} ${styles.contentBand}`} data-tone={tone}
-    data-layout={layout} aria-labelledby={`${id}-heading`}>
-    <div className={`${band.container} ${styles.bandContainer}`}>
-      <div className={`${styles.bandIntro} ${copy.lead || copy.body ? band.introduction : ''}`}>
-        <ExecutionReveal>
-          <h2 id={`${id}-heading`} className={`${band.title} ${styles.bandTitle}`}>
-            {copy.titleLines.map((line) => (
-              <span key={line}>{line}</span>
-            ))}
-          </h2>
-        </ExecutionReveal>
-        {copy.lead || copy.body || copy.callout || action ? (
-          <ExecutionReveal delay={0.12} className={styles.introCopy}>
-            {copy.lead ? <p className={styles.lead}>{copy.lead}</p> : null}
-            {copy.body ? <p className={layout === 'split' ? styles.callout : styles.body}>{copy.body}</p> : null}
-            {copy.callout ? <p className={styles.callout}>{copy.callout}</p> : null}
-            {action ? <div className={styles.action}>{action}</div> : null}
+}) => {
+  const introAction = actionPlacement === 'intro' ? action : null;
+  const afterAction = actionPlacement === 'after' ? action : null;
+  const hasIntroCopy = Boolean(copy.lead || copy.body || copy.callout || introAction);
+
+  return (
+    <section id={id} className={`${band.section} ${styles.contentBand}`} data-tone={tone}
+      data-layout={layout} aria-labelledby={`${id}-heading`}>
+      <div className={`${band.container} ${styles.bandContainer}`}>
+        <div className={`${styles.bandIntro} ${copy.lead || copy.body ? band.introduction : ''}`}>
+          <ExecutionReveal>
+            <h2 id={`${id}-heading`} className={`${band.title} ${styles.bandTitle}`}>
+              {copy.titleLines.map((line) => (
+                <span key={line}>{line}</span>
+              ))}
+            </h2>
+          </ExecutionReveal>
+          {hasIntroCopy ? (
+            <ExecutionReveal delay={0.12} className={styles.introCopy}>
+              {copy.lead ? <p className={styles.lead}>{copy.lead}</p> : null}
+              {copy.body ? <p className={layout === 'split' ? styles.callout : styles.body}>{copy.body}</p> : null}
+              {copy.callout ? <p className={styles.callout}>{copy.callout}</p> : null}
+              {introAction ? <div className={styles.action}>{introAction}</div> : null}
+            </ExecutionReveal>
+          ) : null}
+        </div>
+        {children ? <div className={styles.bandContent}>{children}</div> : null}
+        {afterAction ? (
+          <ExecutionReveal delay={0.16} className={styles.action}>
+            {afterAction}
           </ExecutionReveal>
         ) : null}
+        {copy.note ? <p className={styles.note}>{copy.note}</p> : null}
       </div>
-      {children ? <div className={styles.bandContent}>{children}</div> : null}
-      {copy.note ? <p className={styles.note}>{copy.note}</p> : null}
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const splitDetailLead = (body: string) => {
   const match = body.match(/^(.+?\.)(\s+)([\s\S]+)$/);
@@ -111,7 +123,7 @@ const splitDetailLead = (body: string) => {
 
 const Details = ({ items, layout = 'cards', logos, emphasizeLead = false }: {
   items: readonly Detail[];
-  layout?: 'cards' | 'benefits' | 'ledger' | 'entities';
+  layout?: 'cards' | 'benefits' | 'ledger' | 'entities' | 'rules';
   logos?: Readonly<Partial<Record<string, DetailLogo>>>;
   emphasizeLead?: boolean;
 }) => {
@@ -120,6 +132,33 @@ const Details = ({ items, layout = 'cards', logos, emphasizeLead = false }: {
       {items.map((item, index) => {
         const logo = logos?.[item.title];
         const lead = emphasizeLead ? splitDetailLead(item.body) : null;
+        if (layout === 'entities') {
+          return (
+            <li key={item.title} className={styles.detail}>
+              <h3>{item.title}</h3>
+              <p className={styles.body}>
+                <span>{item.body}</span>
+                {item.href && item.link ? (
+                  <>
+                    {' · '}
+                    <a href={item.href} target="_blank" rel="noreferrer" className={styles.detailLink}>
+                      {item.link}<span className="sr-only"> — {item.title}</span>
+                    </a>
+                  </>
+                ) : null}
+              </p>
+            </li>
+          );
+        }
+        if (layout === 'rules') {
+          return (
+            <li key={item.title} className={styles.detail}>
+              {item.code ? <span className={styles.ruleCode}>{item.code}</span> : null}
+              <h3>{item.title}</h3>
+              <p className={styles.body}>{item.body}</p>
+            </li>
+          );
+        }
         const body = (
           <>
             {logo ? (
@@ -129,11 +168,12 @@ const Details = ({ items, layout = 'cards', logos, emphasizeLead = false }: {
             ) : (
               <div className={layout === 'benefits' ? styles.benefitHead : undefined}>
                 {layout === 'benefits' ? (
-                  <span className={styles.detailIcon} aria-hidden="true">
-                    {String(index + 1).padStart(2, '0')}
+                  <span className={styles.detailIcon} data-code={item.code ? '' : undefined} aria-hidden="true">
+                    {item.code || String(index + 1).padStart(2, '0')}
                   </span>
+                ) : item.code ? (
+                  <span className={styles.code}>{item.code}</span>
                 ) : null}
-                {item.code ? <span className={styles.code}>{item.code}</span> : null}
                 <h3>{item.title}</h3>
               </div>
             )}
@@ -240,6 +280,53 @@ const InfrastructureProviders = ({
   </ExecutionReveal>
 );
 
+const visibleRelationshipTitles = new Set(['Walkers', 'Apex', 'Dechert']);
+
+const RelationshipProviders = ({ items }: { items: readonly Detail[] }) => {
+  const visibleItems = items.filter(({ title }) => visibleRelationshipTitles.has(title));
+
+  return (
+    <ExecutionReveal className={styles.relationshipProviders}>
+      <svg className={styles.logoFilter} aria-hidden="true" focusable="false">
+        <defs>
+          <filter id="why-relationship-navy" colorInterpolationFilters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.6378 -2.1456 -.2166 0 3" />
+            <feComposite in2="SourceAlpha" operator="in" result="ink" />
+            <feFlood floodColor="var(--text-primary, #071832)" />
+            <feComposite in2="ink" operator="in" />
+          </filter>
+        </defs>
+      </svg>
+      <ul className={styles.relationshipGrid} role="list">
+        {visibleItems.map(({ title: name, body }) => {
+          const logo = relationshipLogos[name];
+          return (
+            <li
+              key={name}
+              className={`${styles.provider} ${reveal.card} ${reveal.panel}`}
+              tabIndex={body ? 0 : undefined}
+            >
+              <div className={`${styles.providerBrand} ${reveal.brand}`} data-provider={name}>
+                {logo ? (
+                  <Image
+                    {...logo}
+                    alt={name}
+                    className={styles.providerLogo}
+                    unoptimized
+                  />
+                ) : (
+                  <strong>{name}</strong>
+                )}
+              </div>
+              {body ? <span className={reveal.details}>{body}</span> : null}
+            </li>
+          );
+        })}
+      </ul>
+    </ExecutionReveal>
+  );
+};
+
 export const DirectContentPage = ({ copy, heroCopy, locale }: {
   copy: WhyPageCopy['direct']; heroCopy: Pick<DirectCopy, 'headline' | 'heroTitle'>; locale: Locale;
 }) => (
@@ -321,23 +408,46 @@ export const ResponsiveContentPage = ({ copy, heroCopy }: {
   </div>
 );
 
-export const DependableContentPage = ({ copy, heroCopy }: {
-  copy: WhyPageCopy['dependable']; heroCopy: Pick<DependableCopy, 'headline' | 'fixed' | 'phrases'>;
+export const DependableContentPage = ({ copy, heroCopy, locale }: {
+  copy: WhyPageCopy['dependable']; heroCopy: Pick<DependableCopy, 'headline' | 'fixed' | 'phrases'>; locale: Locale;
 }) => (
   <div className={styles.page} data-pillar="dependable">
     <WhyHero headline={heroCopy.headline} prefix={heroCopy.fixed} words={heroCopy.phrases} spacedLines>
       <DependablePeekSlide />
     </WhyHero>
-    <ContentBand id="client-assets" copy={copy.assets} tone="soft">
-      <Details items={copy.assets.items} />
+    <ContentBand
+      id="client-assets"
+      copy={copy.assets}
+      tone="soft"
+      actionPlacement="after"
+      action={(
+        <Button href={localizeHref('/services/settlement-custody', locale)} variant="circle">
+          {copy.assets.action}
+        </Button>
+      )}
+    >
+      <Details items={copy.assets.items} layout="rules" />
     </ContentBand>
-    <ContentBand id="regulation" copy={copy.relationships}>
-      <Details items={copy.relationships.items} layout="ledger" logos={relationshipLogos} emphasizeLead />
+    <ContentBand id="regulation" copy={copy.relationships} tone="white">
+      <RelationshipProviders items={copy.relationships.items} />
     </ContentBand>
-    <ContentBand id="fees" copy={copy.fees} tone="soft">
-      <Details items={copy.fees.items} layout="ledger" />
+    <ContentBand
+      id="fees"
+      copy={{ titleLines: copy.fees.titleLines, lead: copy.fees.lead }}
+      tone="soft"
+      action={(
+        <Button href={localizeHref('/contact', locale)} variant="circle">
+          {copy.fees.action}
+        </Button>
+      )}
+    >
+      <Details items={copy.fees.items} layout="benefits" />
     </ContentBand>
-    <ContentBand id="entities" copy={copy.entities} tone="white">
+    <ContentBand
+      id="entities"
+      copy={copy.entities}
+      tone="white"
+    >
       <Details items={copy.entities.items} layout="entities" />
     </ContentBand>
   </div>

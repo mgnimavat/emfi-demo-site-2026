@@ -9,7 +9,7 @@ export const AboutMarket = ({ copy }: { copy: AboutCopy }) => {
       {/* Soft brand atmosphere on the open side of the split — opposite the headline weight. */}
       <div className={styles.mark} aria-hidden="true" />
       <div className={styles.container}>
-        <div className={styles.split}>
+        <div className={styles.copy}>
           <FadeIn>
             <h1 id="about-market-heading" className={styles.title}>
               {section.title.map((line, index) => (

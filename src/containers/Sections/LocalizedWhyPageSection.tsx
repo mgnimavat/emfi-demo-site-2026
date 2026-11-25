@@ -47,7 +47,7 @@ export const LocalizedWhyPageSection = ({ page, locale = 'en', archived = false 
             <ResponsiveContentPage copy={current.responsive} heroCopy={previous.responsive} />
           )
         ) : archived ? <DependableOperationsPageSection copy={previous.dependable} /> : (
-          <DependableContentPage copy={current.dependable} heroCopy={previous.dependable} />
+          <DependableContentPage copy={current.dependable} heroCopy={previous.dependable} locale={locale} />
         )}
       </div>
     </ServiceLocaleProvider>

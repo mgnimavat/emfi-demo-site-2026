@@ -340,6 +340,26 @@
 .footerLegalSocial .social svg {
   height: 14px;
 }
+.footerBottom {
+  margin-top: clamp(40px, 5vw, 64px);
+  padding-top: clamp(28px, 3.5vw, 40px);
+  border-top: 1px solid rgb(122 156 196 / 35%);
+}
+.footerBottomLegal,
+.footerBottomCopy {
+  margin: 0;
+  color: #a9bbd2;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+.footerBottomLegal {
+  max-width: 72rem;
+}
+.footerBottomLegal strong {
+  color: #c5d3e6;
+  font-weight: 700;
+}
 .social {
   display: flex;
   justify-content: flex-start;

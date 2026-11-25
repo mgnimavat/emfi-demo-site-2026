@@ -97,8 +97,7 @@
         "Your Portfolio.",
         "Within Reach."
       ],
-      "lead": "Mobile access puts relevant account and portfolio information within reach when users are away from their desks.",
-      "body": "One connected operating picture. Workstation, Dashboard and Mobile serve different parts of the client and operating experience."
+      "lead": "Mobile access puts relevant account and portfolio information within reach when users are away from their desks."
     },
     "specialist": {
       "titleLines": [
@@ -116,7 +115,8 @@
     "description": "Regulated entities, client asset arrangements, independent audit and clear fee principles. How EMFI keeps client assets accounted for.",
     "relationships": {
       "titleLines": [
-        "Regulated. Audited.",
+        "Regulated.",
+        "Audited.",
         "Connected."
       ],
       "lead": "EMFI operates through specialist legal entities and works with established professional firms and market infrastructure. The relationship matters, but so does the precise role each organisation performs.",
@@ -169,6 +169,7 @@
         "Accounted For."
       ],
       "lead": "Safeguarding client assets is a continuing operational responsibility. In the UK, the FCA’s Client Assets Sourcebook sets requirements for client money and safe custody assets.",
+      "action": "Settlement & Custody",
       "items": [
         {
           "code": "CASS 7",
@@ -194,6 +195,7 @@
       ],
       "lead": "A fee schedule should make the economics of the relationship understandable before you transact.",
       "body": "EMFI’s commercial arrangements can include custody fees, monthly minimums, execution and ticket charges, account or service fees and third-party infrastructure costs. The applicable schedule should identify the charging basis, relevant thresholds, currency, minimums and any pass-through items so you can understand what you are paying and why.",
+      "action": "Contact",
       "items": [
         {
           "title": "Custody",
@@ -218,7 +220,14 @@
         "Clear Entities.",
         "Defined Responsibilities."
       ],
+      "lead": "EMFI’s activities are carried out through distinct legal entities.\nThe entity providing a service depends on the activity, jurisdiction, client classification and applicable permissions.",
       "items": [
+        {
+          "title": "EMFI Fund SPC",
+          "body": "Cayman Islands · CIMA LMFN 1664891",
+          "link": "CIMA Register",
+          "href": "https://www.cima.ky/upimages/commonfiles/QuarterlyListofallMutualFundsregisteredandlicensedwiththeCaymanIslandsMonetaryAuthority-31December2020_1610460966.pdf"
+        },
         {
           "title": "EMFI Securities Limited",
           "body": "UK · FCA FRN 763979 · Company No. 10447140",
@@ -236,12 +245,6 @@
           "body": "DIFC · DFSA Reference F011663",
           "link": "DFSA Register",
           "href": "https://www.dfsa.ae/public-register"
-        },
-        {
-          "title": "EMFI Group Limited",
-          "body": "UK holding company · Company No. 11391808 · 25-26 Dering Street, Mayfair, London W1S 1AW",
-          "link": "",
-          "href": ""
         }
       ]
     }

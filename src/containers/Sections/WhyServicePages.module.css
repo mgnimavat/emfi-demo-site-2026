@@ -28,6 +28,7 @@
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: -.025em;
+  white-space: pre-line;
 }
 .body, .note {
   margin: 0;
@@ -282,6 +283,18 @@
     background-color .5s cubic-bezier(0.22, 1, 0.36, 1),
     transform .5s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.benefitHead .detailIcon[data-code] {
+  width: auto;
+  /* Match longest label ("CASS 7") so CASS 6 / DIFC share the same box width */
+  min-width: calc(6.5ch + 1.25rem);
+  aspect-ratio: auto;
+  height: 48px;
+  padding-inline: 0.625rem;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  white-space: nowrap;
+}
 .benefitHead h3 {
   grid-area: title;
   position: relative;
@@ -364,6 +377,18 @@
   min-width: 0;
   list-style: none;
 }
+.relationshipProviders {
+  width: 100%;
+  min-width: 0;
+}
+.relationshipGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 .provider {
   display: grid;
   justify-items: center;
@@ -403,8 +428,36 @@ a.provider:focus-visible {
   height: 64px;
   object-fit: contain;
 }
+.relationshipProviders .providerLogo {
+  filter: url('#why-relationship-navy');
+}
+.relationshipProviders .providerBrand[data-provider='FCA'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='Allfunds'] .providerLogo {
+  height: 48px;
+  max-width: min(168px, 100%);
+}
+.relationshipProviders .providerBrand[data-provider='DFSA'] .providerLogo {
+  height: 64px;
+  max-width: min(148px, 100%);
+}
+.relationshipProviders .providerBrand[data-provider='Apex'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='Dechert'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='CIMA'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='Walkers'] .providerLogo {
+  height: 76px;
+  max-width: min(220px, 100%);
+}
+.relationshipProviders .providerBrand[data-provider='Euroclear'] .providerLogo {
+  height: 68px;
+  max-width: 68px;
+}
+.relationshipProviders .providerBrand[data-provider='BDO'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='Baker Tilly'] .providerLogo {
+  height: 56px;
+  max-width: min(200px, 100%);
+}
 .providerBrand[data-provider='FundSettle'],
-.providerBrand[data-provider='Euroclear'] {
+.providers .providerBrand[data-provider='Euroclear'] {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
@@ -413,14 +466,14 @@ a.provider:focus-visible {
   max-width: none;
 }
 .providerBrand[data-provider='FundSettle'] .providerLogo,
-.providerBrand[data-provider='Euroclear'] .providerLogo {
+.providers .providerBrand[data-provider='Euroclear'] .providerLogo {
   flex: none;
   width: auto;
   height: 68px;
   max-width: 68px;
 }
 .providerBrand[data-provider='FundSettle'] strong,
-.providerBrand[data-provider='Euroclear'] strong {
+.providers .providerBrand[data-provider='Euroclear'] strong {
   font-size: 32px;
   font-weight: 700;
   line-height: 1;
@@ -444,8 +497,114 @@ a.provider:focus-visible {
 .page > [data-tone='navy'] .details[data-layout='ledger'] .detail {
   background: color-mix(in srgb, var(--bg-inverse) 94%, var(--text-inverse));
 }
-.details[data-layout='entities'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.details[data-layout='entities'] .detail { background: var(--bg-soft); box-shadow: var(--elevation-card-hover); }
+.details[data-layout='entities'] {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  border-block-start: 1px solid color-mix(in srgb, var(--color-blue-200) 55%, transparent);
+}
+.details[data-layout='entities'] .detail {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.34fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(var(--space-4), 3cqi, var(--space-8));
+  margin: 0;
+  padding-block: clamp(1.15rem, 1.8cqi, 1.55rem);
+  padding-inline: 0;
+  border: 0;
+  border-block-end: 1px solid color-mix(in srgb, var(--color-blue-200) 55%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.details[data-layout='rules'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-block-start: 0;
+}
+.details[data-layout='rules'] .detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: 0.55rem;
+  margin: 0;
+  padding-block: clamp(0.85rem, 1.4cqi, 1.15rem);
+  padding-inline: clamp(var(--space-4), 2.4cqi, var(--space-6));
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.details[data-layout='rules'] .detail:first-child {
+  padding-inline-start: 0;
+}
+.details[data-layout='rules'] .detail:last-child {
+  padding-inline-end: 0;
+}
+.details[data-layout='rules'] .detail + .detail {
+  background-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-blue-500) 45%, transparent) 18%,
+    color-mix(in srgb, var(--color-blue-200) 70%, transparent) 50%,
+    color-mix(in srgb, var(--color-blue-500) 35%, transparent) 82%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 1px 100%;
+}
+.details[data-layout='rules'] .ruleCode {
+  width: fit-content;
+  margin: 0;
+  color: var(--color-blue-550);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.details[data-layout='rules'] .detail h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(19px, 1.55cqi, 24px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -.025em;
+}
+.details[data-layout='rules'] .detail .body {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: clamp(14px, 1.1cqi, 15.5px);
+  font-weight: 450;
+  line-height: 1.65;
+}
+.details[data-layout='entities'] .detail h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(17px, 1.35cqi, 20px);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -.02em;
+}
+.details[data-layout='entities'] .detail .body {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: clamp(14px, 1.15cqi, 16px);
+  font-weight: 450;
+  line-height: 1.55;
+}
+.details[data-layout='entities'] .detailLink {
+  display: inline;
+  margin: 0;
+  color: #0d8f8a;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+.details[data-layout='entities'] .detailLink:hover {
+  color: #0a6f6b;
+}
 .code { display: block; margin-bottom: var(--space-2); color: var(--color-blue-550); font-size: 13px; font-weight: 700; }
 .detailLink {
   display: inline-flex;
@@ -482,8 +641,8 @@ a.provider:focus-visible {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
-  height: calc(100svh - var(--site-header-height, 78px) - clamp(132px, 16vh, 208px));
-  max-height: calc(100svh - var(--site-header-height, 78px) - clamp(132px, 16vh, 208px));
+  height: calc(100svh - var(--site-header-height, 78px) - clamp(96px, 12vh, 160px));
+  max-height: calc(100svh - var(--site-header-height, 78px) - clamp(96px, 12vh, 160px));
   overflow: hidden;
   display: grid;
   align-items: center;
@@ -497,7 +656,7 @@ a.provider:focus-visible {
   container-type: size;
   display: grid;
   align-items: center;
-  justify-items: start;
+  justify-items: stretch;
 }
 .page[data-pillar='responsive'] .contentBand[id='workstation'] .workstationScale {
   box-sizing: border-box;
@@ -564,17 +723,21 @@ a.provider:focus-visible {
   overflow: visible;
 }
 .contentBand[id='mobile'] .phones {
-  height: min(52vh, 460px);
+  /* Match hero showcase cluster: height-led, correct aspect, no width clamp stretch */
+  width: min(100%, 640px);
+  height: min(50vh, 424px);
+  margin-inline: auto;
+  gap: clamp(12px, 2.2cqi, 28px);
 }
 .contentBand[id='mobile'] .phones :global(figure) {
   width: auto;
-  height: 86%;
-  max-width: min(28%, 220px);
+  height: 82%;
+  max-width: none;
   aspect-ratio: 489 / 1024;
 }
 .contentBand[id='mobile'] .phones :global(figure[data-featured]) {
   height: 100%;
-  max-width: min(34%, 268px);
+  max-width: none;
 }
 .specialistSummary {
   display: grid;
@@ -718,46 +881,179 @@ a.provider:focus-visible {
   background: var(--color-blue-500);
   color: var(--text-inverse);
 }
-.contentBand[id='direct-benefits'] .introCopy {
+.contentBand[id='direct-benefits'] .introCopy,
+.page[data-pillar='dependable'] .contentBand:is([id='client-assets'], [id='fees']) .introCopy {
   gap: var(--space-5);
 }
-.contentBand[id='direct-benefits'] .lead {
+.contentBand[id='direct-benefits'] .lead,
+.page[data-pillar='dependable'] .contentBand:is([id='client-assets'], [id='fees'], [id='entities']) .lead {
   font-size: 22px;
   font-weight: 400;
   line-height: 1.45;
   letter-spacing: -.015em;
 }
-.contentBand[id='direct-benefits'] .details[data-layout='benefits'] {
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'],
+.page[data-pillar='dependable'] .contentBand[id='fees'] .details[data-layout='benefits'] {
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
 }
-.contentBand[id='direct-benefits'] .action {
+.page[data-pillar='dependable'] .contentBand[id='client-assets'] .bandContainer {
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(var(--space-5), 3.5cqi, var(--space-7));
+}
+.page[data-pillar='dependable'] .contentBand[id='client-assets'] .bandIntro {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-4);
+  margin-bottom: 0;
+  max-width: none;
+}
+.page[data-pillar='dependable'] .contentBand[id='client-assets'] .lead {
+  max-width: min(58rem, 100%);
+  text-wrap: pretty;
+}
+.page[data-pillar='dependable'] .contentBand[id='client-assets'] .details[data-layout='rules'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+}
+.page[data-pillar='dependable'] .contentBand[id='client-assets'] .bandContainer > .action {
+  justify-self: start;
+  width: fit-content;
+  max-width: 100%;
+  margin-block-start: 0;
+}
+.contentBand[id='direct-benefits'] .action,
+.page[data-pillar='dependable'] .contentBand[id='fees'] .action {
   justify-self: start;
   width: fit-content;
   max-width: 100%;
   margin-block-start: var(--space-2);
 }
-.contentBand[id='direct-benefits'] .action :global(.emfi-circle-btn) {
+.contentBand[id='direct-benefits'] .action :global(.emfi-circle-btn),
+.page[data-pillar='dependable'] .contentBand:is([id='client-assets'], [id='fees']) .action :global(.emfi-circle-btn) {
   font-size: 16px;
 }
-.contentBand[id='direct-benefits'] .action :global(.emfi-circle-btn-mark) {
+.contentBand[id='direct-benefits'] .action :global(.emfi-circle-btn-mark),
+.page[data-pillar='dependable'] .contentBand:is([id='client-assets'], [id='fees']) .action :global(.emfi-circle-btn-mark) {
   border-color: rgb(7 24 50 / 32%);
+}
+.page[data-pillar='dependable'] .contentBand[id='fees'] .bandIntro {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-5);
+  margin-bottom: 0;
+}
+.page[data-pillar='dependable'] .contentBand[id='regulation'] .bandContainer {
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(var(--space-5), 3.5cqi, var(--space-7));
+}
+.page[data-pillar='dependable'] .contentBand[id='regulation'] .bandIntro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  align-items: start;
+  gap: var(--space-5);
+  margin-bottom: 0;
+  max-width: 32rem;
+}
+.page[data-pillar='dependable'] .contentBand[id='regulation'] .bandTitle {
+  overflow-wrap: normal;
+}
+.page[data-pillar='dependable'] .contentBand[id='regulation'] .bandTitle > span {
+  display: block;
+  white-space: nowrap;
+}
+.page[data-pillar='dependable'] .contentBand[id='regulation'] .introCopy {
+  gap: var(--space-4);
+}
+.page[data-pillar='dependable'] .contentBand[id='regulation'] .lead {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -.015em;
+}
+.page[data-pillar='dependable'] .contentBand[id='regulation'] .bandContent {
+  width: 100%;
+  min-width: 0;
+  align-self: center;
+}
+.page[data-pillar='dependable'] .contentBand:is([id='client-assets'], [id='fees']) .bandTitle {
+  overflow-wrap: normal;
+}
+.page[data-pillar='dependable'] .contentBand:is([id='client-assets'], [id='fees']) .bandTitle > span {
+  display: block;
+  white-space: nowrap;
+}
+/* Entities: full-width stacked column */
+.page[data-pillar='dependable'] .contentBand[id='entities'] .bandContainer {
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(var(--space-6), 4cqi, var(--space-8));
+}
+.page[data-pillar='dependable'] .contentBand[id='entities'] .bandIntro {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-5);
+  margin-bottom: 0;
+  max-width: none;
+}
+.page[data-pillar='dependable'] .contentBand[id='entities'] .lead {
+  max-width: none;
+  white-space: pre-line;
+}
+
+@media (min-width: 1100px) {
+  .page[data-pillar='dependable'] .contentBand[id='entities'] .lead {
+    white-space: pre;
+  }
+}
+.page[data-pillar='dependable'] .contentBand[id='entities'] .introCopy {
+  gap: var(--space-5);
+}
+.page[data-pillar='dependable'] .contentBand[id='entities'] .bandTitle {
+  overflow-wrap: normal;
+  font-size: clamp(42px, 6.4cqi, 80px);
+}
+.page[data-pillar='dependable'] .contentBand[id='entities'] .bandTitle > span {
+  display: block;
+  white-space: nowrap;
+}
+.page[data-pillar='dependable'] .contentBand[id='entities'] .bandContent {
+  width: 100%;
+  min-width: 0;
+}
+.page[data-pillar='dependable'] .contentBand[id='entities'] .details[data-layout='entities'] {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
 }
 
 @media (min-width: 901px) {
   .contentBand[id='infrastructure'] .bandContainer,
   .contentBand[id='direct-benefits'] .bandContainer,
   .contentBand[id='dma'] .bandContainer,
-  .contentBand[data-layout='product'] .bandContainer {
+  .contentBand[data-layout='product'] .bandContainer,
+  .page[data-pillar='dependable'] .contentBand[id='fees'] .bandContainer {
     align-items: center;
   }
   .contentBand[id='infrastructure'] .bandContainer {
     grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
     gap: clamp(24px, 4vw, 72px);
   }
-  .contentBand[id='direct-benefits'] .bandContainer {
+  .contentBand[id='direct-benefits'] .bandContainer,
+  .page[data-pillar='dependable'] .contentBand[id='fees'] .bandContainer {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
     gap: clamp(32px, 5vw, 80px);
+  }
+  .page[data-pillar='dependable'] .contentBand[id='regulation'] .bandContainer {
+    align-items: center;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 80px);
+  }
+  .page[data-pillar='dependable'] .contentBand[id='regulation'] .bandIntro {
+    order: 2;
+    max-width: none;
+  }
+  .page[data-pillar='dependable'] .contentBand[id='regulation'] .bandContent {
+    order: 1;
   }
   .contentBand[id='dma'] .bandContainer {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
@@ -767,29 +1063,23 @@ a.provider:focus-visible {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     gap: clamp(32px, 5vw, 80px);
   }
-  .page[data-pillar='responsive'] .contentBand[id='mobile'] {
-    overflow-x: clip;
-  }
-  .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard']) {
+  .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard'], [id='mobile']) {
     overflow: visible;
   }
   .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard'], [id='mobile']) .bandContainer {
-    width: 100%;
-    max-width: none;
-    min-height: calc(100svh - var(--site-header-height, 78px));
-    margin-inline: 0;
-    padding-inline: 0;
     box-sizing: border-box;
+    width: calc(100% - 64px);
+    max-width: 1320px;
+    min-height: calc(100svh - var(--site-header-height, 78px));
+    margin-inline: auto;
+    padding-inline: 0;
     align-items: center;
-    gap: 0;
+    gap: clamp(32px, 4.5vw, 72px);
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
   }
-  /* Even: media right bleed, copy toward horizontal middle */
-  .page[data-pillar='responsive'] .contentBand[id='dashboard'] .bandContainer {
-    grid-template-columns: 50vw 50vw;
-  }
-  /* Odd: media left bleed, copy toward horizontal middle */
+  /* Odd sections: media left, copy right */
   .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='mobile']) .bandContainer {
-    grid-template-columns: 50vw 50vw;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
   }
   .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='mobile']) .bandIntro {
     order: 2;
@@ -799,9 +1089,12 @@ a.provider:focus-visible {
   }
   .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard'], [id='mobile']) .bandIntro {
     box-sizing: border-box;
-    width: min(640px, 46vw);
-    max-width: calc(50vw - clamp(24px, 3vw, 48px));
+    width: 100%;
+    max-width: none;
+    margin: 0;
     text-align: left;
+    justify-self: stretch;
+    align-content: center;
   }
   .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard'], [id='mobile']) .bandTitle {
     overflow-wrap: normal;
@@ -809,71 +1102,60 @@ a.provider:focus-visible {
   .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard'], [id='mobile']) .bandTitle > span {
     white-space: nowrap;
   }
-  /* Sit copy at the viewport midline (out of container), keep text left-aligned */
-  .page[data-pillar='responsive'] .contentBand[id='dashboard'] .bandIntro {
-    justify-self: end;
-    margin-inline-end: clamp(28px, 3.5vw, 56px);
-  }
-  .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='mobile']) .bandIntro {
-    justify-self: start;
-    margin-inline-start: clamp(28px, 3.5vw, 56px);
-  }
   .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard'], [id='mobile']) .bandContent {
-    width: 50vw;
-    max-width: 50vw;
+    width: 100%;
+    max-width: none;
     min-width: 0;
     justify-self: stretch;
+    align-self: center;
   }
   .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard']) .bandContent {
-    align-self: center;
     box-sizing: border-box;
-    height: calc(100svh - var(--site-header-height, 78px) - clamp(132px, 16vh, 208px));
-    max-height: calc(100svh - var(--site-header-height, 78px) - clamp(132px, 16vh, 208px));
+    height: calc(100svh - var(--site-header-height, 78px) - clamp(96px, 12vh, 160px));
+    max-height: calc(100svh - var(--site-header-height, 78px) - clamp(96px, 12vh, 160px));
+    padding: 0;
     overflow: visible;
-  }
-  .page[data-pillar='responsive'] .contentBand[id='dashboard'] .bandContent {
-    padding: clamp(16px, 2vw, 28px);
-  }
-  .page[data-pillar='responsive'] .contentBand[id='workstation'] .bandContent {
-    padding: clamp(16px, 2vw, 28px);
-    padding-inline-start: 0;
   }
   .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard']) .preview,
   .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard']) .mediaFit {
     width: 100%;
     height: 100%;
     max-height: 100%;
-    overflow: visible;
+    overflow: hidden;
     border-radius: var(--radius-card);
   }
-  .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard']) .mediaFit :global([data-system-preview]),
-  .page[data-pillar='responsive'] .contentBand:is([id='workstation'], [id='dashboard']) .mediaFit :global([data-system-preview] > div) {
-    overflow: visible;
-  }
   .page[data-pillar='responsive'] .contentBand[id='workstation'] .workstationStage {
-    justify-items: end;
+    justify-items: stretch;
   }
   .page[data-pillar='responsive'] .contentBand[id='mobile'] .phones {
     justify-content: center;
-    height: min(58vh, 520px);
-    padding-inline-start: clamp(12px, 2vw, 28px);
+    height: min(50vh, 424px);
+    padding-inline: 0;
   }
   .contentBand[id='infrastructure'] .bandIntro,
   .contentBand[id='direct-benefits'] .bandIntro,
   .contentBand[id='dma'] .bandIntro,
-  .contentBand[data-layout='product'] .bandIntro {
+  .contentBand[data-layout='product'] .bandIntro,
+  .page[data-pillar='dependable'] .contentBand[id='fees'] .bandIntro {
     align-content: center;
   }
   .contentBand[id='infrastructure'] .bandContent,
   .contentBand[id='direct-benefits'] .bandContent,
   .contentBand[id='dma'] .bandContent,
-  .contentBand[data-layout='product'] .bandContent {
+  .contentBand[data-layout='product'] .bandContent,
+  .page[data-pillar='dependable'] .contentBand[id='fees'] .bandContent {
     align-self: center;
   }
   .contentBand[data-layout='product'] .bandTitle,
   .contentBand[data-layout='split'] .bandTitle,
   .page[data-pillar='direct'] .contentBand .bandTitle,
-  .page[data-pillar='responsive'] .contentBand .bandTitle { font-size: clamp(42px, 7.2cqi, 96px); }
+  .page[data-pillar='responsive'] .contentBand .bandTitle,
+  .page[data-pillar='dependable'] .contentBand:is([id='client-assets'], [id='fees']) .bandTitle {
+    font-size: clamp(42px, 7.2cqi, 96px);
+  }
+  .page[data-pillar='dependable'] .contentBand[id='entities'] .bandTitle {
+    font-size: clamp(48px, 6.4cqi, 80px);
+  }
   .contentBand[data-layout='split'] .callout {
     font-size: clamp(24px, 2.4cqi, 32px);
     line-height: 1.15;
@@ -889,7 +1171,46 @@ a.provider:focus-visible {
   .details[data-layout], .specialistSummary { grid-template-columns: minmax(0, 1fr); }
   .contentBand[data-layout='split'] .bandIntro { grid-template-columns: minmax(0, 1fr); }
   .contentBand .bandTitle { font-size: clamp(34px, 8cqi, 56px); }
+  .page[data-pillar='dependable'] .contentBand[id='entities'] .bandTitle > span,
+  .page[data-pillar='dependable'] .contentBand[id='regulation'] .bandTitle > span {
+    white-space: normal;
+  }
+  .page[data-pillar='dependable'] .contentBand[id='regulation'] .bandIntro {
+    max-width: none;
+  }
+  .details[data-layout='entities'] .detail {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+    align-items: start;
+  }
+  .details[data-layout='rules'],
+  .page[data-pillar='dependable'] .contentBand[id='client-assets'] .details[data-layout='rules'] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .details[data-layout='rules'] .detail {
+    padding-block: clamp(1.2rem, 3cqi, 1.55rem);
+    padding-inline: 0;
+  }
+  .details[data-layout='rules'] .detail:first-child {
+    padding-block-start: 0;
+  }
+  .details[data-layout='rules'] .detail:last-child {
+    padding-block-end: 0;
+  }
+  .details[data-layout='rules'] .detail + .detail {
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, var(--color-blue-500) 45%, transparent) 18%,
+      color-mix(in srgb, var(--color-blue-200) 70%, transparent) 50%,
+      color-mix(in srgb, var(--color-blue-500) 35%, transparent) 82%,
+      transparent 100%
+    );
+    background-position: top center;
+    background-size: 100% 1px;
+  }
 }
 @media (max-width: 599px) {
   .providerGrid { gap: var(--space-3); }
+  .relationshipGrid { gap: var(--space-3); }
 }

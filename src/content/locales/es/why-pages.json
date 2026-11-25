@@ -98,8 +98,7 @@
         "Su cartera.",
         "A su alcance."
       ],
-      "lead": "El acceso móvil permite consultar información relevante sobre cuentas y carteras fuera de la oficina.",
-      "body": "Una visión operativa conectada. Workstation, Dashboard y Mobile cubren distintas partes de la operación y de la experiencia del cliente."
+      "lead": "El acceso móvil permite consultar información relevante sobre cuentas y carteras fuera de la oficina."
     },
     "specialist": {
       "titleLines": [
@@ -117,7 +116,8 @@
     "description": "Entidades reguladas, protección de activos de clientes, auditoría independiente y principios claros de comisiones.",
     "relationships": {
       "titleLines": [
-        "Regulados. Auditados.",
+        "Regulados.",
+        "Auditados.",
         "Conectados."
       ],
       "lead": "EMFI opera a través de entidades jurídicas especializadas y trabaja con firmas profesionales e infraestructuras de mercado consolidadas. Cada organización cumple una función precisa.",
@@ -170,6 +170,7 @@
         "Debidamente registrados."
       ],
       "lead": "Salvaguardar los activos de clientes es una responsabilidad operativa continua. En el Reino Unido, el manual de activos de clientes de la FCA establece requisitos para el dinero de clientes y los activos en custodia.",
+      "action": "Liquidación y custodia",
       "items": [
         {
           "code": "CASS 7",
@@ -195,6 +196,7 @@
       ],
       "lead": "El cuadro de comisiones debe permitirle entender el coste de la relación antes de operar.",
       "body": "Los acuerdos comerciales de EMFI pueden incluir comisiones de custodia, mínimos mensuales, cargos de ejecución y por operación, cargos por cuenta o servicio y costes de infraestructura de terceros. El cuadro aplicable debe identificar la base de cálculo, los umbrales, la moneda, los mínimos y los costes repercutidos.",
+      "action": "Contacto",
       "items": [
         {
           "title": "Custodia",
@@ -219,7 +221,14 @@
         "Entidades claras.",
         "Responsabilidades definidas."
       ],
+      "lead": "Las actividades de EMFI se desarrollan a través de entidades jurídicas distintas.\nLa entidad que presta un servicio depende de la actividad, la jurisdicción, la clasificación del cliente y las autorizaciones aplicables.",
       "items": [
+        {
+          "title": "EMFI Fund SPC",
+          "body": "Islas Caimán · CIMA LMFN 1664891",
+          "link": "Registro de la CIMA",
+          "href": "https://www.cima.ky/upimages/commonfiles/QuarterlyListofallMutualFundsregisteredandlicensedwiththeCaymanIslandsMonetaryAuthority-31December2020_1610460966.pdf"
+        },
         {
           "title": "EMFI Securities Limited",
           "body": "Reino Unido · FCA FRN 763979 · N.º de sociedad 10447140",
@@ -237,12 +246,6 @@
           "body": "DIFC · Referencia DFSA F011663",
           "link": "Registro de la DFSA",
           "href": "https://www.dfsa.ae/public-register"
-        },
-        {
-          "title": "EMFI Group Limited",
-          "body": "Sociedad de cartera del Reino Unido · N.º de sociedad 11391808 · 25-26 Dering Street, Mayfair, London W1S 1AW",
-          "link": "",
-          "href": ""
         }
       ]
     }
