@@ -423,10 +423,11 @@ a.provider:focus-visible {
   letter-spacing: -.04em;
 }
 .providerLogo {
-  display: block;
-  width: 100%;
-  height: 64px;
-  object-fit: contain;
+  composes: providerLogo from './ProviderCardReveal.module.css';
+}
+.squareProviderLogo {
+  composes: squareProviderLogo from './ProviderCardReveal.module.css';
+  flex: none;
 }
 .relationshipProviders .providerLogo {
   filter: url('#why-relationship-navy');

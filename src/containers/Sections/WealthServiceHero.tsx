@@ -282,10 +282,9 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
                   ))}
                 </div>
               )}
-              <div className={styles.disclaimers}>
-                <p>{copy.risk}</p>
-                <p>{copy.marketing}</p>
-              </div>
+              <p className={styles.disclaimer}>
+                <strong>{copy.disclaimerLabel}:</strong>{' '}{copy.risk} {copy.marketing}
+              </p>
             </figcaption>
           </figure>
 

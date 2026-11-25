@@ -249,7 +249,7 @@ const InfrastructureProviders = ({
                   alt={showName ? '' : name}
                   width={square ? 76 : 168}
                   height={square ? 76 : 46}
-                  className={styles.providerLogo}
+                  className={square ? styles.squareProviderLogo : styles.providerLogo}
                 />
               ) : null}
               {showName ? <strong>{name}</strong> : null}

@@ -21,13 +21,14 @@
   "redesign": {
     "hero": {
       "title": "Gestión de activos",
-      "body": "EMFI OPPORTUNITY FUND",
+      "body": "EMFI Opportunity Fund",
       "rangeLabel": "Intervalo del gráfico",
       "ranges": [
         "1Y",
         "3Y",
         "5Y"
       ],
+      "disclaimerLabel": "Aviso legal",
       "risk": "La rentabilidad pasada no es un indicador fiable de resultados futuros. El valor de una inversión puede bajar o subir, y puede perder parte o la totalidad de su capital.",
       "marketing": "Esta página está dirigida a clientes profesionales y contrapartes elegibles. No es una oferta ni una solicitud y no se dirige a clientes minoristas, personas estadounidenses ni a jurisdicciones donde resulte ilícita. Lea los documentos de oferta del fondo antes de tomar decisiones de inversión.",
       "gate": {
@@ -135,6 +136,7 @@
         "La estructura detrás",
         "de la estrategia."
       ],
+      "stepsTitle": "Proceso de inversión",
       "body": "La gestión patrimonial comienza con el mandato de inversión, no con un producto estándar. La cartera debe reflejar los objetivos, parámetros de riesgo, necesidades de liquidez y restricciones del cliente.",
       "steps": [
         {
@@ -180,7 +182,8 @@
         {
           "name": "Gustavo Rodrigues",
           "role": "Secretario, EMFI Fund SPC",
-          "photo": "/people/gustavo-rodrigues-6.jpg"
+          "photo": "/people/gustavo-rodrigues-6.jpg",
+          "inset": true
         }
       ]
     }

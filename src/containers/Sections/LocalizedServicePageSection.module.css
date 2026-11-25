@@ -1,3 +1,13 @@
+.page:is(
+  [data-research-variant='current'],
+  [data-settlement-variant='archive'],
+  [data-wealth-variant='current']
+) {
+  --service-soft-blue: #e5eefb;
+  --color-blue-25: var(--service-soft-blue);
+  --bg-soft: var(--service-soft-blue);
+}
+
 .page:lang(es) h1:not([id='research-heading']) { font-size: min(clamp(56px, 8vw, 110px), 12cqw); }
 .page:lang(ar) :is(h1, h2, h3, h4, p) { letter-spacing: normal; }
 .page:lang(ar) h1 { line-height: 1.3; }

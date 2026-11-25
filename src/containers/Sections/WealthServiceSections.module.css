@@ -12,8 +12,8 @@
   gap: var(--space-6);
   min-width: 0;
 }
-.fundIntroduction .title { font-size: clamp(30px, 10cqi, 80px); }
-.fundCopy { container-type: inline-size; }
+.fundIntroduction .title { font-size: clamp(30px, 8.8vw, 80px); }
+.descriptionContainer { container-type: inline-size; }
 .fundArchiveCopy { display: grid; gap: var(--space-5); }
 @media (min-width: 901px) {
   .fundStructure {
@@ -23,7 +23,7 @@
     min-block-size: calc(100vh - var(--site-header-height, 78px));
     min-block-size: calc(100svh - var(--site-header-height, 78px));
   }
-  .fundIntroduction .title { font-size: clamp(36px, 6.1cqi, 82px); }
+  .fundIntroduction .title { font-size: clamp(36px, 5.7vw, 81px); }
   .fundLayout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -38,7 +38,7 @@
   composes: sectionDescription from '../../components/sections/execution/workstation-section.module.css';
 }
 .body { margin: 0; color: var(--text-secondary); font-size: 15px; line-height: 1.75; }
-.providers h3, .mandateStep h3 { margin: 0; font-size: clamp(22px, 2vw, 27px); font-weight: 700; line-height: 1.2; letter-spacing: -.03em; }
+.providers h3 { margin: 0; font-size: clamp(22px, 2vw, 27px); font-weight: 700; line-height: 1.2; letter-spacing: -.03em; }
 .providerGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -57,16 +57,19 @@
   padding: var(--space-3);
   border: 1px solid var(--flow-from);
   border-radius: var(--radius-card);
-  background: var(--provider-card-bg);
+  background: var(--service-soft-blue, #e5eefb);
   text-align: center;
 }
 .logoFilter { position: absolute; width: 0; height: 0; overflow: hidden; }
 .providerBrand { display: grid; place-items: center; width: 100%; max-width: 260px; height: 80px; }
 .providerBrand strong { font-size: 24px; letter-spacing: -.04em; }
-.providerLogo { display: block; width: 100%; height: 64px; object-fit: contain; filter: url('#wealth-provider-navy'); }
-.providerBrand[data-provider='northern-trust'] .providerLogo { height: 80px; object-fit: cover; }
+.providerLogo {
+  composes: providerLogo from './ProviderCardReveal.module.css';
+  filter: url('#wealth-provider-navy');
+}
+.providerBrand[data-provider='northern-trust'] .providerLogo { --provider-logo-height: 80px; object-fit: cover; }
 .providerBrand[data-provider='dechert'] .providerLogo,
-.providerBrand[data-provider='apex'] .providerLogo { height: 76px; }
+.providerBrand[data-provider='apex'] .providerLogo { --provider-logo-height: 76px; }
 .providerBrand[data-provider='emfi'] .providerLogo { filter: brightness(0) url('#wealth-provider-navy'); }
 .providers > h3 { text-align: center; }
 .notice { margin: var(--space-6) 0 0; color: var(--text-muted); font-size: 12px; line-height: 1.7; }
@@ -84,7 +87,10 @@
   align-items: center;
   gap: clamp(var(--space-5), 3cqi, var(--space-7));
 }
+.mandateSection { background: var(--bg-soft); }
+.mandateSection .splitLayout { gap: clamp(var(--space-6), 4.5cqi, var(--space-8)); }
 .mandateIntro { display: grid; gap: var(--space-5); min-inline-size: 0; container-type: inline-size; }
+.mandateIntro .description { color: var(--text-primary); }
 .mandateTitle {
   margin: 0;
   font-size: min(9.75cqi, 78px);
@@ -95,43 +101,33 @@
 }
 .mandateTitle > span { display: block; }
 .mandateSteps {
+  display: grid;
+  gap: var(--space-4);
   margin: 0;
   padding: 0;
   list-style: none;
-  overflow: hidden;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-card);
-  background: var(--bg-soft);
 }
-.mandateStep {
+.mandateSteps .mandateStep {
   display: grid;
-  grid-template-columns: minmax(3ch, auto) minmax(0, 1fr);
-  gap: var(--space-4);
-  padding: clamp(var(--space-5), 2.7cqi, var(--space-7));
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
 }
-.mandateStep + .mandateStep { border-block-start: 1px solid var(--border-default); }
-.mandateNumber {
-  color: var(--text-primary);
-  font-size: clamp(22px, 2.8cqi, 38px);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-  letter-spacing: -.045em;
-}
-.mandateStepCopy {
-  padding-inline-start: var(--space-4);
-  border-inline-start: 1px solid color-mix(in srgb, currentColor 20%, transparent);
-}
-.mandateStep p { margin-block-start: var(--space-2); }
+.mandateStep h4 { margin: 0; color: var(--text-primary); font-size: 16px; font-weight: 700; line-height: 1.45; }
+.mandateStep p { grid-column: 2; }
 .teamGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-5); margin-top: var(--space-7); }
 @media (max-width: 1023px) { .teamGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 901px) { .mandateTitle { font-size: min(10.35cqi, 78px); } }
+@media (min-width: 901px) {
+  .mandateSection .splitLayout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
+    gap: clamp(40px, 5.5vw, 88px);
+  }
+  .mandateTitle { font-size: min(10.35cqi, 78px); }
+}
 @media (max-width: 900px) { .splitLayout { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 767px) {
   .teamGrid { grid-template-columns: minmax(0, 1fr); }
   .mandateTitle { text-wrap: pretty; }
-  .mandateStep { gap: var(--space-3); padding: var(--space-4); }
-  .mandateStepCopy { padding-inline-start: var(--space-3); }
 }
 
 @media (max-width: 599px) {
@@ -143,33 +139,43 @@
   --dashboard-frame-padding: 0;
   --dashboard-grid-gap: var(--space-2);
   --dashboard-card-radius: var(--radius-control);
+  --dashboard-fit-label-size: 14px;
   --elevation-card-hover: 0 4px 14px color-mix(in srgb, var(--text-primary) 4%, transparent);
-  background: #e5eefb;
+  background: var(--service-soft-blue, #e5eefb);
 }
-.visibilityContainer { width: 100%; max-width: 1440px; padding-inline: clamp(var(--space-5), 4vw, 56px); }
-.visibilityContainer .splitLayout { row-gap: clamp(20px, 3vh, 32px); }
+.visibilityContainer {
+  display: grid;
+  justify-items: center;
+  gap: clamp(var(--space-6), 4vw, var(--space-8));
+}
+.visibilityIntro {
+  display: grid;
+  gap: var(--space-6);
+  inline-size: 100%;
+  min-inline-size: 0;
+  text-align: center;
+}
+.visibilityIntro .description { margin-inline: auto; }
+.visibilityIntro .title {
+  font-size: clamp(28px, 7.3vw, 64px);
+  overflow-wrap: anywhere;
+}
+.visibilityDashboard { inline-size: min(100%, 960px); }
 @media (min-width: 901px) {
-  .visibilityContainer .splitLayout { column-gap: clamp(36px, 4vw, 72px); }
+  .visibilityIntro .title { font-size: clamp(34px, 4.8vw, 64px); }
 }
-.visibilityIntro { display: grid; gap: 18px; }
-.visibilityTitle {
-  container-type: inline-size;
-  margin: 0;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -.05em;
+@media (min-width: 1200px) {
+  .visibilityIntro {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: var(--space-5);
+    text-align: start;
+  }
+  .visibilityIntro .description { margin-inline: 0; }
+  .visibilityIntro .title:lang(es) {
+    font-size: min(64px, calc((100cqi - var(--space-5)) * .049));
+  }
 }
-.visibilityTitle > span {
-  display: block;
-  font-size: min(74px, 9.5cqi);
-  white-space: nowrap;
-}
-.visibilityTitle:lang(es) > span { font-size: min(74px, 9cqi); }
-.visibilityDescription {
-  max-width: 36em;
-  margin: 0;
-  color: #24344b;
-  font-size: 18px;
-  line-height: 1.6;
-  text-wrap: pretty;
+@media (max-width: 380px) {
+  .visibilityContainer { width: calc(100% - var(--space-3)); }
 }
