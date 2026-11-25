@@ -28,6 +28,7 @@
         "3Y",
         "5Y"
       ],
+      "disclaimerLabel": "Aviso legal",
       "risk": "La rentabilidad pasada no es un indicador fiable de resultados futuros. El valor de una inversión puede bajar o subir, y puede perder parte o la totalidad de su capital.",
       "marketing": "Esta página está dirigida a clientes profesionales y contrapartes elegibles. No es una oferta ni una solicitud y no se dirige a clientes minoristas, personas estadounidenses ni a jurisdicciones donde resulte ilícita. Lea los documentos de oferta del fondo antes de tomar decisiones de inversión.",
       "gate": {
