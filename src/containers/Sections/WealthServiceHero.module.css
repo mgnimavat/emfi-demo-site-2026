@@ -6,7 +6,7 @@
   display: grid;
   min-block-size: calc(100svh - var(--site-header-height, 78px));
   padding-block: var(--space-4);
-  background: var(--hero-page-background);
+  background: var(--bg-soft);
   color: var(--text-primary);
   font-family: var(--font-inter), Inter, Arial, sans-serif;
 }
@@ -22,7 +22,7 @@
   align-self: center;
   z-index: 2;
   margin-block: var(--hero-inset) 0;
-  margin-inline: var(--hero-inset) 0;
+  margin-inline: var(--hero-inset);
   font-size: clamp(38px, 6.2cqi, 82px);
   font-weight: 800;
   line-height: 1.04;
@@ -33,8 +33,27 @@
   --accent: var(--color-blue-550);
   --chart-border: color-mix(in srgb, var(--accent) 22%, transparent);
   display: grid;
-  grid-template: 'title ranges' auto 'chart chart' 1fr / minmax(0, 1fr) auto;
-  column-gap: var(--space-4);
+  grid-template: 'title' auto 'summary' auto 'chart' 1fr / minmax(0, 1fr);
+}
+
+.summary {
+  grid-area: summary;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-block-start: var(--space-4);
+  margin-inline: var(--hero-inset);
+}
+
+.description {
+  position: relative;
+  z-index: 2;
+  max-inline-size: 65ch;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 20px;
+  line-height: 1.45;
 }
 
 .fund, .overlay { grid-area: chart; }
@@ -49,12 +68,9 @@
 }
 
 .ranges {
-  grid-area: ranges;
   display: flex;
-  place-self: center end;
+  flex: none;
   gap: var(--space-1);
-  margin-block-start: var(--hero-inset);
-  margin-inline-end: var(--hero-inset);
   padding: var(--space-1);
   border: 1px solid var(--chart-border);
   border-radius: var(--radius-pill);
@@ -119,14 +135,20 @@
 
 .verticalGrid { stroke-dasharray: 3 5; opacity: .62; }
 
-.line, .endpoint, .endpointPulse, .activeGuide {
+.line, .lineShine, .endpoint, .endpointPulse, .activeGuide {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
 }
 
-.line { stroke-width: 2.5; }
+.line, .lineShine { stroke-width: 2.5; }
+.line { stroke: var(--action-primary); }
+.lineShine { stroke: var(--flow-from); pointer-events: none; }
+.shineSweep {
+  transform-box: view-box;
+  animation: sweepLineShine 4.5s linear infinite;
+}
 .endpoint { stroke: var(--action-primary); stroke-width: 8; }
 .endpointPulse {
   stroke: var(--accent);
@@ -135,6 +157,11 @@
 }
 .activeGuide { stroke-width: 1.25; }
 .series { animation: revealChart .3s ease-out; }
+
+@keyframes sweepLineShine {
+  from { transform: translateX(0); }
+  76%, to { transform: translateX(118%); }
+}
 
 @keyframes endpointPulse {
   from { stroke-width: 8; opacity: .55; }
@@ -204,6 +231,16 @@
 .axis time:first-child { transform: none; }
 .axis time:last-child { transform: translateX(-100%); }
 
+.disclaimers {
+  display: grid;
+  gap: var(--space-2);
+  margin-block-start: var(--space-3);
+  font-size: 13px;
+  text-align: center;
+}
+
+.disclaimers p { margin: 0; }
+
 .chartState {
   position: absolute;
   inset: 0;
@@ -228,11 +265,10 @@
 }
 
 .section[data-confirmed='false']::before {
-  --glass-tint: color-mix(in srgb, var(--bg-page) 92%, var(--bg-soft));
   position: absolute;
   z-index: 1;
   inset: 0;
-  background: var(--glass-tint);
+  background: var(--bg-soft);
   pointer-events: none;
   content: '';
 }
@@ -246,7 +282,7 @@
 
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
   .section[data-confirmed='false']::before {
-    background: color-mix(in srgb, var(--glass-tint) 66%, transparent);
+    background: color-mix(in srgb, var(--bg-soft) 66%, transparent);
     -webkit-backdrop-filter: blur(8px) saturate(.8);
     backdrop-filter: blur(8px) saturate(.8);
   }
@@ -258,9 +294,7 @@
 }
 
 @media (max-width: 599px) {
-  .stage { grid-template: 'title' auto 'ranges' auto 'chart' 1fr / minmax(0, 1fr); }
-  .title { margin-inline: var(--hero-inset); }
-  .ranges { justify-self: start; margin-inline: var(--hero-inset); }
+  .summary { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
 }
 
 @media (max-width: 479px) {
@@ -269,6 +303,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .series, .endpointPulse { animation: none; }
+  .series, .endpointPulse, .shineSweep { animation: none; }
+  .lineShine { display: none; }
   .ranges button { transition: none; }
 }

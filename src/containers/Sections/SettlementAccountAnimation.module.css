@@ -1,7 +1,4 @@
 .stage {
-  --arrival-progress-a: 0;
-  --arrival-progress-b: 0;
-  --delivery-progress: 0;
   --client-a: var(--color-blue-400);
   --client-b: color-mix(in srgb, var(--flow-to) 48%, var(--color-blue-500));
   --warning: color-mix(in srgb, var(--status-negative) 72%, var(--color-blue-500));
@@ -41,79 +38,54 @@
 
 .canvas {
   --direction: 1;
-  --station-height: 84px;
+  --station-icon-size: calc(var(--space-8) + var(--space-5));
+  --badge-offset: calc(var(--station-icon-size) / 2 + var(--space-1));
   position: relative;
   isolation: isolate;
-  height: 288px;
-  border-radius: var(--radius-card);
-  background: var(--bg-subtle);
+  block-size: 360px;
 }
 
 .canvas:dir(rtl) { --direction: -1; }
-.stage[data-orientation='vertical'] .canvas { height: 420px; }
-
-.routes {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  scale: var(--direction) 1;
-  pointer-events: none;
-}
-
-.rail, .trail {
-  fill: none;
-  vector-effect: non-scaling-stroke;
-  stroke-linecap: round;
-}
-
-.rail { stroke: var(--color-blue-100); stroke-width: 1.5; }
-.rail[data-inactive='true'] { stroke-dasharray: 2 5; }
-.rail[data-blocked='true'] { stroke: var(--warning); }
-.trail {
-  stroke: var(--client-a);
-  stroke-width: 2;
-  stroke-dasharray: 1 1;
-  stroke-dashoffset: calc(1 - var(--route-progress));
-}
-.trail[data-owner='B'] { stroke: var(--client-b); }
+.stage[data-orientation='vertical'] .canvas { block-size: 480px; }
 
 .station {
-  --owner: var(--client-a);
   position: absolute;
   inset-inline-start: var(--position-x);
   inset-block-start: var(--position-y);
   display: grid;
-  grid-template-rows: 18px auto 1fr;
   justify-items: center;
   gap: var(--space-1);
   inline-size: clamp(70px, 22%, 108px);
-  block-size: var(--station-height);
-  padding: var(--space-3) var(--space-1) var(--space-2);
-  translate: calc(-50% * var(--direction)) -50%;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-control);
-  background: var(--bg-page);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-blue-500) 8%, transparent);
+  translate: calc(-50% * var(--direction)) calc(var(--station-icon-size) / -2);
   color: var(--text-primary);
   text-align: center;
 }
 
-.station[data-owner='B'], .badge[data-owner='B'] { --owner: var(--client-b); }
-.station:not([data-owner]) { --owner: var(--text-primary); }
-.stationHeader { display: flex; align-items: center; gap: var(--space-1); }
-.stationIcon { color: var(--owner); }
+.stationModel {
+  display: grid;
+  place-items: center;
+  inline-size: var(--station-icon-size);
+  block-size: var(--station-icon-size);
+}
+.stationIcon {
+  display: none;
+  inline-size: 100%;
+  block-size: 100%;
+}
+.stationIcon[data-rendered='true'] { display: block; }
+.stationIcon[data-rendered='true'] + .stationFallback { display: none; }
+.stationFallback {
+  inline-size: var(--space-6);
+  block-size: var(--space-6);
+  color: var(--client-a);
+}
+.station[data-owner='B'] .stationFallback { color: var(--client-b); }
 .stationLabel { font-size: 12px; font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
 .stationStatus { color: var(--text-secondary); font-size: 10px; line-height: 1.25; }
 .stationStatus[data-tone='warning'] { color: var(--warning); }
 .stationStatus[data-tone='complete'] { color: var(--client-b); }
 
 .stage[data-orientation='vertical'] .station { inline-size: clamp(82px, 33%, 112px); }
-
-@container (max-width: 399px) {
-  .canvas { --station-height: 96px; }
-}
 
 .accounts {
   position: absolute;
@@ -125,7 +97,7 @@
 
 .tokenCarrier {
   position: absolute;
-  inset-inline-start: var(--position-x);
+  inset-inline-start: calc(var(--position-x) + var(--badge-offset));
   inset-block-start: var(--position-y);
   z-index: 1;
   translate: calc(-50% * var(--direction)) -50%;
@@ -136,8 +108,9 @@
   --owner: var(--client-a);
   display: grid;
   place-items: center;
-  inline-size: 18px;
+  inline-size: 22px;
   aspect-ratio: 1;
+  border: 2px solid var(--bg-page);
   border-radius: var(--radius-pill);
   background: var(--owner);
   color: var(--text-inverse);
@@ -146,7 +119,7 @@
   line-height: 1;
 }
 
-.tokenCarrier .badge { inline-size: 22px; border: 2px solid var(--bg-page); }
+.badge[data-owner='B'] { --owner: var(--client-b); }
 
 .caption {
   display: flex;
@@ -164,6 +137,5 @@
 .stage[data-dedicated='true'] .caption svg { color: var(--client-b); }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage { --arrival-progress-a: 1 !important; --arrival-progress-b: 1 !important; --delivery-progress: 1 !important; }
   .accounts { animation: none; }
 }

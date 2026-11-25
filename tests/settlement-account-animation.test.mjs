@@ -32,7 +32,7 @@ test('deliveries remain pending until the securities have arrived', () => {
   assert.deepEqual(completed.dedicatedB, station(settlementLayouts.vertical.deliveries[1]));
 });
 
-test('the delivery trail follows the tokens before settlement is confirmed', () => {
+test('delivery progress advances before settlement is confirmed', () => {
   const { scene, deliveryDelay, deliveryTravel, deliveryConfirmation } = settlementAnimationTiming;
   assert.equal(getVerticalFrame(scene + deliveryDelay).deliveryProgress, 0);
 
@@ -47,7 +47,7 @@ test('the delivery trail follows the tokens before settlement is confirmed', () 
   assert.equal(arrived.delivered, true);
 });
 
-test('each arrival trail follows its own token from the client to the account', () => {
+test('each arrival starts and finishes on its own schedule', () => {
   const { arrivalDelay, arrivalTravel, secondClientDelay } = settlementAnimationTiming;
   const firstDeparture = getVerticalFrame(arrivalDelay + secondClientDelay);
   assert.ok(firstDeparture.arrivalProgressA > 0);
@@ -98,37 +98,31 @@ test('the model switches and the full loop resets on the Direct timeline', () =>
     getSettlementComparisonFrame(0, duration, 'horizontal'));
 });
 
-for (const [orientation, axis] of [['horizontal', 'x'], ['vertical', 'y'], ['track', 'y']]) {
-  test(`the ${orientation} tracks connect clients, accounts and deliveries in order`, () => {
-    const { clients, accounts, pool, deliveries, routes } = settlementLayouts[orientation];
+const assertDirectPosition = (point, from, to, progress) => {
+  const offset = [point[0] - from.x, point[1] - from.y];
+  const delta = [to.x - from.x, to.y - from.y];
+  assert.ok(Math.abs(offset[0] * delta[1] - offset[1] * delta[0]) < 1e-6);
+  assert.ok(Math.abs(Math.hypot(...offset) - Math.hypot(...delta) * progress) < 1e-6);
+};
 
-    for (const route of Object.values(routes)) {
-      assert.match(route.path, /^M[\d .]+ L[\d .]+$/);
-      for (const [index, from] of route.points.slice(0, -1).entries()) {
-        const to = route.points[index + 1];
-        assert.ok((from[0] === to[0]) !== (from[1] === to[1]), route.path);
-      }
+for (const orientation of ['horizontal', 'vertical', 'track']) {
+  test(`markers take a direct path between the stations in the ${orientation} layout`, () => {
+    const { clients, accounts, pool, deliveries } = settlementLayouts[orientation];
+    const { scene, arrivalDelay, arrivalTravel, deliveryDelay, deliveryTravel } = settlementAnimationTiming;
+
+    for (const fraction of [0.25, 0.5, 0.75]) {
+      const arriving = getSettlementAnimationFrame(arrivalDelay + arrivalTravel * fraction, orientation);
+      assertDirectPosition(arriving.sharedA, clients[0], pool, arriving.arrivalProgressA);
+      assertDirectPosition(arriving.dedicatedA, clients[0], accounts[0], arriving.arrivalProgressA);
+      assertDirectPosition(arriving.dedicatedB, clients[1], accounts[1], arriving.arrivalProgressB);
+
+      const delivering = getSettlementAnimationFrame(scene + deliveryDelay + deliveryTravel * fraction, orientation);
+      assertDirectPosition(delivering.sharedA, pool, deliveries[1], delivering.deliveryProgress);
+      assertDirectPosition(delivering.dedicatedA, accounts[0], deliveries[0], delivering.deliveryProgress);
+      assertDirectPosition(delivering.dedicatedB, accounts[1], deliveries[1], delivering.deliveryProgress);
     }
 
-    for (const [index, sharedArrival, sharedDelivery, arrival, delivery] of [
-      [0, routes.sharedArrival, routes.sharedPending, routes.arrivalA, routes.deliveryA],
-      [1, routes.sharedArrivalB, routes.sharedDelivery, routes.arrivalB, routes.deliveryB],
-    ]) {
-      const client = clients[index];
-      const account = accounts[index];
-      const destination = deliveries[index];
-      assert.deepEqual(sharedArrival.points[0], station(client));
-      assert.deepEqual(sharedArrival.points.at(-1), station(pool));
-      assert.deepEqual(sharedDelivery.points[0], station(pool));
-      assert.deepEqual(sharedDelivery.points.at(-1), station(destination));
-      assert.deepEqual(arrival.points[0], station(client));
-      assert.deepEqual(arrival.points.at(-1), station(account));
-      assert.deepEqual(delivery.points[0], station(account));
-      assert.deepEqual(delivery.points.at(-1), station(destination));
-      assert.ok(client[axis] < account[axis] && account[axis] < destination[axis]);
-    }
-
-    const completed = getSettlementAnimationFrame(settlementAnimationTiming.scene * 2, orientation);
+    const completed = getSettlementAnimationFrame(scene * 2, orientation);
     assert.deepEqual(completed.sharedA, station(deliveries[1]));
     assert.deepEqual(completed.dedicatedA, station(deliveries[0]));
     assert.deepEqual(completed.dedicatedB, station(deliveries[1]));

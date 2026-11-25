@@ -21,7 +21,7 @@
   "redesign": {
     "hero": {
       "title": "Asset Management",
-      "body": "Investment management for professional clients, supported by defined mandates, dedicated fund structures and specialist professional service providers.",
+      "body": "EMFI OPPORTUNITY FUND",
       "rangeLabel": "Chart time range",
       "ranges": [
         "1Y",
@@ -29,7 +29,7 @@
         "5Y"
       ],
       "risk": "Past performance is not a reliable indicator of future results. The value of an investment can fall as well as rise, and you may lose some or all of your capital.",
-      "marketing": "Marketing communication. This page is for professional clients and eligible counterparties. It is not an offer or solicitation, and is not directed at retail clients, US persons or anyone in a jurisdiction where it would be unlawful. Read the fund’s offering documents before any investment decision.",
+      "marketing": "This page is for professional clients and eligible counterparties. It is not an offer or solicitation, and is not directed at retail clients, US persons or anyone in a jurisdiction where it would be unlawful. Read the fund’s offering documents before any investment decision.",
       "gate": {
         "title": "For professional investors only",
         "body": "Fund information is not for retail clients or US persons. Tell us who you are to continue.",

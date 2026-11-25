@@ -5,6 +5,8 @@
   scroll-margin-top: var(--site-header-height, 78px);
 }
 
+.section[id='research-office'],
+.section[id='settlement-office'][data-layout='columns'] { background: var(--bg-page); }
 .section[id='wealth-office'][data-layout='columns'] { background: var(--color-blue-25); }
 
 .container { width: calc(100% - 64px); max-width: 1320px; margin-inline: auto; }
