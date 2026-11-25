@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { Check } from 'lucide-react';
 import { ExecutionReveal } from '@/components/sections/execution/reveal';
 import { PersonCard } from '@/components/sections/person-card';
 import { wealthProviderAssets } from '@/content/wealth-provider-assets';
@@ -116,10 +117,10 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
           <ExecutionReveal delay={0.12} className={bandStyles.conditions}>
             <h3 id="mandate-steps-heading">{copy.mandate.stepsTitle}</h3>
             <ol className={styles.mandateSteps} role="list" aria-labelledby="mandate-steps-heading">
-              {copy.mandate.steps.map((step, index) => (
+              {copy.mandate.steps.map((step) => (
                 <li key={step.title} className={styles.mandateStep}>
                   <span className={bandStyles.conditionMark} aria-hidden="true">
-                    {String(index + 1).padStart(2, '0')}
+                    <Check size={14} strokeWidth={2.5} />
                   </span>
                   <h4>{step.title}</h4>
                   <p className={styles.body}>{step.body}</p>

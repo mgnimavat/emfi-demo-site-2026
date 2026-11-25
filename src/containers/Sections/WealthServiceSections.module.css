@@ -57,7 +57,7 @@
   padding: var(--space-3);
   border: 1px solid var(--flow-from);
   border-radius: var(--radius-card);
-  background: var(--provider-card-bg);
+  background: var(--service-soft-blue, #e5eefb);
   text-align: center;
 }
 .logoFilter { position: absolute; width: 0; height: 0; overflow: hidden; }
