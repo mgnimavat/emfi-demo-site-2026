@@ -44,8 +44,7 @@ export const LocalizedWhyPageSection = ({ page, locale = 'en', archived = false 
           )
         ) : page === 'responsive-technology' ? (
           archived ? <ResponsiveTechnologyPageSection copy={previous.responsive} /> : (
-            <ResponsiveContentPage copy={current.responsive} heroCopy={previous.responsive}
-              workflowSteps={previous.responsive.specialist.steps} />
+            <ResponsiveContentPage copy={current.responsive} heroCopy={previous.responsive} />
           )
         ) : archived ? <DependableOperationsPageSection copy={previous.dependable} /> : (
           <DependableContentPage copy={current.dependable} heroCopy={previous.dependable} />

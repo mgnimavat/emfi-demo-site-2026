@@ -22,19 +22,19 @@
           "detail": "Depositarios, liquidación y plataformas de fondos"
         }
       ],
-      "providersTitle": "Depositarios y plataformas de fondos",
+      "providersTitle": "Depositarios y Plataformas de Fondos",
       "providers": [
         {
           "title": "Euroclear",
-          "body": "Infraestructura de liquidación de valores."
+          "body": "Infraestructura de Liquidación de Valores"
         },
         {
           "title": "FundSettle",
-          "body": "Solución para fondos."
+          "body": "Solución para Fondos"
         },
         {
           "title": "Allfunds",
-          "body": "Servicios de distribución, negociación y tecnología para fondos."
+          "body": "Distribución, Negociación y Tecnología"
         }
       ]
     },
@@ -58,7 +58,7 @@
           "body": "Para los clientes elegibles, las cuentas individuales segregadas en el depositario permiten identificar sus valores por separado, en lugar de agruparlos con los de otros clientes en una cuenta ómnibus."
         }
       ],
-      "action": "Cómo funcionan la liquidación y la custodia de EMFI"
+      "action": "Liquidación y custodia"
     },
     "execution": {
       "titleLines": [
@@ -66,7 +66,14 @@
         "al mercado."
       ],
       "lead": "Para clientes elegibles e instrumentos compatibles, EMFI puede organizar el acceso directo a determinados centros de negociación mediante acuerdos de ejecución aprobados.",
-      "body": "El acceso directo al mercado (DMA) permite a los clientes autorizados enviar órdenes electrónicas mediante mecanismos de acceso designados. Está sujeto a la clasificación e incorporación del cliente, el tamaño de la cuenta, los criterios de actividad, la disponibilidad de mercados e instrumentos, los controles previos a la negociación, los límites de crédito y la supervisión continua. El acceso es limitado y se evalúa individualmente."
+      "body": "El acceso directo al mercado (DMA) permite a los clientes autorizados enviar órdenes electrónicas mediante mecanismos de acceso designados. El acceso es limitado y se evalúa individualmente.",
+      "conditionsTitle": "Condiciones de Acceso",
+      "conditions": [
+        "Clasificación e incorporación como cliente profesional",
+        "Criterios de tamaño de cuenta y actividad de negociación",
+        "Instrumentos y centros de negociación admitidos",
+        "Controles operativos, de crédito y de riesgo"
+      ]
     }
   },
   "responsive": {
