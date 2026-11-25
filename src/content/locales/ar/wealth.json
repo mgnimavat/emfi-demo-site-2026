@@ -182,7 +182,8 @@
         {
           "name": "Gustavo Rodrigues",
           "role": "أمين السر، EMFI Fund SPC",
-          "photo": "/people/gustavo-rodrigues-6.jpg"
+          "photo": "/people/gustavo-rodrigues-6.jpg",
+          "inset": true
         }
       ]
     }
