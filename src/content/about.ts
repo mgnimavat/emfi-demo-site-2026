@@ -197,8 +197,7 @@ export const about = {
     {
       name: "Zee Amin",
       role: "Operations",
-      photo: "/people/zee-amin-12.jpg",
-      inset: true,
+      photo: "/people/zee-amin-15.jpg",
       description: "Ensures instructions move through matching, settlement, exceptions and reporting.",
     },
     {
