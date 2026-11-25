@@ -62,7 +62,8 @@
   gap: var(--space-1) var(--space-2);
 }
 
-.viewport[data-fit='true'] .cardHeader :is(h4, strong) { font-size: 12px; }
+.viewport[data-fit='true'] .cardHeader strong { font-size: 12px; }
+.viewport[data-fit='true'] .cardHeader h4 { font-size: var(--dashboard-fit-label-size, 12px); }
 
 /* Compact density: only when compact prop is set (responsive-technology dashboard band). */
 .viewport[data-compact='true'] {

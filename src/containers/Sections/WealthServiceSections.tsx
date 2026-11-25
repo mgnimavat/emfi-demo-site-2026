@@ -8,6 +8,7 @@ import { SettlementDashboard } from './SettlementDashboard';
 import theme from '@/components/sections/archive/theme.module.css';
 import styles from './WealthServiceSections.module.css';
 import reveal from './ProviderCardReveal.module.css';
+import bandStyles from './WhyServicePages.module.css';
 
 const portfolioResearchNames = new Set([
   'Guillermo Guerrero',
@@ -34,7 +35,7 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
             </h2>
           </ExecutionReveal>
           <ExecutionReveal delay={0.12}
-            className={`${styles.fundCopy}${archiveFund ? ` ${styles.fundArchiveCopy}` : ''}`}>
+            className={`${styles.descriptionContainer}${archiveFund ? ` ${styles.fundArchiveCopy}` : ''}`}>
             <p className={styles.description}>{archiveFund ? copy.fund.archive.lead : copy.fund.lead}</p>
             {archiveFund && <p className={styles.body}>{copy.fund.archive.body}</p>}
           </ExecutionReveal>
@@ -74,10 +75,12 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
         <div className={styles.splitLayout}>
           <ExecutionReveal><SettlementDashboard borderless fit /></ExecutionReveal>
           <ExecutionReveal delay={0.12} className={styles.visibilityIntro}>
-            <h2 id="portfolio-visibility-heading" className={styles.visibilityTitle}>
+            <h2 id="portfolio-visibility-heading" className={styles.title}>
               {copy.visibility.titleLines.map((line) => <span key={line}>{line}{' '}</span>)}
             </h2>
-            <p className={styles.visibilityDescription}>{copy.visibility.body}</p>
+            <div className={styles.descriptionContainer}>
+              <p className={styles.description}>{copy.visibility.body}</p>
+            </div>
           </ExecutionReveal>
         </div>
       </div>
@@ -110,17 +113,16 @@ export const WealthServiceSections = ({ copy, researchTeam, aboutPeople, archive
             </h2>
             <p className={styles.description}>{copy.mandate.body}</p>
           </ExecutionReveal>
-          <ExecutionReveal delay={0.12}>
-            <ol className={styles.mandateSteps} role="list">
+          <ExecutionReveal delay={0.12} className={bandStyles.conditions}>
+            <h3 id="mandate-steps-heading">{copy.mandate.stepsTitle}</h3>
+            <ol className={styles.mandateSteps} role="list" aria-labelledby="mandate-steps-heading">
               {copy.mandate.steps.map((step, index) => (
                 <li key={step.title} className={styles.mandateStep}>
-                  <span className={styles.mandateNumber} aria-hidden="true">
+                  <span className={bandStyles.conditionMark} aria-hidden="true">
                     {String(index + 1).padStart(2, '0')}
                   </span>
-                  <div className={styles.mandateStepCopy}>
-                    <h3>{step.title}</h3>
-                    <p className={styles.body}>{step.body}</p>
-                  </div>
+                  <h4>{step.title}</h4>
+                  <p className={styles.body}>{step.body}</p>
                 </li>
               ))}
             </ol>
