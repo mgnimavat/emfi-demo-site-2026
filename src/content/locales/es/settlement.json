@@ -74,27 +74,15 @@
     }
   },
   "accountAnimation": {
-    "sharedTitle": "Cuenta compartida",
-    "dedicatedTitle": "Cuentas separadas",
     "clientA": "Cliente A",
     "clientB": "Cliente B",
     "pool": "Fondo común",
-    "accountA": "Cuenta de A",
-    "accountB": "Cuenta de B",
+    "accountA": "Cuenta del cliente A en Euroclear",
+    "accountB": "Cuenta del cliente B en Euroclear",
     "delivery": "Entrega de B",
-    "sharedCaptions": [
-      "Llegan los valores de A. La obligación de entrega de B está pendiente.",
-      "La cuenta compartida utiliza los valores de A para la entrega de B.",
-      "Se cumple la entrega de B; la obligación de A puede seguir pendiente."
-    ],
-    "dedicatedCaptions": [
-      "Los valores de cada cliente entran en su propia cuenta.",
-      "Cada entrega utiliza los valores del cliente correspondiente.",
-      "A entrega sus valores. B entrega los suyos."
-    ],
-    "deliveryA": "Entrega de A",
-    "pending": "Obligación pendiente",
-    "delivered": "Entregado"
+    "securities": "Valores",
+    "sharedCaption": "Como la cuenta es compartida, la entrega del cliente B usa 30 unidades del cliente A.",
+    "dedicatedCaption": "Cada cliente usa sus propios valores."
   },
   "questionnaire": {
     "title": "¿Cómo se compara su estructura actual?",

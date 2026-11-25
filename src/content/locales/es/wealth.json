@@ -84,16 +84,16 @@
     },
     "fund": {
       "titleLines": [
-        "Un fondo es más",
-        "que una cartera."
+        "Gestión patrimonial"
       ],
-      "lead": "La estrategia de inversión es solo una parte de un fondo. La estructura jurídica, la organización de las carteras, la administración, la auditoría y la supervisión legal también forman parte del marco operativo.",
+      "lead": "Un fondo es más que una cartera. La estructura jurídica, la organización de las carteras, la administración, la auditoría y la supervisión legal forman parte de su marco operativo.",
       "archive": {
         "titleLines": [
           "Un fondo es",
           "más que una",
           "cartera."
         ],
+        "lead": "La estrategia de inversión es solo una parte de un fondo. La estructura jurídica, la organización de las carteras, la administración, la auditoría y la supervisión legal también forman parte del marco operativo.",
         "body": "EMFI Fund SPC es una sociedad de carteras segregadas de las Islas Caimán diseñada para albergar distintas carteras de inversión. Cada cartera opera conforme a su mandato de inversión y documentos de gobierno, con los nombramientos y acuerdos de proveedores correspondientes establecidos en la documentación del fondo."
       },
       "providersTitle": "Proveedores de servicios",
@@ -132,9 +132,8 @@
     },
     "mandate": {
       "titleLines": [
-        "La estructura",
-        "detrás de",
-        "la estrategia."
+        "La estructura detrás",
+        "de la estrategia."
       ],
       "body": "La gestión patrimonial comienza con el mandato de inversión, no con un producto estándar. La cartera debe reflejar los objetivos, parámetros de riesgo, necesidades de liquidez y restricciones del cliente.",
       "steps": [

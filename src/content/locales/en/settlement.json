@@ -74,27 +74,15 @@
     }
   },
   "accountAnimation": {
-    "sharedTitle": "Shared account",
-    "dedicatedTitle": "Separate client accounts",
     "clientA": "Client A",
     "clientB": "Client B",
     "pool": "Shared pool",
-    "accountA": "A’s account",
-    "accountB": "B’s account",
+    "accountA": "Euroclear Client A Account",
+    "accountB": "Euroclear Client B Account",
     "delivery": "B’s delivery",
-    "sharedCaptions": [
-      "A’s securities arrive. B’s delivery obligation is pending.",
-      "The shared pool uses A’s securities for B’s delivery.",
-      "B’s delivery is met; A’s obligation can remain pending."
-    ],
-    "dedicatedCaptions": [
-      "Each client’s securities enter their own account.",
-      "Each delivery uses that client’s own securities.",
-      "A delivers A’s securities. B delivers B’s."
-    ],
-    "deliveryA": "A’s delivery",
-    "pending": "Obligation pending",
-    "delivered": "Delivered"
+    "securities": "Securities",
+    "sharedCaption": "Because the account is shared, Client B’s delivery uses 30 units from Client A.",
+    "dedicatedCaption": "Each client uses their own securities."
   },
   "questionnaire": {
     "title": "How does your current set-up measure up.",
@@ -278,7 +266,7 @@
       "Cross Border.",
       "Not Cross Settle."
     ],
-    "body": "In a shared omnibus account, securities bought for one client can be used to meet another client’s delivery. For larger clients, we can open dedicated Euroclear accounts so your securities stay identified as yours."
+    "body": "In a shared omnibus account, one client’s securities can settle another client’s trade. We can open dedicated Euroclear accounts for larger clients to keep their securities separate."
   },
   "serviceSections": [
     {
@@ -287,7 +275,7 @@
         "Cross Border.",
         "Not Cross Settle."
       ],
-      "lead": "International securities may need to move between different depositories. Securities belonging to different clients should not cross between unrelated settlement obligations.",
+      "lead": "International securities can move between depositories.",
       "panels": [
         {
           "id": "shared",

@@ -140,7 +140,7 @@ export const WealthServiceHero = ({ copy }: { copy: WealthCopy['redesign']['hero
         <div className={styles.stage}>
           <h1 id="wealth-heading" className={styles.title}>{copy.title}</h1>
           <div className={styles.summary}>
-            <p className={styles.description}>{copy.body}</p>
+            <p className={styles.description}>{confirmed ? copy.body : null}</p>
             <div className={styles.ranges} role="group" aria-label={copy.rangeLabel} inert={!confirmed}>
               {fundPositionRanges.map((option, index) => (
                 <button key={option} ref={range === option ? activeRangeRef : undefined}

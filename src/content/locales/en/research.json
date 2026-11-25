@@ -168,6 +168,7 @@
   },
   "executionVenues": {
     "title": "Execution",
+    "venuesTitle": "Execution Venues",
     "subtitle": "Execution across fixed income platforms and selected venues.",
     "body": "Execution across relevant markets and securities, supported by specialist dealing relationships and the technology to coordinate the trade through the post-trade process."
   },

@@ -49,6 +49,7 @@
 .description {
   position: relative;
   z-index: 2;
+  min-block-size: 1lh;
   max-inline-size: 65ch;
   margin: 0;
   color: var(--text-secondary);

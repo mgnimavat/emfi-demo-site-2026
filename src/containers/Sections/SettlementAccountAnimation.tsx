@@ -1,243 +1,169 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type RefObject } from 'react';
+import { useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from 'react';
 import { useAnimationFrame, useInView } from 'framer-motion';
-import { Check, Clock3, Landmark, TriangleAlert, UserRound } from 'lucide-react';
-import { directPaceScale, getDirectRouteDuration } from '@/components/emfi-sections/values';
+import { ArrowRight, ArrowRightLeft, Check, LockKeyhole, TriangleAlert } from 'lucide-react';
 import type { SettlementCopy } from '@/lib/i18n/service-dictionaries';
 import {
-  getSettlementAnimationFrame,
-  getSettlementComparisonFrame,
-  settlementAnimationTiming,
-  settlementLayouts,
-  type SettlementOrientation,
+  getSettlementChapterFrame,
+  nextSettlementChapter,
+  settlementChapterDuration,
+  type SettlementChapter,
 } from '@/lib/settlement-account-animation';
 import styles from './SettlementAccountAnimation.module.css';
-import type { SettlementStationIcon } from './settlement-station-models';
 
 type AnimationCopy = SettlementCopy['accountAnimation'];
-type Model = 'shared' | 'separate';
-type Owner = 'A' | 'B';
-type Point = readonly [number, number];
-type TokenRef = RefObject<HTMLDivElement | null>;
-type Layout = (typeof settlementLayouts)[SettlementOrientation];
-type Frame = ReturnType<typeof getSettlementComparisonFrame>;
+type Frame = ReturnType<typeof getSettlementChapterFrame>;
 
-const stationFallbacks = {
-  client: UserRound,
-  bank: Landmark,
-  pending: Clock3,
-  complete: Check,
-} as const;
+const sharedDelivery = { own: 70, cross: 30 };
+const sharedDeliveryStyle = {
+  '--own-share': sharedDelivery.own / (sharedDelivery.own + sharedDelivery.cross),
+} as CSSProperties;
 
-const loopDuration = getDirectRouteDuration(directPaceScale('home12'));
-const modelDuration = loopDuration / 2;
-const completedElapsed = settlementAnimationTiming.scene * 2;
-
-const subscribeToMedia = (query: string) => (onChange: () => void) => {
-  const media = window.matchMedia(query);
+const reducedMotionQuery = '(prefers-reduced-motion: reduce)';
+const subscribeToReducedMotion = (onChange: () => void) => {
+  const media = window.matchMedia(reducedMotionQuery);
   media.addEventListener('change', onChange);
   return () => media.removeEventListener('change', onChange);
 };
-
-const compactQuery = '(max-width: 699px)';
-const reducedMotionQuery = '(prefers-reduced-motion: reduce)';
-const subscribeToLayout = subscribeToMedia(compactQuery);
-const subscribeToReducedMotion = subscribeToMedia(reducedMotionQuery);
-const getOrientation = (): SettlementOrientation => window.matchMedia(compactQuery).matches ? 'vertical' : 'horizontal';
-const getServerOrientation = (): SettlementOrientation => 'horizontal';
 const getReducedMotion = () => window.matchMedia(reducedMotionQuery).matches;
 const getServerReducedMotion = () => false;
 
-const getFrame = (elapsed: number, orientation: SettlementOrientation) =>
-  getSettlementComparisonFrame(elapsed, loopDuration, orientation);
-
-const getTokenOpacity = (frame: Frame, owner: Owner) =>
-  (owner === 'A' || frame.dedicated) ? frame.opacity : 0;
-
-const plotSize = (layout: Layout): Point => {
-  const [, , width, height] = layout.viewBox.split(' ').map(Number);
-  return [width, height];
+const paintTiles = (board: HTMLDivElement | null, frame: Frame) => {
+  if (!board) return;
+  board.style.setProperty('--first-tile', frame.firstTile.toFixed(4));
+  board.style.setProperty('--second-tile', frame.secondTile.toFixed(4));
 };
 
-const asPercent = (coordinate: number, extent: number) => `${(coordinate / extent * 100).toFixed(3)}%`;
+interface AccountCardProps {
+  side: 'source' | 'target';
+  tone?: 'navy';
+  title: string;
+  children: ReactNode;
+}
 
-const positionStyle = ([x, y]: Point, [width, height]: Point) => ({
-  '--position-x': asPercent(x, width),
-  '--position-y': asPercent(y, height),
-}) as CSSProperties;
-
-const moveToken = (ref: TokenRef, [x, y]: Point, [width, height]: Point, opacity: number) => {
-  const token = ref.current;
-  if (!token) return;
-  token.style.setProperty('--position-x', asPercent(x, width));
-  token.style.setProperty('--position-y', asPercent(y, height));
-  token.style.opacity = opacity.toFixed(3);
-};
-
-const paintFrame = (tokenA: TokenRef, tokenB: TokenRef, frame: Frame, size: Point) => {
-  moveToken(tokenA, frame.dedicated ? frame.dedicatedA : frame.sharedA, size, getTokenOpacity(frame, 'A'));
-  moveToken(tokenB, frame.dedicatedB, size, getTokenOpacity(frame, 'B'));
-};
-
-const SecurityBadge = ({ owner }: { owner: Owner }) => (
-  <span className={styles.badge} data-owner={owner} aria-hidden="true">{owner}</span>
-);
-
-const StationModel = ({ icon, owner }: { icon: SettlementStationIcon; owner?: Owner }) => {
-  const canvas = useRef<HTMLCanvasElement>(null);
-  const Fallback = stationFallbacks[icon];
-
-  useEffect(() => {
-    const element = canvas.current;
-    if (!element) return;
-
-    let current = true;
-    delete element.dataset.rendered;
-    void import('./settlement-station-models')
-      .then(({ paintStationModel }) => {
-        if (current && paintStationModel(element, icon, owner)) element.dataset.rendered = 'true';
-      })
-      .catch(() => {});
-
-    return () => { current = false; };
-  }, [icon, owner]);
-
-  return (
-    <span className={styles.stationModel} aria-hidden="true">
-      <canvas ref={canvas} className={styles.stationIcon} />
-      <Fallback className={styles.stationFallback} />
-    </span>
-  );
-};
-
-const Station = ({ node, size, label, icon, owner, status, tone }: {
-  node: { x: number; y: number };
-  size: Point;
-  label: string;
-  icon: SettlementStationIcon;
-  owner?: Owner;
-  status?: string;
-  tone?: 'warning' | 'complete';
-}) => (
-  <div className={styles.station} style={positionStyle([node.x, node.y], size)} data-owner={owner}>
-    <StationModel icon={icon} owner={owner} />
-    <span className={styles.stationLabel}>{label}</span>
-    {status && <span className={styles.stationStatus} data-tone={tone}>{status}</span>}
+const AccountCard = ({ side, tone, title, children }: AccountCardProps) => (
+  <div className={styles.card} data-side={side} data-tone={tone}>
+    <div className={styles.cardTitle}>{title}</div>
+    {children}
   </div>
 );
 
-const SecurityToken = ({ owner, tokenRef, position, size, opacity }: {
-  owner: Owner; tokenRef: TokenRef; position: Point; size: Point; opacity: number;
+const Slot = ({ children, wide = false }: { children?: ReactNode; wide?: boolean }) => (
+  <div className={styles.slot} data-wide={wide}>{children}</div>
+);
+
+const SecurityTile = ({ label, amount, tone, locked }: {
+  label: string; amount?: number; tone?: 'navy' | 'warning'; locked?: boolean;
 }) => (
-  <div ref={tokenRef} className={styles.tokenCarrier} aria-hidden="true"
-    style={{ ...positionStyle(position, size), opacity }}>
-    <SecurityBadge owner={owner} />
+  <div className={styles.tile} data-tone={tone}>
+    {locked && <LockKeyhole size={13} aria-hidden="true" />}
+    <span>{label}</span>
+    {amount !== undefined && <b>{amount}</b>}
   </div>
 );
 
-const AccountDiagram = ({ layout, copy, dedicated, delivered, frame, tokenA, tokenB }: {
-  layout: Layout; copy: AnimationCopy; dedicated: boolean; delivered: boolean;
-  frame: Frame; tokenA: TokenRef; tokenB: TokenRef;
-}) => {
-  const { clients, accounts, pool, deliveries } = layout;
-  const size = plotSize(layout);
-  const deliveredA = delivered && dedicated;
+const Bridge = ({ warning = false }: { warning?: boolean }) => (
+  <div className={styles.bridge} data-warning={warning} aria-hidden="true">
+    <ArrowRight size={15} />
+  </div>
+);
 
-  return (
-    <div className={styles.canvas}>
-      <SecurityToken owner="A" tokenRef={tokenA} position={dedicated ? frame.dedicatedA : frame.sharedA}
-        size={size} opacity={getTokenOpacity(frame, 'A')} />
-      <SecurityToken owner="B" tokenRef={tokenB} position={frame.dedicatedB} size={size}
-        opacity={getTokenOpacity(frame, 'B')} />
-
-      <Station node={clients[0]} size={size} label={copy.clientA} icon="client" owner="A" />
-      <Station node={clients[1]} size={size} label={copy.clientB} icon="client" owner="B" />
-      <div className={styles.accounts} key={dedicated ? 'separate' : 'shared'}>
-        {dedicated ? (
-          <>
-            <Station node={accounts[0]} size={size} label={copy.accountA} icon="bank" owner="A" />
-            <Station node={accounts[1]} size={size} label={copy.accountB} icon="bank" owner="B" />
-          </>
-        ) : <Station node={pool} size={size} label={copy.pool} icon="bank" />}
-      </div>
-      <Station node={deliveries[0]} size={size} label={copy.deliveryA} owner="A"
-        icon={deliveredA ? 'complete' : 'pending'} status={deliveredA ? copy.delivered : copy.pending}
-        tone={deliveredA ? 'complete' : delivered ? 'warning' : undefined} />
-      <Station node={deliveries[1]} size={size} label={copy.delivery} owner="B"
-        icon={delivered ? 'complete' : 'pending'} status={delivered ? copy.delivered : copy.pending}
-        tone={delivered ? 'complete' : undefined} />
+const SharedScene = ({ copy, crossUse }: { copy: AnimationCopy; crossUse: boolean }) => (
+  <>
+    <AccountCard side="source" title={copy.pool}>
+      <Slot />
+      <Slot />
+    </AccountCard>
+    <AccountCard side="target" title={copy.delivery}>
+      <Slot />
+      <Slot />
+    </AccountCard>
+    <Bridge warning={crossUse} />
+    <div className={styles.track} data-track="own">
+      <SecurityTile label={copy.clientB} amount={sharedDelivery.own} />
     </div>
-  );
-};
+    <div className={styles.track} data-track="cross">
+      <SecurityTile label={copy.clientA} amount={sharedDelivery.cross} tone={crossUse ? 'warning' : 'navy'} />
+    </div>
+  </>
+);
 
-export const SettlementAccountAnimation = ({ copy, label }: {
-  copy: AnimationCopy;
-  label: string;
-}) => {
-  const orientation = useSyncExternalStore(subscribeToLayout, getOrientation, getServerOrientation);
+const DedicatedScene = ({ copy }: { copy: AnimationCopy }) => (
+  <>
+    <AccountCard side="source" tone="navy" title={copy.accountA}>
+      <Slot wide><SecurityTile label={copy.securities} locked /></Slot>
+    </AccountCard>
+    <AccountCard side="target" title={copy.accountB}>
+      <Slot wide><SecurityTile label={copy.securities} locked /></Slot>
+    </AccountCard>
+    <div className={styles.barrier} aria-hidden="true"><LockKeyhole size={17} /></div>
+  </>
+);
+
+const describeFrame = (chapter: SettlementChapter, { phase, delivered, crossUse }: Frame) =>
+  ({ chapter, phase, delivered, crossUse });
+
+export const SettlementAccountAnimation = ({ copy }: { copy: AnimationCopy }) => {
   const reducedMotion = useSyncExternalStore(subscribeToReducedMotion, getReducedMotion, getServerReducedMotion);
   const stage = useRef<HTMLDivElement>(null);
-  const tokenA = useRef<HTMLDivElement>(null);
-  const tokenB = useRef<HTMLDivElement>(null);
+  const board = useRef<HTMLDivElement>(null);
   const elapsed = useRef(0);
-  const [staticModel, setStaticModel] = useState<Model>('separate');
-  const [scene, setScene] = useState(() => getFrame(0, 'horizontal'));
+  const [scene, setScene] = useState(() => describeFrame('shared', getSettlementChapterFrame('shared', 0)));
   const visible = useInView(stage, { amount: 0.25 });
-  const layout = settlementLayouts[orientation];
-  const size = plotSize(layout);
-  const frame = reducedMotion
-    ? { ...getSettlementAnimationFrame(completedElapsed, orientation), dedicated: staticModel === 'separate' }
-    : scene;
-  const { phase, delivered, dedicated } = frame;
-  const activeModel = dedicated ? 'separate' : 'shared';
+  const chapter = reducedMotion ? 'shared' : scene.chapter;
+  const duration = settlementChapterDuration(chapter);
+  const { phase, delivered, crossUse } = reducedMotion ? getSettlementChapterFrame(chapter, duration) : scene;
   const running = visible && !reducedMotion;
-  const captions = dedicated ? copy.dedicatedCaptions : copy.sharedCaptions;
-  const CaptionIcon = dedicated ? Check : TriangleAlert;
+  const caption = chapter === 'shared' ? copy.sharedCaption : copy.dedicatedCaption;
+  const captionTone = crossUse ? 'warning' : delivered ? 'complete' : undefined;
+  const CaptionIcon = crossUse ? TriangleAlert : delivered ? Check : ArrowRightLeft;
 
   useLayoutEffect(() => {
-    if (reducedMotion) return;
-    paintFrame(tokenA, tokenB, getFrame(elapsed.current, orientation),
-      plotSize(settlementLayouts[orientation]));
-  }, [orientation, reducedMotion]);
+    paintTiles(board.current, getSettlementChapterFrame(chapter, reducedMotion ? duration : elapsed.current));
+  }, [chapter, duration, reducedMotion, scene]);
 
   useAnimationFrame((_time, delta) => {
     if (!running || document.hidden) return;
+
     elapsed.current += Math.min(delta, 64);
-    const next = getFrame(elapsed.current, orientation);
-    paintFrame(tokenA, tokenB, next, size);
-    if (scene.phase !== next.phase || scene.delivered !== next.delivered || scene.dedicated !== next.dedicated) {
-      setScene(next);
+    if (elapsed.current >= duration) {
+      const next = nextSettlementChapter(chapter);
+      elapsed.current = 0;
+      setScene(describeFrame(next, getSettlementChapterFrame(next, 0)));
+      return;
+    }
+
+    const frame = getSettlementChapterFrame(chapter, elapsed.current);
+    paintTiles(board.current, frame);
+    if (scene.phase !== frame.phase || scene.delivered !== frame.delivered || scene.crossUse !== frame.crossUse) {
+      setScene(describeFrame(chapter, frame));
     }
   });
 
-  const selectModel = (nextModel: Model) => {
-    elapsed.current = nextModel === 'separate' ? modelDuration : 0;
-    const first = getFrame(elapsed.current, orientation);
-    if (!reducedMotion) paintFrame(tokenA, tokenB, first, size);
-    setStaticModel(nextModel);
-    setScene(first);
-  };
-
   return (
-    <div ref={stage} className={styles.stage} data-orientation={orientation} data-phase={phase}
-      data-dedicated={dedicated} data-running={running} data-settled={delivered}>
-      <div className={styles.modes} role="group" aria-label={label}>
-        <button type="button" aria-pressed={activeModel === 'shared'} onClick={() => selectModel('shared')}>
-          {copy.sharedTitle}
-        </button>
-        <button type="button" aria-pressed={activeModel === 'separate'} onClick={() => selectModel('separate')}>
-          {copy.dedicatedTitle}
-        </button>
-      </div>
+    <div ref={stage} className={styles.stage} data-phase={phase} data-chapter={chapter}
+      data-running={running} data-settled={delivered} data-cross-use={crossUse}>
       <figure className={styles.figure}>
-        <AccountDiagram layout={layout} copy={copy} dedicated={dedicated} delivered={delivered}
-          frame={frame} tokenA={tokenA} tokenB={tokenB} />
-        <figcaption className={styles.caption} aria-live={reducedMotion ? 'polite' : 'off'}>
-          <CaptionIcon size={17} aria-hidden="true" />
-          <span>{captions[phase]}</span>
+        <div ref={board} className={styles.board} data-scene={chapter}
+          style={chapter === 'shared' ? sharedDeliveryStyle : undefined}>
+          {chapter === 'shared' && <SharedScene copy={copy} crossUse={crossUse} />}
+          {chapter === 'separate' && <DedicatedScene copy={copy} />}
+        </div>
+        <figcaption className={styles.caption} data-tone={captionTone}>
+          <CaptionIcon size={15} aria-hidden="true" />
+          <span>{caption}</span>
         </figcaption>
       </figure>
+      {reducedMotion && (
+        <figure className={styles.figure}>
+          <div className={styles.board} data-scene="separate"><DedicatedScene copy={copy} /></div>
+          <figcaption className={styles.caption} data-tone="complete">
+            <Check size={15} aria-hidden="true" />
+            <span>{copy.dedicatedCaption}</span>
+          </figcaption>
+        </figure>
+      )}
     </div>
   );
 };
