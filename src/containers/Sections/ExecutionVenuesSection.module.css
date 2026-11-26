@@ -49,7 +49,7 @@
   padding: var(--space-3);
   border: 1px solid var(--flow-from);
   border-radius: var(--radius-card);
-  background: var(--service-soft-blue, #e5eefb);
+  background: var(--service-soft-blue, var(--color-blue-25));
   text-align: center;
 }
 

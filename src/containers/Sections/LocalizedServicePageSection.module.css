@@ -5,8 +5,7 @@
   [data-wealth-variant='current'],
   [data-wealth-variant='v2']
 ) {
-  --service-soft-blue: #e5eefb;
-  --color-blue-25: var(--service-soft-blue);
+  --service-soft-blue: var(--color-blue-25);
   --bg-soft: var(--service-soft-blue);
 }
 

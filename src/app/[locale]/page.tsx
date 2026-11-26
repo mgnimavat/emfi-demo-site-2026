@@ -21,6 +21,6 @@ export const generateMetadata = async ({ params }: PageProps) => {
 const LocalizedHomePage = async ({ params }: PageProps) => {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  return <HomePageSection locale={locale} />;
+  return <HomePageSection locale={locale} nativeScroll />;
 };
 export default LocalizedHomePage;

@@ -28,10 +28,12 @@ export const getWhyPageMetadata = (page: WhyPage, locale: Locale = 'en', archive
   return { title: copy.title, description: copy.description };
 };
 
-export const LocalizedWhyPageSection = ({ page, locale = 'en', archived = false }: {
+export const LocalizedWhyPageSection = ({ page, locale = 'en', archived = false, variant }: {
   page: WhyPage;
   locale?: Locale;
   archived?: boolean;
+  /** Review variant of the Dependable page (logo carousel). */
+  variant?: 'v1';
 }) => {
   const previous = marketingDictionaries[locale];
   const current = whyPageDictionaries[locale];
@@ -47,7 +49,7 @@ export const LocalizedWhyPageSection = ({ page, locale = 'en', archived = false 
             <ResponsiveContentPage copy={current.responsive} heroCopy={previous.responsive} />
           )
         ) : archived ? <DependableOperationsPageSection copy={previous.dependable} /> : (
-          <DependableContentPage copy={current.dependable} heroCopy={previous.dependable} locale={locale} />
+          <DependableContentPage copy={current.dependable} heroCopy={previous.dependable} locale={locale} variant={variant} />
         )}
       </div>
     </ServiceLocaleProvider>

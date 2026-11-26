@@ -397,6 +397,54 @@
   flex: 1;
   min-width: 0;
 }
+/* Dependable v1: two rows of three logos per slide, previous and next slides partly in view. */
+.relationshipCarousel {
+  width: 100%;
+  min-width: 0;
+}
+.relationshipCarouselViewport {
+  position: relative;
+  overflow: hidden;
+  min-height: 320px;
+}
+.relationshipCarouselTrack {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.relationshipCarouselRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  flex: none;
+  transition: opacity .5s ease;
+}
+.relationshipCarouselRow[data-active='true'] {
+  opacity: 1;
+}
+.relationshipCarouselRow[data-active='false'] {
+  opacity: .25;
+}
+.relationshipCarouselRow > .providerItem {
+  display: flex;
+  min-width: 0;
+}
+.relationshipCarouselRow > .providerItem > .provider {
+  flex: 1;
+  min-width: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .relationshipCarouselRow { transition: none; }
+}
+@media (max-width: 599px) {
+  .relationshipCarouselRow { gap: var(--space-2); }
+  .relationshipCarouselRow > .providerItem > .provider {
+    min-height: 112px;
+    padding: var(--space-2);
+  }
+}
 .provider {
   display: grid;
   justify-items: center;
@@ -633,13 +681,13 @@ a.provider:focus-visible {
 .details[data-layout='entities'] .detailLink {
   display: inline;
   margin: 0;
-  color: #0d8f8a;
+  color: var(--color-blue-550);
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: .18em;
 }
 .details[data-layout='entities'] .detailLink:hover {
-  color: #0a6f6b;
+  color: var(--color-blue-700);
 }
 .code { display: block; margin-bottom: var(--space-2); color: var(--color-blue-550); font-size: 13px; font-weight: 700; }
 .detailLink {
@@ -959,6 +1007,77 @@ a.provider:focus-visible {
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
 }
+/* Direct Means Less: plain icon, title and text, no card box. */
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'] {
+  gap: 0;
+}
+/* Same gradient rule between items as in Client Assets. Accounted For. */
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'] .detail {
+  padding-block: clamp(1.2rem, 2.2cqi, 1.75rem);
+}
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'] .detail:first-child {
+  padding-block-start: 0;
+}
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'] .detail:last-child {
+  padding-block-end: 0;
+}
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'] .detail + .detail {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-blue-500) 45%, transparent) 18%,
+    color-mix(in srgb, var(--color-blue-200) 70%, transparent) 50%,
+    color-mix(in srgb, var(--color-blue-500) 35%, transparent) 82%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% 1px;
+}
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'] .benefitCard {
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'] .benefitCard::before,
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'] .benefitCard::after {
+  content: none;
+}
+/* Solid navy circle with a white icon above the title instead of the numbered box. */
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'] .benefitCard {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'icon'
+    'title'
+    'body';
+  row-gap: var(--space-3);
+}
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'] .detailIcon[data-outline] {
+  width: 48px;
+  height: 48px;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-blue-500);
+  color: var(--text-inverse, #fff);
+}
+.contentBand[id='direct-benefits'] .details[data-layout='benefits'] .benefitHead h3 {
+  align-self: start;
+}
+@media (hover: hover) and (pointer: fine) {
+  .contentBand[id='direct-benefits'] .details[data-layout='benefits'] .detail:is(:hover, :focus-within) .benefitCard {
+    transform: none;
+    border-color: transparent;
+    box-shadow: none;
+  }
+  .contentBand[id='direct-benefits'] .details[data-layout='benefits'] .detail:is(:hover, :focus-within) .detailIcon[data-outline] {
+    background: var(--color-blue-500);
+    transform: none;
+  }
+}
 .page[data-pillar='dependable'] .contentBand[id='client-assets'] .bandContainer {
   grid-template-columns: minmax(0, 1fr);
   gap: clamp(var(--space-5), 3.5cqi, var(--space-7));
@@ -1105,6 +1224,16 @@ a.provider:focus-visible {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
     gap: clamp(32px, 5vw, 80px);
   }
+  /* Direct Means Less: flipped, benefits on the left and headline copy on the right. */
+  .contentBand[id='direct-benefits'] .bandContainer {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  }
+  .contentBand[id='direct-benefits'] .bandIntro {
+    order: 2;
+  }
+  .contentBand[id='direct-benefits'] .bandContent {
+    order: 1;
+  }
   /* One column: headline (40%) and sub-headline (60%) share the first row; logos follow in a four-column grid. */
   .page[data-pillar='dependable'] .contentBand[id='regulation'] .bandContainer {
     align-items: start;
@@ -1123,6 +1252,21 @@ a.provider:focus-visible {
   }
   .page[data-pillar='dependable'] .contentBand[id='regulation'] .relationshipGrid {
     grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  /* v1 carousel: headline and sub-headline stacked on the left, logo slider on the right. */
+  .page[data-pillar='dependable'] .contentBand[id='regulation'][data-variant='carousel'] .bandContainer {
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: clamp(32px, 5vw, 80px);
+  }
+  .page[data-pillar='dependable'] .contentBand[id='regulation'][data-variant='carousel'] .bandIntro {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-5);
+    max-width: 32rem;
+  }
+  .page[data-pillar='dependable'] .contentBand[id='regulation'][data-variant='carousel'] .bandTitle {
+    font-size: clamp(38px, 5cqi, 72px);
   }
   .contentBand[id='dma'] .bandContainer {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);

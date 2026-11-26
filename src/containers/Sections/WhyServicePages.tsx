@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { ArrowUpRight, Check } from 'lucide-react';
+import { ArrowUpRight, Check, Layers, ShieldCheck, Workflow } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { DependablePeekSlide } from '@/components/home/emfi-sections/accountable-section';
 import { ExecutionHeroTitle } from '@/components/sections/execution/hero-title';
@@ -16,6 +16,7 @@ import { localizeHref } from '@/lib/i18n';
 import reveal from './ProviderCardReveal.module.css';
 import { responsiveTechnology } from '@/content/responsive-technology';
 import { ExecutionWorkstation } from './ExecutionWorkstation';
+import { RelationshipCarousel } from './RelationshipCarousel';
 import { SettlementDashboard } from './SettlementDashboard';
 import { SettlementHeroAnimation } from './SettlementHeroAnimation';
 import styles from './WhyServicePages.module.css';
@@ -99,13 +100,15 @@ const WhyHero = ({ headline, prefix, words, spacedLines, children }: {
   </section>
 );
 
-const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', action, actionPlacement = 'intro', children }: {
+const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', action, actionPlacement = 'intro', variant, children }: {
   id: string;
   copy: Intro;
   tone?: 'white' | 'soft' | 'navy';
   layout?: 'standard' | 'centered' | 'product' | 'split';
   action?: ReactNode;
   actionPlacement?: 'intro' | 'after';
+  /** `carousel`: headline and sub-headline on the left, logo carousel on the right. */
+  variant?: 'carousel';
   children?: ReactNode;
 }) => {
   const introAction = actionPlacement === 'intro' ? action : null;
@@ -114,7 +117,7 @@ const ContentBand = ({ id, copy, tone = 'white', layout = 'standard', action, ac
 
   return (
     <section id={id} className={`${band.section} ${styles.contentBand}`} data-tone={tone}
-      data-layout={layout} aria-labelledby={`${id}-heading`}>
+      data-layout={layout} data-variant={variant} aria-labelledby={`${id}-heading`}>
       <div className={`${band.container} ${styles.bandContainer}`}>
         <div className={`${styles.bandIntro} ${copy.lead || copy.body ? band.introduction : ''}`}>
           <ExecutionReveal>
@@ -150,8 +153,10 @@ const splitDetailLead = (body: string) => {
   return match ? { lead: match[1], rest: match[3] } : null;
 };
 
-const Details = ({ items, layout = 'cards', logos, emphasizeLead = false }: {
+const Details = ({ items, layout = 'cards', logos, emphasizeLead = false, icons }: {
   items: readonly Detail[];
+  /** Outline icons shown above the title (benefits layout), matched to items by index. */
+  icons?: readonly ReactNode[];
   layout?: 'cards' | 'benefits' | 'ledger' | 'entities' | 'rules';
   logos?: Readonly<Partial<Record<string, DetailLogo>>>;
   emphasizeLead?: boolean;
@@ -197,8 +202,9 @@ const Details = ({ items, layout = 'cards', logos, emphasizeLead = false }: {
             ) : (
               <div className={layout === 'benefits' ? styles.benefitHead : undefined}>
                 {layout === 'benefits' ? (
-                  <span className={styles.detailIcon} data-code={item.code ? '' : undefined} aria-hidden="true">
-                    {item.code || String(index + 1).padStart(2, '0')}
+                  <span className={styles.detailIcon} data-code={item.code ? '' : undefined}
+                    data-outline={icons?.[index] ? '' : undefined} aria-hidden="true">
+                    {icons?.[index] ?? (item.code || String(index + 1).padStart(2, '0'))}
                   </span>
                 ) : item.code ? (
                   <span className={styles.code}>{item.code}</span>
@@ -390,6 +396,29 @@ const RelationshipProviders = ({ items }: { items: readonly Detail[] }) => {
   );
 };
 
+const RelationshipCarouselProviders = ({ items }: { items: readonly Detail[] }) => {
+  const entries = items
+    .filter(({ title }) => visibleRelationshipTitles.has(title))
+    .map(({ title, body }) => ({
+      name: title,
+      body: body || undefined,
+      href: relationshipHrefs[title],
+      logo: relationshipLogos[title],
+    }));
+
+  return (
+    <ExecutionReveal className={styles.relationshipProviders}>
+      <RelationshipCarousel items={entries} />
+    </ExecutionReveal>
+  );
+};
+
+const directBenefitIcons = [
+  <Layers key="overlap" size={22} strokeWidth={1.6} />,
+  <Workflow key="complexity" size={22} strokeWidth={1.6} />,
+  <ShieldCheck key="exposure" size={22} strokeWidth={1.6} />,
+];
+
 export const DirectContentPage = ({ copy, heroCopy, locale }: {
   copy: WhyPageCopy['direct']; heroCopy: Pick<DirectCopy, 'headline' | 'heroTitle'>; locale: Locale;
 }) => (
@@ -405,7 +434,7 @@ export const DirectContentPage = ({ copy, heroCopy, locale }: {
         </Button>
       )}
     >
-      <Details items={copy.benefits.items} layout="benefits" />
+      <Details items={copy.benefits.items} layout="benefits" icons={directBenefitIcons} />
     </ContentBand>
     <ContentBand id="infrastructure" copy={copy.infrastructure}>
       <InfrastructureProviders
@@ -471,8 +500,10 @@ export const ResponsiveContentPage = ({ copy, heroCopy }: {
   </div>
 );
 
-export const DependableContentPage = ({ copy, heroCopy, locale }: {
+export const DependableContentPage = ({ copy, heroCopy, locale, variant }: {
   copy: WhyPageCopy['dependable']; heroCopy: Pick<DependableCopy, 'headline' | 'fixed' | 'phrases'>; locale: Locale;
+  /** `v1` shows the Regulated / Audited / Connected logos in a carousel. */
+  variant?: 'v1';
 }) => (
   <div className={styles.page} data-pillar="dependable">
     <WhyHero headline={heroCopy.headline} prefix={heroCopy.fixed} words={heroCopy.phrases} spacedLines>
@@ -491,8 +522,11 @@ export const DependableContentPage = ({ copy, heroCopy, locale }: {
     >
       <Details items={copy.assets.items} layout="rules" />
     </ContentBand>
-    <ContentBand id="regulation" copy={copy.relationships} tone="white">
-      <RelationshipProviders items={copy.relationships.items} />
+    <ContentBand id="regulation" copy={copy.relationships} tone="white"
+      variant={variant === 'v1' ? 'carousel' : undefined}>
+      {variant === 'v1'
+        ? <RelationshipCarouselProviders items={copy.relationships.items} />
+        : <RelationshipProviders items={copy.relationships.items} />}
     </ContentBand>
     <ContentBand
       id="fees"

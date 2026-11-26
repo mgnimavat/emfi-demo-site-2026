@@ -1348,7 +1348,8 @@ function ViewPanel({ view, apple = false, square = false, trimChrome = false, ap
   }
 }
 
-const balancesGradient = "linear-gradient(165deg, #f5f9fd 0%, #d7e6f8 100%)";
+// Flat theme light blue (#E6EFFB); a gradient layer is required because it is combined with the border gradient below.
+const balancesGradient = "linear-gradient(var(--color-blue-25), var(--color-blue-25))";
 const ctaBorderGradient = "linear-gradient(90deg, #a7c4fd 0%, #a1bcf3 10%, #9ab5ea 20%, #94aee1 30%, #90a7d9 40%, #899fd0 50%, #75a5c9 60%, #5aafc3 70%, #42b7bc 80%, #2dc0b5 90%, #1ecaae 100%)";
 const quietBorder = "linear-gradient(90deg, rgb(186 214 246 / 80%), rgb(168 206 220 / 55%))";
 const phoneViews = new Set<View>(["FloatingPhones", "PhoneDevices"]);

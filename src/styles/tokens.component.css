@@ -14,7 +14,7 @@
   --card-bg: var(--bg-muted);
   --card-border: var(--border-default);
   --card-radius: var(--radius-card);
-  --provider-card-bg: #dce8f8;
+  --provider-card-bg: var(--color-blue-25);
 
   --input-bg: var(--bg-page);
   --input-border: var(--border-default);
