@@ -1,7 +1,9 @@
 .page:is(
   [data-research-variant='current'],
   [data-settlement-variant='archive'],
-  [data-wealth-variant='current']
+  [data-settlement-variant='v2'],
+  [data-wealth-variant='current'],
+  [data-wealth-variant='v2']
 ) {
   --service-soft-blue: #e5eefb;
   --color-blue-25: var(--service-soft-blue);

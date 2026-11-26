@@ -9,7 +9,9 @@ import styles from './SettlementServiceSections.module.css';
 const workflowIcons = { upload: FileUp, extract: ScanText, validate: ShieldCheck, process: Workflow };
 const isWorkflowStep = (id: string): id is keyof typeof workflowIcons => id in workflowIcons;
 
-const ArchiveCrossBorder = ({ lead, copy }: { lead: string; copy: SettlementCopy }) => {
+const ArchiveCrossBorder = ({ lead, copy, showFullDeposits }: {
+  lead: string; copy: SettlementCopy; showFullDeposits: boolean;
+}) => {
   const { titleLines, body } = copy.crossBorderArchive;
 
   return (
@@ -22,8 +24,8 @@ const ArchiveCrossBorder = ({ lead, copy }: { lead: string; copy: SettlementCopy
           </h2>
           <p className={styles.archiveLead}>{lead} {body}</p>
         </ExecutionReveal>
-        <div className={styles.archiveAnimation}>
-          <SettlementAccountAnimation copy={copy.accountAnimation} />
+        <div className={styles.archiveAnimation} data-full-deposits={showFullDeposits || undefined}>
+          <SettlementAccountAnimation copy={copy.accountAnimation} showFullDeposits={showFullDeposits} />
         </div>
       </div>
     </section>
@@ -51,7 +53,9 @@ const TradeEntryMethods = ({ section, archive = false }: { section: ServiceSecti
   ) : null
 );
 
-const ArchiveWorkflow = ({ section, copy }: { section: ServiceSection; copy: SettlementCopy }) => (
+const ArchiveWorkflow = ({ section, copy, showLinkedTradeCards }: {
+  section: ServiceSection; copy: SettlementCopy; showLinkedTradeCards: boolean;
+}) => (
   <section id={section.id} className={`${styles.section} ${styles.archiveSection} ${styles.archiveWorkflow}`}
     aria-labelledby={`${section.id}-heading`}>
     <div className={`${styles.container} ${styles.archiveLayout}`}>
@@ -64,7 +68,8 @@ const ArchiveWorkflow = ({ section, copy }: { section: ServiceSection; copy: Set
       </ExecutionReveal>
       <div className={styles.archiveAnimation}>
         {section.id === 'linked-settlement' ? (
-          <SettlementLinkedAnimation panels={section.panels} copy={copy.linkedAnimation} layout="vertical" />
+          <SettlementLinkedAnimation panels={section.panels} copy={copy.linkedAnimation}
+            layout="vertical" tradeCards={showLinkedTradeCards} />
         ) : (
           <SettlementUploadAnimation copy={copy.uploadAnimation} />
         )}
@@ -73,14 +78,14 @@ const ArchiveWorkflow = ({ section, copy }: { section: ServiceSection; copy: Set
   </section>
 );
 
-export const SettlementServiceSections = ({ copy, archive = false }: {
-  copy: SettlementCopy; archive?: boolean;
+export const SettlementServiceSections = ({ copy, archive = false, showFullDeposits = false, showLinkedTradeCards = false }: {
+  copy: SettlementCopy; archive?: boolean; showFullDeposits?: boolean; showLinkedTradeCards?: boolean;
 }) => (
   <div id="settlement" className={styles.sections}>
     {copy.serviceSections.map((section) => archive && section.id === 'cross-border' ? (
-      <ArchiveCrossBorder key={section.id} lead={section.lead} copy={copy} />
+      <ArchiveCrossBorder key={section.id} lead={section.lead} copy={copy} showFullDeposits={showFullDeposits} />
     ) : archive && (section.id === 'linked-settlement' || section.id === 'trade-upload') ? (
-      <ArchiveWorkflow key={section.id} section={section} copy={copy} />
+      <ArchiveWorkflow key={section.id} section={section} copy={copy} showLinkedTradeCards={showLinkedTradeCards} />
     ) : (
       <section
         key={section.id}

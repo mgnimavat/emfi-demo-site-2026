@@ -1,5 +1,6 @@
 {
   "title": "Settlement & Custody",
+  "heroCta": "Explore More",
   "description": "Institutional custody and settlement services, supported by technology that brings greater visibility to positions, balances and transactions.",
   "heroLines": [
     "Settlement &",
@@ -20,6 +21,10 @@
   },
   "linkedAnimation": {
     "label": "Illustrative settlement flow",
+    "fundingInterest": {
+      "title": "You pay interest on the funding gap",
+      "body": "The buy has settled and the sale proceeds haven’t arrived. You pay interest on the cash you borrow to cover the gap."
+    },
     "buy": "BUY",
     "sell": "SELL",
     "exposure": "Financing interest may accrue",

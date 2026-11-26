@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { parseFundPositionData } from '../src/lib/fund-position-data.ts';
+import { isFundPositionSeries, parseFundPositionData } from '../src/lib/fund-position-data.ts';
 
 test('chart points use settled values and preserve the sorted feed dates', () => {
   const first = Date.UTC(2026, 10, 18);
@@ -21,6 +21,17 @@ test('chart points use settled values and preserve the sorted feed dates', () =>
 test('invalid or incomplete feeds cannot produce a chart', () => {
   assert.throws(() => parseFundPositionData({ data: [] }));
   assert.throws(() => parseFundPositionData({ data: [{ date: 1, settled: 1 }, { date: 2, traded: 1 }] }));
+});
+
+test('the chart accepts ordered normalized points and rejects invalid responses', () => {
+  const first = { date: Date.UTC(2026, 10, 18), value: 0 };
+  const second = { date: Date.UTC(2026, 10, 19), value: 1 };
+  assert.equal(isFundPositionSeries([first, second]), true);
+  assert.equal(isFundPositionSeries([first]), false);
+  assert.equal(isFundPositionSeries([second, first]), false);
+  assert.equal(isFundPositionSeries([first, first]), false);
+  assert.equal(isFundPositionSeries([first, { ...second, value: 1.1 }]), false);
+  assert.equal(isFundPositionSeries([first, { ...second, date: Infinity }]), false);
 });
 
 test('the five-year window trims older observations before normalizing', () => {

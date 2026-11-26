@@ -1,5 +1,6 @@
 {
   "title": "Liquidación y custodia",
+  "heroCta": "Explorar más",
   "description": "Servicios institucionales de custodia y liquidación, respaldados por tecnología que aporta mayor visibilidad a posiciones, saldos y operaciones.",
   "heroLines": [
     "Liquidación y",
@@ -20,6 +21,10 @@
   },
   "linkedAnimation": {
     "label": "Flujo de liquidación ilustrativo",
+    "fundingInterest": {
+      "title": "Paga intereses por la diferencia de financiación",
+      "body": "La compra ya se ha liquidado y aún no ha recibido el importe de la venta. Paga intereses por el efectivo que toma prestado para cubrir la diferencia."
+    },
     "buy": "COMPRA",
     "sell": "VENTA",
     "exposure": "Pueden acumularse intereses de financiación",

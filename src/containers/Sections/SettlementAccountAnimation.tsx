@@ -16,6 +16,7 @@ type AnimationCopy = SettlementCopy['accountAnimation'];
 type Frame = ReturnType<typeof getSettlementChapterFrame>;
 
 const sharedDelivery = { own: 70, cross: 30 };
+const fullDeposit = 100;
 const sharedDeliveryStyle = {
   '--own-share': sharedDelivery.own / (sharedDelivery.own + sharedDelivery.cross),
 } as CSSProperties;
@@ -33,6 +34,7 @@ const paintTiles = (board: HTMLDivElement | null, frame: Frame) => {
   if (!board) return;
   board.style.setProperty('--first-tile', frame.firstTile.toFixed(4));
   board.style.setProperty('--second-tile', frame.secondTile.toFixed(4));
+  board.style.setProperty('--deposit-progress', frame.depositProgress.toFixed(4));
 };
 
 interface AccountCardProps {
@@ -49,8 +51,10 @@ const AccountCard = ({ side, tone, title, children }: AccountCardProps) => (
   </div>
 );
 
-const Slot = ({ children, wide = false }: { children?: ReactNode; wide?: boolean }) => (
-  <div className={styles.slot} data-wide={wide}>{children}</div>
+const Slot = ({ children, wide = false, deposit = false }: {
+  children?: ReactNode; wide?: boolean; deposit?: boolean;
+}) => (
+  <div className={styles.slot} data-wide={wide} data-deposit={deposit || undefined}>{children}</div>
 );
 
 const SecurityTile = ({ label, amount, tone, locked }: {
@@ -63,13 +67,15 @@ const SecurityTile = ({ label, amount, tone, locked }: {
   </div>
 );
 
-const Bridge = ({ warning = false }: { warning?: boolean }) => (
+const Bridge = ({ warning = false, showIcon }: { warning?: boolean; showIcon: boolean }) => (
   <div className={styles.bridge} data-warning={warning} aria-hidden="true">
-    <ArrowRight size={15} />
+    {showIcon && <ArrowRight size={15} />}
   </div>
 );
 
-const SharedScene = ({ copy, crossUse }: { copy: AnimationCopy; crossUse: boolean }) => (
+const SharedScene = ({ copy, crossUse, showIcon }: {
+  copy: AnimationCopy; crossUse: boolean; showIcon: boolean;
+}) => (
   <>
     <AccountCard side="source" title={copy.pool}>
       <Slot />
@@ -79,7 +85,7 @@ const SharedScene = ({ copy, crossUse }: { copy: AnimationCopy; crossUse: boolea
       <Slot />
       <Slot />
     </AccountCard>
-    <Bridge warning={crossUse} />
+    <Bridge warning={crossUse} showIcon={showIcon} />
     <div className={styles.track} data-track="own">
       <SecurityTile label={copy.clientB} amount={sharedDelivery.own} />
     </div>
@@ -89,22 +95,30 @@ const SharedScene = ({ copy, crossUse }: { copy: AnimationCopy; crossUse: boolea
   </>
 );
 
-const DedicatedScene = ({ copy }: { copy: AnimationCopy }) => (
+const DedicatedScene = ({ copy, showFullDeposits = false }: { copy: AnimationCopy; showFullDeposits?: boolean }) => (
   <>
     <AccountCard side="source" tone="navy" title={copy.accountA}>
-      <Slot wide><SecurityTile label={copy.securities} locked /></Slot>
+      <Slot wide deposit={showFullDeposits}>
+        <SecurityTile label={copy.securities} amount={showFullDeposits ? fullDeposit : sharedDelivery.cross}
+          locked={!showFullDeposits} />
+      </Slot>
     </AccountCard>
     <AccountCard side="target" title={copy.accountB}>
-      <Slot wide><SecurityTile label={copy.securities} locked /></Slot>
+      <Slot wide deposit={showFullDeposits}>
+        <SecurityTile label={copy.securities} amount={showFullDeposits ? fullDeposit : sharedDelivery.own}
+          locked={!showFullDeposits} />
+      </Slot>
     </AccountCard>
-    <div className={styles.barrier} aria-hidden="true"><LockKeyhole size={17} /></div>
+    <div className={styles.barrier} aria-hidden="true">{!showFullDeposits && <LockKeyhole size={17} />}</div>
   </>
 );
 
 const describeFrame = (chapter: SettlementChapter, { phase, delivered, crossUse }: Frame) =>
   ({ chapter, phase, delivered, crossUse });
 
-export const SettlementAccountAnimation = ({ copy }: { copy: AnimationCopy }) => {
+export const SettlementAccountAnimation = ({ copy, showFullDeposits = false }: {
+  copy: AnimationCopy; showFullDeposits?: boolean;
+}) => {
   const reducedMotion = useSyncExternalStore(subscribeToReducedMotion, getReducedMotion, getServerReducedMotion);
   const stage = useRef<HTMLDivElement>(null);
   const board = useRef<HTMLDivElement>(null);
@@ -143,23 +157,26 @@ export const SettlementAccountAnimation = ({ copy }: { copy: AnimationCopy }) =>
 
   return (
     <div ref={stage} className={styles.stage} data-phase={phase} data-chapter={chapter}
-      data-running={running} data-settled={delivered} data-cross-use={crossUse}>
+      data-running={running} data-settled={delivered} data-cross-use={crossUse}
+      data-full-deposits={showFullDeposits || undefined}>
       <figure className={styles.figure}>
         <div ref={board} className={styles.board} data-scene={chapter}
           style={chapter === 'shared' ? sharedDeliveryStyle : undefined}>
-          {chapter === 'shared' && <SharedScene copy={copy} crossUse={crossUse} />}
-          {chapter === 'separate' && <DedicatedScene copy={copy} />}
+          {chapter === 'shared' && <SharedScene copy={copy} crossUse={crossUse} showIcon={!showFullDeposits} />}
+          {chapter === 'separate' && <DedicatedScene copy={copy} showFullDeposits={showFullDeposits} />}
         </div>
         <figcaption className={styles.caption} data-tone={captionTone}>
-          <CaptionIcon size={15} aria-hidden="true" />
+          {!showFullDeposits && <CaptionIcon size={15} aria-hidden="true" />}
           <span>{caption}</span>
         </figcaption>
       </figure>
       {reducedMotion && (
         <figure className={styles.figure}>
-          <div className={styles.board} data-scene="separate"><DedicatedScene copy={copy} /></div>
+          <div className={styles.board} data-scene="separate">
+            <DedicatedScene copy={copy} showFullDeposits={showFullDeposits} />
+          </div>
           <figcaption className={styles.caption} data-tone="complete">
-            <Check size={15} aria-hidden="true" />
+            {!showFullDeposits && <Check size={15} aria-hidden="true" />}
             <span>{copy.dedicatedCaption}</span>
           </figcaption>
         </figure>

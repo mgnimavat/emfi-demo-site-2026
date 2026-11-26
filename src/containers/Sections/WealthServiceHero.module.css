@@ -308,6 +308,101 @@
   padding: var(--hero-inset);
 }
 
+.stage[data-layout='split'] {
+  grid-template: 'intro chart' auto / minmax(0, 1fr) minmax(0, 1fr);
+  align-content: center;
+  column-gap: clamp(var(--space-6), 4cqi, var(--space-8));
+  row-gap: var(--space-3);
+  padding: clamp(var(--space-5), 5svh, var(--space-8)) var(--hero-inset);
+}
+
+.heroCopy {
+  grid-area: intro;
+  align-self: center;
+  z-index: 2;
+  min-inline-size: 0;
+  container-type: inline-size;
+}
+
+.stage[data-layout='split'] .title {
+  grid-area: auto;
+  margin: 0;
+  font-size: clamp(34px, 16.4cqi, 96.67px);
+  line-height: .94;
+  letter-spacing: -.05em;
+  text-wrap: balance;
+}
+
+.heroStrapline { --hero-tagline-size: clamp(20px, 9cqi, 43.5px); }
+
+.chartCard {
+  composes: surface from '../../components/sections/execution/execution-chart.module.css';
+  --chart-border: var(--chart-frame);
+  grid-area: chart;
+  display: grid;
+  grid-template: 'summary' auto 'chart' minmax(min-content, 1fr) / minmax(0, 1fr);
+  min-inline-size: 0;
+}
+
+.chartToolbar {
+  composes: toolbar from '../../components/sections/execution/execution-chart.module.css';
+  grid-area: summary;
+  justify-content: space-between;
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+}
+
+.chartTitle {
+  composes: title from '../../components/sections/execution/execution-chart.module.css';
+  margin: 0;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.chartRanges {
+  composes: segmented from '../../components/sections/execution/execution-chart.module.css';
+  flex: none;
+}
+
+.chartRanges button:focus-visible {
+  outline: 2px solid var(--color-blue-200);
+  outline-offset: 2px;
+}
+
+.cardFigure {
+  --chart-series: var(--color-blue-500);
+  --chart-area-start: var(--color-blue-200);
+  --chart-area-start-opacity: .26;
+  --chart-area-end-opacity: 0;
+  --chart-grid-line: color-mix(in srgb, var(--color-blue-100) 34%, var(--bg-page));
+  --chart-skeleton-label: var(--color-blue-50);
+  grid-area: chart;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  min-block-size: 422px;
+  margin: 0;
+}
+
+.cardFigure .chartState { background: var(--bg-page); }
+
+.cardDisclaimer {
+  padding: var(--space-2) var(--space-5) var(--space-3);
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.chartCard .overlay { padding: var(--space-3); }
+@media (max-width: 900px) {
+  .stage[data-layout='split'] {
+    grid-template: 'intro' auto 'chart' auto / minmax(0, 1fr);
+  }
+  .stage[data-layout='split'] .title { font-size: clamp(34px, 15.8cqi, 96.67px); }
+  .heroStrapline { --hero-tagline-size: clamp(20px, 7.2cqi, 43.5px); }
+}
+
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
   .section[data-confirmed='false']::before {
     background: color-mix(in srgb, var(--bg-soft) 66%, transparent);
@@ -323,6 +418,8 @@
 
 @media (max-width: 599px) {
   .summary { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  .cardFigure { min-block-size: 310px; }
+  .chartCard .chartRanges button { min-width: 36px; min-height: 32px; }
 }
 
 @media (max-width: 479px) {

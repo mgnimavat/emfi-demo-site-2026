@@ -2,7 +2,7 @@ export const settlementChapters = ['shared', 'separate'] as const;
 export type SettlementChapter = (typeof settlementChapters)[number];
 
 const sharedTiming = { duration: 4900, ownStart: 450, ownEnd: 1200, crossStart: 1500, crossEnd: 2400 };
-const separateTiming = { duration: 3900, confirmation: 650 };
+const separateTiming = { duration: 3900, depositStart: 150, confirmation: 650 };
 const chapterTimings = { shared: sharedTiming, separate: separateTiming };
 
 export const settlementChapterDuration = (chapter: SettlementChapter) => chapterTimings[chapter].duration;
@@ -24,9 +24,18 @@ export const getSettlementChapterFrame = (chapter: SettlementChapter, elapsed: n
       crossUse: elapsed >= crossStart,
       firstTile: travelProgress(elapsed, ownStart, ownEnd),
       secondTile: travelProgress(elapsed, crossStart, crossEnd),
+      depositProgress: 0,
     };
   }
 
-  const delivered = elapsed >= separateTiming.confirmation;
-  return { phase: delivered ? 2 : 0, delivered, crossUse: false, firstTile: 0, secondTile: 0 };
+  const { depositStart, confirmation } = separateTiming;
+  const delivered = elapsed >= confirmation;
+  return {
+    phase: delivered ? 2 : 0,
+    delivered,
+    crossUse: false,
+    firstTile: 0,
+    secondTile: 0,
+    depositProgress: travelProgress(elapsed, depositStart, confirmation),
+  };
 };

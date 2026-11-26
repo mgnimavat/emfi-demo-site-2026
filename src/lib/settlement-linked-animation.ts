@@ -43,3 +43,15 @@ export const getLinkedSettlementStoryProgress = (elapsed: number) => {
   if (time < outcome) return (time - sellAttempt) / (outcome - sellAttempt);
   return 1;
 };
+
+export const getLinkedSettlementTradeFill = (
+  elapsed: number,
+  { linked, progress }: Pick<ReturnType<typeof getLinkedSettlementComparisonFrame>, 'linked' | 'progress'>,
+) => {
+  if (linked) return { buy: progress, sell: progress };
+
+  const { cycle, buySettlement } = linkedSettlementTiming;
+  const fillStart = buySettlement / 4;
+  const fill = Math.min(1, Math.max(0, (elapsed % cycle - fillStart) / (buySettlement - fillStart)));
+  return { buy: fill * fill * (3 - 2 * fill), sell: 0 };
+};

@@ -29,7 +29,8 @@
         "5Y"
       ],
       "disclaimerLabel": "Aviso legal",
-      "risk": "La rentabilidad pasada no es un indicador fiable de resultados futuros. El valor de una inversión puede bajar o subir, y puede perder parte o la totalidad de su capital.",
+      "risk": "La rentabilidad pasada no es un indicador fiable de resultados futuros.",
+      "capitalRisk": "El valor de una inversión puede bajar o subir, y puede perder parte o la totalidad de su capital.",
       "marketing": "Esta página está dirigida a clientes profesionales y contrapartes elegibles. No es una oferta ni una solicitud y no se dirige a clientes minoristas, personas estadounidenses ni a jurisdicciones donde resulte ilícita. Lea los documentos de oferta del fondo antes de tomar decisiones de inversión.",
       "gate": {
         "title": "Solo para inversores profesionales",
@@ -77,6 +78,7 @@
         "ineligible": "Esta información está disponible únicamente para clientes profesionales y contrapartes elegibles."
       },
       "chartSeries": "Valor de posiciones liquidadas",
+      "chartScaleDescription": "La escala relativa va de la posición más baja observada, 0, a la más alta, 1, en el período seleccionado. Si todas las posiciones son iguales, se muestran en el punto medio.",
       "chartLoading": "Cargando datos del fondo…",
       "chartUnavailable": "Los datos del fondo no están disponibles en este momento.",
       "chartRetry": "Volver a intentar",

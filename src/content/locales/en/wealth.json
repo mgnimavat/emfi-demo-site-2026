@@ -29,7 +29,8 @@
         "5Y"
       ],
       "disclaimerLabel": "Disclaimer",
-      "risk": "Past performance is not a reliable indicator of future results. The value of an investment can fall as well as rise, and you may lose some or all of your capital.",
+      "risk": "Past performance is not a reliable indicator of future results.",
+      "capitalRisk": "The value of an investment can fall as well as rise, and you may lose some or all of your capital.",
       "marketing": "This page is for professional clients and eligible counterparties. It is not an offer or solicitation, and is not directed at retail clients, US persons or anyone in a jurisdiction where it would be unlawful. Read the fund’s offering documents before any investment decision.",
       "gate": {
         "title": "For professional investors only",
@@ -77,6 +78,7 @@
         "ineligible": "This information is for professional clients and eligible counterparties only, so it is not available to you."
       },
       "chartSeries": "Settled position value",
+      "chartScaleDescription": "The relative scale runs from the lowest observed position at 0 to the highest at 1 in the selected period. Equal positions appear at the midpoint.",
       "chartLoading": "Loading fund data…",
       "chartUnavailable": "Fund data is temporarily unavailable.",
       "chartRetry": "Try again",
