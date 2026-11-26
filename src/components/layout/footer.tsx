@@ -23,8 +23,8 @@ export function Footer() {
       </nav>)}
     </div>
     <div className="emfi-footer-legal">
-      <p>{footer.legal}</p>
       <p className="emfi-footer-legal-detail">{footer.legalDetail}</p>
+      <p>{footer.legal}</p>
     </div>
   </div></footer>;
 }

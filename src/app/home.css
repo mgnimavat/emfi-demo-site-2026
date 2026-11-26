@@ -494,13 +494,13 @@
 }
 
 .home-page [data-why-split] #accountable [class*="splitCarousel"] [class*="plainItemBdo"] [class*="plainLogo"] {
-  height: 62px;
-  max-height: 62px;
+  height: 52px;
+  max-height: 52px;
 }
 
 .home-page [data-why-split] #accountable [class*="splitCarousel"] [class*="plainItemBdo"] [class*="plainLogo"] img {
-  height: 62px !important;
-  max-height: 62px !important;
+  height: 52px !important;
+  max-height: 52px !important;
 }
 
 .home-page [data-why-split] #accountable [class*="splitCarousel"] [class*="plainItemBloomberg"] [class*="plainLogo"] {
@@ -514,6 +514,29 @@
 .home-page [data-why-split] #accountable [class*="splitCarousel"] [class*="plainItemBloomberg"] [class*="plainLogo"] img {
   height: 48px !important;
   max-height: 48px !important;
+}
+
+/* Fund and legal providers (navy tint): same sizes as the Dependable page hero. Walkers is the wide wordmark. */
+.home-page [data-why-split] #accountable [class*="splitCarousel"] [class*="plainItemNavy"] [class*="plainLogo"] {
+  height: 68px;
+  max-height: 68px;
+}
+
+.home-page [data-why-split] #accountable [class*="splitCarousel"] [class*="plainItemNavy"] [class*="plainLogo"] img {
+  height: 68px !important;
+  max-height: 68px !important;
+}
+
+.home-page [data-why-split] #accountable [class*="splitCarousel"] [class*="plainItemNavyWide"] [class*="plainLogo"] {
+  width: calc(100% + 28px);
+  margin-inline: -14px;
+  height: 92px;
+  max-height: 92px;
+}
+
+.home-page [data-why-split] #accountable [class*="splitCarousel"] [class*="plainItemNavyWide"] [class*="plainLogo"] img {
+  height: 92px !important;
+  max-height: 92px !important;
 }
 
 .home-page #accountable [class*="plainRow"] {

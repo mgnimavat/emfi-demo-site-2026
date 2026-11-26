@@ -348,6 +348,35 @@
   max-height: 86px;
 }
 
+/* Fund and legal providers: navy tint, same filter as the Regulated section. White fields drop out. */
+.splitCarousel .plainItemNavy .plainLogo img {
+  filter: url('#dependable-hero-navy');
+}
+
+/* Fund and legal providers: Apex and Dechert sized to sit with the other hero logos. */
+.splitCarousel .plainItemNavy .plainLogo {
+  height: 68px;
+  max-height: 68px;
+}
+
+.splitCarousel .plainItemNavy .plainLogo img {
+  height: 68px !important;
+  max-height: 68px !important;
+}
+
+/* Walkers is a wide wordmark: taller logo, and the logo box extends into the card padding (cards stay equal width). */
+.splitCarousel .plainItemNavyWide .plainLogo {
+  width: calc(100% + 28px);
+  margin-inline: -14px;
+  height: 92px;
+  max-height: 92px;
+}
+
+.splitCarousel .plainItemNavyWide .plainLogo img {
+  height: 92px !important;
+  max-height: 92px !important;
+}
+
 .splitCarousel .plainItemCima .plainLogo img {
   height: 86px !important;
   max-height: 86px !important;
@@ -364,13 +393,13 @@
 }
 
 .splitCarousel .plainItemBdo .plainLogo {
-  height: 62px;
-  max-height: 62px;
+  height: 52px;
+  max-height: 52px;
 }
 
 .splitCarousel .plainItemBdo .plainLogo img {
-  height: 62px !important;
-  max-height: 62px !important;
+  height: 52px !important;
+  max-height: 52px !important;
 }
 
 /* Bloomberg wordmark has a deep “g” descender — keep it clear of the card edge. */

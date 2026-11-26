@@ -114,7 +114,13 @@ type LogoItem = {
   entities?: readonly string[];
 };
 
-const slides = [
+type EvidenceSlideItem = {
+  title: string;
+  kind: "logos";
+  items: readonly LogoItem[];
+};
+
+const slides: EvidenceSlideItem[] = [
   {
     title: "Authorised by",
     kind: "logos" as const,
@@ -155,14 +161,22 @@ const slides = [
   },
 ];
 
-/** Home Dependable (split): logo slides from home-22, in display order. */
-const splitLogoSlides = [
+/** Dependable split slider (home and Dependable page hero): fund and legal providers take the middle slot. */
+const splitLogoSlides: readonly EvidenceSlideItem[] = [
   slides[1], // Audited by
-  slides[3], // Quoted in
+  {
+    title: "Fund and legal partners",
+    kind: "logos" as const,
+    items: [
+      { name: "Apex", src: "/images/fund-providers/apex.svg", width: 550, height: 514 },
+      { name: "Walkers", src: "/images/fund-providers/walkers.jpg", width: 1797, height: 614 },
+      { name: "Dechert", src: "/images/fund-providers/dechert.png", width: 1024, height: 1024 },
+    ],
+  },
   slides[2], // Connected to
-] as const;
+];
 
-function plainTitle(slide: (typeof slides)[number]) {
+function plainTitle(slide: EvidenceSlideItem) {
   return slide.title.replace(/\.$/, "");
 }
 
@@ -170,7 +184,7 @@ function logoEntities(item: LogoItem) {
   return item.entities?.length ? item.entities : null;
 }
 
-function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: (typeof slides)[number]; ink?: boolean; gray?: boolean }) {
+function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: EvidenceSlideItem; ink?: boolean; gray?: boolean }) {
   const marks = gray ? { ...brandMarkSrc, ...grayMarkSrc } : ink ? inkMarkSrc : brandMarkSrc;
   return (
     <div className={styles.plainRow}>
@@ -188,6 +202,8 @@ function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: (type
               item.name === "Cayman Islands Monetary Authority" && styles.plainItemCima,
               item.name === "Dubai Financial Services Authority" && styles.plainItemDfsa,
               item.name === "The Wall Street Journal" && styles.plainItemWsj,
+              navyProviderNames.has(item.name) && styles.plainItemNavy,
+              item.name === "Walkers" && styles.plainItemNavyWide,
               item.name === "CISI" && styles.plainItemCisi,
               item.name === "Bloomberg" && styles.plainItemBloomberg,
               entities && styles.plainItemWithEntities,
@@ -210,7 +226,7 @@ function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: (type
   );
 }
 
-function PlainEvidenceContent({ slide, ink = false, gray = false }: { slide: (typeof slides)[number]; ink?: boolean; gray?: boolean }) {
+function PlainEvidenceContent({ slide, ink = false, gray = false }: { slide: EvidenceSlideItem; ink?: boolean; gray?: boolean }) {
   const { t } = useServiceLocale();
   return (
     <>
@@ -219,8 +235,6 @@ function PlainEvidenceContent({ slide, ink = false, gray = false }: { slide: (ty
     </>
   );
 }
-
-type EvidenceSlideItem = (typeof slides)[number];
 
 /** Space between stacked logo rows. The viewport grows to keep the gap below the active row visible. */
 const LOGO_ROW_GAP = 10;
@@ -311,6 +325,21 @@ function SplitPeekCarousel({
 
   return (
     <div className={styles.splitCarousel}>
+      {/* Navy tint for the fund and legal providers; white fields drop out. Used by .plainItemNavy. */}
+      <svg
+        style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}
+        aria-hidden="true"
+        focusable="false"
+      >
+        <defs>
+          <filter id="dependable-hero-navy" colorInterpolationFilters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.6378 -2.1456 -.2166 0 3" />
+            <feComposite in2="SourceAlpha" operator="in" result="ink" />
+            <feFlood floodColor="var(--text-primary, #071832)" />
+            <feComposite in2="ink" operator="in" />
+          </filter>
+        </defs>
+      </svg>
       <h3 className={styles.splitCarouselTitle} key={activeItem.title}>
         {t(plainTitle(activeItem))}
       </h3>
@@ -354,6 +383,9 @@ function SplitPeekCarousel({
   );
 }
 
+/** Fund and legal providers in the Dependable hero are tinted navy, matching the Regulated section. */
+const navyProviderNames = new Set(["Apex", "Walkers", "Dechert"]);
+
 export function DependablePeekSlide() {
   const [index, setIndex] = useState(0);
   const reduceMotion = useReducedMotion();
@@ -377,7 +409,7 @@ export function DependablePeekSlide() {
   );
 }
 
-function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = false, open = false, ink = false, gray = false }: { slide: (typeof slides)[number]; plain?: boolean; centered?: boolean; brandLogos?: boolean; open?: boolean; ink?: boolean; gray?: boolean }) {
+function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = false, open = false, ink = false, gray = false }: { slide: EvidenceSlideItem; plain?: boolean; centered?: boolean; brandLogos?: boolean; open?: boolean; ink?: boolean; gray?: boolean }) {
   const { t } = useServiceLocale();
   const title = plain || open ? slide.title.replace(/\.$/, "") : slide.title;
   if (open) {

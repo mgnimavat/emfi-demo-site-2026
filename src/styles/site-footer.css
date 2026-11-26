@@ -17,9 +17,10 @@
 .emfi-footer-links ul { display: grid; gap: 12px; margin: 20px 0 0; padding: 0; list-style: none; }
 .emfi-site-footer .emfi-footer-links a { color: #cbd2e8; font-size: 15px; font-weight: 500; line-height: 1.6; text-decoration: none; transition: color .2s; }
 .emfi-site-footer .emfi-footer-links a:hover { color: #fff; }
-.emfi-site-footer .emfi-footer-legal { padding-top: 24px; border-top: 1px solid rgb(255 255 255 / 12%); }
-.emfi-site-footer .emfi-footer-legal p { max-width: none; margin: 0; color: #cbd2e8; font-size: 13px; font-weight: 400; line-height: 1.6; }
-.emfi-site-footer .emfi-footer-legal .emfi-footer-legal-detail { margin-top: 8px; max-width: none; color: #6f7f9c; }
+.emfi-site-footer .emfi-footer-legal { padding-top: 28px; border-top: 1px solid rgb(122 156 196 / 35%); }
+.emfi-site-footer .emfi-footer-legal p { max-width: none; margin: 0; color: #a9bbd2; font-size: 12px; font-weight: 400; line-height: 1.65; }
+.emfi-site-footer .emfi-footer-legal .emfi-footer-legal-detail { margin: 0 0 24px; max-width: 72rem; color: #a9bbd2; }
+.emfi-site-footer .emfi-footer-legal .emfi-footer-legal-detail strong { color: #c5d3e6; font-weight: 700; }
 .emfi-site-footer a:focus-visible { outline: 3px solid #8098cc; outline-offset: 5px; }
 @media (max-width: 899px) { .emfi-footer-top { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media (max-width: 599px) { .emfi-site-footer .emfi-footer-inner { width: calc(100% - 40px); } }

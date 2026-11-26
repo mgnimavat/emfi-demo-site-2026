@@ -11,9 +11,7 @@ import { BrandSign } from "@/components/brand/logo";
 import footer from "@/content/site-footer.json";
 import styles from "./chrome.module.css";
 
-const copyright = [
-  "©2026 EMFI Group Limited. All Rights Reserved.",
-] as const;
+const copyright = "© 2026 EMFI Group Limited. All rights reserved.";
 const featureColumns = [
   {
     title: "Direct.",
@@ -99,7 +97,7 @@ export const Home11Footer = ({ socialVariant = "filled" }: { socialVariant?: "fi
             <div className={styles.footerBrandCopy}>
               <p>{t("Intended for Professional Clients Only.")}</p>
               <p>{t("Not Suitable for Retail Clients or US Persons.")}</p>
-              {copyright.map((line) => <p key={line}>{t(line)}</p>)}
+              <p>{t(copyright)}</p>
             </div>
           </div>
           <div className={styles.footerFeatures}>
@@ -134,6 +132,17 @@ export const Home11Footer = ({ socialVariant = "filled" }: { socialVariant?: "fi
               <div className={styles.footerLegalSocial}>{socialList}</div>
             </nav>
           ) : null}
+        </div>
+        <div className={styles.footerBottom}>
+          <p className={styles.footerBottomLegal}>
+            <strong>EMFI Securities Limited</strong>
+            {" "}(FRN 763979) and{" "}
+            <strong>EMFI Capital Limited</strong>
+            {" "}(FRN 822389) are authorised and regulated by the Financial Conduct Authority.
+            <br />
+            <strong>EMFI Capital (DIFC) Limited</strong>
+            {" "}is authorised and regulated by the Dubai Financial Services Authority (F011663).
+          </p>
         </div>
       </div>
     </footer>

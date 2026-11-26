@@ -205,14 +205,14 @@
       "Construida para un",
       "mercado distinto"
     ],
-    "body": "EMFI nació en valores especializados y servicios financieros de mercados emergentes. A medida que evolucionaron las necesidades de los clientes, también lo hizo la firma. Hoy la cadena va de la inteligencia a la ejecución, y de la liquidación a la custodia, con fondos y tecnología construidos encima. Operamos a través de entidades legales especializadas en el Reino Unido y el Centro Financiero Internacional de Dubái, con estructuras de fondos en las Islas Caimán, para clientes profesionales y contrapartes elegibles. Cada servicio lo presta la entidad correspondiente, dentro de sus permisos."
+    "body": "EMFI nació en valores especializados y mercados emergentes. Hoy la cadena va de la inteligencia a la ejecución, y de la liquidación a la custodia, con fondos y tecnología construidos encima - para clientes profesionales y contrapartes elegibles."
   },
   "entities": {
     "title": [
       "Un grupo.",
       "Entidades especializadas"
     ],
-    "body": "Las actividades de EMFI se desarrollan a través de entidades legales distintas. La entidad que presta un servicio depende de la actividad, la jurisdicción, la clasificación del cliente y los permisos aplicables.",
+    "body": "Las actividades de EMFI se desarrollan a través de entidades legales distintas.\nLa entidad que presta un servicio depende de la actividad, la jurisdicción, la clasificación del cliente y los permisos aplicables.",
     "holding": {
       "badge": "Holding",
       "jurisdiction": "Reino Unido",

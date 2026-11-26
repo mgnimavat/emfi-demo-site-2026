@@ -121,7 +121,9 @@ export const AboutEntities = ({ copy }: { copy: AboutCopy }) => {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.34, delay: reduceMotion ? 0 : 0.05, ease }}
           >
-            {section.body}
+            {section.body.split("\n").map((line) => (
+              <span key={line} className={styles.leadLine}>{line}</span>
+            ))}
           </motion.p>
         </div>
 
