@@ -383,11 +383,19 @@
 }
 .relationshipGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
   margin: 0;
   padding: 0;
   list-style: none;
+}
+.relationshipGrid > .providerItem {
+  display: flex;
+  min-width: 0;
+}
+.relationshipGrid > .providerItem > .provider {
+  flex: 1;
+  min-width: 0;
 }
 .provider {
   display: grid;
@@ -441,10 +449,7 @@ a.provider:focus-visible {
   height: 64px;
   max-width: min(148px, 100%);
 }
-.relationshipProviders .providerBrand[data-provider='Apex'] .providerLogo,
-.relationshipProviders .providerBrand[data-provider='Dechert'] .providerLogo,
-.relationshipProviders .providerBrand[data-provider='CIMA'] .providerLogo,
-.relationshipProviders .providerBrand[data-provider='Walkers'] .providerLogo {
+.relationshipProviders .providerBrand[data-provider='CIMA'] .providerLogo {
   height: 76px;
   max-width: min(220px, 100%);
 }
@@ -456,6 +461,36 @@ a.provider:focus-visible {
 .relationshipProviders .providerBrand[data-provider='Baker Tilly'] .providerLogo {
   height: 56px;
   max-width: min(200px, 100%);
+}
+.relationshipProviders .providerBrand[data-provider='Bloomberg'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='Reuters'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='The Wall Street Journal'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='The New York Times'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider="Barron's"] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='Chatham House'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='Al Jazeera'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='France 24'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='VOA'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='El Financiero'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='Le Point'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='El Universal'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='Cbonds'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='GlobalCapital'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='Zignox'] .providerLogo {
+  height: 42px;
+  max-width: min(168px, 78%);
+}
+/* Lighter press marks (WSJ, NYT, Al Jazeera, France 24, VOA, El Financiero, El Universal, GlobalCapital) read smaller at 42px; enlarge to match the rest. */
+.relationshipProviders .providerBrand[data-provider='The Wall Street Journal'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='The New York Times'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='Al Jazeera'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='France 24'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='VOA'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='El Financiero'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='El Universal'] .providerLogo,
+.relationshipProviders .providerBrand[data-provider='GlobalCapital'] .providerLogo {
+  height: 60px;
+  max-width: min(184px, 90%);
 }
 .providerBrand[data-provider='FundSettle'],
 .providers .providerBrand[data-provider='Euroclear'] {
@@ -1044,17 +1079,24 @@ a.provider:focus-visible {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
     gap: clamp(32px, 5vw, 80px);
   }
+  /* One column: headline (40%) and sub-headline (60%) share the first row; logos follow in a four-column grid. */
   .page[data-pillar='dependable'] .contentBand[id='regulation'] .bandContainer {
-    align-items: center;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 80px);
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(32px, 4vw, 56px);
   }
   .page[data-pillar='dependable'] .contentBand[id='regulation'] .bandIntro {
-    order: 2;
+    order: 1;
     max-width: none;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    align-items: end;
+    gap: clamp(24px, 4cqi, 64px);
   }
   .page[data-pillar='dependable'] .contentBand[id='regulation'] .bandContent {
-    order: 1;
+    order: 2;
+  }
+  .page[data-pillar='dependable'] .contentBand[id='regulation'] .relationshipGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
   .contentBand[id='dma'] .bandContainer {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
@@ -1210,6 +1252,9 @@ a.provider:focus-visible {
     background-position: top center;
     background-size: 100% 1px;
   }
+}
+@media (max-width: 900px) {
+  .relationshipGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 599px) {
   .providerGrid { gap: var(--space-3); }

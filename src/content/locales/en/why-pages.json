@@ -142,17 +142,32 @@
           "body": "Audited by. Relevant fund structure or portfolio."
         },
         {
-          "title": "Apex",
-          "body": "Fund administration. Relevant fund structures."
+          "title": "Bloomberg",
+          "body": "Quoted in."
         },
         {
-          "title": "Walkers",
-          "body": "Legal counsel. Cayman Islands legal counsel for applicable fund work."
+          "title": "Reuters",
+          "body": "Quoted in."
         },
         {
-          "title": "Dechert",
-          "body": "Legal counsel. English and US legal counsel for applicable matters."
+          "title": "The Wall Street Journal",
+          "body": "Quoted in."
         },
+        {
+          "title": "The New York Times",
+          "body": "Quoted in."
+        },
+        { "title": "Barron's", "body": "Quoted in." },
+        { "title": "Chatham House", "body": "Quoted in." },
+        { "title": "Al Jazeera", "body": "Quoted in." },
+        { "title": "France 24", "body": "Quoted in." },
+        { "title": "VOA", "body": "Quoted in." },
+        { "title": "El Financiero", "body": "Quoted in." },
+        { "title": "Le Point", "body": "Quoted in." },
+        { "title": "El Universal", "body": "Quoted in." },
+        { "title": "Cbonds", "body": "Quoted in." },
+        { "title": "GlobalCapital", "body": "Quoted in." },
+        { "title": "Zignox", "body": "Quoted in." },
         {
           "title": "Euroclear",
           "body": "Infrastructure. Securities settlement and custody infrastructure."

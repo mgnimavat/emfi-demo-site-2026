@@ -143,17 +143,32 @@
           "body": "التدقيق. هيكل الصندوق أو المحفظة المعنية."
         },
         {
-          "title": "Apex",
-          "body": "إدارة الصناديق. هياكل الصناديق المعنية."
+          "title": "Bloomberg",
+          "body": "ورد ذكرها في."
         },
         {
-          "title": "Walkers",
-          "body": "الاستشارات القانونية. مستشار قانوني في جزر كايمان لأعمال الصناديق ذات الصلة."
+          "title": "Reuters",
+          "body": "ورد ذكرها في."
         },
         {
-          "title": "Dechert",
-          "body": "الاستشارات القانونية. مستشار قانوني إنجليزي وأمريكي للمسائل ذات الصلة."
+          "title": "The Wall Street Journal",
+          "body": "ورد ذكرها في."
         },
+        {
+          "title": "The New York Times",
+          "body": "ورد ذكرها في."
+        },
+        { "title": "Barron's", "body": "ورد ذكرها في." },
+        { "title": "Chatham House", "body": "ورد ذكرها في." },
+        { "title": "Al Jazeera", "body": "ورد ذكرها في." },
+        { "title": "France 24", "body": "ورد ذكرها في." },
+        { "title": "VOA", "body": "ورد ذكرها في." },
+        { "title": "El Financiero", "body": "ورد ذكرها في." },
+        { "title": "Le Point", "body": "ورد ذكرها في." },
+        { "title": "El Universal", "body": "ورد ذكرها في." },
+        { "title": "Cbonds", "body": "ورد ذكرها في." },
+        { "title": "GlobalCapital", "body": "ورد ذكرها في." },
+        { "title": "Zignox", "body": "ورد ذكرها في." },
         {
           "title": "Euroclear",
           "body": "البنية التحتية. بنية تحتية لتسوية الأوراق المالية وحفظها."

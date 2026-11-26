@@ -143,17 +143,32 @@
           "body": "Auditado por. Estructura de fondo o cartera pertinente."
         },
         {
-          "title": "Apex",
-          "body": "Administración de fondos. Estructuras de fondos pertinentes."
+          "title": "Bloomberg",
+          "body": "Citada en."
         },
         {
-          "title": "Walkers",
-          "body": "Asesoría jurídica. Asesoría jurídica de las Islas Caimán para los fondos aplicables."
+          "title": "Reuters",
+          "body": "Citada en."
         },
         {
-          "title": "Dechert",
-          "body": "Asesoría jurídica. Asesoría jurídica inglesa y estadounidense para los asuntos aplicables."
+          "title": "The Wall Street Journal",
+          "body": "Citada en."
         },
+        {
+          "title": "The New York Times",
+          "body": "Citada en."
+        },
+        { "title": "Barron's", "body": "Citada en." },
+        { "title": "Chatham House", "body": "Citada en." },
+        { "title": "Al Jazeera", "body": "Citada en." },
+        { "title": "France 24", "body": "Citada en." },
+        { "title": "VOA", "body": "Citada en." },
+        { "title": "El Financiero", "body": "Citada en." },
+        { "title": "Le Point", "body": "Citada en." },
+        { "title": "El Universal", "body": "Citada en." },
+        { "title": "Cbonds", "body": "Citada en." },
+        { "title": "GlobalCapital", "body": "Citada en." },
+        { "title": "Zignox", "body": "Citada en." },
         {
           "title": "Euroclear",
           "body": "Infraestructura. Infraestructura de liquidación y custodia de valores."

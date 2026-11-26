@@ -42,11 +42,40 @@ const relationshipLogos: Readonly<Partial<Record<string, DetailLogo>>> = {
   CIMA: { src: '/brand/regulators/cima-brand.png', width: 120, height: 120 },
   BDO: { src: '/brand/auditors/bdo-brand.png', width: 280, height: 108 },
   'Baker Tilly': { src: '/brand/auditors/baker-tilly-brand.png', width: 1023, height: 268 },
-  Apex: { src: '/images/fund-providers/apex.svg', width: 550, height: 514 },
-  Walkers: { src: '/images/fund-providers/walkers.jpg', width: 1797, height: 614 },
-  Dechert: { src: '/images/fund-providers/dechert.png', width: 1024, height: 1024 },
+  Bloomberg: { src: '/brand/standing/bloomberg.png', width: 280, height: 56 },
+  Reuters: { src: '/brand/press/reuters-brand.svg', width: 280, height: 70 },
+  'The Wall Street Journal': { src: '/brand/press/wsj-brand.svg', width: 64, height: 64 },
+  'The New York Times': { src: '/brand/press/nyt-brand.svg', width: 184, height: 25 },
+  "Barron's": { src: '/brand/press/barrons-gray.svg', width: 320, height: 65 },
+  'Chatham House': { src: '/brand/press/chanthamhousegrey.svg', width: 280, height: 100 },
+  'Al Jazeera': { src: '/brand/press/aljazeeragrey.svg', width: 280, height: 100 },
+  'France 24': { src: '/brand/press/france24grey.svg', width: 280, height: 100 },
+  VOA: { src: '/brand/press/voagrey.svg', width: 205, height: 88 },
+  'El Financiero': { src: '/brand/press/elfinancierocr-gray.svg', width: 280, height: 100 },
+  'Le Point': { src: '/brand/press/lepoint-gray.svg', width: 280, height: 100 },
+  'El Universal': { src: '/brand/press/eluniversal-gray.svg', width: 280, height: 100 },
+  Cbonds: { src: '/brand/press/cbonds-logo.svg', width: 434, height: 91 },
+  GlobalCapital: { src: '/brand/press/globalcapital-gray.png', width: 212, height: 39 },
+  Zignox: { src: '/brand/press/zignox_logo_gray.png', width: 488, height: 112 },
   Euroclear: { src: euroclearLogo, width: 76, height: 76 },
   Allfunds: { src: allfundsLogo, width: 144, height: 39 },
+};
+const relationshipHrefs: Readonly<Partial<Record<string, string>>> = {
+  Bloomberg: 'https://www.bloomberg.com',
+  Reuters: 'https://www.reuters.com',
+  'The Wall Street Journal': 'https://www.wsj.com',
+  'The New York Times': 'https://www.nytimes.com',
+  "Barron's": 'https://www.barrons.com',
+  'Chatham House': 'https://www.chathamhouse.org',
+  'Al Jazeera': 'https://www.aljazeera.com',
+  'France 24': 'https://www.france24.com/en',
+  VOA: 'https://www.voanews.com',
+  'El Financiero': 'https://www.elfinancierocr.com',
+  'Le Point': 'https://www.lepoint.fr',
+  'El Universal': 'https://www.eluniversal.com',
+  Cbonds: 'https://cbonds.com/company/EMFI',
+  GlobalCapital: 'https://www.globalcapital.com',
+  Zignox: 'https://app.zignox.com/investment-banks/emfi',
 };
 const WhyHero = ({ headline, prefix, words, spacedLines, children }: {
   headline: string;
@@ -280,7 +309,23 @@ const InfrastructureProviders = ({
   </ExecutionReveal>
 );
 
-const visibleRelationshipTitles = new Set(['Walkers', 'Apex', 'Dechert']);
+const visibleRelationshipTitles = new Set([
+  'Bloomberg',
+  'Reuters',
+  'The Wall Street Journal',
+  'The New York Times',
+  "Barron's",
+  'Chatham House',
+  'Al Jazeera',
+  'France 24',
+  'VOA',
+  'El Financiero',
+  'Le Point',
+  'El Universal',
+  'Cbonds',
+  'GlobalCapital',
+  'Zignox',
+]);
 
 const RelationshipProviders = ({ items }: { items: readonly Detail[] }) => {
   const visibleItems = items.filter(({ title }) => visibleRelationshipTitles.has(title));
@@ -300,17 +345,14 @@ const RelationshipProviders = ({ items }: { items: readonly Detail[] }) => {
       <ul className={styles.relationshipGrid} role="list">
         {visibleItems.map(({ title: name, body }) => {
           const logo = relationshipLogos[name];
-          return (
-            <li
-              key={name}
-              className={`${styles.provider} ${reveal.card} ${reveal.panel}`}
-              tabIndex={body ? 0 : undefined}
-            >
+          const href = relationshipHrefs[name];
+          const card = (
+            <>
               <div className={`${styles.providerBrand} ${reveal.brand}`} data-provider={name}>
                 {logo ? (
                   <Image
                     {...logo}
-                    alt={name}
+                    alt=""
                     className={styles.providerLogo}
                     unoptimized
                   />
@@ -319,6 +361,27 @@ const RelationshipProviders = ({ items }: { items: readonly Detail[] }) => {
                 )}
               </div>
               {body ? <span className={reveal.details}>{body}</span> : null}
+            </>
+          );
+          const cardClassName = `${styles.provider} ${reveal.card} ${reveal.panel}`;
+
+          return (
+            <li key={name} className={styles.providerItem}>
+              {href ? (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cardClassName}
+                  aria-label={`${name} (opens in a new tab)`}
+                >
+                  {card}
+                </a>
+              ) : (
+                <div className={cardClassName} tabIndex={body ? 0 : undefined}>
+                  {card}
+                </div>
+              )}
             </li>
           );
         })}
