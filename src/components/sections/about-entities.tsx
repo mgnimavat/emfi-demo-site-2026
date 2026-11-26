@@ -133,21 +133,13 @@ export const AboutEntities = ({ copy }: { copy: AboutCopy }) => {
           data-vertical={vertical || undefined}
         >
           <svg className={styles.connectors} aria-hidden="true">
-            <defs>
-              <linearGradient id="about-entity-curve" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#8098cc" />
-                <stop offset="55%" stopColor="#5db1b5" />
-                <stop offset="100%" stopColor="#3dceb6" />
-              </linearGradient>
-            </defs>
-
             {paths.map((path, index) => (
               <motion.path
                 key={`${index}-${path.d}`}
                 d={path.d}
                 className={styles.connector}
                 fill="none"
-                stroke="url(#about-entity-curve)"
+                stroke="#071932"
                 strokeWidth={1.4}
                 initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
                 animate={

@@ -457,7 +457,7 @@ export const ResponsiveContentPage = ({ copy, heroCopy }: {
     </ContentBand>
     <ContentBand id="dashboard" copy={copy.dashboard} layout="product">
       <ExecutionReveal className={`${styles.preview} ${styles.mediaFit}`}>
-        <SettlementDashboard borderless fit compact />
+        <div className={styles.dashboardBandScale}><SettlementDashboard /></div>
       </ExecutionReveal>
     </ContentBand>
     <ContentBand id="mobile" copy={copy.mobile} tone="soft" layout="product">

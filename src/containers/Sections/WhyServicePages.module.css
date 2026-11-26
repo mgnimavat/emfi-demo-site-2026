@@ -685,6 +685,22 @@ a.provider:focus-visible {
   justify-items: stretch;
   container-type: size;
 }
+/* Dashboard band: the same full-size dashboard as the hero, scaled to the band width. */
+.dashboardBandScale {
+  box-sizing: border-box;
+  width: 1160px;
+  height: 810px;
+  padding: var(--space-2);
+  zoom: calc(100cqw / 1160px);
+  pointer-events: none;
+}
+.dashboardBandScale > :global(div) {
+  height: 100%;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.dashboardBandScale > :global(div) > :global(div) { height: 100%; }
 .page[data-pillar='responsive'] .contentBand[id='workstation'] .workstationStage {
   width: 100%;
   height: 100%;
@@ -759,21 +775,31 @@ a.provider:focus-visible {
   overflow: visible;
 }
 .contentBand[id='mobile'] .phones {
-  /* Match hero showcase cluster: height-led, correct aspect, no width clamp stretch */
+  /* Same cluster as the hero showcase (642 x 423): proportional to the column so phones never spill out of it */
   width: min(100%, 640px);
-  height: min(50vh, 424px);
+  height: auto;
+  max-height: min(50vh, 424px);
+  aspect-ratio: 642 / 423;
   margin-inline: auto;
-  gap: clamp(12px, 2.2cqi, 28px);
+  /* hero gap is 2.2% of its stage (~2.4% of the cluster); percentage gaps resolve against the cluster width */
+  gap: 2.4%;
 }
 .contentBand[id='mobile'] .phones :global(figure) {
   width: auto;
   height: 82%;
-  max-width: none;
+  max-width: min(28%, 220px);
   aspect-ratio: 489 / 1024;
 }
 .contentBand[id='mobile'] .phones :global(figure[data-featured]) {
+  /* 34% of the cluster, as in the hero (no viewport-height cap, so it scales with the cluster) */
+  width: min(34%, 292px);
   height: 100%;
-  max-width: none;
+  max-width: min(34%, 268px);
+}
+.contentBand[id='mobile'] .phones :global(figure > div) {
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 16%),
+    0 8px 14px rgb(7 24 50 / 8%);
 }
 .specialistSummary {
   display: grid;
@@ -1172,7 +1198,7 @@ a.provider:focus-visible {
   }
   .page[data-pillar='responsive'] .contentBand[id='mobile'] .phones {
     justify-content: center;
-    height: min(50vh, 424px);
+    height: auto;
     padding-inline: 0;
   }
   .contentBand[id='infrastructure'] .bandIntro,
@@ -1198,6 +1224,9 @@ a.provider:focus-visible {
   }
   .page[data-pillar='dependable'] .contentBand:is([id='entities'], [id='regulation']) .bandTitle {
     font-size: clamp(42px, 7.2cqi, 96px);
+  }
+  .page[data-pillar='dependable'] .contentBand[id='regulation'] .bandTitle {
+    font-size: clamp(38px, 6.2cqi, 84px);
   }
   .contentBand[data-layout='split'] .callout {
     font-size: clamp(24px, 2.4cqi, 32px);

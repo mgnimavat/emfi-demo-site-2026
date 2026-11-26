@@ -335,8 +335,9 @@
   .home-page [data-why-split] #responsive [class*="whyColumns"] [class*="splitResponsiveMedia"] [class*="h-[478px]"] {
     width: 100% !important;
     height: auto !important;
-    aspect-ratio: 912 / 504;
-    max-height: min(460px, 46vh) !important;
+    /* Same proportions as the Responsive Technology hero stage (1160 x 800). */
+    aspect-ratio: 1160 / 800;
+    max-height: none !important;
   }
 }
 

@@ -17,7 +17,9 @@ import {
 } from "lucide-react";
 import { FloatingPhones } from "@/components/home-17/floating-phones";
 import { HeroDashboardScreen } from "@/components/home-17/operating-view";
-import { ExecutionWorkstationFit, SettlementDashboardFit } from "@/components/home-17/scaled-mockup";
+import { ExecutionWorkstation } from "@/containers/Sections/ExecutionWorkstation";
+import { SettlementDashboard } from "@/containers/Sections/SettlementDashboard";
+import phoneSlideStyles from "@/components/home-17/phone-devices-slide.module.css";
 import { PhoneDevice } from "@/components/mockups/phone-device";
 import { responsiveTechnology } from "@/content/responsive-technology";
 
@@ -1323,9 +1325,9 @@ function ViewPanel({ view, apple = false, square = false, trimChrome = false, ap
         </div>
       );
     case "SettlementDashboard":
-      return <SettlementDashboardFit />;
+      return <HeroDashboardSlide />;
     case "Workstation":
-      return <ExecutionWorkstationFit />;
+      return <HeroWorkstationSlide />;
     case "MobileBalances":
       return <MobileBalancesSlide />;
     case "MobileScreens":
@@ -1351,20 +1353,45 @@ const ctaBorderGradient = "linear-gradient(90deg, #a7c4fd 0%, #a1bcf3 10%, #9ab5
 const quietBorder = "linear-gradient(90deg, rgb(186 214 246 / 80%), rgb(168 206 220 / 55%))";
 const phoneViews = new Set<View>(["FloatingPhones", "PhoneDevices"]);
 
+/** Same stage + scaling as the Responsive Technology hero (showcase.tsx). */
+function HeroDashboardSlide() {
+  return (
+    <div className={phoneSlideStyles.slide}>
+      <div className={phoneSlideStyles.stage}>
+        <div className={phoneSlideStyles.clip}><div className={phoneSlideStyles.dashboardScale}><SettlementDashboard /></div></div>
+      </div>
+    </div>
+  );
+}
+
+function HeroWorkstationSlide() {
+  return (
+    <div className={phoneSlideStyles.slide}>
+      <div className={phoneSlideStyles.stage}>
+        <div className={phoneSlideStyles.clip}><div className={phoneSlideStyles.executionScale}><ExecutionWorkstation maskVariant="blur" /></div></div>
+      </div>
+    </div>
+  );
+}
+
 function PhoneDevicesSlide() {
   return (
-    <div className="flex h-full w-full items-center justify-center px-2">
-      <div className="flex w-full items-end justify-center gap-[clamp(10px,1.6vw,24px)]">
-        {responsiveTechnology.showcase.screens.map((screen, index) => (
-          <PhoneDevice
-            key={screen.src}
-            src={`${screen.src}?v=8`}
-            alt={screen.alt}
-            width={screen.width}
-            height={screen.height}
-            featured={index === 1}
-          />
-        ))}
+    <div className={phoneSlideStyles.slide}>
+      <div className={phoneSlideStyles.stage}>
+        <div className={phoneSlideStyles.mobile}>
+          <div className={phoneSlideStyles.phones}>
+            {responsiveTechnology.showcase.screens.map((screen, index) => (
+              <PhoneDevice
+                key={screen.src}
+                src={`${screen.src}?v=8`}
+                alt={screen.alt}
+                width={screen.width}
+                height={screen.height}
+                featured={index === 1}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,56 @@
+/*
+ * Home "Responsive." slides rendered exactly like the Responsive Technology hero
+ * (src/components/sections/responsive/showcase.module.css): a 1160 x 800 stage, centred and contained in the frame.
+ */
+.slide {
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  container-type: size;
+}
+.stage {
+  position: relative;
+  width: min(100cqw, calc(100cqh * 1160 / 800));
+  aspect-ratio: 1160 / 800;
+  container-type: inline-size;
+}
+.clip { height: 100%; overflow: hidden; background: transparent; }
+.dashboardScale > div,
+.executionScale > :global(fieldset) { height: 100%; border: 0; background: transparent; box-shadow: none; }
+.dashboardScale > div > div { height: 100%; }
+.dashboardScale, .executionScale { box-sizing: border-box; width: 1160px; height: 800px; padding: var(--space-2); zoom: calc(100cqw / 1160px); pointer-events: none; }
+
+/* The home page shell styles every `header` as the site navbar; keep mockup card headers as designed. */
+.dashboardScale header,
+.executionScale header {
+  background: #eef0f2 !important;
+  border-bottom: 1px solid #dce0e6 !important;
+}
+
+.mobile { display: grid; place-items: center; width: 100%; height: 100%; }
+.phones {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(12px, 2.2cqw, 28px);
+  width: min(92%, 720px);
+  height: min(88%, 640px);
+  pointer-events: none;
+}
+.phones :global(figure) {
+  width: auto;
+  height: 82%;
+  max-width: min(28%, 220px);
+  aspect-ratio: 489 / 1024;
+}
+.phones :global(figure[data-featured]) {
+  height: 100%;
+  max-width: min(34%, 268px);
+}
+.phones :global(figure > div) {
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 16%),
+    0 8px 14px rgb(7 24 50 / 8%);
+}
