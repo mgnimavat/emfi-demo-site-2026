@@ -1196,8 +1196,8 @@ a.provider:focus-visible {
   .page[data-pillar='dependable'] .contentBand:is([id='client-assets'], [id='fees']) .bandTitle {
     font-size: clamp(42px, 7.2cqi, 96px);
   }
-  .page[data-pillar='dependable'] .contentBand[id='entities'] .bandTitle {
-    font-size: clamp(48px, 6.4cqi, 80px);
+  .page[data-pillar='dependable'] .contentBand:is([id='entities'], [id='regulation']) .bandTitle {
+    font-size: clamp(42px, 7.2cqi, 96px);
   }
   .contentBand[data-layout='split'] .callout {
     font-size: clamp(24px, 2.4cqi, 32px);

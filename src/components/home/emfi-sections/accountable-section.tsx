@@ -114,7 +114,13 @@ type LogoItem = {
   entities?: readonly string[];
 };
 
-const slides = [
+type EvidenceSlideItem = {
+  title: string;
+  kind: "logos";
+  items: readonly LogoItem[];
+};
+
+const slides: EvidenceSlideItem[] = [
   {
     title: "Authorised by",
     kind: "logos" as const,
@@ -156,7 +162,7 @@ const slides = [
 ];
 
 /** Dependable split slider (home and Dependable page hero): fund and legal providers take the middle slot. */
-const splitLogoSlides = [
+const splitLogoSlides: readonly EvidenceSlideItem[] = [
   slides[1], // Audited by
   {
     title: "Fund and legal partners",
@@ -168,9 +174,9 @@ const splitLogoSlides = [
     ],
   },
   slides[2], // Connected to
-] as const;
+];
 
-function plainTitle(slide: (typeof slides)[number]) {
+function plainTitle(slide: EvidenceSlideItem) {
   return slide.title.replace(/\.$/, "");
 }
 
@@ -178,7 +184,7 @@ function logoEntities(item: LogoItem) {
   return item.entities?.length ? item.entities : null;
 }
 
-function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: (typeof slides)[number]; ink?: boolean; gray?: boolean }) {
+function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: EvidenceSlideItem; ink?: boolean; gray?: boolean }) {
   const marks = gray ? { ...brandMarkSrc, ...grayMarkSrc } : ink ? inkMarkSrc : brandMarkSrc;
   return (
     <div className={styles.plainRow}>
@@ -220,7 +226,7 @@ function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: (type
   );
 }
 
-function PlainEvidenceContent({ slide, ink = false, gray = false }: { slide: (typeof slides)[number]; ink?: boolean; gray?: boolean }) {
+function PlainEvidenceContent({ slide, ink = false, gray = false }: { slide: EvidenceSlideItem; ink?: boolean; gray?: boolean }) {
   const { t } = useServiceLocale();
   return (
     <>
@@ -229,8 +235,6 @@ function PlainEvidenceContent({ slide, ink = false, gray = false }: { slide: (ty
     </>
   );
 }
-
-type EvidenceSlideItem = (typeof slides)[number];
 
 /** Space between stacked logo rows. The viewport grows to keep the gap below the active row visible. */
 const LOGO_ROW_GAP = 10;
@@ -405,7 +409,7 @@ export function DependablePeekSlide() {
   );
 }
 
-function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = false, open = false, ink = false, gray = false }: { slide: (typeof slides)[number]; plain?: boolean; centered?: boolean; brandLogos?: boolean; open?: boolean; ink?: boolean; gray?: boolean }) {
+function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = false, open = false, ink = false, gray = false }: { slide: EvidenceSlideItem; plain?: boolean; centered?: boolean; brandLogos?: boolean; open?: boolean; ink?: boolean; gray?: boolean }) {
   const { t } = useServiceLocale();
   const title = plain || open ? slide.title.replace(/\.$/, "") : slide.title;
   if (open) {
