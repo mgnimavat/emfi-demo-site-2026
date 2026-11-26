@@ -94,7 +94,7 @@ export const LocalizedServicePageSection = ({
                 appearance="light"
                 splitLayout={settlementVariant === 'v2'}
                 cueHref="#settlement"
-                cueLabel={getMarketingMessages(locale)["Let's Talk"]} />
+                cueLabel={dictionary.settlement.heroCta} />
             ) : <ServiceHero key={locale} lines={copy.heroLines} phrases={copy.heroPhrases}
               typewriter={copy.heroTypewriter}
               visual={service === 'settlement-custody' ? <SettlementHeroAnimation /> : undefined}
