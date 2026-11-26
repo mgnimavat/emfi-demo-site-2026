@@ -27,9 +27,10 @@ test('Client B’s own securities arrive before Client A’s securities cover th
   assert.equal(crossDelivery.delivered, false);
   assert.equal(frameAt(2400).secondTile, 1);
   assert.equal(frameAt(2400).delivered, true);
+  assert.equal(frameAt(2400).depositProgress, 0);
 });
 
-test('dedicated-account tiles stay inside their own accounts throughout the scene', () => {
+test('dedicated deposits advance independently of the shared-pool transfer', () => {
   for (const elapsed of [0, 650, settlementChapterDuration('separate')]) {
     const frame = getSettlementChapterFrame('separate', elapsed);
     assert.equal(frame.crossUse, false);
@@ -37,6 +38,11 @@ test('dedicated-account tiles stay inside their own accounts throughout the scen
     assert.equal(frame.secondTile, 0);
     assert.equal(frame.delivered, elapsed >= 650);
   }
+
+  assert.equal(getSettlementChapterFrame('separate', 0).depositProgress, 0);
+  assert.equal(getSettlementChapterFrame('separate', 150).depositProgress, 0);
+  assert.equal(getSettlementChapterFrame('separate', 400).depositProgress, 0.5);
+  assert.equal(getSettlementChapterFrame('separate', 650).depositProgress, 1);
 });
 
 test('every chapter holds its completed state before the next scene', () => {

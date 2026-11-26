@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import { useEffect, useId, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
-import { useServiceLocale } from "@/ui/hooks/useServiceLocale";
-import type { ExecutionSecurity } from "@/content/execution-securities";
+import { useId, useMemo, useState } from 'react';
+import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
+import { TimeSeriesPlot } from '@/ui/components/TimeSeriesPlot';
+import type { ExecutionSecurity } from '@/content/execution-securities';
 import { MaskedWorkstationValue } from '@/containers/Sections/WorkstationPrivacy';
-import styles from "./execution-chart.module.css";
+import styles from './execution-chart.module.css';
 
 const ranges = [
   { label: "1D", days: 1, span: .025 },
@@ -24,24 +25,7 @@ const axisDate = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "shor
 const tooltipDate = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
 const timeFormat = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "UTC" });
 
-export function ExecutionChart({ security, staticPreview = false, controlsEnabled = !staticPreview }: { security: ExecutionSecurity; staticPreview?: boolean; controlsEnabled?: boolean }) {
-  const { t } = useServiceLocale();
-  const [range, setRange] = useState<Range>("1M");
-  const [cursor, setCursor] = useState<number | null>(null);
-  const [size, setSize] = useState({ width: 820, height: 380 });
-  const plotRef = useRef<HTMLDivElement>(null);
-  const id = useId().replaceAll(":", "");
-  useEffect(() => {
-    const element = plotRef.current;
-    if (!element) return;
-    const observer = new ResizeObserver(([entry]) => {
-      const width = Math.round(entry.contentRect.width), height = Math.round(entry.contentRect.height);
-      if (width > 0 && height > 0) setSize((current) => current.width === width && current.height === height ? current : { width, height });
-    });
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-
+const makeSeries = (security: ExecutionSecurity, range: Range) => {
   const selectedRange = ranges.find((item) => item.label === range) ?? ranges[5];
   const lastPrice = (security.bid + security.ask) / 2;
   const firstPrice = lastPrice * (1 - selectedRange.span);
@@ -71,55 +55,52 @@ export function ExecutionChart({ security, staticPreview = false, controlsEnable
   const step = Math.ceil(rawStep / magnitude) * magnitude;
   const low = Math.max(0, Math.floor((minimum - rawStep * .25) / step) * step);
   const high = Math.ceil((maximum + rawStep * .25) / step) * step;
-  const left = size.width < 450 ? 54 : 66, right = size.width - 24, top = 24, bottom = size.height - 42;
-  const x = (index: number) => left + (right - left) * index / (data.length - 1);
-  const y = (value: number) => bottom - (bottom - top) * (value - low) / (high - low);
-  const path = data.map((point, index) => `${index ? "L" : "M"}${x(index).toFixed(2)},${y(point.value).toFixed(2)}`).join(" ");
-  const area = `${path} L${right},${bottom} L${left},${bottom} Z`;
   const ticks = Array.from({ length: Math.round((high - low) / step) + 1 }, (_, index) => low + step * index);
-  const active = cursor === null ? null : data[cursor];
+  return { points: data, ticks };
+};
 
-  function move(event: PointerEvent<SVGSVGElement>) {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const position = (event.clientX - bounds.left) * size.width / bounds.width;
-    setCursor(Math.max(0, Math.min(data.length - 1, Math.round((position - left) / (right - left) * (data.length - 1)))));
-  }
+type ExecutionChartProps = {
+  security: ExecutionSecurity;
+  staticPreview?: boolean;
+  controlsEnabled?: boolean;
+};
 
-  function keyDown(event: KeyboardEvent<SVGSVGElement>) {
-    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-      event.preventDefault();
-      setCursor((current) => Math.max(0, Math.min(data.length - 1, (current ?? data.length - 1) + (event.key === "ArrowRight" ? 1 : -1))));
-    } else if (event.key === "Home" || event.key === "End") {
-      event.preventDefault();
-      setCursor(event.key === "Home" ? 0 : data.length - 1);
-    } else if (event.key === "Escape") setCursor(null);
-  }
+export const ExecutionChart = ({ security, staticPreview = false, controlsEnabled = !staticPreview }: ExecutionChartProps) => {
+  const { t } = useServiceLocale();
+  const [range, setRange] = useState<Range>('1M');
+  const { points, ticks } = useMemo(() => makeSeries(security, range), [security, range]);
+  const plotId = `${useId()}-plot`;
+  const demoChartDescription = t('Synthetic USD prices for a local demonstration, not historical or live market data.');
+  const chartInstructions = t('Use Left and Right arrow keys to explore points, or Home and End to jump to the first and last point.');
 
-  const tooltipX = cursor === null ? left : Math.min(Math.max(x(cursor) - 80, left), right - 160);
-  return <figure className={styles.chart} aria-label={`${staticPreview ? "Sample security" : security.symbol} demo price chart`}>
-    <div className={styles.header}>
-      <span className={styles.title}><strong>{staticPreview ? <MaskedWorkstationValue value={security.symbol} /> : security.symbol}</strong></span>
-      <div className={styles.ranges} role="group" aria-label={t("Chart time range")}>{ranges.map((item) => <button key={item.label} type="button" disabled={!controlsEnabled} aria-pressed={range === item.label} aria-controls={`${id}-plot`} onClick={() => { setRange(item.label); setCursor(null); }}>{item.label}</button>)}</div>
-    </div>
-    <div ref={plotRef} className={styles.plot}>
-      <svg id={`${id}-plot`} viewBox={`0 0 ${size.width} ${size.height}`} className={styles.svg} role="img" aria-labelledby={`${id}-title ${id}-description`} tabIndex={!controlsEnabled ? undefined : 0} onPointerMove={!controlsEnabled ? undefined : move} onPointerLeave={!controlsEnabled ? undefined : () => setCursor(null)} onFocus={!controlsEnabled ? undefined : () => setCursor(data.length - 1)} onBlur={!controlsEnabled ? undefined : () => setCursor(null)} onKeyDown={!controlsEnabled ? undefined : keyDown}>
-        <title id={`${id}-title`}>{`${staticPreview ? "Sample security" : security.name} · ${range} demo price chart`}</title>
-        <desc id={`${id}-description`}>{t("Synthetic USD prices for a local demonstration, not historical or live market data.")} {!controlsEnabled ? "" : t("Use Left and Right arrow keys to explore points, or Home and End to jump to the first and last point.")}</desc>
-        <defs><linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#4d6fb8" stopOpacity=".24" /><stop offset="100%" stopColor="#dce8f8" stopOpacity=".03" /></linearGradient></defs>
-        <g className={styles.yTicks}>{ticks.map((tick) => <g key={tick}><line x1={left} x2={right} y1={y(tick)} y2={y(tick)} /><text x={left - 12} y={y(tick)} dominantBaseline="middle" textAnchor="end">{priceFormat.format(tick)}</text></g>)}</g>
-        <line x1={left} x2={right} y1={y(lastPrice)} y2={y(lastPrice)} stroke="#8098cc" strokeOpacity=".45" strokeDasharray="4 5" />
-        <path d={area} fill={`url(#${id}-area)`} />
-        <path d={path} fill="none" stroke="#244f88" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" data-price-line />
-        <circle cx={right} cy={y(lastPrice)} r="4" fill="#244f88" stroke="#fff" strokeWidth="2" />
-        <line x1={left} x2={right} y1={bottom} y2={bottom} className={styles.baseline} />
-        <g className={styles.xTicks}>{Array.from({ length: 6 }, (_, index) => {
-          const pointIndex = Math.round((data.length - 1) * index / 5);
-          const point = data[pointIndex];
-          return <g key={index}><line x1={x(pointIndex)} x2={x(pointIndex)} y1={bottom} y2={bottom + 7} /><text x={x(pointIndex)} y={bottom + 25} textAnchor={index === 0 ? "start" : index === 5 ? "end" : "middle"}>{range === "1D" ? timeFormat.format(point.date) : axisDate.format(point.date)}</text></g>;
-        })}</g>
-        {active && cursor !== null ? <g className={styles.cursor} pointerEvents="none" data-chart-cursor><line x1={x(cursor)} x2={x(cursor)} y1={top} y2={bottom} strokeDasharray="3 4" /><circle cx={x(cursor)} cy={y(active.value)} r="4" /><rect x={tooltipX} y={top + 4} width="160" height="48" rx="6" /><text x={tooltipX + 12} y={top + 23}>{range === "1D" ? timeFormat.format(active.date) : tooltipDate.format(active.date)}</text><text x={tooltipX + 12} y={top + 42} className={styles.tooltipPrice}>{`${priceFormat.format(active.value)} USD`}</text></g> : null}
-      </svg>
-    </div>
-    {!staticPreview ? <figcaption>{t("Demo price chart · USD · Not live")}</figcaption> : null}
-  </figure>;
-}
+  return (
+    <figure className={styles.chart} aria-label={`${staticPreview ? 'Sample security' : security.symbol} demo price chart`}>
+      <div className={styles.header}>
+        <span className={styles.title}>
+          <strong>{staticPreview ? <MaskedWorkstationValue value={security.symbol} /> : security.symbol}</strong>
+        </span>
+        <div className={styles.ranges} role="group" aria-label={t('Chart time range')}>
+          {ranges.map((item) => (
+            <button key={item.label} type="button" disabled={!controlsEnabled} aria-pressed={range === item.label}
+              aria-controls={plotId} onClick={() => setRange(item.label)}>
+              {item.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <TimeSeriesPlot
+        id={plotId}
+        title={`${staticPreview ? 'Sample security' : security.name} · ${range} demo price chart`}
+        description={controlsEnabled ? `${demoChartDescription} ${chartInstructions}` : demoChartDescription}
+        state={{ kind: 'ready', points }}
+        valueTicks={ticks}
+        formatAxisDate={range === '1D' ? timeFormat.format : axisDate.format}
+        formatTooltipDate={range === '1D' ? timeFormat.format : tooltipDate.format}
+        formatAxisValue={priceFormat.format}
+        formatTooltipValue={(value) => `${priceFormat.format(value)} USD`}
+        controlsEnabled={controlsEnabled}
+      />
+      {!staticPreview && <figcaption>{t('Demo price chart · USD · Not live')}</figcaption>}
+    </figure>
+  );
+};

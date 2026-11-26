@@ -46,6 +46,7 @@
 }
 .archiveCopy .body { font-size: clamp(13px, 2.5cqi, 15px); }
 .archiveAnimation { justify-self: end; width: min(100%, 560px); }
+.archiveAnimation[data-full-deposits] { width: min(100%, 640px); }
 @media (min-width: 901px) {
   .archiveWorkflow[id='linked-settlement'] .archiveCopy { grid-area: 1 / 2; }
   .archiveWorkflow[id='linked-settlement'] .archiveAnimation { grid-area: 1 / 1; justify-self: start; }

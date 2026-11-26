@@ -3,6 +3,7 @@ import test from 'node:test';
 import {
   getLinkedSettlementComparisonFrame,
   getLinkedSettlementStoryProgress,
+  getLinkedSettlementTradeFill,
   getLinkedSettlementScene,
   linkedSettlementOutcome,
   linkedSettlementTiming,
@@ -54,4 +55,15 @@ test('one graph plays the unlinked flow, the linked flow, and then restarts', ()
     linked: true, buy: 'settled', sell: 'settled', progress: 1,
   });
   assert.deepEqual(getLinkedSettlementComparisonFrame(cycle * 2), getLinkedSettlementComparisonFrame(0));
+});
+
+test('only the buy fills without linking and both fills stay in sync with linking', () => {
+  const { buySettlement, cycle, sellAttempt, outcome } = linkedSettlementTiming;
+  const fillAt = (time) => getLinkedSettlementTradeFill(time, getLinkedSettlementComparisonFrame(time));
+  assert.deepEqual(fillAt(0), { buy: 0, sell: 0 });
+  assert.deepEqual(fillAt(buySettlement), { buy: 1, sell: 0 });
+  assert.deepEqual(fillAt(outcome), { buy: 1, sell: 0 });
+  assert.deepEqual(fillAt(cycle), { buy: 0, sell: 0 });
+  assert.deepEqual(fillAt(cycle + (sellAttempt + outcome) / 2), { buy: 0.5, sell: 0.5 });
+  assert.deepEqual(fillAt(cycle + outcome), { buy: 1, sell: 1 });
 });

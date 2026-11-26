@@ -145,7 +145,7 @@ const InteractivePrinciples = ({ copy }: { copy: TranslatedPrinciples }) => {
   );
 }
 
-const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false, hero = false, appearance, cueHref = '#say-less', cueLabel }: { copy: TranslatedPrinciples; whiteCards?: boolean; breakTitle?: boolean; hero?: boolean; appearance: 'light' | 'dark'; cueHref?: string; cueLabel?: string }) => {
+const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false, hero = false, appearance, cueHref = '#say-less', cueLabel, splitLayout = false }: { copy: TranslatedPrinciples; whiteCards?: boolean; breakTitle?: boolean; hero?: boolean; appearance: 'light' | 'dark'; cueHref?: string; cueLabel?: string; splitLayout?: boolean }) => {
   const { t } = useServiceLocale();
   const Heading = hero ? 'h1' : 'h2';
   const blendHeader = hero && appearance === 'dark';
@@ -153,10 +153,9 @@ const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false, hero 
 
   return (
     <section id="settle" className={`${styles.section} ${styles.stackedSection}`} data-appearance={appearance}
-      data-blend-header={blendHeader || undefined} aria-labelledby="home-16-principles-heading">
-      <div className={styles.mark} aria-hidden="true">
-        <GradientMark />
-      </div>
+      data-blend-header={blendHeader || undefined} data-split-layout={splitLayout || undefined}
+      aria-labelledby="home-16-principles-heading">
+      <div className={styles.mark} aria-hidden="true"><GradientMark /></div>
       <div className={styles.container}>
         <div className={`${styles.intro} ${styles.stackedIntro}`}>
           <div className={styles.introCopy}>
@@ -166,7 +165,7 @@ const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false, hero 
             </Heading>
             <div className={styles.stackedCards}>
               {copy.items.map((item) => (
-                <article key={item.id} tabIndex={appearance === 'dark' ? 0 : undefined}
+                <article key={item.id} tabIndex={appearance === 'dark' || splitLayout ? 0 : undefined}
                   className={whiteCards ? `${styles.card} ${styles.stackedCard} ${styles.stackedCardPlain}` : `${styles.card} ${styles.stackedCard}`}>
                   <h3 className={styles.stackedCardTitle}>
                     <span className={styles.stackedCardTitleText}>
@@ -190,8 +189,8 @@ const StackedPrinciples = ({ copy, whiteCards = false, breakTitle = false, hero 
   );
 }
 
-export const PrinciplesSection = ({ copy = defaultCopy, open = false, stacked = false, whiteCards = false, breakTitle = false, hero = false, appearance = 'light', cueHref, cueLabel }: { copy?: TranslatedPrinciples; open?: boolean; stacked?: boolean; whiteCards?: boolean; breakTitle?: boolean; hero?: boolean; appearance?: 'light' | 'dark'; cueHref?: string; cueLabel?: string }) => {
+export const PrinciplesSection = ({ copy = defaultCopy, open = false, stacked = false, whiteCards = false, breakTitle = false, hero = false, appearance = 'light', cueHref, cueLabel, splitLayout }: { copy?: TranslatedPrinciples; open?: boolean; stacked?: boolean; whiteCards?: boolean; breakTitle?: boolean; hero?: boolean; appearance?: 'light' | 'dark'; cueHref?: string; cueLabel?: string; splitLayout?: boolean }) => {
   if (open) return <OpenPrinciples copy={copy} />;
-  if (stacked) return <StackedPrinciples copy={copy} whiteCards={whiteCards} breakTitle={breakTitle} hero={hero} appearance={appearance} cueHref={cueHref} cueLabel={cueLabel} />;
+  if (stacked) return <StackedPrinciples copy={copy} whiteCards={whiteCards} breakTitle={breakTitle} hero={hero} appearance={appearance} cueHref={cueHref} cueLabel={cueLabel} splitLayout={splitLayout} />;
   return <InteractivePrinciples copy={copy} />;
 };

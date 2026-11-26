@@ -36,8 +36,30 @@
     var(--inset);
 }
 
+.stage[data-full-deposits] .board {
+  --title-height: clamp(58px, 12.5cqi, 78px);
+  --slot-height: clamp(51px, 12.5cqi, 80px);
+  --extra-card-spacing: clamp(0px, calc((100cqi - 320px) * .2), 52px);
+}
+
 .board[data-scene='separate'] {
   --board-rows: var(--title-height) var(--body-height) var(--inset);
+}
+
+.board:has([data-deposit='true']) {
+  --deposit-height: clamp(34px, 8cqi, 46px);
+  --deposit-start: 0px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .board:has([data-deposit='true']) {
+    --deposit-headroom: calc(var(--deposit-height) + var(--space-2));
+    --deposit-start: calc(-1 * (var(--title-height) + var(--slot-margin) + var(--deposit-headroom)));
+    --board-rows: var(--title-height) calc(var(--body-height) - var(--deposit-headroom)) var(--inset);
+    padding-block-start: var(--deposit-headroom);
+  }
+
+  .card:has([data-deposit='true']) { overflow: visible; }
 }
 
 .card {
@@ -205,8 +227,38 @@
   background: var(--panel);
 }
 
-.stage[data-chapter='separate'][data-running='true'] .tile { animation: lift-tile .65s ease-out both; }
-@keyframes lift-tile { from { translate: 0 5px; } to { translate: 0; } }
+.slot[data-deposit='true'] {
+  position: relative;
+}
+
+.card[data-side='target'] .slot[data-deposit='true'] { background: var(--bg-page); }
+
+.slot[data-deposit='true'] > .tile {
+  --deposit-end: calc(50% - var(--deposit-height) / 2);
+  --travel: calc(var(--deposit-end) - var(--deposit-start));
+  position: absolute;
+  z-index: 1;
+  inset-block-start: calc(var(--deposit-start) + var(--deposit-progress, 1) * var(--travel));
+  inset-inline: var(--space-2);
+  inline-size: auto;
+  block-size: var(--deposit-height);
+  background: var(--card-bg);
+  --badge-bg: var(--card-slot);
+}
+
+.card[data-side='target'] .slot[data-deposit='true'] > .tile { --badge-bg: var(--bg-page); }
+
+.stage[data-chapter='separate'] .slot:not([data-deposit='true']) > .tile > * {
+  animation: deposit-securities .65s ease-out both;
+}
+.stage[data-chapter='separate'][data-running='false'] .slot:not([data-deposit='true']) > .tile > * {
+  animation-play-state: paused;
+}
+
+@keyframes deposit-securities {
+  from { opacity: 0; translate: 0 calc(-1 * var(--space-5)); }
+  to { opacity: 1; translate: 0; }
+}
 
 .caption {
   display: flex;
@@ -226,6 +278,10 @@
 .caption svg { flex: none; color: var(--blue); }
 .caption[data-tone='complete'] svg { color: var(--green); }
 .caption[data-tone='warning'] svg { color: var(--red); }
+.stage[data-full-deposits] .caption[data-tone='warning'] { color: var(--red); }
+.stage[data-full-deposits] .cardTitle { font-size: clamp(12px, 3cqi, 18px); }
+.stage[data-full-deposits] .tile { font-size: clamp(10px, 2.5cqi, 15px); }
+.stage[data-full-deposits] .tile > b { font-size: clamp(10px, 2.2cqi, 13px); }
 
 @container (max-width: 320px) {
   .board { --gap: 26px; }
@@ -233,5 +289,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage[data-chapter='separate'] .tile { animation: none; }
+  .stage[data-chapter='separate'] .slot:not([data-deposit='true']) > .tile > * { animation: none; }
 }

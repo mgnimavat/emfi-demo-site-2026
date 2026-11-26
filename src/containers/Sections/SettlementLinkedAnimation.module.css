@@ -184,3 +184,117 @@
 @media (prefers-reduced-motion: reduce) {
   .outcome { transition: none; }
 }
+
+.stage[data-trade-cards='true'] {
+  --flow-accent: var(--color-blue-550);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.stage[data-trade-cards='true'][data-linked='true'] { --flow-accent: var(--settled); }
+
+.tradeCards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(var(--space-3), 3cqi, var(--space-4));
+  padding-block: var(--space-4);
+}
+
+.tradeCard {
+  --trade-color: var(--flow-accent);
+  --fill-level: var(--sell-fill, 0);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  align-self: stretch;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-2);
+  min-block-size: clamp(124px, 29cqi, 162px);
+  padding: var(--space-2) 2px;
+  border: 1px solid var(--chart-border);
+  border-radius: var(--radius-control);
+  background: var(--bg-soft);
+  color: var(--text-primary);
+  font-size: clamp(16px, 3.6cqi, 20px);
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.tradeCard[data-trade='buy'] { --fill-level: var(--buy-fill, 0); }
+
+.tradeCard::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: color-mix(in srgb, var(--settled) 23%, var(--chart-surface));
+  transform: scaleY(var(--fill-level));
+  transform-origin: center bottom;
+  content: '';
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tradeCard { transition: background-color .25s ease, border-color .25s ease; }
+}
+
+.tradeCard[data-trade-state='settled'] { --trade-color: var(--settled); --fill-level: 1; }
+.tradeCard[data-trade-state='failed'] { --trade-color: var(--failed); --fill-level: 0; }
+.tradeCard:is([data-trade-state='settled'], [data-trade-state='failed']) {
+  border-color: var(--trade-color);
+  background: color-mix(in srgb, var(--trade-color) 8%, var(--chart-surface));
+}
+
+.tradeState {
+  padding-inline: var(--space-1);
+  color: var(--trade-color);
+  font-size: clamp(12px, 2.5cqi, 14px);
+  font-weight: 650;
+  text-wrap: balance;
+}
+
+.flowCopy {
+  min-block-size: 98px;
+  padding: var(--space-3) var(--space-4);
+  border-inline-start: 2px solid var(--flow-accent);
+  background: color-mix(in srgb, var(--flow-accent) 6%, var(--chart-surface));
+}
+.stage[data-trade-cards='true'][data-sell-state='failed'] .flowCopy {
+  border-color: var(--failed);
+  background: color-mix(in srgb, var(--failed) 6%, var(--chart-surface));
+}
+.flowCopy strong { font-size: 17px; line-height: 1.3; }
+.flowCopy p { margin: var(--space-1) 0 0; color: var(--text-secondary); font-size: 14px; line-height: 1.5; }
+
+.stage[data-trade-cards='true'] .caption {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  overflow: visible;
+  padding-block-start: var(--space-4);
+}
+
+.scenarioButton {
+  --scenario-color: var(--failed);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 44px;
+  padding: var(--space-2);
+  border: 1px solid var(--chart-border);
+  border-radius: var(--radius-control);
+  background: var(--chart-surface);
+  color: var(--text-primary);
+  font-size: clamp(11px, 2.6cqi, 14px);
+  font-weight: 650;
+  line-height: 1.3;
+  text-align: start;
+  cursor: pointer;
+}
+.scenarioButton[data-scenario='linked'] { --scenario-color: var(--settled); }
+.scenarioButton svg { flex: none; color: var(--scenario-color); }
+.scenarioButton[aria-pressed='true'] {
+  border-color: var(--scenario-color);
+  background: color-mix(in srgb, var(--scenario-color) 7%, var(--chart-surface));
+}
+.scenarioButton:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 2px; }

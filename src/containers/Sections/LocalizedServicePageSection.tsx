@@ -43,7 +43,7 @@ export const LocalizedServicePageSection = ({
   researchVariant = 'current',
   settlementVariant = 'current',
   wealthVariant = 'current',
-}: { service: ServicePage; locale?: Locale; researchVariant?: 'current' | 'archived'; settlementVariant?: 'current' | 'archive' | 'v1' | 'archived'; wealthVariant?: 'current' | 'archive' | 'v1' }) => {
+}: { service: ServicePage; locale?: Locale; researchVariant?: 'current' | 'archived'; settlementVariant?: 'current' | 'archive' | 'v1' | 'v2' | 'archived'; wealthVariant?: 'current' | 'archive' | 'v1' | 'v2' }) => {
   const dictionary = serviceDictionaries[locale];
   const messages = dictionary[servicePages[service]].ui;
   const research = service === 'research-execution';
@@ -87,10 +87,12 @@ export const LocalizedServicePageSection = ({
         ) : (
           <>
             {service === 'wealth-asset-management' && wealthVariant !== 'v1' ? (
-              <WealthServiceHero copy={dictionary.wealth.redesign.hero} />
+              <WealthServiceHero copy={dictionary.wealth.redesign.hero} heroTypewriter={dictionary.wealth.heroTypewriter}
+                layout={wealthVariant === 'v2' ? 'split' : 'stacked'} />
             ) : service === 'settlement-custody' && settlementVariant !== 'archived' ? (
               <PrinciplesSection stacked hero copy={marketingDictionaries[locale].home.principles}
                 appearance="light"
+                splitLayout={settlementVariant === 'v2'}
                 cueHref="#settlement"
                 cueLabel={getMarketingMessages(locale)["Let's Talk"]} />
             ) : <ServiceHero key={locale} lines={copy.heroLines} phrases={copy.heroPhrases}
@@ -99,9 +101,10 @@ export const LocalizedServicePageSection = ({
               taglineClassName={service === 'wealth-asset-management' ? heroStyles.wealthTagline : undefined}
               headlineClassName={service === 'wealth-asset-management' ? heroStyles.wideHeadline : undefined} />}
             {service === 'settlement-custody' ? (
-              settlementVariant === 'current' || settlementVariant === 'archive' ? <>
+              settlementVariant === 'current' || settlementVariant === 'archive' || settlementVariant === 'v2' ? <>
                 <SettlementServiceSections copy={dictionary.settlement}
-                  archive={settlementVariant === 'archive'} />
+                  archive={settlementVariant !== 'current'} showFullDeposits={settlementVariant === 'v2'}
+                  showLinkedTradeCards={settlementVariant === 'v2'} />
                 <ServiceLocaleProvider locale={locale} messages={getMarketingMessages(locale)}>
                   <QuestionnaireSection copy={marketingDictionaries[locale].home.questionnaire} />
                 </ServiceLocaleProvider>
