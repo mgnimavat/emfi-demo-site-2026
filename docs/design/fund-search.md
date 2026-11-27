@@ -6,11 +6,7 @@ Find Funds on the main Asset & Wealth Management page searches by long fund name
 
 The API reads `src/content/data/fund-universe.json.gz` on the server. It contains the long name and available ISIN, fund house, fund family currency, income treatment, domicile, LEI, and share decimal precision for each entry. The import merges duplicate ISINs and keeps entries with invalid ISINs searchable by name.
 
-Put updated Fund Universe workbooks in the local `Fund/` directory and run the import from the repository root. Restart the application to load the refreshed snapshot. Git ignores the workbook directory. Commit the generated archive with the site update.
-
-```sh
-python3 scripts/import-fund-universe.py Fund/*.xlsx
-```
+To refresh the catalogue, replace the compressed JSON snapshot and deploy it with the site. Keep the source workbooks in the ignored `Fund/` directory. The application reads the generated archive directly with Node.js.
 
 ## Optional provider override
 

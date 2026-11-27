@@ -161,7 +161,7 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: clamp(48px, 5vw, 72px) clamp(20px, 4vw, 56px) calc(clamp(48px, 5vw, 72px) - 10px);
+  padding: clamp(48px, 5vw, 72px) clamp(20px, 4vw, 56px) calc(clamp(48px, 5vw, 72px) - 28px);
   box-sizing: border-box;
 }
 /* Five columns: brand | Direct | Responsive | Dependable | legal — mid trio centered between ends. */
@@ -195,9 +195,9 @@
 .footerFeatures {
   display: contents;
 }
-.footerFeatures > :nth-child(1) { grid-column: 2; grid-row: 1; transform: translateX(55px); }
-.footerFeatures > :nth-child(2) { grid-column: 3; grid-row: 1; transform: translateX(35px); }
-.footerFeatures > :nth-child(3) { grid-column: 4; grid-row: 1; transform: translateX(35px); }
+.footerFeatures > :nth-child(1) { grid-column: 2; grid-row: 1; transform: translateX(40px); }
+.footerFeatures > :nth-child(2) { grid-column: 3; grid-row: 1; transform: translateX(31px); }
+.footerFeatures > :nth-child(3) { grid-column: 4; grid-row: 1; transform: translateX(31px); }
 .footerBrandLink {
   display: inline-flex;
   align-self: flex-start;
@@ -208,10 +208,14 @@
 }
 .footerContact .footerBrandLink {
   margin-left: 0;
+  margin-bottom: 2px;
 }
-.footerContact .footerFeatures > :nth-child(1) { transform: translateX(70px); }
-.footerContact .footerFeatures > :nth-child(2) { transform: translateX(50px); }
-.footerContact .footerFeatures > :nth-child(3) { transform: translateX(50px); }
+.footerContact .footerLegalSocial {
+  margin-top: 4px;
+}
+.footerContact .footerFeatures > :nth-child(1) { transform: translateX(40px); }
+.footerContact .footerFeatures > :nth-child(2) { transform: translateX(71px); }
+.footerContact .footerFeatures > :nth-child(3) { transform: translateX(71px); }
 .footerBrandMark {
   display: block;
   width: 88px;
@@ -255,7 +259,8 @@
   text-decoration: none;
   transition: opacity .2s;
 }
-.footerFeature:hover { opacity: .88; }
+.footerFeature:hover { opacity: 1; }
+.footerFeature:hover .footerFeatureCopy { color: #fff; }
 .footerFeature h2 {
   margin: 0;
   color: #fff;
@@ -274,21 +279,31 @@
   line-height: 1.4;
 }
 .footerFeatureCopy span { display: block; }
+.footerFeatureLabel {
+  margin: 22px 0 0;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+}
 .footerFeatureLogo {
   display: flex;
-  align-items: center;
-  margin-top: 15px;
-  min-height: 87px;
+  align-items: flex-start;
+  margin-top: 14px;
+  min-height: 72px;
 }
 .footerEuroclear,
+.footerEuroclearLegacy,
 .footerEmta,
 .footerCisi {
   display: block;
   height: auto;
   margin: 0;
 }
-.footerEuroclear { width: 90px; }
-.footerEmta { width: 168px; }
+.footerEuroclear { width: 228px; }
+.footerEuroclearLegacy { width: 81px; }
+.footerEmta { width: 168px; padding-top: 4px; }
 .footerCisi {
   width: 124px;
   /* Force solid white from the navy brand mark (avoids grey ISI wash). */
@@ -306,13 +321,13 @@
   justify-content: flex-start;
 }
 .footerContact .footerLegalEnd {
-  text-align: end;
+  text-align: start;
 }
 .footerContact .footerLegalEnd ul {
-  justify-items: end;
+  justify-items: start;
 }
 .footerContact .footerLegalEnd .footerLegalSocial {
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 .footerLegalSocial {
   margin-top: 12px;
@@ -328,7 +343,7 @@
   max-width: none;
 }
 .footerContact .footerLegalSocial .social {
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 .footerLegalSocial .social li {
   flex: none;
@@ -341,24 +356,28 @@
   height: 14px;
 }
 .footerBottom {
-  margin-top: clamp(40px, 5vw, 64px);
-  padding-top: clamp(28px, 3.5vw, 40px);
+  margin-top: clamp(32px, 4vw, 52px);
+  padding-top: clamp(22px, 2.8vw, 32px);
   border-top: 1px solid rgb(122 156 196 / 35%);
 }
 .footerBottomLegal,
 .footerBottomCopy {
   margin: 0;
-  color: #a9bbd2;
-  font-size: 12px;
+  color: #cbd2e8;
+  font-size: 11px;
   font-weight: 400;
   line-height: 1.65;
 }
 .footerBottomLegal {
-  max-width: 72rem;
+  max-width: none;
+  width: 100%;
+}
+.footerContact .footerBottom {
+  margin-top: clamp(22px, 3vw, 42px);
 }
 .footerBottomLegal strong {
-  color: #c5d3e6;
-  font-weight: 700;
+  color: #cbd2e8;
+  font-weight: 400;
 }
 .social {
   display: flex;

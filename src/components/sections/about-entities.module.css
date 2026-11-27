@@ -1,7 +1,7 @@
 .section {
   --entity-ink: var(--color-blue-500);
   --entity-muted: var(--text-secondary);
-  --entity-cyan: #3dceb6;
+  --entity-label: #c9dcf2;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -171,19 +171,11 @@
   font-weight: 800;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: #fff;
-  background: linear-gradient(90deg, #9bb6d4 0%, #3dceb6 100%);
-  box-shadow:
-    0 0 0 1px rgb(255 255 255 / 28%) inset,
-    0 0 12px rgb(61 206 182 / 16%);
+  color: #071932;
+  background: var(--entity-label);
   transition: box-shadow .28s ease;
 }
 
-.child:is(:hover, :focus-visible) .badge {
-  box-shadow:
-    0 0 0 1px rgb(255 255 255 / 38%) inset,
-    0 0 10px rgb(61 206 182 / 14%);
-}
 
 .badgeHolding {
   position: static;
@@ -193,7 +185,7 @@
 .badgeFca,
 .badgeDfsa,
 .badgeFund {
-  background: linear-gradient(90deg, #9bb6d4 0%, #3dceb6 100%);
+  background: var(--entity-label);
 }
 
 .jurisdiction {
@@ -243,13 +235,13 @@
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: #3d7a8f;
+  color: var(--color-blue-500);
 }
 
 .holding .meta {
   width: 100%;
   border-top-color: rgb(255 255 255 / 12%);
-  color: var(--entity-cyan);
+  color: #9bb6d4;
 }
 
 @media (max-width: 1024px) {

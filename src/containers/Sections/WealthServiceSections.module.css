@@ -66,7 +66,7 @@
   padding: var(--space-3);
   border: 1px solid var(--flow-from);
   border-radius: var(--radius-card);
-  background: var(--service-soft-blue, #e5eefb);
+  background: var(--service-soft-blue, var(--color-blue-25));
   text-align: center;
 }
 .logoFilter { position: absolute; width: 0; height: 0; overflow: hidden; }
@@ -150,7 +150,7 @@
   --dashboard-card-radius: var(--radius-control);
   --dashboard-fit-label-size: 14px;
   --elevation-card-hover: 0 4px 14px color-mix(in srgb, var(--text-primary) 4%, transparent);
-  background: var(--service-soft-blue, #e5eefb);
+  background: var(--service-soft-blue, var(--color-blue-25));
 }
 .visibilityContainer {
   display: grid;

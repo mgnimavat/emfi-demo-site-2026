@@ -6,5 +6,6 @@ export const metadata = {
   title: { absolute: copy.title },
   description: copy.description,
 };
-const HomePage = () => <HomePageSection />;
+// Home: normal (native) mouse-wheel scrolling. The scroll-by-section effect lives on /home-25.
+const HomePage = () => <HomePageSection nativeScroll />;
 export default HomePage;

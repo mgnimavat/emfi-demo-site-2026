@@ -41,7 +41,7 @@ export const cardStyle: CSSProperties = {
 /** Shared light route card — direct-access hero + infrastructure diagram. */
 export const lightRouteCardStyle: CSSProperties = {
   ...cardStyle,
-  background: "linear-gradient(160deg, #e8f0fb, #d6e4f6)",
+  background: "var(--color-blue-25)",
   border: "1px solid rgb(162 194 253 / 45%)",
 };
 

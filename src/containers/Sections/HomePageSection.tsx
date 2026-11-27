@@ -8,7 +8,7 @@ import styles from "@/components/home/landing.module.css";
 import "@/app/home-16/home-16.css";
 import "@/app/home.css";
 
-export const HomePageSection = ({ locale = 'en' }: { locale?: Locale }) => {
+export const HomePageSection = ({ locale = 'en', nativeScroll = false }: { locale?: Locale; nativeScroll?: boolean }) => {
   const copy = marketingDictionaries[locale].home;
   return (
     <ServiceLocaleProvider locale={locale} messages={getMarketingMessages(locale)}>

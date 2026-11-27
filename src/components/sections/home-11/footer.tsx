@@ -12,23 +12,28 @@ import footer from "@/content/site-footer.json";
 import styles from "./chrome.module.css";
 
 const copyright = "© 2026 EMFI Group Limited. All rights reserved.";
+/** Default footer (non-contact pages) keeps the original white Euroclear mark. */
+const directLegacyLogo = { src: "/brand/standing/euroclear-stacked-adjusted.png", alt: "Euroclear", width: 1097, height: 831, className: "footerEuroclearLegacy" };
 const featureColumns = [
   {
     title: "Direct.",
     href: "/why-emfi/direct-access",
     lines: ["Fewer intermediaries.", "Fewer handovers."] as const,
-    logo: { src: "/brand/standing/euroclear-white.png", alt: "Euroclear", width: 140, height: 135, className: "footerEuroclear" },
+    label: "Direct Participant",
+    logo: { src: "/brand/standing/euroclear-white-horizontal.png", alt: "Euroclear", width: 586, height: 114, className: "footerEuroclear" },
   },
   {
     title: "Responsive.",
     href: "/why-emfi/responsive-technology",
     lines: ["Technology that works.", "People who respond."] as const,
+    label: "Buy-Side Member",
     logo: { src: "/brand/standing/emta-white.svg", alt: "EMTA", width: 160, height: 47, className: "footerEmta" },
   },
   {
     title: "Dependable.",
     href: "/why-emfi/dependable-operations",
     lines: ["Institutional safeguards.", "Clear accountability."] as const,
+    label: "Chartered Member",
     logo: { src: "/brand/standing/cisi-brand.png", alt: "CISI", width: 160, height: 81, className: "footerCisi" },
   },
 ] as const;
@@ -112,15 +117,21 @@ export const Home11Footer = ({ socialVariant = "filled" }: { socialVariant?: "fi
                 <p className={styles.footerFeatureCopy}>
                   {column.lines.map((line) => <span key={line}>{t(line)}</span>)}
                 </p>
+                <p className={styles.footerFeatureLabel}>{t(column.label)}</p>
                 <div className={styles.footerFeatureLogo}>
-                  <Image
-                    className={styles[column.logo.className]}
-                    src={column.logo.src}
-                    alt={column.logo.alt}
-                    width={column.logo.width}
-                    height={column.logo.height}
-                    unoptimized
-                  />
+                  {(() => {
+                    const logo = !outlineSocial && column.title === "Direct." ? directLegacyLogo : column.logo;
+                    return (
+                      <Image
+                        className={styles[logo.className]}
+                        src={logo.src}
+                        alt={logo.alt}
+                        width={logo.width}
+                        height={logo.height}
+                        unoptimized
+                      />
+                    );
+                  })()}
                 </div>
               </Link>
             ))}
@@ -136,12 +147,16 @@ export const Home11Footer = ({ socialVariant = "filled" }: { socialVariant?: "fi
         <div className={styles.footerBottom}>
           <p className={styles.footerBottomLegal}>
             <strong>EMFI Securities Limited</strong>
-            {" "}(FRN 763979) and{" "}
+            {" "}(FRN 763979, Company No. 10447140) and{" "}
             <strong>EMFI Capital Limited</strong>
-            {" "}(FRN 822389) are authorised and regulated by the Financial Conduct Authority.
-            <br />
+            {" "}(FRN 822389, Company No. 11380609) are authorised and regulated by the Financial Conduct Authority.
+            {" "}
             <strong>EMFI Capital (DIFC) Limited</strong>
             {" "}is authorised and regulated by the Dubai Financial Services Authority (F011663).
+            {" "}
+            <strong>EMFI Fund SPC</strong>
+            {" "}is a Cayman Islands entity with Cayman Islands Monetary Authority reference LMFN 1664891.
+            {" "}
           </p>
         </div>
       </div>

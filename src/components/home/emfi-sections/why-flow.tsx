@@ -109,7 +109,7 @@ function Rail({
   );
 }
 
-export function WhyFlow({ children, stickyLabel = false, formProgress = false, shortWhy = false, pairedCue = false, split = false }: { children: ReactNode; stickyLabel?: boolean; formProgress?: boolean; shortWhy?: boolean; pairedCue?: boolean; split?: boolean }) {
+export function WhyFlow({ children, stickyLabel = false, formProgress = false, shortWhy = false, pairedCue = false, split = false, nativeScroll = false }: { children: ReactNode; stickyLabel?: boolean; formProgress?: boolean; shortWhy?: boolean; pairedCue?: boolean; split?: boolean; nativeScroll?: boolean }) {
   const { t, localize } = useServiceLocale();
   const ref = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -362,7 +362,8 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
   }, [active, stickyLabel, split]);
 
   useEffect(() => {
-    if (!split) return;
+    // nativeScroll: leave the mouse wheel alone so the page scrolls normally.
+    if (!split || nativeScroll) return;
     const flow = ref.current;
     if (!flow) return;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -425,7 +426,7 @@ export function WhyFlow({ children, stickyLabel = false, formProgress = false, s
 
     window.addEventListener("wheel", onWheel, { passive: false });
     return () => window.removeEventListener("wheel", onWheel);
-  }, [split]);
+  }, [split, nativeScroll]);
 
   const goToStep = (n: number) => {
     const flow = ref.current;
