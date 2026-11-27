@@ -9,6 +9,7 @@ import { IntelligenceSignupSection } from './IntelligenceSignupSection';
 import { ResearchDisclosures } from '@/components/sections/execution/research-disclosures';
 import { ServiceHero } from './ServiceHero';
 import { SettlementCustodySections } from './SettlementCustodySections';
+import { SettlementCustodyMapSection } from './SettlementCustodyMapSection';
 import { SettlementServiceSections } from './SettlementServiceSections';
 import { QuestionnaireSection } from '@/components/home/questionnaire/questionnaire';
 import { OfficeContactSection } from './OfficeContactSection';
@@ -43,10 +44,11 @@ export const LocalizedServicePageSection = ({
   researchVariant = 'current',
   settlementVariant = 'current',
   wealthVariant = 'current',
-}: { service: ServicePage; locale?: Locale; researchVariant?: 'current' | 'archived'; settlementVariant?: 'current' | 'archive' | 'v1' | 'v2' | 'archived'; wealthVariant?: 'current' | 'archive' | 'v1' | 'v2' }) => {
+}: { service: ServicePage; locale?: Locale; researchVariant?: 'current' | 'archived'; settlementVariant?: 'current' | 'archive' | 'v1' | 'v2' | 'archived'; wealthVariant?: 'current' | 'archive' | 'v1' | 'v2' | 'glass' }) => {
   const dictionary = serviceDictionaries[locale];
   const messages = dictionary[servicePages[service]].ui;
   const research = service === 'research-execution';
+  const hasCustodyMapHero = service === 'settlement-custody' && settlementVariant === 'archive';
   const copy = service === 'settlement-custody' ? dictionary.settlement : dictionary.wealth;
   const [londonEntity] = dictionary.settlement.disclosures.entities;
   return (
@@ -86,9 +88,12 @@ export const LocalizedServicePageSection = ({
           </>
         ) : (
           <>
-            {service === 'wealth-asset-management' && wealthVariant !== 'v1' ? (
+            {hasCustodyMapHero ? (
+              <SettlementCustodyMapSection title={dictionary.settlement.title} copy={dictionary.settlement.custodyMap}
+                cueLabel={dictionary.settlement.heroCta} />
+            ) : service === 'wealth-asset-management' && wealthVariant !== 'v1' ? (
               <WealthServiceHero copy={dictionary.wealth.redesign.hero} heroTypewriter={dictionary.wealth.heroTypewriter}
-                layout={wealthVariant === 'v2' ? 'split' : 'stacked'} />
+                layout={wealthVariant === 'v2' ? 'split' : 'stacked'} darkGlass={wealthVariant === 'glass'} />
             ) : service === 'settlement-custody' && settlementVariant !== 'archived' ? (
               <PrinciplesSection stacked hero copy={marketingDictionaries[locale].home.principles}
                 appearance="light"
@@ -117,7 +122,9 @@ export const LocalizedServicePageSection = ({
             ) : wealthVariant !== 'v1' ? <>
               <WealthServiceSections copy={dictionary.wealth.redesign} researchTeam={dictionary.research.team}
                 aboutPeople={dictionaries[locale].about.people}
-                archiveFund={wealthVariant === 'archive'} />
+                archiveFund={wealthVariant === 'archive'}
+                fundLeadAsTitle={wealthVariant === 'current' || wealthVariant === 'v2'}
+                showFundSearch={wealthVariant === 'current'} />
               <OfficeContactSection copy={dictionaries[locale].common} officeCity="Cayman" sectionId="wealth-office"
                 layout="columns" officeCities={['London', 'Cayman']} stretchColumns
                 officeEntityNames={{ London: [londonEntity.name] }} />

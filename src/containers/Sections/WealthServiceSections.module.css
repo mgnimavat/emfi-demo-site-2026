@@ -27,12 +27,21 @@
   .fundLayout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  :global([data-wealth-variant='current']) .fundIntroduction { grid-area: 1 / 2; }
+  :global([data-wealth-variant='current']) .providers { grid-area: 1 / 1; }
   .fundLayout:not(.fundArchiveLayout) .providerGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-4);
   }
   .fundArchiveLayout .title { font-size: clamp(36px, 7.2cqi, 96px); }
   .fundArchiveLayout .providerGrid { gap: var(--space-3); }
+}
+.fundIntroduction .fundLeadTitle {
+  font-size: clamp(34px, 4.7vw, 72px);
+  text-wrap: balance;
+}
+:global([data-wealth-variant='current']) .fundLeadTitle:lang(en) {
+  text-transform: capitalize;
 }
 .description {
   composes: sectionDescription from '../../components/sections/execution/workstation-section.module.css';
@@ -174,6 +183,33 @@
   .visibilityIntro .description { margin-inline: 0; }
   .visibilityIntro .title:lang(es) {
     font-size: min(64px, calc((100cqi - var(--space-5)) * .049));
+  }
+}
+@media (min-width: 901px) {
+  :global([data-wealth-variant='current']) .visibilityContainer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+  }
+
+  :global([data-wealth-variant='current']) .visibilityIntro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+    text-align: start;
+  }
+
+  :global([data-wealth-variant='current']) .visibilityIntro .description { margin-inline: 0; }
+}
+
+:global([data-wealth-variant='current']) .visibilityIntro .title:lang(en) {
+  font-size: clamp(38px, 6.2vw, 82px);
+  line-height: 1.04;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+
+@media (max-width: 767px) {
+  :global([data-wealth-variant='current']) .visibilityIntro .title:lang(en) {
+    font-size: clamp(32px, 8vw, 60px);
   }
 }
 @media (max-width: 380px) {

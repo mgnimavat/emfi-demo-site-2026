@@ -89,7 +89,8 @@
       "titleLines": [
         "Gestión patrimonial"
       ],
-      "lead": "Un fondo es más que una cartera. La estructura jurídica, la organización de las carteras, la administración, la auditoría y la supervisión legal forman parte de su marco operativo.",
+      "lead": "Un fondo es más que una cartera.",
+      "body": "La estructura jurídica, la organización de las carteras, la administración, la auditoría y la supervisión legal forman parte de su marco operativo.",
       "archive": {
         "titleLines": [
           "Un fondo es",
@@ -154,6 +155,33 @@
           "body": "Revisar la cartera conforme a sus parámetros acordados, marco de riesgo y requisitos de información."
         }
       ]
+    },
+    "fundSearch": {
+      "title": "Encuentre fondos",
+      "description": "Explore más de 180.000 fichas de fondos. Consulte quién gestiona cada fondo, dónde está domiciliado y si la clase de participaciones reinvierte o distribuye las rentas.",
+      "label": "Buscar fondos",
+      "fundName": "Nombre del fondo",
+      "placeholder": "Buscar por nombre o ISIN",
+      "hint": "Introduzca al menos {min} caracteres para buscar.",
+      "loading": "Buscando fondos…",
+      "resultsReady": "Hay resultados disponibles. Use las teclas de flecha para explorarlos.",
+      "empty": "Ningún fondo coincide con su búsqueda.",
+      "unavailable": "El catálogo de fondos no está disponible.",
+      "retry": "Volver a intentar",
+      "refine": "Hay más coincidencias. Acote la búsqueda por nombre o ISIN.",
+      "show": "Abrir la búsqueda de fondos",
+      "hide": "Cerrar la búsqueda de fondos",
+      "clear": "Borrar el fondo seleccionado",
+      "detailsTitle": "Datos del fondo",
+      "detailsEmpty": "Seleccione un fondo de los resultados para consultar sus datos.",
+      "isin": "ISIN",
+      "fundHouse": "Gestora del fondo",
+      "familyCurrency": "Divisa de la familia de fondos",
+      "incomeTreatment": "Tratamiento de rentas",
+      "domicile": "Domicilio",
+      "lei": "LEI del fondo",
+      "unitDecimals": "Decimales de las participaciones",
+      "incomeLabels": { "ACC": "Acumulación", "INC": "Distribución de rentas" }
     },
     "visibility": {
       "titleLines": [

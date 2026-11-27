@@ -21,12 +21,18 @@
 }
 
 .copy { min-width: 0; container-type: inline-size; }
-.title { margin: 0; font-size: clamp(38px, 12cqi, 72px); font-weight: 800; line-height: 1.02; letter-spacing: -.055em; }
-.title span { display: block; }
-.benefits { display: grid; gap: var(--space-4); margin: var(--space-6) 0 0; padding: 0; list-style: none; }
-.benefits li { display: flex; align-items: flex-start; gap: var(--space-3); color: var(--text-inverse-muted); font-size: 15px; line-height: 1.7; }
-.benefits svg { flex: none; margin-top: var(--space-1); color: var(--color-blue-100); }
-.note { max-width: 60ch; margin: var(--space-6) 0 0; color: var(--text-inverse-muted); font-size: 12px; line-height: 1.7; }
+.title {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(38px, 15cqi, 80px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+
+.title:lang(ar) { letter-spacing: normal; line-height: 1.2; }
+.accent { color: var(--color-blue-100); }
 @media (max-width: 1023px) { .card { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 599px) {
   .section { padding-inline: var(--space-4); }

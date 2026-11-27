@@ -2,6 +2,14 @@
   "title": "Liquidación y custodia",
   "heroCta": "Explorar más",
   "description": "Servicios institucionales de custodia y liquidación, respaldados por tecnología que aporta mayor visibilidad a posiciones, saldos y operaciones.",
+  "custodyMap": {
+    "description": "Explore los mercados en los que EMFI presta servicios de custodia y liquidación transfronterizas para valores elegibles.",
+    "marketSelection": "Mercados de liquidación y custodia",
+    "hongKong": "Hong Kong",
+    "exchangeLabel": "Bolsas de Emiratos Árabes Unidos",
+    "systemsLabel": "Sistemas de liquidación",
+    "exchanges": { "ADX": "Abu Dabi (ADX)", "DFM": "Dubái (DFM)" }
+  },
   "heroLines": [
     "Liquidación y",
     "Custodia"
@@ -22,8 +30,8 @@
   "linkedAnimation": {
     "label": "Flujo de liquidación ilustrativo",
     "fundingInterest": {
-      "title": "Paga intereses por la diferencia de financiación",
-      "body": "La compra ya se ha liquidado y aún no ha recibido el importe de la venta. Paga intereses por el efectivo que toma prestado para cubrir la diferencia."
+      "title": "Es posible que pague intereses",
+      "body": "Si pide un préstamo para pagar la compra, puede tener que pagar intereses hasta que se liquide la venta."
     },
     "buy": "COMPRA",
     "sell": "VENTA",
@@ -32,41 +40,41 @@
       "unlinked": [
         {
           "id": "buy",
-          "title": "La compra se liquida primero",
-          "body": "Sale efectivo de su cuenta para pagar los valores."
+          "title": "La compra se completa primero",
+          "body": "Paga los valores que compró."
         },
         {
           "id": "sell",
-          "title": "La venta no se liquida",
-          "body": "El importe de la venta se retrasa y su dinero queda inmovilizado."
+          "title": "La venta se retrasa",
+          "body": "Todavía no ha recibido el dinero de la venta."
         },
         {
           "id": "outcome",
-          "title": "Usted financia la diferencia",
-          "body": "Puede necesitar financiación y pagar intereses hasta que se liquide la venta."
+          "title": "Puede necesitar un préstamo",
+          "body": "Es posible que pague intereses hasta que se liquide la venta."
         }
       ],
       "linked": [
         {
           "id": "buy",
-          "title": "La compra queda retenida",
-          "body": "El pago de la compra espera mientras la venta sigue pendiente."
+          "title": "La compra espera",
+          "body": "El pago se aplaza mientras la venta siga pendiente."
         },
         {
           "id": "sell",
           "title": "La venta está lista",
-          "body": "Ambas instrucciones están listas para liquidarse juntas."
+          "body": "La compra y la venta ya pueden liquidarse."
         },
         {
           "id": "outcome",
           "title": "Ambas operaciones se liquidan juntas",
-          "body": "El importe de la venta llega cuando se debe pagar la compra."
+          "body": "Recibe el dinero de la venta cuando debe pagar la compra."
         }
       ]
     },
     "storySummary": {
-      "unlinked": "Paga la compra antes de recibir el importe de la venta.",
-      "linked": "El pago de la compra coincide con el cobro de la venta."
+      "unlinked": "Paga la compra antes de recibir el dinero de la venta.",
+      "linked": "La compra y la venta se liquidan al mismo tiempo."
     },
     "pause": "Pausar animación",
     "play": "Reanudar animación",

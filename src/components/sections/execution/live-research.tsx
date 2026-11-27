@@ -50,7 +50,7 @@ export const LiveResearch = ({ singleColumn = false, compact = false, heading }:
 
   const searchField = <label className={`${styles.filterField} ${styles.searchLabel}`}><span className={compact ? 'sr-only' : undefined}>{t("Search research")}</span><span className={styles.researchSearch}>
             <Search size={19} strokeWidth={1.7} aria-hidden="true" />
-            <input type="search" placeholder={t("Search reports, markets or countries…")} value={filters.keyword} onChange={event => updateFilter({ keyword: event.target.value })} />
+            <input type="search" placeholder={t("Search By Keyword")} value={filters.keyword} onChange={event => updateFilter({ keyword: event.target.value })} />
             {filters.keyword ? <button type="button" aria-label={t("Clear search")} onClick={() => updateFilter({ keyword: "" })}><X size={16} aria-hidden="true" /></button> : null}
           </span>
         </label>;

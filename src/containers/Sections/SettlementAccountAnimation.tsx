@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from 'react';
 import { useAnimationFrame, useInView } from 'framer-motion';
 import { ArrowRight, ArrowRightLeft, Check, LockKeyhole, TriangleAlert } from 'lucide-react';
+import routeStyles from '@/components/emfi-sections/sections.module.css';
 import type { SettlementCopy } from '@/lib/i18n/service-dictionaries';
 import {
   getSettlementChapterFrame,
@@ -10,6 +11,7 @@ import {
   settlementChapterDuration,
   type SettlementChapter,
 } from '@/lib/settlement-account-animation';
+import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
 import styles from './SettlementAccountAnimation.module.css';
 
 type AnimationCopy = SettlementCopy['accountAnimation'];
@@ -116,6 +118,19 @@ const DedicatedScene = ({ copy, showFullDeposits = false }: { copy: AnimationCop
 const describeFrame = (chapter: SettlementChapter, { phase, delivered, crossUse }: Frame) =>
   ({ chapter, phase, delivered, crossUse });
 
+const RouteEyebrow = ({ chapter }: { chapter: SettlementChapter }) => {
+  const { t } = useServiceLocale();
+  const conventional = chapter === 'shared';
+
+  return (
+    <p className={styles.routeEyebrow}>
+      <span className={conventional ? routeStyles.routeTitleConventional : routeStyles.routeTitleEmfi}>
+        {t(conventional ? 'Conventional Route' : 'EMFI Route')}
+      </span>
+    </p>
+  );
+};
+
 export const SettlementAccountAnimation = ({ copy, showFullDeposits = false }: {
   copy: AnimationCopy; showFullDeposits?: boolean;
 }) => {
@@ -160,6 +175,7 @@ export const SettlementAccountAnimation = ({ copy, showFullDeposits = false }: {
       data-running={running} data-settled={delivered} data-cross-use={crossUse}
       data-full-deposits={showFullDeposits || undefined}>
       <figure className={styles.figure}>
+        <RouteEyebrow chapter={chapter} />
         <div ref={board} className={styles.board} data-scene={chapter}
           style={chapter === 'shared' ? sharedDeliveryStyle : undefined}>
           {chapter === 'shared' && <SharedScene copy={copy} crossUse={crossUse} showIcon={!showFullDeposits} />}
@@ -172,6 +188,7 @@ export const SettlementAccountAnimation = ({ copy, showFullDeposits = false }: {
       </figure>
       {reducedMotion && (
         <figure className={styles.figure}>
+          <RouteEyebrow chapter="separate" />
           <div className={styles.board} data-scene="separate">
             <DedicatedScene copy={copy} showFullDeposits={showFullDeposits} />
           </div>

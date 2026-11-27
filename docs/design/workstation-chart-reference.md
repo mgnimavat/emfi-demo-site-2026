@@ -7,3 +7,7 @@ The Workstation and Wealth V2 use the same plot component for axes, tooltips, an
 - [Workstation chart](../../src/components/sections/execution/execution-chart.tsx) · [Styles](../../src/components/sections/execution/execution-chart.module.css)
 - [Shared plot](../../src/ui/components/TimeSeriesPlot.tsx) · [Styles](../../src/ui/components/TimeSeriesPlot.module.css)
 - [Wealth V2 chart](../../src/containers/Sections/WealthServiceHero.tsx) · [Styles](../../src/containers/Sections/WealthServiceHero.module.css)
+
+## Full-width Asset Management chart
+
+The full-width chart uses a continuous translucent blue area. A soft sheen drifts across the fill, and a second light follows the pointer inside the plotted area. [WealthLiquidGlass](../../src/containers/Sections/WealthLiquidGlass.tsx)
