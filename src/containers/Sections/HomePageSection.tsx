@@ -15,7 +15,7 @@ export const HomePageSection = ({ locale = 'en', nativeScroll = false }: { local
     <div lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`home-16-shell home-page ${localeStyles.page}`}>
 
       <div className={`${styles.page} ${styles.fullHero} ${styles.spinMark}`}>
-        <EmfiSections showRouteTitle loop stepLabel="Handover" highlightSlides standardsEyebrow lightBands markFill={false} homeSlides omitSecondSlide perspectivePhones floatingPhones brandLogos whyTimeline blendHeader directPace="home12" responsiveBody="Technology that works. People who respond." dependableBody="Institutional safeguards. Clear accountability." routeTitles={{ conventional: "Conventional Route", direct: "EMFI Route" }} directBody="Fewer intermediaries. Fewer handovers." whySticky heroCue trimChrome home15Trade shortWhy brandInk settlementDash splitWhy />
+        <EmfiSections showPoints={false} showRouteTitle loop stepLabel="Handover" highlightSlides standardsEyebrow lightBands markFill={false} homeSlides omitSecondSlide perspectivePhones floatingPhones brandLogos whyTimeline blendHeader directPace="home12" responsiveBody="Technology that works. People who respond." dependableBody="Institutional safeguards. Clear accountability." routeTitles={{ conventional: "Conventional Route", direct: "EMFI Route" }} directBody="Fewer intermediaries. Fewer handovers." whySticky heroCue trimChrome home15Trade shortWhy brandInk settlementDash splitWhy />
       </div>
       <QuestionnaireSection copy={copy.questionnaire} />
     </div>

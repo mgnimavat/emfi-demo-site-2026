@@ -20,6 +20,7 @@ const featureColumns = [
     href: "/why-emfi/direct-access",
     lines: ["Fewer intermediaries.", "Fewer handovers."] as const,
     label: "Direct Participant",
+    officialHref: "https://www.euroclear.com",
     logo: { src: "/brand/standing/euroclear-white-horizontal.png", alt: "Euroclear", width: 586, height: 114, className: "footerEuroclear" },
   },
   {
@@ -27,6 +28,7 @@ const featureColumns = [
     href: "/why-emfi/responsive-technology",
     lines: ["Technology that works.", "People who respond."] as const,
     label: "Buy-Side Member",
+    officialHref: "https://www.emta.org/membership/list-of-members/",
     logo: { src: "/brand/standing/emta-white.svg", alt: "EMTA", width: 160, height: 47, className: "footerEmta" },
   },
   {
@@ -34,6 +36,7 @@ const featureColumns = [
     href: "/why-emfi/dependable-operations",
     lines: ["Institutional safeguards.", "Clear accountability."] as const,
     label: "Chartered Member",
+    officialHref: "https://www.cisi.org/cisiweb2/cisi-website/who-we-are/cisi-chartered-firm",
     logo: { src: "/brand/standing/cisi-brand.png", alt: "CISI", width: 160, height: 81, className: "footerCisi" },
   },
 ] as const;
@@ -106,35 +109,43 @@ export const Home11Footer = ({ socialVariant = "filled" }: { socialVariant?: "fi
             </div>
           </div>
           <div className={styles.footerFeatures}>
-            {featureColumns.map((column) => (
-              <Link
-                key={column.title}
-                href={localizeHref(column.href, locale)}
-                className={`${styles.footerLinks} ${styles.footerFeature}`}
-                aria-label={t(column.title)}
-              >
-                <h2>{t(column.title)}</h2>
-                <p className={styles.footerFeatureCopy}>
-                  {column.lines.map((line) => <span key={line}>{t(line)}</span>)}
-                </p>
-                <p className={styles.footerFeatureLabel}>{t(column.label)}</p>
-                <div className={styles.footerFeatureLogo}>
-                  {(() => {
-                    const logo = !outlineSocial && column.title === "Direct." ? directLegacyLogo : column.logo;
-                    return (
-                      <Image
-                        className={styles[logo.className]}
-                        src={logo.src}
-                        alt={logo.alt}
-                        width={logo.width}
-                        height={logo.height}
-                        unoptimized
-                      />
-                    );
-                  })()}
+            {featureColumns.map((column) => {
+              const logo = !outlineSocial && column.title === "Direct." ? directLegacyLogo : column.logo;
+              return (
+                <div key={column.title} className={`${styles.footerLinks} ${styles.footerFeature}`}>
+                  <Link href={localizeHref(column.href, locale)} className={styles.footerFeatureIntro}>
+                    <h2>{t(column.title)}</h2>
+                    <p className={styles.footerFeatureCopy}>
+                      {column.lines.map((line) => <span key={line}>{t(line)}</span>)}
+                    </p>
+                  </Link>
+                  <a className={styles.footerFeatureCred} href={column.officialHref} target="_blank" rel="noopener noreferrer">
+                    <p className={styles.footerFeatureLabel}>{t(column.label)}</p>
+                    <div className={styles.footerFeatureLogo}>
+                      {logo.className === "footerEuroclearLegacy" ? (
+                        <span className={styles.footerEuroclearStack}>
+                          <span className={styles.footerEuroclearMark}>
+                            <Image src={logo.src} alt="" width={logo.width} height={logo.height} unoptimized />
+                          </span>
+                          <span className={styles.footerEuroclearWord}>
+                            <Image src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} unoptimized />
+                          </span>
+                        </span>
+                      ) : (
+                        <Image
+                          className={styles[logo.className]}
+                          src={logo.src}
+                          alt={logo.alt}
+                          width={logo.width}
+                          height={logo.height}
+                          unoptimized
+                        />
+                      )}
+                    </div>
+                  </a>
                 </div>
-              </Link>
-            ))}
+              );
+            })}
           </div>
           {legalRegulatoryLinks.length ? (
             <nav className={`${styles.footerLinks} ${styles.footerLegal} ${styles.footerLegalEnd}`} aria-label={t(legalRegulatoryHeading)}>

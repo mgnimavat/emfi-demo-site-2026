@@ -108,10 +108,11 @@ function StandardsPanel({ centered = false }: { centered?: boolean }) {
 
 type LogoItem = {
   name: string;
-  src: string;
-  width: number;
-  height: number;
+  src?: string;
+  width?: number;
+  height?: number;
   entities?: readonly string[];
+  textLogo?: "risk";
 };
 
 type EvidenceSlideItem = {
@@ -145,8 +146,8 @@ const slides: EvidenceSlideItem[] = [
     title: "Connected to",
     kind: "logos" as const,
     items: [
-      { name: "EMTA", src: "/brand/standing/emta.svg", width: 290, height: 85 },
-      { name: "CISI", src: "/brand/standing/cisi.png", width: 572, height: 288 },
+      { name: "LSEG", src: "/brand/standing/lseg.png", width: 1067, height: 1040 },
+      { name: "Risk Intelligence", textLogo: "risk" },
       { name: "Bloomberg", src: "/brand/standing/bloomberg.png", width: 280, height: 56 },
     ] satisfies LogoItem[],
   },
@@ -168,9 +169,9 @@ const splitLogoSlides: readonly EvidenceSlideItem[] = [
     title: "Fund and legal partners",
     kind: "logos" as const,
     items: [
-      { name: "Apex", src: "/images/fund-providers/apex.svg", width: 550, height: 514 },
-      { name: "Walkers", src: "/images/fund-providers/walkers.jpg", width: 1797, height: 614 },
       { name: "Dechert", src: "/images/fund-providers/dechert.png", width: 1024, height: 1024 },
+      { name: "Walkers", src: "/images/fund-providers/walkers.jpg", width: 1797, height: 614 },
+      { name: "Apex", src: "/images/fund-providers/apex.svg", width: 550, height: 514 },
     ],
   },
   slides[2], // Connected to
@@ -185,6 +186,7 @@ function logoEntities(item: LogoItem) {
 }
 
 function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: EvidenceSlideItem; ink?: boolean; gray?: boolean }) {
+  const { t } = useServiceLocale();
   const marks = gray ? { ...brandMarkSrc, ...grayMarkSrc } : ink ? inkMarkSrc : brandMarkSrc;
   return (
     <div className={styles.plainRow}>
@@ -205,12 +207,23 @@ function PlainEvidenceLogos({ slide, ink = false, gray = false }: { slide: Evide
               navyProviderNames.has(item.name) && styles.plainItemNavy,
               item.name === "Walkers" && styles.plainItemNavyWide,
               item.name === "CISI" && styles.plainItemCisi,
+              item.name === "LSEG" && styles.plainItemLseg,
+              item.textLogo === "risk" && styles.plainItemRisk,
               item.name === "Bloomberg" && styles.plainItemBloomberg,
               entities && styles.plainItemWithEntities,
             ].filter(Boolean).join(" ")}
           >
             <div className={styles.plainLogo}>
-              <Image src={marks[item.src] ?? item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
+              {item.textLogo === "risk" ? (
+                <p className={styles.riskLogo}>
+                  <span className={styles.riskKicker}>{t("Risk Intelligence")}</span>
+                  <span className={styles.riskWord}>World-Check</span>
+                  <span className={styles.riskRule} aria-hidden="true" />
+                  <span className={styles.riskWord}>Media Check</span>
+                </p>
+              ) : (
+                <Image src={marks[item.src!] ?? item.src!} alt={item.name} width={item.width ?? 1} height={item.height ?? 1} unoptimized />
+              )}
             </div>
             {entities ? (
               <ul className={styles.plainEntities}>

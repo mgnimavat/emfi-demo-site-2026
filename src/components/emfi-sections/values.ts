@@ -140,13 +140,14 @@ function tok(p: RoutePt, op: number, bg: string) {
 const CONVENTIONAL_END = 0.56;
 const CONVENTIONAL_STRETCH = 1.75;
 export const directTimelineScale = CONVENTIONAL_END * CONVENTIONAL_STRETCH + (1 - CONVENTIONAL_END);
-const HOME12_CONV_MS = 12500;
+const HOME12_CONV_MS = 10000;
 const HOME12_EMFI_MS = 8000;
 const HOME12_HOLD_MS = 2500;
-/** Just after Depository shows Received, then the EMFI route starts. */
+/** Just after Depository shows Received. Hold this finished conventional route, then the EMFI route starts. */
 const HOME12_CONV_DONE = 0.47;
+const HOME12_CONV_HOLD_MS = 3000;
 const HOME12_CONV_PLAY_MS = (HOME12_CONV_DONE / CONVENTIONAL_END) * HOME12_CONV_MS;
-const HOME12_TOTAL_MS = HOME12_CONV_PLAY_MS + HOME12_EMFI_MS + HOME12_HOLD_MS;
+const HOME12_TOTAL_MS = HOME12_CONV_PLAY_MS + HOME12_CONV_HOLD_MS + HOME12_EMFI_MS + HOME12_HOLD_MS;
 const HOME12_EMFI_END = 0.92;
 const BASE_DIRECT_MS = 13000;
 
@@ -166,9 +167,11 @@ function slowConventionalRoute(t: number) {
 
 function home12Route(t: number) {
   const ms = t * HOME12_TOTAL_MS;
+  const emfiStart = HOME12_CONV_PLAY_MS + HOME12_CONV_HOLD_MS;
   if (ms <= HOME12_CONV_PLAY_MS) return (ms / HOME12_CONV_MS) * CONVENTIONAL_END;
-  if (ms <= HOME12_CONV_PLAY_MS + HOME12_EMFI_MS) {
-    const k = (ms - HOME12_CONV_PLAY_MS) / HOME12_EMFI_MS;
+  if (ms <= emfiStart) return HOME12_CONV_DONE;
+  if (ms <= emfiStart + HOME12_EMFI_MS) {
+    const k = (ms - emfiStart) / HOME12_EMFI_MS;
     return CONVENTIONAL_END + k * (HOME12_EMFI_END - CONVENTIONAL_END);
   }
   return HOME12_EMFI_END;

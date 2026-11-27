@@ -239,7 +239,8 @@
   opacity: 0.62;
 }
 
-.splitCarouselSlide[data-active="false"] .plainLogo img {
+.splitCarouselSlide[data-active="false"] .plainLogo img,
+.splitCarouselSlide[data-active="false"] .riskLogo {
   opacity: 0.22;
 }
 
@@ -341,6 +342,62 @@
 .splitCarousel .plainItemCisi .plainLogo img {
   height: 76px !important;
   max-height: 76px !important;
+}
+
+/* Full LSEG crest and wordmark: fill the card so both parts stay readable. */
+.splitCarousel .plainItemLseg {
+  padding: 14px 16px !important;
+}
+
+.splitCarousel .plainItemLseg .plainLogo,
+.splitCarousel .plainItemLseg .plainLogo img {
+  height: 84px !important;
+  max-height: 84px !important;
+}
+
+.splitCarousel .plainItemRisk {
+  padding: 10px 14px !important;
+}
+
+.splitCarousel .plainItemRisk .plainLogo {
+  height: 100px !important;
+  max-height: 100px !important;
+}
+
+.riskLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  color: #071832;
+  line-height: 0.95;
+}
+
+.riskKicker {
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.riskWord {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+
+.riskRule {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin: 6px 0;
+  background: currentColor;
 }
 
 .splitCarousel .plainItemCima .plainLogo {
