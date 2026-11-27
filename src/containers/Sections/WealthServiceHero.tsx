@@ -10,12 +10,12 @@ import type { WealthCopy } from '@/lib/i18n/service-dictionaries';
 import { TimeSeriesPlot, type TimeSeriesPlotState } from '@/ui/components/TimeSeriesPlot';
 import { useServiceLocale } from '@/ui/hooks/useServiceLocale';
 import { WealthFundConsent } from './WealthFundConsent';
+import { WealthLiquidGlass } from './WealthLiquidGlass';
 import styles from './WealthServiceHero.module.css';
 
 const dateOptions = { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' } as const;
 const monthOptions = { month: 'short', year: 'numeric', timeZone: 'UTC' } as const;
 const plot = { width: 1000, height: 400, top: 26, bottom: 380 } as const;
-const shineWidth = plot.width * 0.16;
 const dateStops = [0, 0.25, 0.5, 0.75, 1] as const;
 const upperTooltipBand = plot.height / 4;
 const gridRows = 6;
@@ -49,8 +49,8 @@ const previewPoints = previewProfile.map(([date, value]) => ({ date, value }));
 
 type ChartResult = { range: FundPositionRange; points: FundPositionPoint[] | 'unavailable' };
 
-export const WealthServiceHero = ({ copy, heroTypewriter, layout = 'stacked' }: {
-  copy: WealthCopy['redesign']['hero']; heroTypewriter: WealthCopy['heroTypewriter']; layout?: 'stacked' | 'split';
+export const WealthServiceHero = ({ copy, heroTypewriter, layout = 'stacked', darkGlass = false }: {
+  copy: WealthCopy['redesign']['hero']; heroTypewriter: WealthCopy['heroTypewriter']; layout?: 'stacked' | 'split'; darkGlass?: boolean;
 }) => {
   const { locale, t } = useServiceLocale();
   const split = layout === 'split';
@@ -63,11 +63,10 @@ export const WealthServiceHero = ({ copy, heroTypewriter, layout = 'stacked' }: 
   const [retry, setRetry] = useState(0);
   const [cursor, setCursor] = useState<number | null>(null);
   const activeRangeRef = useRef<HTMLButtonElement>(null);
+  const pointerGradientRef = useRef<SVGRadialGradientElement>(null);
+  const pointerLightRef = useRef<SVGPathElement>(null);
   const chartId = useId();
   const plotId = `${chartId}-plot`;
-  const areaGradientId = `${chartId}-area-fill`;
-  const shineGradientId = `${chartId}-shine`;
-  const shineMaskId = `${chartId}-shine-mask`;
   const guideGradientId = `${chartId}-guide`;
   const points = result?.range === range ? result.points : null;
   const loading = confirmed && points === null;
@@ -110,19 +109,28 @@ export const WealthServiceHero = ({ copy, heroTypewriter, layout = 'stacked' }: 
       axisDates: dateStops.map((stop) => new Date(first.date + stop * span)),
       coordinates,
       path: toPath(coordinates),
-      endpoint: coordinates[coordinates.length - 1],
     };
   }, [points, split]);
 
   const active = cursor === null ? null : chart?.coordinates[cursor];
   const lastIndex = (chart?.coordinates.length ?? 1) - 1;
   const visiblePath = confirmed ? chart?.path : previewPath;
+  const areaPath = visiblePath ? `${visiblePath} V${plot.bottom} H0 Z` : null;
+
+  const hidePointerLight = () => pointerLightRef.current?.removeAttribute('data-lit');
 
   const moveCursor = (event: PointerEvent<SVGSVGElement>) => {
-    const { left, width } = event.currentTarget.getBoundingClientRect();
-    if (!width || !chart) return;
+    const { left, top, width, height } = event.currentTarget.getBoundingClientRect();
+    if (!width || !height || !chart) return;
 
     const x = (event.clientX - left) / width * plot.width;
+    if (event.pointerType !== 'touch') {
+      const y = (event.clientY - top) / height * plot.height;
+      const radius = Math.min(126, Math.max(54, width * .105));
+      pointerGradientRef.current?.setAttribute('gradientTransform',
+        `translate(${x} ${y}) scale(${radius * plot.width / width} ${radius * plot.height / height})`);
+      pointerLightRef.current?.toggleAttribute('data-lit', true);
+    }
     const next = chart.coordinates.findIndex((point) => point.x >= x);
     if (next <= 0) {
       setCursor(next === 0 ? 0 : lastIndex);
@@ -134,6 +142,7 @@ export const WealthServiceHero = ({ copy, heroTypewriter, layout = 'stacked' }: 
 
   const navigateChart = (event: KeyboardEvent<SVGSVGElement>) => {
     if (event.key === 'Escape') {
+      hidePointerLight();
       setCursor(null);
     } else if (event.key === 'Home' || event.key === 'End') {
       event.preventDefault();
@@ -215,47 +224,33 @@ export const WealthServiceHero = ({ copy, heroTypewriter, layout = 'stacked' }: 
           aria-label={chart ? chartTitle : undefined}
           aria-describedby={chart ? `${chartId}-help` : undefined}
           tabIndex={chart ? 0 : undefined}
-          onPointerDown={moveCursor} onPointerMove={moveCursor}
-          onPointerLeave={(event) => { if (event.pointerType === 'mouse') setCursor(null); }}
+          onPointerDown={moveCursor} onPointerEnter={moveCursor} onPointerMove={moveCursor}
+          onPointerCancel={hidePointerLight}
+          onPointerLeave={(event) => {
+            hidePointerLight();
+            if (event.pointerType === 'mouse') setCursor(null);
+          }}
           onKeyDown={navigateChart} onFocus={() => setCursor((current) => current ?? lastIndex)}
           onBlur={() => setCursor(null)}>
           {chart && (
             <desc id={`${chartId}-help`}>{chartInstructions}</desc>
           )}
           <defs>
-            <linearGradient id={areaGradientId} gradientUnits="userSpaceOnUse"
-              x1="0" y1={plot.top} x2="0" y2={plot.bottom}>
-              <stop stopColor="color-mix(in srgb, var(--color-blue-100) 32%, var(--bg-page))" />
-              <stop offset="100%" stopColor="var(--bg-page)" />
-            </linearGradient>
-            {chart && (
-              <>
-                <linearGradient id={shineGradientId}>
-                  <stop stopColor="white" stopOpacity="0" />
-                  <stop offset="32%" stopColor="white" stopOpacity=".28" />
-                  <stop offset="50%" stopColor="white" stopOpacity=".96" />
-                  <stop offset="68%" stopColor="white" stopOpacity=".28" />
-                  <stop offset="100%" stopColor="white" stopOpacity="0" />
-                </linearGradient>
-                <mask id={shineMaskId} maskUnits="userSpaceOnUse"
-                  x={0} y={0} width={plot.width} height={plot.height}>
-                  <rect className={styles.shineSweep} x={-shineWidth} width={shineWidth}
-                    height={plot.height} fill={`url(#${shineGradientId})`} />
-                </mask>
-              </>
-            )}
             <linearGradient id={guideGradientId} gradientUnits="userSpaceOnUse"
               x1="0" y1={plot.top} x2="0" y2={plot.bottom}>
-              <stop stopColor="var(--accent)" stopOpacity="0" />
-              <stop offset="24%" stopColor="var(--accent)" stopOpacity=".65" />
-              <stop offset="76%" stopColor="var(--accent)" stopOpacity=".65" />
-              <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+              <stop stopColor="var(--chart-guide)" stopOpacity="0" />
+              <stop offset="24%" stopColor="var(--chart-guide)" stopOpacity=".65" />
+              <stop offset="76%" stopColor="var(--chart-guide)" stopOpacity=".65" />
+              <stop offset="100%" stopColor="var(--chart-guide)" stopOpacity="0" />
             </linearGradient>
           </defs>
           <g aria-hidden="true">
-            {visiblePath && (
-              <path key={confirmed ? `${range}-area` : 'preview-area'} className={styles.series}
-                d={`${visiblePath} V${plot.bottom} H0 Z`} fill={`url(#${areaGradientId})`} />
+            {areaPath && (
+              <g key={confirmed ? range : 'preview'} className={styles.series}>
+                <WealthLiquidGlass id={`${chartId}-glass`} path={areaPath} plot={plot}
+                  pointerGradientRef={pointerGradientRef} pointerLightRef={pointerLightRef} />
+                <path d={visiblePath} className={styles.glassEdge} />
+              </g>
             )}
             {gridLines.map((y) => (
               <line key={y} x1="0" x2={plot.width} y1={y} y2={y} className={styles.gridLine} />
@@ -264,22 +259,6 @@ export const WealthServiceHero = ({ copy, heroTypewriter, layout = 'stacked' }: 
               <line key={stop} x1={stop * plot.width} x2={stop * plot.width} y1={plot.top}
                 y2={plot.bottom} className={`${styles.gridLine} ${styles.verticalGrid}`} />
             ))}
-            {visiblePath && (
-              <g key={confirmed ? range : 'preview'} className={styles.series}>
-                <path d={visiblePath} className={styles.line} />
-                {chart && (
-                  <path d={visiblePath} className={styles.lineShine} mask={`url(#${shineMaskId})`} />
-                )}
-              </g>
-            )}
-            {chart && (
-              <g>
-                <path d={`M${chart.endpoint.x} ${chart.endpoint.y} h.01`}
-                  className={styles.endpointPulse} />
-                <path d={`M${chart.endpoint.x} ${chart.endpoint.y} h.01`}
-                  className={styles.endpoint} />
-              </g>
-            )}
             {active && (
               <line x1={active.x} x2={active.x} y1={plot.top} y2={plot.bottom}
                 stroke={`url(#${guideGradientId})`} className={styles.activeGuide} />
@@ -321,15 +300,13 @@ export const WealthServiceHero = ({ copy, heroTypewriter, layout = 'stacked' }: 
             ))}
           </div>
         )}
-        <p className={styles.disclaimer}>
-          <strong>{copy.disclaimerLabel}:</strong>{' '}{copy.risk} {copy.capitalRisk} {copy.marketing}
-        </p>
       </figcaption>
     </figure>
   );
 
   return (
-    <section className={styles.section} aria-labelledby="wealth-heading" data-confirmed={confirmed}>
+    <section className={split ? styles.section : `${styles.section} ${styles.glassSection}`}
+      aria-labelledby="wealth-heading" data-confirmed={confirmed} data-appearance={darkGlass ? 'dark' : undefined}>
       <div className={styles.container}>
         <div className={styles.stage} data-layout={split ? layout : undefined}>
           {split ? (

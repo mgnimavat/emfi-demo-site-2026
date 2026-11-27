@@ -89,7 +89,8 @@
       "titleLines": [
         "Wealth Management"
       ],
-      "lead": "A fund is more than a portfolio. The legal structure, portfolio arrangements, administration, audit and legal oversight are all part of its operating framework.",
+      "lead": "A fund is more than a portfolio.",
+      "body": "The legal structure, portfolio arrangements, administration, audit and legal oversight are all part of its operating framework.",
       "archive": {
         "titleLines": [
           "A Fund Is",
@@ -154,6 +155,33 @@
           "body": "Review the portfolio against its agreed parameters, risk framework and reporting requirements."
         }
       ]
+    },
+    "fundSearch": {
+      "title": "Find Funds",
+      "description": "Explore more than 180,000 fund listings. See who manages a fund, where it’s domiciled, and whether its share class reinvests income or pays it out.",
+      "label": "Search funds",
+      "fundName": "Fund name",
+      "placeholder": "Search Name or ISIN",
+      "hint": "Enter at least {min} characters to search.",
+      "loading": "Searching funds…",
+      "resultsReady": "Results available. Use the arrow keys to browse.",
+      "empty": "No funds match your search.",
+      "unavailable": "The fund catalogue is unavailable.",
+      "retry": "Try again",
+      "refine": "More matches available. Refine by name or ISIN.",
+      "show": "Open fund search",
+      "hide": "Close fund search",
+      "clear": "Clear selected fund",
+      "detailsTitle": "Fund details",
+      "detailsEmpty": "Select a fund from the search results to see its details.",
+      "isin": "ISIN",
+      "fundHouse": "Fund house",
+      "familyCurrency": "Fund family currency",
+      "incomeTreatment": "Income treatment",
+      "domicile": "Domicile",
+      "lei": "Fund LEI",
+      "unitDecimals": "Share decimal places",
+      "incomeLabels": { "ACC": "Accumulation", "INC": "Income distribution" }
     },
     "visibility": {
       "titleLines": [

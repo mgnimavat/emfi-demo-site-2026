@@ -29,16 +29,8 @@
     "notice": "Publication and chart snapshot from EMFI Intelligence, imported 21 October 2026."
   },
   "signup": {
-    "titleLines": [
-      "Sign up for",
-      "EMFI Intelligence."
-    ],
-    "benefits": [
-      "New Intelligence most weekdays",
-      "Country reports, the EMFI Monthly Review and special reports",
-      "Written by EMFI’s economists and strategists"
-    ],
-    "note": "For professional clients and eligible counterparties. Full publication access follows the relevant client and publication arrangements.",
+    "title": "See What Moves",
+    "titleAccent": "Emerging Markets.",
     "form": {
       "heading": "Get EMFI Intelligence",
       "fields": [
@@ -328,7 +320,7 @@
     "Scrollable dummy transaction table": "Scrollable dummy transaction table",
     "Search by ISIN or Ticker...": "Search by ISIN or Ticker...",
     "Search by ticker or name...": "Search by ticker or name...",
-    "Search reports, markets or countries…": "Search reports, markets or countries…",
+    "Search By Keyword": "Search By Keyword",
     "Search research": "Search research",
     "Securities": "Securities",
     "Security": "Security",

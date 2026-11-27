@@ -11,7 +11,6 @@ export const ResearchTeamSection = ({ copy }: { copy: ResearchCopy['team'] }) =>
         <h2 id="research-team-heading" className={theme.sectionTitle}>
           {copy.title}
         </h2>
-        <p className={styles.body}>{copy.body}</p>
       </ExecutionReveal>
       <div className={theme.personGrid}>
         {copy.people.map((person) => (

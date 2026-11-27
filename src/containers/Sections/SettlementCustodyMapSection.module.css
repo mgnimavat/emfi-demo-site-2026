@@ -1,0 +1,153 @@
+.section {
+  composes: backdrop from './ServiceHeroGlass.module.css';
+  --hero-inset: clamp(var(--space-5), 3vw, var(--space-7));
+  --map-accent: color-mix(in srgb, var(--flow-to) 46%, var(--bg-inverse));
+  --land-north: color-mix(in srgb, var(--color-blue-200) 72%, var(--bg-soft));
+  --land-middle: color-mix(in srgb, var(--color-blue-100) 82%, var(--flow-to));
+  --land-south: color-mix(in srgb, var(--color-blue-100) 72%, var(--bg-soft));
+  container-type: inline-size;
+  display: grid;
+  min-block-size: calc(100svh - var(--site-header-height, 78px));
+  padding-block: clamp(var(--space-4), 3svh, var(--space-6));
+  scroll-margin-top: var(--site-header-height, 78px);
+}
+
+.layout {
+  composes: surface from './ServiceHeroGlass.module.css';
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: var(--space-4);
+  inline-size: min(1320px, calc(100% - 2 * var(--hero-inset)));
+  margin-inline: auto;
+  padding: var(--hero-inset);
+}
+
+.title {
+  composes: heading from './ServiceHeroGlass.module.css';
+  margin: 0;
+}
+
+.description {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: calc(clamp(14px, 1.3cqi, 17px) + 2px);
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+.map {
+  position: relative;
+  align-self: center;
+  min-inline-size: 0;
+}
+
+.atlas { display: block; inline-size: 100%; }
+
+.graticule {
+  fill: none;
+  stroke: color-mix(in srgb, var(--color-blue-300) 38%, transparent);
+  stroke-dasharray: 1 5;
+  vector-effect: non-scaling-stroke;
+  mask-image: radial-gradient(ellipse at 50% 46%, black 24%, transparent 73%);
+}
+
+.land {
+  stroke: color-mix(in srgb, var(--bg-page) 80%, var(--color-blue-100));
+  stroke-width: .65;
+  filter: drop-shadow(0 9px 12px color-mix(in srgb, var(--color-blue-300) 16%, transparent));
+}
+
+.highlight {
+  fill: color-mix(in srgb, var(--flow-to) 54%, var(--color-blue-550));
+  stroke: var(--bg-page);
+  stroke-width: .8;
+  transition: fill 240ms ease;
+}
+
+.highlight[tabindex], .pin { cursor: help; }
+.highlight[tabindex]:is(:hover, :focus-visible) { fill: var(--map-accent); }
+.highlight:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 3px; }
+
+.pin line { stroke: var(--map-accent); stroke-width: 1; pointer-events: none; }
+.pin circle { fill: var(--map-accent); stroke: var(--bg-page); stroke-width: 1; }
+.pin:focus-visible { outline: none; }
+.pin:is(:hover, :focus-visible) circle { fill: var(--bg-inverse); stroke: var(--action-focus); stroke-width: 2; }
+
+.mapLabel {
+  position: absolute;
+  min-inline-size: max-content;
+  padding: 5px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--bg-inverse) 18%, transparent);
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 650;
+  line-height: 1.2;
+  transform: translate(-50%, calc(-100% - var(--space-3)));
+  pointer-events: none;
+}
+
+.legend, .legendGroup, .legend ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.legend { column-gap: var(--space-5); }
+.legendLabel { color: var(--text-secondary); font-size: 13px; font-weight: 650; }
+.legend ul { margin: 0; padding: 0; list-style: none; }
+.legend li {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid color-mix(in srgb, var(--color-blue-100) 72%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--bg-page) 62%, transparent);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.caption {
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-5);
+  row-gap: var(--space-2);
+  padding-block-start: var(--space-4);
+  border-block-start: 1px solid var(--color-blue-100);
+}
+
+.cue {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 44px;
+  padding-inline: var(--space-4);
+  border: 1px solid var(--color-blue-100);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--bg-page) 62%, transparent);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.cue svg { color: var(--color-blue-550); }
+.cue:hover { background: var(--bg-page); border-color: var(--color-blue-200); }
+.cue:focus-visible { outline: 2px solid var(--action-focus); outline-offset: 3px; }
+
+@media (max-width: 767px) {
+  .section { --hero-inset: var(--space-4); }
+}
+
+@media (max-width: 599px) {
+  .section { min-block-size: auto; }
+  .layout { gap: var(--space-6); }
+  .caption { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .highlight { transition: none; }
+}

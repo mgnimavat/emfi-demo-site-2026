@@ -29,16 +29,8 @@
     "notice": "Publicación y gráfico de EMFI Intelligence, importados el 21 de octubre de 2026."
   },
   "signup": {
-    "titleLines": [
-      "Suscríbase a",
-      "EMFI Intelligence."
-    ],
-    "benefits": [
-      "Nuevos análisis la mayoría de los días laborables",
-      "Informes de países, EMFI Monthly Review e informes especiales",
-      "Elaborados por los economistas y estrategas de EMFI"
-    ],
-    "note": "Para clientes profesionales y contrapartes elegibles. El acceso completo a las publicaciones está sujeto a los acuerdos pertinentes de cliente y publicación.",
+    "title": "Descubra qué mueve los",
+    "titleAccent": "mercados emergentes.",
     "form": {
       "heading": "Reciba EMFI Intelligence",
       "fields": [
@@ -328,7 +320,7 @@
     "Scrollable dummy transaction table": "Tabla desplazable de operaciones ficticias",
     "Search by ISIN or Ticker...": "Buscar por ISIN o símbolo...",
     "Search by ticker or name...": "Buscar por símbolo o nombre...",
-    "Search reports, markets or countries…": "Buscar informes, mercados o países…",
+    "Search By Keyword": "Buscar por palabra clave",
     "Search research": "Buscar análisis",
     "Securities": "Valores",
     "Security": "Valor",

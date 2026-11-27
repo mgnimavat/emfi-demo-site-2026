@@ -2,6 +2,14 @@
   "title": "Settlement & Custody",
   "heroCta": "Explore More",
   "description": "Institutional custody and settlement services, supported by technology that brings greater visibility to positions, balances and transactions.",
+  "custodyMap": {
+    "description": "Explore the markets where EMFI supports cross-border custody and settlement for eligible securities.",
+    "marketSelection": "Settlement and custody markets",
+    "hongKong": "Hong Kong",
+    "exchangeLabel": "UAE exchanges",
+    "systemsLabel": "Settlement systems",
+    "exchanges": { "ADX": "Abu Dhabi (ADX)", "DFM": "Dubai (DFM)" }
+  },
   "heroLines": [
     "Settlement &",
     "Custody"
@@ -22,8 +30,8 @@
   "linkedAnimation": {
     "label": "Illustrative settlement flow",
     "fundingInterest": {
-      "title": "You pay interest on the funding gap",
-      "body": "The buy has settled and the sale proceeds haven’t arrived. You pay interest on the cash you borrow to cover the gap."
+      "title": "You may pay interest",
+      "body": "If you borrow to pay for the buy, you may owe interest until the sale settles."
     },
     "buy": "BUY",
     "sell": "SELL",
@@ -32,41 +40,41 @@
       "unlinked": [
         {
           "id": "buy",
-          "title": "The buy settles first",
-          "body": "Cash leaves your account to pay for the securities."
+          "title": "The buy goes through first",
+          "body": "You pay for the securities you bought."
         },
         {
           "id": "sell",
-          "title": "The sell fails to settle",
-          "body": "The sale proceeds are delayed, leaving your cash tied up."
+          "title": "The sale is delayed",
+          "body": "The money from the sale hasn’t arrived."
         },
         {
           "id": "outcome",
-          "title": "You fund the gap",
-          "body": "You may need financing and pay interest until the sell settles."
+          "title": "You may need to borrow",
+          "body": "You may pay interest until the sale settles."
         }
       ],
       "linked": [
         {
           "id": "buy",
-          "title": "The buy is held",
-          "body": "Payment for the buy waits while the sell is pending."
+          "title": "The buy waits",
+          "body": "Payment waits while the sale is pending."
         },
         {
           "id": "sell",
-          "title": "The sell is ready",
-          "body": "Both instructions are ready to settle together."
+          "title": "The sale is ready",
+          "body": "The buy and sell can now settle."
         },
         {
           "id": "outcome",
           "title": "Both trades settle together",
-          "body": "The sale proceeds arrive when payment for the buy is due."
+          "body": "The money from the sale arrives when you need to pay for the buy."
         }
       ]
     },
     "storySummary": {
-      "unlinked": "You pay for the buy before the sale proceeds arrive.",
-      "linked": "The sale proceeds are available when the buy settles."
+      "unlinked": "You pay before the money from the sale arrives.",
+      "linked": "The buy and sell settle at the same time."
     },
     "pause": "Pause animation",
     "play": "Resume animation",

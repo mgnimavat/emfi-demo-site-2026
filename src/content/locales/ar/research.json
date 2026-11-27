@@ -29,16 +29,8 @@
     "notice": "لقطة من المنشور والرسم البياني من EMFI Intelligence، مستوردة في 21 أكتوبر 2026."
   },
   "signup": {
-    "titleLines": [
-      "اشترك في",
-      "EMFI Intelligence."
-    ],
-    "benefits": [
-      "أبحاث جديدة في معظم أيام العمل",
-      "تقارير الدول والمراجعة الشهرية لـ EMFI والتقارير الخاصة",
-      "يعدّها خبراء الاقتصاد والاستراتيجية في EMFI"
-    ],
-    "note": "للعملاء المحترفين والأطراف المقابلة المؤهلة. يخضع الوصول الكامل إلى المنشورات لترتيبات العملاء والمنشورات ذات الصلة.",
+    "title": "اكتشف ما يحرّك",
+    "titleAccent": "الأسواق الناشئة.",
     "form": {
       "heading": "احصل على EMFI Intelligence",
       "fields": [
@@ -328,7 +320,7 @@
     "Scrollable dummy transaction table": "جدول معاملات وهمية قابل للتمرير",
     "Search by ISIN or Ticker...": "ابحث برقم ISIN أو الرمز...",
     "Search by ticker or name...": "ابحث بالرمز أو الاسم...",
-    "Search reports, markets or countries…": "ابحث عن تقارير أو أسواق أو دول…",
+    "Search By Keyword": "البحث بالكلمات المفتاحية",
     "Search research": "البحث في البحوث",
     "Securities": "الأوراق المالية",
     "Security": "الورقة المالية",

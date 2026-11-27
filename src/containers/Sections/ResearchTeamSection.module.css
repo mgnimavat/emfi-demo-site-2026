@@ -1,11 +1,3 @@
-.body {
-  max-width: 65ch;
-  margin: var(--space-4) auto 0;
-  color: var(--text-secondary);
-  font-size: 15px;
-  line-height: 1.7;
-}
-
 @media (min-width: 1024px) {
   .rowStart { grid-column-start: 1; }
 }
