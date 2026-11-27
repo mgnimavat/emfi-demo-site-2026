@@ -441,7 +441,7 @@ function EvidenceSlide({ slide, plain = false, centered = false, brandLogos = fa
       <div className={[styles.logos, brandLogos && styles.brandLogos, brandLogos && slide.title.startsWith("Authorised") && styles.authorityLogos].filter(Boolean).join(" ")}>
         {slide.items.map((item) => (
           <div key={item.name} className={[styles.logoCard, brandLogos && (item.name.startsWith("Dubai") || item.name.startsWith("Cayman")) && styles.markLogo, brandLogos && (item.name.startsWith("Cayman") || item.name.startsWith("Baker")) && styles.largeLogo].filter(Boolean).join(" ")}>
-            <Image src={brandLogos ? brandLogoSrc[item.src] ?? item.src : item.src} alt={item.name} width={item.width} height={item.height} unoptimized />
+            <Image src={(item.src && brandLogos ? brandLogoSrc[item.src] : item.src) ?? ""} alt={item.name} width={item.width} height={item.height} unoptimized />
           </div>
         ))}
       </div>
